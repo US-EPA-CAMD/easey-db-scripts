@@ -10,6 +10,21 @@ ALTER TABLE camdmd.program_code
 ALTER TABLE camdmd.program_code
     ADD COLUMN compliance_ui_filter numeric(1,0) NOT NULL DEFAULT 0;
 
+ALTER TABLE camdmd.program_code
+    ADD COLUMN rue_ind numeric(1,0) NOT NULL DEFAULT 0;
+
+ALTER TABLE camdmd.program_code
+    ADD COLUMN so2_cert_ind numeric(1,0) NOT NULL DEFAULT 0;
+
+ALTER TABLE camdmd.program_code
+    ADD COLUMN nox_cert_ind numeric(1,0) NOT NULL DEFAULT 0;
+
+ALTER TABLE camdmd.program_code
+    ADD COLUMN noxc_cert_ind numeric(1,0) NOT NULL DEFAULT 0;
+
+ALTER TABLE camdmd.program_code
+    ADD COLUMN notes character varying(1000) NOT NULL DEFAULT 0;
+
 update camdmd.program_code
 set emissions_ui_filter = 1
 where prg_cd not in ('MATS');
@@ -26,7 +41,8 @@ update camdmd.program_code
 set trading_end_date = '2003-05-06',
 penalty_factor = 3,
 first_comp_year = 1999,
-comp_parameter_cd = 'NOX'
+comp_parameter_cd = 'NOX',
+notes = 'OTC is not treated as a OS program in ECMPS'
 where prg_cd = 'OTC';
 
 update camdmd.program_code
@@ -43,6 +59,26 @@ where prg_cd = 'CAIRNOX';
 update camdmd.program_code
 set first_comp_year = 2010
 where prg_cd = 'CAIRSO2';
+
+update camdmd.program_code
+set notes = 'SIPNOX is treated as a OS program in ECMPS'
+where prg_cd = 'SIPNOX';
+
+update camdmd.program_code
+set rue_ind = 1
+where prg_cd in ('ARP','CAIRNOX','CAIROS','CAIRSO2','CSNOX','CSNOXOS','CSOSG1','CSOSG2','CSSO2G1','CSSO2G2','TRNOX','TRNOXOS','TRSO2G1','TRSO2G2','TXSO2');
+
+update camdmd.program_code
+set so2_cert_ind = 1
+where prg_cd in ('ARP','CAIRSO2','CSSO2G1','CSSO2G2','TRSO2G1','TRSO2G2','TXSO2');
+
+update camdmd.program_code
+set nox_cert_ind = 1
+where prg_cd in ('ARP','CAIRNOX','CAIROS','CSNOX','CSNOXOS','CSOSG1','CSOSG2','NBP','NHNOX','SIPNOX','TRNOX','TRNOXOS');
+
+update camdmd.program_code
+set noxc_cert_ind = 1
+where prg_cd in ('CAIRNOX','CAIROS','CSNOX','CSNOXOS','CSOSG1','CSOSG2','NBP','NHNOX','SIPNOX','TRNOX','TRNOXOS');
 
 --------------------------------------------------
 -- FUEL TYPE CODE UPDATES 
