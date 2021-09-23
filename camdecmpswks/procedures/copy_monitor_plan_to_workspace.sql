@@ -1,44 +1,56 @@
+-- PROCEDURE: camdecmpswks.copy_monitor_plan_to_workspace(text)
+
+-- DROP PROCEDURE camdecmpswks.copy_monitor_plan_to_workspace(text);
+
 CREATE OR REPLACE PROCEDURE camdecmpswks.copy_monitor_plan_to_workspace(
-	monPlanId	text
-)
+	monplanid text)
 LANGUAGE 'plpgsql'
-AS $$
+AS $BODY$
 BEGIN
 
-	IF NOT EXISTS (
-		SELECT * FROM camdecmpswks.monitor_plan WHERE mon_plan_id = monPlanId
-	) THEN
+	--IF NOT EXISTS (
+		--SELECT * FROM camdecmpswks.monitor_plan WHERE mon_plan_id = monPlanId
+	--) THEN
 
 		-- MONITOR_PLAN --
-		INSERT INTO camdecmpswks.monitor_plan(
-			mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, pending_status_cd, begin_rpt_period_id, end_rpt_period_id
-		)
-		SELECT
-			mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, 'NOTSUB', begin_rpt_period_id, end_rpt_period_id
-		FROM camdecmps.monitor_plan
-		WHERE mon_plan_id = monPlanId;
+		--INSERT INTO camdecmpswks.monitor_plan(
+		--	mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, pending_status_cd, begin_rpt_period_id, end_rpt_period_id, last_evaluated_date
+		--)
+		--SELECT
+		--	mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, 'NOTSUB', begin_rpt_period_id, end_rpt_period_id, last_evaluated_date
+		--FROM camdecmps.monitor_plan
+		--WHERE mon_plan_id = monPlanId;
 
 		-- STACK_PIPE --
-		INSERT INTO camdecmpswks.stack_pipe(
-			stack_pipe_id, fac_id, stack_name, active_date, retire_date, userid, add_date, update_date
-		)
-		SELECT
-			sp.stack_pipe_id, sp.fac_id, sp.stack_name, sp.active_date, sp.retire_date, sp.userid, sp.add_date, sp.update_date		
-		FROM camdecmps.stack_pipe AS sp
-		LEFT OUTER JOIN camdecmpswks.stack_pipe AS wks
-			USING (stack_pipe_id)
-		WHERE sp.fac_id = fac.fac_id
-		AND wks.stack_pipe_id IS NULL;
+		--INSERT INTO camdecmpswks.stack_pipe(
+		--	stack_pipe_id, fac_id, stack_name, active_date, retire_date, userid, add_date, update_date
+		--)
+		--SELECT
+		--	sp.stack_pipe_id, sp.fac_id, sp.stack_name, sp.active_date, sp.retire_date, sp.userid, sp.add_date, sp.update_date		
+		--FROM camdecmps.stack_pipe AS sp
+		--LEFT OUTER JOIN camdecmpswks.stack_pipe AS wks
+		--	USING (stack_pipe_id)
+		--WHERE sp.fac_id = fac.fac_id
+		--AND wks.stack_pipe_id IS NULL;
 
 		-- MONITOR_LOCATION --
-		INSERT INTO camdecmpswks.monitor_location(
-			mon_loc_id, stack_pipe_id, unit_id, userid, add_date, update_date
+-- 		INSERT INTO camdecmpswks.monitor_location(
+-- 			mon_loc_id, stack_pipe_id, unit_id, userid, add_date, update_date
+-- 		)
+-- 		SELECT
+-- 			ml.mon_loc_id, ml.stack_pipe_id, ml.unit_id, ml.userid, ml.add_date, ml.update_date	
+-- 		FROM camdecmps.monitor_location AS ml
+-- 		JOIN camdecmps.monitor_plan_location
+-- 			USING(mon_loc_id)
+-- 		WHERE mon_plan_id = monPlanId;
+
+		-- MONITOR_PLAN_REPORTING_FREQ --
+		INSERT INTO camdecmpswks.monitor_plan_reporting_freq(
+			mon_plan_rf_id, mon_plan_id, report_freq_cd, end_rpt_period_id, begin_rpt_period_id, userid, add_date, update_date
 		)
 		SELECT
-			ml.mon_loc_id, ml.stack_pipe_id, ml.unit_id, ml.userid, ml.add_date, ml.update_date	
-		FROM camdecmps.monitor_location AS ml
-		JOIN camdecmps.monitor_plan_location
-			USING(mon_loc_id)
+			mon_plan_rf_id, mon_plan_id, report_freq_cd, end_rpt_period_id, begin_rpt_period_id, userid, add_date, update_date
+		FROM camdecmps.monitor_plan_reporting_freq
 		WHERE mon_plan_id = monPlanId;
 
 		-- COMPONENT --
@@ -141,13 +153,13 @@ BEGIN
 		WHERE mon_plan_id = monPlanId;
 
 		-- MONITOR_PLAN_LOCATION --
-		INSERT INTO camdecmpswks.monitor_plan_location(
-			monitor_plan_location_id, mon_plan_id, mon_loc_id
-		)
-		SELECT
-			monitor_plan_location_id, mon_plan_id, mon_loc_id
-		FROM camdecmps.monitor_plan_location
-		WHERE mon_plan_id = monPlanId;		
+-- 		INSERT INTO camdecmpswks.monitor_plan_location(
+-- 			monitor_plan_location_id, mon_plan_id, mon_loc_id
+-- 		)
+-- 		SELECT
+-- 			monitor_plan_location_id, mon_plan_id, mon_loc_id
+-- 		FROM camdecmps.monitor_plan_location
+-- 		WHERE mon_plan_id = monPlanId;
 
 		-- MONITOR_QUALIFICATION --
 		INSERT INTO camdecmpswks.monitor_qualification(
@@ -259,62 +271,62 @@ BEGIN
 		WHERE mon_plan_id = monPlanId;
 
 		-- UNIT_CAPACITY --
-		INSERT INTO camdecmpswks.unit_capacity(
-			unit_cap_id, unit_id, begin_date, end_date, max_hi_capacity, userid, add_date, update_date
-		)
-		SELECT
-			uc.unit_cap_id, uc.unit_id, uc.begin_date, uc.end_date, uc.max_hi_capacity, uc.userid, uc.add_date, uc.update_date
-		FROM camdecmps.unit_capacity AS uc
-		JOIN camd.unit AS u
-			USING (unit_id)
-		LEFT OUTER JOIN camdecmpswks.unit_capacity AS wks
-			USING (unit_cap_id)
-		WHERE u.fac_id = fac.fac_id
-		AND wks.unit_cap_id IS NULL;
+-- 		INSERT INTO camdecmpswks.unit_capacity(
+-- 			unit_cap_id, unit_id, begin_date, end_date, max_hi_capacity, userid, add_date, update_date
+-- 		)
+-- 		SELECT
+-- 			uc.unit_cap_id, uc.unit_id, uc.begin_date, uc.end_date, uc.max_hi_capacity, uc.userid, uc.add_date, uc.update_date
+-- 		FROM camdecmps.unit_capacity AS uc
+-- 		JOIN camd.unit AS u
+-- 			USING (unit_id)
+-- 		LEFT OUTER JOIN camdecmpswks.unit_capacity AS wks
+-- 			USING (unit_cap_id)
+-- 		WHERE u.fac_id = fac.fac_id
+-- 		AND wks.unit_cap_id IS NULL;
 
 		-- UNIT_CONTROL --
-		INSERT INTO camdecmpswks.unit_control(
-			ctl_id, unit_id, control_cd, ce_param, install_date, opt_date, orig_cd, seas_cd, retire_date, indicator_cd, userid, add_date, update_date
-		)
-		SELECT
-			uc.ctl_id, uc.unit_id, uc.control_cd, uc.ce_param, uc.install_date, uc.opt_date, uc.orig_cd, uc.seas_cd, uc.retire_date, uc.indicator_cd, uc.userid, uc.add_date, uc.update_date
-		FROM camdecmps.unit_control AS uc
-		JOIN camd.unit AS u
-			USING (unit_id)
-		LEFT OUTER JOIN camdecmpswks.unit_control AS wks
-			USING (ctl_id)
-		WHERE u.fac_id = fac.fac_id
-		AND wks.ctl_id IS NULL;
+-- 		INSERT INTO camdecmpswks.unit_control(
+-- 			ctl_id, unit_id, control_cd, ce_param, install_date, opt_date, orig_cd, seas_cd, retire_date, indicator_cd, userid, add_date, update_date
+-- 		)
+-- 		SELECT
+-- 			uc.ctl_id, uc.unit_id, uc.control_cd, uc.ce_param, uc.install_date, uc.opt_date, uc.orig_cd, uc.seas_cd, uc.retire_date, uc.indicator_cd, uc.userid, uc.add_date, uc.update_date
+-- 		FROM camdecmps.unit_control AS uc
+-- 		JOIN camd.unit AS u
+-- 			USING (unit_id)
+-- 		LEFT OUTER JOIN camdecmpswks.unit_control AS wks
+-- 			USING (ctl_id)
+-- 		WHERE u.fac_id = fac.fac_id
+-- 		AND wks.ctl_id IS NULL;
 
 		-- UNIT_FUEL --
-		INSERT INTO camdecmpswks.unit_fuel(
-			uf_id, unit_id, fuel_type, begin_date, end_date, indicator_cd, act_or_proj_cd, ozone_seas_ind, dem_so2, dem_gcv, sulfur_content, userid, add_date, update_date
-		)
-		SELECT
-			uf.uf_id, uf.unit_id, uf.fuel_type, uf.begin_date, uf.end_date, uf.indicator_cd, uf.act_or_proj_cd, uf.ozone_seas_ind, uf.dem_so2, uf.dem_gcv, uf.sulfur_content, uf.userid, uf.add_date, uf.update_date
-		FROM camdecmps.unit_fuel AS uf
-		JOIN camd.unit AS u
-			USING (unit_id)
-		LEFT OUTER JOIN camdecmpswks.unit_fuel AS wks
-			USING (uf_id)
-		WHERE u.fac_id = fac.fac_id
-		AND wks.uf_id IS NULL;
+-- 		INSERT INTO camdecmpswks.unit_fuel(
+-- 			uf_id, unit_id, fuel_type, begin_date, end_date, indicator_cd, act_or_proj_cd, ozone_seas_ind, dem_so2, dem_gcv, sulfur_content, userid, add_date, update_date
+-- 		)
+-- 		SELECT
+-- 			uf.uf_id, uf.unit_id, uf.fuel_type, uf.begin_date, uf.end_date, uf.indicator_cd, uf.act_or_proj_cd, uf.ozone_seas_ind, uf.dem_so2, uf.dem_gcv, uf.sulfur_content, uf.userid, uf.add_date, uf.update_date
+-- 		FROM camdecmps.unit_fuel AS uf
+-- 		JOIN camd.unit AS u
+-- 			USING (unit_id)
+-- 		LEFT OUTER JOIN camdecmpswks.unit_fuel AS wks
+-- 			USING (uf_id)
+-- 		WHERE u.fac_id = fac.fac_id
+-- 		AND wks.uf_id IS NULL;
 
 		-- UNIT_STACK_CONFIGURATION --
-		INSERT INTO camdecmpswks.unit_stack_configuration(
-			config_id, unit_id, stack_pipe_id, begin_date, end_date, userid, add_date, update_date
-		)
-		SELECT
-			usc.config_id, usc.unit_id, usc.stack_pipe_id, usc.begin_date, usc.end_date, usc.userid, usc.add_date, usc.update_date
-		FROM camdecmps.unit_stack_configuration AS usc
-		JOIN camd.unit AS u
-			USING (unit_id)
-		LEFT OUTER JOIN camdecmpswks.unit_stack_configuration AS wks
-			USING (config_id)
-		WHERE u.fac_id = fac.fac_id
-		AND wks.config_id IS NULL;		
+-- 		INSERT INTO camdecmpswks.unit_stack_configuration(
+-- 			config_id, unit_id, stack_pipe_id, begin_date, end_date, userid, add_date, update_date
+-- 		)
+-- 		SELECT
+-- 			usc.config_id, usc.unit_id, usc.stack_pipe_id, usc.begin_date, usc.end_date, usc.userid, usc.add_date, usc.update_date
+-- 		FROM camdecmps.unit_stack_configuration AS usc
+-- 		JOIN camd.unit AS u
+-- 			USING (unit_id)
+-- 		LEFT OUTER JOIN camdecmpswks.unit_stack_configuration AS wks
+-- 			USING (config_id)
+-- 		WHERE u.fac_id = fac.fac_id
+-- 		AND wks.config_id IS NULL;		
 
-	END IF;
+	--END IF;
 
 END;
-$$
+$BODY$;

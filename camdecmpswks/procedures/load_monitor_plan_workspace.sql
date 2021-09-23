@@ -5,10 +5,10 @@ BEGIN
 		-- MONITOR_PLAN --
 		DELETE FROM camdecmpswks.monitor_plan;
 		INSERT INTO camdecmpswks.monitor_plan(
-			mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, pending_status_cd, begin_rpt_period_id, end_rpt_period_id
+			mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, pending_status_cd, begin_rpt_period_id, end_rpt_period_id, last_evaluated_date
 		)
 		SELECT
-			mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, 'NOTSUB', begin_rpt_period_id, end_rpt_period_id
+			mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, 'NOTSUB', begin_rpt_period_id, end_rpt_period_id, last_evaluated_date
 		FROM camdecmps.monitor_plan;
 
 		-- STACK_PIPE --

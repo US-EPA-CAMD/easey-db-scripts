@@ -1,8 +1,11 @@
+-- PROCEDURE: camdecmpswks.delete_workspace_monitor_plan(text)
+
+-- DROP PROCEDURE camdecmpswks.delete_workspace_monitor_plan(text);
+
 CREATE OR REPLACE PROCEDURE camdecmpswks.delete_workspace_monitor_plan(
-	monPlanId	text
-)
+	monplanid text)
 LANGUAGE 'plpgsql'
-AS $$
+AS $BODY$
 DECLARE
 	unitIds 	integer[];
 	monLocIds text[];
@@ -79,10 +82,6 @@ BEGIN
 	DELETE FROM camdecmpswks.monitor_method
 	WHERE mon_loc_id = ANY(monLocIds);
 
-	-- MONITOR_PLAN_COMMENT --
-	DELETE FROM camdecmpswks.monitor_plan_comment
-	WHERE mon_plan_id = monPlanId;
-
 	-- MONITOR_QUALIFICATION_LEE --
 	DELETE FROM camdecmpswks.monitor_qualification_lee
 	WHERE mon_qual_lee_id IN (
@@ -129,43 +128,51 @@ BEGIN
 	DELETE FROM camdecmpswks.rect_duct_waf
 	WHERE mon_loc_id = ANY(monLocIds);
 
-	-- MONITOR_PLAN_LOCATION --
-	DELETE FROM camdecmpswks.monitor_plan_location
+	-- MONITOR_PLAN_COMMENT --
+	DELETE FROM camdecmpswks.monitor_plan_comment
 	WHERE mon_plan_id = monPlanId;
+
+	-- MONITOR_PLAN_REPORTING_FREQ --
+	DELETE FROM camdecmpswks.monitor_plan_reporting_freq
+	WHERE mon_plan_id = monPlanId;
+
+	-- MONITOR_PLAN_LOCATION --
+	--DELETE FROM camdecmpswks.monitor_plan_location
+	--WHERE mon_plan_id = monPlanId;
 
 	-- MONITOR_LOCATION --
-	DELETE FROM camdecmpswks.monitor_location
-	WHERE mon_loc_id = ANY(monLocIds);
+	--DELETE FROM camdecmpswks.monitor_location
+	--WHERE mon_loc_id = ANY(monLocIds);
 
 	-- UNIT_CAPACITY --
-	DELETE FROM camdecmpswks.unit_capacity
-	WHERE unit_id = ANY (unitIds);
+	--DELETE FROM camdecmpswks.unit_capacity
+	--WHERE unit_id = ANY (unitIds);
 
 	-- UNIT_CONTROL --
-	DELETE FROM camdecmpswks.unit_control
-	WHERE unit_id = ANY (unitIds);
+	--DELETE FROM camdecmpswks.unit_control
+	--WHERE unit_id = ANY (unitIds);
 
 	-- UNIT_FUEL --
-	DELETE FROM camdecmpswks.unit_fuel
-	WHERE unit_id = ANY (unitIds);
+	--DELETE FROM camdecmpswks.unit_fuel
+	--WHERE unit_id = ANY (unitIds);
 
 	-- UNIT_STACK_CONFIGURATION --	
-	DELETE FROM camdecmpswks.unit_stack_configuration
-	WHERE unit_id = ANY (unitIds);
+	--DELETE FROM camdecmpswks.unit_stack_configuration
+	--WHERE unit_id = ANY (unitIds);
 
 	-- STACK_PIPES --
-	DELETE FROM camdecmpswks.stack_pipe
-	WHERE stack_pipe_id IN (
-		SELECT stack_pipe_id 
-		FROM camdecmpswks.stack_pipe	
-		JOIN camdecmpswks.monitor_plan
-			USING (fac_id)
-		WHERE mon_plan_id = monPlanId
-	);
+	--DELETE FROM camdecmpswks.stack_pipe
+	--WHERE stack_pipe_id IN (
+	--	SELECT stack_pipe_id 
+	--	FROM camdecmpswks.stack_pipe	
+	--	JOIN camdecmpswks.monitor_plan
+	--		USING (fac_id)
+	--	WHERE mon_plan_id = monPlanId
+	--);
 
 	-- MONITOR_PLAN --
-	DELETE FROM camdecmpswks.monitor_plan
-	WHERE mon_plan_id = monPlanId;
+	--DELETE FROM camdecmpswks.monitor_plan
+	--WHERE mon_plan_id = monPlanId;
 
 END;
-$$
+$BODY$;
