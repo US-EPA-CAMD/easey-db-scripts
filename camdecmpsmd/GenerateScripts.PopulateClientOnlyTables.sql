@@ -50,4 +50,4 @@ select  concat( 'insert into PARAMETER_METHOD_TO_FORMULA ( PARAMETER_CD, METHOD_
                 case when FORMULA_LIST is not null then '''' + FORMULA_LIST + '''' else 'NULL' end, ', ', 
                 case when NOT_FOUND_RESULT is not null then '''' + NOT_FOUND_RESULT + '''' else 'NULL' end,
                 ' );' )
-  from  ECMPS_AUX.CrossCheck.PARAMETER_METHOD_TO_FORMULA 
+  from  ECMPS.CrossCheck.PARAMETER_METHOD_TO_FORMULA 

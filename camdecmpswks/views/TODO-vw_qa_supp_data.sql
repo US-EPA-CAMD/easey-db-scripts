@@ -17,7 +17,7 @@ SELECT
         WHEN qa.submission_availability_cd IS NULL OR qa.submission_availability_cd = 'REQUIRE' THEN 'Y'
         ELSE 'N'
     END AS must_submit, qa.fuel_cd, fc.fuel_group_cd, fc.unit_fuel_cd, fc.fuel_cd_description, qa.operating_condition_cd, occ.op_condition_cd_description, qa.submission_availability_cd, qa.pending_status_cd, ml.oris_code, ml.facility_name, qa.submission_id
-    FROM camdecmpswks.qa_supp_data AS qa
+    FROM camdecmps.qa_supp_data AS qa
     LEFT OUTER JOIN camdecmpswks.vw_monitor_location AS ml
         ON qa.mon_loc_id = ml.mon_loc_id
     LEFT OUTER JOIN camdecmpswks.monitor_system AS ms
