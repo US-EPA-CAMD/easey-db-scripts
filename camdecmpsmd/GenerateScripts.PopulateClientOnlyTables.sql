@@ -38,4 +38,16 @@ select  concat( 'insert into SYSTEM_PARAMETER ( SYS_PARAM_ID, SYS_PARAM_NAME, PA
                 case when PARAM_VALUE5 is not null then '''' + replace(PARAM_VALUE5, '''', '''''') + '''' else 'NULL' end, ', ', 
                 case when NOTES is not null then '''' + replace(NOTES, '''', '''''') + '''' else 'NULL' end,
                 ' );' )
-  from  ECMPS_AUX.dbo.SYSTEM_PARAMETER 
+  from  ECMPS_AUX.dbo.SYSTEM_PARAMETER
+
+-- PARAMETER_METHOD_TO_FORMULA
+select  concat( 'insert into PARAMETER_METHOD_TO_FORMULA ( PARAMETER_CD, METHOD_CD, SYSTEM_TYPE_LIST, ECMPS_ONLY, LOCATION_TYPE_LIST, FORMULA_LIST, NOT_FOUND_RESULT ) values ( ', 
+                case when PARAMETER_CD is not null then '''' + PARAMETER_CD + '''' else 'NULL' end, ', ',                 
+                case when METHOD_CD is not null then '''' + METHOD_CD + '''' else 'NULL' end, ', ', 
+                case when SYSTEM_TYPE_LIST is not null then '''' + SYSTEM_TYPE_LIST + '''' else 'NULL' end, ', ',                 
+                case when ECMPS_ONLY is not null then '''' + ECMPS_ONLY + '''' else 'NULL' end, ', ', 
+                case when LOCATION_TYPE_LIST is not null then '''' + LOCATION_TYPE_LIST + '''' else 'NULL' end, ', ', 
+                case when FORMULA_LIST is not null then '''' + FORMULA_LIST + '''' else 'NULL' end, ', ', 
+                case when NOT_FOUND_RESULT is not null then '''' + NOT_FOUND_RESULT + '''' else 'NULL' end,
+                ' );' )
+  from  ECMPS.CrossCheck.PARAMETER_METHOD_TO_FORMULA 

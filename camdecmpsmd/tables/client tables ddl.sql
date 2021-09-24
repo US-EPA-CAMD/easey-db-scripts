@@ -317,3 +317,28 @@ ADD CONSTRAINT pk_system_parameter PRIMARY KEY (sys_param_id);
 ALTER TABLE camdecmpsmd.system_parameter
 ADD CONSTRAINT fk_system_parameter_system_parameter_name FOREIGN KEY (sys_param_name) 
 REFERENCES camdecmpsmd.system_parameter_name (sys_param_name);
+-----------------------------------------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS camdecmpsmd.parameter_method_to_formula(
+    param_method_to_formula_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 ),
+    parameter_cd character varying(7) NOT NULL,
+    method_cd character varying(7) NOT NULL,
+    system_type_list character varying(1000),
+    ecmps_only character varying(3),
+    location_type_list character varying(1000),
+    formula_list character varying(1000) NOT NULL,
+    not_found_result character varying(75) NOT NULL
+);
+
+ALTER TABLE camdecmpsmd.parameter_method_to_formula
+ADD CONSTRAINT pk_parameter_method_to_formula PRIMARY KEY (param_method_to_formula_id);
+
+ALTER TABLE camdecmpsmd.parameter_method_to_formula
+ADD CONSTRAINT uq_parameter_method_to_formula UNIQUE (parameter_cd, method_cd, system_type_list, location_type_list);
+
+ALTER TABLE camdecmpsmd.parameter_method_to_formula
+ADD CONSTRAINT fk_parameter_method_to_formula_parameter_code FOREIGN KEY (parameter_cd) 
+REFERENCES camdecmpsmd.parameter_code (parameter_cd);
+
+ALTER TABLE camdecmpsmd.parameter_method_to_formula
+ADD CONSTRAINT fk_parameter_method_to_formula_method_code FOREIGN KEY (method_cd) 
+REFERENCES camdecmpsmd.method_code (method_cd);
