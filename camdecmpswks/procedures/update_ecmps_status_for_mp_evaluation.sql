@@ -25,7 +25,7 @@ begin
     /* Indicate that the MP does not need to be evaluated. */
     update  camdecmpswks.monitor_plan 
        set  needs_eval_flg = 'Y',
-            --last_evaluated_date = null,
+            last_evaluated_date = current_timestamp,
             chk_session_id = vChkSessionId
      where  mon_plan_id = vMonPlanId;
     
