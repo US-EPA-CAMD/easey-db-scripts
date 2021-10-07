@@ -86,3 +86,10 @@ where prg_cd in ('CAIRNOX','CAIROS','CSNOX','CSNOXOS','CSOSG1','CSOSG2','NBP','N
 update camdecmpsmd.fuel_type_code
 set fuel_group_cd = 'COAL'
 where fuel_type_cd in ('C', 'CRF', 'PTC');
+
+--------------------------------------------------
+-- ACCOUNT TYPE CODE
+--------------------------------------------------
+update camdmd.account_type_code
+set account_type_description = 'Facility Account'
+where account_type_cd = 'FACLTY';

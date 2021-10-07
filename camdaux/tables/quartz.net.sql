@@ -1,28 +1,14 @@
-
-DROP TABLE IF EXISTS camdaux.qrtz_fired_triggers;
-DROP TABLE IF EXISTS camdaux.qrtz_paused_trigger_grps;
-DROP TABLE IF EXISTS camdaux.qrtz_scheduler_state;
-DROP TABLE IF EXISTS camdaux.qrtz_locks;
-DROP TABLE IF EXISTS camdaux.qrtz_simprop_triggers;
-DROP TABLE IF EXISTS camdaux.qrtz_simple_triggers;
-DROP TABLE IF EXISTS camdaux.qrtz_cron_triggers;
-DROP TABLE IF EXISTS camdaux.qrtz_blob_triggers;
-DROP TABLE IF EXISTS camdaux.qrtz_triggers;
-DROP TABLE IF EXISTS camdaux.qrtz_job_details;
-DROP TABLE IF EXISTS camdaux.qrtz_calendars;
-
-
 CREATE TABLE camdaux.qrtz_job_details
   (
     sched_name TEXT NOT NULL,
-	job_name  TEXT NOT NULL,
+	  job_name  TEXT NOT NULL,
     job_group TEXT NOT NULL,
     description TEXT NULL,
     job_class_name   TEXT NOT NULL, 
     is_durable BOOL NOT NULL,
     is_nonconcurrent BOOL NOT NULL,
     is_update_data BOOL NOT NULL,
-	requests_recovery BOOL NOT NULL,
+	  requests_recovery BOOL NOT NULL,
     job_data BYTEA NULL,
     PRIMARY KEY (sched_name,job_name,job_group)
 );
@@ -30,7 +16,7 @@ CREATE TABLE camdaux.qrtz_job_details
 CREATE TABLE camdaux.qrtz_triggers
   (
     sched_name TEXT NOT NULL,
-	trigger_name TEXT NOT NULL,
+	  trigger_name TEXT NOT NULL,
     trigger_group TEXT NOT NULL,
     job_name  TEXT NOT NULL, 
     job_group TEXT NOT NULL,
@@ -53,7 +39,7 @@ CREATE TABLE camdaux.qrtz_triggers
 CREATE TABLE camdaux.qrtz_simple_triggers
   (
     sched_name TEXT NOT NULL,
-	trigger_name TEXT NOT NULL,
+	  trigger_name TEXT NOT NULL,
     trigger_group TEXT NOT NULL,
     repeat_count BIGINT NOT NULL,
     repeat_interval BIGINT NOT NULL,
@@ -63,7 +49,7 @@ CREATE TABLE camdaux.qrtz_simple_triggers
 		REFERENCES camdaux.qrtz_triggers(sched_name,trigger_name,trigger_group) ON DELETE CASCADE
 );
 
-CREATE TABLE camdaux.QRTZ_SIMPROP_TRIGGERS 
+CREATE TABLE camdaux.qrtz_simprop_triggers 
   (
     sched_name TEXT NOT NULL,
     trigger_name TEXT NOT NULL ,
@@ -79,8 +65,8 @@ CREATE TABLE camdaux.QRTZ_SIMPROP_TRIGGERS
     dec_prop_2 NUMERIC NULL,
     bool_prop_1 BOOL NULL,
     bool_prop_2 BOOL NULL,
-	time_zone_id TEXT NULL,
-	PRIMARY KEY (sched_name,trigger_name,trigger_group),
+  	time_zone_id TEXT NULL,
+	  PRIMARY KEY (sched_name,trigger_name,trigger_group),
     FOREIGN KEY (sched_name,trigger_name,trigger_group) 
 		REFERENCES camdaux.qrtz_triggers(sched_name,trigger_name,trigger_group) ON DELETE CASCADE
 );
@@ -131,7 +117,7 @@ CREATE TABLE camdaux.qrtz_fired_triggers
     trigger_group TEXT NOT NULL,
     instance_name TEXT NOT NULL,
     fired_time BIGINT NOT NULL,
-	sched_time BIGINT NOT NULL,
+	  sched_time BIGINT NOT NULL,
     priority INTEGER NOT NULL,
     state TEXT NOT NULL,
     job_name TEXT NULL,
