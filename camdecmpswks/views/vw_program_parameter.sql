@@ -1,5 +1,10 @@
+-- View: camdecmpswks.vw_program_parameter
+
+-- DROP VIEW camdecmpswks.vw_program_parameter;
+
 CREATE OR REPLACE VIEW camdecmpswks.vw_program_parameter
-AS SELECT pp.prg_param_id,
+ AS
+ SELECT pp.prg_param_id,
     pp.prg_id,
     pp.parameter_cd,
     pp.required_ind,
