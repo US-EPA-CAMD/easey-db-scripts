@@ -12,3 +12,6 @@ CREATE TABLE camdaux.cors_to_api
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
+
+
+INSERT INTO camdaux.cors_to_api(cors_id, api_id) VALUES (?, ?);
