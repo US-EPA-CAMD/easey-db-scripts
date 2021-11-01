@@ -61,7 +61,8 @@ set first_comp_year = 2010
 where prg_cd = 'CAIRSO2';
 
 update camdmd.program_code
-set notes = 'SIPNOX is treated as a OS program in ECMPS'
+set os_ind = 1,
+notes = 'SIPNOX is treated as a OS program in ECMPS'
 where prg_cd = 'SIPNOX';
 
 update camdmd.program_code

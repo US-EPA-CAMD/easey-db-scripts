@@ -66,3 +66,18 @@ WHERE process_cd = 'LMESCRN';
 UPDATE camdecmpsmd.process_code
 SET process_cd_name = 'EM Generation'
 WHERE process_cd = 'EMGEN';
+
+
+--------------------------------------------------
+-- QUAL_TYPE_CODE UPDATES 
+--------------------------------------------------
+ALTER TABLE camdecmpsmd.qual_type_code
+    ADD COLUMN qual_type_group_cd character varying(7) NOT NULL DEFAULT 'PCT';
+
+UPDATE camdecmpsmd.qual_type_code
+SET qual_type_group_cd = 'LEE'
+WHERE qual_type_cd = 'LEE';
+
+UPDATE camdecmpsmd.qual_type_code
+SET qual_type_group_cd = 'LME'
+WHERE qual_type_cd IN ('LMEA', 'LMES');
