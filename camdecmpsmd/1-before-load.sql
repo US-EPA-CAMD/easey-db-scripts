@@ -1,3 +1,11 @@
+--EVALUATION_STATUS_CODE
+--need to drop the relationship in order to reload data
+ALTER TABLE IF EXISTS camdecmpswks.monitor_plan
+    DROP CONSTRAINT IF EXISTS fk_monitor_plan_eval_status_code;
+
+DROP TABLE camdecmpsmd.eval_status_code;
+
+
 -- PROCESS_CODE
 ALTER TABLE IF EXISTS camdecmpsmd.process_code
     DROP COLUMN IF EXISTS process_cd_name;
