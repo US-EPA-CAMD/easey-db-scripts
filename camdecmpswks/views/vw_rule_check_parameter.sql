@@ -1,3 +1,7 @@
+-- View: camdecmpswks.vw_rule_check_parameter
+
+-- DROP VIEW camdecmpswks.vw_rule_check_parameter;
+
 CREATE OR REPLACE VIEW camdecmpswks.vw_rule_check_parameter
  AS
  SELECT ccp.check_catalog_param_id,

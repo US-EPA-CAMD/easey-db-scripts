@@ -1,12 +1,14 @@
-CREATE OR REPLACE PROCEDURE camdecmpswks.update_ecmps_status_for_mp_evaluation
-(
-    vMonPlanId      in      varchar(45),
-    vChkSessionId   in      varchar(45),
-    vResult         inout   char(1),
-    vErrorMsg       inout   varchar(200)
-)
- LANGUAGE plpgsql
-AS $procedure$
+-- PROCEDURE: camdecmpswks.update_ecmps_status_for_mp_evaluation(character varying, character varying, character, character varying)
+
+-- DROP PROCEDURE camdecmpswks.update_ecmps_status_for_mp_evaluation(character varying, character varying, character, character varying);
+
+CREATE OR REPLACE PROCEDURE camdecmpswks.update_ecmps_status_for_mp_evaluation(
+	vmonplanid character varying,
+	vchksessionid character varying,
+	INOUT vresult character,
+	INOUT verrormsg character varying)
+LANGUAGE 'plpgsql'
+AS $BODY$
 declare 
     vSubmittable    char(1);
 begin
@@ -84,5 +86,4 @@ exception when others then
     get stacked diagnostics vErrorMsg := message_text;
     vResult = 'F';
 END;
-$procedure$
-;
+$BODY$;

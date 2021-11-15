@@ -1,3 +1,7 @@
+-- View: camddmw.vw_facility_unit_attributes
+
+-- DROP VIEW camddmw.vw_facility_unit_attributes;
+
 CREATE OR REPLACE VIEW camddmw.vw_facility_unit_attributes
  AS
  SELECT uf.unit_id,

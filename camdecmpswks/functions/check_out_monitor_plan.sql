@@ -1,10 +1,18 @@
+-- FUNCTION: camdecmpswks.check_out_monitor_plan(text, text)
+
+-- DROP FUNCTION camdecmpswks.check_out_monitor_plan(text, text);
+
 CREATE OR REPLACE FUNCTION camdecmpswks.check_out_monitor_plan(
-	monPlanId	text,
-	userName	text
-)
-RETURNS SETOF camdecmpswks.user_check_out
-LANGUAGE 'plpgsql'
-AS $$
+	monplanid text,
+	username text)
+    RETURNS SETOF camdecmpswks.user_check_out 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
+AS $BODY$
 DECLARE
 	fac 			record;
 	rec 			record;
@@ -61,10 +69,10 @@ BEGIN
 		facility_id, mon_plan_id, checked_out_on, checked_out_by, last_activity
 	)
 	VALUES(fac.fac_id, monPlanId, CURRENT_TIMESTAMP, userName, CURRENT_TIMESTAMP);
-
+	
 	RETURN QUERY SELECT *
 	FROM camdecmpswks.user_check_out
 	WHERE mon_plan_id = monPlanId;
 
 END;
-$$
+$BODY$;

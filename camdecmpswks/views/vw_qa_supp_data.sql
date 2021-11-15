@@ -62,7 +62,7 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_qa_supp_data
     qa.operating_condition_cd,
     occ.op_condition_cd_description,
     qa.submission_availability_cd,
-    NULL::text AS pending_status_cd,--qa.pending_status_cd,not needed for monitor plan eval but will be needed for QA later on
+    NULL::text AS pending_status_cd,
     ml.oris_code,
     ml.facility_name,
     qa.submission_id

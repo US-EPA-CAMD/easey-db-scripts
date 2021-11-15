@@ -1,3 +1,7 @@
+-- View: camdecmpswks.vw_rule_check_condition
+
+-- DROP VIEW camdecmpswks.vw_rule_check_condition;
+
 CREATE OR REPLACE VIEW camdecmpswks.vw_rule_check_condition
  AS
  SELECT rcc.rule_check_condition_id,
