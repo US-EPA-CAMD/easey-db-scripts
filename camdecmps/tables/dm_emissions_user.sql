@@ -36,10 +36,8 @@ ADD CONSTRAINT dm_emissions_user_em__cd_uq UNIQUE (dm_emissions_id, dm_emissions
 
 ALTER TABLE camdecmps.dm_emissions_user
 ADD CONSTRAINT dm_emissions_user_cd_fk FOREIGN KEY (dm_emissions_user_cd) 
-REFERENCES camdecmpsmd.dm_emissions_user_code (dm_emissions_user_cd)
-ON DELETE NO ACTION;
+REFERENCES camdecmpsmd.dm_emissions_user_code (dm_emissions_user_cd);
 
 ALTER TABLE camdecmps.dm_emissions_user
 ADD CONSTRAINT dm_emissions_user_em_fk FOREIGN KEY (dm_emissions_id) 
-REFERENCES camdecmps.dm_emissions (dm_emissions_id)
-ON DELETE NO ACTION;
+REFERENCES camdecmps.dm_emissions (dm_emissions_id);

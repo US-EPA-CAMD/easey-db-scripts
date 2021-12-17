@@ -39,5 +39,4 @@ ADD CONSTRAINT dm_emissions_uq UNIQUE (mon_plan_id, rpt_period_id);
 
 ALTER TABLE camdecmps.dm_emissions
 ADD CONSTRAINT dm_emissions_apptype_fk FOREIGN KEY (apportionment_type_cd) 
-REFERENCES camdecmpsmd.apportionment_type_code (apportionment_type_cd)
-ON DELETE NO ACTION;
+REFERENCES camdecmpsmd.apportionment_type_code (apportionment_type_cd);

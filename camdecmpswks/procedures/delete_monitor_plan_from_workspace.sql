@@ -147,7 +147,15 @@ BEGIN
 	DELETE FROM camdecmpswks.rect_duct_waf
 	WHERE mon_loc_id = ANY(monLocIds);
 
+	-- CHECK_LOG --
+	DELETE FROM camdecmpswks.check_log
+	WHERE mon_loc_id = ANY(monLocIds);
+
 	---------------------------------- MONITOR PLAN DEPENDENT DATA --------------------------------------------
+
+	-- CHECK_SESSION --
+	DELETE FROM camdecmpswks.check_session
+	WHERE mon_plan_id = monPlanId;
 
 	-- MONITOR_PLAN_COMMENT --
 	DELETE FROM camdecmpswks.monitor_plan_comment
