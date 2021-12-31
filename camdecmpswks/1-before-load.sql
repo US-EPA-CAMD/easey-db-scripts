@@ -4,4 +4,3 @@ ALTER TABLE IF EXISTS camdecmpswks.monitor_plan
 
 ALTER TABLE IF EXISTS camdecmpswks.monitor_plan
     DROP COLUMN IF EXISTS eval_status_cd;
-

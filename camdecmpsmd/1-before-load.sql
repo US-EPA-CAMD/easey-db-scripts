@@ -3,7 +3,13 @@
 ALTER TABLE IF EXISTS camdecmpswks.monitor_plan
     DROP CONSTRAINT IF EXISTS fk_monitor_plan_eval_status_code;
 
-DROP TABLE camdecmpsmd.eval_status_code;
+ALTER TABLE IF EXISTS camdecmpsmd.severity_code
+    DROP COLUMN IF EXISTS eval_status_cd;
+
+ALTER TABLE IF EXISTS camdecmpswks.monitor_plan
+    DROP COLUMN IF EXISTS eval_status_cd;
+
+DROP TABLE IF EXISTS camdecmpsmd.eval_status_code;
 
 
 -- PROCESS_CODE

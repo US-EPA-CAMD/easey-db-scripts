@@ -26,4 +26,4 @@ WHERE fac_id = 5;
 
 ALTER TABLE IF EXISTS camdecmpswks.monitor_plan
     ADD CONSTRAINT fk_monitor_plan_eval_status_code FOREIGN KEY (eval_status_cd)
-    REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE
+    REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;

@@ -81,3 +81,26 @@ WHERE qual_type_cd = 'LEE';
 UPDATE camdecmpsmd.qual_type_code
 SET qual_type_group_cd = 'LME'
 WHERE qual_type_cd IN ('LMEA', 'LMES');
+
+
+--------------------------------------------------
+-- SEVERITY_CODE UPDATES 
+--------------------------------------------------
+ALTER TABLE camdecmpsmd.severity_code
+    ADD COLUMN eval_status_cd character varying(7);
+
+ALTER TABLE camdecmpsmd.severity_code
+    ADD CONSTRAINT fk_severity_code_eval_status_code FOREIGN KEY (eval_status_cd)
+    REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
+
+UPDATE camdecmpsmd.severity_code
+SET eval_status_cd = 'PASS'
+WHERE severity_cd IN ('NONE');
+
+UPDATE camdecmpsmd.severity_code
+SET eval_status_cd = 'INFO'
+WHERE severity_cd IN ('ADMNOVR', 'INFORM', 'NONCRIT', 'FORGIVE');
+
+UPDATE camdecmpsmd.severity_code
+SET eval_status_cd = 'ERR'
+WHERE severity_cd IN ('CRIT1', 'CRIT2', 'CRIT3', 'FATAL');

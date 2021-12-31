@@ -91,7 +91,7 @@ BEGIN
 		mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, 'NOTSUB', begin_rpt_period_id, end_rpt_period_id, last_evaluated_date
 	FROM camdecmps.monitor_plan
 	WHERE mon_plan_id = monPlanId;
-	
+
 	-- MONITOR_PLAN_COMMENT --
 	INSERT INTO camdecmpswks.monitor_plan_comment(
 		mon_plan_comment_id, mon_plan_id, mon_plan_comment, begin_date, end_date, userid, add_date, submission_availability_cd, update_date
@@ -118,7 +118,7 @@ BEGIN
 		mon_loc_id, stack_pipe_id, unit_id, userid, add_date, update_date
 	FROM camdecmps.monitor_location
 	WHERE mon_loc_id = ANY(monLocIds);
-
+	
 	-- MONITOR_PLAN_LOCATION --
 	INSERT INTO camdecmpswks.monitor_plan_location(
 		monitor_plan_location_id, mon_plan_id, mon_loc_id

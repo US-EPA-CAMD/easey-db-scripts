@@ -1,0 +1,114 @@
+-- CREATES THE ALTER STATEMENTS
+--select 'ALTER TABLE ' || table_schema || '.' || table_name || ' ALTER COLUMN ' || column_name || ' type character varying(25);'
+--from information_schema.columns
+--where column_name = 'userid'
+--order by table_schema, table_name
+
+-- THESE HAVE TO BE DROPPED BEFORE RUNNING DATA TYPE CHANGE
+--camdecmpswks.vw_program_parameter
+--camdecmpswks.vw_qa_supp_data
+--camdecmpswks.vw_qa_test_summary
+
+ALTER TABLE camd.generator ALTER COLUMN userid type character varying(25);
+ALTER TABLE camd.plant ALTER COLUMN userid type character varying(25);
+ALTER TABLE camd.program ALTER COLUMN userid type character varying(25);
+ALTER TABLE camd.unit ALTER COLUMN userid type character varying(25);
+ALTER TABLE camd.unit_boiler_type ALTER COLUMN userid type character varying(25);
+ALTER TABLE camd.unit_exemption ALTER COLUMN userid type character varying(25);
+ALTER TABLE camd.unit_generator ALTER COLUMN userid type character varying(25);
+ALTER TABLE camd.unit_op_status ALTER COLUMN userid type character varying(25);
+ALTER TABLE camd.unit_program ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.account_compliance_dim ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.account_fact ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.account_owner_dim ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.allowance_holding_dim ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.annual_unit_data ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.control_year_dim ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.day_unit_data ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.fuel_year_dim ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.hour_unit_data ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.month_unit_data ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.owner_display_fact ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.owner_year_dim ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.ozone_unit_data ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.program_year_dim ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.quarter_unit_data ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.transaction_block_dim ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.transaction_fact ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.transaction_owner_dim ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.unit_compliance_dim ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.unit_fact ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw.unit_type_year_dim ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw_arch.annual_unit_data_a ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw_arch.day_unit_data_a ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw_arch.hour_unit_data_a ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw_arch.month_unit_data_a ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw_arch.ozone_unit_data_a ALTER COLUMN userid type character varying(25);
+ALTER TABLE camddmw_arch.quarter_unit_data_a ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.analyzer_range ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.component ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.flow_to_load_check ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.flow_to_load_reference ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.fuel_flowmeter_accuracy ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.mats_method_data ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.monitor_default ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.monitor_formula ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.monitor_load ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.monitor_location ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.monitor_location_attribute ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.monitor_method ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.monitor_plan ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.monitor_plan_comment ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.monitor_plan_reporting_freq ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.monitor_qualification ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.monitor_qualification_lee ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.monitor_qualification_lme ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.monitor_qualification_pct ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.monitor_span ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.monitor_system ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.monitor_system_component ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.qa_supp_data ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.rect_duct_waf ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.stack_pipe ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.system_fuel_flow ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.test_summary ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.unit_capacity ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.unit_control ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.unit_default_test ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.unit_fuel ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.unit_stack_configuration ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmps.used_identifier ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpsaux.apportionment ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpsaux.check_session ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpsaux.em_submission_access ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpsaux.es_spec ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpsaux.program_parameter ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.analyzer_range ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.check_session ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.component ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.mats_method_data ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.monitor_default ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.monitor_formula ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.monitor_load ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.monitor_location ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.monitor_location_attribute ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.monitor_method ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.monitor_plan ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.monitor_plan_comment ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.monitor_plan_reporting_freq ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.monitor_qualification ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.monitor_qualification_lee ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.monitor_qualification_lme ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.monitor_qualification_pct ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.monitor_span ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.monitor_system ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.monitor_system_component ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.rect_duct_waf ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.stack_pipe ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.system_fuel_flow ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.unit_capacity ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.unit_control ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.unit_fuel ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.unit_stack_configuration ALTER COLUMN userid type character varying(25);
+ALTER TABLE camdecmpswks.user_session ALTER COLUMN userid type character varying(25);
+

@@ -6,8 +6,7 @@ CREATE OR REPLACE VIEW camddmw.vw_facility_unit_attributes
  AS
  SELECT uf.unit_id,
     uf.op_year,
-    pyd.prg_code,
-    pyd.report_freq,
+    uf.prg_code_info,
     uf.state,
     uf.orispl_code,
     uf.unitid,
@@ -35,12 +34,15 @@ CREATE OR REPLACE VIEW camddmw.vw_facility_unit_attributes
     odf.own_display,
     odf.opr_display,
     d.generator_id,
-    uf.facility_name
+    uf.facility_name,
+    d.arp_nameplate_capacity,
+    d.other_nameplate_capacity
    FROM camddmw.unit_fact uf
      JOIN ( SELECT ug.unit_id,
-            string_agg(g.genid::text, ', '::text) AS generator_id
+            string_agg(g.genid::text, ', '::text) AS generator_id,
+            string_agg(COALESCE(g.arp_nameplate_capacity::text, 'null'::text), ', '::text) AS arp_nameplate_capacity,
+            string_agg(COALESCE(g.other_nameplate_capacity::text, 'null'::text), ', '::text) AS other_nameplate_capacity
            FROM camd.generator g
              JOIN camd.unit_generator ug ON g.gen_id = ug.gen_id
           GROUP BY ug.unit_id) d ON uf.unit_id = d.unit_id
-     LEFT JOIN camddmw.program_year_dim pyd ON uf.unit_id = pyd.unit_id AND uf.op_year = pyd.op_year
      LEFT JOIN camddmw.owner_display_fact odf ON uf.unit_id = odf.unit_id AND uf.op_year = odf.op_year;
