@@ -2,19 +2,20 @@
 
 -- DROP PROCEDURE camdecmpswks.update_ecmps_status_for_mp_evaluation(character varying, character varying, character, character varying);
 
-CREATE OR REPLACE PROCEDURE camdecmpswks.update_ecmps_status_for_mp_evaluation(
+CREATE OR REPLACE FUNCTION camdecmpswks.update_ecmps_status_for_mp_evaluation
+(
 	vmonplanid character varying,
-	vchksessionid character varying,
-	INOUT vresult character,
-	INOUT verrormsg character varying)
+	vchksessionid character varying
+)
+RETURNS TABLE(result text, error_msg character varying)
 LANGUAGE 'plpgsql'
 AS $BODY$
 declare 
     vSubmittable    char(1);
 begin
     
-    vErrorMsg := '';
-    vResult := 'T';
+    error_msg := '';
+    result := 'T';
 
     /* Remove check session for the MP that are not the current check session. */
     delete 
@@ -26,7 +27,7 @@ begin
 
     /* Indicate that the MP does not need to be evaluated. */
     update  camdecmpswks.monitor_plan 
-       set  needs_eval_flg = 'Y',
+       set  needs_eval_flg = 'N',
             last_evaluated_date = current_timestamp,
             chk_session_id = vChkSessionId
      where  mon_plan_id = vMonPlanId;
@@ -81,9 +82,13 @@ begin
          */
     
     end if;
+   
+   return next;
 
 exception when others then
-    get stacked diagnostics vErrorMsg := message_text;
-    vResult = 'F';
+    get stacked diagnostics error_msg := message_text;
+    result = 'F';
+   
+   return next;
 END;
 $BODY$;
