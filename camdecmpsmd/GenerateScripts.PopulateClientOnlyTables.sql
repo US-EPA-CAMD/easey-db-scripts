@@ -1,29 +1,52 @@
 -- CONFIGURATION_TYPE_CODE
-select  concat( 'insert into CONFIGURATION_TYPE_CODE ( CONFIG_TYPE_CD, CONFIG_TYPE_CD_DESCRIPTION ) values ( ', 
+select  '-- CONFIGURATION_TYPE_CODE'
+union all
+select  concat( 'insert into camdecmpsmd.CONFIGURATION_TYPE_CODE ( CONFIG_TYPE_CD, CONFIG_TYPE_CD_DESCRIPTION ) values ( ', 
                 case when CONFIG_TYPE_CD is not null then '''' + CONFIG_TYPE_CD + '''' else 'NULL' end, ', ', 
                 case when CONFIG_TYPE_CD_DESCRIPTION is not null then '''' + CONFIG_TYPE_CD_DESCRIPTION + '''' else 'NULL' end,
                 ' );' )
   from  ECMPS.dbo.CONFIGURATION_TYPE_CODE 
 
+union all 
+select  '' 
+union all 
+select  ''
+union all 
 
 -- EVAL_SCORE_CODE
-select  concat( 'insert into EVAL_SCORE_CODE ( EVAL_SCORE_CD, EVAL_SCORE_DESCRIPTION ) values ( ', 
+select  '-- EVAL_SCORE_CODE'
+union all
+select  concat( 'insert into camdecmpsmd.EVAL_SCORE_CODE ( EVAL_SCORE_CD, EVAL_SCORE_DESCRIPTION ) values ( ', 
                 case when EVAL_SCORE_CD is not null then '''' + EVAL_SCORE_CD + '''' else 'NULL' end, ', ', 
                 case when EVAL_SCORE_DESCRIPTION is not null then '''' + EVAL_SCORE_DESCRIPTION + '''' else 'NULL' end,
                 ' );' )
   from  ECMPS_AUX.dbo.EVAL_SCORE_CODE 
 
+union all 
+select  '' 
+union all 
+select  ''
+union all 
 
 -- SYSTEM_PARAMETER_NAME
-select  concat( 'insert into SYSTEM_PARAMETER_NAME ( SYS_PARAM_NAME, SYS_PARAM_DESCRIPTION ) values ( ', 
+select  '-- SYSTEM_PARAMETER_NAME'
+union all
+select  concat( 'insert into camdecmpsmd.SYSTEM_PARAMETER_NAME ( SYS_PARAM_NAME, SYS_PARAM_DESCRIPTION ) values ( ', 
                 case when SYS_PARAM_NAME is not null then '''' + SYS_PARAM_NAME + '''' else 'NULL' end, ', ', 
                 case when SYS_PARAM_DESCRIPTION is not null then '''' + replace(SYS_PARAM_DESCRIPTION, '''', '''''') + '''' else 'NULL' end,
                 ' );' )
   from  ECMPS_AUX.dbo.SYSTEM_PARAMETER_NAME 
 
+union all 
+select  '' 
+union all 
+select  ''
+union all 
 
 -- SYSTEM_PARAMETER
-select  concat( 'insert into SYSTEM_PARAMETER ( SYS_PARAM_ID, SYS_PARAM_NAME, PARAM_NAME1, PARAM_VALUE1, PARAM_NAME2, PARAM_VALUE2, PARAM_NAME3, PARAM_VALUE3, PARAM_NAME4, PARAM_VALUE4, PARAM_NAME5, PARAM_VALUE5, NOTES ) overriding system value values ( ', 
+select  '-- SYSTEM_PARAMETER'
+union all
+select  concat( 'insert into camdecmpsmd.SYSTEM_PARAMETER ( SYS_PARAM_ID, SYS_PARAM_NAME, PARAM_NAME1, PARAM_VALUE1, PARAM_NAME2, PARAM_VALUE2, PARAM_NAME3, PARAM_VALUE3, PARAM_NAME4, PARAM_VALUE4, PARAM_NAME5, PARAM_VALUE5, NOTES ) overriding system value values ( ', 
                 case when SYS_PARAM_ID is not null then cast(SYS_PARAM_ID as varchar) else 'NULL' end, ', ', 
                 case when SYS_PARAM_NAME is not null then '''' + replace(SYS_PARAM_NAME, '''', '''''') + '''' else 'NULL' end, ', ', 
                 case when PARAM_NAME1 is not null then '''' + replace(PARAM_NAME1, '''', '''''') + '''' else 'NULL' end, ', ', 
@@ -40,8 +63,16 @@ select  concat( 'insert into SYSTEM_PARAMETER ( SYS_PARAM_ID, SYS_PARAM_NAME, PA
                 ' );' )
   from  ECMPS_AUX.dbo.SYSTEM_PARAMETER
 
+union all 
+select  '' 
+union all 
+select  ''
+union all 
+
 -- PARAMETER_METHOD_TO_FORMULA
-select  concat( 'insert into PARAMETER_METHOD_TO_FORMULA ( PARAMETER_CD, METHOD_CD, SYSTEM_TYPE_LIST, ECMPS_ONLY, LOCATION_TYPE_LIST, FORMULA_LIST, NOT_FOUND_RESULT ) values ( ', 
+select  '-- PARAMETER_METHOD_TO_FORMULA'
+union all
+select  concat( 'insert into camdecmpsmd.PARAMETER_METHOD_TO_FORMULA ( PARAMETER_CD, METHOD_CD, SYSTEM_TYPE_LIST, ECMPS_ONLY, LOCATION_TYPE_LIST, FORMULA_LIST, NOT_FOUND_RESULT ) values ( ', 
                 case when PARAMETER_CD is not null then '''' + PARAMETER_CD + '''' else 'NULL' end, ', ',                 
                 case when METHOD_CD is not null then '''' + METHOD_CD + '''' else 'NULL' end, ', ', 
                 case when SYSTEM_TYPE_LIST is not null then '''' + SYSTEM_TYPE_LIST + '''' else 'NULL' end, ', ',                 
