@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tree>
+    <complex-attributes>
+        <type name="materialized-view">
+            <attr name="sql"></attr>
+        </type>
+        <type name="metadata">
+            <attr name="vendor-engine"></attr>
+        </type>
+        <type name="view">
+            <attr name="sql"></attr>
+        </type>
+        <type name="function">
+            <attr name="sql"></attr>
+        </type>
+        <type name="constraint">
+            <attr name="check-clause"></attr>
+        </type>
+        <type name="trigger">
+            <attr name="trigger-definition"></attr>
+            <attr name="comment"></attr>
+            <attr name="sql"></attr>
+        </type>
+        <type name="procedure">
+            <attr name="sql"></attr>
+        </type>
+    </complex-attributes>
+    <metadata _I_D="68f7e77b-b4ce-4372-9aaf-51f28d3029bb" vendor="POSTGRESQL" nonquoted-case="lower" allow-similarly-named-objects="y" quoted-case="specified" name="uImcwuf4K9dyaxeL@localhost:15210/cgawsbrokerprodr97macy19l" product-version="12.3.0.0" vendor-engine-version="12.3" last-update-tree="2022-04-12 13:30:02" max-identifier-length="63">
+        <complex-attribute name="vendor-engine"><![CDATA[PostgreSQL 12.3 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-11), 64-bit]]></complex-attribute>
+        <category _I_D="b90b4c95-7fa0-4a5c-b648-d096ab1a1347" name="Schemas" order-num="0" objects-loading="extended" subcategories-loading="none" child-type="schema">
+            <schema _I_D="35568cf4-1ef9-4660-96e9-f65471865155" name="aws_oracle_context" context="aws_oracle_context" subcategories-loading="none" object-loading="extended" schema-owner="uImcwuf4K9dyaxeL">
+                <category _I_D="a287c43d-008e-4043-a469-b075453b9827" name="Tables" order-num="0" objects-loading="none" subcategories-loading="none" child-type="table"/>
+                <category _I_D="5a37c6df-eb04-42fd-82b9-7066590b5256" name="Foreign tables" order-num="1" objects-loading="none" subcategories-loading="none" child-type="foreigntable"/>
+                <category _I_D="a6b439c7-5a88-48ce-879c-9a42ceb449c2" name="Views" order-num="2" objects-loading="none" subcategories-loading="none" child-type="view"/>
+                <category _I_D="ebb6a8ee-c6db-4feb-a0da-6ca38cbeb733" name="Collations" order-num="3" objects-loading="none" subcategories-loading="none" child-type="collation"/>
+                <category _I_D="11fe7592-83d1-41d7-8b57-1d090edd322e" name="Operators" order-num="4" objects-loading="none" subcategories-loading="none" child-type="operator"/>
+                <category _I_D="0f76b8f3-c16d-4349-ad4a-28705b137dc6" name="Rules" order-num="5" objects-loading="none" subcategories-loading="none" child-type="rule"/>
+                <category _I_D="d49737b2-aec4-49f2-bc74-87e92e3674fb" name="FTS Configurations" order-num="6" objects-loading="none" subcategories-loading="none" child-type="ftsconfiguration"/>
+                <category _I_D="4dba8022-057f-4bb1-b49e-c662f858c6e8" name="FTS Dictionaries" order-num="7" objects-loading="none" subcategories-loading="none" child-type="ftsdictionary"/>
+                <category _I_D="80951f58-4244-4bf2-b641-77b583dcdf7a" name="Functions" order-num="8" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="ac187867-5265-408b-94ee-06006f12466d" name="Trigger functions" order-num="9" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="fb6b362c-2175-40de-9171-a3dbcac56238" name="Procedures" order-num="10" objects-loading="none" subcategories-loading="none" child-type="procedure"/>
+                <category _I_D="fc4aadfd-b951-4432-bb73-ca0db164b9d2" name="Sequences" order-num="11" objects-loading="none" subcategories-loading="none" child-type="sequence"/>
+                <category _I_D="17a435ff-ea32-423f-9fe2-0e88aa4775d3" name="User defined types" order-num="12" objects-loading="none" subcategories-loading="none" child-type="type"/>
+                <category _I_D="7cd860dc-31aa-473e-8ae6-90659a72b235" name="Domains" order-num="13" objects-loading="none" subcategories-loading="none" child-type="domain"/>
+                <category _I_D="d4483284-88ba-448e-a7cb-c13fdad59859" name="Materialized Views" order-num="14" objects-loading="none" subcategories-loading="none" child-type="materialized-view"/>
+                <category _I_D="630012d0-e409-4048-b2b6-2157a748f92c" name="Aggregates" order-num="15" objects-loading="none" subcategories-loading="none" child-type="aggregate"/>
+            </schema>
+            <schema _I_D="65f68b92-20f1-4f2b-9564-71ac4f52ee3c" name="aws_oracle_data" context="aws_oracle_data" subcategories-loading="none" object-loading="extended" schema-owner="uImcwuf4K9dyaxeL">
+                <category _I_D="5e363222-7043-4748-95b2-02e93d1e4647" name="Tables" order-num="0" objects-loading="none" subcategories-loading="none" child-type="table"/>
+                <category _I_D="0900e3c1-f024-495d-9b47-3f72ee2f9936" name="Foreign tables" order-num="1" objects-loading="none" subcategories-loading="none" child-type="foreigntable"/>
+                <category _I_D="a2e4e5ee-3985-4cd1-9697-62f4cf2e6984" name="Views" order-num="2" objects-loading="none" subcategories-loading="none" child-type="view"/>
+                <category _I_D="c5670593-76e9-4122-8291-5944548bf720" name="Collations" order-num="3" objects-loading="none" subcategories-loading="none" child-type="collation"/>
+                <category _I_D="7be098ba-261e-42da-8374-a069a30138d7" name="Operators" order-num="4" objects-loading="none" subcategories-loading="none" child-type="operator"/>
+                <category _I_D="3dab93bd-fdc7-4be3-a152-902f55b69bea" name="Rules" order-num="5" objects-loading="none" subcategories-loading="none" child-type="rule"/>
+                <category _I_D="bd3f9f85-7259-4957-8edc-1527763d6b9a" name="FTS Configurations" order-num="6" objects-loading="none" subcategories-loading="none" child-type="ftsconfiguration"/>
+                <category _I_D="0d1e5173-3a28-49ae-b733-5bcd15bf8689" name="FTS Dictionaries" order-num="7" objects-loading="none" subcategories-loading="none" child-type="ftsdictionary"/>
+                <category _I_D="b6d7381e-87df-4686-afde-07044b018818" name="Functions" order-num="8" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="c6677f10-02ba-462b-b977-8fc181731063" name="Trigger functions" order-num="9" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="e6dcfb98-62a7-4b2f-baba-15d185923aaf" name="Procedures" order-num="10" objects-loading="none" subcategories-loading="none" child-type="procedure"/>
+                <category _I_D="9b714955-8833-419c-a9f7-a5af7c38c259" name="Sequences" order-num="11" objects-loading="none" subcategories-loading="none" child-type="sequence"/>
+                <category _I_D="7eb319f8-24bd-40ee-8012-7e717f9b2204" name="User defined types" order-num="12" objects-loading="none" subcategories-loading="none" child-type="type"/>
+                <category _I_D="d3e5231a-e849-4c8d-942f-200a258437c0" name="Domains" order-num="13" objects-loading="none" subcategories-loading="none" child-type="domain"/>
+                <category _I_D="0d6d1587-f5d0-4673-882d-4c3554850fe7" name="Materialized Views" order-num="14" objects-loading="none" subcategories-loading="none" child-type="materialized-view"/>
+                <category _I_D="4e35d07c-f66d-4d0b-9942-e40f5e80ca09" name="Aggregates" order-num="15" objects-loading="none" subcategories-loading="none" child-type="aggregate"/>
+            </schema>
+            <schema _I_D="9987f9fd-bdbe-4ad7-ab41-5a62c18efee7" name="aws_oracle_ext" context="aws_oracle_ext" subcategories-loading="none" object-loading="extended" schema-owner="uImcwuf4K9dyaxeL">
+                <category _I_D="b1e04bea-0fcf-4eab-9d02-b6def9b32f5f" name="Tables" order-num="0" objects-loading="none" subcategories-loading="none" child-type="table"/>
+                <category _I_D="01f4f6a3-4355-4568-8546-89ebdbdf55bb" name="Foreign tables" order-num="1" objects-loading="none" subcategories-loading="none" child-type="foreigntable"/>
+                <category _I_D="1648f020-e206-4d3e-b37e-3951f8387ac4" name="Views" order-num="2" objects-loading="none" subcategories-loading="none" child-type="view"/>
+                <category _I_D="3e155604-fe3f-4bad-ae59-2613b38e4712" name="Collations" order-num="3" objects-loading="none" subcategories-loading="none" child-type="collation"/>
+                <category _I_D="697baf5f-af16-47f6-9318-a191cb2e6bec" name="Operators" order-num="4" objects-loading="none" subcategories-loading="none" child-type="operator"/>
+                <category _I_D="c7b0ccff-99b7-49b0-8ed8-2f20ff1ad944" name="Rules" order-num="5" objects-loading="none" subcategories-loading="none" child-type="rule"/>
+                <category _I_D="65dd1cd9-0bce-4e37-b493-e1a6fcdf6cd6" name="FTS Configurations" order-num="6" objects-loading="none" subcategories-loading="none" child-type="ftsconfiguration"/>
+                <category _I_D="3736ee81-6897-4239-bbd3-6d954edf7c09" name="FTS Dictionaries" order-num="7" objects-loading="none" subcategories-loading="none" child-type="ftsdictionary"/>
+                <category _I_D="408cea24-02b9-41c4-8802-9310134b91d2" name="Functions" order-num="8" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="e78d5c38-3ca2-49f5-bddb-4d0cd0b3f822" name="Trigger functions" order-num="9" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="ab8194b5-12db-46b1-b576-b3948a6d2e7c" name="Procedures" order-num="10" objects-loading="none" subcategories-loading="none" child-type="procedure"/>
+                <category _I_D="42e8cad8-628b-4f09-8ef5-313f27aa5958" name="Sequences" order-num="11" objects-loading="none" subcategories-loading="none" child-type="sequence"/>
+                <category _I_D="16f7e0fb-13ad-462c-a9f8-81d9ab08319c" name="User defined types" order-num="12" objects-loading="none" subcategories-loading="none" child-type="type"/>
+                <category _I_D="40dc1a41-b2a2-49e3-85a3-0f87a0f8cb17" name="Domains" order-num="13" objects-loading="none" subcategories-loading="none" child-type="domain"/>
+                <category _I_D="fd50a221-ac19-4b7b-be79-e1b3f24d7cbf" name="Materialized Views" order-num="14" objects-loading="none" subcategories-loading="none" child-type="materialized-view"/>
+                <category _I_D="45e19372-ea01-458e-8a1c-d78d2f60bf94" name="Aggregates" order-num="15" objects-loading="none" subcategories-loading="none" child-type="aggregate"/>
+            </schema>
+            <schema _I_D="ecc02b59-40fc-485b-9fff-bc22a2598ffe" name="aws_postgis" context="aws_postgis" subcategories-loading="none" object-loading="extended" schema-owner="uImcwuf4K9dyaxeL">
+                <category _I_D="e1cc8390-92a6-4eda-bc85-623cb8626a72" name="Tables" order-num="0" objects-loading="none" subcategories-loading="none" child-type="table"/>
+                <category _I_D="d4759770-639f-424f-98bd-cb062c86f63d" name="Foreign tables" order-num="1" objects-loading="none" subcategories-loading="none" child-type="foreigntable"/>
+                <category _I_D="c1f917ff-7eaf-490f-82a4-6de4ff34c565" name="Views" order-num="2" objects-loading="none" subcategories-loading="none" child-type="view"/>
+                <category _I_D="ce41ce78-c2df-48e2-a3e3-900b3c89c4b4" name="Collations" order-num="3" objects-loading="none" subcategories-loading="none" child-type="collation"/>
+                <category _I_D="0deeb090-b618-4295-b4d4-935ff3199ac2" name="Operators" order-num="4" objects-loading="none" subcategories-loading="none" child-type="operator"/>
+                <category _I_D="f63a5120-ff2f-43c3-b34b-11456083c8f2" name="Rules" order-num="5" objects-loading="none" subcategories-loading="none" child-type="rule"/>
+                <category _I_D="1523fbdd-8fbf-4107-938d-1fb336260bf8" name="FTS Configurations" order-num="6" objects-loading="none" subcategories-loading="none" child-type="ftsconfiguration"/>
+                <category _I_D="c60555ad-67c9-41be-a63b-a13413ce7a62" name="FTS Dictionaries" order-num="7" objects-loading="none" subcategories-loading="none" child-type="ftsdictionary"/>
+                <category _I_D="86258bf2-9e46-4e9a-97e6-55bffff18d66" name="Functions" order-num="8" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="dc1f327e-eca2-49cb-b566-aa917e1b224a" name="Trigger functions" order-num="9" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="8862752b-306a-4e68-a618-62b21b580248" name="Procedures" order-num="10" objects-loading="none" subcategories-loading="none" child-type="procedure"/>
+                <category _I_D="6ea26a7c-82b0-43e3-baef-725392c4114e" name="Sequences" order-num="11" objects-loading="none" subcategories-loading="none" child-type="sequence"/>
+                <category _I_D="d9210428-391b-4d16-9a6e-b64eeb551243" name="User defined types" order-num="12" objects-loading="none" subcategories-loading="none" child-type="type"/>
+                <category _I_D="d2057f49-8517-4bc9-9082-6029c33ea332" name="Domains" order-num="13" objects-loading="none" subcategories-loading="none" child-type="domain"/>
+                <category _I_D="6886505d-dbd1-432e-8a66-209a970c91f1" name="Materialized Views" order-num="14" objects-loading="none" subcategories-loading="none" child-type="materialized-view"/>
+                <category _I_D="65306fb1-cd67-483a-80fd-9f740bc61204" name="Aggregates" order-num="15" objects-loading="none" subcategories-loading="none" child-type="aggregate"/>
+            </schema>
+            <schema _I_D="931de57d-9e55-4eec-9ebb-4e83a7545703" name="camd" context="camd" subcategories-loading="none" object-loading="extended" schema-owner="uImcwuf4K9dyaxeL">
+                <category _I_D="4bd6b9a0-5fdd-41c1-9dbe-eabb2f76f1ed" name="Tables" order-num="0" objects-loading="none" subcategories-loading="none" child-type="table"/>
+                <category _I_D="392af43b-aed3-4290-9a79-84772b166b03" name="Foreign tables" order-num="1" objects-loading="none" subcategories-loading="none" child-type="foreigntable"/>
+                <category _I_D="384bbf55-4bfc-488d-ac2a-6ee35dee3175" name="Views" order-num="2" objects-loading="none" subcategories-loading="none" child-type="view"/>
+                <category _I_D="852f3221-585a-42e3-b991-7e78747f112f" name="Collations" order-num="3" objects-loading="none" subcategories-loading="none" child-type="collation"/>
+                <category _I_D="d144300a-32e8-4d30-ade1-9c3baaaaf955" name="Operators" order-num="4" objects-loading="none" subcategories-loading="none" child-type="operator"/>
+                <category _I_D="75d0e321-cdbc-46d0-bf88-3465aa6fb4a1" name="Rules" order-num="5" objects-loading="none" subcategories-loading="none" child-type="rule"/>
+                <category _I_D="d9987bef-8762-48f2-83b4-076eea823b7c" name="FTS Configurations" order-num="6" objects-loading="none" subcategories-loading="none" child-type="ftsconfiguration"/>
+                <category _I_D="afa665f7-d22d-4707-aab9-c5b66b193a48" name="FTS Dictionaries" order-num="7" objects-loading="none" subcategories-loading="none" child-type="ftsdictionary"/>
+                <category _I_D="59bec1e7-bf46-4401-8fc0-3ce2de1a1252" name="Functions" order-num="8" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="182321f5-b509-46c4-ab07-dbe2696d5b40" name="Trigger functions" order-num="9" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="0c5c1531-3d5b-48e1-b0c1-ee0f1a83bed3" name="Procedures" order-num="10" objects-loading="none" subcategories-loading="none" child-type="procedure"/>
+                <category _I_D="3e9d7c6e-e707-4123-8b52-4866965e1f50" name="Sequences" order-num="11" objects-loading="none" subcategories-loading="none" child-type="sequence"/>
+                <category _I_D="74be9a2d-6f3e-4aa7-889a-9e74a4963c4c" name="User defined types" order-num="12" objects-loading="none" subcategories-loading="none" child-type="type"/>
+                <category _I_D="e092c4ee-4b9d-4d2f-8548-e089fdb9adce" name="Domains" order-num="13" objects-loading="none" subcategories-loading="none" child-type="domain"/>
+                <category _I_D="b5304741-f671-4915-8e10-ffdeb6e21e45" name="Materialized Views" order-num="14" objects-loading="none" subcategories-loading="none" child-type="materialized-view"/>
+                <category _I_D="ebbabe22-c970-4f1c-9d24-66a9acadccc1" name="Aggregates" order-num="15" objects-loading="none" subcategories-loading="none" child-type="aggregate"/>
+            </schema>
+            <schema _I_D="dcd2285c-7636-41a5-a18a-ebecf216d425" name="camdaux" context="camdaux" subcategories-loading="none" object-loading="extended" schema-owner="uImcwuf4K9dyaxeL">
+                <category _I_D="c10a1842-692c-4462-a115-230125bc8435" name="Tables" order-num="0" objects-loading="none" subcategories-loading="none" child-type="table"/>
+                <category _I_D="9d8c9c3e-b9cb-4003-bd56-545189c3f2f5" name="Foreign tables" order-num="1" objects-loading="none" subcategories-loading="none" child-type="foreigntable"/>
+                <category _I_D="62754ab2-dbd9-4c7b-8fea-280d11597829" name="Views" order-num="2" objects-loading="none" subcategories-loading="none" child-type="view"/>
+                <category _I_D="de9e4090-37b6-4c65-a95e-523f3c343522" name="Collations" order-num="3" objects-loading="none" subcategories-loading="none" child-type="collation"/>
+                <category _I_D="12e8a67b-9d60-4dc0-aabd-288637976aac" name="Operators" order-num="4" objects-loading="none" subcategories-loading="none" child-type="operator"/>
+                <category _I_D="6e2a994b-50b9-4916-990f-c87809d57df6" name="Rules" order-num="5" objects-loading="none" subcategories-loading="none" child-type="rule"/>
+                <category _I_D="8f8cbf16-fb72-4179-ad03-9a97e757f9c2" name="FTS Configurations" order-num="6" objects-loading="none" subcategories-loading="none" child-type="ftsconfiguration"/>
+                <category _I_D="646d92f9-d33c-4270-9cd7-6aabaaa4b91a" name="FTS Dictionaries" order-num="7" objects-loading="none" subcategories-loading="none" child-type="ftsdictionary"/>
+                <category _I_D="23094686-2a80-4ada-9ed3-fe874b0b2d61" name="Functions" order-num="8" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="d5b09c63-f16c-44b3-9410-1a313fd3a877" name="Trigger functions" order-num="9" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="94e6c793-f88f-4625-8134-5a64795ccaca" name="Procedures" order-num="10" objects-loading="none" subcategories-loading="none" child-type="procedure"/>
+                <category _I_D="58c10058-6c10-470d-983e-5e7e67e662c5" name="Sequences" order-num="11" objects-loading="none" subcategories-loading="none" child-type="sequence"/>
+                <category _I_D="a456e432-e90f-4618-98c6-21adea35f662" name="User defined types" order-num="12" objects-loading="none" subcategories-loading="none" child-type="type"/>
+                <category _I_D="2ec44c34-c3b2-400e-bf57-aea7b5f779fa" name="Domains" order-num="13" objects-loading="none" subcategories-loading="none" child-type="domain"/>
+                <category _I_D="3c6979b6-aa88-4551-8dcd-c96b5cabca6f" name="Materialized Views" order-num="14" objects-loading="none" subcategories-loading="none" child-type="materialized-view"/>
+                <category _I_D="39cd9479-d935-476f-a410-3173513f71c2" name="Aggregates" order-num="15" objects-loading="none" subcategories-loading="none" child-type="aggregate"/>
+            </schema>
+            <schema _I_D="5c59cba5-0dd2-491b-bd9e-674749b3cfa0" name="camddmw" context="camddmw" subcategories-loading="none" object-loading="extended" schema-owner="uImcwuf4K9dyaxeL">
+                <category _I_D="41623d6f-136c-402d-9896-a9536386cd4a" name="Tables" order-num="0" objects-loading="none" subcategories-loading="none" child-type="table"/>
+                <category _I_D="2701e512-16ca-4393-8437-32c54bc4ac1f" name="Foreign tables" order-num="1" objects-loading="none" subcategories-loading="none" child-type="foreigntable"/>
+                <category _I_D="c6633935-99da-4b1e-879e-3d8a448a9db2" name="Views" order-num="2" objects-loading="none" subcategories-loading="none" child-type="view"/>
+                <category _I_D="cef110fc-2871-4385-98c5-3092d1d3210f" name="Collations" order-num="3" objects-loading="none" subcategories-loading="none" child-type="collation"/>
+                <category _I_D="376c35c9-dfb6-4e6c-9e51-4ffdac9fd196" name="Operators" order-num="4" objects-loading="none" subcategories-loading="none" child-type="operator"/>
+                <category _I_D="f634be54-c171-412d-9d2b-bf16e42c1270" name="Rules" order-num="5" objects-loading="none" subcategories-loading="none" child-type="rule"/>
+                <category _I_D="f39f9b83-4d3c-4fe9-bd0c-fae296515d2a" name="FTS Configurations" order-num="6" objects-loading="none" subcategories-loading="none" child-type="ftsconfiguration"/>
+                <category _I_D="18f97ef6-91c4-43fc-8909-9fd0c8ac29fe" name="FTS Dictionaries" order-num="7" objects-loading="none" subcategories-loading="none" child-type="ftsdictionary"/>
+                <category _I_D="3a1b4a77-2707-4dc1-b453-ab69a21d492c" name="Functions" order-num="8" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="9c0c4093-cebf-4f4a-9132-505d2bcb81f7" name="Trigger functions" order-num="9" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="2742bdae-d8c6-4dfb-8a24-6da8c04ae1ac" name="Procedures" order-num="10" objects-loading="none" subcategories-loading="none" child-type="procedure"/>
+                <category _I_D="7870050c-aafa-41a5-895d-b54eb37d5c11" name="Sequences" order-num="11" objects-loading="none" subcategories-loading="none" child-type="sequence"/>
+                <category _I_D="da1fb123-de86-4742-9113-b029b7000ba8" name="User defined types" order-num="12" objects-loading="none" subcategories-loading="none" child-type="type"/>
+                <category _I_D="3202ba7a-c386-48eb-94cd-613d4c140291" name="Domains" order-num="13" objects-loading="none" subcategories-loading="none" child-type="domain"/>
+                <category _I_D="1f7cd7c1-9d95-46ff-812c-fcc63a209842" name="Materialized Views" order-num="14" objects-loading="none" subcategories-loading="none" child-type="materialized-view"/>
+                <category _I_D="bb209d4f-f2b5-456f-88e1-edb18d983461" name="Aggregates" order-num="15" objects-loading="none" subcategories-loading="none" child-type="aggregate"/>
+            </schema>
+            <schema _I_D="a24c53ec-89e5-4cbe-95ba-362f69a2dc31" name="camddmw_arch" context="camddmw_arch" subcategories-loading="none" object-loading="extended" schema-owner="uImcwuf4K9dyaxeL">
+                <category _I_D="919edd80-b45b-4a7c-971c-fdd7b5ad94c7" name="Tables" order-num="0" objects-loading="none" subcategories-loading="none" child-type="table"/>
+                <category _I_D="afc2fa7c-4c9c-46b9-b20a-97c8131151d4" name="Foreign tables" order-num="1" objects-loading="none" subcategories-loading="none" child-type="foreigntable"/>
+                <category _I_D="45a61b04-c9f9-4fb8-b929-cad42f49e970" name="Views" order-num="2" objects-loading="none" subcategories-loading="none" child-type="view"/>
+                <category _I_D="d2cba8b3-39da-4582-9ff2-f6347709ee43" name="Collations" order-num="3" objects-loading="none" subcategories-loading="none" child-type="collation"/>
+                <category _I_D="0cf5e638-3fa5-4b3a-a5ca-0c98dee42a75" name="Operators" order-num="4" objects-loading="none" subcategories-loading="none" child-type="operator"/>
+                <category _I_D="9bb0e910-282c-4d8a-93ae-1156e002eba1" name="Rules" order-num="5" objects-loading="none" subcategories-loading="none" child-type="rule"/>
+                <category _I_D="e37788f7-b698-449a-af15-2cf54ea315b7" name="FTS Configurations" order-num="6" objects-loading="none" subcategories-loading="none" child-type="ftsconfiguration"/>
+                <category _I_D="162273fe-0426-48e5-b3f0-d38425e73872" name="FTS Dictionaries" order-num="7" objects-loading="none" subcategories-loading="none" child-type="ftsdictionary"/>
+                <category _I_D="0687dc61-1844-4f0d-94df-dd98f400ff59" name="Functions" order-num="8" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="07eab65c-b24b-428c-bb7a-a7fa027127a6" name="Trigger functions" order-num="9" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="08b704fa-3ff8-424e-9fed-f3d2c6d3c76e" name="Procedures" order-num="10" objects-loading="none" subcategories-loading="none" child-type="procedure"/>
+                <category _I_D="f43ca453-f897-47fd-b48a-6624de18e162" name="Sequences" order-num="11" objects-loading="none" subcategories-loading="none" child-type="sequence"/>
+                <category _I_D="2546fcba-8de5-4879-9afb-8f0b869b7c0d" name="User defined types" order-num="12" objects-loading="none" subcategories-loading="none" child-type="type"/>
+                <category _I_D="230f0867-df95-4abb-887d-aac6711db06c" name="Domains" order-num="13" objects-loading="none" subcategories-loading="none" child-type="domain"/>
+                <category _I_D="843b4ca7-f8f2-4b7a-b0fd-8244fd8ae364" name="Materialized Views" order-num="14" objects-loading="none" subcategories-loading="none" child-type="materialized-view"/>
+                <category _I_D="05a20f55-2a3e-4f69-a531-3f08b2afdf88" name="Aggregates" order-num="15" objects-loading="none" subcategories-loading="none" child-type="aggregate"/>
+            </schema>
+            <schema _I_D="59d1fdf0-9ed2-4fbf-8534-1a33626d5be2" name="camdecmps" context="camdecmps" subcategories-loading="none" object-loading="extended" schema-owner="uImcwuf4K9dyaxeL">
+                <category _I_D="31fda45d-14a8-41c3-807f-41e9a718ea5a" name="Tables" order-num="0" objects-loading="none" subcategories-loading="none" child-type="table"/>
+                <category _I_D="b06548b6-32dc-4a2b-8cb8-d8e83ec09fdf" name="Foreign tables" order-num="1" objects-loading="none" subcategories-loading="none" child-type="foreigntable"/>
+                <category _I_D="a8c7bf67-30be-4262-aa78-63ccb27deff7" name="Views" order-num="2" objects-loading="none" subcategories-loading="none" child-type="view"/>
+                <category _I_D="d3d81594-f597-4691-9963-be3597a284d2" name="Collations" order-num="3" objects-loading="none" subcategories-loading="none" child-type="collation"/>
+                <category _I_D="dad0c9a6-d061-48a0-9724-11593692531c" name="Operators" order-num="4" objects-loading="none" subcategories-loading="none" child-type="operator"/>
+                <category _I_D="ef11f052-dbfe-4589-9994-3a02b4c13e01" name="Rules" order-num="5" objects-loading="none" subcategories-loading="none" child-type="rule"/>
+                <category _I_D="e1c92067-8de4-4674-a919-6e0c965459c6" name="FTS Configurations" order-num="6" objects-loading="none" subcategories-loading="none" child-type="ftsconfiguration"/>
+                <category _I_D="1d6677d3-5b57-45c7-b0fe-67a1d4dabc82" name="FTS Dictionaries" order-num="7" objects-loading="none" subcategories-loading="none" child-type="ftsdictionary"/>
+                <category _I_D="914a65c1-cc7a-4f94-9137-b29d7ed6fc91" name="Functions" order-num="8" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="e6ad90c7-6465-46fb-9e95-638f379bc153" name="Trigger functions" order-num="9" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="d553e236-86d7-41cf-85c4-cc7640cc7387" name="Procedures" order-num="10" objects-loading="none" subcategories-loading="none" child-type="procedure"/>
+                <category _I_D="6d9c2b3f-31ea-4978-80fe-d52949ff5a1f" name="Sequences" order-num="11" objects-loading="none" subcategories-loading="none" child-type="sequence"/>
+                <category _I_D="47893d4d-1c99-4f44-ad3b-36625e019680" name="User defined types" order-num="12" objects-loading="none" subcategories-loading="none" child-type="type"/>
+                <category _I_D="f7356778-a2dd-4fbd-8b2d-fcef7fca6aeb" name="Domains" order-num="13" objects-loading="none" subcategories-loading="none" child-type="domain"/>
+                <category _I_D="d81d1001-7d07-4f03-b08e-1540143f6c4a" name="Materialized Views" order-num="14" objects-loading="none" subcategories-loading="none" child-type="materialized-view"/>
+                <category _I_D="d54b36af-93bd-490b-93bf-5a51e2ec2fff" name="Aggregates" order-num="15" objects-loading="none" subcategories-loading="none" child-type="aggregate"/>
+            </schema>
+            <schema _I_D="7754bb30-c3fe-49e0-bd92-b92df5d58e38" name="camdecmpsaux" context="camdecmpsaux" subcategories-loading="none" object-loading="extended" schema-owner="uImcwuf4K9dyaxeL">
+                <category _I_D="50d7fcda-c683-49bd-ab21-76a51545c1b0" name="Tables" order-num="0" objects-loading="none" subcategories-loading="none" child-type="table"/>
+                <category _I_D="949e123a-3862-4711-8067-9e9236fe843f" name="Foreign tables" order-num="1" objects-loading="none" subcategories-loading="none" child-type="foreigntable"/>
+                <category _I_D="ca8b316c-faaf-4c8d-acae-ea82cc0798cf" name="Views" order-num="2" objects-loading="none" subcategories-loading="none" child-type="view"/>
+                <category _I_D="d4a9604c-4ded-4149-bde9-3a2f90dbd76b" name="Collations" order-num="3" objects-loading="none" subcategories-loading="none" child-type="collation"/>
+                <category _I_D="10b42ae7-8dd5-4b39-aa79-3db496c3a2d4" name="Operators" order-num="4" objects-loading="none" subcategories-loading="none" child-type="operator"/>
+                <category _I_D="e2ec0915-62f3-4986-9748-f2471d52a57c" name="Rules" order-num="5" objects-loading="none" subcategories-loading="none" child-type="rule"/>
+                <category _I_D="56731552-d6ee-47c3-a89a-9b3bf0a4c8df" name="FTS Configurations" order-num="6" objects-loading="none" subcategories-loading="none" child-type="ftsconfiguration"/>
+                <category _I_D="78734fbc-67c1-4c90-89e5-05e66663092b" name="FTS Dictionaries" order-num="7" objects-loading="none" subcategories-loading="none" child-type="ftsdictionary"/>
+                <category _I_D="ad4294ed-aee6-4cfd-b6c9-b02a374f23e8" name="Functions" order-num="8" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="755a48d5-d7ae-48e0-87aa-9fc9decca71d" name="Trigger functions" order-num="9" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="81896284-a901-4b11-bdb9-59e2fe1d1ba9" name="Procedures" order-num="10" objects-loading="none" subcategories-loading="none" child-type="procedure"/>
+                <category _I_D="63f9b1d5-cf50-46bb-8218-2e1a26c4a87a" name="Sequences" order-num="11" objects-loading="none" subcategories-loading="none" child-type="sequence"/>
+                <category _I_D="5baff9db-09e6-47b3-b692-454d5ecd9aa0" name="User defined types" order-num="12" objects-loading="none" subcategories-loading="none" child-type="type"/>
+                <category _I_D="77487b24-ad67-4cae-8ead-a8b142e506da" name="Domains" order-num="13" objects-loading="none" subcategories-loading="none" child-type="domain"/>
+                <category _I_D="64dbae84-3bcc-4bae-a114-c56a68eb3cd1" name="Materialized Views" order-num="14" objects-loading="none" subcategories-loading="none" child-type="materialized-view"/>
+                <category _I_D="f6351670-cc18-4dc3-a124-d71fe5ccfab8" name="Aggregates" order-num="15" objects-loading="none" subcategories-loading="none" child-type="aggregate"/>
+            </schema>
+            <schema _I_D="83bae778-1e7d-48c6-b78a-48840535609d" name="camdecmpsmd" context="camdecmpsmd" subcategories-loading="none" object-loading="extended" schema-owner="uImcwuf4K9dyaxeL">
+                <category _I_D="ed394ecc-96f0-4d22-bb2d-9b46eb4a8fee" name="Tables" order-num="0" objects-loading="none" subcategories-loading="none" child-type="table"/>
+                <category _I_D="0c155a2e-ebb0-445b-9085-1bf368d82d09" name="Foreign tables" order-num="1" objects-loading="none" subcategories-loading="none" child-type="foreigntable"/>
+                <category _I_D="86e0d0fd-522d-426a-8349-c7a4a659a634" name="Views" order-num="2" objects-loading="none" subcategories-loading="none" child-type="view"/>
+                <category _I_D="ae524c53-ebed-4861-9f08-1d035a58791c" name="Collations" order-num="3" objects-loading="none" subcategories-loading="none" child-type="collation"/>
+                <category _I_D="f818d93d-6f8f-4a77-bea6-1f7cb5dc6000" name="Operators" order-num="4" objects-loading="none" subcategories-loading="none" child-type="operator"/>
+                <category _I_D="e04097e5-de2e-417f-9d41-1a976fa4f61d" name="Rules" order-num="5" objects-loading="none" subcategories-loading="none" child-type="rule"/>
+                <category _I_D="855a51bd-1f72-4967-9739-772169766aa5" name="FTS Configurations" order-num="6" objects-loading="none" subcategories-loading="none" child-type="ftsconfiguration"/>
+                <category _I_D="da7aa74f-6270-4734-9022-75d7e5446c3f" name="FTS Dictionaries" order-num="7" objects-loading="none" subcategories-loading="none" child-type="ftsdictionary"/>
+                <category _I_D="863fbbfc-be88-4858-9fec-ee78251b2c18" name="Functions" order-num="8" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="8f5a5d8f-84a9-4838-987e-17a422fc7232" name="Trigger functions" order-num="9" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="42271437-2a11-483c-8a91-6c61b93979bb" name="Procedures" order-num="10" objects-loading="none" subcategories-loading="none" child-type="procedure"/>
+                <category _I_D="190a7ba6-8dbf-4abd-a14d-3d9207d39305" name="Sequences" order-num="11" objects-loading="none" subcategories-loading="none" child-type="sequence"/>
+                <category _I_D="d23cc094-45ba-407c-a7cb-69383ef20a52" name="User defined types" order-num="12" objects-loading="none" subcategories-loading="none" child-type="type"/>
+                <category _I_D="dc351c54-b359-4173-a0ca-2a34eaf23b55" name="Domains" order-num="13" objects-loading="none" subcategories-loading="none" child-type="domain"/>
+                <category _I_D="870a4855-e35b-432d-ad71-3d5101fc6267" name="Materialized Views" order-num="14" objects-loading="none" subcategories-loading="none" child-type="materialized-view"/>
+                <category _I_D="8cb2e06c-8991-4e4e-882a-67cd376d1978" name="Aggregates" order-num="15" objects-loading="none" subcategories-loading="none" child-type="aggregate"/>
+            </schema>
+            <schema _I_D="b7cd3682-2efa-461d-9cd4-26713976c80d" name="camdecmpswks" context="camdecmpswks" subcategories-loading="none" object-loading="extended" schema-owner="uImcwuf4K9dyaxeL">
+                <category _I_D="4f1752a2-e126-4fb2-8e8f-57568ed76131" name="Tables" order-num="0" objects-loading="none" subcategories-loading="none" child-type="table"/>
+                <category _I_D="74c929cb-9d53-4ff5-816b-098259a39d6a" name="Foreign tables" order-num="1" objects-loading="none" subcategories-loading="none" child-type="foreigntable"/>
+                <category _I_D="034c0c8d-a84b-462e-9ea1-8a49633dfe55" name="Views" order-num="2" objects-loading="none" subcategories-loading="none" child-type="view"/>
+                <category _I_D="5fca3212-a6e4-4e8e-b4a8-485a3ea5ed2e" name="Collations" order-num="3" objects-loading="none" subcategories-loading="none" child-type="collation"/>
+                <category _I_D="389b191e-5a17-4a25-93a5-199095eb04ee" name="Operators" order-num="4" objects-loading="none" subcategories-loading="none" child-type="operator"/>
+                <category _I_D="0f46fc3e-3a4f-42b6-9377-6e039957563c" name="Rules" order-num="5" objects-loading="none" subcategories-loading="none" child-type="rule"/>
+                <category _I_D="75a13638-33e6-4802-9483-876ba1ad8d55" name="FTS Configurations" order-num="6" objects-loading="none" subcategories-loading="none" child-type="ftsconfiguration"/>
+                <category _I_D="fbe1496f-5e85-4c93-b1bf-6248656d4694" name="FTS Dictionaries" order-num="7" objects-loading="none" subcategories-loading="none" child-type="ftsdictionary"/>
+                <category _I_D="e8f5fa7a-9744-4e09-82fa-8379d0e0d579" name="Functions" order-num="8" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="8d8fed7e-3576-47d5-94bd-2e258eb3e304" name="Trigger functions" order-num="9" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="eafc50a3-dbeb-4375-8adb-16149444f59d" name="Procedures" order-num="10" objects-loading="none" subcategories-loading="none" child-type="procedure"/>
+                <category _I_D="1a35042c-0aca-4f6a-a8ea-083f204e7878" name="Sequences" order-num="11" objects-loading="none" subcategories-loading="none" child-type="sequence"/>
+                <category _I_D="49e3d91d-c8b2-4de6-b193-f19d9f8ba3da" name="User defined types" order-num="12" objects-loading="none" subcategories-loading="none" child-type="type"/>
+                <category _I_D="d99ba40a-d7af-4b53-947d-1953f6748853" name="Domains" order-num="13" objects-loading="none" subcategories-loading="none" child-type="domain"/>
+                <category _I_D="03530f6a-2969-4d64-8dff-7a10963c289a" name="Materialized Views" order-num="14" objects-loading="none" subcategories-loading="none" child-type="materialized-view"/>
+                <category _I_D="81cbe001-29a1-4d34-ad83-41418045e740" name="Aggregates" order-num="15" objects-loading="none" subcategories-loading="none" child-type="aggregate"/>
+            </schema>
+            <schema _I_D="64edfec1-549a-4290-9bf6-69831351a84b" name="camdmd" context="camdmd" subcategories-loading="none" object-loading="extended" schema-owner="uImcwuf4K9dyaxeL">
+                <category _I_D="5d393bb2-4f3a-4653-a078-6630f489463e" name="Tables" order-num="0" objects-loading="none" subcategories-loading="none" child-type="table"/>
+                <category _I_D="99fd8d66-2b53-4c42-b6c4-1d04c603f485" name="Foreign tables" order-num="1" objects-loading="none" subcategories-loading="none" child-type="foreigntable"/>
+                <category _I_D="97938865-03e5-436a-b396-9f401185751e" name="Views" order-num="2" objects-loading="none" subcategories-loading="none" child-type="view"/>
+                <category _I_D="bfeec589-d6e3-44f2-b094-9b52f3fcb178" name="Collations" order-num="3" objects-loading="none" subcategories-loading="none" child-type="collation"/>
+                <category _I_D="fb741729-f0ef-48d8-93b6-c91644425ea8" name="Operators" order-num="4" objects-loading="none" subcategories-loading="none" child-type="operator"/>
+                <category _I_D="10ce8aae-4eb8-43bb-9d9c-34d994e69bd2" name="Rules" order-num="5" objects-loading="none" subcategories-loading="none" child-type="rule"/>
+                <category _I_D="d45bfa60-4c1b-4f7b-b97f-152260ec78aa" name="FTS Configurations" order-num="6" objects-loading="none" subcategories-loading="none" child-type="ftsconfiguration"/>
+                <category _I_D="16fb7a32-15de-4184-8005-6bd0d3a08239" name="FTS Dictionaries" order-num="7" objects-loading="none" subcategories-loading="none" child-type="ftsdictionary"/>
+                <category _I_D="97e26c53-9a71-4e8f-b208-0d062d2958f5" name="Functions" order-num="8" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="bd244f09-13d8-441c-b5e0-ae1d18bea024" name="Trigger functions" order-num="9" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="d048c30a-2408-4611-9eb0-37b749340601" name="Procedures" order-num="10" objects-loading="none" subcategories-loading="none" child-type="procedure"/>
+                <category _I_D="e6f62fef-641b-438e-b0c7-c593817925e5" name="Sequences" order-num="11" objects-loading="none" subcategories-loading="none" child-type="sequence"/>
+                <category _I_D="121ba819-2a50-40ad-8e4b-0803b6d8e8e0" name="User defined types" order-num="12" objects-loading="none" subcategories-loading="none" child-type="type"/>
+                <category _I_D="ff19be86-276d-478d-b38c-3b76e714d071" name="Domains" order-num="13" objects-loading="none" subcategories-loading="none" child-type="domain"/>
+                <category _I_D="299e1a5f-7cac-4187-bda5-d56a731a71be" name="Materialized Views" order-num="14" objects-loading="none" subcategories-loading="none" child-type="materialized-view"/>
+                <category _I_D="6fdea5f7-284f-4dbf-9e62-98c247e9a38c" name="Aggregates" order-num="15" objects-loading="none" subcategories-loading="none" child-type="aggregate"/>
+            </schema>
+            <schema _I_D="1dcf3820-00e9-4408-9437-a02e6825bb44" name="public" context="public" subcategories-loading="none" object-loading="extended" schema-owner="uImcwuf4K9dyaxeL">
+                <category _I_D="abd172cb-45ef-4618-ab61-9c97f0650f3c" name="Tables" order-num="0" objects-loading="none" subcategories-loading="none" child-type="table"/>
+                <category _I_D="2455542c-80a8-43f7-a883-32b8c2cb92ec" name="Foreign tables" order-num="1" objects-loading="none" subcategories-loading="none" child-type="foreigntable"/>
+                <category _I_D="be4f4590-26e3-4e10-8d86-7b662fbfd7ec" name="Views" order-num="2" objects-loading="none" subcategories-loading="none" child-type="view"/>
+                <category _I_D="8b3fafa1-3546-4a9e-b92c-5339efb2da48" name="Collations" order-num="3" objects-loading="none" subcategories-loading="none" child-type="collation"/>
+                <category _I_D="477d0ea1-aabc-46a5-8a41-f5c279409679" name="Operators" order-num="4" objects-loading="none" subcategories-loading="none" child-type="operator"/>
+                <category _I_D="c3ffe068-ef16-4ca1-b6c2-9e553796d3d5" name="Rules" order-num="5" objects-loading="none" subcategories-loading="none" child-type="rule"/>
+                <category _I_D="ff6cfe8b-76b0-43c6-aa8f-ffdafe861803" name="FTS Configurations" order-num="6" objects-loading="none" subcategories-loading="none" child-type="ftsconfiguration"/>
+                <category _I_D="d9d0b505-7c2e-458e-88cb-763d1e35c468" name="FTS Dictionaries" order-num="7" objects-loading="none" subcategories-loading="none" child-type="ftsdictionary"/>
+                <category _I_D="3e54d6d7-dfec-445f-add2-0ecd3081b707" name="Functions" order-num="8" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="32b2904b-0b37-453d-8a7f-f07aaab2120d" name="Trigger functions" order-num="9" objects-loading="none" subcategories-loading="none" child-type="function"/>
+                <category _I_D="fb66c8e5-7875-4557-99d6-823464d79453" name="Procedures" order-num="10" objects-loading="none" subcategories-loading="none" child-type="procedure"/>
+                <category _I_D="c0976cc1-8fd5-492a-9a69-128ae4ecbb28" name="Sequences" order-num="11" objects-loading="none" subcategories-loading="none" child-type="sequence"/>
+                <category _I_D="4e89d3e9-e8a6-4e03-a102-23cdfe86d2f7" name="User defined types" order-num="12" objects-loading="none" subcategories-loading="none" child-type="type"/>
+                <category _I_D="db192baa-2854-4a6b-949d-846507fa4855" name="Domains" order-num="13" objects-loading="none" subcategories-loading="none" child-type="domain"/>
+                <category _I_D="74d620f1-0084-491b-9a7e-93e0c8c1880e" name="Materialized Views" order-num="14" objects-loading="none" subcategories-loading="none" child-type="materialized-view"/>
+                <category _I_D="6235ffcb-7b17-4471-b32d-a75944a5c18b" name="Aggregates" order-num="15" objects-loading="none" subcategories-loading="none" child-type="aggregate"/>
+            </schema>
+        </category>
+        <category _I_D="64ac2832-f153-4308-bfb4-3ee033223ee1" name="Foreign Servers" order-num="1" objects-loading="empty" subcategories-loading="full" child-type="foreign-server"/>
+        <category-group _I_D="46019960-2233-4f1d-b37f-192e825ec597" name="Server Level Objects" order-num="2" objects-loading="empty" subcategories-loading="full">
+            <category _I_D="4dc4efbe-e1a8-4f08-866a-dc9f656d89a7" name="Contexts" order-num="0" objects-loading="empty" subcategories-loading="full" child-type="context"/>
+        </category-group>
+        <category _I_D="7f0550bb-c243-4ba3-bfa9-7b207d43ab3b" name="SQL Scripts" script-root="true" disable-autocommit="true" data-format="DD-MON-RR" sql-plus-settings="{&quot;tnsAliases&quot;:[]}"/>
+    </metadata>
+</tree>
