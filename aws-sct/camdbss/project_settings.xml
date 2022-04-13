@@ -27,6 +27,7 @@
     <setting key="compression_format" value="GZIP"/>
     <setting key="convert_number_to_bigint" value="false"/>
     <setting key="convert_number_to_numeric" value="false"/>
+    <setting key="convert_output_as_dynamic" value="false"/>
     <setting key="convert_procedures_to_function" value="false"/>
     <setting key="convert_varchar_routing" value="false"/>
     <setting key="convert_without_statistic_reminder" value="false"/>
@@ -49,7 +50,7 @@
     <setting key="ext_out_file_size" value="10485760"/>
     <setting key="ext_pack_newid" value="NO"/>
     <setting key="ext_pack_spatial" value="YES"/>
-    <setting key="ext_pack_version_replace" value="true"/>
+    <setting key="ext_pack_version_replace" value="false"/>
     <setting key="ext_snowball_out_file_size" value="104857600"/>
     <setting key="ext_source_temp_database_schema" value=""/>
     <setting key="ext_use_partitioning_size" value="100"/>
@@ -57,6 +58,7 @@
     <setting key="extract_lobs" value="true"/>
     <setting key="from_date" value="1900-01-01"/>
     <setting key="generate_row_id" value="false"/>
+    <setting key="generate_table_valued_function" value="false"/>
     <setting key="ignore_disabled_triggers_constraints" value="false"/>
     <setting key="instr_builtin_function_oracle" value="false"/>
     <setting key="instrb_builtin_function_oracle" value="false"/>
@@ -93,12 +95,14 @@
     <setting key="olap_extractor_version" value="VERSION_1"/>
     <setting key="open_datasets_procedures" value="true"/>
     <setting key="package_variables" value="PLV8_GLOBAL_OBJECTS"/>
+    <setting key="partition_number_limit" value="368"/>
     <setting key="project_environment" value=""/>
-    <setting key="project_folder" value="C:\Users\JWHITEHE\AWS Schema Conversion Tool\Projects\EPA CAMD Oracle to AWS Postgres\camdbss"/>
+    <setting key="project_folder" value="C:\Users\JSTIGDON\Projects\easey-db-scripts\aws-sct\camdbss"/>
     <setting key="raise_exception" value="{&quot;isActive&quot;:false,&quot;levels&quot;:[]}"/>
     <setting key="recursion-limit-call-from" value="9"/>
     <setting key="recursion-limit-call-to" value="9"/>
     <setting key="recursion-limit-initialization" value="9"/>
+    <setting key="redshift_tables_number" value="AUTO"/>
     <setting key="resolver_depth_of_call_checks_for_transaction_detection" value="1"/>
     <setting key="round_date_fmt_builtin_function_oracle" value="false"/>
     <setting key="round_number_builtin_function_oracle" value="false"/>
@@ -153,6 +157,8 @@
     <setting key="use_custom_extensions" value="false"/>
     <setting key="use_dblinks_or_transactions" value="YES"/>
     <setting key="use_empty_as_null" value="true"/>
+    <setting key="use_explicit_columns_declaration" value="false"/>
+    <setting key="use_redshift_auto_table_tuning" value="false"/>
     <setting key="user.selection.settings" value="{&quot;userSettingsType&quot;:&quot;ALL_USER&quot;,&quot;checkedUsers&quot;:[],&quot;allUsers&quot;:[]}"/>
     <setting key="wla_days_import_expired" value="30"/>
     <setting key="wla_history_storage" value=""/>
