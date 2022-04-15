@@ -97,7 +97,7 @@
     <setting key="package_variables" value="PLV8_GLOBAL_OBJECTS"/>
     <setting key="partition_number_limit" value="368"/>
     <setting key="project_environment" value=""/>
-    <setting key="project_folder" value="C:\Users\JWHITEHE\projects\easey-db-scripts\aws-sct\camdbss"/>
+    <setting key="project_folder" value="C:\Users\JSTIGDON\Projects\easey-db-scripts\aws-sct\camdbss"/>
     <setting key="raise_exception" value="{&quot;isActive&quot;:false,&quot;levels&quot;:[]}"/>
     <setting key="recursion-limit-call-from" value="9"/>
     <setting key="recursion-limit-call-to" value="9"/>
