@@ -1,0 +1,97 @@
+-- ------------ Write CREATE-TABLE-stage scripts -----------
+
+CREATE TABLE IF NOT EXISTS camdecmps.rata_run(
+    rata_run_id CHARACTER VARYING(45) NOT NULL,
+    rata_sum_id CHARACTER VARYING(45) NOT NULL,
+    gross_unit_load NUMERIC(6,0),
+    run_num NUMERIC(2,0) NOT NULL,
+    cem_value NUMERIC(15,5),
+    rata_ref_value NUMERIC(15,5),
+    calc_rata_ref_value NUMERIC(15,5),
+    run_status_cd CHARACTER VARYING(7),
+    begin_date DATE,
+    begin_hour NUMERIC(2,0),
+    begin_min NUMERIC(2,0),
+    end_date DATE,
+    end_hour NUMERIC(2,0),
+    end_min NUMERIC(2,0),
+    userid CHARACTER VARYING(8),
+    add_date TIMESTAMP WITHOUT TIME ZONE,
+    update_date TIMESTAMP WITHOUT TIME ZONE
+)
+        WITH (
+        OIDS=FALSE
+        );
+COMMENT ON TABLE camdecmps.rata_run
+     IS 'Relative Accuracy Test Audit (RATA) and bias test data for one RATA run.  Record Type 610.';
+COMMENT ON COLUMN camdecmps.rata_run.rata_run_id
+     IS 'Unique identifier of a RATA run record. ';
+COMMENT ON COLUMN camdecmps.rata_run.rata_sum_id
+     IS 'Unique identifier of a RATA summary record. ';
+COMMENT ON COLUMN camdecmps.rata_run.gross_unit_load
+     IS 'Gross unit load or average velocity at operating level. ';
+COMMENT ON COLUMN camdecmps.rata_run.run_num
+     IS 'Run number. ';
+COMMENT ON COLUMN camdecmps.rata_run.cem_value
+     IS 'Value from CEM system being tested. ';
+COMMENT ON COLUMN camdecmps.rata_run.rata_ref_value
+     IS 'Value from reference method, adjusted as necessary for moisture and/or calibration bias. ';
+COMMENT ON COLUMN camdecmps.rata_run.calc_rata_ref_value
+     IS 'Value from reference method, adjusted as necessary for moisture and/or calibration bias. ';
+COMMENT ON COLUMN camdecmps.rata_run.run_status_cd
+     IS 'Code used to identify run status. ';
+COMMENT ON COLUMN camdecmps.rata_run.begin_date
+     IS 'Date in which information became effective or activity started. ';
+COMMENT ON COLUMN camdecmps.rata_run.begin_hour
+     IS 'Hour in which information became effective or activity started. ';
+COMMENT ON COLUMN camdecmps.rata_run.begin_min
+     IS 'Minute in which the RATA run began. ';
+COMMENT ON COLUMN camdecmps.rata_run.end_date
+     IS 'Last date in which information was effective or date in which activity ended. ';
+COMMENT ON COLUMN camdecmps.rata_run.end_hour
+     IS 'Last hour in which information was effective or hour in which activity ended. ';
+COMMENT ON COLUMN camdecmps.rata_run.end_min
+     IS 'Last minute in which information was effective or minute in which activity ended. ';
+COMMENT ON COLUMN camdecmps.rata_run.userid
+     IS 'User account or source of data that added or updated record. ';
+COMMENT ON COLUMN camdecmps.rata_run.add_date
+     IS 'Date and time in which record was added. ';
+COMMENT ON COLUMN camdecmps.rata_run.update_date
+     IS 'Date and time in which record was last updated. ';
+
+
+
+-- ------------ Write CREATE-INDEX-stage scripts -----------
+
+CREATE INDEX idx_rata_run_run_status
+ON camdecmps.rata_run
+USING BTREE (run_status_cd ASC);
+
+
+
+CREATE INDEX rata_run_idx001
+ON camdecmps.rata_run
+USING BTREE (rata_sum_id ASC);
+
+
+
+-- ------------ Write CREATE-CONSTRAINT-stage scripts -----------
+
+ALTER TABLE camdecmps.rata_run
+ADD CONSTRAINT pk_rata_run PRIMARY KEY (rata_run_id);
+
+
+
+-- ------------ Write CREATE-FOREIGN-KEY-CONSTRAINT-stage scripts -----------
+
+ALTER TABLE camdecmps.rata_run
+ADD CONSTRAINT fk_rata_summary_rata_run FOREIGN KEY (rata_sum_id) 
+REFERENCES camdecmps.rata_summary (rata_sum_id)
+ON DELETE NO ACTION;
+
+
+
+ALTER TABLE camdecmps.rata_run
+ADD CONSTRAINT fk_run_status_co_rata_run FOREIGN KEY (run_status_cd) 
+REFERENCES camdecmpsmd.run_status_code (run_status_cd)
+ON DELETE NO ACTION;
