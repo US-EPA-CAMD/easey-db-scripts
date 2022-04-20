@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpsaux.check_rule_type;
 
-CREATE TABLE camdecmpsaux.check_rule_type
+CREATE TABLE IF NOT EXISTS camdecmpsaux.check_rule_type
 (
     check_rule_type_cd character varying NOT NULL,
     check_rule_type_description character varying NOT NULL,

@@ -1,4 +1,8 @@
-CREATE TABLE camd.unit_program
+-- Table: camd.unit_program
+
+-- DROP TABLE camd.unit_program;
+
+CREATE TABLE IF NOT EXISTS camd.unit_program
 (
     up_id numeric(38,0) NOT NULL,
     unit_id numeric(38,0) NOT NULL,
@@ -20,9 +24,9 @@ CREATE TABLE camd.unit_program
     nonstandard_comment character varying(1000) COLLATE pg_catalog."default",
     so2_affect_year numeric(4,0),
     so2_phase character varying(1) COLLATE pg_catalog."default",
-    userid character varying(8) COLLATE pg_catalog."default" NOT NULL,
-    add_date date NOT NULL,
-    update_date date,
+    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    add_date timestamp without time zone NOT NULL,
+    update_date timestamp without time zone,
     CONSTRAINT pk_unit_program PRIMARY KEY (up_id),
     CONSTRAINT uq_unit_program UNIQUE (unit_id, prg_id),
     CONSTRAINT fk_unit_program_applic FOREIGN KEY (app_status_cd)
@@ -118,59 +122,59 @@ COMMENT ON COLUMN camd.unit_program.add_date
 
 COMMENT ON COLUMN camd.unit_program.update_date
     IS 'Date of the last record update.';
+
 -- Index: idx_unit_program_applic
 
 -- DROP INDEX camd.idx_unit_program_applic;
 
 CREATE INDEX idx_unit_program_applic
     ON camd.unit_program USING btree
-    (app_status_cd COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (app_status_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+
 -- Index: idx_unit_program_class
 
 -- DROP INDEX camd.idx_unit_program_class;
 
 CREATE INDEX idx_unit_program_class
     ON camd.unit_program USING btree
-    (prg_cd COLLATE pg_catalog."default" ASC NULLS LAST, class_cd COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (prg_cd COLLATE pg_catalog."default" ASC NULLS LAST, class_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+
 -- Index: idx_unit_program_id
 
 -- DROP INDEX camd.idx_unit_program_id;
 
 CREATE INDEX idx_unit_program_id
     ON camd.unit_program USING btree
-    (prg_id ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (prg_id ASC NULLS LAST);
+
 -- Index: idx_unit_program_nonstandard
 
 -- DROP INDEX camd.idx_unit_program_nonstandard;
 
 CREATE INDEX idx_unit_program_nonstandard
     ON camd.unit_program USING btree
-    (nonstandard_cd COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (nonstandard_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+
 -- Index: idx_unit_program_unit
 
 -- DROP INDEX camd.idx_unit_program_unit;
 
 CREATE INDEX idx_unit_program_unit
     ON camd.unit_program USING btree
-    (unit_id ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (unit_id ASC NULLS LAST);
+
 -- Index: idx_unit_program_unit_class
 
 -- DROP INDEX camd.idx_unit_program_unit_class;
 
 CREATE INDEX idx_unit_program_unit_class
     ON camd.unit_program USING btree
-    (unit_id ASC NULLS LAST, class_cd COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (unit_id ASC NULLS LAST, class_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+
 -- Index: idx_unit_program_unit_program
 
 -- DROP INDEX camd.idx_unit_program_unit_program;
 
 CREATE INDEX idx_unit_program_unit_program
     ON camd.unit_program USING btree
-    (unit_id ASC NULLS LAST, prg_cd COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (unit_id ASC NULLS LAST, prg_cd COLLATE pg_catalog."default" ASC NULLS LAST);

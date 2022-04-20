@@ -1,13 +1,18 @@
-CREATE TABLE camddmw.owner_display_fact
+-- Table: camddmw.owner_display_fact
+
+-- DROP TABLE camddmw.owner_display_fact;
+
+CREATE TABLE IF NOT EXISTS camddmw.owner_display_fact
 (
     unit_id numeric(12,0) NOT NULL,
     op_year numeric(4,0) NOT NULL,
     own_display character varying(1200) COLLATE pg_catalog."default",
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(8) COLLATE pg_catalog."default",
-    add_date date,
+    userid character varying(25) COLLATE pg_catalog."default",
+    add_date timestamp without time zone,
     opr_display character varying(1200) COLLATE pg_catalog."default",
-    CONSTRAINT owner_display_fact_pk PRIMARY KEY (unit_id, op_year)
+    last_update_date timestamp without time zone,
+    CONSTRAINT pk_owner_display_fact PRIMARY KEY (unit_id, op_year)
 );
 
 COMMENT ON TABLE camddmw.owner_display_fact
@@ -33,19 +38,6 @@ COMMENT ON COLUMN camddmw.owner_display_fact.add_date
 
 COMMENT ON COLUMN camddmw.owner_display_fact.opr_display
     IS 'Formatted list of operators';
--- Index: own_disp_fact_idx01
 
--- DROP INDEX camddmw.own_disp_fact_idx01;
-
-CREATE INDEX own_disp_fact_idx01
-    ON camddmw.owner_display_fact USING btree
-    (unit_id ASC NULLS LAST, own_display COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: own_disp_fact_idx02
-
--- DROP INDEX camddmw.own_disp_fact_idx02;
-
-CREATE INDEX own_disp_fact_idx02
-    ON camddmw.owner_display_fact USING btree
-    (unit_id ASC NULLS LAST)
-    TABLESPACE pg_default;
+COMMENT ON COLUMN camddmw.owner_display_fact.last_update_date
+    IS 'Latest add or update date on source records that are used to populate this record';

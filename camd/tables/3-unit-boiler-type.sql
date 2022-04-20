@@ -1,13 +1,17 @@
-CREATE TABLE camd.unit_boiler_type
+-- Table: camd.unit_boiler_type
+
+-- DROP TABLE camd.unit_boiler_type;
+
+CREATE TABLE IF NOT EXISTS camd.unit_boiler_type
 (
     unit_boiler_type_id numeric(38,0) NOT NULL,
     unit_id numeric(38,0) NOT NULL,
     unit_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     begin_date date NOT NULL,
     end_date date,
-    userid character varying(8) COLLATE pg_catalog."default" NOT NULL,
-    add_date date NOT NULL,
-    update_date date,
+    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    add_date timestamp without time zone NOT NULL,
+    update_date timestamp without time zone,
     CONSTRAINT pk_unit_boiler_type PRIMARY KEY (unit_boiler_type_id),
     CONSTRAINT uq_unit_boiler_type UNIQUE (unit_id, unit_type_cd, begin_date),
     CONSTRAINT fk_unit_boiler_type_unit FOREIGN KEY (unit_id)
@@ -46,11 +50,11 @@ COMMENT ON COLUMN camd.unit_boiler_type.add_date
 
 COMMENT ON COLUMN camd.unit_boiler_type.update_date
     IS 'Date of the last record update.';
+
 -- Index: idx_unit_boiler_type_unit
 
 -- DROP INDEX camd.idx_unit_boiler_type_unit;
 
 CREATE INDEX idx_unit_boiler_type_unit
     ON camd.unit_boiler_type USING btree
-    (unit_id ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (unit_id ASC NULLS LAST);

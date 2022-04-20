@@ -1,13 +1,17 @@
-CREATE TABLE camd.unit_generator
+-- Table: camd.unit_generator
+
+-- DROP TABLE camd.unit_generator;
+
+CREATE TABLE IF NOT EXISTS camd.unit_generator
 (
     unit_gen_id numeric(38,0) NOT NULL,
     unit_id numeric(38,0) NOT NULL,
     gen_id numeric(38,0) NOT NULL,
     begin_date date NOT NULL,
     end_date date,
-    userid character varying(8) COLLATE pg_catalog."default" NOT NULL,
-    add_date date NOT NULL DEFAULT aws_oracle_ext.sysdate(),
-    update_date date,
+    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    add_date timestamp without time zone NOT NULL,
+    update_date timestamp without time zone,
     CONSTRAINT pk_unit_generator PRIMARY KEY (unit_gen_id),
     CONSTRAINT uq_unit_generator UNIQUE (unit_id, gen_id, begin_date),
     CONSTRAINT fk_unit_generator_gen_id FOREIGN KEY (gen_id)

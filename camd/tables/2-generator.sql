@@ -1,4 +1,8 @@
-CREATE TABLE camd.generator
+-- Table: camd.generator
+
+-- DROP TABLE camd.generator;
+
+CREATE TABLE IF NOT EXISTS camd.generator
 (
     gen_id numeric(38,0) NOT NULL,
     fac_id numeric(38,0) NOT NULL,
@@ -11,9 +15,9 @@ CREATE TABLE camd.generator
     gen_capacity_factor numeric(5,3),
     online_year numeric(4,0),
     eia_year numeric(4,0),
-    userid character varying(8) COLLATE pg_catalog."default" NOT NULL,
-    add_date date NOT NULL DEFAULT aws_oracle_ext.sysdate(),
-    update_date date,
+    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    add_date timestamp without time zone NOT NULL,
+    update_date timestamp without time zone,
     CONSTRAINT pk_generator PRIMARY KEY (gen_id),
     CONSTRAINT uq_generator UNIQUE (fac_id, genid),
     CONSTRAINT fk_generator_gen_source_cd FOREIGN KEY (gen_source_cd)

@@ -1,0 +1,32 @@
+select 'configuration_type_code' as tablename, count(*) from camdecmpsmd.configuration_type_code union all
+select 'unit_program_exemption' as tablename, count(*) from camdecmpswks.vw_unit_program_exemption union all
+select 'program_parameter' as tablename, count(*) from camdecmpsaux.program_parameter union all
+select 'parameter_group_override_code' as tablename, count(*) from camdecmpsmd.parameter_group_override_code union all
+select 'check_applicability_code' as tablename, count(*) from camdecmpsmd.check_applicability_code union all
+select 'check_catalog' as tablename, count(*) from camdecmpsmd.check_catalog union all
+select 'check_catalog_result' as tablename, count(*) from camdecmpsmd.check_catalog_result union all
+select 'check_catalog_parameter' as tablename, count(*) from camdecmpsmd.check_catalog_parameter union all
+select 'check_catalog_plugin' as tablename, count(*) from camdecmpsmd.check_catalog_plugin union all
+select 'check_data_type_code' as tablename, count(*) from camdecmpsmd.check_data_type_code union all
+select 'check_operator_code' as tablename, count(*) from camdecmpsmd.check_operator_code union all
+select 'check_operator_data_type' as tablename, count(*) from camdecmpsmd.check_operator_data_type union all
+select 'check_parameter_code' as tablename, count(*) from camdecmpsmd.check_parameter_code union all
+select 'check_parameter_type_code' as tablename, count(*) from camdecmpsmd.check_parameter_type_code union all
+select 'check_parameter_usage_code' as tablename, count(*) from camdecmpsmd.check_parameter_usage_code union all
+select 'check_status_code' as tablename, count(*) from camdecmpsmd.check_status_code union all
+select 'check_type_code' as tablename, count(*) from camdecmpsmd.check_type_code union all
+select 'cross_check_catalog' as tablename, count(*) from camdecmpsmd.cross_check_catalog union all
+select 'cross_check_catalog_value' as tablename, count(*) from camdecmpsmd.cross_check_catalog_value union all
+select 'eval_score_code' as tablename, count(*) from camdecmpsmd.eval_score_code union all
+select 'plugin_type_code' as tablename, count(*) from camdecmpsmd.plugin_type_code union all
+select 'response_catalog' as tablename, count(*) from camdecmpsmd.response_catalog union all
+select 'response_type_code' as tablename, count(*) from camdecmpsmd.response_type_code union all
+select 'rule_check' as tablename, count(*) from camdecmpsmd.rule_check union all
+select 'rule_check_condition' as tablename, count(*) from camdecmpsmd.rule_check_condition union all
+select 'system_parameter' as tablename, count(*) from camdecmpsmd.system_parameter union all
+select 'system_parameter_name' as tablename, count(*) from camdecmpsmd.system_parameter_name union all
+--select 'test_scenario_catalog' as tablename, count(*) from camdecmpsmd.test_scenario_catalog union all
+--select 'test_scenario_status_code' as tablename, count(*) from camdecmpsmd.test_scenario_status_code union all
+select 'process_group_code' as tablename, count(*) from camdecmpsmd.process_group_code union all
+select 'parameter_method_to_formula' as tablename, count(*) from camdecmpsmd.parameter_method_to_formula
+

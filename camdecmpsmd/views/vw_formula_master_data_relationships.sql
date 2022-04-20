@@ -13,7 +13,3 @@ CREATE OR REPLACE VIEW camdecmpsmd.vw_formula_master_data_relationships
             vw_cross_check_catalog_value.value2 AS formula_code
            FROM camdecmpsmd.vw_cross_check_catalog_value
           WHERE vw_cross_check_catalog_value.cross_chk_catalog_name::text = 'Parameter Code to Formula Code for Formulas'::text) formula_code ON param_code.parameter_code = formula_code.parameter_code;
-
-ALTER TABLE camdecmpsmd.vw_formula_master_data_relationships
-    OWNER TO "uImcwuf4K9dyaxeL";
-

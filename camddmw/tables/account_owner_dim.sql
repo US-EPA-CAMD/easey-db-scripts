@@ -1,17 +1,22 @@
-CREATE TABLE camddmw.account_owner_dim
+-- Table: camddmw.account_owner_dim
+
+-- DROP TABLE camddmw.account_owner_dim;
+
+CREATE TABLE IF NOT EXISTS camddmw.account_owner_dim
 (
     prg_code character varying(8) COLLATE pg_catalog."default" NOT NULL,
     account_number character varying(12) COLLATE pg_catalog."default" NOT NULL,
     unit_id numeric(12,0),
     own_id numeric(12,0),
     own_type character varying(3) COLLATE pg_catalog."default",
-    own_display character varying(65) COLLATE pg_catalog."default",
+    own_display character varying(100) COLLATE pg_catalog."default",
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(8) COLLATE pg_catalog."default",
-    add_date date,
+    userid character varying(25) COLLATE pg_catalog."default",
+    add_date timestamp without time zone,
     ppl_id numeric(12,0),
     account_owner_id double precision,
     account_owner_unique_id numeric(38,0) NOT NULL,
+    last_update_date timestamp without time zone,
     CONSTRAINT account_owner_dim_pk PRIMARY KEY (account_owner_unique_id)
 );
 
@@ -53,3 +58,6 @@ COMMENT ON COLUMN camddmw.account_owner_dim.account_owner_id
 
 COMMENT ON COLUMN camddmw.account_owner_dim.account_owner_unique_id
     IS 'Unique key for the ACCOUNT_OWNER_DIM table';
+
+COMMENT ON COLUMN camddmw.account_owner_dim.last_update_date
+    IS 'Latest add or update date on source records that are used to populate this record';

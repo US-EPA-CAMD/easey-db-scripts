@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.user_check_out;
 
-CREATE TABLE camdecmpswks.user_check_out
+CREATE TABLE IF NOT EXISTS camdecmpswks.user_check_out
 (
     facility_id integer NOT NULL,
     mon_plan_id text NOT NULL,

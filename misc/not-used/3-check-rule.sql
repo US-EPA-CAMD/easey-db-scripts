@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpsaux.check_rule;
 
-CREATE TABLE camdecmpsaux.check_rule
+CREATE TABLE IF NOT EXISTS camdecmpsaux.check_rule
 (
     check_rule_id uuid NOT NULL,
     check_rule_cd character varying NOT NULL,

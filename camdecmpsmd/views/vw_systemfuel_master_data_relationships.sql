@@ -11,7 +11,3 @@ CREATE OR REPLACE VIEW camdecmpsmd.vw_systemfuel_master_data_relationships
            FROM camdecmpsmd.vw_cross_check_catalog_value unit,
             camdecmpsmd.max_rate_source_code mfrs
           WHERE unit.cross_chk_catalog_name::text = 'Units of Measure to Category'::text AND unit.value2 = 'SYSFUEL'::text) uom;
-
-ALTER TABLE camdecmpsmd.vw_systemfuel_master_data_relationships
-    OWNER TO "uImcwuf4K9dyaxeL";
-

@@ -1,18 +1,23 @@
-CREATE TABLE camddmw.transaction_owner_dim
+-- Table: camddmw.transaction_owner_dim
+
+-- DROP TABLE camddmw.transaction_owner_dim;
+
+CREATE TABLE IF NOT EXISTS camddmw.transaction_owner_dim
 (
     transaction_id double precision,
     prg_code character varying(8) COLLATE pg_catalog."default",
     account_number character varying(12) COLLATE pg_catalog."default",
     account_owner_id double precision,
     own_type character varying(3) COLLATE pg_catalog."default",
-    own_display character varying(65) COLLATE pg_catalog."default",
+    own_display character varying(100) COLLATE pg_catalog."default",
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(8) COLLATE pg_catalog."default",
-    add_date date,
+    userid character varying(25) COLLATE pg_catalog."default",
+    add_date timestamp without time zone,
     ppl_id double precision,
     own_id double precision,
     buy_or_sell character varying(4) COLLATE pg_catalog."default",
     transaction_owner_unique_id numeric(38,0) NOT NULL,
+    last_update_date timestamp without time zone,
     CONSTRAINT transaction_owner_dim_pk PRIMARY KEY (transaction_owner_unique_id)
 );
 
@@ -57,27 +62,30 @@ COMMENT ON COLUMN camddmw.transaction_owner_dim.buy_or_sell
 
 COMMENT ON COLUMN camddmw.transaction_owner_dim.transaction_owner_unique_id
     IS 'Unique identifier of a record in the TRANSACTION_OWNER table';
+
+COMMENT ON COLUMN camddmw.transaction_owner_dim.last_update_date
+    IS 'Latest add or update date on source records that are used to populate this record';
+
 -- Index: transaction_owner_dim_fk
 
 -- DROP INDEX camddmw.transaction_owner_dim_fk;
 
 CREATE INDEX transaction_owner_dim_fk
     ON camddmw.transaction_owner_dim USING btree
-    (transaction_id ASC NULLS LAST, prg_code COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (transaction_id ASC NULLS LAST, prg_code COLLATE pg_catalog."default" ASC NULLS LAST);
+
 -- Index: transaction_owner_dim_idx001
 
 -- DROP INDEX camddmw.transaction_owner_dim_idx001;
 
 CREATE INDEX transaction_owner_dim_idx001
     ON camddmw.transaction_owner_dim USING btree
-    (own_id ASC NULLS LAST, ppl_id ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (own_id ASC NULLS LAST, ppl_id ASC NULLS LAST);
+
 -- Index: transaction_owner_dim_idx002
 
 -- DROP INDEX camddmw.transaction_owner_dim_idx002;
 
 CREATE INDEX transaction_owner_dim_idx002
     ON camddmw.transaction_owner_dim USING btree
-    (ppl_id ASC NULLS LAST, own_id ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (ppl_id ASC NULLS LAST, own_id ASC NULLS LAST);

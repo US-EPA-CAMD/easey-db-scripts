@@ -16,6 +16,15 @@ BEGIN
 			mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, 'NOTSUB', begin_rpt_period_id, end_rpt_period_id, last_evaluated_date
 		FROM camdecmps.monitor_plan;
 
+		-- MONITOR_PLAN_REPORTING_FREQ --
+		DELETE FROM camdecmpswks.monitor_plan_reporting_freq;
+		INSERT INTO camdecmpswks.monitor_plan_reporting_freq(
+			mon_plan_rf_id, mon_plan_id, report_freq_cd, end_rpt_period_id, begin_rpt_period_id, userid, add_date, update_date
+		)
+		SELECT
+			mon_plan_rf_id, mon_plan_id, report_freq_cd, end_rpt_period_id, begin_rpt_period_id, userid, add_date, update_date
+		FROM camdecmps.monitor_plan_reporting_freq;
+
 		-- STACK_PIPE --
 		DELETE FROM camdecmpswks.stack_pipe;
 		INSERT INTO camdecmpswks.stack_pipe(

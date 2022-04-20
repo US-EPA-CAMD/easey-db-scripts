@@ -20,7 +20,3 @@ CREATE OR REPLACE VIEW camdecmpsmd.vw_span_master_data_relationships
             vw_cross_check_catalog_value.value3 AS span_method_code
            FROM camdecmpsmd.vw_cross_check_catalog_value
           WHERE vw_cross_check_catalog_value.cross_chk_catalog_name::text = 'Component Type and Span Scale to Span Method'::text) scale_method ON scale_method.component_type_code = component.component_type_code;
-
-ALTER TABLE camdecmpsmd.vw_span_master_data_relationships
-    OWNER TO "uImcwuf4K9dyaxeL";
-

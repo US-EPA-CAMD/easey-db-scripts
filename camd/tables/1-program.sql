@@ -1,4 +1,8 @@
-CREATE TABLE camd.program
+-- Table: camd.program
+
+-- DROP TABLE camd.program;
+
+CREATE TABLE IF NOT EXISTS camd.program
 (
     prg_id numeric(38,0) NOT NULL,
     prg_cd character varying(8) COLLATE pg_catalog."default" NOT NULL,
@@ -10,9 +14,9 @@ CREATE TABLE camd.program
     indian_country_ind numeric(1,0) NOT NULL DEFAULT 0,
     overdraft_ind numeric(1,0) NOT NULL DEFAULT 0,
     first_sip_year numeric(4,0),
-    userid character varying(8) COLLATE pg_catalog."default" NOT NULL,
-    add_date date NOT NULL,
-    update_date date,
+    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    add_date timestamp without time zone NOT NULL,
+    update_date timestamp without time zone,
     CONSTRAINT pk_program PRIMARY KEY (prg_id),
     CONSTRAINT uq_program_code_state UNIQUE (prg_cd, state_cd),
     CONSTRAINT fk_program_code FOREIGN KEY (prg_cd)
@@ -70,19 +74,19 @@ COMMENT ON COLUMN camd.program.add_date
 
 COMMENT ON COLUMN camd.program.update_date
     IS 'Date of the last record update.';
+
 -- Index: idx_program_code
 
 -- DROP INDEX camd.idx_program_code;
 
 CREATE INDEX idx_program_code
     ON camd.program USING btree
-    (prg_cd COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (prg_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+
 -- Index: idx_program_state
 
 -- DROP INDEX camd.idx_program_state;
 
 CREATE INDEX idx_program_state
     ON camd.program USING btree
-    (state_cd COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (state_cd COLLATE pg_catalog."default" ASC NULLS LAST);

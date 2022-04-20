@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.monitor_method;
 
-CREATE TABLE camdecmpswks.monitor_method
+CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_method
 (
     mon_method_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

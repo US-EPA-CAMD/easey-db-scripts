@@ -1,4 +1,8 @@
-CREATE TABLE camddmw.ozone_unit_data
+-- Table: camddmw.ozone_unit_data
+
+-- DROP TABLE camddmw.ozone_unit_data;
+
+CREATE TABLE IF NOT EXISTS camddmw.ozone_unit_data
 (
     unit_id numeric(12,0) NOT NULL,
     op_year numeric(4,0) NOT NULL,
@@ -24,13 +28,11 @@ CREATE TABLE camddmw.ozone_unit_data
     nox_rate_count numeric(4,0),
     num_months_reported double precision,
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(8) COLLATE pg_catalog."default",
-    add_date date,
-    CONSTRAINT ozone_unit_data_pk PRIMARY KEY (unit_id, op_year)
+    userid character varying(25) COLLATE pg_catalog."default",
+    add_date timestamp without time zone,
+    CONSTRAINT pk_ozone_unit_data PRIMARY KEY (unit_id, op_year)
 ) PARTITION BY RANGE (op_year);
 
---ALTER TABLE camddmw.ozone_unit_data
---    OWNER to "uImcwuf4K9dyaxeL";
 
 COMMENT ON TABLE camddmw.ozone_unit_data
     IS 'Ozone season emissions data at the unit level';
@@ -115,31 +117,31 @@ COMMENT ON COLUMN camddmw.ozone_unit_data.add_date
 
 -- Partitions SQL
 
-CREATE TABLE camddmw.ozone_unit_data_dm_em_uo_2017 PARTITION OF camddmw.ozone_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.ozone_unit_data_dm_em_uo_2017 PARTITION OF camddmw.ozone_unit_data
     FOR VALUES FROM (MINVALUE) TO ('2018');
 
 --ALTER TABLE camddmw.ozone_unit_data_dm_em_uo_2017
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.ozone_unit_data_dm_em_uo_2018 PARTITION OF camddmw.ozone_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.ozone_unit_data_dm_em_uo_2018 PARTITION OF camddmw.ozone_unit_data
     FOR VALUES FROM ('2018') TO ('2019');
 
 --ALTER TABLE camddmw.ozone_unit_data_dm_em_uo_2018
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.ozone_unit_data_dm_em_uo_2019 PARTITION OF camddmw.ozone_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.ozone_unit_data_dm_em_uo_2019 PARTITION OF camddmw.ozone_unit_data
     FOR VALUES FROM ('2019') TO ('2020');
 
 --ALTER TABLE camddmw.ozone_unit_data_dm_em_uo_2019
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.ozone_unit_data_dm_em_uo_2020 PARTITION OF camddmw.ozone_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.ozone_unit_data_dm_em_uo_2020 PARTITION OF camddmw.ozone_unit_data
     FOR VALUES FROM ('2020') TO ('2021');
 
 --ALTER TABLE camddmw.ozone_unit_data_dm_em_uo_2020
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.ozone_unit_data_dm_em_uo_2021 PARTITION OF camddmw.ozone_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.ozone_unit_data_dm_em_uo_2021 PARTITION OF camddmw.ozone_unit_data
     FOR VALUES FROM ('2021') TO ('2022');
 
 --ALTER TABLE camddmw.ozone_unit_data_dm_em_uo_2021

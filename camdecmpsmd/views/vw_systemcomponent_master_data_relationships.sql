@@ -21,7 +21,3 @@ CREATE OR REPLACE VIEW camdecmpsmd.vw_systemcomponent_master_data_relationships
             camdecmpsmd.basis_code bc
           WHERE vw_cross_check_catalog_value.cross_chk_catalog_name::text = 'Component Type and Basis to Sample Acquisition Method'::text) sam ON component.component_type_code = sam.component_type_code
   ORDER BY component.component_type_code, sam.sample_aquisition_method_code;
-
-ALTER TABLE camdecmpsmd.vw_systemcomponent_master_data_relationships
-    OWNER TO "uImcwuf4K9dyaxeL";
-

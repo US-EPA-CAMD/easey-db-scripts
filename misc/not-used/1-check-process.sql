@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpsaux.check_process;
 
-CREATE TABLE camdecmpsaux.check_process
+CREATE TABLE IF NOT EXISTS camdecmpsaux.check_process
 (
     check_process_cd character varying NOT NULL,
     check_process_description character varying NOT NULL,

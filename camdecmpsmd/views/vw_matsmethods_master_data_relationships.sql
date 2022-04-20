@@ -8,7 +8,3 @@ CREATE OR REPLACE VIEW camdecmpsmd.vw_matsmethods_master_data_relationships
     vw_cross_check_catalog_value.value2 AS method_code
    FROM camdecmpsmd.vw_cross_check_catalog_value
   WHERE vw_cross_check_catalog_value.cross_chk_catalog_name::text = 'MATS Supplemental Compliance Parameter to Method'::text;
-
-ALTER TABLE camdecmpsmd.vw_matsmethods_master_data_relationships
-    OWNER TO "uImcwuf4K9dyaxeL";
-

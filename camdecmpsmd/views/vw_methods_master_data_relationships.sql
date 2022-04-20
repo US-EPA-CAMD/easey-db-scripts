@@ -24,7 +24,3 @@ CREATE OR REPLACE VIEW camdecmpsmd.vw_methods_master_data_relationships
             vw_cross_check_catalog_value.value2 AS substitute_data_code
            FROM camdecmpsmd.vw_cross_check_catalog_value
           WHERE vw_cross_check_catalog_value.cross_chk_catalog_name::text = 'Method Parameter to Substitute Data Code for Methods'::text) substitute_data_code ON method_param.parameter_code = substitute_data_code.parameter_code;
-
-ALTER TABLE camdecmpsmd.vw_methods_master_data_relationships
-    OWNER TO "uImcwuf4K9dyaxeL";
-

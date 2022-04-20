@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.unit_stack_configuration;
 
-CREATE TABLE camdecmpswks.unit_stack_configuration
+CREATE TABLE IF NOT EXISTS camdecmpswks.unit_stack_configuration
 (
     config_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     unit_id numeric(38,0) NOT NULL,

@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpsaux.check_category;
 
-CREATE TABLE camdecmpsaux.check_category
+CREATE TABLE IF NOT EXISTS camdecmpsaux.check_category
 (
     check_category_cd character varying NOT NULL,
     check_category_description character varying NOT NULL,

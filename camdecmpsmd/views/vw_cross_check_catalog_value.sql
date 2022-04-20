@@ -12,7 +12,3 @@ CREATE OR REPLACE VIEW camdecmpsmd.vw_cross_check_catalog_value
     cccv.value3
    FROM camdecmpsmd.cross_check_catalog_value cccv
      LEFT JOIN camdecmpsmd.cross_check_catalog ccc ON cccv.cross_chk_catalog_id = ccc.cross_chk_catalog_id;
-
-ALTER TABLE camdecmpsmd.vw_cross_check_catalog_value
-    OWNER TO "uImcwuf4K9dyaxeL";
-

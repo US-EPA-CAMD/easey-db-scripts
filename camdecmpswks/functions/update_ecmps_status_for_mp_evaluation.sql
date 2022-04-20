@@ -1,14 +1,17 @@
--- PROCEDURE: camdecmpswks.update_ecmps_status_for_mp_evaluation(character varying, character varying, character, character varying)
+-- FUNCTION: camdecmpswks.update_ecmps_status_for_mp_evaluation(character varying, character varying)
 
--- DROP PROCEDURE camdecmpswks.update_ecmps_status_for_mp_evaluation(character varying, character varying, character, character varying);
+-- DROP FUNCTION camdecmpswks.update_ecmps_status_for_mp_evaluation(character varying, character varying);
 
-CREATE OR REPLACE FUNCTION camdecmpswks.update_ecmps_status_for_mp_evaluation
-(
+CREATE OR REPLACE FUNCTION camdecmpswks.update_ecmps_status_for_mp_evaluation(
 	vmonplanid character varying,
-	vchksessionid character varying
-)
-RETURNS TABLE(result text, error_msg character varying)
-LANGUAGE 'plpgsql'
+	vchksessionid character varying)
+    RETURNS TABLE(result text, error_msg character varying) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 declare 
     vSubmittable    char(1);

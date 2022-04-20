@@ -15,7 +15,3 @@ CREATE OR REPLACE VIEW camdecmpsmd.vw_quallee_master_data_relationships
           WHERE vw_cross_check_catalog_value.cross_chk_catalog_name::text = 'Units of Measure to Category'::text AND vw_cross_check_catalog_value.value2 = 'QUALLEE'::text) uom,
     ( SELECT qual_lee_test_type_code.qual_lee_test_type_cd
            FROM camdecmpsmd.qual_lee_test_type_code) qual_lee_ttc;
-
-ALTER TABLE camdecmpsmd.vw_quallee_master_data_relationships
-    OWNER TO "uImcwuf4K9dyaxeL";
-

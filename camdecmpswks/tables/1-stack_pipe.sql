@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.stack_pipe;
 
-CREATE TABLE camdecmpswks.stack_pipe
+CREATE TABLE IF NOT EXISTS camdecmpswks.stack_pipe
 (
     stack_pipe_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     fac_id numeric(38,0) NOT NULL,

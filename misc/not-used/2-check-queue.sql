@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpsaux.check_queue;
 
-CREATE TABLE camdecmpsaux.check_queue
+CREATE TABLE IF NOT EXISTS camdecmpsaux.check_queue
 (
     check_queue_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 ),
     check_queue_status_cd text NOT NULL,

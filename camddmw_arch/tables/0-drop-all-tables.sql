@@ -4,6 +4,7 @@
 DROP TABLE camddmw.annual_unit_data_a;
 DROP TABLE camddmw.day_unit_data_a;
 DROP TABLE camddmw.hour_unit_data_a;
+DROP TABLE camddmw.hour_unit_mats_data_a;
 DROP TABLE camddmw.month_unit_data_a;
 DROP TABLE camddmw.ozone_unit_data_a;
 DROP TABLE camddmw.quarter_unit_data_a;

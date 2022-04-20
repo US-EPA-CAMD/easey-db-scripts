@@ -1,7 +1,7 @@
 -- Table: camdaux.property_metadata
 
 -- DROP TABLE camdaux.property_metadata;
-CREATE TABLE camdaux.property_metadata
+CREATE TABLE IF NOT EXISTS camdaux.property_metadata
 (
     property_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 ),
     name character varying NOT NULL,

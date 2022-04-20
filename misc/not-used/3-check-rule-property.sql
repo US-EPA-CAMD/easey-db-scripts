@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpsaux.check_rule_property;
 
-CREATE TABLE camdecmpsaux.check_rule_property
+CREATE TABLE IF NOT EXISTS camdecmpsaux.check_rule_property
 (
     property_id integer NOT NULL,
     check_rule_category_cd character varying NOT NULL,

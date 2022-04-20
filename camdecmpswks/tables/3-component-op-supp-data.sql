@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.component_op_supp_data;
 
-CREATE TABLE camdecmpswks.component_op_supp_data
+CREATE TABLE IF NOT EXISTS camdecmpswks.component_op_supp_data
 (
     comp_op_supp_data_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     component_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

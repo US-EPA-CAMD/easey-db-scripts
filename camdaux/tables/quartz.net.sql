@@ -1,4 +1,4 @@
-CREATE TABLE camdaux.qrtz_job_details
+CREATE TABLE IF NOT EXISTS camdaux.qrtz_job_details
   (
     sched_name TEXT NOT NULL,
 	  job_name  TEXT NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE camdaux.qrtz_job_details
     PRIMARY KEY (sched_name,job_name,job_group)
 );
 
-CREATE TABLE camdaux.qrtz_triggers
+CREATE TABLE IF NOT EXISTS camdaux.qrtz_triggers
   (
     sched_name TEXT NOT NULL,
 	  trigger_name TEXT NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE camdaux.qrtz_triggers
 		REFERENCES camdaux.qrtz_job_details(sched_name,job_name,job_group) 
 );
 
-CREATE TABLE camdaux.qrtz_simple_triggers
+CREATE TABLE IF NOT EXISTS camdaux.qrtz_simple_triggers
   (
     sched_name TEXT NOT NULL,
 	  trigger_name TEXT NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE camdaux.qrtz_simple_triggers
 		REFERENCES camdaux.qrtz_triggers(sched_name,trigger_name,trigger_group) ON DELETE CASCADE
 );
 
-CREATE TABLE camdaux.qrtz_simprop_triggers 
+CREATE TABLE IF NOT EXISTS camdaux.qrtz_simprop_triggers 
   (
     sched_name TEXT NOT NULL,
     trigger_name TEXT NOT NULL ,
@@ -71,7 +71,7 @@ CREATE TABLE camdaux.qrtz_simprop_triggers
 		REFERENCES camdaux.qrtz_triggers(sched_name,trigger_name,trigger_group) ON DELETE CASCADE
 );
 
-CREATE TABLE camdaux.qrtz_cron_triggers
+CREATE TABLE IF NOT EXISTS camdaux.qrtz_cron_triggers
   (
     sched_name TEXT NOT NULL,
     trigger_name TEXT NOT NULL,
@@ -83,7 +83,7 @@ CREATE TABLE camdaux.qrtz_cron_triggers
 		REFERENCES camdaux.qrtz_triggers(sched_name,trigger_name,trigger_group) ON DELETE CASCADE
 );
 
-CREATE TABLE camdaux.qrtz_blob_triggers
+CREATE TABLE IF NOT EXISTS camdaux.qrtz_blob_triggers
   (
     sched_name TEXT NOT NULL,
     trigger_name TEXT NOT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE camdaux.qrtz_blob_triggers
 		REFERENCES camdaux.qrtz_triggers(sched_name,trigger_name,trigger_group) ON DELETE CASCADE
 );
 
-CREATE TABLE camdaux.qrtz_calendars
+CREATE TABLE IF NOT EXISTS camdaux.qrtz_calendars
   (
     sched_name TEXT NOT NULL,
     calendar_name  TEXT NOT NULL, 
@@ -102,14 +102,14 @@ CREATE TABLE camdaux.qrtz_calendars
     PRIMARY KEY (sched_name,calendar_name)
 );
 
-CREATE TABLE camdaux.qrtz_paused_trigger_grps
+CREATE TABLE IF NOT EXISTS camdaux.qrtz_paused_trigger_grps
   (
     sched_name TEXT NOT NULL,
     trigger_group TEXT NOT NULL, 
     PRIMARY KEY (sched_name,trigger_group)
 );
 
-CREATE TABLE camdaux.qrtz_fired_triggers 
+CREATE TABLE IF NOT EXISTS camdaux.qrtz_fired_triggers 
   (
     sched_name TEXT NOT NULL,
     entry_id TEXT NOT NULL,
@@ -127,7 +127,7 @@ CREATE TABLE camdaux.qrtz_fired_triggers
     PRIMARY KEY (sched_name,entry_id)
 );
 
-CREATE TABLE camdaux.qrtz_scheduler_state 
+CREATE TABLE IF NOT EXISTS camdaux.qrtz_scheduler_state 
   (
     sched_name TEXT NOT NULL,
     instance_name TEXT NOT NULL,
@@ -136,7 +136,7 @@ CREATE TABLE camdaux.qrtz_scheduler_state
     PRIMARY KEY (sched_name,instance_name)
 );
 
-CREATE TABLE camdaux.qrtz_locks
+CREATE TABLE IF NOT EXISTS camdaux.qrtz_locks
   (
     sched_name TEXT NOT NULL,
     lock_name  TEXT NOT NULL, 

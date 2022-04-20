@@ -1,4 +1,8 @@
-CREATE TABLE camdaux.cors_to_api
+-- Table: camdaux.cors_to_api
+
+-- DROP TABLE camdaux.cors_to_api;
+
+CREATE TABLE IF NOT EXISTS camdaux.cors_to_api
 (
     cors_id integer NOT NULL,
     api_id integer NOT NULL,
@@ -12,6 +16,3 @@ CREATE TABLE camdaux.cors_to_api
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
-
-
-INSERT INTO camdaux.cors_to_api(cors_id, api_id) VALUES (?, ?);

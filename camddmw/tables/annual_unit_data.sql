@@ -1,4 +1,8 @@
-CREATE TABLE camddmw.annual_unit_data
+-- Table: camddmw.annual_unit_data
+
+-- DROP TABLE camddmw.annual_unit_data;
+
+CREATE TABLE IF NOT EXISTS camddmw.annual_unit_data
 (
     unit_id numeric(12,0) NOT NULL,
     op_year numeric(4,0) NOT NULL,
@@ -24,10 +28,11 @@ CREATE TABLE camddmw.annual_unit_data
     nox_rate_count numeric(4,0),
     num_months_reported double precision,
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(8) COLLATE pg_catalog."default",
-    add_date date,
-    CONSTRAINT annual_unit_data_pk PRIMARY KEY (unit_id, op_year)
+    userid character varying(25) COLLATE pg_catalog."default",
+    add_date timestamp without time zone,
+    CONSTRAINT pk_annual_unit_data PRIMARY KEY (unit_id, op_year)
 ) PARTITION BY RANGE (op_year);
+
 
 COMMENT ON TABLE camddmw.annual_unit_data
     IS 'Annual emissions data at the unit level';
@@ -109,28 +114,35 @@ COMMENT ON COLUMN camddmw.annual_unit_data.userid
 
 COMMENT ON COLUMN camddmw.annual_unit_data.add_date
     IS 'Date on which the record was added';
--- Index: annual_unit_data_id_ix
-
--- DROP INDEX camddmw.annual_unit_data_id_ix;
-
-CREATE INDEX annual_unit_data_id_ix
-    ON camddmw.annual_unit_data USING btree
-    (unit_id ASC NULLS LAST)
-    TABLESPACE pg_default;
 
 -- Partitions SQL
 
-CREATE TABLE camddmw.annual_unit_data_dm_em_ua_2017 PARTITION OF camddmw.annual_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.annual_unit_data_dm_em_ua_2017 PARTITION OF camddmw.annual_unit_data
     FOR VALUES FROM (MINVALUE) TO ('2018');
 
-CREATE TABLE camddmw.annual_unit_data_dm_em_ua_2018 PARTITION OF camddmw.annual_unit_data
+--ALTER TABLE camddmw.annual_unit_data_dm_em_ua_2017
+--    OWNER to "uImcwuf4K9dyaxeL";
+
+CREATE TABLE IF NOT EXISTS camddmw.annual_unit_data_dm_em_ua_2018 PARTITION OF camddmw.annual_unit_data
     FOR VALUES FROM ('2018') TO ('2019');
 
-CREATE TABLE camddmw.annual_unit_data_dm_em_ua_2019 PARTITION OF camddmw.annual_unit_data
+--ALTER TABLE camddmw.annual_unit_data_dm_em_ua_2018
+--    OWNER to "uImcwuf4K9dyaxeL";
+
+CREATE TABLE IF NOT EXISTS camddmw.annual_unit_data_dm_em_ua_2019 PARTITION OF camddmw.annual_unit_data
     FOR VALUES FROM ('2019') TO ('2020');
 
-CREATE TABLE camddmw.annual_unit_data_dm_em_ua_2020 PARTITION OF camddmw.annual_unit_data
+--ALTER TABLE camddmw.annual_unit_data_dm_em_ua_2019
+--    OWNER to "uImcwuf4K9dyaxeL";
+
+CREATE TABLE IF NOT EXISTS camddmw.annual_unit_data_dm_em_ua_2020 PARTITION OF camddmw.annual_unit_data
     FOR VALUES FROM ('2020') TO ('2021');
 
-CREATE TABLE camddmw.annual_unit_data_dm_em_ua_2021 PARTITION OF camddmw.annual_unit_data
+--ALTER TABLE camddmw.annual_unit_data_dm_em_ua_2020
+--    OWNER to "uImcwuf4K9dyaxeL";
+
+CREATE TABLE IF NOT EXISTS camddmw.annual_unit_data_dm_em_ua_2021 PARTITION OF camddmw.annual_unit_data
     FOR VALUES FROM ('2021') TO ('2022');
+
+--ALTER TABLE camddmw.annual_unit_data_dm_em_ua_2021
+--    OWNER to "uImcwuf4K9dyaxeL";

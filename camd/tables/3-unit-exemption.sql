@@ -1,4 +1,8 @@
-CREATE TABLE camd.unit_exemption
+-- Table: camd.unit_exemption
+
+-- DROP TABLE camd.unit_exemption;
+
+CREATE TABLE IF NOT EXISTS camd.unit_exemption
 (
     unit_exempt_id numeric(38,0) NOT NULL,
     unit_id numeric(38,0) NOT NULL,
@@ -7,9 +11,9 @@ CREATE TABLE camd.unit_exemption
     end_date date,
     ex_rec_date date,
     submitter_ppl_id numeric(38,0),
-    userid character varying(8) COLLATE pg_catalog."default" NOT NULL,
-    add_date date NOT NULL,
-    update_date date,
+    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    add_date timestamp without time zone NOT NULL,
+    update_date timestamp without time zone,
     CONSTRAINT pk_unit_exemption PRIMARY KEY (unit_exempt_id),
     CONSTRAINT uq_unit_exemption UNIQUE (unit_id, begin_date),
     CONSTRAINT fk_unit_exemption_code FOREIGN KEY (exemption_type_cd)
@@ -54,27 +58,27 @@ COMMENT ON COLUMN camd.unit_exemption.add_date
 
 COMMENT ON COLUMN camd.unit_exemption.update_date
     IS 'Date of the last record update.';
+
 -- Index: idx_unit_exemption_code
 
 -- DROP INDEX camd.idx_unit_exemption_code;
 
 CREATE INDEX idx_unit_exemption_code
     ON camd.unit_exemption USING btree
-    (exemption_type_cd COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (exemption_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+
 -- Index: idx_unit_exemption_submit
 
 -- DROP INDEX camd.idx_unit_exemption_submit;
 
 CREATE INDEX idx_unit_exemption_submit
     ON camd.unit_exemption USING btree
-    (submitter_ppl_id ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (submitter_ppl_id ASC NULLS LAST);
+
 -- Index: idx_unit_exemption_unit
 
 -- DROP INDEX camd.idx_unit_exemption_unit;
 
 CREATE INDEX idx_unit_exemption_unit
     ON camd.unit_exemption USING btree
-    (unit_id ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (unit_id ASC NULLS LAST);

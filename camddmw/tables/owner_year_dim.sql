@@ -1,15 +1,21 @@
-CREATE TABLE camddmw.owner_year_dim
+-- Table: camddmw.owner_year_dim
+
+-- DROP TABLE camddmw.owner_year_dim;
+
+CREATE TABLE IF NOT EXISTS camddmw.owner_year_dim
 (
     own_yr_id numeric(10,0) NOT NULL,
     unit_id numeric(12,0) NOT NULL,
     op_year numeric(4,0) NOT NULL,
     own_id numeric(12,0),
     own_type character varying(3) COLLATE pg_catalog."default" NOT NULL,
-    own_display character varying(65) COLLATE pg_catalog."default",
+    own_display character varying(100) COLLATE pg_catalog."default",
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(8) COLLATE pg_catalog."default",
-    add_date date,
-    CONSTRAINT pk_owner_year_dim PRIMARY KEY (own_yr_id)
+    userid character varying(25) COLLATE pg_catalog."default",
+    add_date timestamp without time zone,
+    last_update_date timestamp without time zone,
+    CONSTRAINT pk_owner_year_dim PRIMARY KEY (own_yr_id),
+    CONSTRAINT unq_owner_year_dim UNIQUE (unit_id, op_year, own_id, own_type)
 );
 
 COMMENT ON TABLE camddmw.owner_year_dim
@@ -41,27 +47,6 @@ COMMENT ON COLUMN camddmw.owner_year_dim.userid
 
 COMMENT ON COLUMN camddmw.owner_year_dim.add_date
     IS 'Date on which the record was added';
--- Index: owner_year_dim_idx003
 
--- DROP INDEX camddmw.owner_year_dim_idx003;
-
-CREATE INDEX owner_year_dim_idx003
-    ON camddmw.owner_year_dim USING btree
-    (own_id ASC NULLS LAST, unit_id ASC NULLS LAST, op_year ASC NULLS LAST, own_type COLLATE pg_catalog."default" ASC NULLS LAST, own_display COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: owner_year_dim_idx1
-
--- DROP INDEX camddmw.owner_year_dim_idx1;
-
-CREATE INDEX owner_year_dim_idx1
-    ON camddmw.owner_year_dim USING btree
-    (own_id ASC NULLS LAST, unit_id ASC NULLS LAST, op_year ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: owner_year_dim_idx2
-
--- DROP INDEX camddmw.owner_year_dim_idx2;
-
-CREATE INDEX owner_year_dim_idx2
-    ON camddmw.owner_year_dim USING btree
-    (unit_id ASC NULLS LAST, op_year ASC NULLS LAST, own_id ASC NULLS LAST)
-    TABLESPACE pg_default;
+COMMENT ON COLUMN camddmw.owner_year_dim.last_update_date
+    IS 'Latest add or update date on source records that are used to populate this record';

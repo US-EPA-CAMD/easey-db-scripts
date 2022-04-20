@@ -4,7 +4,7 @@
 
 CREATE OR REPLACE FUNCTION camdecmpswks.error_suppression_spec_gather(
 	)
-    RETURNS TABLE(es_spec_id numeric, check_catalog_result_id numeric, check_catalog_id numeric, check_type_cd character varying, check_number numeric, check_result character varying, severity_cd character varying, fac_id numeric, location_name_list character varying, es_match_data_type_cd character varying, match_data_value character varying, es_match_time_type_cd character varying, match_historical_ind numeric, match_time_begin_value date, match_time_end_value date, active_ind numeric, di character varying) 
+    RETURNS TABLE(es_spec_id numeric, check_catalog_result_id numeric, check_catalog_id numeric, check_type_cd character varying, check_number numeric, check_result character varying, severity_cd character varying, fac_id numeric, location_name_list character varying, es_match_data_type_cd character varying, match_data_value character varying, es_match_time_type_cd character varying, match_historical_ind numeric, match_time_begin_value timestamp without time zone, match_time_end_value timestamp without time zone, active_ind numeric, di character varying) 
     LANGUAGE 'sql'
 
     COST 100

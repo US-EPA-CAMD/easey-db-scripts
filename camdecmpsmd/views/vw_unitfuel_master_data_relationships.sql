@@ -16,7 +16,3 @@ CREATE OR REPLACE VIEW camdecmpsmd.vw_unitfuel_master_data_relationships
     ( SELECT dem_method_code.dem_method_cd
            FROM camdecmpsmd.dem_method_code
           WHERE dem_method_code.dem_parameter::text = 'SULFUR'::text) so2;
-
-ALTER TABLE camdecmpsmd.vw_unitfuel_master_data_relationships
-    OWNER TO "uImcwuf4K9dyaxeL";
-

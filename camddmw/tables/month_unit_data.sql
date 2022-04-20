@@ -1,4 +1,8 @@
-CREATE TABLE camddmw.month_unit_data
+-- Table: camddmw.month_unit_data
+
+-- DROP TABLE camddmw.month_unit_data;
+
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data
 (
     unit_id numeric(12,0) NOT NULL,
     op_year numeric(4,0) NOT NULL,
@@ -27,13 +31,11 @@ CREATE TABLE camddmw.month_unit_data
     rpt_period_id numeric(38,0),
     op_quarter numeric(1,0),
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(8) COLLATE pg_catalog."default",
-    add_date date,
-    CONSTRAINT month_unit_data_pk PRIMARY KEY (unit_id, op_year, op_month)
+    userid character varying(25) COLLATE pg_catalog."default",
+    add_date timestamp without time zone,
+    CONSTRAINT pk_month_unit_data PRIMARY KEY (unit_id, op_year, op_month)
 ) PARTITION BY RANGE (op_year, op_month);
 
---ALTER TABLE camddmw.month_unit_data
---    OWNER to "uImcwuf4K9dyaxeL";
 
 COMMENT ON TABLE camddmw.month_unit_data
     IS 'Monthly emissions data at the unit level';
@@ -124,380 +126,380 @@ COMMENT ON COLUMN camddmw.month_unit_data.userid
 
 COMMENT ON COLUMN camddmw.month_unit_data.add_date
     IS 'Date on which the record was added';
--- Index: month_unit_data_mthdesc_ix
 
--- DROP INDEX camddmw.month_unit_data_mthdesc_ix;
+-- Index: idx_month_unit_data_op_quarter
 
-CREATE INDEX month_unit_data_mthdesc_ix
+-- DROP INDEX camddmw.idx_month_unit_data_op_quarter;
+
+CREATE INDEX idx_month_unit_data_op_quarter
     ON camddmw.month_unit_data USING btree
-    (month_description COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: month_unit_data_prd_ix
+    (op_quarter ASC NULLS LAST);
 
--- DROP INDEX camddmw.month_unit_data_prd_ix;
+-- Index: idx_month_unit_data_rpt_period_id
 
-CREATE INDEX month_unit_data_prd_ix
+-- DROP INDEX camddmw.idx_month_unit_data_rpt_period_id;
+
+CREATE INDEX idx_month_unit_data_rpt_period_id
     ON camddmw.month_unit_data USING btree
-    (unit_id ASC NULLS LAST, rpt_period_id ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (rpt_period_id ASC NULLS LAST);
 
 -- Partitions SQL
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2017m01 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2017m01 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM (MINVALUE, MINVALUE) TO ('2017', '2');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2017m01
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2017m02 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2017m02 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2017', '2') TO ('2017', '3');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2017m02
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2017m03 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2017m03 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2017', '3') TO ('2017', '4');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2017m03
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2017m04 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2017m04 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2017', '4') TO ('2017', '5');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2017m04
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2017m05 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2017m05 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2017', '5') TO ('2017', '6');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2017m05
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2017m06 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2017m06 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2017', '6') TO ('2017', '7');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2017m06
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2017m07 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2017m07 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2017', '7') TO ('2017', '8');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2017m07
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2017m08 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2017m08 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2017', '8') TO ('2017', '9');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2017m08
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2017m09 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2017m09 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2017', '9') TO ('2017', '10');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2017m09
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2017m10 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2017m10 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2017', '10') TO ('2017', '11');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2017m10
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2017m11 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2017m11 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2017', '11') TO ('2017', '12');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2017m11
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2017m12 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2017m12 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2017', '12') TO ('2017', '13');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2017m12
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2018m01 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2018m01 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2017', '13') TO ('2018', '2');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2018m01
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2018m02 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2018m02 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2018', '2') TO ('2018', '3');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2018m02
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2018m03 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2018m03 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2018', '3') TO ('2018', '4');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2018m03
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2018m04 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2018m04 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2018', '4') TO ('2018', '5');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2018m04
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2018m05 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2018m05 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2018', '5') TO ('2018', '6');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2018m05
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2018m06 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2018m06 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2018', '6') TO ('2018', '7');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2018m06
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2018m07 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2018m07 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2018', '7') TO ('2018', '8');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2018m07
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2018m08 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2018m08 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2018', '8') TO ('2018', '9');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2018m08
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2018m09 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2018m09 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2018', '9') TO ('2018', '10');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2018m09
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2018m10 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2018m10 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2018', '10') TO ('2018', '11');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2018m10
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2018m11 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2018m11 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2018', '11') TO ('2018', '12');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2018m11
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2018m12 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2018m12 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2018', '12') TO ('2018', '13');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2018m12
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2019m01 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2019m01 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2018', '13') TO ('2019', '2');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2019m01
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2019m02 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2019m02 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2019', '2') TO ('2019', '3');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2019m02
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2019m03 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2019m03 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2019', '3') TO ('2019', '4');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2019m03
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2019m04 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2019m04 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2019', '4') TO ('2019', '5');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2019m04
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2019m05 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2019m05 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2019', '5') TO ('2019', '6');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2019m05
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2019m06 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2019m06 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2019', '6') TO ('2019', '7');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2019m06
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2019m07 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2019m07 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2019', '7') TO ('2019', '8');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2019m07
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2019m08 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2019m08 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2019', '8') TO ('2019', '9');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2019m08
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2019m09 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2019m09 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2019', '9') TO ('2019', '10');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2019m09
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2019m10 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2019m10 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2019', '10') TO ('2019', '11');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2019m10
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2019m11 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2019m11 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2019', '11') TO ('2019', '12');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2019m11
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2019m12 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2019m12 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2019', '12') TO ('2019', '13');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2019m12
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2020m01 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2020m01 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2019', '13') TO ('2020', '2');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2020m01
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2020m02 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2020m02 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2020', '2') TO ('2020', '3');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2020m02
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2020m03 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2020m03 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2020', '3') TO ('2020', '4');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2020m03
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2020m04 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2020m04 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2020', '4') TO ('2020', '5');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2020m04
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2020m05 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2020m05 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2020', '5') TO ('2020', '6');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2020m05
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2020m06 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2020m06 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2020', '6') TO ('2020', '7');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2020m06
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2020m07 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2020m07 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2020', '7') TO ('2020', '8');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2020m07
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2020m08 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2020m08 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2020', '8') TO ('2020', '9');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2020m08
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2020m09 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2020m09 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2020', '9') TO ('2020', '10');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2020m09
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2020m10 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2020m10 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2020', '10') TO ('2020', '11');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2020m10
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2020m11 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2020m11 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2020', '11') TO ('2020', '12');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2020m11
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2020m12 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2020m12 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2020', '12') TO ('2020', '13');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2020m12
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2021m01 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2021m01 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2020', '13') TO ('2021', '2');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2021m01
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2021m02 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2021m02 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2021', '2') TO ('2021', '3');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2021m02
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2021m03 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2021m03 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2021', '3') TO ('2021', '4');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2021m03
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2021m04 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2021m04 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2021', '4') TO ('2021', '5');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2021m04
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2021m05 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2021m05 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2021', '5') TO ('2021', '6');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2021m05
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2021m06 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2021m06 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2021', '6') TO ('2021', '7');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2021m06
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2021m07 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2021m07 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2021', '7') TO ('2021', '8');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2021m07
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2021m08 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2021m08 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2021', '8') TO ('2021', '9');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2021m08
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2021m09 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2021m09 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2021', '9') TO ('2021', '10');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2021m09
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2021m10 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2021m10 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2021', '10') TO ('2021', '11');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2021m10
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2021m11 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2021m11 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2021', '11') TO ('2021', '12');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2021m11
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.month_unit_data_dm_em_um_2021m12 PARTITION OF camddmw.month_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_dm_em_um_2021m12 PARTITION OF camddmw.month_unit_data
     FOR VALUES FROM ('2021', '12') TO ('2021', '13');
 
 --ALTER TABLE camddmw.month_unit_data_dm_em_um_2021m12

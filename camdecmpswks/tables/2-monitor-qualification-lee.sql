@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.monitor_qualification_lee;
 
-CREATE TABLE camdecmpswks.monitor_qualification_lee
+CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_qualification_lee
 (
     mon_qual_lee_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_qual_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

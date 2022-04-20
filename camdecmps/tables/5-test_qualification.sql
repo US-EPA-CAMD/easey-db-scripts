@@ -1,79 +1,79 @@
--- ------------ Write CREATE-TABLE-stage scripts -----------
+-- Table: camdecmps.test_qualification
 
-CREATE TABLE IF NOT EXISTS camdecmps.test_qualification(
-    test_qualification_id CHARACTER VARYING(45) NOT NULL,
-    test_sum_id CHARACTER VARYING(45) NOT NULL,
-    test_claim_cd CHARACTER VARYING(7) NOT NULL,
-    hi_load_pct NUMERIC(5,1),
-    mid_load_pct NUMERIC(5,1),
-    low_load_pct NUMERIC(5,1),
-    begin_date DATE,
-    end_date DATE,
-    userid CHARACTER VARYING(8),
-    add_date TIMESTAMP WITHOUT TIME ZONE,
-    update_date TIMESTAMP WITHOUT TIME ZONE
-)
-        WITH (
-        OIDS=FALSE
-        );
+-- DROP TABLE camdecmps.test_qualification;
+
+CREATE TABLE IF NOT EXISTS camdecmps.test_qualification
+(
+    test_qualification_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    test_claim_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
+    hi_load_pct numeric(5,1),
+    mid_load_pct numeric(5,1),
+    low_load_pct numeric(5,1),
+    begin_date date,
+    end_date date,
+    userid character varying(8) COLLATE pg_catalog."default",
+    add_date timestamp without time zone,
+    update_date timestamp without time zone,
+    CONSTRAINT pk_test_qualification PRIMARY KEY (test_qualification_id),
+    CONSTRAINT fk_test_claim_co_test_qualific FOREIGN KEY (test_claim_cd)
+        REFERENCES camdecmpsmd.test_claim_code (test_claim_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_test_summary_test_qualific FOREIGN KEY (test_sum_id)
+        REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
 COMMENT ON TABLE camdecmps.test_qualification
-     IS 'Table supporting qualification to perform flow RATAs at single load.';
+    IS 'Table supporting qualification to perform flow RATAs at single load.';
+
 COMMENT ON COLUMN camdecmps.test_qualification.test_qualification_id
-     IS 'Unique identifier of test qualification record. ';
+    IS 'Unique identifier of test qualification record. ';
+
 COMMENT ON COLUMN camdecmps.test_qualification.test_sum_id
-     IS 'Unique identifier of a test summary record. ';
+    IS 'Unique identifier of a test summary record. ';
+
 COMMENT ON COLUMN camdecmps.test_qualification.test_claim_cd
-     IS 'Code used to indicate the type of test claim (i.e., single load, normal load exemption or operating range exemption). ';
+    IS 'Code used to indicate the type of test claim (i.e., single load, normal load exemption or operating range exemption). ';
+
 COMMENT ON COLUMN camdecmps.test_qualification.hi_load_pct
-     IS 'Percentage of the time that the unit operated at high load. ';
+    IS 'Percentage of the time that the unit operated at high load. ';
+
 COMMENT ON COLUMN camdecmps.test_qualification.mid_load_pct
-     IS 'Percentage of the time that the unit operated at mid load. ';
+    IS 'Percentage of the time that the unit operated at mid load. ';
+
 COMMENT ON COLUMN camdecmps.test_qualification.low_load_pct
-     IS 'Percentage of the time that the unit operated at low load. ';
+    IS 'Percentage of the time that the unit operated at low load. ';
+
 COMMENT ON COLUMN camdecmps.test_qualification.begin_date
-     IS 'Date in which information became effective or activity started. ';
+    IS 'Date in which information became effective or activity started. ';
+
 COMMENT ON COLUMN camdecmps.test_qualification.end_date
-     IS 'Last date in which information was effective or date in which activity ended. ';
+    IS 'Last date in which information was effective or date in which activity ended. ';
+
 COMMENT ON COLUMN camdecmps.test_qualification.userid
-     IS 'User account or source of data that added or updated record. ';
+    IS 'User account or source of data that added or updated record. ';
+
 COMMENT ON COLUMN camdecmps.test_qualification.add_date
-     IS 'Date and time in which record was added. ';
+    IS 'Date and time in which record was added. ';
+
 COMMENT ON COLUMN camdecmps.test_qualification.update_date
-     IS 'Date and time in which record was last updated. ';
+    IS 'Date and time in which record was last updated. ';
 
+-- Index: idx_test_qualificat_test_claim
 
-
--- ------------ Write CREATE-INDEX-stage scripts -----------
+-- DROP INDEX camdecmps.idx_test_qualificat_test_claim;
 
 CREATE INDEX idx_test_qualificat_test_claim
-ON camdecmps.test_qualification
-USING BTREE (test_claim_cd ASC);
+    ON camdecmps.test_qualification USING btree
+    (test_claim_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
+-- Index: idx_test_qualification_001
 
+-- DROP INDEX camdecmps.idx_test_qualification_001;
 
 CREATE INDEX idx_test_qualification_001
-ON camdecmps.test_qualification
-USING BTREE (test_sum_id ASC);
-
-
-
--- ------------ Write CREATE-CONSTRAINT-stage scripts -----------
-
-ALTER TABLE camdecmps.test_qualification
-ADD CONSTRAINT pk_test_qualification PRIMARY KEY (test_qualification_id);
-
-
-
--- ------------ Write CREATE-FOREIGN-KEY-CONSTRAINT-stage scripts -----------
-
-ALTER TABLE camdecmps.test_qualification
-ADD CONSTRAINT fk_test_claim_co_test_qualific FOREIGN KEY (test_claim_cd) 
-REFERENCES camdecmpsmd.test_claim_code (test_claim_cd)
-ON DELETE NO ACTION;
-
-
-
-ALTER TABLE camdecmps.test_qualification
-ADD CONSTRAINT fk_test_summary_test_qualific FOREIGN KEY (test_sum_id) 
-REFERENCES camdecmps.test_summary (test_sum_id)
-ON DELETE NO ACTION;
+    ON camdecmps.test_qualification USING btree
+    (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

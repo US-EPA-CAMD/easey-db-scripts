@@ -13,7 +13,3 @@ CREATE OR REPLACE VIEW camdecmpsmd.vw_load_master_data_relationships
     ( SELECT op_level.value1 AS operating_level_code
            FROM camdecmpsmd.vw_cross_check_catalog_value op_level
           WHERE op_level.cross_chk_catalog_name::text = 'Operating Level to Category'::text AND op_level.value2 = 'LOAD'::text) operating_level;
-
-ALTER TABLE camdecmpsmd.vw_load_master_data_relationships
-    OWNER TO "uImcwuf4K9dyaxeL";
-

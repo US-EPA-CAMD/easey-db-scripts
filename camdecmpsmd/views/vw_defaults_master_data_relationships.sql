@@ -31,7 +31,3 @@ CREATE OR REPLACE VIEW camdecmpsmd.vw_defaults_master_data_relationships
             vw_cross_check_catalog_value.value2 AS source_code
            FROM camdecmpsmd.vw_cross_check_catalog_value
           WHERE vw_cross_check_catalog_value.cross_chk_catalog_name::text = 'Parameter Code to Source Code for Defaults'::text) src ON param_code.parameter_code = src.parameter_code;
-
-ALTER TABLE camdecmpsmd.vw_defaults_master_data_relationships
-    OWNER TO "uImcwuf4K9dyaxeL";
-

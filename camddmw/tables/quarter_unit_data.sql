@@ -1,4 +1,8 @@
-CREATE TABLE camddmw.quarter_unit_data
+-- Table: camddmw.quarter_unit_data
+
+-- DROP TABLE camddmw.quarter_unit_data;
+
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data
 (
     unit_id numeric(12,0) NOT NULL,
     op_year numeric(4,0) NOT NULL,
@@ -26,13 +30,11 @@ CREATE TABLE camddmw.quarter_unit_data
     num_months_reported double precision,
     rpt_period_id numeric(38,0),
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(8) COLLATE pg_catalog."default",
-    add_date date,
+    userid character varying(25) COLLATE pg_catalog."default",
+    add_date timestamp without time zone,
     CONSTRAINT quarter_unit_data_pk PRIMARY KEY (unit_id, op_year, op_quarter)
 ) PARTITION BY RANGE (op_year, op_quarter);
 
---ALTER TABLE camddmw.quarter_unit_data
---    OWNER to "uImcwuf4K9dyaxeL";
 
 COMMENT ON TABLE camddmw.quarter_unit_data
     IS 'Quarterly emissions data at the unit level';
@@ -120,132 +122,132 @@ COMMENT ON COLUMN camddmw.quarter_unit_data.userid
 
 COMMENT ON COLUMN camddmw.quarter_unit_data.add_date
     IS 'Date on which the record was added';
--- Index: quarter_unit_data_prd_ix
 
--- DROP INDEX camddmw.quarter_unit_data_prd_ix;
+-- Index: idx_quarter_unit_data_rpt_period_id
 
-CREATE INDEX quarter_unit_data_prd_ix
+-- DROP INDEX camddmw.idx_quarter_unit_data_rpt_period_id;
+
+CREATE INDEX idx_quarter_unit_data_rpt_period_id
     ON camddmw.quarter_unit_data USING btree
-    (unit_id ASC NULLS LAST, rpt_period_id ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (rpt_period_id ASC NULLS LAST);
 
 -- Partitions SQL
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2017q1 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2017q1 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM (MINVALUE, MINVALUE) TO ('2017', '2');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2017q1
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2017q2 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2017q2 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM ('2017', '2') TO ('2017', '3');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2017q2
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2017q3 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2017q3 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM ('2017', '3') TO ('2017', '4');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2017q3
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2017q4 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2017q4 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM ('2017', '4') TO ('2017', '5');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2017q4
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2018q1 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2018q1 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM ('2017', '5') TO ('2018', '2');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2018q1
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2018q2 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2018q2 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM ('2018', '2') TO ('2018', '3');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2018q2
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2018q3 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2018q3 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM ('2018', '3') TO ('2018', '4');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2018q3
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2018q4 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2018q4 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM ('2018', '4') TO ('2018', '5');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2018q4
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2019q1 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2019q1 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM ('2018', '5') TO ('2019', '2');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2019q1
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2019q2 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2019q2 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM ('2019', '2') TO ('2019', '3');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2019q2
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2019q3 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2019q3 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM ('2019', '3') TO ('2019', '4');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2019q3
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2019q4 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2019q4 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM ('2019', '4') TO ('2019', '5');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2019q4
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2020q1 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2020q1 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM ('2019', '5') TO ('2020', '2');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2020q1
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2020q2 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2020q2 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM ('2020', '2') TO ('2020', '3');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2020q2
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2020q3 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2020q3 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM ('2020', '3') TO ('2020', '4');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2020q3
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2020q4 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2020q4 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM ('2020', '4') TO ('2020', '5');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2020q4
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2021q1 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2021q1 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM ('2020', '5') TO ('2021', '2');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2021q1
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2021q2 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2021q2 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM ('2021', '2') TO ('2021', '3');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2021q2
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2021q3 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2021q3 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM ('2021', '3') TO ('2021', '4');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2021q3
 --    OWNER to "uImcwuf4K9dyaxeL";
 
-CREATE TABLE camddmw.quarter_unit_data_dm_em_uq_2021q4 PARTITION OF camddmw.quarter_unit_data
+CREATE TABLE IF NOT EXISTS camddmw.quarter_unit_data_dm_em_uq_2021q4 PARTITION OF camddmw.quarter_unit_data
     FOR VALUES FROM ('2021', '4') TO ('2021', '5');
 
 --ALTER TABLE camddmw.quarter_unit_data_dm_em_uq_2021q4

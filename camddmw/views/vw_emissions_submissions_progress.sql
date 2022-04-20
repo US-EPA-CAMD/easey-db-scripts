@@ -18,4 +18,5 @@ CREATE OR REPLACE VIEW camddmw.vw_emissions_submissions_progress
    FROM camddmw.vw_emissions_submissions_received received
      JOIN camdecmpsmd.reporting_period rp USING (rpt_period_id)
      LEFT JOIN camddmw.vw_emissions_submissions_expected expected ON expected.rpt_period_id = received.rpt_period_id
-     LEFT JOIN camddmw.vw_emissions_submissions_gdm gdm ON expected.rpt_period_id = gdm.rpt_period_id;
+     LEFT JOIN camddmw.vw_emissions_submissions_gdm gdm ON expected.rpt_period_id = gdm.rpt_period_id
+  ORDER BY rp.begin_date;

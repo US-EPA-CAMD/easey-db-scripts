@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.monitor_plan_comment;
 
-CREATE TABLE camdecmpswks.monitor_plan_comment
+CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_plan_comment
 (
     mon_plan_comment_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

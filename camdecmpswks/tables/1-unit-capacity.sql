@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.unit_capacity;
 
-CREATE TABLE camdecmpswks.unit_capacity
+CREATE TABLE IF NOT EXISTS camdecmpswks.unit_capacity
 (
     unit_cap_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     unit_id numeric(38,0) NOT NULL,

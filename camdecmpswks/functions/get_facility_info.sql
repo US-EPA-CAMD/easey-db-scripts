@@ -31,12 +31,13 @@ BEGIN
        SELECT fac.FAC_ID, fac.FIRST_ECMPS_RPT_PERIOD_ID 
 		 into facid, firstEcmpsRptPeriodId
 		FROM camdecmpswks.MONITOR_PLAN pln
-				INNER JOIN camd.plant fac ON fac.FAC_ID = pln.FAC_ID
+		   INNER JOIN camd.plant fac ON fac.FAC_ID = pln.FAC_ID
 				where pln.MON_PLAN_ID = lookupid; 
 		  if facid is null then
 			error_msg:='camdecmpswks.get_facility_info: Unable to determine Facility ID 
-			       for MON_PLAN_ID: '|| lookupid;
+			       for MON_PLAN_ID: '||lookupid;
 		   END if;
+		   
 	 elsif lookupType ='ML'  then
 		SELECT	fac.FAC_ID, fac.FIRST_ECMPS_RPT_PERIOD_ID into facid, firstEcmpsRptPeriodId
 			FROM camdecmpswks.MONITOR_LOCATION ml
@@ -51,6 +52,7 @@ BEGIN
 			END if;
 			
 	/*   --copy the codes from SQL script here in case it's needed later on
+	--Anna edit 1/21/2022 */
 	  ELSEIF lookupType = 'TEST' then
 	   SELECT fac.FAC_ID, fac.FIRST_ECMPS_RPT_PERIOD_ID into facid, firstEcmpsRptPeriodId
 			FROM camdecmps.TEST_SUMMARY tst
@@ -61,37 +63,37 @@ BEGIN
 			WHERE tst.TEST_SUM_ID = lookupid;
 	  
 	      if facid is null then 
-				error_msg:= 'camdecmpswks.GetFacilityInfo: Unable to determine Facility ID for TEST_SUM_ID: ' 
-				||lookupid;
+				error_msg:= 'camdecmpswks.get_facility_info: Unable to determine Facility ID 
+				for TEST_SUM_ID: '||lookupid;
 			END if;		  
 	 
-	 	  ELSE IF lookupType = 'QCE' then
-	   SELECT fac.FAC_ID, fac.FIRST_ECMPS_RPT_PERIOD_ID into v_facid, v_first_id	
+	 	/* MISS TABLE QA_CERT_EVENT, TEST_EXTENSION_EXEMPTION
+		ELSE IF lookupType = 'QCE' then
+	   SELECT fac.FAC_ID, fac.FIRST_ECMPS_RPT_PERIOD_ID into facid, firstEcmpsRptPeriodId	
 			FROM QA_CERT_EVENT qac
-				JOIN MONITOR_LOCATION loc ON loc.MON_LOC_ID = qac.MON_LOC_ID
-				LEFT JOIN UNIT unt ON unt.UNIT_ID = loc.UNIT_ID
-				LEFT JOIN STACK_PIPE stp ON stp.STACK_PIPE_ID = loc.STACK_PIPE_ID
-				JOIN FACILITY fac ON fac.FAC_ID IN (unt.FAC_ID, stp.FAC_ID)
+				JOIN camdecmpswks.MONITOR_LOCATION loc ON loc.MON_LOC_ID = qac.MON_LOC_ID
+				LEFT JOIN camd.UNIT unt ON unt.UNIT_ID = loc.UNIT_ID
+				LEFT JOIN camdecmpswks.STACK_PIPE stp ON stp.STACK_PIPE_ID = loc.STACK_PIPE_ID
+				JOIN camd.plant fac ON fac.FAC_ID IN (unt.FAC_ID, stp.FAC_ID)
 			WHERE qac.QA_CERT_EVENT_ID = lookupid;
 		if facid is null then 
-				error_msg:= 'camdecmpswks.GetFacilityInfo: Unable to determine Facility ID for QA_CERT_EVENT_ID: ' 
-				||lookupid;
+				error_msg:= 'camdecmpswks.get_facility_info: Unable to determine Facility ID 
+				for QA_CERT_EVENT_ID: '||lookupid;
 			END if;
 			
-		ELSE IF (@lookupType = 'TEE') 
-		BEGIN
-			SELECT	@facId = fac.FAC_ID, 
-					@firstEcmpsRptPeriodId = fac.FIRST_ECMPS_RPT_PERIOD_ID 
+		 ELSEIF lookupType ='TEE' then
+		SELECT	fac.FAC_ID, fac.FIRST_ECMPS_RPT_PERIOD_ID into facid, firstEcmpsRptPeriodId
 			FROM TEST_EXTENSION_EXEMPTION tee
-				JOIN MONITOR_LOCATION loc ON loc.MON_LOC_ID = tee.MON_LOC_ID
-				LEFT JOIN UNIT unt ON unt.UNIT_ID = loc.UNIT_ID
-				LEFT JOIN STACK_PIPE stp ON stp.STACK_PIPE_ID = loc.STACK_PIPE_ID
-				JOIN FACILITY fac ON fac.FAC_ID IN (unt.FAC_ID, stp.FAC_ID)
-				WHERE tee.TEST_EXTENSION_EXEMPTION_ID = @lookupid;
+				JOIN camdecmpswks.MONITOR_LOCATION loc ON loc.MON_LOC_ID = tee.MON_LOC_ID
+				LEFT JOIN camd.UNIT unt ON unt.UNIT_ID = loc.UNIT_ID
+				LEFT JOIN camdecmpswks.STACK_PIPE stp ON stp.STACK_PIPE_ID = loc.STACK_PIPE_ID
+				JOIN camd.plant fac ON fac.FAC_ID IN (unt.FAC_ID, stp.FAC_ID)
+				WHERE tee.TEST_EXTENSION_EXEMPTION_ID = lookupid;
 
-			IF @@ROWCOUNT = 0 
-				SET @errorMessage = 'camdecmpswks.GetFacilityInfo: Unable to determine Facility ID for TEE_ID: ' + @lookupid;
-		END;
+			if facid is null then 
+				error_msg:= 'camdecmpswks.get_facility_info: Unable to determine Facility ID 
+				for TEE_ID: '||lookupid;
+			END if; 
 		*/	
 	ELSEIF lookupType = 'ORIS' then
 	   SELECT fac.FAC_ID, fac.FIRST_ECMPS_RPT_PERIOD_ID into facid, firstEcmpsRptPeriodId	

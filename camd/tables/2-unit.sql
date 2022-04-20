@@ -1,4 +1,8 @@
-CREATE TABLE camd.unit
+-- Table: camd.unit
+
+-- DROP TABLE camd.unit;
+
+CREATE TABLE IF NOT EXISTS camd.unit
 (
     unit_id numeric(38,0) NOT NULL,
     fac_id numeric(38,0) NOT NULL,
@@ -17,9 +21,9 @@ CREATE TABLE camd.unit
     non_load_based_ind numeric(1,0) NOT NULL DEFAULT 0,
     actual_90th_op_date date,
     moved_ind numeric(1,0) NOT NULL DEFAULT 0,
-    userid character varying(8) COLLATE pg_catalog."default" NOT NULL,
-    add_date date NOT NULL,
-    update_date date,
+    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    add_date timestamp without time zone NOT NULL,
+    update_date timestamp without time zone,
     CONSTRAINT pk_unit PRIMARY KEY (unit_id),
     CONSTRAINT uq_unit UNIQUE (fac_id, unitid),
     CONSTRAINT fk_unit_naics FOREIGN KEY (naics_cd)
@@ -98,27 +102,27 @@ COMMENT ON COLUMN camd.unit.add_date
 
 COMMENT ON COLUMN camd.unit.update_date
     IS 'Date of the last record update.';
+
 -- Index: idx_unit_naics
 
 -- DROP INDEX camd.idx_unit_naics;
 
 CREATE INDEX idx_unit_naics
     ON camd.unit USING btree
-    (naics_cd ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (naics_cd ASC NULLS LAST);
+
 -- Index: idx_unit_plant
 
 -- DROP INDEX camd.idx_unit_plant;
 
 CREATE INDEX idx_unit_plant
     ON camd.unit USING btree
-    (fac_id ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (fac_id ASC NULLS LAST);
+
 -- Index: idx_unit_source_category
 
 -- DROP INDEX camd.idx_unit_source_category;
 
 CREATE INDEX idx_unit_source_category
     ON camd.unit USING btree
-    (source_category_cd COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
+    (source_category_cd COLLATE pg_catalog."default" ASC NULLS LAST);
