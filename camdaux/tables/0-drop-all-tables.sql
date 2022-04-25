@@ -12,8 +12,8 @@ DROP TABLE IF EXISTS camdaux.qrtz_blob_triggers;
 DROP TABLE IF EXISTS camdaux.qrtz_triggers;
 DROP TABLE IF EXISTS camdaux.qrtz_job_details;
 DROP TABLE IF EXISTS camdaux.qrtz_calendars;
-DROP TABLE IF EXISTS camdaux.bookmark;
 
+DROP TABLE IF EXISTS camdaux.bookmark;
 DROP TABLE camdaux.cors_to_api;
 DROP TABLE camdaux.cors;
 DROP TABLE camdaux.api;
