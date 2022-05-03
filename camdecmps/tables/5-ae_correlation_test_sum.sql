@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.ae_correlation_test_sum
     avg_hrly_hi_rate numeric(7,1),
     calc_avg_hrly_hi_rate numeric(7,1),
     op_level_num numeric(2,0) NOT NULL,
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_ae_correlation_test_sum PRIMARY KEY (ae_corr_test_sum_id),

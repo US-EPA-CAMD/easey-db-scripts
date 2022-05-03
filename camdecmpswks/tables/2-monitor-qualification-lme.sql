@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_qualification_lme
     so2_tons numeric(4,1),
     nox_tons numeric(4,1),
     op_hours numeric(38,0),
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date date DEFAULT aws_oracle_ext.sysdate(),
     update_date date,
     CONSTRAINT pk_monitor_qualification_lme PRIMARY KEY (mon_lme_id),

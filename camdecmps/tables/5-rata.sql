@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.rata
     calc_overall_bias_adj_factor numeric(5,3),
     num_load_level numeric(1,0),
     calc_num_load_level numeric(1,0),
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_rata PRIMARY KEY (rata_id),

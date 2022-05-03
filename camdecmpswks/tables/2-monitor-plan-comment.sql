@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_plan_comment
     mon_plan_comment character varying(4000) COLLATE pg_catalog."default" NOT NULL,
     begin_date date NOT NULL,
     end_date date,
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date date DEFAULT aws_oracle_ext.sysdate(),
     submission_availability_cd character varying(7) COLLATE pg_catalog."default",
     update_date date,

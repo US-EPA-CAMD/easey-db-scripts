@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_qualification
     qual_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     begin_date date NOT NULL,
     end_date date,
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date date DEFAULT aws_oracle_ext.sysdate(),
     update_date date,
     CONSTRAINT pk_monitor_qualification PRIMARY KEY (mon_qual_id),

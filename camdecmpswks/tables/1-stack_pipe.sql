@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.stack_pipe
     stack_name character varying(6) COLLATE pg_catalog."default" NOT NULL,
     active_date date NOT NULL,
     retire_date date,
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date date,
     update_date date,
     CONSTRAINT pk_stack_pipe PRIMARY KEY (stack_pipe_id),

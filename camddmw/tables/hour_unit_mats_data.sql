@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS camddmw.hour_unit_mats_data
     rpt_period_id numeric(38,0) NOT NULL,
     op_year numeric(4,0) NOT NULL,
     data_source character varying(35) COLLATE pg_catalog."default" NOT NULL,
-    userid character varying(8) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp(0) without time zone NOT NULL,
     CONSTRAINT pk_hour_unit_mats_data PRIMARY KEY (unit_id, op_date, op_hour)
 ) PARTITION BY RANGE (op_date);

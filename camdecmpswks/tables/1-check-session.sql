@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.check_session
     updated_status_flg character varying(1) COLLATE pg_catalog."default" default 'N',
     di character varying(50) COLLATE pg_catalog."default",
     last_updated date,
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     CONSTRAINT pk_check_session PRIMARY KEY (chk_session_id),
     CONSTRAINT fk_check_session_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,

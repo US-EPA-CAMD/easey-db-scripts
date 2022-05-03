@@ -12,12 +12,12 @@ CREATE TABLE IF NOT EXISTS camdecmps.air_emission_testing
     aetb_name character varying(50) COLLATE pg_catalog."default",
     aetb_phone_number character varying(18) COLLATE pg_catalog."default",
     aetb_email character varying(70) COLLATE pg_catalog."default",
-    exam_date timestamp without time zone,
+    exam_date date,
     provider_name character varying(50) COLLATE pg_catalog."default",
     provider_email character varying(70) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     CONSTRAINT pk_air_emission_testing PRIMARY KEY (air_emission_test_id),
     CONSTRAINT fk_test_summary_aet FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE

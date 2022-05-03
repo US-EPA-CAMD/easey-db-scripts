@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.test_qualification
     low_load_pct numeric(5,1),
     begin_date date,
     end_date date,
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_test_qualification PRIMARY KEY (test_qualification_id),

@@ -1,0 +1,6 @@
+CREATE OR REPLACE  VIEW camdecmpswks.vw_qa_gfm_calibration_data (test_sum_id, test_num, test_reason_cd, test_begin_date, test_begin_hour, test_begin_min, test_end_date, test_end_hour, test_end_min, component_type_cd, component_identifier, component_id, mon_loc_id, fac_id, location_identifier, gfm_calibration_id, gfm_calibration_data_id, gas_level_cd, sample_rate, calibration_factor, userid, add_date, update_date) AS
+SELECT
+    ts.test_sum_id, ts.test_num, ts.test_reason_cd, ts.begin_date AS test_begin_date, ts.begin_hour AS test_begin_hour, ts.begin_min AS test_begin_min, ts.end_date AS test_end_date, ts.end_hour AS test_end_hour, ts.end_min AS test_end_min, ts.component_type_cd, ts.component_identifier, ts.component_id, ts.mon_loc_id, ts.fac_id, ts.location_identifier, ts.gfm_calibration_id, gd.gfm_calibration_data_id, gd.gas_level_cd, gd.sample_rate, gd.calibration_factor, gd.userid, gd.add_date, gd.update_date
+    FROM camdecmpswks.gfm_calibration_data AS gd
+    INNER JOIN camdecmpswks.vw_qa_test_summary_gfmcal AS ts
+        ON gd.gfm_calibration_id = ts.gfm_calibration_id;

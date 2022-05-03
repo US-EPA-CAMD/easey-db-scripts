@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_location
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     stack_pipe_id character varying(45) COLLATE pg_catalog."default",
     unit_id numeric(38,0),
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date date,
     update_date date,
     CONSTRAINT pk_monitor_location PRIMARY KEY (mon_loc_id),

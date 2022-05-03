@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.qa_cert_event
     updated_status_flg character varying(1) COLLATE pg_catalog."default",
     needs_eval_flg character varying(1) COLLATE pg_catalog."default",
     chk_session_id character varying(45) COLLATE pg_catalog."default",
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     qa_cert_event_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

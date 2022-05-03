@@ -10,10 +10,10 @@ CREATE TABLE IF NOT EXISTS camdecmps.protocol_gas
     gas_type_cd character varying(255) COLLATE pg_catalog."default" NOT NULL,
     vendor_id character varying(8) COLLATE pg_catalog."default",
     cylinder_id character varying(25) COLLATE pg_catalog."default",
-    expiration_date timestamp without time zone,
+    expiration_date date,
     add_date timestamp without time zone,
     update_date timestamp without time zone,
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     CONSTRAINT pk_protocol_gas PRIMARY KEY (protocol_gas_id),
     CONSTRAINT fk_gas_level_cd FOREIGN KEY (gas_level_cd)
         REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE

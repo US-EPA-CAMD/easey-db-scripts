@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.mats_method_data
     begin_hour numeric(2,0) NOT NULL,
     end_date date,
     end_hour numeric(2,0),
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date date,
     update_date date,
     CONSTRAINT pk_mats_method_data PRIMARY KEY (mats_method_data_id),

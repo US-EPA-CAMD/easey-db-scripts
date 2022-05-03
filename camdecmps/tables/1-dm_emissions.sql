@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.dm_emissions
     apportionment_type_cd character varying(7) COLLATE pg_catalog."default",
     emissions_created_flg character varying(1) COLLATE pg_catalog."default" NOT NULL,
     data_source character varying(35) COLLATE pg_catalog."default" NOT NULL,
-    userid character varying(8) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     CONSTRAINT dm_emissions_pk PRIMARY KEY (dm_emissions_id),
     CONSTRAINT dm_emissions_uq UNIQUE (mon_plan_id, rpt_period_id),

@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.qa_cert_event_supp_data
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id numeric(38,0) NOT NULL,
     delete_ind numeric(1,0) NOT NULL DEFAULT 0,
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_qa_cert_event_supp_data PRIMARY KEY (qa_cert_event_supp_data_id),
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.qa_cert_event_supp_data
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT fk_qa_cert_event_supp_data_de FOREIGN KEY (qa_cert_event_supp_date_cd)
-        REFERENCES camdecmpsmd.qa_cert_event_supp_data_code (qa_cert_event_supp_data_cd) MATCH SIMPLE
+        REFERENCES camdecmpsmd.qa_cert_event_supp_date_code (qa_cert_event_supp_date_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT fk_qa_cert_event_supp_data_ml FOREIGN KEY (mon_loc_id)
