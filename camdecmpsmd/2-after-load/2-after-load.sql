@@ -1,3 +1,6 @@
+-- NOTE: THE FOLLOWING TABLES NEED TO EXIST PRIOR TO RUNNING THIS SCRIPT
+-- Table: camdecmpsmd.eval_status_code
+
 --------------------------------------------------
 -- LOAD EVALUATION STATUS CODES
 --------------------------------------------------

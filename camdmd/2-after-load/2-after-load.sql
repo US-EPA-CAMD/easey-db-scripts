@@ -1,3 +1,7 @@
+-- NOTE: THE FOLLOWING TABLES NEED TO EXIST PRIOR TO RUNNING THIS SCRIPT
+-- Table: camdmd.account_type_group_code
+-- Table: camdmd.unit_type_group_code
+
 --------------------------------------------------
 -- PROGRAM CODE UPDATES 
 --------------------------------------------------
@@ -89,38 +93,6 @@ set fuel_group_cd = 'COAL'
 where fuel_type_cd in ('C', 'CRF', 'PTC');
 
 --------------------------------------------------
--- PROGRAM_EXEMPTION (ECMPS BETA)
---------------------------------------------------
-INSERT INTO camdmd.program_exemption(prg_cd, exemption_type_cd)
-VALUES ('ARP', 'NUE');
-INSERT INTO camdmd.program_exemption(prg_cd, exemption_type_cd)
-VALUES ('ARP', 'RUE');
-INSERT INTO camdmd.program_exemption(prg_cd, exemption_type_cd)
-VALUES ('CAIRNOX', 'RUE');
-INSERT INTO camdmd.program_exemption(prg_cd, exemption_type_cd)
-VALUES ('CAIROS', 'RUE');
-INSERT INTO camdmd.program_exemption(prg_cd, exemption_type_cd)
-VALUES ('CAIRSO2', 'RUE');
-INSERT INTO camdmd.program_exemption(prg_cd, exemption_type_cd)
-VALUES ('CSNOX', 'RUE');
-INSERT INTO camdmd.program_exemption(prg_cd, exemption_type_cd)
-VALUES ('CSNOXOS', 'RUE');
-INSERT INTO camdmd.program_exemption(prg_cd, exemption_type_cd)
-VALUES ('CSOSG1', 'RUE');
-INSERT INTO camdmd.program_exemption(prg_cd, exemption_type_cd)
-VALUES ('CSOSG2', 'RUE');
-INSERT INTO camdmd.program_exemption(prg_cd, exemption_type_cd)
-VALUES ('CSSO2G1', 'RUE');
-INSERT INTO camdmd.program_exemption(prg_cd, exemption_type_cd)
-VALUES ('CSSO2G2', 'RUE');
-INSERT INTO camdmd.program_exemption(prg_cd, exemption_type_cd)
-VALUES ('NBP', '25TON');
-INSERT INTO camdmd.program_exemption(prg_cd, exemption_type_cd)
-VALUES ('TXSO2', 'RUE');
-INSERT INTO camdmd.program_exemption(prg_cd, exemption_type_cd)
-VALUES ('CSOSG3', 'RUE');
-
---------------------------------------------------
 -- ACCOUNT TYPE CODE
 --------------------------------------------------
 update camdmd.account_type_code
@@ -161,7 +133,7 @@ INSERT INTO camdmd.account_type_group_code(
 -- ADD CONSTRAINT
 ALTER TABLE camdmd.account_type_code
     ADD CONSTRAINT fk_account_type_account_type_group FOREIGN KEY (account_type_group_cd)
-    REFERENCES camdmd.account_type_group_code (account_type_group_cd) MATCH SIMPLE
+    REFERENCES camdmd.account_type_group_code (account_type_group_cd) MATCH SIMPLE;
 
 --------------------------------------------------
 -- LOAD UNIT TYPE GROUPS
@@ -208,4 +180,4 @@ ALTER TABLE camdmd.unit_type_code
 -- ADD CONSTRAINT
 ALTER TABLE camdmd.unit_type_code
     ADD CONSTRAINT fk_unit_type_unit_type_group FOREIGN KEY (unit_type_group_cd)
-    REFERENCES camdmd.unit_type_group_code (unit_type_group_cd) MATCH SIMPLE
+    REFERENCES camdmd.unit_type_group_code (unit_type_group_cd) MATCH SIMPLE;

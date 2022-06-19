@@ -66,7 +66,7 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_qa_supp_data
     ml.oris_code,
     ml.facility_name,
     qa.submission_id
-   FROM camdecmps.qa_supp_data qa
+   FROM camdecmpswks.qa_supp_data qa
      LEFT JOIN camdecmpswks.vw_monitor_location ml ON qa.mon_loc_id::text = ml.mon_loc_id::text
      LEFT JOIN camdecmpswks.monitor_system ms ON qa.mon_sys_id::text = ms.mon_sys_id::text
      LEFT JOIN camdecmpswks.component c ON qa.component_id::text = c.component_id::text
