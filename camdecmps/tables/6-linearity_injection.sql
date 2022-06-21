@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.linearity_injection
     injection_min numeric(2,0),
     measured_value numeric(13,3),
     ref_value numeric(13,3),
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_linearity_injection PRIMARY KEY (lin_inj_id),

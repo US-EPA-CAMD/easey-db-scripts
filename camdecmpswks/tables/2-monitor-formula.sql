@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_formula
     end_date date,
     end_hour numeric(2,0),
     formula_equation character varying(200) COLLATE pg_catalog."default",
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date date,
     update_date date,
     CONSTRAINT pk_monitor_formula PRIMARY KEY (mon_form_id),

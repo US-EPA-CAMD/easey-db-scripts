@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.system_fuel_flow
     end_date date,
     end_hour numeric(2,0),
     max_rate_source_cd character varying(7) COLLATE pg_catalog."default",
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date date,
     update_date date,
     sys_fuel_uom_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,

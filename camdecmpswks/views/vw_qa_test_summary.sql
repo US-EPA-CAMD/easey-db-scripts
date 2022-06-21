@@ -51,14 +51,14 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_qa_test_summary
     udt.operating_condition_cd,
     occ.op_condition_cd_description,
     COALESCE(flc.op_level_cd, flr.op_level_cd) AS op_level_cd
-   FROM camdecmps.test_summary ts
+   FROM camdecmpswks.test_summary ts
      LEFT JOIN camdecmpswks.vw_monitor_location ml ON ts.mon_loc_id::text = ml.mon_loc_id::text
      LEFT JOIN camdecmpswks.monitor_system ms ON ts.mon_sys_id::text = ms.mon_sys_id::text
      LEFT JOIN camdecmpswks.component c ON ts.component_id::text = c.component_id::text
      LEFT JOIN camdecmpsmd.reporting_period rp ON ts.rpt_period_id = rp.rpt_period_id
-     LEFT JOIN camdecmps.fuel_flowmeter_accuracy ff ON ts.test_sum_id::text = ff.test_sum_id::text
-     LEFT JOIN camdecmps.unit_default_test udt ON ts.test_sum_id::text = udt.test_sum_id::text
+     LEFT JOIN camdecmpswks.fuel_flowmeter_accuracy ff ON ts.test_sum_id::text = ff.test_sum_id::text
+     LEFT JOIN camdecmpswks.unit_default_test udt ON ts.test_sum_id::text = udt.test_sum_id::text
      LEFT JOIN camdecmpsmd.fuel_code fc ON udt.fuel_cd::text = fc.fuel_cd::text
      LEFT JOIN camdecmpsmd.operating_condition_code occ ON udt.operating_condition_cd::text = occ.operating_condition_cd::text
-     LEFT JOIN camdecmps.flow_to_load_check flc ON ts.test_sum_id::text = flc.test_sum_id::text
-     LEFT JOIN camdecmps.flow_to_load_reference flr ON ts.test_sum_id::text = flr.test_sum_id::text;
+     LEFT JOIN camdecmpswks.flow_to_load_check flc ON ts.test_sum_id::text = flc.test_sum_id::text
+     LEFT JOIN camdecmpswks.flow_to_load_reference flr ON ts.test_sum_id::text = flr.test_sum_id::text;

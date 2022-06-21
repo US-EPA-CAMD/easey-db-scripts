@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_qualification_lee
     applicable_emission_standard numeric(9,4),
     emission_standard_uom character varying(7) COLLATE pg_catalog."default",
     emission_standard_pct numeric(5,1),
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date date DEFAULT aws_oracle_ext.sysdate(),
     update_date date,
     CONSTRAINT pk_monitor_qualification_lee PRIMARY KEY (mon_qual_lee_id),

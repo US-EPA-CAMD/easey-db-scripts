@@ -21,7 +21,7 @@ BEGIN
 
 	-- GET FACILITY --
 	SELECT fac_id, facility_name INTO fac
-	FROM camdecmps.monitor_plan
+	FROM camdecmpswks.monitor_plan
 	JOIN camd.plant
 		USING (fac_id)
 	WHERE mon_plan_id = monPlanId;
@@ -39,10 +39,10 @@ BEGIN
 		SELECT string_agg(unitStack, ', ') INTO planName
 		FROM (
 			SELECT unitid AS unitStack
-			FROM camdecmps.monitor_plan
-			JOIN camdecmps.monitor_plan_location
+			FROM camdecmpswks.monitor_plan
+			JOIN camdecmpswks.monitor_plan_location
 				USING (mon_plan_id)
-			JOIN camdecmps.monitor_location
+			JOIN camdecmpswks.monitor_location
 				USING (mon_loc_id)
 			JOIN camd.unit
 				USING (unit_id)
@@ -51,12 +51,12 @@ BEGIN
 			UNION
 
 			SELECT stack_name AS unitStack
-			FROM camdecmps.monitor_plan
-			JOIN camdecmps.monitor_plan_location
+			FROM camdecmpswks.monitor_plan
+			JOIN camdecmpswks.monitor_plan_location
 				USING (mon_plan_id)
-			JOIN camdecmps.monitor_location
+			JOIN camdecmpswks.monitor_location
 				USING (mon_loc_id)
-			JOIN camdecmps.stack_pipe
+			JOIN camdecmpswks.stack_pipe
 				USING (stack_pipe_id)
 			WHERE mon_plan_id = monPlanId
 		) AS unitStack;

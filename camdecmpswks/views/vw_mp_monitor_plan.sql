@@ -30,6 +30,6 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_mp_monitor_plan
    FROM camdecmpswks.monitor_plan mp
      JOIN camd.plant f ON mp.fac_id = f.fac_id
      LEFT JOIN camdecmpswks.derived_monitor_plan_status() dmps(mon_plan_id, begin_date, end_date, mon_plan_status_cd, mon_plan_status_cd_description) ON mp.mon_plan_id::text = dmps.mon_plan_id
-     LEFT JOIN camdecmpswks.vw_reporting_period rpbegin ON mp.begin_rpt_period_id = rpbegin.rpt_period_id
-     LEFT JOIN camdecmpswks.vw_reporting_period rpend ON mp.end_rpt_period_id = rpend.rpt_period_id
+     LEFT JOIN camdecmpsmd.vw_reporting_period rpbegin ON mp.begin_rpt_period_id = rpbegin.rpt_period_id
+     LEFT JOIN camdecmpsmd.vw_reporting_period rpend ON mp.end_rpt_period_id = rpend.rpt_period_id
      LEFT JOIN camdecmpswks.check_session cs ON mp.chk_session_id::text = cs.chk_session_id::text;

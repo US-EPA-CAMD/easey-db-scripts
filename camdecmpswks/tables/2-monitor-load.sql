@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_load
     low_op_boundary numeric(6,0),
     normal_level_cd character varying(7) COLLATE pg_catalog."default",
     second_level_cd character varying(7) COLLATE pg_catalog."default",
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date date,
     update_date date,
     max_load_uom_cd character varying(7) COLLATE pg_catalog."default",

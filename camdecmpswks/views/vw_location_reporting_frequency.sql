@@ -21,5 +21,5 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_location_reporting_frequency
      JOIN camdecmpswks.monitor_plan mp ON rf.mon_plan_id::text = mp.mon_plan_id::text
      JOIN camdecmpswks.monitor_plan_location mpl ON mp.mon_plan_id::text = mpl.mon_plan_id::text
      JOIN camdecmpswks.vw_monitor_location ml ON mpl.mon_loc_id::text = ml.mon_loc_id::text
-     JOIN camdecmpswks.vw_reporting_period brp ON rf.begin_rpt_period_id = brp.rpt_period_id
-     LEFT JOIN camdecmpswks.vw_reporting_period erp ON rf.end_rpt_period_id = erp.rpt_period_id;
+     JOIN camdecmpsmd.vw_reporting_period brp ON rf.begin_rpt_period_id = brp.rpt_period_id
+     LEFT JOIN camdecmpsmd.vw_reporting_period erp ON rf.end_rpt_period_id = erp.rpt_period_id;

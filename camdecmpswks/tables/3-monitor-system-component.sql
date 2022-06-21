@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_system_component
     begin_date date NOT NULL,
     end_date date,
     end_hour numeric(2,0),
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date date,
     update_date date,
     CONSTRAINT pk_monitor_system_component PRIMARY KEY (mon_sys_comp_id),

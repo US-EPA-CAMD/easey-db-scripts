@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.rect_duct_waf
     end_hour numeric(2,0),
     add_date date,
     update_date date,
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     CONSTRAINT pk_rect_duct_waf PRIMARY KEY (rect_duct_waf_data_id),
     CONSTRAINT fk_rect_duct_waf_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE,

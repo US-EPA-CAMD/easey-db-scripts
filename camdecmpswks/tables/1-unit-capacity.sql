@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.unit_capacity
     begin_date date,
     end_date date,
     max_hi_capacity numeric(7,1),
-    userid character varying(8) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
     add_date date NOT NULL,
     update_date date,
     CONSTRAINT pk_unit_capacity PRIMARY KEY (unit_cap_id),

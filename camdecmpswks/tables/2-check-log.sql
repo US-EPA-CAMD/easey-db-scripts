@@ -1,8 +1,14 @@
-CREATE TABLE IF NOT EXISTS camdecmpswks.check_log
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- Table: camdecmpswks.check_log
+
+-- DROP TABLE camdecmpswks.check_log;
+
+CREATE TABLE camdecmpswks.check_log
 (
-    chk_log_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    chk_log_id uuid NOT NULL DEFAULT uuid_generate_v4(),
     chk_session_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    begin_date date NOT NULL,
+    begin_date timestamp without time zone NOT NULL,
     rule_check_id numeric(38,0),
     result_message character varying(1000) COLLATE pg_catalog."default",
     chk_log_comment character varying(1000) COLLATE pg_catalog."default",
@@ -24,13 +30,21 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.check_log
     error_suppress_id numeric(38,0),
     CONSTRAINT pk_check_log PRIMARY KEY (chk_log_id),
     CONSTRAINT check_log_r01 FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE,
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT check_log_severity_fk FOREIGN KEY (severity_cd)
-        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE,
+        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT check_log_suppress_severity_fk FOREIGN KEY (suppressed_severity_cd)
-        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE,
+        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT pk_check_session_check_log FOREIGN KEY (chk_session_id)
         REFERENCES camdecmpswks.check_session (chk_session_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmpswks.check_log

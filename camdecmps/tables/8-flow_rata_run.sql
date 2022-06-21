@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.flow_rata_run
     calc_waf numeric(6,4),
     calc_calc_waf numeric(6,4),
     avg_stack_flow_rate numeric(10,0),
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     update_date timestamp without time zone,
     add_date timestamp without time zone,
     CONSTRAINT pk_flow_rata_run PRIMARY KEY (flow_rata_run_id),

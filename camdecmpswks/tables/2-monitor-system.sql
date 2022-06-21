@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_system
     end_hour numeric(2,0),
     sys_designation_cd character varying(7) COLLATE pg_catalog."default",
     fuel_cd character varying(7) COLLATE pg_catalog."default",
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date date,
     update_date date,
     CONSTRAINT pk_monitor_system PRIMARY KEY (mon_sys_id),

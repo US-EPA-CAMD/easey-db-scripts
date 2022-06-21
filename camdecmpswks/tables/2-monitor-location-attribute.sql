@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_location_attribute
     material_cd character varying(7) COLLATE pg_catalog."default",
     add_date date,
     update_date date,
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     CONSTRAINT pk_monitor_location_attribute PRIMARY KEY (mon_loc_attrib_id),
     CONSTRAINT fk_monitor_location_attribute_material_code FOREIGN KEY (material_cd)
         REFERENCES camdecmpsmd.material_code (material_cd) MATCH SIMPLE,

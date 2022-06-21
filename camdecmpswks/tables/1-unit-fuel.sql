@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.unit_fuel
     dem_so2 character varying(7) COLLATE pg_catalog."default",
     dem_gcv character varying(7) COLLATE pg_catalog."default",
     sulfur_content numeric(5,4),
-    userid character varying(8) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
     add_date date NOT NULL,
     update_date date,
     CONSTRAINT pk_unit_fuel PRIMARY KEY (uf_id),

@@ -23,11 +23,10 @@ begin
     /* Remove check session for the MP that are not the current check session. */
     delete 
       from  camdecmpswks.check_session
-     where  process_cd = 'MP'
+        where  process_cd = 'MP'
        and  mon_plan_id = vMonPlanId
        and  chk_session_id != vChkSessionId;
-
-
+   
     /* Indicate that the MP does not need to be evaluated. */
     update  camdecmpswks.monitor_plan 
        set  needs_eval_flg = 'N',
@@ -48,8 +47,7 @@ begin
     then 
         
         /*
-         * 1)   When Emission Evaluations are implemented.
-         * 
+         * 1)   When Emission Evaluations are implemented.         * 
          *      For each EMISSION_EVALUATION row for the MP where
          *      EMISSION_EVALUATION.NEEDS_EVAL_FLG = 'N' and 
          *      EM_SUBMISSION_ACCESS.SUBMISSION_AVAILABILITY_CD = 'REQUIRE' or'GRANTED' where RPT_PERIOD_ID = EMISSION_EVALUATION.RPT_PERIOD_ID
@@ -83,9 +81,46 @@ begin
          *      - Updates NEEDS_EVAL_FLG to 'Y' and CHK_SESSION_ID to null for the TEST_SUMMARY row.
          *      - Nulls the calculated values in each test table.
          */
-    
-    end if;
-   
+  
+  /* For QCE and TEE test */
+     if result != 'F' then
+      --- For QCE ---------------------
+      DELETE FROM camdecmpswks.CHECK_SESSION
+	     WHERE CHK_SESSION_ID IN 
+	     (SELECT CHK_SESSION_ID FROM camdecmpswks.QA_CERT_EVENT qce, camdecmpswks.MONITOR_PLAN_LOCATION MPL
+            WHERE NEEDS_EVAL_FLG = 'N' AND
+           (SUBMISSION_AVAILABILITY_CD = 'REQUIRE' OR UPDATED_STATUS_FLG = 'Y') AND
+			QCE.MON_LOC_ID = MPL.MON_LOC_ID AND	MON_PLAN_ID =vMonPlanId);
+			
+       UPDATE camdecmpswks.QA_CERT_EVENT
+					SET NEEDS_EVAL_FLG = 'Y', CHK_SESSION_ID = null, 
+						UPDATE_DATE = current_timestamp
+					FROM camdecmpswks.QA_CERT_EVENT qce
+						INNER JOIN camdecmpswks.MONITOR_PLAN_LOCATION mpl ON qce.MON_LOC_ID = mpl.MON_LOC_ID 
+					WHERE qce.NEEDS_EVAL_FLG = 'N' AND
+						(qce.SUBMISSION_AVAILABILITY_CD = 'REQUIRE' OR
+						qce.UPDATED_STATUS_FLG = 'Y') AND
+						mpl.MON_PLAN_ID =vMonPlanId;
+	   ---- For TEE ----------
+	   DELETE FROM camdecmpswks.CHECK_SESSION 
+			WHERE CHK_SESSION_ID IN 
+			 (SELECT CHK_SESSION_ID FROM camdecmpswks.TEST_EXTENSION_EXEMPTION tee,camdecmpswks.MONITOR_PLAN_LOCATION MPL
+				WHERE NEEDS_EVAL_FLG = 'N' AND (SUBMISSION_AVAILABILITY_CD = 'REQUIRE' OR
+							UPDATED_STATUS_FLG = 'Y') AND
+							TEE.MON_LOC_ID = MPL.MON_LOC_ID AND
+							MON_PLAN_ID  = vMonPlanId);
+
+				UPDATE camdecmpswks.TEST_EXTENSION_EXEMPTION
+					SET NEEDS_EVAL_FLG = 'Y', CHK_SESSION_ID = null, UPDATE_DATE = current_timestamp
+					FROM camdecmpswks.TEST_EXTENSION_EXEMPTION tee
+						INNER JOIN camdecmpswks.MONITOR_PLAN_LOCATION mpl ON tee.MON_LOC_ID = mpl.MON_LOC_ID 
+					WHERE tee.NEEDS_EVAL_FLG = 'N' AND
+						(tee.SUBMISSION_AVAILABILITY_CD = 'REQUIRE' OR
+						tee.UPDATED_STATUS_FLG = 'Y') AND
+						mpl.MON_PLAN_ID  = vMonPlanId;
+						
+	      end if;
+	  end if;
    return next;
 
 exception when others then

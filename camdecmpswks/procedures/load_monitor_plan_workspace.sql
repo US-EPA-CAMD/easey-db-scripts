@@ -8,7 +8,6 @@ LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
 		-- MONITOR_PLAN --
-		DELETE FROM camdecmpswks.monitor_plan;
 		INSERT INTO camdecmpswks.monitor_plan(
 			mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, pending_status_cd, begin_rpt_period_id, end_rpt_period_id, last_evaluated_date
 		)
@@ -17,7 +16,6 @@ BEGIN
 		FROM camdecmps.monitor_plan;
 
 		-- MONITOR_PLAN_REPORTING_FREQ --
-		DELETE FROM camdecmpswks.monitor_plan_reporting_freq;
 		INSERT INTO camdecmpswks.monitor_plan_reporting_freq(
 			mon_plan_rf_id, mon_plan_id, report_freq_cd, end_rpt_period_id, begin_rpt_period_id, userid, add_date, update_date
 		)
@@ -26,7 +24,6 @@ BEGIN
 		FROM camdecmps.monitor_plan_reporting_freq;
 
 		-- STACK_PIPE --
-		DELETE FROM camdecmpswks.stack_pipe;
 		INSERT INTO camdecmpswks.stack_pipe(
 			stack_pipe_id, fac_id, stack_name, active_date, retire_date, userid, add_date, update_date
 		)
@@ -35,7 +32,6 @@ BEGIN
 		FROM camdecmps.stack_pipe AS sp;
 
 		-- MONITOR_LOCATION --
-		DELETE FROM camdecmpswks.monitor_location;
 		INSERT INTO camdecmpswks.monitor_location(
 			mon_loc_id, stack_pipe_id, unit_id, userid, add_date, update_date
 		)
@@ -44,7 +40,6 @@ BEGIN
 		FROM camdecmps.monitor_location AS ml;
 
 		-- COMPONENT --
-		DELETE FROM camdecmpswks.component;
 		INSERT INTO camdecmpswks.component(
 			component_id, mon_loc_id, component_identifier, model_version, serial_number, manufacturer, component_type_cd, acq_cd, basis_cd, userid, add_date, update_date, hg_converter_ind
 		)
@@ -53,7 +48,6 @@ BEGIN
 		FROM camdecmps.component AS c;
 
 		-- ANALYZER_RANGE --
-		DELETE FROM camdecmpswks.analyzer_range;		
 		INSERT INTO camdecmpswks.analyzer_range(
 			analyzer_range_id, component_id, analyzer_range_cd, dual_range_ind, begin_date, begin_hour, end_date, end_hour, userid, add_date, update_date
 		)
@@ -62,7 +56,6 @@ BEGIN
 		FROM camdecmps.analyzer_range AS ar;		
 
 		-- MATS_METHOD_DATA --
-		DELETE FROM camdecmpswks.mats_method_data;
 		INSERT INTO camdecmpswks.mats_method_data(
 			mats_method_data_id, mon_loc_id, mats_method_cd, mats_method_parameter_cd, begin_date, begin_hour, end_date, end_hour, userid, add_date, update_date
 		)
@@ -71,7 +64,6 @@ BEGIN
 		FROM camdecmps.mats_method_data AS mmd;
 
 		-- MONITOR_DEFAULT --
-		DELETE FROM camdecmpswks.monitor_default;
 		INSERT INTO camdecmpswks.monitor_default(
 			mondef_id, mon_loc_id, parameter_cd, begin_date, begin_hour, end_date, end_hour, operating_condition_cd, default_value, default_purpose_cd, default_source_cd, fuel_cd, group_id, userid, add_date, update_date, default_uom_cd
 		)
@@ -80,7 +72,6 @@ BEGIN
 		FROM camdecmps.monitor_default AS md;
 
 		-- MONITOR_FORMULA --
-		DELETE FROM camdecmpswks.monitor_formula;
 		INSERT INTO camdecmpswks.monitor_formula(
 			mon_form_id, mon_loc_id, parameter_cd, equation_cd, formula_identifier, begin_date, begin_hour, end_date, end_hour, formula_equation, userid, add_date, update_date
 		)
@@ -89,7 +80,6 @@ BEGIN
 		FROM camdecmps.monitor_formula AS mf;
 
 		-- MONITOR_LOAD --
-		DELETE FROM camdecmpswks.monitor_load;
 		INSERT INTO camdecmpswks.monitor_load(
 			load_id, mon_loc_id, load_analysis_date, begin_date, begin_hour, end_date, end_hour, max_load_value, second_normal_ind, up_op_boundary, low_op_boundary, normal_level_cd, second_level_cd, userid, add_date, update_date, max_load_uom_cd
 		)
@@ -98,7 +88,6 @@ BEGIN
 		FROM camdecmps.monitor_load AS ml;
 
 		-- MONITOR_LOCATION_ATTRIBUTE --
-		DELETE FROM camdecmpswks.monitor_location_attribute;
 		INSERT INTO camdecmpswks.monitor_location_attribute(
 			mon_loc_attrib_id, mon_loc_id, grd_elevation, duct_ind, bypass_ind, cross_area_flow, cross_area_exit, begin_date, end_date, stack_height, shape_cd, material_cd, add_date, update_date, userid
 		)
@@ -107,7 +96,6 @@ BEGIN
 		FROM camdecmps.monitor_location_attribute AS mla;
 
 		-- MONITOR_METHOD --
-		DELETE FROM camdecmpswks.monitor_method;
 		INSERT INTO camdecmpswks.monitor_method(
 			mon_method_id, mon_loc_id, parameter_cd, sub_data_cd, bypass_approach_cd, method_cd, begin_date, begin_hour, end_date, end_hour, userid, add_date, update_date
 		)
@@ -116,7 +104,6 @@ BEGIN
 		FROM camdecmps.monitor_method AS mm;
 
 		-- MONITOR_PLAN_COMMENT --
-		DELETE FROM camdecmpswks.monitor_plan_comment;
 		INSERT INTO camdecmpswks.monitor_plan_comment(
 			mon_plan_comment_id, mon_plan_id, mon_plan_comment, begin_date, end_date, userid, add_date, submission_availability_cd, update_date
 		)
@@ -125,7 +112,6 @@ BEGIN
 		FROM camdecmps.monitor_plan_comment;
 
 		-- MONITOR_PLAN_LOCATION --
-		DELETE FROM camdecmpswks.monitor_plan_location;
 		INSERT INTO camdecmpswks.monitor_plan_location(
 			monitor_plan_location_id, mon_plan_id, mon_loc_id
 		)
@@ -134,7 +120,6 @@ BEGIN
 		FROM camdecmps.monitor_plan_location;		
 
 		-- MONITOR_QUALIFICATION --
-		DELETE FROM camdecmpswks.monitor_qualification;
 		INSERT INTO camdecmpswks.monitor_qualification(
 			mon_qual_id, mon_loc_id, qual_type_cd, begin_date, end_date, userid, add_date, update_date
 		)
@@ -143,7 +128,6 @@ BEGIN
 		FROM camdecmps.monitor_qualification AS mq;
 
 		-- MONITOR_QUALIFICATION_LEE --
-		DELETE FROM camdecmpswks.monitor_qualification_lee;
 		INSERT INTO camdecmpswks.monitor_qualification_lee(
 			mon_qual_lee_id, mon_qual_id, qual_test_date, parameter_cd, qual_lee_test_type_cd, potential_annual_emissions, applicable_emission_standard, emission_standard_uom, emission_standard_pct, userid, add_date, update_date
 		)
@@ -152,7 +136,6 @@ BEGIN
 		FROM camdecmps.monitor_qualification_lee AS mq;
 
 		-- MONITOR_QUALIFICATION_LME --		
-		DELETE FROM camdecmpswks.monitor_qualification_lme;		
 		INSERT INTO camdecmpswks.monitor_qualification_lme(
 			mon_lme_id, mon_qual_id, qual_data_year, so2_tons, nox_tons, op_hours, userid, add_date, update_date
 		)
@@ -161,7 +144,6 @@ BEGIN
 		FROM camdecmps.monitor_qualification_lme AS mq;
 
 		-- MONITOR_QUALIFICATION_PCT --		
-		DELETE FROM camdecmpswks.monitor_qualification_pct;		
 		INSERT INTO camdecmpswks.monitor_qualification_pct(
 			mon_pct_id, mon_qual_id, qual_year, yr1_qual_data_type_cd, yr1_qual_data_year, yr1_pct_value, yr2_qual_data_type_cd, yr2_qual_data_year, yr2_pct_value, yr3_qual_data_type_cd, yr3_qual_data_year, yr3_pct_value, avg_pct_value, userid, add_date, update_date
 		)
@@ -170,7 +152,6 @@ BEGIN
 		FROM camdecmps.monitor_qualification_pct AS mq;
 
 		-- MONITOR_SPAN --
-		DELETE FROM camdecmpswks.monitor_span;
 		INSERT INTO camdecmpswks.monitor_span(
 			span_id, mon_loc_id, mpc_value, mec_value, mpf_value, max_low_range, span_value, full_scale_range, begin_date, begin_hour, end_date, end_hour, default_high_range, flow_span_value, flow_full_scale_range, component_type_cd, span_scale_cd, span_method_cd, userid, add_date, update_date, span_uom_cd
 		)
@@ -179,7 +160,6 @@ BEGIN
 		FROM camdecmps.monitor_span AS ms;
 
 		-- MONITOR_SYSTEM --
-		DELETE FROM camdecmpswks.monitor_system;
 		INSERT INTO camdecmpswks.monitor_system(
 			mon_sys_id, mon_loc_id, system_identifier, sys_type_cd, begin_date, begin_hour, end_date, end_hour, sys_designation_cd, fuel_cd, userid, add_date, update_date
 		)
@@ -188,7 +168,6 @@ BEGIN
 		FROM camdecmps.monitor_system AS ms;
 
 		-- MONITOR_SYSTEM_COMPONENT --
-		DELETE FROM camdecmpswks.monitor_system_component;
 		INSERT INTO camdecmpswks.monitor_system_component(
 			mon_sys_comp_id, mon_sys_id, component_id, begin_hour, begin_date, end_date, end_hour, userid, add_date, update_date
 		)
@@ -197,7 +176,6 @@ BEGIN
 		FROM camdecmps.monitor_system_component AS msc;
 
 		-- RECT_DUCT_WAF --
-		DELETE FROM camdecmpswks.rect_duct_waf;
 		INSERT INTO camdecmpswks.rect_duct_waf(
 			rect_duct_waf_data_id, mon_loc_id, waf_determined_date, waf_effective_date, waf_effective_hour, waf_method_cd, waf_value, num_test_runs, num_traverse_points_waf, num_test_ports, num_traverse_points_ref, duct_width, duct_depth, end_date, end_hour, add_date, update_date, userid
 		)
@@ -206,7 +184,6 @@ BEGIN
 		FROM camdecmps.rect_duct_waf AS rdw;
 
 		-- SYSTEM_FUEL_FLOW --
-		DELETE FROM camdecmpswks.system_fuel_flow;
 		INSERT INTO camdecmpswks.system_fuel_flow(
 			sys_fuel_id, mon_sys_id, max_rate, begin_date, begin_hour, end_date, end_hour, max_rate_source_cd, userid, add_date, update_date, sys_fuel_uom_cd
 		)
@@ -215,7 +192,6 @@ BEGIN
 		FROM camdecmps.system_fuel_flow AS sff;
 
 		-- UNIT_CAPACITY --
-		DELETE FROM camdecmpswks.unit_capacity;
 		INSERT INTO camdecmpswks.unit_capacity(
 			unit_cap_id, unit_id, begin_date, end_date, max_hi_capacity, userid, add_date, update_date
 		)
@@ -224,7 +200,6 @@ BEGIN
 		FROM camdecmps.unit_capacity AS uc;
 
 		-- UNIT_CONTROL --
-		DELETE FROM camdecmpswks.unit_control;
 		INSERT INTO camdecmpswks.unit_control(
 			ctl_id, unit_id, control_cd, ce_param, install_date, opt_date, orig_cd, seas_cd, retire_date, indicator_cd, userid, add_date, update_date
 		)
@@ -233,7 +208,6 @@ BEGIN
 		FROM camdecmps.unit_control AS uc;
 
 		-- UNIT_FUEL --
-		DELETE FROM camdecmpswks.unit_fuel;
 		INSERT INTO camdecmpswks.unit_fuel(
 			uf_id, unit_id, fuel_type, begin_date, end_date, indicator_cd, act_or_proj_cd, ozone_seas_ind, dem_so2, dem_gcv, sulfur_content, userid, add_date, update_date
 		)
@@ -242,7 +216,6 @@ BEGIN
 		FROM camdecmps.unit_fuel AS uf;
 
 		-- UNIT_STACK_CONFIGURATION --
-		DELETE FROM camdecmpswks.unit_stack_configuration;
 		INSERT INTO camdecmpswks.unit_stack_configuration(
 			config_id, unit_id, stack_pipe_id, begin_date, end_date, userid, add_date, update_date
 		)

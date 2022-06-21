@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_qualification_pct
     yr3_qual_data_year numeric(4,0),
     yr3_pct_value numeric(5,1),
     avg_pct_value numeric(5,1),
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date date DEFAULT aws_oracle_ext.sysdate(),
     update_date date,
     CONSTRAINT pk_monitor_qualification_pct PRIMARY KEY (mon_pct_id),

@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.unit_control
     seas_cd character varying(1) COLLATE pg_catalog."default",
     retire_date date,
     indicator_cd character varying(7) COLLATE pg_catalog."default",
-    userid character varying(8) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
     add_date date NOT NULL,
     update_date date,
     CONSTRAINT pk_unit_control PRIMARY KEY (ctl_id),

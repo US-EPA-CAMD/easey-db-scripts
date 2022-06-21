@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.hg_test_injection
     injection_min numeric(2,0),
     measured_value numeric(13,3),
     ref_value numeric(13,3),
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(25) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_hg_test_injection PRIMARY KEY (hg_test_inj_id),
