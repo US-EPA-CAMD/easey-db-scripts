@@ -50,7 +50,7 @@
     <setting key="ext_out_file_size" value="10485760"/>
     <setting key="ext_pack_newid" value="NO"/>
     <setting key="ext_pack_spatial" value="YES"/>
-    <setting key="ext_pack_version_replace" value="true"/>
+    <setting key="ext_pack_version_replace" value="false"/>
     <setting key="ext_snowball_out_file_size" value="104857600"/>
     <setting key="ext_source_temp_database_schema" value=""/>
     <setting key="ext_use_partitioning_size" value="100"/>
