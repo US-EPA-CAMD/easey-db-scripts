@@ -18,12 +18,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsmd.nsps4t_emission_standard_code
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS camdecmpsmd.nsps4t_emission_standard_code
-    OWNER to "uImcwuf4K9dyaxeL";
+);
 
 COMMENT ON TABLE camdecmpsmd.nsps4t_emission_standard_code
     IS 'NSPS4T (quarterly) Summary Information. ';

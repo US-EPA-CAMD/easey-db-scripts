@@ -7,12 +7,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsmd.operating_type_code
     op_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     op_type_cd_description character varying(1000) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT pk_operating_type_code PRIMARY KEY (op_type_cd)
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS camdecmpsmd.operating_type_code
-    OWNER to "uImcwuf4K9dyaxeL";
+);
 
 COMMENT ON TABLE camdecmpsmd.operating_type_code
     IS 'Lookup table for operating type code (e.g., quarterly operating hours).';

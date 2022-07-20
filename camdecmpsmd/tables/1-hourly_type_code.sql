@@ -7,12 +7,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsmd.hourly_type_code
     hourly_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     hourly_type_description character varying(1000) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT pk_hourly_type_code PRIMARY KEY (hourly_type_cd)
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS camdecmpsmd.hourly_type_code
-    OWNER to "uImcwuf4K9dyaxeL";
+);
 
 COMMENT ON TABLE camdecmpsmd.hourly_type_code
     IS 'Lookup table for hourly type.';
