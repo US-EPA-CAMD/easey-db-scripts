@@ -1,0 +1,3 @@
+ALTER TABLE camdecmpswks.check_session
+ADD batch_id character varying(45)
+ 
