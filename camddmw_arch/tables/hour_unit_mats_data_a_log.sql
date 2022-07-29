@@ -1,8 +1,8 @@
--- Table: camddmw.hour_unit_mats_data_log
+-- Table: camddmw_arch.hour_unit_mats_data_a_log
 
--- DROP TABLE camddmw.hour_unit_mats_data_log;
+-- DROP TABLE camddmw_arch.hour_unit_mats_data_a_log;
 
-CREATE TABLE IF NOT EXISTS camddmw.hour_unit_mats_data_log
+CREATE TABLE IF NOT EXISTS camddmw_arch.hour_unit_mats_data_a_log
 (
     sql_function character varying(1) COLLATE pg_catalog."default" NOT NULL,
     unit_id numeric(38,0) NOT NULL,
@@ -33,28 +33,28 @@ CREATE TABLE IF NOT EXISTS camddmw.hour_unit_mats_data_log
     add_date timestamp(0) without time zone NOT NULL,
     skey numeric NOT NULL,
     logged_time timestamp without time zone,
-    CONSTRAINT pk_hour_unit_mats_data_log PRIMARY KEY (skey)
+    CONSTRAINT pk_hour_unit_mats_data_a_log PRIMARY KEY (skey)
 );
 
-DROP INDEX IF EXISTS camddmw.idx_hour_unit_mats_data_log_op_date;
-DROP INDEX IF EXISTS camddmw.idx_hour_unit_mats_data_log_op_hour;
-DROP INDEX IF EXISTS camddmw.idx_hour_unit_mats_data_log_op_time;
-DROP INDEX IF EXISTS camddmw.idx_hour_unit_mats_data_log_op_year;
-DROP INDEX IF EXISTS camddmw.idx_hour_unit_mats_data_log_sql_function;
-DROP INDEX IF EXISTS camddmw.idx_hour_unit_mats_data_log_unit_id;
+DROP INDEX IF EXISTS camddmw_arch.idx_hour_unit_mats_data_a_log_op_date;
+DROP INDEX IF EXISTS camddmw_arch.idx_hour_unit_mats_data_a_log_op_hour;
+DROP INDEX IF EXISTS camddmw_arch.idx_hour_unit_mats_data_a_log_op_time;
+DROP INDEX IF EXISTS camddmw_arch.idx_hour_unit_mats_data_a_log_op_year;
+DROP INDEX IF EXISTS camddmw_arch.idx_hour_unit_mats_data_a_log_sql_function;
+DROP INDEX IF EXISTS camddmw_arch.idx_hour_unit_mats_data_a_log_unit_id;
 
-CREATE INDEX idx_hour_unit_mats_data_log_sql_function
-    ON camddmw.hour_unit_mats_data_log USING btree
+CREATE INDEX idx_hour_unit_mats_data_a_log_sql_function
+    ON camddmw_arch.hour_unit_mats_data_a_log USING btree
     (sql_function ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_mats_data_log_unit_id
-    ON camddmw.hour_unit_mats_data_log USING btree
+CREATE INDEX idx_hour_unit_mats_data_a_log_unit_id
+    ON camddmw_arch.hour_unit_mats_data_a_log USING btree
     (unit_id ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_mats_data_log_op_date
-    ON camddmw.hour_unit_mats_data_log USING btree
+CREATE INDEX idx_hour_unit_mats_data_a_log_op_date
+    ON camddmw_arch.hour_unit_mats_data_a_log USING btree
     (op_date ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_mats_data_log_op_hour
-    ON camddmw.hour_unit_mats_data_log USING btree
+CREATE INDEX idx_hour_unit_mats_data_a_log_op_hour
+    ON camddmw_arch.hour_unit_mats_data_a_log USING btree
     (op_hour ASC NULLS LAST);
