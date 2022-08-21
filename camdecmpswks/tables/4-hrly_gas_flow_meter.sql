@@ -1,8 +1,8 @@
 -- Table: camdecmpswks.hrly_gas_flow_meter
 
--- DROP TABLE IF EXISTS camdecmpswks.hrly_gas_flow_meter;
+-- DROP TABLE camdecmpswks.hrly_gas_flow_meter;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.hrly_gas_flow_meter
+CREATE TABLE camdecmpswks.hrly_gas_flow_meter
 (
     hrly_gas_flow_meter_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     hour_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -20,19 +20,19 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.hrly_gas_flow_meter
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_hrly_gas_flow_meter PRIMARY KEY (hrly_gas_flow_meter_id),
-    CONSTRAINT fk_gfm_component_id FOREIGN KEY (component_id)
+    CONSTRAINT fk_hrly_gas_flow_meter_component FOREIGN KEY (component_id)
         REFERENCES camdecmpswks.component (component_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_gfm_hour_id FOREIGN KEY (hour_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_hrly_gas_flow_meter_hrly_op_data FOREIGN KEY (hour_id)
         REFERENCES camdecmpswks.hrly_op_data (hour_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_gfm_mon_loc_id FOREIGN KEY (mon_loc_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_hrly_gas_flow_meter_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_gfm_rpt_period_id FOREIGN KEY (rpt_period_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_hrly_gas_flow_meter_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -85,35 +85,35 @@ COMMENT ON COLUMN camdecmpswks.hrly_gas_flow_meter.add_date
 
 COMMENT ON COLUMN camdecmpswks.hrly_gas_flow_meter.update_date
     IS 'Date and time in which record was last updated. ';
-
 -- Index: idx_component_id
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_component_id;
+-- DROP INDEX camdecmpswks.idx_component_id;
 
-CREATE INDEX IF NOT EXISTS idx_component_id
+CREATE INDEX idx_component_id
     ON camdecmpswks.hrly_gas_flow_meter USING btree
-    (component_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (component_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_hrlygfm_001
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_hrlygfm_001;
+-- DROP INDEX camdecmpswks.idx_hrlygfm_001;
 
-CREATE INDEX IF NOT EXISTS idx_hrlygfm_001
+CREATE INDEX idx_hrlygfm_001
     ON camdecmpswks.hrly_gas_flow_meter USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_hrlygfm_add_date
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_hrlygfm_add_date;
+-- DROP INDEX camdecmpswks.idx_hrlygfm_add_date;
 
-CREATE INDEX IF NOT EXISTS idx_hrlygfm_add_date
+CREATE INDEX idx_hrlygfm_add_date
     ON camdecmpswks.hrly_gas_flow_meter USING btree
-    (add_date ASC NULLS LAST);
-
+    (add_date ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_hrlygfm_hour_id
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_hrlygfm_hour_id;
+-- DROP INDEX camdecmpswks.idx_hrlygfm_hour_id;
 
-CREATE INDEX IF NOT EXISTS idx_hrlygfm_hour_id
+CREATE INDEX idx_hrlygfm_hour_id
     ON camdecmpswks.hrly_gas_flow_meter USING btree
-    (hour_id COLLATE pg_catalog."default" ASC NULLS LAST);
+    (hour_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

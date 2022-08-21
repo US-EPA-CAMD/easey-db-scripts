@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.ae_correlation_test_sum;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.ae_correlation_test_sum
+CREATE TABLE camdecmpswks.ae_correlation_test_sum
 (
     ae_corr_test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -19,13 +19,5 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.ae_correlation_test_sum
     CONSTRAINT fk_ae_correlation_test_sum_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmpswks.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
-
--- -- Index: idx_ae_corr_test_sum_001
-
--- -- DROP INDEX camdecmpswks.idx_ae_corr_test_sum_001;
-
--- CREATE INDEX idx_ae_corr_test_sum_001
---     ON camdecmpswks.ae_correlation_test_sum USING btree
---     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

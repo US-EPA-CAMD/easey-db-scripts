@@ -11,11 +11,11 @@ CREATE TABLE camdecmpswks.user_session
     last_login_date timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT user_session_pkey PRIMARY KEY (userid)
 );
-
 -- Index: token_index
 
 -- DROP INDEX camdecmpswks.token_index;
 
 CREATE INDEX token_index
     ON camdecmpswks.user_session USING btree
-    (security_token COLLATE pg_catalog."default" ASC NULLS LAST);
+    (security_token COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

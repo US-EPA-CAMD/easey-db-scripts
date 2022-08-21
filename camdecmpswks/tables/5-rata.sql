@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.rata;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.rata
+CREATE TABLE camdecmpswks.rata
 (
     rata_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -29,29 +29,5 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.rata
     CONSTRAINT fk_rata_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmpswks.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
-
--- -- Index: idx_rata_001
-
--- -- DROP INDEX camdecmpswks.idx_rata_001;
-
--- CREATE INDEX idx_rata_001
---     ON camdecmpswks.rata USING btree
---     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- -- Index: idx_rata_calc_rata
-
--- -- DROP INDEX camdecmpswks.idx_rata_calc_rata;
-
--- CREATE INDEX idx_rata_calc_rata
---     ON camdecmpswks.rata USING btree
---     (calc_rata_frequency_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- -- Index: idx_rata_rata_frequ
-
--- -- DROP INDEX camdecmpswks.idx_rata_rata_frequ;
-
--- CREATE INDEX idx_rata_rata_frequ
---     ON camdecmpswks.rata USING btree
---     (rata_frequency_cd COLLATE pg_catalog."default" ASC NULLS LAST);

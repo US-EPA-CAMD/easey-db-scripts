@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.rata_run;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.rata_run
+CREATE TABLE camdecmpswks.rata_run
 (
     rata_run_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rata_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -25,25 +25,9 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.rata_run
     CONSTRAINT fk_rata_run_rata_summary FOREIGN KEY (rata_sum_id)
         REFERENCES camdecmpswks.rata_summary (rata_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT fk_rata_run_run_status_code FOREIGN KEY (run_status_cd)
         REFERENCES camdecmpsmd.run_status_code (run_status_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
-
--- -- Index: idx_rata_run_run_status
-
--- -- DROP INDEX camdecmpswks.idx_rata_run_run_status;
-
--- CREATE INDEX idx_rata_run_run_status
---     ON camdecmpswks.rata_run USING btree
---     (run_status_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- -- Index: rata_run_idx001
-
--- -- DROP INDEX camdecmpswks.rata_run_idx001;
-
--- CREATE INDEX rata_run_idx001
---     ON camdecmpswks.rata_run USING btree
---     (rata_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

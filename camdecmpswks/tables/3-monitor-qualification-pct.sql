@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.monitor_qualification_pct;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_qualification_pct
+CREATE TABLE camdecmpswks.monitor_qualification_pct
 (
     mon_pct_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_qual_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -18,19 +18,26 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_qualification_pct
     yr3_pct_value numeric(5,1),
     avg_pct_value numeric(5,1),
     userid character varying(25) COLLATE pg_catalog."default",
-    add_date date DEFAULT aws_oracle_ext.sysdate(),
-    update_date date,
+    add_date timestamp without time zone,
+    update_date timestamp without time zone,
     CONSTRAINT pk_monitor_qualification_pct PRIMARY KEY (mon_pct_id),
     CONSTRAINT fk_monitor_qualification_pct_monitor_qualification FOREIGN KEY (mon_qual_id)
-        REFERENCES camdecmpswks.monitor_qualification (mon_qual_id) MATCH SIMPLE,
+        REFERENCES camdecmpswks.monitor_qualification (mon_qual_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
     CONSTRAINT fk_monitor_qualification_pct_qual_data_type_code_yr1 FOREIGN KEY (yr1_qual_data_type_cd)
-        REFERENCES camdecmpsmd.qual_data_type_code (qual_data_type_cd) MATCH SIMPLE,
+        REFERENCES camdecmpsmd.qual_data_type_code (qual_data_type_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT fk_monitor_qualification_pct_qual_data_type_code_yr2 FOREIGN KEY (yr2_qual_data_type_cd)
-        REFERENCES camdecmpsmd.qual_data_type_code (qual_data_type_cd) MATCH SIMPLE,
+        REFERENCES camdecmpsmd.qual_data_type_code (qual_data_type_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT fk_monitor_qualification_pct_qual_data_type_code_yr3 FOREIGN KEY (yr3_qual_data_type_cd)
         REFERENCES camdecmpsmd.qual_data_type_code (qual_data_type_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
-
 -- Index: idx_monitor_qualification_pct_mon_qual_id
 
 -- DROP INDEX camdecmpswks.idx_monitor_qualification_pct_mon_qual_id;

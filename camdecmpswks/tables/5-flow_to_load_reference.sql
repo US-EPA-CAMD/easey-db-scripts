@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.flow_to_load_reference;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.flow_to_load_reference
+CREATE TABLE camdecmpswks.flow_to_load_reference
 (
     flow_load_ref_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -29,21 +29,5 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.flow_to_load_reference
     CONSTRAINT fk_flow_to_load_reference_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmpswks.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
-
--- -- Index: idx_flow_to_load_re_op_level_c
-
--- -- DROP INDEX camdecmpswks.idx_flow_to_load_re_op_level_c;
-
--- CREATE INDEX idx_flow_to_load_re_op_level_c
---     ON camdecmpswks.flow_to_load_reference USING btree
---     (op_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- -- Index: idx_flow_to_load_reference_001
-
--- -- DROP INDEX camdecmpswks.idx_flow_to_load_reference_001;
-
--- CREATE INDEX idx_flow_to_load_reference_001
---     ON camdecmpswks.flow_to_load_reference USING btree
---     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

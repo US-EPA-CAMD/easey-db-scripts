@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.unit_default_test;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.unit_default_test
+CREATE TABLE camdecmpswks.unit_default_test
 (
     unit_default_test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -28,29 +28,5 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.unit_default_test
     CONSTRAINT fk_unt_default_test_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmpswks.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
-
--- -- Index: idx_unit_default_te_fuel_cd
-
--- -- DROP INDEX camdecmpswks.idx_unit_default_te_fuel_cd;
-
--- CREATE INDEX idx_unit_default_te_fuel_cd
---     ON camdecmpswks.unit_default_test USING btree
---     (fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- -- Index: idx_unit_default_te_operating
-
--- -- DROP INDEX camdecmpswks.idx_unit_default_te_operating;
-
--- CREATE INDEX idx_unit_default_te_operating
---     ON camdecmpswks.unit_default_test USING btree
---     (operating_condition_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- -- Index: idx_unit_default_test_001
-
--- -- DROP INDEX camdecmpswks.idx_unit_default_test_001;
-
--- CREATE INDEX idx_unit_default_test_001
---     ON camdecmpswks.unit_default_test USING btree
---     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

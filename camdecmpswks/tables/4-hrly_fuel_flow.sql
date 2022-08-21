@@ -1,8 +1,8 @@
 -- Table: camdecmpswks.hrly_fuel_flow
 
--- DROP TABLE IF EXISTS camdecmpswks.hrly_fuel_flow;
+-- DROP TABLE camdecmpswks.hrly_fuel_flow;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.hrly_fuel_flow
+CREATE TABLE camdecmpswks.hrly_fuel_flow
 (
     hrly_fuel_flow_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     hour_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -23,28 +23,36 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.hrly_fuel_flow
     rpt_period_id numeric(38,0) NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT pk_hrly_fuel_flow PRIMARY KEY (hrly_fuel_flow_id),
-    CONSTRAINT fk_fuel_code_hrly_fuel_flo FOREIGN KEY (fuel_cd)
+    CONSTRAINT fk_hrly_fuel_flow_fuel_code FOREIGN KEY (fuel_cd)
         REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_syste_hrly_fuel_flo FOREIGN KEY (mon_sys_id)
+    CONSTRAINT fk_hrly_fuel_flow_hrly_op_data FOREIGN KEY (hour_id)
+        REFERENCES camdecmpswks.hrly_op_data (hour_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_hrly_fuel_flow_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_hrly_fuel_flow_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmpswks.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_hrly_fuel_flow_reporting_period FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_sod_mass_code_hrly_fuel_flo FOREIGN KEY (sod_mass_cd)
+    CONSTRAINT fk_hrly_fuel_flow_sod_mass_code FOREIGN KEY (sod_mass_cd)
         REFERENCES camdecmpsmd.sod_mass_code (sod_mass_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_sod_volumetri_hrly_fuel_flo FOREIGN KEY (sod_volumetric_cd)
+    CONSTRAINT fk_hrly_fuel_flow_sod_volumetric_code FOREIGN KEY (sod_volumetric_cd)
         REFERENCES camdecmpsmd.sod_volumetric_code (sod_volumetric_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_units_of_meas_hrly_fuel_flo FOREIGN KEY (volumetric_uom_cd)
+    CONSTRAINT fk_hrly_fuel_flow_units_of_measure_code FOREIGN KEY (volumetric_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT hrly_fuel_flow_r01 FOREIGN KEY (hour_id)
-        REFERENCES camdecmpswks.hrly_op_data (hour_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
@@ -105,67 +113,67 @@ COMMENT ON COLUMN camdecmpswks.hrly_fuel_flow.rpt_period_id
 
 COMMENT ON COLUMN camdecmpswks.hrly_fuel_flow.mon_loc_id
     IS 'Unique identifier of a monitoring location record. ';
-
 -- Index: hrly_fuel_flow_idx001
 
--- DROP INDEX IF EXISTS camdecmpswks.hrly_fuel_flow_idx001;
+-- DROP INDEX camdecmpswks.hrly_fuel_flow_idx001;
 
-CREATE INDEX IF NOT EXISTS hrly_fuel_flow_idx001
+CREATE INDEX hrly_fuel_flow_idx001
     ON camdecmpswks.hrly_fuel_flow USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_hff_add_date
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_hff_add_date;
+-- DROP INDEX camdecmpswks.idx_hff_add_date;
 
-CREATE INDEX IF NOT EXISTS idx_hff_add_date
+CREATE INDEX idx_hff_add_date
     ON camdecmpswks.hrly_fuel_flow USING btree
-    (add_date ASC NULLS LAST);
-
+    (add_date ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_hrly_fuel_flow_fuel_cd
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_hrly_fuel_flow_fuel_cd;
+-- DROP INDEX camdecmpswks.idx_hrly_fuel_flow_fuel_cd;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_fuel_flow_fuel_cd
+CREATE INDEX idx_hrly_fuel_flow_fuel_cd
     ON camdecmpswks.hrly_fuel_flow USING btree
-    (fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_hrly_fuel_flow_hour_id
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_hrly_fuel_flow_hour_id;
+-- DROP INDEX camdecmpswks.idx_hrly_fuel_flow_hour_id;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_fuel_flow_hour_id
+CREATE INDEX idx_hrly_fuel_flow_hour_id
     ON camdecmpswks.hrly_fuel_flow USING btree
-    (hour_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (hour_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_hrly_fuel_flow_mon_sys_id
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_hrly_fuel_flow_mon_sys_id;
+-- DROP INDEX camdecmpswks.idx_hrly_fuel_flow_mon_sys_id;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_fuel_flow_mon_sys_id
+CREATE INDEX idx_hrly_fuel_flow_mon_sys_id
     ON camdecmpswks.hrly_fuel_flow USING btree
-    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_hrly_fuel_flow_sod_mass_c
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_hrly_fuel_flow_sod_mass_c;
+-- DROP INDEX camdecmpswks.idx_hrly_fuel_flow_sod_mass_c;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_fuel_flow_sod_mass_c
+CREATE INDEX idx_hrly_fuel_flow_sod_mass_c
     ON camdecmpswks.hrly_fuel_flow USING btree
-    (sod_mass_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (sod_mass_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_hrly_fuel_flow_sod_volume
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_hrly_fuel_flow_sod_volume;
+-- DROP INDEX camdecmpswks.idx_hrly_fuel_flow_sod_volume;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_fuel_flow_sod_volume
+CREATE INDEX idx_hrly_fuel_flow_sod_volume
     ON camdecmpswks.hrly_fuel_flow USING btree
-    (sod_volumetric_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (sod_volumetric_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_hrly_fuel_flow_volumetric
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_hrly_fuel_flow_volumetric;
+-- DROP INDEX camdecmpswks.idx_hrly_fuel_flow_volumetric;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_fuel_flow_volumetric
+CREATE INDEX idx_hrly_fuel_flow_volumetric
     ON camdecmpswks.hrly_fuel_flow USING btree
-    (volumetric_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+    (volumetric_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

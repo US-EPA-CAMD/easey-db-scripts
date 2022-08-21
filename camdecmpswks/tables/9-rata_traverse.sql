@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.rata_traverse;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.rata_traverse
+CREATE TABLE camdecmpswks.rata_traverse
 (
     rata_traverse_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     flow_rata_run_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.rata_traverse
     CONSTRAINT fk_rata_traverse_flow_rata_run FOREIGN KEY (flow_rata_run_id)
         REFERENCES camdecmpswks.flow_rata_run (flow_rata_run_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT fk_rata_traverse_pressure_measure_code FOREIGN KEY (pressure_meas_cd)
         REFERENCES camdecmpsmd.pressure_measure_code (pressure_meas_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -39,27 +39,3 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.rata_traverse
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
-
--- -- Index: idx_rata_traverse_flow_rata
-
--- -- DROP INDEX camdecmpswks.idx_rata_traverse_flow_rata;
-
--- CREATE INDEX idx_rata_traverse_flow_rata
---     ON camdecmpswks.rata_traverse USING btree
---     (flow_rata_run_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- -- Index: idx_rata_traverse_pressure_m
-
--- -- DROP INDEX camdecmpswks.idx_rata_traverse_pressure_m;
-
--- CREATE INDEX idx_rata_traverse_pressure_m
---     ON camdecmpswks.rata_traverse USING btree
---     (pressure_meas_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- -- Index: idx_rata_traverse_probe_type
-
--- -- DROP INDEX camdecmpswks.idx_rata_traverse_probe_type;
-
--- CREATE INDEX idx_rata_traverse_probe_type
---     ON camdecmpswks.rata_traverse USING btree
---     (probe_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);

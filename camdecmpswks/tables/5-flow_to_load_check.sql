@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.flow_to_load_check;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.flow_to_load_check
+CREATE TABLE camdecmpswks.flow_to_load_check
 (
     flow_load_check_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -32,29 +32,5 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.flow_to_load_check
     CONSTRAINT fk_flow_to_load_check_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmpswks.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
-
--- -- Index: idx_flow_to_load_ch_op_level_c
-
--- -- DROP INDEX camdecmpswks.idx_flow_to_load_ch_op_level_c;
-
--- CREATE INDEX idx_flow_to_load_ch_op_level_c
---     ON camdecmpswks.flow_to_load_check USING btree
---     (op_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- -- Index: idx_flow_to_load_ch_test_basis
-
--- -- DROP INDEX camdecmpswks.idx_flow_to_load_ch_test_basis;
-
--- CREATE INDEX idx_flow_to_load_ch_test_basis
---     ON camdecmpswks.flow_to_load_check USING btree
---     (test_basis_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- -- Index: idx_flow_to_load_check_001
-
--- -- DROP INDEX camdecmpswks.idx_flow_to_load_check_001;
-
--- CREATE INDEX idx_flow_to_load_check_001
---     ON camdecmpswks.flow_to_load_check USING btree
---     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

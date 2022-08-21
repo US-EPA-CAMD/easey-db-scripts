@@ -215,6 +215,7 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, 
 		  and value1='FUELFLOW';
 
 
+/* NO LONGER NEEDED - MATCHING EXISTING CHECK ENGINE CHECK LOGIC
 --Make all SAM code for FLOW records W
 select * from camdecmpsmd.cross_check_catalog_value where cross_chk_catalog_id = (select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type and Basis to Sample Acquisition Method')
 			and value1='FLOW';
@@ -264,6 +265,7 @@ where cross_chk_catalog_id = (select cross_chk_catalog_id from camdecmpsmd.cross
 			and value3 in ('O')
 			and value2 is NOT NULL
 			and value1 <> ('FLOW');
+*/
 
 --DATA VALIDATION SCRIPTS
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Component Type to Category' and value2='COMPONENT'; --27 rows

@@ -1,8 +1,8 @@
 -- Table: camdecmpswks.sorbent_trap
 
--- DROP TABLE IF EXISTS camdecmpswks.sorbent_trap;
+-- DROP TABLE camdecmpswks.sorbent_trap;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.sorbent_trap
+CREATE TABLE camdecmpswks.sorbent_trap
 (
     trap_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -25,24 +25,28 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.sorbent_trap
     sorbent_trap_aps_cd character varying(7) COLLATE pg_catalog."default",
     rata_ind numeric(38,0),
     CONSTRAINT pk_sorbent_trap PRIMARY KEY (trap_id),
-    CONSTRAINT fk_st_aps_cd FOREIGN KEY (sorbent_trap_aps_cd)
-        REFERENCES camdecmpsmd.sorbent_trap_aps_code (sorbent_trap_aps_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_st_modc_cd FOREIGN KEY (modc_cd)
+    CONSTRAINT fk_sorbent_trap_modc_code FOREIGN KEY (modc_cd)
         REFERENCES camdecmpsmd.modc_code (modc_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_st_mon_loc_id FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_sorbent_trap_modc_code_calc FOREIGN KEY (calc_modc_cd)
+        REFERENCES camdecmpsmd.modc_code (modc_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_sorbent_trap_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_st_mon_sys_id FOREIGN KEY (mon_sys_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_sorbent_trap_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmpswks.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_st_rpt_period_id FOREIGN KEY (rpt_period_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_sorbent_trap_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_sorbent_trap_sorbent_trap_aps_code FOREIGN KEY (sorbent_trap_aps_cd)
+        REFERENCES camdecmpsmd.sorbent_trap_aps_code (sorbent_trap_aps_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
@@ -109,35 +113,35 @@ COMMENT ON COLUMN camdecmpswks.sorbent_trap.sorbent_trap_aps_cd
 
 COMMENT ON COLUMN camdecmpswks.sorbent_trap.rata_ind
     IS 'Indicates whether the sorbent trap was used for a RATA.';
-
 -- Index: idx_sorbent_trap_001
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_sorbent_trap_001;
+-- DROP INDEX camdecmpswks.idx_sorbent_trap_001;
 
-CREATE INDEX IF NOT EXISTS idx_sorbent_trap_001
+CREATE INDEX idx_sorbent_trap_001
     ON camdecmpswks.sorbent_trap USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_trap_add_date
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_trap_add_date;
+-- DROP INDEX camdecmpswks.idx_trap_add_date;
 
-CREATE INDEX IF NOT EXISTS idx_trap_add_date
+CREATE INDEX idx_trap_add_date
     ON camdecmpswks.sorbent_trap USING btree
-    (add_date ASC NULLS LAST);
-
+    (add_date ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_trap_modc_cd
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_trap_modc_cd;
+-- DROP INDEX camdecmpswks.idx_trap_modc_cd;
 
-CREATE INDEX IF NOT EXISTS idx_trap_modc_cd
+CREATE INDEX idx_trap_modc_cd
     ON camdecmpswks.sorbent_trap USING btree
-    (modc_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (modc_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_trap_sys_id
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_trap_sys_id;
+-- DROP INDEX camdecmpswks.idx_trap_sys_id;
 
-CREATE INDEX IF NOT EXISTS idx_trap_sys_id
+CREATE INDEX idx_trap_sys_id
     ON camdecmpswks.sorbent_trap USING btree
-    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
+    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

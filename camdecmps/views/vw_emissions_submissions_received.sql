@@ -1,9 +1,8 @@
--- View: camdecmps.vw_emissions_submissions_received
+-- View: camddmw.vw_emissions_submissions_received
 
-DROP VIEW IF EXISTS camddmw.vw_emissions_submissions_received;
-DROP VIEW IF EXISTS camdecmps.vw_emissions_submissions_received;
+-- DROP VIEW camddmw.vw_emissions_submissions_received;
 
-CREATE OR REPLACE VIEW camdecmps.vw_emissions_submissions_received
+CREATE OR REPLACE VIEW camddmw.vw_emissions_submissions_received
  AS
  SELECT em_submission_access.rpt_period_id,
     count(em_submission_access.em_sub_access_id) AS total

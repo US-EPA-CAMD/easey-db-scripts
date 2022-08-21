@@ -1,8 +1,8 @@
 -- Table: camdecmpswks.summary_value
 
--- DROP TABLE IF EXISTS camdecmpswks.summary_value;
+-- DROP TABLE camdecmpswks.summary_value;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.summary_value
+CREATE TABLE camdecmpswks.summary_value
 (
     sum_value_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id numeric(38,0) NOT NULL,
@@ -18,16 +18,16 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.summary_value
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_summary_value PRIMARY KEY (sum_value_id),
-    CONSTRAINT summary_value_u01 UNIQUE (mon_loc_id, rpt_period_id, parameter_cd),
-    CONSTRAINT fk_monitor_locat_summary_value FOREIGN KEY (mon_loc_id)
+    CONSTRAINT uq_summary_value UNIQUE (mon_loc_id, rpt_period_id, parameter_cd),
+    CONSTRAINT fk_summary_value_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_parameter_cod_summary_value FOREIGN KEY (parameter_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_summary_value_parameter_code FOREIGN KEY (parameter_cd)
         REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_reporting_per_summary_value FOREIGN KEY (rpt_period_id)
+    CONSTRAINT fk_summary_value_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -74,35 +74,35 @@ COMMENT ON COLUMN camdecmpswks.summary_value.add_date
 
 COMMENT ON COLUMN camdecmpswks.summary_value.update_date
     IS 'Date and time in which record was last updated. ';
-
 -- Index: idx_summary_value_mon_loc_id
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_summary_value_mon_loc_id;
+-- DROP INDEX camdecmpswks.idx_summary_value_mon_loc_id;
 
-CREATE INDEX IF NOT EXISTS idx_summary_value_mon_loc_id
+CREATE INDEX idx_summary_value_mon_loc_id
     ON camdecmpswks.summary_value USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_sv_add_date
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_sv_add_date;
+-- DROP INDEX camdecmpswks.idx_sv_add_date;
 
-CREATE INDEX IF NOT EXISTS idx_sv_add_date
+CREATE INDEX idx_sv_add_date
     ON camdecmpswks.summary_value USING btree
-    (add_date ASC NULLS LAST);
-
+    (add_date ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: summary_value_idx001
 
--- DROP INDEX IF EXISTS camdecmpswks.summary_value_idx001;
+-- DROP INDEX camdecmpswks.summary_value_idx001;
 
-CREATE INDEX IF NOT EXISTS summary_value_idx001
+CREATE INDEX summary_value_idx001
     ON camdecmpswks.summary_value USING btree
-    (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: summary_value_idx002
 
--- DROP INDEX IF EXISTS camdecmpswks.summary_value_idx002;
+-- DROP INDEX camdecmpswks.summary_value_idx002;
 
-CREATE INDEX IF NOT EXISTS summary_value_idx002
+CREATE INDEX summary_value_idx002
     ON camdecmpswks.summary_value USING btree
-    (rpt_period_id ASC NULLS LAST);
+    (rpt_period_id ASC NULLS LAST)
+    TABLESPACE pg_default;

@@ -1,8 +1,8 @@
 -- Table: camdecmpswks.hrly_op_data
 
--- DROP TABLE IF EXISTS camdecmpswks.hrly_op_data;
+-- DROP TABLE camdecmpswks.hrly_op_data;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.hrly_op_data
+CREATE TABLE camdecmpswks.hrly_op_data
 (
     hour_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id numeric(38,0) NOT NULL,
@@ -28,23 +28,23 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.hrly_op_data
     mats_load numeric(6,0),
     mats_startup_shutdown_flg character varying(1) COLLATE pg_catalog."default",
     CONSTRAINT pk_hrly_op_data PRIMARY KEY (hour_id),
-    CONSTRAINT fk_fuel_code_hrly_op_data FOREIGN KEY (fuel_cd)
+    CONSTRAINT fk_hrly_op_data_fuel_code FOREIGN KEY (fuel_cd)
         REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_locat_hrly_op_data FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_hrly_op_data_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_operating_con_hrly_op_data FOREIGN KEY (operating_condition_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_hrly_op_data_operating_condition_code FOREIGN KEY (operating_condition_cd)
         REFERENCES camdecmpsmd.operating_condition_code (operating_condition_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_reporting_per_hrly_op_data FOREIGN KEY (rpt_period_id)
+    CONSTRAINT fk_hrly_op_data_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_units_of_meas_hrly_op_data FOREIGN KEY (load_uom_cd)
+    CONSTRAINT fk_hrly_op_data_units_of_measure_code FOREIGN KEY (load_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
@@ -126,51 +126,51 @@ COMMENT ON COLUMN camdecmpswks.hrly_op_data.mats_load
 
 COMMENT ON COLUMN camdecmpswks.hrly_op_data.mats_startup_shutdown_flg
     IS 'Flag indicating whether the current hour is either a MATS startup or shutdown hour.';
-
 -- Index: idx_hod_add_date
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_hod_add_date;
+-- DROP INDEX camdecmpswks.idx_hod_add_date;
 
-CREATE INDEX IF NOT EXISTS idx_hod_add_date
+CREATE INDEX idx_hod_add_date
     ON camdecmpswks.hrly_op_data USING btree
-    (add_date ASC NULLS LAST);
-
+    (add_date ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_hrly_op_data_1
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_hrly_op_data_1;
+-- DROP INDEX camdecmpswks.idx_hrly_op_data_1;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_op_data_1
+CREATE INDEX idx_hrly_op_data_1
     ON camdecmpswks.hrly_op_data USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_hrly_op_data_2
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_hrly_op_data_2;
+-- DROP INDEX camdecmpswks.idx_hrly_op_data_2;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_op_data_2
+CREATE INDEX idx_hrly_op_data_2
     ON camdecmpswks.hrly_op_data USING btree
-    (rpt_period_id ASC NULLS LAST);
-
+    (rpt_period_id ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_hrly_op_data_emr
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_hrly_op_data_emr;
+-- DROP INDEX camdecmpswks.idx_hrly_op_data_emr;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_op_data_emr
+CREATE INDEX idx_hrly_op_data_emr
     ON camdecmpswks.hrly_op_data USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_hrly_op_data_fuel_cd
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_hrly_op_data_fuel_cd;
+-- DROP INDEX camdecmpswks.idx_hrly_op_data_fuel_cd;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_op_data_fuel_cd
+CREATE INDEX idx_hrly_op_data_fuel_cd
     ON camdecmpswks.hrly_op_data USING btree
-    (fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_hrly_op_data_operating_
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_hrly_op_data_operating_;
+-- DROP INDEX camdecmpswks.idx_hrly_op_data_operating_;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_op_data_operating_
+CREATE INDEX idx_hrly_op_data_operating_
     ON camdecmpswks.hrly_op_data USING btree
-    (operating_condition_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+    (operating_condition_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

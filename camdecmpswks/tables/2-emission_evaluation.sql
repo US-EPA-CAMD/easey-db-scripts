@@ -1,8 +1,8 @@
 -- Table: camdecmpswks.emission_evaluation
 
--- DROP TABLE IF EXISTS camdecmpswks.emission_evaluation;
+-- DROP TABLE camdecmpswks.emission_evaluation;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.emission_evaluation
+CREATE TABLE camdecmpswks.emission_evaluation
 (
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id numeric(38,0) NOT NULL,
@@ -19,19 +19,19 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_evaluation
         REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
+    CONSTRAINT fk_emission_evaluation_monitor_plan FOREIGN KEY (mon_plan_id)
+        REFERENCES camdecmpswks.monitor_plan (mon_plan_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
     CONSTRAINT fk_emission_evaluation_pending_status_code FOREIGN KEY (pending_status_cd)
         REFERENCES camdecmpsmd.submission_availability_code (submission_availability_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_plan_emission_eval FOREIGN KEY (mon_plan_id)
-        REFERENCES camdecmpswks.monitor_plan (mon_plan_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_reporting_per_emission_eval FOREIGN KEY (rpt_period_id)
+    CONSTRAINT fk_emission_evaluation_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_submission_av_emission_eval FOREIGN KEY (submission_availability_cd)
+    CONSTRAINT fk_emission_evaluation_submission_availability_code FOREIGN KEY (submission_availability_cd)
         REFERENCES camdecmpsmd.submission_availability_code (submission_availability_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -63,35 +63,35 @@ COMMENT ON COLUMN camdecmpswks.emission_evaluation.submission_id
 
 COMMENT ON COLUMN camdecmpswks.emission_evaluation.submission_availability_cd
     IS 'Unique code value for a lookup table.';
-
 -- Index: emission_evaluation_idx001
 
--- DROP INDEX IF EXISTS camdecmpswks.emission_evaluation_idx001;
+-- DROP INDEX camdecmpswks.emission_evaluation_idx001;
 
-CREATE INDEX IF NOT EXISTS emission_evaluation_idx001
+CREATE INDEX emission_evaluation_idx001
     ON camdecmpswks.emission_evaluation USING btree
-    (rpt_period_id ASC NULLS LAST);
-
+    (rpt_period_id ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_emission_evalua1
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_emission_evalua1;
+-- DROP INDEX camdecmpswks.idx_emission_evalua1;
 
-CREATE INDEX IF NOT EXISTS idx_emission_evalua1
+CREATE INDEX idx_emission_evalua1
     ON camdecmpswks.emission_evaluation USING btree
-    (submission_id ASC NULLS LAST);
-
+    (submission_id ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_emission_evalua_chk_sessio
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_emission_evalua_chk_sessio;
+-- DROP INDEX camdecmpswks.idx_emission_evalua_chk_sessio;
 
-CREATE INDEX IF NOT EXISTS idx_emission_evalua_chk_sessio
+CREATE INDEX idx_emission_evalua_chk_sessio
     ON camdecmpswks.emission_evaluation USING btree
-    (chk_session_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (chk_session_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_emission_evalua_submission
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_emission_evalua_submission;
+-- DROP INDEX camdecmpswks.idx_emission_evalua_submission;
 
-CREATE INDEX IF NOT EXISTS idx_emission_evalua_submission
+CREATE INDEX idx_emission_evalua_submission
     ON camdecmpswks.emission_evaluation USING btree
-    (submission_availability_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+    (submission_availability_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.monitor_formula;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_formula
+CREATE TABLE camdecmpswks.monitor_formula
 (
     mon_form_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -15,46 +15,19 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_formula
     end_hour numeric(2,0),
     formula_equation character varying(200) COLLATE pg_catalog."default",
     userid character varying(25) COLLATE pg_catalog."default",
-    add_date date,
-    update_date date,
+    add_date timestamp without time zone,
+    update_date timestamp without time zone,
     CONSTRAINT pk_monitor_formula PRIMARY KEY (mon_form_id),
     CONSTRAINT fk_monitor_formula_equation_code FOREIGN KEY (equation_cd)
-        REFERENCES camdecmpsmd.equation_code (equation_cd) MATCH SIMPLE,
+        REFERENCES camdecmpsmd.equation_code (equation_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT fk_monitor_formula_monitor_location FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE,
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
     CONSTRAINT fk_monitor_formula_parameter_code FOREIGN KEY (parameter_cd)
         REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
-
--- -- Index: idx_monitor_formula_equation_c
-
--- -- DROP INDEX camdecmpswks.idx_monitor_formula_equation_c;
-
--- CREATE INDEX idx_monitor_formula_equation_c
---     ON camdecmpswks.monitor_formula USING btree
---     (equation_cd COLLATE pg_catalog."default" ASC NULLS LAST)
---     TABLESPACE pg_default;
--- -- Index: idx_monitor_formula_mon_loc_id
-
--- -- DROP INDEX camdecmpswks.idx_monitor_formula_mon_loc_id;
-
--- CREATE INDEX idx_monitor_formula_mon_loc_id
---     ON camdecmpswks.monitor_formula USING btree
---     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
---     TABLESPACE pg_default;
--- -- Index: monitor_formula_idx$$_15b00008
-
--- -- DROP INDEX camdecmpswks."monitor_formula_idx$$_15b00008";
-
--- CREATE INDEX "monitor_formula_idx$$_15b00008"
---     ON camdecmpswks.monitor_formula USING btree
---     (formula_identifier COLLATE pg_catalog."default" ASC NULLS LAST)
---     TABLESPACE pg_default;
--- -- Index: monitor_formula_idx001
-
--- -- DROP INDEX camdecmpswks.monitor_formula_idx001;
-
--- CREATE INDEX monitor_formula_idx001
---     ON camdecmpswks.monitor_formula USING btree
---     (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST)
---     TABLESPACE pg_default;

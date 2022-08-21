@@ -5,7 +5,7 @@
 CREATE TABLE camdecmpsaux.report_parameter
 (
     report_parameter_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
-    "position" integer NOT NULL,
+    sequence_number integer NOT NULL,
     name text COLLATE pg_catalog."default" NOT NULL,
     default_value text COLLATE pg_catalog."default",
     report_detail_id integer NOT NULL,

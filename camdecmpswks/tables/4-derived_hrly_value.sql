@@ -1,8 +1,8 @@
 -- Table: camdecmpswks.derived_hrly_value
 
--- DROP TABLE IF EXISTS camdecmpswks.derived_hrly_value;
+-- DROP TABLE camdecmpswks.derived_hrly_value;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.derived_hrly_value
+CREATE TABLE camdecmpswks.derived_hrly_value
 (
     derv_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     hour_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -32,32 +32,40 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.derived_hrly_value
     calc_fuel_flow_total numeric(15,4),
     calc_hour_measure_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_derived_hrly_value PRIMARY KEY (derv_id),
-    CONSTRAINT derived_hrly_value_r01 FOREIGN KEY (hour_id)
-        REFERENCES camdecmpswks.hrly_op_data (hour_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_fuel_code_derived_hrly_ FOREIGN KEY (fuel_cd)
+    CONSTRAINT fk_derived_hrly_value_fuel_code FOREIGN KEY (fuel_cd)
         REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_modc_code_derived_hrly_ FOREIGN KEY (modc_cd)
+    CONSTRAINT fk_derived_hrly_value_hrly_op_data FOREIGN KEY (hour_id)
+        REFERENCES camdecmpswks.hrly_op_data (hour_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_derived_hrly_value_modc_code FOREIGN KEY (modc_cd)
         REFERENCES camdecmpsmd.modc_code (modc_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_formu_derived_hrly_ FOREIGN KEY (mon_form_id)
+    CONSTRAINT fk_derived_hrly_value_monitor_formula FOREIGN KEY (mon_form_id)
         REFERENCES camdecmpswks.monitor_formula (mon_form_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_syste_derived_hrly_ FOREIGN KEY (mon_sys_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_derived_hrly_value_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_derived_hrly_value_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmpswks.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_operating_con_derived_hrly_ FOREIGN KEY (operating_condition_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_derived_hrly_value_operating_condition_code FOREIGN KEY (operating_condition_cd)
         REFERENCES camdecmpsmd.operating_condition_code (operating_condition_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_parameter_cod_derived_hrly_ FOREIGN KEY (parameter_cd)
+    CONSTRAINT fk_derived_hrly_value_parameter_code FOREIGN KEY (parameter_cd)
         REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_derived_hrly_value_reporting_period FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
@@ -145,75 +153,75 @@ COMMENT ON COLUMN camdecmpswks.derived_hrly_value.calc_fuel_flow_total
 
 COMMENT ON COLUMN camdecmpswks.derived_hrly_value.calc_hour_measure_cd
     IS 'Code used to identify the how the calculated hour value was determined.';
-
 -- Index: derived_hrly_value_idx001
 
--- DROP INDEX IF EXISTS camdecmpswks.derived_hrly_value_idx001;
+-- DROP INDEX camdecmpswks.derived_hrly_value_idx001;
 
-CREATE INDEX IF NOT EXISTS derived_hrly_value_idx001
+CREATE INDEX derived_hrly_value_idx001
     ON camdecmpswks.derived_hrly_value USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_derived_hrly_frm
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_derived_hrly_frm;
+-- DROP INDEX camdecmpswks.idx_derived_hrly_frm;
 
-CREATE INDEX IF NOT EXISTS idx_derived_hrly_frm
+CREATE INDEX idx_derived_hrly_frm
     ON camdecmpswks.derived_hrly_value USING btree
-    (modc_cd COLLATE pg_catalog."default" ASC NULLS LAST, unadjusted_hrly_value ASC NULLS LAST, parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST, hour_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (modc_cd COLLATE pg_catalog."default" ASC NULLS LAST, unadjusted_hrly_value ASC NULLS LAST, parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST, hour_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_derived_hrly_va_fuel_cd
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_derived_hrly_va_fuel_cd;
+-- DROP INDEX camdecmpswks.idx_derived_hrly_va_fuel_cd;
 
-CREATE INDEX IF NOT EXISTS idx_derived_hrly_va_fuel_cd
+CREATE INDEX idx_derived_hrly_va_fuel_cd
     ON camdecmpswks.derived_hrly_value USING btree
-    (fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_derived_hrly_va_hour_id
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_derived_hrly_va_hour_id;
+-- DROP INDEX camdecmpswks.idx_derived_hrly_va_hour_id;
 
-CREATE INDEX IF NOT EXISTS idx_derived_hrly_va_hour_id
+CREATE INDEX idx_derived_hrly_va_hour_id
     ON camdecmpswks.derived_hrly_value USING btree
-    (hour_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (hour_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_derived_hrly_va_mon_form_i
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_derived_hrly_va_mon_form_i;
+-- DROP INDEX camdecmpswks.idx_derived_hrly_va_mon_form_i;
 
-CREATE INDEX IF NOT EXISTS idx_derived_hrly_va_mon_form_i
+CREATE INDEX idx_derived_hrly_va_mon_form_i
     ON camdecmpswks.derived_hrly_value USING btree
-    (mon_form_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (mon_form_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_derived_hrly_va_mon_sys_id
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_derived_hrly_va_mon_sys_id;
+-- DROP INDEX camdecmpswks.idx_derived_hrly_va_mon_sys_id;
 
-CREATE INDEX IF NOT EXISTS idx_derived_hrly_va_mon_sys_id
+CREATE INDEX idx_derived_hrly_va_mon_sys_id
     ON camdecmpswks.derived_hrly_value USING btree
-    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_derived_hrly_va_operating
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_derived_hrly_va_operating;
+-- DROP INDEX camdecmpswks.idx_derived_hrly_va_operating;
 
-CREATE INDEX IF NOT EXISTS idx_derived_hrly_va_operating
+CREATE INDEX idx_derived_hrly_va_operating
     ON camdecmpswks.derived_hrly_value USING btree
-    (operating_condition_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (operating_condition_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_derived_hrly_va_parameter_
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_derived_hrly_va_parameter_;
+-- DROP INDEX camdecmpswks.idx_derived_hrly_va_parameter_;
 
-CREATE INDEX IF NOT EXISTS idx_derived_hrly_va_parameter_
+CREATE INDEX idx_derived_hrly_va_parameter_
     ON camdecmpswks.derived_hrly_value USING btree
-    (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_dhv_add_date
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_dhv_add_date;
+-- DROP INDEX camdecmpswks.idx_dhv_add_date;
 
-CREATE INDEX IF NOT EXISTS idx_dhv_add_date
+CREATE INDEX idx_dhv_add_date
     ON camdecmpswks.derived_hrly_value USING btree
-    (add_date ASC NULLS LAST);
+    (add_date ASC NULLS LAST)
+    TABLESPACE pg_default;

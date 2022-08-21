@@ -1,8 +1,8 @@
 -- Table: camdecmpswks.daily_fuel
 
--- DROP TABLE IF EXISTS camdecmpswks.daily_fuel;
+-- DROP TABLE camdecmpswks.daily_fuel;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.daily_fuel
+CREATE TABLE camdecmpswks.daily_fuel
 (
     daily_fuel_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     daily_emission_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -16,9 +16,21 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.daily_fuel
     update_date timestamp without time zone,
     rpt_period_id numeric(38,0) NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT daily_fuel_pk PRIMARY KEY (daily_fuel_id),
-    CONSTRAINT daily_fuel_r02 FOREIGN KEY (fuel_cd)
+    CONSTRAINT pk_daily_fuel PRIMARY KEY (daily_fuel_id),
+    CONSTRAINT fk_daily_fuel_daily_emission FOREIGN KEY (daily_emission_id)
+        REFERENCES camdecmpswks.daily_emission (daily_emission_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_daily_fuel_fuel_code FOREIGN KEY (fuel_cd)
         REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_daily_fuel_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_daily_fuel_reporting_period FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
@@ -61,19 +73,19 @@ COMMENT ON COLUMN camdecmpswks.daily_fuel.rpt_period_id
 
 COMMENT ON COLUMN camdecmpswks.daily_fuel.mon_loc_id
     IS 'Unique identifier of a monitor location record. ';
-
 -- Index: idx_daily_fuel_01
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_daily_fuel_01;
+-- DROP INDEX camdecmpswks.idx_daily_fuel_01;
 
-CREATE INDEX IF NOT EXISTS idx_daily_fuel_01
+CREATE INDEX idx_daily_fuel_01
     ON camdecmpswks.daily_fuel USING btree
-    (daily_emission_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (daily_emission_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_daily_fuel_prd_loc
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_daily_fuel_prd_loc;
+-- DROP INDEX camdecmpswks.idx_daily_fuel_prd_loc;
 
-CREATE INDEX IF NOT EXISTS idx_daily_fuel_prd_loc
+CREATE INDEX idx_daily_fuel_prd_loc
     ON camdecmpswks.daily_fuel USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
+    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

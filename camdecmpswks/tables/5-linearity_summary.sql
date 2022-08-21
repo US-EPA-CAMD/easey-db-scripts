@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.linearity_summary;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.linearity_summary
+CREATE TABLE camdecmpswks.linearity_summary
 (
     lin_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -26,21 +26,5 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.linearity_summary
     CONSTRAINT fk_linearity_summary_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmpswks.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
-
--- -- Index: idx_linearity_summa_gas_level
-
--- -- DROP INDEX camdecmpswks.idx_linearity_summa_gas_level;
-
--- CREATE INDEX idx_linearity_summa_gas_level
---     ON camdecmpswks.linearity_summary USING btree
---     (gas_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- -- Index: idx_linearity_summary_001
-
--- -- DROP INDEX camdecmpswks.idx_linearity_summary_001;
-
--- CREATE INDEX idx_linearity_summary_001
---     ON camdecmpswks.linearity_summary USING btree
---     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

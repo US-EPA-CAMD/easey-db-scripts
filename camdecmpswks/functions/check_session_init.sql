@@ -1,6 +1,6 @@
--- FUNCTION: camdecmpswks.check_session_init(text, text, text, integer, text, text, text, date, date, text)
+-- FUNCTION: camdecmpswks.check_session_init(text, text, text, integer, text, text, text, date, date, text, text)
 
--- DROP FUNCTION camdecmpswks.check_session_init(text, text, text, integer, text, text, text, date, date, text);
+-- DROP FUNCTION camdecmpswks.check_session_init(text, text, text, integer, text, text, text, date, date, text, text);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.check_session_init(
 	v_process_cd text,
@@ -12,7 +12,8 @@ CREATE OR REPLACE FUNCTION camdecmpswks.check_session_init(
 	v_test_extension_exemption_id text,
 	v_eval_begin_date date,
 	v_eval_end_date date,
-	v_userid text)
+	v_userid text,
+	v_batch_id text DEFAULT NULL::text)
     RETURNS TABLE(chk_session character varying, result text, error_msg character varying) 
     LANGUAGE 'plpgsql'
 
@@ -39,10 +40,10 @@ BEGIN
     -- do our insert now
 	 INSERT INTO camdecmpswks.CHECK_SESSION
 		   (CHK_SESSION_ID, PROCESS_CD,CATEGORY_CD,MON_PLAN_ID,RPT_PERIOD_ID,TEST_SUM_ID,QA_CERT_EVENT_ID,
-			TEST_EXTENSION_EXEMPTION_ID, EVAL_BEGIN_DATE, EVAL_END_DATE, SESSION_COMMENT,USERID,LAST_UPDATED)
+			TEST_EXTENSION_EXEMPTION_ID, EVAL_BEGIN_DATE, EVAL_END_DATE, SESSION_COMMENT,USERID,LAST_UPDATED, BATCH_ID)
 		VALUES(chk_session,v_process_cd,V_CATEGORY_CD,V_MON_PLAN_ID, V_RPT_PERIOD_ID,V_TEST_SUM_ID,V_QA_CERT_EVENT_ID, 
 		  V_TEST_EXTENSION_EXEMPTION_ID,V_EVAL_BEGIN_DATE, V_EVAL_END_DATE,'Check Session Started',V_USERID,
-		NOW());
+		NOW(), V_BATCH_ID);
     END IF;
 		
 	result:= 'T';

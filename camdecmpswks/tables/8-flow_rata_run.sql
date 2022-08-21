@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.flow_rata_run;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.flow_rata_run
+CREATE TABLE camdecmpswks.flow_rata_run
 (
     flow_rata_run_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rata_run_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -30,13 +30,5 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.flow_rata_run
     CONSTRAINT fk_flow_rata_run_rata_run FOREIGN KEY (rata_run_id)
         REFERENCES camdecmpswks.rata_run (rata_run_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
-
--- -- Index: flow_rata_run_idx001
-
--- -- DROP INDEX camdecmpswks.flow_rata_run_idx001;
-
--- CREATE INDEX flow_rata_run_idx001
---     ON camdecmpswks.flow_rata_run USING btree
---     (rata_run_id COLLATE pg_catalog."default" ASC NULLS LAST);

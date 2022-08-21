@@ -1,8 +1,8 @@
 -- Table: camdecmpswks.nsps4t_summary
 
--- DROP TABLE IF EXISTS camdecmpswks.nsps4t_summary;
+-- DROP TABLE camdecmpswks.nsps4t_summary;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.nsps4t_summary
+CREATE TABLE camdecmpswks.nsps4t_summary
 (
     nsps4t_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     emission_standard_cd character varying(7) COLLATE pg_catalog."default",
@@ -17,23 +17,23 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.nsps4t_summary
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone,
     CONSTRAINT pk_nsps4t_summary PRIMARY KEY (nsps4t_sum_id),
-    CONSTRAINT fk_nsps4t_summary_loc FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_nsps4t_summary_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_nsps4t_summary_lod FOREIGN KEY (electrical_load_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_nsps4t_summary_nsps4t_electrical_load_code FOREIGN KEY (electrical_load_cd)
         REFERENCES camdecmpsmd.nsps4t_electrical_load_code (electrical_load_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_nsps4t_summary_prd FOREIGN KEY (rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_nsps4t_summary_stn FOREIGN KEY (emission_standard_cd)
+    CONSTRAINT fk_nsps4t_summary_nsps4t_emission_standard_code FOREIGN KEY (emission_standard_cd)
         REFERENCES camdecmpsmd.nsps4t_emission_standard_code (emission_standard_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_nsps4t_summary_uom FOREIGN KEY (modus_uom_cd)
+    CONSTRAINT fk_nsps4t_summary_reporting_period FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_nsps4t_summary_units_of_measure_code FOREIGN KEY (modus_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -77,51 +77,51 @@ COMMENT ON COLUMN camdecmpswks.nsps4t_summary.add_date
 
 COMMENT ON COLUMN camdecmpswks.nsps4t_summary.update_date
     IS 'Date and time in which record was last updated. ';
-
 -- Index: idx_nsps4t_summary_loc
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_nsps4t_summary_loc;
+-- DROP INDEX camdecmpswks.idx_nsps4t_summary_loc;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_summary_loc
+CREATE INDEX idx_nsps4t_summary_loc
     ON camdecmpswks.nsps4t_summary USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_nsps4t_summary_lod
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_nsps4t_summary_lod;
+-- DROP INDEX camdecmpswks.idx_nsps4t_summary_lod;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_summary_lod
+CREATE INDEX idx_nsps4t_summary_lod
     ON camdecmpswks.nsps4t_summary USING btree
-    (electrical_load_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (electrical_load_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_nsps4t_summary_prd
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_nsps4t_summary_prd;
+-- DROP INDEX camdecmpswks.idx_nsps4t_summary_prd;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_summary_prd
+CREATE INDEX idx_nsps4t_summary_prd
     ON camdecmpswks.nsps4t_summary USING btree
-    (rpt_period_id ASC NULLS LAST);
-
+    (rpt_period_id ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_nsps4t_summary_rpt
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_nsps4t_summary_rpt;
+-- DROP INDEX camdecmpswks.idx_nsps4t_summary_rpt;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_summary_rpt
+CREATE INDEX idx_nsps4t_summary_rpt
     ON camdecmpswks.nsps4t_summary USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_nsps4t_summary_stn
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_nsps4t_summary_stn;
+-- DROP INDEX camdecmpswks.idx_nsps4t_summary_stn;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_summary_stn
+CREATE INDEX idx_nsps4t_summary_stn
     ON camdecmpswks.nsps4t_summary USING btree
-    (emission_standard_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (emission_standard_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_nsps4t_summary_uom
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_nsps4t_summary_uom;
+-- DROP INDEX camdecmpswks.idx_nsps4t_summary_uom;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_summary_uom
+CREATE INDEX idx_nsps4t_summary_uom
     ON camdecmpswks.nsps4t_summary USING btree
-    (modus_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+    (modus_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

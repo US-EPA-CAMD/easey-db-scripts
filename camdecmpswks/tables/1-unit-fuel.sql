@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.unit_fuel;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.unit_fuel
+CREATE TABLE camdecmpswks.unit_fuel
 (
     uf_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     unit_id numeric(38,0) NOT NULL,
@@ -16,19 +16,29 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.unit_fuel
     dem_gcv character varying(7) COLLATE pg_catalog."default",
     sulfur_content numeric(5,4),
     userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
-    add_date date NOT NULL,
-    update_date date,
+    add_date timestamp without time zone NOT NULL,
+    update_date timestamp without time zone,
     CONSTRAINT pk_unit_fuel PRIMARY KEY (uf_id),
     CONSTRAINT uq_unit_fuel UNIQUE (unit_id, fuel_type, begin_date),
     CONSTRAINT fk_unit_fuel_dem_method_code_gcv FOREIGN KEY (dem_gcv)
-        REFERENCES camdecmpsmd.dem_method_code (dem_method_cd) MATCH SIMPLE,
+        REFERENCES camdecmpsmd.dem_method_code (dem_method_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT fk_unit_fuel_dem_method_code_so2 FOREIGN KEY (dem_so2)
-        REFERENCES camdecmpsmd.dem_method_code (dem_method_cd) MATCH SIMPLE,
+        REFERENCES camdecmpsmd.dem_method_code (dem_method_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT fk_unit_fuel_fuel_indicator_code FOREIGN KEY (indicator_cd)
-        REFERENCES camdecmpsmd.fuel_indicator_code (fuel_indicator_cd) MATCH SIMPLE,
+        REFERENCES camdecmpsmd.fuel_indicator_code (fuel_indicator_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT fk_unit_fuel_fuel_type_code FOREIGN KEY (fuel_type)
-        REFERENCES camdecmpsmd.fuel_type_code (fuel_type_cd) MATCH SIMPLE,
+        REFERENCES camdecmpsmd.fuel_type_code (fuel_type_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT fk_unit_fuel_unit FOREIGN KEY (unit_id)
-        REFERENCES camd.unit (unit_id) MATCH SIMPLE,
-    CONSTRAINT ck_unit_fuel_act_or_proj_cd CHECK (act_or_proj_cd::text = ANY (ARRAY['A'::character varying, 'P'::character varying, NULL::character varying]::text[]))
+        REFERENCES camd.unit (unit_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT ck_unit_fuel_act_or_proj_cd CHECK (act_or_proj_cd::text = ANY (ARRAY['A'::character varying::text, 'P'::character varying::text, NULL::character varying::text]))
 );

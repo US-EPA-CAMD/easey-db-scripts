@@ -55,7 +55,7 @@ BEGIN
 	--Anna edit 1/21/2022 */
 	  ELSEIF lookupType = 'TEST' then
 	   SELECT fac.FAC_ID, fac.FIRST_ECMPS_RPT_PERIOD_ID into facid, firstEcmpsRptPeriodId
-			FROM camdecmpswks.TEST_SUMMARY tst
+			FROM camdecmps.TEST_SUMMARY tst
 				JOIN camdecmpswks.MONITOR_LOCATION loc ON loc.MON_LOC_ID = tst.MON_LOC_ID
 				LEFT JOIN camd.UNIT unt ON unt.UNIT_ID = loc.UNIT_ID
 				LEFT JOIN camdecmpswks.STACK_PIPE stp ON stp.STACK_PIPE_ID = loc.STACK_PIPE_ID
@@ -67,10 +67,10 @@ BEGIN
 				for TEST_SUM_ID: '||lookupid;
 			END if;		  
 	 
-	 	/* MISS TABLE QA_CERT_EVENT, TEST_EXTENSION_EXEMPTION
-		ELSE IF lookupType = 'QCE' then
+	 	/* Anna edit 6/3/2022 for QCE, TEE */
+	ELSEIF lookupType = 'QCE' then
 	   SELECT fac.FAC_ID, fac.FIRST_ECMPS_RPT_PERIOD_ID into facid, firstEcmpsRptPeriodId	
-			FROM QA_CERT_EVENT qac
+			FROM camdecmpswks.QA_CERT_EVENT qac
 				JOIN camdecmpswks.MONITOR_LOCATION loc ON loc.MON_LOC_ID = qac.MON_LOC_ID
 				LEFT JOIN camd.UNIT unt ON unt.UNIT_ID = loc.UNIT_ID
 				LEFT JOIN camdecmpswks.STACK_PIPE stp ON stp.STACK_PIPE_ID = loc.STACK_PIPE_ID
@@ -81,9 +81,9 @@ BEGIN
 				for QA_CERT_EVENT_ID: '||lookupid;
 			END if;
 			
-		 ELSEIF lookupType ='TEE' then
+	 ELSEIF lookupType ='TEE' then
 		SELECT	fac.FAC_ID, fac.FIRST_ECMPS_RPT_PERIOD_ID into facid, firstEcmpsRptPeriodId
-			FROM TEST_EXTENSION_EXEMPTION tee
+			FROM camdecmpswks.TEST_EXTENSION_EXEMPTION tee
 				JOIN camdecmpswks.MONITOR_LOCATION loc ON loc.MON_LOC_ID = tee.MON_LOC_ID
 				LEFT JOIN camd.UNIT unt ON unt.UNIT_ID = loc.UNIT_ID
 				LEFT JOIN camdecmpswks.STACK_PIPE stp ON stp.STACK_PIPE_ID = loc.STACK_PIPE_ID
@@ -94,7 +94,7 @@ BEGIN
 				error_msg:= 'camdecmpswks.get_facility_info: Unable to determine Facility ID 
 				for TEE_ID: '||lookupid;
 			END if; 
-		*/	
+		
 	ELSEIF lookupType = 'ORIS' then
 	   SELECT fac.FAC_ID, fac.FIRST_ECMPS_RPT_PERIOD_ID into facid, firstEcmpsRptPeriodId	
 			FROM camd.plant fac

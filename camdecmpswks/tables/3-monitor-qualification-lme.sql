@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.monitor_qualification_lme;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_qualification_lme
+CREATE TABLE camdecmpswks.monitor_qualification_lme
 (
     mon_lme_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_qual_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -11,13 +11,14 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_qualification_lme
     nox_tons numeric(4,1),
     op_hours numeric(38,0),
     userid character varying(25) COLLATE pg_catalog."default",
-    add_date date DEFAULT aws_oracle_ext.sysdate(),
-    update_date date,
+    add_date timestamp without time zone,
+    update_date timestamp without time zone,
     CONSTRAINT pk_monitor_qualification_lme PRIMARY KEY (mon_lme_id),
     CONSTRAINT fk_monitor_qualification_lme_monitor_qualification FOREIGN KEY (mon_qual_id)
         REFERENCES camdecmpswks.monitor_qualification (mon_qual_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 );
-
 -- Index: idx_monitor_qualification_lme_mon_qual_id
 
 -- DROP INDEX camdecmpswks.idx_monitor_qualification_lme_mon_qual_id;

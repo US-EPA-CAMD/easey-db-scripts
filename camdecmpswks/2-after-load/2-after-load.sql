@@ -1,3 +1,7 @@
+ALTER TABLE camdecmpswks.check_session
+    ADD COLUMN batch_id character varying(45);
+
+
 ALTER TABLE camdecmpswks.monitor_plan
     ADD COLUMN eval_status_cd character varying(7) NOT NULL DEFAULT 'EVAL';
 

@@ -1,8 +1,8 @@
 -- Table: camdecmpswks.weekly_test_summary
 
--- DROP TABLE IF EXISTS camdecmpswks.weekly_test_summary;
+-- DROP TABLE camdecmpswks.weekly_test_summary;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.weekly_test_summary
+CREATE TABLE camdecmpswks.weekly_test_summary
 (
     weekly_test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id numeric(38,0) NOT NULL,
@@ -20,31 +20,35 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.weekly_test_summary
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_weekly_test_summary PRIMARY KEY (weekly_test_sum_id),
-    CONSTRAINT fk_wts_component_id FOREIGN KEY (component_id)
+    CONSTRAINT fk_weekly_test_summary_component FOREIGN KEY (component_id)
         REFERENCES camdecmpswks.component (component_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_wts_mon_loc_id FOREIGN KEY (mon_loc_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_weekly_test_summary_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_wts_mon_sys_id FOREIGN KEY (mon_sys_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_weekly_test_summary_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmpswks.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_wts_rpt_period_id FOREIGN KEY (rpt_period_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_weekly_test_summary_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_wts_span_scale_cd FOREIGN KEY (span_scale_cd)
+    CONSTRAINT fk_weekly_test_summary_span_scale_code FOREIGN KEY (span_scale_cd)
         REFERENCES camdecmpsmd.span_scale_code (span_scale_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_wts_test_result_cd FOREIGN KEY (test_result_cd)
+    CONSTRAINT fk_weekly_test_summary_test_result_code FOREIGN KEY (test_result_cd)
         REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_wts_test_type_cd FOREIGN KEY (test_type_cd)
+    CONSTRAINT fk_weekly_test_summary_test_result_code_calc FOREIGN KEY (calc_test_result_cd)
+        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_weekly_test_summary_test_type_code FOREIGN KEY (test_type_cd)
         REFERENCES camdecmpsmd.test_type_code (test_type_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -97,75 +101,75 @@ COMMENT ON COLUMN camdecmpswks.weekly_test_summary.add_date
 
 COMMENT ON COLUMN camdecmpswks.weekly_test_summary.update_date
     IS 'Date and time in which record was last updated. ';
-
 -- Index: idx_wts_add_date
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_wts_add_date;
+-- DROP INDEX camdecmpswks.idx_wts_add_date;
 
-CREATE INDEX IF NOT EXISTS idx_wts_add_date
+CREATE INDEX idx_wts_add_date
     ON camdecmpswks.weekly_test_summary USING btree
-    (add_date ASC NULLS LAST);
-
+    (add_date ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_wts_calc_test
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_wts_calc_test;
+-- DROP INDEX camdecmpswks.idx_wts_calc_test;
 
-CREATE INDEX IF NOT EXISTS idx_wts_calc_test
+CREATE INDEX idx_wts_calc_test
     ON camdecmpswks.weekly_test_summary USING btree
-    (calc_test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (calc_test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_wts_component
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_wts_component;
+-- DROP INDEX camdecmpswks.idx_wts_component;
 
-CREATE INDEX IF NOT EXISTS idx_wts_component
+CREATE INDEX idx_wts_component
     ON camdecmpswks.weekly_test_summary USING btree
-    (component_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (component_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_wts_mon_loc_id
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_wts_mon_loc_id;
+-- DROP INDEX camdecmpswks.idx_wts_mon_loc_id;
 
-CREATE INDEX IF NOT EXISTS idx_wts_mon_loc_id
+CREATE INDEX idx_wts_mon_loc_id
     ON camdecmpswks.weekly_test_summary USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_wts_span_scale
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_wts_span_scale;
+-- DROP INDEX camdecmpswks.idx_wts_span_scale;
 
-CREATE INDEX IF NOT EXISTS idx_wts_span_scale
+CREATE INDEX idx_wts_span_scale
     ON camdecmpswks.weekly_test_summary USING btree
-    (span_scale_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (span_scale_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_wts_sys
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_wts_sys;
+-- DROP INDEX camdecmpswks.idx_wts_sys;
 
-CREATE INDEX IF NOT EXISTS idx_wts_sys
+CREATE INDEX idx_wts_sys
     ON camdecmpswks.weekly_test_summary USING btree
-    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_wts_test_resul
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_wts_test_resul;
+-- DROP INDEX camdecmpswks.idx_wts_test_resul;
 
-CREATE INDEX IF NOT EXISTS idx_wts_test_resul
+CREATE INDEX idx_wts_test_resul
     ON camdecmpswks.weekly_test_summary USING btree
-    (test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_wts_test_type
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_wts_test_type;
+-- DROP INDEX camdecmpswks.idx_wts_test_type;
 
-CREATE INDEX IF NOT EXISTS idx_wts_test_type
+CREATE INDEX idx_wts_test_type
     ON camdecmpswks.weekly_test_summary USING btree
-    (test_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (test_type_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: weekly_test_summary_idx002
 
--- DROP INDEX IF EXISTS camdecmpswks.weekly_test_summary_idx002;
+-- DROP INDEX camdecmpswks.weekly_test_summary_idx002;
 
-CREATE INDEX IF NOT EXISTS weekly_test_summary_idx002
+CREATE INDEX weekly_test_summary_idx002
     ON camdecmpswks.weekly_test_summary USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
+    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

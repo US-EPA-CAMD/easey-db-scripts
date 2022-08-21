@@ -1,8 +1,8 @@
 -- Table: camdecmpswks.weekly_system_integrity
 
--- DROP TABLE IF EXISTS camdecmpswks.weekly_system_integrity;
+-- DROP TABLE camdecmpswks.weekly_system_integrity;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.weekly_system_integrity
+CREATE TABLE camdecmpswks.weekly_system_integrity
 (
     weekly_sys_integrity_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     weekly_test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -19,14 +19,22 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.weekly_system_integrity
     rpt_period_id numeric(38,0) NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT pk_weekly_system_integrity PRIMARY KEY (weekly_sys_integrity_id),
-    CONSTRAINT fk_wsi_gas_level_cd FOREIGN KEY (gas_level_cd)
+    CONSTRAINT fk_weekly_system_integrity_gas_level_code FOREIGN KEY (gas_level_cd)
         REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_wsi_test_sum_id FOREIGN KEY (weekly_test_sum_id)
+    CONSTRAINT fk_weekly_system_integrity_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_weekly_system_integrity_reporting_period FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_weekly_system_integrity_weekly_test_summary FOREIGN KEY (weekly_test_sum_id)
         REFERENCES camdecmpswks.weekly_test_summary (weekly_test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmpswks.weekly_system_integrity
@@ -73,27 +81,27 @@ COMMENT ON COLUMN camdecmpswks.weekly_system_integrity.rpt_period_id
 
 COMMENT ON COLUMN camdecmpswks.weekly_system_integrity.mon_loc_id
     IS 'Unique identifier of a monitor location record. ';
-
 -- Index: idx_wsi_gas_level
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_wsi_gas_level;
+-- DROP INDEX camdecmpswks.idx_wsi_gas_level;
 
-CREATE INDEX IF NOT EXISTS idx_wsi_gas_level
+CREATE INDEX idx_wsi_gas_level
     ON camdecmpswks.weekly_system_integrity USING btree
-    (gas_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (gas_level_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_wsi_prd_loc
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_wsi_prd_loc;
+-- DROP INDEX camdecmpswks.idx_wsi_prd_loc;
 
-CREATE INDEX IF NOT EXISTS idx_wsi_prd_loc
+CREATE INDEX idx_wsi_prd_loc
     ON camdecmpswks.weekly_system_integrity USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_wsi_weekly_test_sum_id
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_wsi_weekly_test_sum_id;
+-- DROP INDEX camdecmpswks.idx_wsi_weekly_test_sum_id;
 
-CREATE INDEX IF NOT EXISTS idx_wsi_weekly_test_sum_id
+CREATE INDEX idx_wsi_weekly_test_sum_id
     ON camdecmpswks.weekly_system_integrity USING btree
-    (weekly_test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
+    (weekly_test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

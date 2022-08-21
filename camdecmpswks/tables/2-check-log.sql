@@ -1,5 +1,3 @@
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
 -- Table: camdecmpswks.check_log
 
 -- DROP TABLE camdecmpswks.check_log;
@@ -29,22 +27,22 @@ CREATE TABLE camdecmpswks.check_log
     check_cd character varying(30) COLLATE pg_catalog."default",
     error_suppress_id numeric(38,0),
     CONSTRAINT pk_check_log PRIMARY KEY (chk_log_id),
-    CONSTRAINT check_log_r01 FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT check_log_severity_fk FOREIGN KEY (severity_cd)
-        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT check_log_suppress_severity_fk FOREIGN KEY (suppressed_severity_cd)
-        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT pk_check_session_check_log FOREIGN KEY (chk_session_id)
+    CONSTRAINT fk_check_log_check_session FOREIGN KEY (chk_session_id)
         REFERENCES camdecmpswks.check_session (chk_session_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT fk_check_log_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_check_log_severity_code FOREIGN KEY (severity_cd)
+        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_check_log_suppressed_severity_cd FOREIGN KEY (suppressed_severity_cd)
+        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmpswks.check_log

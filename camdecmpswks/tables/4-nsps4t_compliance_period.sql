@@ -1,8 +1,8 @@
 -- Table: camdecmpswks.nsps4t_compliance_period
 
--- DROP TABLE IF EXISTS camdecmpswks.nsps4t_compliance_period;
+-- DROP TABLE camdecmpswks.nsps4t_compliance_period;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.nsps4t_compliance_period
+CREATE TABLE camdecmpswks.nsps4t_compliance_period
 (
     nsps4t_cmp_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     nsps4t_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -20,20 +20,20 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.nsps4t_compliance_period
     userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone,
-    CONSTRAINT pk_nsps4t_compliance_prd PRIMARY KEY (nsps4t_cmp_id),
-    CONSTRAINT fk_nsps4t_compliance_prd_loc FOREIGN KEY (mon_loc_id)
+    CONSTRAINT pk_nsps4t_compliance_period PRIMARY KEY (nsps4t_cmp_id),
+    CONSTRAINT fk_nsps4t_compliance_period_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_nsps4t_compliance_prd_prd FOREIGN KEY (rpt_period_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_nsps4t_compliance_period_nsps4t_summary FOREIGN KEY (nsps4t_sum_id)
+        REFERENCES camdecmpswks.nsps4t_summary (nsps4t_sum_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_nsps4t_compliance_period_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_nsps4t_compliance_prd_sum FOREIGN KEY (nsps4t_sum_id)
-        REFERENCES camdecmpswks.nsps4t_summary (nsps4t_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_nsps4t_compliance_prd_uom FOREIGN KEY (co2_emission_rate_uom_cd)
+    CONSTRAINT fk_nsps4t_compliance_period_units_of_measure_code FOREIGN KEY (co2_emission_rate_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -89,43 +89,43 @@ COMMENT ON COLUMN camdecmpswks.nsps4t_compliance_period.add_date
 
 COMMENT ON COLUMN camdecmpswks.nsps4t_compliance_period.update_date
     IS 'Date and time in which record was last updated. ';
-
 -- Index: idx_nsps4t_compliance_prd_loc
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_nsps4t_compliance_prd_loc;
+-- DROP INDEX camdecmpswks.idx_nsps4t_compliance_prd_loc;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_compliance_prd_loc
+CREATE INDEX idx_nsps4t_compliance_prd_loc
     ON camdecmpswks.nsps4t_compliance_period USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_nsps4t_compliance_prd_prd
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_nsps4t_compliance_prd_prd;
+-- DROP INDEX camdecmpswks.idx_nsps4t_compliance_prd_prd;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_compliance_prd_prd
+CREATE INDEX idx_nsps4t_compliance_prd_prd
     ON camdecmpswks.nsps4t_compliance_period USING btree
-    (rpt_period_id ASC NULLS LAST);
-
+    (rpt_period_id ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_nsps4t_compliance_prd_rpt
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_nsps4t_compliance_prd_rpt;
+-- DROP INDEX camdecmpswks.idx_nsps4t_compliance_prd_rpt;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_compliance_prd_rpt
+CREATE INDEX idx_nsps4t_compliance_prd_rpt
     ON camdecmpswks.nsps4t_compliance_period USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_nsps4t_compliance_prd_sum
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_nsps4t_compliance_prd_sum;
+-- DROP INDEX camdecmpswks.idx_nsps4t_compliance_prd_sum;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_compliance_prd_sum
+CREATE INDEX idx_nsps4t_compliance_prd_sum
     ON camdecmpswks.nsps4t_compliance_period USING btree
-    (nsps4t_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (nsps4t_sum_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_nsps4t_compliance_prd_uom
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_nsps4t_compliance_prd_uom;
+-- DROP INDEX camdecmpswks.idx_nsps4t_compliance_prd_uom;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_compliance_prd_uom
+CREATE INDEX idx_nsps4t_compliance_prd_uom
     ON camdecmpswks.nsps4t_compliance_period USING btree
-    (co2_emission_rate_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+    (co2_emission_rate_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

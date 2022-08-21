@@ -1,8 +1,8 @@
 -- Table: camdecmpswks.long_term_fuel_flow
 
--- DROP TABLE IF EXISTS camdecmpswks.long_term_fuel_flow;
+-- DROP TABLE camdecmpswks.long_term_fuel_flow;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.long_term_fuel_flow
+CREATE TABLE camdecmpswks.long_term_fuel_flow
 (
     ltff_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id numeric(38,0),
@@ -19,27 +19,27 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.long_term_fuel_flow
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_long_term_fuel_flow PRIMARY KEY (ltff_id),
-    CONSTRAINT fk_fuel_flow_per_long_term_fue FOREIGN KEY (fuel_flow_period_cd)
+    CONSTRAINT fk_long_term_fuel_flow_fuel_flow_period_code FOREIGN KEY (fuel_flow_period_cd)
         REFERENCES camdecmpsmd.fuel_flow_period_code (fuel_flow_period_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_locat_long_term_fue FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_long_term_fuel_flow_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_syste_long_term_fue FOREIGN KEY (mon_sys_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_long_term_fuel_flow_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmpswks.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_reporting_per_long_term_fue FOREIGN KEY (rpt_period_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_long_term_fuel_flow_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_units_of_meas_long_term_fu2 FOREIGN KEY (gcv_uom_cd)
+    CONSTRAINT fk_long_term_fuel_flow_units_of_measure_code_gcv FOREIGN KEY (gcv_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_units_of_meas_long_term_fue FOREIGN KEY (ltff_uom_cd)
+    CONSTRAINT fk_long_term_fuel_flow_units_of_measure_code_ltff FOREIGN KEY (ltff_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -89,67 +89,67 @@ COMMENT ON COLUMN camdecmpswks.long_term_fuel_flow.add_date
 
 COMMENT ON COLUMN camdecmpswks.long_term_fuel_flow.update_date
     IS 'Date and time in which record was last updated.';
-
 -- Index: idx_long_term_fuel_flow_emr
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_long_term_fuel_flow_emr;
+-- DROP INDEX camdecmpswks.idx_long_term_fuel_flow_emr;
 
-CREATE INDEX IF NOT EXISTS idx_long_term_fuel_flow_emr
+CREATE INDEX idx_long_term_fuel_flow_emr
     ON camdecmpswks.long_term_fuel_flow USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_long_term_fuel_fuel_flow
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_long_term_fuel_fuel_flow;
+-- DROP INDEX camdecmpswks.idx_long_term_fuel_fuel_flow;
 
-CREATE INDEX IF NOT EXISTS idx_long_term_fuel_fuel_flow
+CREATE INDEX idx_long_term_fuel_fuel_flow
     ON camdecmpswks.long_term_fuel_flow USING btree
-    (fuel_flow_period_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (fuel_flow_period_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_long_term_fuel_gcv_uom_cd
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_long_term_fuel_gcv_uom_cd;
+-- DROP INDEX camdecmpswks.idx_long_term_fuel_gcv_uom_cd;
 
-CREATE INDEX IF NOT EXISTS idx_long_term_fuel_gcv_uom_cd
+CREATE INDEX idx_long_term_fuel_gcv_uom_cd
     ON camdecmpswks.long_term_fuel_flow USING btree
-    (gcv_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (gcv_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_long_term_fuel_ltff_uom_c
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_long_term_fuel_ltff_uom_c;
+-- DROP INDEX camdecmpswks.idx_long_term_fuel_ltff_uom_c;
 
-CREATE INDEX IF NOT EXISTS idx_long_term_fuel_ltff_uom_c
+CREATE INDEX idx_long_term_fuel_ltff_uom_c
     ON camdecmpswks.long_term_fuel_flow USING btree
-    (ltff_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (ltff_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_long_term_fuel_mon_loc_id
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_long_term_fuel_mon_loc_id;
+-- DROP INDEX camdecmpswks.idx_long_term_fuel_mon_loc_id;
 
-CREATE INDEX IF NOT EXISTS idx_long_term_fuel_mon_loc_id
+CREATE INDEX idx_long_term_fuel_mon_loc_id
     ON camdecmpswks.long_term_fuel_flow USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_long_term_fuel_mon_sys_id
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_long_term_fuel_mon_sys_id;
+-- DROP INDEX camdecmpswks.idx_long_term_fuel_mon_sys_id;
 
-CREATE INDEX IF NOT EXISTS idx_long_term_fuel_mon_sys_id
+CREATE INDEX idx_long_term_fuel_mon_sys_id
     ON camdecmpswks.long_term_fuel_flow USING btree
-    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_ltff_add_date
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_ltff_add_date;
+-- DROP INDEX camdecmpswks.idx_ltff_add_date;
 
-CREATE INDEX IF NOT EXISTS idx_ltff_add_date
+CREATE INDEX idx_ltff_add_date
     ON camdecmpswks.long_term_fuel_flow USING btree
-    (add_date ASC NULLS LAST);
-
+    (add_date ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: long_term_fuel_flow_idx001
 
--- DROP INDEX IF EXISTS camdecmpswks.long_term_fuel_flow_idx001;
+-- DROP INDEX camdecmpswks.long_term_fuel_flow_idx001;
 
-CREATE INDEX IF NOT EXISTS long_term_fuel_flow_idx001
+CREATE INDEX long_term_fuel_flow_idx001
     ON camdecmpswks.long_term_fuel_flow USING btree
-    (rpt_period_id ASC NULLS LAST);
+    (rpt_period_id ASC NULLS LAST)
+    TABLESPACE pg_default;

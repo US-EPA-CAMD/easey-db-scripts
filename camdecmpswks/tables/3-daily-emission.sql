@@ -1,8 +1,8 @@
 -- Table: camdecmpswks.daily_emission
 
--- DROP TABLE IF EXISTS camdecmpswks.daily_emission;
+-- DROP TABLE camdecmpswks.daily_emission;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.daily_emission
+CREATE TABLE camdecmpswks.daily_emission
 (
     daily_emission_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id numeric(38,0) NOT NULL,
@@ -20,15 +20,15 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.daily_emission
     calc_total_daily_emission numeric(10,1),
     calc_total_op_time numeric(4,2),
     CONSTRAINT pk_daily_emission PRIMARY KEY (daily_emission_id),
-    CONSTRAINT fk_monitor_locat_daily_emissio FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_daily_emission_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_parameter_cod_daily_emissio FOREIGN KEY (parameter_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_daily_emission_parameter_code FOREIGN KEY (parameter_cd)
         REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_reporting_per_daily_emissio FOREIGN KEY (rpt_period_id)
+    CONSTRAINT fk_daily_emission_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -81,35 +81,35 @@ COMMENT ON COLUMN camdecmpswks.daily_emission.calc_total_daily_emission
 
 COMMENT ON COLUMN camdecmpswks.daily_emission.calc_total_op_time
     IS 'Calculated total operating time.';
-
 -- Index: daily_emission_idx001
 
--- DROP INDEX IF EXISTS camdecmpswks.daily_emission_idx001;
+-- DROP INDEX camdecmpswks.daily_emission_idx001;
 
-CREATE INDEX IF NOT EXISTS daily_emission_idx001
+CREATE INDEX daily_emission_idx001
     ON camdecmpswks.daily_emission USING btree
-    (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: daily_emission_idx003
 
--- DROP INDEX IF EXISTS camdecmpswks.daily_emission_idx003;
+-- DROP INDEX camdecmpswks.daily_emission_idx003;
 
-CREATE INDEX IF NOT EXISTS daily_emission_idx003
+CREATE INDEX daily_emission_idx003
     ON camdecmpswks.daily_emission USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_daily_emission_mon_loc_id
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_daily_emission_mon_loc_id;
+-- DROP INDEX camdecmpswks.idx_daily_emission_mon_loc_id;
 
-CREATE INDEX IF NOT EXISTS idx_daily_emission_mon_loc_id
+CREATE INDEX idx_daily_emission_mon_loc_id
     ON camdecmpswks.daily_emission USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_de_add_date
 
--- DROP INDEX IF EXISTS camdecmpswks.idx_de_add_date;
+-- DROP INDEX camdecmpswks.idx_de_add_date;
 
-CREATE INDEX IF NOT EXISTS idx_de_add_date
+CREATE INDEX idx_de_add_date
     ON camdecmpswks.daily_emission USING btree
-    (add_date ASC NULLS LAST);
+    (add_date ASC NULLS LAST)
+    TABLESPACE pg_default;
