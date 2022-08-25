@@ -7,9 +7,10 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.delete_monitor_plan_from_workspace(
 LANGUAGE 'plpgsql'
 AS $BODY$
 DECLARE
-	monLocIds 		text[];
-	unitIds   		integer[];
-	stackPipeIds	text[];	
+	unitIds   			int[];
+	monLocIds 			text[];
+	stackPipeIds		text[];
+	unitStackConfigIds  text[];
 BEGIN
 
 	SELECT ARRAY(
@@ -31,6 +32,13 @@ BEGIN
 		WHERE mon_loc_id = ANY(monLocIds)
 		AND stack_pipe_id IS NOT NULL
 	) INTO stackPipeIds;
+
+	SELECT ARRAY(
+		SELECT config_id
+		FROM camdecmpswks.unit_stack_configuration
+		WHERE unit_id = ANY(unitIds)
+		OR stack_pipe_id = ANY(stackPipeIds)
+	) INTO unitStackConfigIds;
 
 	-- CHECK_SESSION --
 	DELETE FROM camdecmpswks.check_session
@@ -56,10 +64,9 @@ BEGIN
 	DELETE FROM camdecmpswks.unit_fuel
 	WHERE unit_id = ANY(unitIds);
 
-	-- UNIT_STACK_CONFIGURATION --	
+	-- UNIT_STACK_CONFIGURATION --
 	DELETE FROM camdecmpswks.unit_stack_configuration
-	WHERE unit_id = ANY(unitIds) OR
-	stack_pipe_id = ANY(stackPipeIds);
+	WHERE config_id = ANY(unitStackConfigIds);
 
 	-- STACK_PIPES --
 	DELETE FROM camdecmpswks.stack_pipe

@@ -7,18 +7,17 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.copy_monitor_plan_to_workspace(
 LANGUAGE 'plpgsql'
 AS $BODY$
 DECLARE
-	monLocIds 		text[];
-	unitIds   		integer[];
-	stackPipeIds	text[];	
+	unitIds   			int[];
+	monLocIds 			text[];
+	stackPipeIds		text[];
+	unitStackConfigIds 	text[];
 BEGIN
-	-- GET LIST OF LOCATION IDs IN THE MONITOR PLAN
 	SELECT ARRAY(
 		SELECT mon_loc_id
 		FROM camdecmps.monitor_plan_location
 		WHERE mon_plan_id = monPlanId
 	) INTO monLocIds;
 
-	-- GET LIST OF UNIT IDs FOR ALL LOCATIONS IN THE MONITOR PLAN
 	SELECT ARRAY(
 		SELECT unit_id
 		FROM camdecmps.monitor_location
@@ -26,13 +25,19 @@ BEGIN
 		AND unit_id IS NOT NULL
 	) INTO unitIds;
 	
-	-- GET LIST OF STACK PIPE IDs FOR ALL LOCATIONS IN THE MONITOR PLAN
 	SELECT ARRAY(
 		SELECT stack_pipe_id
 		FROM camdecmps.monitor_location
 		WHERE mon_loc_id = ANY(monLocIds)
 		AND stack_pipe_id IS NOT NULL
 	) INTO stackPipeIds;
+	
+	SELECT ARRAY(
+		SELECT config_id
+		FROM camdecmps.unit_stack_configuration
+		WHERE unit_id = ANY(unitIds)
+		OR stack_pipe_id = ANY(stackPipeIds)
+	) INTO unitStackConfigIds;
 
 	---------------------------------- UNIT & STACK PIPE DATA --------------------------------------------
 
@@ -79,7 +84,7 @@ BEGIN
 	SELECT
 		config_id, unit_id, stack_pipe_id, begin_date, end_date, userid, add_date, update_date
 	FROM camdecmps.unit_stack_configuration
-	WHERE unit_id = ANY (unitIds);	
+	WHERE config_id = ANY (unitStackConfigIds);
 
 	---------------------------------- MONITOR PLAN DATA --------------------------------------------
 
