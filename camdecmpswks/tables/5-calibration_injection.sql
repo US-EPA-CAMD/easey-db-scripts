@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.calibration_injection;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.calibration_injection
+CREATE TABLE camdecmpswks.calibration_injection
 (
     cal_inj_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -37,21 +37,5 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.calibration_injection
     CONSTRAINT fk_calibration_injection_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmpswks.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
-
--- -- Index: idx_calibration_inj_upscale_ga
-
--- -- DROP INDEX camdecmpswks.idx_calibration_inj_upscale_ga;
-
--- CREATE INDEX idx_calibration_inj_upscale_ga
---     ON camdecmpswks.calibration_injection USING btree
---     (upscale_gas_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- -- Index: idx_calibration_injection_001
-
--- -- DROP INDEX camdecmpswks.idx_calibration_injection_001;
-
--- CREATE INDEX idx_calibration_injection_001
---     ON camdecmpswks.calibration_injection USING btree
---     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

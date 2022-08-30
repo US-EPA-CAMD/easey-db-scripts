@@ -1,9 +1,9 @@
--- PROCEDURE: camdecmpswks.ins_check_session()
+-- PROCEDURE: camdecmpswks.ins_check_session(character varying)
 
--- DROP PROCEDURE camdecmpswks.ins_check_session();
+-- DROP PROCEDURE camdecmpswks.ins_check_session(character varying);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.ins_check_session(
-	)
+	p_v_batch_id character varying DEFAULT NULL::character varying)
 LANGUAGE 'plpgsql'
 AS $BODY$
 DECLARE
@@ -59,14 +59,14 @@ BEGIN
 			RPT_PERIOD_ID, EVAL_BEGIN_DATE, EVAL_END_DATE, 
 		    SESSION_BEGIN_DATE, SESSION_END_DATE, SESSION_COMMENT, 
 		    EVAL_SCORE_CD, SEVERITY_CD, CATEGORY_CD, PROCESS_CD, 
-		    UPDATED_STATUS_FLG, LAST_UPDATED, USERID )
+		    UPDATED_STATUS_FLG, LAST_UPDATED, USERID, BATCH_ID )
 		VALUES
 		   (p_V_CHK_SESSION_ID, p_V_MON_PLAN_ID, p_V_TEST_SUM_ID,
 			p_V_QA_CERT_EVENT_ID, p_V_TEE_ID, 
 			p_V_RPT_PERIOD_ID, p_V_EM_EVAL_BEGIN_DATE, p_V_EM_EVAL_END_DATE,
 			p_V_SESSION_BEGIN_DATE, NULL, p_V_SESSION_COMMENT,
 			NULL, NULL, p_V_CATEGORY_CD, p_V_PROCESS_CD,
-			NULL, NOW(), p_V_USERID );
+			NULL, NOW(), p_V_USERID, p_V_batch_id);
 
 	EXCEPTION
 		WHEN OTHERS THEN

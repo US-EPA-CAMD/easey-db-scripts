@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.ae_hi_oil;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.ae_hi_oil
+CREATE TABLE camdecmpswks.ae_hi_oil
 (
     ae_hi_oil_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     ae_corr_test_run_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -24,12 +24,12 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.ae_hi_oil
     CONSTRAINT fk_ae_hi_oil_ae_correlation_test_run FOREIGN KEY (ae_corr_test_run_id)
         REFERENCES camdecmpswks.ae_correlation_test_run (ae_corr_test_run_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT fk_ae_hi_oil_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmpswks.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_ae_hi_oil_oil_volume_uom FOREIGN KEY (oil_volume_uom_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_ae_hi_oil_oil_density_uom FOREIGN KEY (oil_density_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
@@ -37,48 +37,8 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.ae_hi_oil
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_ae_hi_oil_oil_density_uom FOREIGN KEY (oil_density_uom_cd)
+    CONSTRAINT fk_ae_hi_oil_oil_volume_uom FOREIGN KEY (oil_volume_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
-
--- -- Index: idx_ae_hi_oil_ae_corr_te
-
--- -- DROP INDEX camdecmpswks.idx_ae_hi_oil_ae_corr_te;
-
--- CREATE INDEX idx_ae_hi_oil_ae_corr_te
---     ON camdecmpswks.ae_hi_oil USING btree
---     (ae_corr_test_run_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- -- Index: idx_ae_hi_oil_mon_sys_id
-
--- -- DROP INDEX camdecmpswks.idx_ae_hi_oil_mon_sys_id;
-
--- CREATE INDEX idx_ae_hi_oil_mon_sys_id
---     ON camdecmpswks.ae_hi_oil USING btree
---     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- -- Index: idx_ae_hi_oil_oil_densit
-
--- -- DROP INDEX camdecmpswks.idx_ae_hi_oil_oil_densit;
-
--- CREATE INDEX idx_ae_hi_oil_oil_densit
---     ON camdecmpswks.ae_hi_oil USING btree
---     (oil_density_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- -- Index: idx_ae_hi_oil_oil_gcv_uo
-
--- -- DROP INDEX camdecmpswks.idx_ae_hi_oil_oil_gcv_uo;
-
--- CREATE INDEX idx_ae_hi_oil_oil_gcv_uo
---     ON camdecmpswks.ae_hi_oil USING btree
---     (oil_gcv_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- -- Index: idx_ae_hi_oil_oil_volume
-
--- -- DROP INDEX camdecmpswks.idx_ae_hi_oil_oil_volume;
-
--- CREATE INDEX idx_ae_hi_oil_oil_volume
---     ON camdecmpswks.ae_hi_oil USING btree
---     (oil_volume_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);

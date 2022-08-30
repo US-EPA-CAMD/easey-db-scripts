@@ -110,3 +110,28 @@ insert into camdecmpsmd.OP_DATE_CODE ( OP_DATE_CD, OP_DATE_CD_DESCRIPTION) value
 -- TEST_FREQUENCY_CODE
 insert into camdecmpsmd.TEST_FREQUENCY_CODE ( TEST_FREQUENCY_CD, TEST_FREQUENCY_CD_DESCRIPTION) values ( '2QTRS', 'Two Quarters' );
 insert into camdecmpsmd.TEST_FREQUENCY_CODE ( TEST_FREQUENCY_CD, TEST_FREQUENCY_CD_DESCRIPTION) values ( '4QTRS', 'Four Quarters' );
+
+-- BEGIN_END_HOUR_FLAG
+insert into camdecmpsmd.BEGIN_END_HOUR_FLAG ( BEGIN_END_HOUR_FLG, BEGIN_END_HOUR_DESCRIPTION) values ( 'F', 'Final Hour' );
+insert into camdecmpsmd.BEGIN_END_HOUR_FLAG ( BEGIN_END_HOUR_FLG, BEGIN_END_HOUR_DESCRIPTION) values ( 'I', 'Initial Hour' );
+insert into camdecmpsmd.BEGIN_END_HOUR_FLAG ( BEGIN_END_HOUR_FLG, BEGIN_END_HOUR_DESCRIPTION) values ( 'N', 'Not Available' );
+insert into camdecmpsmd.BEGIN_END_HOUR_FLAG ( BEGIN_END_HOUR_FLG, BEGIN_END_HOUR_DESCRIPTION) values ( 'T', 'Transition Hour' );
+
+-- INDICATOR_CODE
+insert into camdecmpsmd.INDICATOR_CODE ( INDICATOR_CD, INDICATOR_CD_DESCRIPTION) values ( 'E', 'Emergency' );
+insert into camdecmpsmd.INDICATOR_CODE ( INDICATOR_CD, INDICATOR_CD_DESCRIPTION) values ( 'I', 'Ignition (Startup)' );
+insert into camdecmpsmd.INDICATOR_CODE ( INDICATOR_CD, INDICATOR_CD_DESCRIPTION) values ( 'P', 'Primary' );
+insert into camdecmpsmd.INDICATOR_CODE ( INDICATOR_CD, INDICATOR_CD_DESCRIPTION) values ( 'S', 'Secondary' );
+
+-- EXEMPTION_TYPE_CODE
+insert into camdecmpsmd.EXEMPTION_TYPE_CODE ( EXEMPT_TYPE_CD, EXEMPT_TYPE_CD_DESCRIPTION) values ( '25TON', '25 Ton Execption' );
+insert into camdecmpsmd.EXEMPTION_TYPE_CODE ( EXEMPT_TYPE_CD, EXEMPT_TYPE_CD_DESCRIPTION) values ( 'NUE', 'New Unit Exemption' );
+insert into camdecmpsmd.EXEMPTION_TYPE_CODE ( EXEMPT_TYPE_CD, EXEMPT_TYPE_CD_DESCRIPTION) values ( 'RUE', 'Retired Unit Exemption' );
+insert into camdecmpsmd.EXEMPTION_TYPE_CODE ( EXEMPT_TYPE_CD, EXEMPT_TYPE_CD_DESCRIPTION) values ( 'RUE1', 'Retired Unit Exemption' );
+
+-- OPERATING_STATUS_CODE
+insert into camdecmpsmd.OPERATING_STATUS_CODE ( OP_STATUS_CD, OP_STATUS_CD_DESCRIPTION) values ( 'CAN', 'Cancelled' );
+insert into camdecmpsmd.OPERATING_STATUS_CODE ( OP_STATUS_CD, OP_STATUS_CD_DESCRIPTION) values ( 'FUT', 'Future' );
+insert into camdecmpsmd.OPERATING_STATUS_CODE ( OP_STATUS_CD, OP_STATUS_CD_DESCRIPTION) values ( 'OPR', 'Operating' );
+insert into camdecmpsmd.OPERATING_STATUS_CODE ( OP_STATUS_CD, OP_STATUS_CD_DESCRIPTION) values ( 'RET', 'Retired' );
+insert into camdecmpsmd.OPERATING_STATUS_CODE ( OP_STATUS_CD, OP_STATUS_CD_DESCRIPTION) values ( 'LTCS', 'Long-Term Cold Storage' );

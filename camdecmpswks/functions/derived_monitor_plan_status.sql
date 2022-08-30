@@ -27,8 +27,8 @@ SELECT mp.*, MON_PLAN_STATUS_CD_DESCRIPTION
 						ELSE 'ACTIVE'
 				   END AS MON_PLAN_STATUS_CD
 			FROM camdecmpswks.MONITOR_PLAN mp
-				LEFT OUTER JOIN camdecmpswks.vw_reporting_period rpBegin on rpBegin.RPT_PERIOD_ID = mp.BEGIN_RPT_PERIOD_ID
-				LEFT OUTER JOIN camdecmpswks.vw_reporting_period rpEnd on rpEnd.RPT_PERIOD_ID = mp.END_RPT_PERIOD_ID
+				LEFT OUTER JOIN camdecmpsmd.vw_reporting_period rpBegin on rpBegin.RPT_PERIOD_ID = mp.BEGIN_RPT_PERIOD_ID
+				LEFT OUTER JOIN camdecmpsmd.vw_reporting_period rpEnd on rpEnd.RPT_PERIOD_ID = mp.END_RPT_PERIOD_ID
 		) as mp
 			LEFT OUTER JOIN camdecmpsmd.MONITORING_PLAN_STATUS_CODE mpsc on mpsc.MON_PLAN_STATUS_CD = mp.MON_PLAN_STATUS_CD
 $BODY$;

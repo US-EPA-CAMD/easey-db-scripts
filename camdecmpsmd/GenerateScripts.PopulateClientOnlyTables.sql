@@ -141,3 +141,59 @@ select  concat( 'insert into camdecmpsmd.TEST_FREQUENCY_CODE ( TEST_FREQUENCY_CD
                 case when TEST_FREQUENCY_CD_DESCRIPTION is not null then '''' + TEST_FREQUENCY_CD_DESCRIPTION + '''' else 'NULL' end,
 				' );' )
   from  ECMPS.dbo.TEST_FREQUENCY_CODE
+
+union all 
+select  '' 
+union all 
+select  ''
+union all 
+
+select  '-- BEGIN_END_HOUR_FLAG'
+union all
+select  concat( 'insert into camdecmpsmd.BEGIN_END_HOUR_FLAG ( BEGIN_END_HOUR_FLG, BEGIN_END_HOUR_DESCRIPTION) values ( ', 
+                case when BEGIN_END_HOUR_FLG is not null then '''' + BEGIN_END_HOUR_FLG + '''' else 'NULL' end, ', ', 
+                case when BEGIN_END_HOUR_DESCRIPTION is not null then '''' + BEGIN_END_HOUR_DESCRIPTION + '''' else 'NULL' end,
+				' );' )
+  from  ECMPS.Lookup.BEGIN_END_HOUR_FLAG
+
+union all 
+select  '' 
+union all 
+select  ''
+union all 
+
+select  '-- INDICATOR_CODE'
+union all
+select  concat( 'insert into camdecmpsmd.INDICATOR_CODE ( INDICATOR_CD, INDICATOR_CD_DESCRIPTION) values ( ', 
+                case when INDICATOR_CD is not null then '''' + INDICATOR_CD + '''' else 'NULL' end, ', ', 
+                case when INDICATOR_CODE_DESCRIPTION is not null then '''' + INDICATOR_CODE_DESCRIPTION + '''' else 'NULL' end,
+				' );' )
+  from  ECMPS.dbo.INDICATOR_CODE
+
+union all 
+select  '' 
+union all 
+select  ''
+union all 
+
+select  '-- EXEMPTION_TYPE_CODE'
+union all
+select  concat( 'insert into camdecmpsmd.EXEMPTION_TYPE_CODE ( EXEMPT_TYPE_CD, EXEMPT_TYPE_CD_DESCRIPTION) values ( ', 
+                case when EXEMPT_TYPE_CD is not null then '''' + EXEMPT_TYPE_CD + '''' else 'NULL' end, ', ', 
+                case when EXEMPT_TYPE_CD_DESCRIPTION is not null then '''' + EXEMPT_TYPE_CD_DESCRIPTION + '''' else 'NULL' end,
+				' );' )
+  from  ECMPS.dbo.EXEMPTION_TYPE_CODE
+
+union all 
+select  '' 
+union all 
+select  ''
+union all 
+
+select  '-- OPERATING_STATUS_CODE'
+union all
+select  concat( 'insert into camdecmpsmd.OPERATING_STATUS_CODE ( OP_STATUS_CD, OP_STATUS_CD_DESCRIPTION) values ( ', 
+                case when OP_STATUS_CD is not null then '''' + OP_STATUS_CD + '''' else 'NULL' end, ', ', 
+                case when OP_STATUS_CD_DESCRIPTION is not null then '''' + OP_STATUS_CD_DESCRIPTION + '''' else 'NULL' end,
+				' );' )
+  from  ECMPS.dbo.OPERATING_STATUS_CODE

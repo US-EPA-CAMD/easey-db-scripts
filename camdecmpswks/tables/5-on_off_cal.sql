@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.on_off_cal;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.on_off_cal
+CREATE TABLE camdecmpswks.on_off_cal
 (
     on_off_cal_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -50,21 +50,5 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.on_off_cal
     CONSTRAINT fk_on_off_cal_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmpswks.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
-
--- -- Index: idx_on_off_cal_001
-
--- -- DROP INDEX camdecmpswks.idx_on_off_cal_001;
-
--- CREATE INDEX idx_on_off_cal_001
---     ON camdecmpswks.on_off_cal USING btree
---     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- -- Index: idx_on_off_cal_upscale_ga
-
--- -- DROP INDEX camdecmpswks.idx_on_off_cal_upscale_ga;
-
--- CREATE INDEX idx_on_off_cal_upscale_ga
---     ON camdecmpswks.on_off_cal USING btree
---     (upscale_gas_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);

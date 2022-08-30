@@ -36,50 +36,25 @@ CREATE TABLE IF NOT EXISTS camddmw.hour_unit_data_log
     CONSTRAINT pk_hour_unit_data_log PRIMARY KEY (skey)
 );
 
--- Index: idx_hour_unit_data_log_op_date
+DROP INDEX IF EXISTS camddmw.idx_hour_unit_data_log_op_date;
+DROP INDEX IF EXISTS camddmw.idx_hour_unit_data_log_op_hour;
+DROP INDEX IF EXISTS camddmw.idx_hour_unit_data_log_op_time;
+DROP INDEX IF EXISTS camddmw.idx_hour_unit_data_log_op_year;
+DROP INDEX IF EXISTS camddmw.idx_hour_unit_data_log_sql_function;
+DROP INDEX IF EXISTS camddmw.idx_hour_unit_data_log_unit_id;
 
--- DROP INDEX camddmw.idx_hour_unit_data_log_op_date;
+CREATE INDEX idx_hour_unit_data_log_sql_function
+    ON camddmw.hour_unit_data_log USING btree
+    (sql_function ASC NULLS LAST);
+
+CREATE INDEX idx_hour_unit_data_log_unit_id
+    ON camddmw.hour_unit_data_log USING btree
+    (unit_id ASC NULLS LAST);
 
 CREATE INDEX idx_hour_unit_data_log_op_date
     ON camddmw.hour_unit_data_log USING btree
     (op_date ASC NULLS LAST);
 
--- Index: idx_hour_unit_data_log_op_hour
-
--- DROP INDEX camddmw.idx_hour_unit_data_log_op_hour;
-
 CREATE INDEX idx_hour_unit_data_log_op_hour
     ON camddmw.hour_unit_data_log USING btree
     (op_hour ASC NULLS LAST);
-
--- Index: idx_hour_unit_data_log_op_time
-
--- DROP INDEX camddmw.idx_hour_unit_data_log_op_time;
-
-CREATE INDEX idx_hour_unit_data_log_op_time
-    ON camddmw.hour_unit_data_log USING btree
-    (op_time ASC NULLS LAST);
-
--- Index: idx_hour_unit_data_log_op_year
-
--- DROP INDEX camddmw.idx_hour_unit_data_log_op_year;
-
-CREATE INDEX idx_hour_unit_data_log_op_year
-    ON camddmw.hour_unit_data_log USING btree
-    (op_year ASC NULLS LAST);
-
--- Index: idx_hour_unit_data_log_sql_function
-
--- DROP INDEX camddmw.idx_hour_unit_data_log_sql_function;
-
-CREATE INDEX idx_hour_unit_data_log_sql_function
-    ON camddmw.hour_unit_data_log USING btree
-    (sql_function COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_hour_unit_data_log_unit_id
-
--- DROP INDEX camddmw.idx_hour_unit_data_log_unit_id;
-
-CREATE INDEX idx_hour_unit_data_log_unit_id
-    ON camddmw.hour_unit_data_log USING btree
-    (unit_id ASC NULLS LAST);

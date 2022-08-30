@@ -29,7 +29,7 @@ SELECT	sup.ES_SPEC_ID,
           sup.MATCH_TIME_END_VALUE,
           sup.ACTIVE_IND,
           sup.DI
-    FROM	camdecmpswksaux.ES_SPEC sup
+    FROM	camdecmpsaux.ES_SPEC sup
           INNER JOIN camdecmpsmd.CHECK_CATALOG_RESULT res 
             ON res.CHECK_CATALOG_RESULT_ID = sup.CHECK_CATALOG_RESULT_ID
           INNER JOIN camdecmpsmd.CHECK_CATALOG chk

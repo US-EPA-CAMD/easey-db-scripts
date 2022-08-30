@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.air_emission_testing;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.air_emission_testing
+CREATE TABLE camdecmpswks.air_emission_testing
 (
     air_emission_test_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -22,13 +22,5 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.air_emission_testing
     CONSTRAINT fk_air_emission_testing_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmpswks.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
-
--- -- Index: idx_aet_testsumid
-
--- -- DROP INDEX camdecmpswks.idx_aet_testsumid;
-
--- CREATE INDEX idx_aet_testsumid
---     ON camdecmpswks.air_emission_testing USING btree
---     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

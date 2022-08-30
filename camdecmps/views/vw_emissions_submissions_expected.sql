@@ -1,9 +1,8 @@
--- View: camdecmps.vw_emissions_submissions_expected
+-- View: camddmw.vw_emissions_submissions_expected
 
-DROP VIEW IF EXISTS camddmw.vw_emissions_submissions_expected;
-DROP VIEW IF EXISTS camdecmps.vw_emissions_submissions_expected;
+-- DROP VIEW camddmw.vw_emissions_submissions_expected;
 
-CREATE OR REPLACE VIEW camdecmps.vw_emissions_submissions_expected
+CREATE OR REPLACE VIEW camddmw.vw_emissions_submissions_expected
  AS
  SELECT esa.rpt_period_id,
     count(esa.em_sub_access_id) AS total,

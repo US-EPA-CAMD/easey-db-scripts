@@ -11,6 +11,6 @@ CREATE OR REPLACE VIEW camdaux.vw_annual_emissions_bulk_files_per_state_to_gener
      JOIN camdecmps.monitor_plan mp USING (mon_plan_id)
      JOIN camd.plant p USING (fac_id)
      LEFT JOIN camdecmps.dm_emissions_user dmeu ON dme.dm_emissions_id::text = dmeu.dm_emissions_id::text AND dmeu.dm_emissions_user_cd::text = 'S3BDF'::text
-  WHERE dmeu.dm_emissions_id IS NULL
+  WHERE dmeu.dm_emissions_id IS NULL AND camdaux.can_generate_state(rp.calendar_year::integer)
   GROUP BY rp.calendar_year, p.state
   ORDER BY rp.calendar_year, p.state;

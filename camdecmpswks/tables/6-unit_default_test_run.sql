@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.unit_default_test_run;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.unit_default_test_run
+CREATE TABLE camdecmpswks.unit_default_test_run
 (
     unit_default_test_run_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     unit_default_test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -24,13 +24,5 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.unit_default_test_run
     CONSTRAINT fk_unit_default_test_run_unit_default_test FOREIGN KEY (unit_default_test_sum_id)
         REFERENCES camdecmpswks.unit_default_test (unit_default_test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
-
--- -- Index: idx_unit_default_te_unit_defau
-
--- -- DROP INDEX camdecmpswks.idx_unit_default_te_unit_defau;
-
--- CREATE INDEX idx_unit_default_te_unit_defau
---     ON camdecmpswks.unit_default_test_run USING btree
---     (unit_default_test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

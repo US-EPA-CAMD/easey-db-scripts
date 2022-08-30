@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.cycle_time_summary;
 
-CREATE TABLE IF NOT EXISTS camdecmpswks.cycle_time_summary
+CREATE TABLE camdecmpswks.cycle_time_summary
 (
     cycle_time_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -15,13 +15,5 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.cycle_time_summary
     CONSTRAINT fk_cycle_time_summary_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmpswks.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
-
--- -- Index: idx_cycle_time_summary_001
-
--- -- DROP INDEX camdecmpswks.idx_cycle_time_summary_001;
-
--- CREATE INDEX idx_cycle_time_summary_001
---     ON camdecmpswks.cycle_time_summary USING btree
---     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
