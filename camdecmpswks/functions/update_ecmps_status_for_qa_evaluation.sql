@@ -124,7 +124,7 @@ begin
 							WHERE QS.SUBMISSION_AVAILABILITY_CD IS NULL OR
 								QS.SUBMISSION_AVAILABILITY_CD IN ('GRANTED','REQUIRE');
 	 
-		     select into result, error_msg from camdecmpswks.Delete_Calculated_QA_Data_from_Workspace();	
+		     select * into result, error_msg from camdecmpswks.Delete_Calculated_QA_Data_from_Workspace();	
 		
 	/*	   I:=0;
 		   OPEN TEST_CSR;
