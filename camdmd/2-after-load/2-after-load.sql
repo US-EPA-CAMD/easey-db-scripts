@@ -30,7 +30,7 @@ ALTER TABLE camdmd.program_code
     ADD COLUMN notes character varying(1000) NOT NULL DEFAULT 0;
 
 ALTER TABLE camdmd.program_code
-    ADD COLUMN active numeric(1,0) NOT NULL DEFAULT 0;
+    ADD COLUMN bulk_file_active numeric(1,0) NOT NULL DEFAULT 0;
 
 update camdmd.program_code
 set emissions_ui_filter = 1
@@ -89,8 +89,8 @@ set noxc_cert_ind = 1
 where prg_cd in ('CAIRNOX', 'CAIROS', 'CSNOX', 'CSNOXOS', 'CSOSG1', 'CSOSG2', 'CSOSG3', 'NBP', 'NHNOX', 'SIPNOX', 'TRNOX', 'TRNOXOS');
 
 UPDATE camdmd.program_code
-SET active = 1
-WHERE prg_cd IN ('ARP', 'CSNOX', 'CSNOXOS', 'CSOSG1', 'CSOSG2', 'CSOSG3', 'CSSO2G1', 'CSSO2G2', 'MATS', 'TXSO2');
+SET bulk_file_active = 1
+WHERE prg_cd IN ('ARP', 'CSNOX', 'CSNOXOS', 'CSOSG1', 'CSOSG2', 'CSOSG3', 'CSSO2G1', 'CSSO2G2', 'TXSO2');
 
 --------------------------------------------------
 -- FUEL TYPE CODE UPDATES 

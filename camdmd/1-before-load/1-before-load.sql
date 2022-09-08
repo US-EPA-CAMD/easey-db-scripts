@@ -31,7 +31,7 @@ ALTER TABLE IF EXISTS camdmd.program_code
     DROP COLUMN IF EXISTS notes;
 
 ALTER TABLE IF EXISTS camdmd.program_code
-    DROP COLUMN IF EXISTS active;
+    DROP COLUMN IF EXISTS bulk_file_active;
 
 
 -- UNIT TYPE
