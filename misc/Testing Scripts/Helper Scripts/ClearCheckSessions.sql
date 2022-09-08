@@ -1,10 +1,16 @@
+
+  	CALL camdecmpswks.delete_monitor_plan_qa_data_from_workspace(monplanid);
+	CALL camdecmpswks.delete_monitor_plan_from_workspace(monplanid);
+
+
+/*
 select	*
   from	camdecmpswks.check_session cs 
   		left join camdecmpswks.check_log cl on cl.chk_session_id = cs.chk_session_id 
  where	cs.process_cd = 'MP'
-   and	cs.mon_plan_id in ( select mp.mon_plan_id from camd.plant p join camdecmps.monitor_plan mp on mp.fac_id = p.fac_id where p.oris_code in ( 3, 10, 983, 994, 2406, 3804, 50628 ) );
+   and	cs.mon_plan_id in ( select mp.mon_plan_id from camd.plant p join camdecmpswks.monitor_plan mp on mp.fac_id = p.fac_id where p.oris_code in ( 3, 10, 47, 628, 983, 994, 1710, 2367, 57241 ) );
 
---/*
+/*
 delete
   from	camdecmpswks.check_log cl 
  where	cl.chk_session_id in	(
@@ -21,7 +27,7 @@ delete
   								select 	mp.mon_plan_id
   								  from 	camd.plant p
   								  		join camdecmps.monitor_plan mp on mp.fac_id = p.fac_id
-  								 where 	p.oris_code in ( 3, 10, 983, 994, 2406, 3804, 50628 ) 
+  								 where 	p.oris_code in ( 3, 10, 47, 628, 983, 994, 1710, 2367, 57241 )
   							);
 commit;
 --*/
@@ -30,5 +36,5 @@ select	*
   from	camdecmpswks.check_session cs 
   		left join camdecmpswks.check_log cl on cl.chk_session_id = cs.chk_session_id 
  where	cs.process_cd = 'MP'
-   and	cs.mon_plan_id in ( select mp.mon_plan_id from camd.plant p join camdecmps.monitor_plan mp on mp.fac_id = p.fac_id where p.oris_code in ( 3, 10, 983, 994, 2406, 3804, 50628 ) );
-
+   and	cs.mon_plan_id in ( select mp.mon_plan_id from camd.plant p join camdecmps.monitor_plan mp on mp.fac_id = p.fac_id where p.oris_code in ( 3, 10, 47, 628, 983, 994, 1710, 2367, 57241 ) );
+*/

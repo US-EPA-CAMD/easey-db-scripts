@@ -94,7 +94,7 @@ begin
 			      INNER JOIN camdecmpswks.MONITOR_PLAN_LOCATION mpl ON ts.MON_LOC_ID = mpl.MON_LOC_ID 
 			      WHERE NEEDS_EVAL_FLG = 'N' AND
 				  		MON_PLAN_ID  = vMonPlanId;
-		 select into result, error_msg from camdecmpswks.Delete_Calculated_QA_Data_from_Workspace();	
+		 select * into result, error_msg from camdecmpswks.Delete_Calculated_QA_Data_from_Workspace();	
 						
 		/* I:=0;
 		   OPEN TEST_CSR;
