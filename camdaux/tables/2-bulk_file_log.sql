@@ -34,6 +34,7 @@ CREATE TABLE camdaux.bulk_file_log
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
+
 -- Index: idx_bulk_file_log_data_subtype
 
 -- DROP INDEX camdaux.idx_bulk_file_log_data_subtype;

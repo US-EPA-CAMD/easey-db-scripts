@@ -92,6 +92,10 @@ update camdmd.program_code
 set noxc_cert_ind = 1
 where prg_cd in ('CAIRNOX', 'CAIROS', 'CSNOX', 'CSNOXOS', 'CSOSG1', 'CSOSG2', 'CSOSG3', 'NBP', 'NHNOX', 'SIPNOX', 'TRNOX', 'TRNOXOS');
 
+UPDATE camdmd.program_code
+SET bulk_file_active = 1
+WHERE prg_cd IN ('ARP', 'CSNOX', 'CSNOXOS', 'CSOSG1', 'CSOSG2', 'CSOSG3', 'CSSO2G1', 'CSSO2G2', 'TXSO2');
+
 --------------------------------------------------
 -- FUEL TYPE CODE UPDATES 
 --------------------------------------------------
