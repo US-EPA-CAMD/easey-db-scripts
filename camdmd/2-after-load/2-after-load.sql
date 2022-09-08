@@ -29,6 +29,9 @@ ALTER TABLE camdmd.program_code
 ALTER TABLE camdmd.program_code
     ADD COLUMN notes character varying(1000) NOT NULL DEFAULT 0;
 
+ALTER TABLE camdmd.program_code
+    ADD COLUMN bulk_file_active numeric(1,0) NOT NULL DEFAULT 0;
+
 update camdmd.program_code
 set emissions_ui_filter = 1
 where prg_cd not in ('MATS');
@@ -39,6 +42,10 @@ where prg_cd not in ('MATS', 'NHNOX', 'NSPS4T', 'RGGI', 'SIPNOX');
 
 update camdmd.program_code
 set compliance_ui_filter = 1
+where prg_cd in ('ARP', 'CSNOX', 'CSOSG1', 'CSOSG2', 'CSOSG3', 'CSSO2G1', 'CSSO2G2', 'TXSO2', 'CSNOXOS');
+
+update camdmd.program_code
+set bulk_file_active = 1
 where prg_cd in ('ARP', 'CSNOX', 'CSOSG1', 'CSOSG2', 'CSOSG3', 'CSSO2G1', 'CSSO2G2', 'TXSO2', 'CSNOXOS');
 
 update camdmd.program_code
