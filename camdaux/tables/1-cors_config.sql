@@ -47,4 +47,5 @@ VALUES
     ('header', 'x-field-mappings'),
     ('header', 'x-total-count'),
     ('header', 'x-api-key'),
+    ('header', 'x-client-id'),
     ('header', 'x-secret-token');
