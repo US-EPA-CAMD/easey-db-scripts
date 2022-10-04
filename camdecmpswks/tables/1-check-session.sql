@@ -4,7 +4,7 @@
 
 CREATE TABLE camdecmpswks.check_session
 (
-    chk_session_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    chk_session_id character varying(45) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v4(),
     mon_plan_id character varying(45) COLLATE pg_catalog."default",
     test_sum_id character varying(45) COLLATE pg_catalog."default",
     qa_cert_event_id character varying(45) COLLATE pg_catalog."default",

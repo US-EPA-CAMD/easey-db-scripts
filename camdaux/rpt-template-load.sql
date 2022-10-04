@@ -1,23 +1,28 @@
 DO $$
 DECLARE
-	reportCode text = '';
-	detailId integer;
+	datasetCode text := '';
+	datatableId integer;
 BEGIN
-	INSERT INTO camdecmpsaux.report(report_cd, report_title, report_template_cd, no_results_msg)
-	VALUES(reportCode, '', '', '');
+	INSERT INTO camdaux.dataset(dataset_cd, template_cd, display_name, no_results_msg)
+	VALUES(datasetCode, 'template_cd', 'display_name', 'no_results_msg');
 
-	/***** REPORT DETAIL 1 *****/
-	INSERT INTO camdecmpsaux.report_detail(report_cd, sequence_number, title, sql_statement, no_results_msg_override)
-	VALUES(reportCode, sequence_number, '', null)
-	RETURNING report_detail_id INTO detailId;
+	/***** DATATABLE 1 *****/
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement, no_results_msg_override)
+	VALUES(datasetCode, 1, 'display_name', 'sql_statement', null)
+	RETURNING datatable_id INTO datatableId;
 
 	/***** COLUMNS *****/
-	INSERT INTO camdecmpsaux.report_column(sequence_number, name, display_name, report_detail_id)
-		VALUES(1, '', '', detailId);
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, '', ''),
+		(datatableId, 2, '', ''),
+		(datatableId, 3, '', '');
 
 	/***** PARAMETERS *****/
-	INSERT INTO camdecmpsaux.report_parameter(sequence_number, name, default_value, report_detail_id)
-		VALUES(1, '', '', detailId);
+	INSERT INTO camdaux.datatable_parameter(datatable_id, parameter_order, name, default_value)
+	VALUES
+		(datatableId, 1, '', null),
+		(datatableId, 2, '', null);
 
 /*
 reportCode := 'QCE_EVAL';

@@ -4,7 +4,7 @@
 
 CREATE TABLE camdecmpswks.check_log
 (
-    chk_log_id uuid NOT NULL DEFAULT uuid_generate_v4(),
+    chk_log_id character varying(45) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v4(),
     chk_session_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     begin_date timestamp without time zone NOT NULL,
     rule_check_id numeric(38,0),

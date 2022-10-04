@@ -17,3 +17,22 @@ COMMENT ON COLUMN camdecmpsmd.test_type_group_code.test_type_group_cd
 
 COMMENT ON COLUMN camdecmpsmd.test_type_group_code.test_type_group_cd_description
     IS 'Description of a test type group code. ';
+
+ALTER TABLE camdecmpsmd.test_type_group_code
+    ADD COLUMN child_depth numeric(2,0) DEFAULT 1;
+
+UPDATE camdecmpsmd.test_type_group_code
+    SET child_depth = 2
+    Where test_type_group_cd in ('CALINJ', 'FFACC', 'FFL', 'FFLB', 'FLC', 'FLR', 'OLOLCAL', 'TSTQUAL', 'TTACC');
+
+UPDATE camdecmpsmd.test_type_group_code
+    SET child_depth = 3
+    Where test_type_group_cd in ('CYCSUM', 'HGL3LS', 'LINSUM', 'LME');
+
+UPDATE camdecmpsmd.test_type_group_code
+    SET child_depth = 4
+    Where test_type_group_cd in ('APPESUM');
+
+UPDATE camdecmpsmd.test_type_group_code
+    SET child_depth = 6
+    Where test_type_group_cd in ('RELACC');
