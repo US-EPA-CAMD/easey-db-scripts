@@ -99,17 +99,18 @@ WHERE check_type_cd = 'METHOD' AND check_number IN (1, 2, 3, 4, 5, 7, 8, 9, 10, 
 -----------------------------------------------------------------------------------------------
 INSERT INTO camdecmpsmd.check_catalog_process(check_catalog_id, process_cd)
 SELECT check_catalog_id, 'MP' FROM camdecmpsmd.check_catalog 
-WHERE check_type_cd = '' AND check_number IN (1, 4, 5, 6, 8, 9, 10, 11, 12, 13);
+WHERE check_type_cd = 'MONPLAN' AND check_number IN (1, 4, 5, 6, 8, 9, 10, 11, 12, 13);
 
 INSERT INTO camdecmpsmd.check_catalog_process(check_catalog_id, process_cd)
 SELECT check_catalog_id, 'MPSCRN' FROM camdecmpsmd.check_catalog 
-WHERE check_type_cd = '' AND check_number IN (4, 5, 11, 3, 7);
+WHERE check_type_cd = 'MONPLAN' AND check_number IN (4, 5, 6, 8, 11, 3, 7);
 
 -----------------------------------------------------------------------------------------------
 INSERT INTO camdecmpsmd.check_catalog_process(check_catalog_id, process_cd)
 SELECT check_catalog_id, 'MP' FROM camdecmpsmd.check_catalog 
 WHERE check_type_cd = 'PROGRAM' AND check_number IN (1, 10, 11, 12, 14);
 
+/* NO MPSCRN CHECKS FOR PROGRAM */
 
 -----------------------------------------------------------------------------------------------
 INSERT INTO camdecmpsmd.check_catalog_process(check_catalog_id, process_cd)

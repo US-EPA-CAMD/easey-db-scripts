@@ -4,7 +4,7 @@ DECLARE
 	datatableId integer;
 BEGIN
 	INSERT INTO camdaux.dataset(dataset_cd, template_cd, display_name, no_results_msg)
-	VALUES(datasetCode, 'Emissions View', 'Daily Calibration View', 'Daily Calibration data does not exist for the specified monitor plan and reporting period.');
+	VALUES(datasetCode, 'EMVIEW', 'Daily Calibration View', 'Daily Calibration data does not exist for the specified monitor plan and reporting period.');
 
 	/***** DATATABLE 1 *****/
 	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement, no_results_msg_override)
