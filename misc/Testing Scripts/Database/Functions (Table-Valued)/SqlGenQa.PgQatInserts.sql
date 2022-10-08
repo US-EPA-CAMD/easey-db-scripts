@@ -82,12 +82,18 @@ BEGIN
     select  SQL_STATEMENT
       from  SqlGenQa.PgAirEmissionTestingInserts( @vTestInformationTable,  4 )
 
+    -- Test Qualification
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgTestQualificationInserts( @vTestInformationTable,  5 )
+
     
     -----------------------
     -- Initialize Offset --
     -----------------------
 
-    declare @OrderOffset integer = 4
+    declare @OrderOffset integer = 5
     
     
     ---------------------------------------

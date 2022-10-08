@@ -1,3 +1,6 @@
+use [EASEY-IN]
+go
+
 begin
 
     declare @MonPlanId varchar(max);
@@ -34,8 +37,5 @@ begin
     select concat( '/*', 'ORIS: ', right( concat('      ', @OrisCode), 6 ), ' (', @FacilityName, '), Location(s): ', @Locations, '    Order:   74 */ ', SQL_STATEMENT ) from SqlGen.PgMonitorQualificationPctInserts(@vMonitorPlanIdTable)
 
     order by 1;
-
-    select  *
-      from  @vMonitorPlanIdTable
 
 end;
