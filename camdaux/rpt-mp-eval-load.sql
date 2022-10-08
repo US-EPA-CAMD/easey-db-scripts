@@ -4,7 +4,7 @@ DECLARE
 	datatableId integer;
 BEGIN
 	INSERT INTO camdaux.dataset(dataset_cd, template_cd, display_name, no_results_msg)
-	VALUES(datasetCode, 'Summary Report', 'Monitoring Plan Evaluation Report', 'Evaluation completed with no errors or informational messages.');
+	VALUES(datasetCode, 'SUMRPT', 'Monitoring Plan Evaluation Report', 'Evaluation completed with no errors or informational messages.');
 
 	/***** DATATABLE 1 *****/
 	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement, no_results_msg_override)
@@ -21,6 +21,6 @@ BEGIN
 		(datatableId, 5, 'resultMessage', 'Result Message');
 
 	/***** PARAMETERS *****/
-	INSERT INTO camdaux.datatable_parameter(datatable_id, parameter_order, name, default_value)
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
 	VALUES (datatableId, 1, 'monitorPlanId', null);
 END $$;
