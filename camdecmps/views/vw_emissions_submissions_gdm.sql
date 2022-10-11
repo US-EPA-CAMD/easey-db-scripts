@@ -1,8 +1,8 @@
--- View: camddmw.vw_emissions_submissions_gdm
+-- View: camdecmps.vw_emissions_submissions_gdm
 
--- DROP VIEW camddmw.vw_emissions_submissions_gdm;
+-- DROP VIEW camdecmps.vw_emissions_submissions_gdm;
 
-CREATE OR REPLACE VIEW camddmw.vw_emissions_submissions_gdm
+CREATE OR REPLACE VIEW camdecmps.vw_emissions_submissions_gdm
  AS
  SELECT dme.rpt_period_id,
     count(dmu.dm_emissions_user_id) AS used_count
