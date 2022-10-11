@@ -96,6 +96,17 @@ BEGIN
     declare @OrderOffset integer = 5
     
     
+    --------------------------------------------
+    -- Genereate Fuel Flow to Load Insert SQL --
+    --------------------------------------------
+
+    -- Fuel Flow to Load Check
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgFuelFlowToLoadCheckInserts( @vTestInformationTable, @OrderOffset + 1 )
+    
+    
     ---------------------------------------
     -- Genereate Hg Test Insert SQL --
     ---------------------------------------
