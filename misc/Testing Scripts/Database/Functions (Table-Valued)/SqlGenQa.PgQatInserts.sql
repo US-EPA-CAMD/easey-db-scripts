@@ -100,6 +100,12 @@ BEGIN
     -- Genereate Fuel Flow to Load Insert SQL --
     --------------------------------------------
 
+    -- Fuel Flow to Load Baseline
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgFuelFlowToLoadBaselineInserts( @vTestInformationTable, @OrderOffset + 1 )
+
     -- Fuel Flow to Load Check
     insert
       into  @SqlTable
