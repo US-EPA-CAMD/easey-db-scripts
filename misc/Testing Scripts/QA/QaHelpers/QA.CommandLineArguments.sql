@@ -4,7 +4,8 @@ go
 select  distinct
         fac.ORIS_CODE,
         fac.FACILITY_NAME,
-        isnull( unt.UNITID, stp.STACK_NAME ) as LOCATION_NAME,
+        dbo.ConcatMonitorPlanLocations( pln.MON_PLAN_ID ) as LOCATIONS,
+        pln.MON_PLAN_ID,
         concat( '"MP" "', pln.MON_PLAN_ID, '"' ) as COMMAND_LINE_ARGS
         --, tst.TEST_SUM_ID
         --, pln.MON_PLAN_ID
@@ -27,7 +28,7 @@ select  distinct
  --where  tst.TEST_TYPE_CD = 'RATA'
  order
     by  ORIS_CODE,
-        LOCATION_NAME
+        LOCATIONS
 
 select  fac.ORIS_CODE,
         fac.FACILITY_NAME,

@@ -35,7 +35,7 @@ select  col.Table_Name,
         ) as Conflict_Update
   from  DBA_TAB_COLS col
  where  col.Owner = 'CAMDECMPS'
-   and  col.Table_Name in ( 'AIR_EMISSION_TESTING' )
+   and  col.Table_Name in ( 'FUEL_FLOW_TO_LOAD_BASELINE' )
  order
     by  col.Owner,
         col.Table_Name,
