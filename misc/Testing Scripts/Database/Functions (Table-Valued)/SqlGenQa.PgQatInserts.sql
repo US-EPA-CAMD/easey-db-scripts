@@ -96,6 +96,23 @@ BEGIN
     declare @OrderOffset integer = 5
     
     
+    --------------------------------------------
+    -- Genereate Fuel Flow to Load Insert SQL --
+    --------------------------------------------
+
+    -- Fuel Flow to Load Baseline
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgFuelFlowToLoadBaselineInserts( @vTestInformationTable, @OrderOffset + 1 )
+
+    -- Fuel Flow to Load Check
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgFuelFlowToLoadCheckInserts( @vTestInformationTable, @OrderOffset + 1 )
+    
+    
     ---------------------------------------
     -- Genereate Hg Test Insert SQL --
     ---------------------------------------
@@ -164,6 +181,23 @@ BEGIN
     select  SQL_STATEMENT
       from  SqlGenQa.PgRataTraverseInserts( @vTestInformationTable, @OrderOffset + 5 )
 
+    
+    --------------------------------------------
+    -- Genereate Unit Default Test Insert SQL --
+    --------------------------------------------
+
+    -- Linearity Summary
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgUnitDefaultTestInserts( @vTestInformationTable, @OrderOffset + 1 )
+
+    -- Linearity Injection
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgUnitDefaultTestRunInserts( @vTestInformationTable,  @OrderOffset + 2 )
+    
 
     return;
 
