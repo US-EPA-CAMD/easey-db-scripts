@@ -1,3 +1,8 @@
+with
+    sel as  (
+                select 'CAMDECMPS' as Owner, 'UNIT_DEFAULT_TEST_RUN' as Table_Name from DUAL
+            )
+
 select  col.Table_Name,
         col.Column_Name,
         col.Data_Type,
@@ -34,8 +39,7 @@ select  col.Table_Name,
             end
         ) as Conflict_Update
   from  DBA_TAB_COLS col
- where  col.Owner = 'CAMDECMPS'
-   and  col.Table_Name in ( 'FUEL_FLOW_TO_LOAD_BASELINE' )
+ where  ( col.Owner, col.Table_Name ) in ( select Owner, Table_Name from sel )
  order
     by  col.Owner,
         col.Table_Name,

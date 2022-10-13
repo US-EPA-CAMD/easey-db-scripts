@@ -96,6 +96,35 @@ BEGIN
     declare @OrderOffset integer = 5
     
     
+    ------------------------------------------------------
+    -- Genereate Appendix E Correlation Test Insert SQL --
+    ------------------------------------------------------
+
+    -- AE_CORRELATION_TEST_SUM
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgAppendixECorrelationTestSummaryInserts( @vTestInformationTable, @OrderOffset + 1 )
+
+    -- AE_CORRELATION_TEST_RUN
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgAppendixECorrelationTestRunInserts( @vTestInformationTable, @OrderOffset + 2 )
+
+    -- AE_HI_GAS
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgAppendixECorrelationHiFromGas( @vTestInformationTable, @OrderOffset + 3 )
+
+    -- AE_HI_OIL
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgAppendixECorrelationHiFromOil( @vTestInformationTable, @OrderOffset + 4 )
+
+    
     --------------------------------------------
     -- Genereate Fuel Flow to Load Insert SQL --
     --------------------------------------------
