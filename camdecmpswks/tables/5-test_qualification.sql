@@ -23,5 +23,5 @@ CREATE TABLE camdecmpswks.test_qualification
     CONSTRAINT fk_test_qualification_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmpswks.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );

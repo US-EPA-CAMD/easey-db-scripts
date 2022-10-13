@@ -72,6 +72,7 @@ BEGIN
 		WEEKLY_TEST_SUM_ID character varying(45) NOT NULL, 
 		MON_PLAN_ID character varying(45) NOT NULL, 
 		MON_LOC_ID character varying(45) NOT NULL, 
+		MON_SYS_ID character varying(45),
 		RPT_PERIOD_ID numeric(38,0) NOT NULL, 
 		COMPONENT_ID character varying(45), 
 		COMPONENT_IDENTIFIER character varying(3),
