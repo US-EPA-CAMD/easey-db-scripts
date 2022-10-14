@@ -125,6 +125,17 @@ BEGIN
       from  SqlGenQa.PgAppendixECorrelationHiFromOil( @vTestInformationTable, @OrderOffset + 4 )
 
     
+    ---------------------------------------
+    -- Genereate Flow to Load Insert SQL --
+    ---------------------------------------
+
+    -- Flow to Load Check
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgFlowToLoadCheckInserts( @vTestInformationTable, @OrderOffset + 1 )
+    
+    
     --------------------------------------------
     -- Genereate Fuel Flow to Load Insert SQL --
     --------------------------------------------
