@@ -134,6 +134,12 @@ BEGIN
       into  @SqlTable
     select  SQL_STATEMENT
       from  SqlGenQa.PgFlowToLoadCheckInserts( @vTestInformationTable, @OrderOffset + 1 )
+
+    -- Flow to Load Reference
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgFlowToLoadReferenceInserts( @vTestInformationTable, @OrderOffset + 1 )
     
     
     --------------------------------------------
