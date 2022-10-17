@@ -96,6 +96,17 @@ BEGIN
     declare @OrderOffset integer = 5
     
     
+    --------------------------------------------
+    -- Genereate 7-Day Calibration Insert SQL --
+    --------------------------------------------
+
+    -- CALIBRATION_INJECTION
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.Pg7DayCalibrationInserts( @vTestInformationTable, @OrderOffset + 1 )
+
+    
     ------------------------------------------------------
     -- Genereate Appendix E Correlation Test Insert SQL --
     ------------------------------------------------------
