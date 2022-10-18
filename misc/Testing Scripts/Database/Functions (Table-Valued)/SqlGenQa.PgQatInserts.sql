@@ -97,6 +97,63 @@ BEGIN
     
     
     --------------------------------------------
+    -- Genereate 7-Day Calibration Insert SQL --
+    --------------------------------------------
+
+    -- CALIBRATION_INJECTION
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.Pg7DayCalibrationInserts( @vTestInformationTable, @OrderOffset + 1 )
+
+    
+    ------------------------------------------------------
+    -- Genereate Appendix E Correlation Test Insert SQL --
+    ------------------------------------------------------
+
+    -- AE_CORRELATION_TEST_SUM
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgAppendixECorrelationTestSummaryInserts( @vTestInformationTable, @OrderOffset + 1 )
+
+    -- AE_CORRELATION_TEST_RUN
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgAppendixECorrelationTestRunInserts( @vTestInformationTable, @OrderOffset + 2 )
+
+    -- AE_HI_GAS
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgAppendixECorrelationHiFromGas( @vTestInformationTable, @OrderOffset + 3 )
+
+    -- AE_HI_OIL
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgAppendixECorrelationHiFromOil( @vTestInformationTable, @OrderOffset + 4 )
+
+    
+    ---------------------------------------
+    -- Genereate Flow to Load Insert SQL --
+    ---------------------------------------
+
+    -- Flow to Load Check
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgFlowToLoadCheckInserts( @vTestInformationTable, @OrderOffset + 1 )
+
+    -- Flow to Load Reference
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgFlowToLoadReferenceInserts( @vTestInformationTable, @OrderOffset + 1 )
+    
+    
+    --------------------------------------------
     -- Genereate Fuel Flow to Load Insert SQL --
     --------------------------------------------
 

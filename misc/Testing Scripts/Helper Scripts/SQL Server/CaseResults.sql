@@ -48,7 +48,7 @@ select 	concat( 'ORIS ', fac.oris_code, ' (', fac.facility_name, ') Location ', 
   		left join ECMPS_AUX.dbo.CHECK_CATALOG_RESULT ccr on ccr.check_catalog_result_id  = chl.check_catalog_result_id 
   		left join ECMPS_AUX.dbo.CHECK_CATALOG chk on chk.check_catalog_id = ccr.check_catalog_id 
   		left join ECMPS_AUX.dbo.SEVERITY_CODE sev on sev.severity_cd = chl.severity_cd 
- where 	fac.oris_code in ( 3, 6030, 6068 )
+ --where 	fac.oris_code in ( 3, 6030, 6068 )
    --and	tst.test_type_cd in ( 'RATA' )
    --and	fac.oris_code in ( 6068 ) and coalesce( unt.unitid , stp.stack_name ) in ( '2' )
  order 
