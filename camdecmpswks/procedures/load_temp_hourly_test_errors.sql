@@ -1,3 +1,7 @@
+-- PROCEDURE: camdecmpswks.load_temp_hourly_test_errors(character varying, numeric)
+
+-- DROP PROCEDURE IF EXISTS camdecmpswks.load_temp_hourly_test_errors(character varying, numeric);
+
 CREATE OR REPLACE PROCEDURE camdecmpswks.load_temp_hourly_test_errors(
 	vmonplanid character varying,
 	vrptperiodid numeric)
@@ -50,7 +54,7 @@ BEGIN
 					LEFT OUTER JOIN camdecmpswks.CHECK_LOG log ON	log.CHK_SESSION_ID = evl.CHK_SESSION_ID AND log.MON_LOC_ID = mpl.MON_LOC_ID
 													AND ((log.OP_BEGIN_DATE < hod.BEGIN_DATE) OR ((log.OP_BEGIN_DATE = hod.BEGIN_DATE) AND (log.OP_BEGIN_HOUR <= hod.BEGIN_HOUR)))
 													AND ((log.OP_END_DATE > hod.BEGIN_DATE) OR ((log.OP_END_DATE = hod.BEGIN_DATE) AND (log.OP_END_HOUR >= hod.BEGIN_HOUR)))
-					LEFT OUTER JOIN camdecmpswks.SEVERITY_CODE sev ON sev.SEVERITY_CD = log.SEVERITY_CD
+					LEFT OUTER JOIN camdecmpsmd.SEVERITY_CODE sev ON sev.SEVERITY_CD = log.SEVERITY_CD
 			GROUP BY	hod.HOUR_ID, 
 						mpl.MON_PLAN_ID, 
 						mpl.MON_LOC_ID, 
