@@ -1,6 +1,6 @@
--- PROCEDURE: camdecmpswks.load_temp_daily_test_errors(character varying, numeric)
+-- PROCEDURE: camdecmpswks.refresh_emission_view_hicems(character varying, numeric)
 
--- DROP PROCEDURE IF EXISTS camdecmpswks.load_temp_daily_test_errors(character varying, numeric);
+-- DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_hicems(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_hicems(
 	vmonplanid character varying,
@@ -161,7 +161,7 @@ BEGIN
 				END AS F_FACTOR, 
 				HOD.ERROR_CODES,
 				hod.FUEL_CD
-		FROM camdecmpswks.temp_hourly_errors AS HOD 
+		FROM temp_hourly_errors AS HOD 
 				INNER JOIN camdecmpswks.DERIVED_HRLY_VALUE AS DHV ON DHV.HOUR_ID = HOD.HOUR_ID 
 				INNER JOIN camdecmpswks.MONITOR_HRLY_VALUE AS MHV ON DHV.HOUR_ID = MHV.HOUR_ID 
 				LEFT OUTER JOIN camdecmpswks.MONITOR_FORMULA AS MF ON DHV.MON_FORM_ID = MF.MON_FORM_ID 

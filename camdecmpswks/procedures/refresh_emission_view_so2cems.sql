@@ -1,6 +1,6 @@
--- PROCEDURE: camdecmpswks.load_temp_daily_test_errors(character varying, numeric)
+-- PROCEDURE: camdecmpswks.refresh_emission_view_so2cems(character varying, numeric)
 
--- DROP PROCEDURE IF EXISTS camdecmpswks.load_temp_daily_test_errors(character varying, numeric);
+-- DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_so2cems(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_so2cems(
 	vmonplanid character varying,
@@ -87,6 +87,6 @@ BEGIN
 				LEFT OUTER JOIN camdecmpswks.DERIVED_HRLY_VALUE  H2O_DHV ON DHV.HOUR_ID = H2O_DHV.HOUR_ID AND H2O_DHV.PARAMETER_CD = 'H2O' 
 				LEFT OUTER JOIN camdecmpswks.MONITOR_DEFAULT  H2O_MD ON HOD.MON_LOC_ID = H2O_MD.MON_LOC_ID AND H2O_MD.DEFAULT_PURPOSE_CD = 'PM' AND H2O_MD.PARAMETER_CD = 'H2O' AND (camdecmpswks.emissions_monitor_default_active(H2O_MD.BEGIN_DATE, H2O_MD.BEGIN_HOUR, H2O_MD.END_DATE, H2O_MD.END_HOUR, HOD.BEGIN_DATE, HOD.BEGIN_HOUR) = 1)
 				LEFT OUTER JOIN camdecmpswks.DERIVED_HRLY_VALUE  HI_DHV ON DHV.HOUR_ID = HI_DHV.HOUR_ID AND HI_DHV.PARAMETER_CD = 'HI' 
-				LEFT OUTER JOIN camdecmpswks.DERIVED_HRLY_VALUE  SO2R_DHV on DHV.HOUR_ID = SO2R_DHV.HOUR_ID AND SO2R_DHV.PARAMETER_CD = 'SO2R'
+				LEFT OUTER JOIN camdecmpswks.DERIVED_HRLY_VALUE  SO2R_DHV on DHV.HOUR_ID = SO2R_DHV.HOUR_ID AND SO2R_DHV.PARAMETER_CD = 'SO2R';
 END
 $BODY$;

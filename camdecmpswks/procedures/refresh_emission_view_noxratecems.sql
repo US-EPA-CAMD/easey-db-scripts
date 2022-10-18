@@ -1,3 +1,7 @@
+-- PROCEDURE: camdecmpswks.refresh_emission_view_noxratecems(character varying, numeric)
+
+-- DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_noxratecems(character varying, numeric);
+
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_noxratecems(
 	vmonplanid character varying,
 	vrptperiodid numeric)

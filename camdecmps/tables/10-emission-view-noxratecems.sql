@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_noxratecems(
+CREATE TABLE IF NOT EXISTS camdecmps.emission_view_noxratecems(
     em_nox_rate_cems_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
     mon_plan_id VARCHAR(45) NOT NULL,
     mon_loc_id VARCHAR(45) NOT NULL,

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_so2cems(
+CREATE TABLE IF NOT EXISTS camdecmps.emission_view_so2cems(
     em_so2_cems_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
     mon_plan_id VARCHAR(45) NOT NULL,
     mon_loc_id VARCHAR(45) NOT NULL,

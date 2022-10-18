@@ -1,3 +1,7 @@
+-- PROCEDURE: camdecmpswks.refresh_emission_view_noxmasscems(character varying, numeric)
+
+-- DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_noxmasscems(character varying, numeric);
+
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_noxmasscems(
 	vmonplanid character varying,
 	vrptperiodid numeric)
@@ -70,7 +74,7 @@ BEGIN
 				DHV.ADJUSTED_HRLY_VALUE AS RPT_NOX_MASS,
 				DHV.CALC_ADJUSTED_HRLY_VALUE AS CALC_NOX_MASS,
 				HOD.ERROR_CODES
-		FROM camdecmpswks.temp_hourly_errors HOD 
+		FROM temp_hourly_errors HOD 
 				INNER JOIN camdecmpswks.DERIVED_HRLY_VALUE  DHV ON DHV.HOUR_ID = HOD.HOUR_ID AND DHV.PARAMETER_CD = 'NOX'
 				INNER JOIN camdecmpswks.MONITOR_HRLY_VALUE  FLOW_MHV ON DHV.HOUR_ID = FLOW_MHV.HOUR_ID AND FLOW_MHV.PARAMETER_CD = 'FLOW'
 				INNER JOIN camdecmpswks.MONITOR_FORMULA  MF ON DHV.MON_FORM_ID = MF.MON_FORM_ID AND MF.EQUATION_CD LIKE 'F-26%'		

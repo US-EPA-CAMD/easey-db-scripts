@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_hicems(
+CREATE TABLE IF NOT EXISTS camdecmps.emission_view_hicems(
     em_hi_cems_id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
     mon_plan_id varchar(45) NOT NULL,
     mon_loc_id varchar(45) NOT NULL,
