@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_noxappemixedfuel(
+    em_nox_appe_mixed_fuel_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
+    mon_plan_id VARCHAR(45) NOT NULL,
+    mon_loc_id VARCHAR(45) NOT NULL,
+    rpt_period_id INTEGER NOT NULL,
+    datehour varchar(25) NOT NULL,
+    op_time NUMERIC(3,2),
+    system_id VARCHAR(3),
+    unit_load NUMERIC(6,0),
+    load_uom VARCHAR(7),
+    calc_hi_rate NUMERIC(14,4),
+    operating_condition_cd VARCHAR(7),
+    segment_number INTEGER,
+    rpt_nox_emission_rate NUMERIC(14,4),
+    calc_nox_emission_rate NUMERIC(14,4),
+    nox_mass_rate_formula_cd VARCHAR(7),
+    rpt_nox_mass_rate NUMERIC(14,4),
+    calc_nox_mass_rate NUMERIC(14,4),
+    error_codes VARCHAR(1000)
+)
