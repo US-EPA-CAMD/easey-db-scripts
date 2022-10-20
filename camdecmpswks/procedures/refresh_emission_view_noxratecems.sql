@@ -30,14 +30,14 @@ BEGIN
            ,PCT_H2O_USED
            ,SOURCE_H2O_VALUE
            ,F_FACTOR
-           ,NOX_FORMULA_CODE
+           ,nox_rate_formula_cd
            ,RPT_UNADJ_NOX_RATE
            ,CALC_UNADJ_NOX_RATE
            ,CALC_NOX_BAF
            ,RPT_ADJ_NOX_RATE
            ,CALC_ADJ_NOX_RATE
            ,CALC_HI_RATE
-           ,NOX_FORMULA_CD
+           ,nox_mass_formula_cd
            ,RPT_NOX_MASS
            ,CALC_NOX_MASS
            ,ERROR_CODES)
@@ -80,7 +80,7 @@ BEGIN
 					 WHEN (MF.EQUATION_CD IN ('19-1', '19-3', '19-3D', '19-4', '19-5', '19-5D', 'F-5')) THEN HOD.FD_FACTOR 
 					 WHEN (MF.EQUATION_CD = '19-2') THEN FW_FACTOR 
 				END AS F_FACTOR, 
-		        MF.EQUATION_CD AS NOX_FORMULA_CODE, 
+		        MF.EQUATION_CD AS nox_rate_formula_cd, 
 				DHV.UNADJUSTED_HRLY_VALUE AS RPT_UNADJ_NOX_RATE, 
 				DHV.CALC_UNADJUSTED_HRLY_VALUE AS CALC_UNADJ_NOX_RATE, 
 				DHV.APPLICABLE_BIAS_ADJ_FACTOR AS CALC_NOX_BAF, 
@@ -91,7 +91,7 @@ BEGIN
 				END AS CALC_HI_RATE, 
 				CASE WHEN NOX_MF.EQUATION_CD = 'F-24A' THEN NOX_MF.EQUATION_CD
 					 ELSE NULL
-				END AS NOX_FORMULA_CD,
+				END AS nox_mass_formula_cd,
 				CASE WHEN NOX_MF.EQUATION_CD = 'F-24A' THEN NOX_DHV.ADJUSTED_HRLY_VALUE
 					 ELSE NULL
 				END AS RPT_NOX_MASS, 
