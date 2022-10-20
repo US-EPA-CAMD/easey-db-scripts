@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_hiappd(
     gross_calorific_value NUMERIC(13,5),
     gcv_uom VARCHAR(7),
     gcv_sampling_type VARCHAR(7),
-    formula_code VARCHAR(7),
+    formula_cd VARCHAR(7),
     rpt_hi_rate NUMERIC(13,5),
     calc_hi_rate NUMERIC(13,5),
     error_codes VARCHAR(1000)

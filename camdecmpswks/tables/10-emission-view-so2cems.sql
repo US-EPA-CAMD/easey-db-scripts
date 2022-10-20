@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_so2cems(
     flow_pma NUMERIC(4,1),
     pct_h2o_used NUMERIC(5,1),
     source_h2o_value VARCHAR(7),
-    so2_formula_code VARCHAR(7),
+    so2_formula_cd VARCHAR(7),
     rpt_so2_mass_rate NUMERIC(14,4),
     calc_so2_mass_rate NUMERIC(14,4),
     calc_hi_rate NUMERIC(14,4),

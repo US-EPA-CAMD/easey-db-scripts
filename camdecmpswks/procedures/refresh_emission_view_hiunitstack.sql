@@ -15,14 +15,13 @@ BEGIN
            (MON_PLAN_ID
            ,MON_LOC_ID
            ,RPT_PERIOD_ID
-           ,DATE
-           ,HOUR
+           ,DATEHOUR
            ,OP_TIME
            ,UNIT_LOAD
            ,LOAD_UOM
            ,LOAD_RANGE
            ,COMMON_STACK_LOAD_RANGE
-           ,HI_FORMULA_CODE
+           ,HI_FORMULA_CD
            ,RPT_HI_RATE
            ,CALC_HI_RATE
            ,ERROR_CODES)
@@ -31,14 +30,13 @@ BEGIN
 				HOD.MON_PLAN_ID, 
 				HOD.MON_LOC_ID, 
 				HOD.RPT_PERIOD_ID, 
-				HOD.BEGIN_DATE AS DATE, 
-				HOD.BEGIN_HOUR AS HOUR, 
+				camdecmpswks.format_date_hour(hod.BEGIN_DATE, hod.BEGIN_HOUR, null),
 				HOD.OP_TIME, 
 				HOD.HR_LOAD AS UNIT_LOAD, 
 		        HOD.LOAD_UOM_CD AS LOAD_UOM, 
 				HOD.LOAD_RANGE, 
 				HOD.COMMON_STACK_LOAD_RANGE, 
-				MF.EQUATION_CD AS HI_FORMULA_CODE, 
+				MF.EQUATION_CD AS HI_FORMULA_CD, 
 		        DHV.ADJUSTED_HRLY_VALUE AS RPT_HI_RATE, 
 				DHV.CALC_ADJUSTED_HRLY_VALUE AS CALC_HI_RATE, 
 				HOD.ERROR_CODES

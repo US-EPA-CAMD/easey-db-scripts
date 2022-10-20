@@ -15,8 +15,7 @@ BEGIN
            (MON_PLAN_ID
            ,MON_LOC_ID
            ,RPT_PERIOD_ID
-           ,DATE
-           ,HOUR
+           ,DATEHOUR
            ,OP_TIME
            ,UNIT_LOAD
            ,LOAD_UOM
@@ -34,7 +33,7 @@ BEGIN
            ,FLOW_PMA
            ,PCT_H2O_USED
            ,SOURCE_H2O_VALUE
-           ,SO2_FORMULA_CODE
+           ,SO2_FORMULA_CD
            ,RPT_SO2_MASS_RATE
            ,CALC_SO2_MASS_RATE
            ,CALC_HI_RATE
@@ -45,8 +44,7 @@ BEGIN
 				HOD.MON_PLAN_ID, 
 				HOD.MON_LOC_ID, 
 				HOD.RPT_PERIOD_ID, 
-				HOD.BEGIN_DATE AS DATE, 
-				HOD.BEGIN_HOUR AS HOUR, 
+				camdecmpswks.format_date_hour(hod.BEGIN_DATE, hod.BEGIN_HOUR, null),
 				HOD.OP_TIME, 
 				HOD.HR_LOAD AS UNIT_LOAD, 
 				HOD.LOAD_UOM_CD AS LOAD_UOM, 
@@ -72,7 +70,7 @@ BEGIN
 						END 
 					ELSE NULL
 				END AS SOURCE_H2O_VALUE, 
-				MF.EQUATION_CD AS SO2_FORMULA_CODE, 
+				MF.EQUATION_CD AS SO2_FORMULA_CD, 
 				DHV.ADJUSTED_HRLY_VALUE AS RPT_SO2_MASS_RATE, 
 				DHV.CALC_ADJUSTED_HRLY_VALUE AS CALC_SO2_MASS_RATE, 
 				CASE (MF.EQUATION_CD) WHEN 'F-23' THEN HI_DHV.CALC_ADJUSTED_HRLY_VALUE END AS CALC_HI_RATE, 

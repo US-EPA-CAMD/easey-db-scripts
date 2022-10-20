@@ -15,8 +15,7 @@ BEGIN
            (MON_PLAN_ID
            ,MON_LOC_ID
            ,RPT_PERIOD_ID
-           ,DATE
-           ,HOUR
+           ,DATEHOUR
            ,OP_TIME
            ,UNIT_LOAD
            ,LOAD_UOM
@@ -47,8 +46,7 @@ BEGIN
 				HOD.MON_PLAN_ID, 
 				HOD.MON_LOC_ID, 
 				HOD.RPT_PERIOD_ID, 
-				HOD.BEGIN_DATE AS DATE, 
-				HOD.BEGIN_HOUR AS HOUR, 
+				camdecmpswks.format_date_hour(hod.BEGIN_DATE, hod.BEGIN_HOUR, null),
 				HOD.OP_TIME, 
 				HOD.HR_LOAD AS UNIT_LOAD, 
 		        HOD.LOAD_UOM_CD AS LOAD_UOM, 

@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_noxmasscems(
     flow_pma NUMERIC(4,1),
     pct_h2o_used NUMERIC(5,1),
     source_h2o_value VARCHAR(7),
-    noxmass_formula_code VARCHAR(7),
+    noxmass_formula_cd VARCHAR(7),
     rpt_nox_mass NUMERIC(14,4),
     calc_nox_mass NUMERIC(14,4),
     error_codes VARCHAR(1000)

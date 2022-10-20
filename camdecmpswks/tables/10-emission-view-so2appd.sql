@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_so2appd(
     sulfur_sampling_type VARCHAR(7),
     default_so2_emission_rate NUMERIC(13,5),
     calc_hi_rate NUMERIC(13,5),
-    formula_code VARCHAR(7),
+    formula_cd VARCHAR(7),
     rpt_so2_mass_rate NUMERIC(13,5),
     calc_so2_mass_rate NUMERIC(13,5),
     summation_formula_cd VARCHAR(7),

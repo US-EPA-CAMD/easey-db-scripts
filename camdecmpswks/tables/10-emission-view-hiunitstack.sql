@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_hiunitstack(
     load_uom VARCHAR(7),
     load_range INTEGER,
     common_stack_load_range INTEGER,
-    hi_formula_code VARCHAR(7),
+    hi_formula_cd VARCHAR(7),
     rpt_hi_rate NUMERIC(14,4),
     calc_hi_rate NUMERIC(14,4),
     error_codes VARCHAR(1000)

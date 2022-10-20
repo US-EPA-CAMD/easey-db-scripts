@@ -15,8 +15,7 @@ BEGIN
            (MON_PLAN_ID
            ,MON_LOC_ID
            ,RPT_PERIOD_ID
-           ,DATE
-           ,HOUR
+           ,DATEHOUR
            ,OP_TIME
            ,UNIT_LOAD
            ,LOAD_UOM
@@ -33,7 +32,7 @@ BEGIN
            ,FLOW_PMA
            ,PCT_H2O_USED
            ,SOURCE_H2O_VALUE
-           ,CO2_FORMULA_CODE
+           ,CO2_FORMULA_CD
            ,RPT_CO2_MASS_RATE
            ,CALC_CO2_MASS_RATE
            ,ERROR_CODES)
@@ -42,8 +41,7 @@ BEGIN
 				HOD.MON_PLAN_ID, 
 				HOD.MON_LOC_ID, 
 				HOD.RPT_PERIOD_ID, 
-				HOD.BEGIN_DATE AS DATE, 
-				HOD.BEGIN_HOUR AS HOUR, 
+				camdecmpswks.format_date_hour(hod.BEGIN_DATE, hod.BEGIN_HOUR, null),
 				HOD.OP_TIME, 
 				HOD.HR_LOAD AS UNIT_LOAD, 
 		        HOD.LOAD_UOM_CD AS LOAD_UOM,
@@ -82,7 +80,7 @@ BEGIN
 						END 
 					ELSE NULL
 				END AS SOURCE_H2O_VALUE,
-				MF.EQUATION_CD AS CO2_FORMULA_CODE,
+				MF.EQUATION_CD AS CO2_FORMULA_CD,
 				DHV.ADJUSTED_HRLY_VALUE AS RPT_CO2_MASS_RATE,
 				DHV.CALC_ADJUSTED_HRLY_VALUE AS CALC_CO2_MASS_RATE,
 				HOD.ERROR_CODES
