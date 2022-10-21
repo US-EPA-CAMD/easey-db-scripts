@@ -1,3 +1,11 @@
+// RUN THIS SQL QUERY ON THE LATEST SQL SERVER ECMPS_AUX DB TO GET COLUMNS FOR THE VIEW NEEDED
+/*
+declare @id integer = 11
+select * from [Emissions].[GridColumn] where grid_id = @id order by column_order
+select '(datatableId, ' + cast(column_order as varchar) + ', ''' + lower(column_key) + ''', ''' + column_name + '''),'
+from [Emissions].[GridColumn] where grid_id = @id order by column_order
+*/
+
 const data = `
 (datatableId, 1, 'date_hour', 'Date/Hr'),
 (datatableId, 3, 'op_time', 'Op. Time'),
