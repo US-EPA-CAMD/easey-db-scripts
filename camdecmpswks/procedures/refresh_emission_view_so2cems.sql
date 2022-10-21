@@ -1,6 +1,6 @@
 -- PROCEDURE: camdecmpswks.refresh_emission_view_so2cems(character varying, numeric)
 
--- DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_so2cems(character varying, numeric);
+-- DROP PROCEDURE camdecmpswks.refresh_emission_view_so2cems(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_so2cems(
 	vmonplanid character varying,
@@ -15,7 +15,7 @@ BEGIN
            (MON_PLAN_ID
            ,MON_LOC_ID
            ,RPT_PERIOD_ID
-           ,DATEHOUR
+           ,DATE_HOUR
            ,OP_TIME
            ,UNIT_LOAD
            ,LOAD_UOM
@@ -44,7 +44,7 @@ BEGIN
 				HOD.MON_PLAN_ID, 
 				HOD.MON_LOC_ID, 
 				HOD.RPT_PERIOD_ID, 
-				camdecmpswks.format_date_hour(hod.BEGIN_DATE, hod.BEGIN_HOUR, null),
+				camdecmpswks.format_date_hour(hod.BEGIN_DATE, hod.BEGIN_HOUR, null) AS DATE_HOUR,
 				HOD.OP_TIME, 
 				HOD.HR_LOAD AS UNIT_LOAD, 
 				HOD.LOAD_UOM_CD AS LOAD_UOM, 

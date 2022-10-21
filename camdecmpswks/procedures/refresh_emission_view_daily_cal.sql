@@ -1,6 +1,6 @@
 -- PROCEDURE: camdecmpswks.refresh_emission_view_dailycal(character varying, numeric)
 
--- DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_dailycal(character varying, numeric);
+-- DROP PROCEDURE camdecmpswks.refresh_emission_view_dailycal(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_dailycal(
 	vmonplanid character varying,
@@ -19,8 +19,7 @@ BEGIN
         COMPONENT_IDENTIFIER,
 		COMPONENT_TYPE_CD,
         SPAN_SCALE_CD,
-        END_DATE,
-        END_TIME,
+		END_DATETIME,
         RPT_TEST_RESULT_CD,
         CALC_TEST_RESULT_CD,
 		APPLICABLE_SPAN_VALUE,
@@ -57,8 +56,7 @@ BEGIN
 				DTS.COMPONENT_IDENTIFIER,
 				DTS.COMPONENT_TYPE_CD,
 				DTS.SPAN_SCALE_CD,
-				DTS.END_DATE,
-				DTS.END_TIME,
+				camdecmpswks.format_date_hour(DTS.END_DATE, null, null) || ' ' || DTS.END_TIME AS END_DATETIME,
 				DTS.TEST_RESULT_CD AS RPT_TEST_RESULT_CD,
 				DTS.CALC_TEST_RESULT_CD AS CALC_TEST_RESULT_CD,
 				MS.SPAN_VALUE AS APPLICABLE_SPAN_VALUE,

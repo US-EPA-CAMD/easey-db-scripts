@@ -1,6 +1,6 @@
 -- PROCEDURE: camdecmpswks.refresh_emission_view_all(character varying, integer)
 
--- DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_all(character varying, integer);
+-- DROP PROCEDURE camdecmpswks.refresh_emission_view_all(character varying, integer);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_all(
 	v_mon_plan_id character varying,
@@ -18,7 +18,7 @@ BEGIN
 				MON_LOC_ID,
 				RPT_PERIOD_ID,
 				HOUR_ID,
-				DATEHOUR,
+				DATE_HOUR,
 				OP_TIME,
 				UNIT_LOAD,
 				LOAD_UOM,
@@ -47,7 +47,7 @@ BEGIN
 				hod.MON_LOC_ID, 
 				hod.RPT_PERIOD_ID,
 				hod.HOUR_ID,
-				camdecmpswks.format_date_hour(hod.BEGIN_DATE, hod.BEGIN_HOUR, null),
+				camdecmpswks.format_date_hour(hod.BEGIN_DATE, hod.BEGIN_HOUR, null) AS DATE_HOUR,
 				hod.OP_TIME,
 				hod.HR_LOAD,
 				hod.LOAD_UOM_CD,
