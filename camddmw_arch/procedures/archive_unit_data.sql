@@ -1,8 +1,8 @@
--- PROCEDURE: camddmw.archive_unit_data(integer)
+-- PROCEDURE: camddmw_arch.archive_unit_data(integer)
 
--- DROP PROCEDURE camddmw.archive_unit_data(integer);
+-- DROP PROCEDURE camddmw_arch.archive_unit_data(integer);
 
-CREATE OR REPLACE PROCEDURE camddmw.archive_unit_data(
+CREATE OR REPLACE PROCEDURE camddmw_arch.archive_unit_data(
 	year integer)
 LANGUAGE 'plpgsql'
 AS $BODY$
@@ -38,10 +38,5 @@ BEGIN
 	INSERT INTO camddmw_arch.hour_unit_mats_data_a(
 		unit_id, op_date, op_hour, op_time, gload, sload, tload, heat_input, heat_input_measure_flg, hg_rate_eo, hg_rate_hi, hg_mass, hg_measure_flg, hcl_rate_eo, hcl_rate_hi, hcl_mass, hcl_measure_flg, hf_rate_eo, hf_rate_hi, hf_mass, hf_measure_flg, rpt_period_id, op_year, data_source, userid, add_date
 	) SELECT * FROM camddmw.hour_unit_mats_data WHERE op_year = year;
-
-	--DROP PARTITIONS & DELETE DATA FROM LIVE TABLES FOR SPECIFIED YEAR & PREVIOUS YEAR
-	--NOTE: LAST PARTITION OF EACH YEAR FOR DAY, HOUR, & MATS CAN SPAN END OF ONE YEAR & BEGINNING OF NEXT YEAR
-	--LAST PARTITION WILL NOT BE DROPPED UNTIL DATA HAS BEEN REMOVED THE FOLLOWING YEAR
-	CALL camddmw.drop_unit_data_partitions(year);
 END
 $BODY$;
