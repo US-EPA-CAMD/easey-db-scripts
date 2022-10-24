@@ -15,7 +15,7 @@ BEGIN
            (MON_PLAN_ID
            ,MON_LOC_ID
            ,RPT_PERIOD_ID
-           ,DATEHOUR
+           ,DATE_HOUR
            ,OP_TIME
            ,UNIT_LOAD
            ,LOAD_UOM

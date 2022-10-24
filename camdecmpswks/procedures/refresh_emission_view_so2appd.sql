@@ -15,7 +15,7 @@ BEGIN
            (MON_PLAN_ID
            ,MON_LOC_ID
            ,RPT_PERIOD_ID
-           ,DATEHOUR
+           ,DATE_HOUR
            ,OP_TIME
            ,FUEL_SYS_ID
            ,FUEL_TYPE
