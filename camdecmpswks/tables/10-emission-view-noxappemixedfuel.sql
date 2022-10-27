@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_noxappemixedfuel(
     mon_plan_id VARCHAR(45) NOT NULL,
     mon_loc_id VARCHAR(45) NOT NULL,
     rpt_period_id INTEGER NOT NULL,
-    datehour varchar(25) NOT NULL,
+    date_hour varchar(25) NOT NULL,
     op_time NUMERIC(3,2),
     system_id VARCHAR(3),
     unit_load NUMERIC(6,0),

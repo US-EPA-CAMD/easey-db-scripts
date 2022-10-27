@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_co2calc(
+    em_co2_calc_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
+    mon_plan_id VARCHAR(45) NOT NULL,
+    mon_loc_id VARCHAR(45) NOT NULL,
+    rpt_period_id INTEGER NOT NULL,
+    date_hour character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    op_time NUMERIC(3,2),
+    co2c_modc VARCHAR(7),
+    co2c_pma NUMERIC(4,1),
+    rpt_pct_o2 NUMERIC(13,3),
+    pct_o2_used NUMERIC(5,1),
+    o2_modc VARCHAR(7),
+    pct_h2o_used NUMERIC(5,1),
+    source_h2o_value VARCHAR(7),
+    fc_factor NUMERIC(8,1),
+    fd_factor NUMERIC(8,1),
+    formula_cd VARCHAR(7),
+    rpt_pct_co2 NUMERIC(14,4),
+    calc_pct_co2 NUMERIC(14,4),
+    error_codes VARCHAR(1000)
+)
