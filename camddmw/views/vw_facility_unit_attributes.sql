@@ -36,8 +36,10 @@ CREATE OR REPLACE VIEW camddmw.vw_facility_unit_attributes
     d.generator_id,
     uf.facility_name,
     d.arp_nameplate_capacity,
-    d.other_nameplate_capacity
+    d.other_nameplate_capacity,
+    rep.primary_rep_info
    FROM camddmw.unit_fact uf
+     LEFT JOIN camddmw.vw_rep_display_fact rep ON uf.unit_id = rep.unit_id AND uf.op_year = rep.op_year
      LEFT JOIN ( SELECT ug.unit_id,
             string_agg(g.genid::text, ', '::text) AS generator_id,
             string_agg(COALESCE(g.arp_nameplate_capacity::text, 'null'::text), ', '::text) AS arp_nameplate_capacity,

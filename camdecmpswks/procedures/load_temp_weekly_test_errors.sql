@@ -1,3 +1,7 @@
+-- PROCEDURE: camdecmpswks.load_temp_weekly_test_errors(character varying, numeric)
+
+-- DROP PROCEDURE IF EXISTS camdecmpswks.load_temp_weekly_test_errors(character varying, numeric);
+
 CREATE OR REPLACE PROCEDURE camdecmpswks.load_temp_weekly_test_errors(
 	vmonplanid character varying,
 	vrptperiodid numeric)
@@ -37,18 +41,18 @@ BEGIN
 				Coalesce(ms.SYS_TYPE_CD, cmp.COMPONENT_TYPE_CD) as SYSTEM_COMPONENT_TYPE,
 				wts.SPAN_SCALE_CD, 
 				wts.TEST_DATE, 
-				dbo.fn_FormatTime(TEST_HOUR, TEST_MIN) as TEST_TIME,
+				camdecmpswks.format_time(TEST_HOUR, TEST_MIN) as TEST_TIME,
 				wts.TEST_TYPE_CD, 
 				wts.TEST_RESULT_CD, 
 				wts.CALC_TEST_RESULT_CD, 
 				CASE WHEN max(Coalesce(sev.SEVERITY_LEVEL, 0)) > 0 THEN 'View Errors' ELSE NULL END AS ERROR_CODES
 				FROM camdecmpswks.WEEKLY_TEST_SUMMARY wts
 					INNER JOIN camdecmpswks.MONITOR_PLAN_LOCATION mpl ON wts.MON_LOC_ID = mpl.MON_LOC_ID
-					LEFT OUTER JOIN camdecmpswks.EMISSION_EVALUATION evl ON evl.MON_PLAN_ID = mpl.MON_PLAN_ID AND evl.RPT_PERIOD_ID = vrptperiodid							
+					LEFT OUTER JOIN camdecmpswks.EMISSION_EVALUATION evl ON evl.MON_PLAN_ID = mpl.MON_PLAN_ID AND evl.RPT_PERIOD_ID = vrptperiodid								
 					LEFT OUTER JOIN camdecmpswks.MONITOR_SYSTEM AS ms ON ms.MON_SYS_ID = wts.MON_SYS_ID
 					LEFT OUTER JOIN camdecmpswks.COMPONENT AS cmp ON cmp.COMPONENT_ID = wts.COMPONENT_ID
 					LEFT OUTER JOIN camdecmpswks.CHECK_LOG log ON log.CHK_SESSION_ID = evl.CHK_SESSION_ID 	AND log.TEST_SUM_ID = wts.WEEKLY_TEST_SUM_ID
-					LEFT OUTER JOIN camdecmpswks.SEVERITY_CODE sev ON sev.SEVERITY_CD = log.SEVERITY_CD
+					LEFT OUTER JOIN camdecmpsmd.SEVERITY_CODE sev ON sev.SEVERITY_CD = log.SEVERITY_CD
 				WHERE mpl.MON_PLAN_ID = vmonplanid
 							  AND wts.RPT_PERIOD_ID = vrptperiodid
 			GROUP BY
@@ -64,7 +68,7 @@ BEGIN
 				Coalesce(ms.SYS_TYPE_CD, cmp.COMPONENT_TYPE_CD),
 				wts.SPAN_SCALE_CD, 
 				wts.TEST_DATE, 
-				dbo.fn_FormatTime(TEST_HOUR, TEST_MIN),
+				camdecmpswks.format_time(TEST_HOUR, TEST_MIN),
 				wts.TEST_TYPE_CD, 
 				wts.TEST_RESULT_CD, 
 				wts.CALC_TEST_RESULT_CD);

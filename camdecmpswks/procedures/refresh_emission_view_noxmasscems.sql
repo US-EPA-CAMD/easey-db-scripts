@@ -1,3 +1,7 @@
+-- PROCEDURE: camdecmpswks.refresh_emission_view_noxmasscems(character varying, numeric)
+
+-- DROP PROCEDURE camdecmpswks.refresh_emission_view_noxmasscems(character varying, numeric);
+
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_noxmasscems(
 	vmonplanid character varying,
 	vrptperiodid numeric)
@@ -11,8 +15,7 @@ BEGIN
            (MON_PLAN_ID
            ,MON_LOC_ID
            ,RPT_PERIOD_ID
-           ,DATE
-           ,HOUR
+           ,DATE_HOUR
            ,OP_TIME
            ,UNIT_LOAD
            ,LOAD_UOM
@@ -30,7 +33,7 @@ BEGIN
            ,FLOW_PMA
            ,PCT_H2O_USED
            ,SOURCE_H2O_VALUE
-           ,NOXMASS_FORMULA_CODE
+           ,NOX_MASS_FORMULA_CD
            ,RPT_NOX_MASS
            ,CALC_NOX_MASS
            ,ERROR_CODES)
@@ -39,8 +42,7 @@ BEGIN
 				HOD.MON_PLAN_ID, 
 				HOD.MON_LOC_ID, 
 				HOD.RPT_PERIOD_ID, 
-				HOD.BEGIN_DATE AS DATE, 
-				HOD.BEGIN_HOUR AS HOUR, 
+				camdecmpswks.format_date_hour(hod.BEGIN_DATE, hod.BEGIN_HOUR, null) AS DATE_HOUR,
 				HOD.OP_TIME, 
 				HOD.HR_LOAD AS UNIT_LOAD, 
 		        HOD.LOAD_UOM_CD AS LOAD_UOM, 
@@ -66,11 +68,11 @@ BEGIN
 						END 
 					ELSE NULL
 				END AS SOURCE_H2O_VALUE, 
-				MF.EQUATION_CD AS NOXMASS_FORMULA_CODE,
+				MF.EQUATION_CD AS NOX_MASS_FORMULA_CD,
 				DHV.ADJUSTED_HRLY_VALUE AS RPT_NOX_MASS,
 				DHV.CALC_ADJUSTED_HRLY_VALUE AS CALC_NOX_MASS,
 				HOD.ERROR_CODES
-		FROM camdecmpswks.temp_hourly_errors HOD 
+		FROM temp_hourly_errors HOD 
 				INNER JOIN camdecmpswks.DERIVED_HRLY_VALUE  DHV ON DHV.HOUR_ID = HOD.HOUR_ID AND DHV.PARAMETER_CD = 'NOX'
 				INNER JOIN camdecmpswks.MONITOR_HRLY_VALUE  FLOW_MHV ON DHV.HOUR_ID = FLOW_MHV.HOUR_ID AND FLOW_MHV.PARAMETER_CD = 'FLOW'
 				INNER JOIN camdecmpswks.MONITOR_FORMULA  MF ON DHV.MON_FORM_ID = MF.MON_FORM_ID AND MF.EQUATION_CD LIKE 'F-26%'		

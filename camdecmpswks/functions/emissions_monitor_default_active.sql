@@ -1,13 +1,18 @@
+-- FUNCTION: camdecmpswks.emissions_monitor_default_active(timestamp without time zone, numeric, timestamp without time zone, numeric, timestamp without time zone, numeric)
+
+-- DROP FUNCTION IF EXISTS camdecmpswks.emissions_monitor_default_active(timestamp without time zone, numeric, timestamp without time zone, numeric, timestamp without time zone, numeric);
+
 CREATE OR REPLACE FUNCTION camdecmpswks.emissions_monitor_default_active(
-	p_MD_BEGIN_DATE TIMESTAMP,
-	p_MD_BEGIN_HOUR INTEGER,
-	p_MD_END_DATE TIMESTAMP,
-	p_MD_END_HOUR INTEGER,
-	p_HOD_BEGIN_DATE TIMESTAMP,
-	p_HOD_BEGIN_HOUR INTEGER
-    )
+	p_md_begin_date timestamp without time zone,
+	p_md_begin_hour numeric,
+	p_md_end_date timestamp without time zone,
+	p_md_end_hour numeric,
+	p_hod_begin_date timestamp without time zone,
+	p_hod_begin_hour numeric)
     RETURNS integer
     LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
 AS $BODY$
 DECLARE
 
@@ -15,12 +20,12 @@ DECLARE
 	 result INTEGER;
  
 begin 
+	
+	hodBeginDateTime := p_HOD_BEGIN_DATE + (p_HOD_BEGIN_HOUR || ' hour')::interval;
 
-    hodBeginDateTime := DATEADD(hour, p_HOD_BEGIN_HOUR, p_HOD_BEGIN_DATE);
-
-	IF (hodBeginDateTime >= DATEADD(hour, p_MD_BEGIN_HOUR, p_MD_BEGIN_DATE))
+	IF (hodBeginDateTime >= (p_MD_BEGIN_DATE + (p_MD_BEGIN_HOUR || ' hour')::interval))
 		AND ((p_MD_END_DATE IS NULL) 
-	      OR (hodBeginDateTime <= DATEADD(hour, p_MD_END_HOUR, p_MD_END_DATE))) THEN
+	      OR (hodBeginDateTime <= (p_MD_END_DATE + (p_MD_END_HOUR || ' hour')::interval))) THEN
 
 		result := 1;
 	ELSE
@@ -31,3 +36,6 @@ begin
     
 END;
 $BODY$;
+
+ALTER FUNCTION camdecmpswks.emissions_monitor_default_active(timestamp without time zone, numeric, timestamp without time zone, numeric, timestamp without time zone, numeric)
+    OWNER TO "uImcwuf4K9dyaxeL";

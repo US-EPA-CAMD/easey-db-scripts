@@ -1,6 +1,6 @@
--- PROCEDURE: camdecmpswks.load_temp_daily_test_errors(character varying, numeric)
+-- PROCEDURE: camdecmpswks.refresh_emission_view_hicems(character varying, numeric)
 
--- DROP PROCEDURE IF EXISTS camdecmpswks.load_temp_daily_test_errors(character varying, numeric);
+-- DROP PROCEDURE camdecmpswks.refresh_emission_view_hicems(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_hicems(
 	vmonplanid character varying,
@@ -16,14 +16,13 @@ BEGIN
            ,MON_LOC_ID
            ,RPT_PERIOD_ID
            ,HOUR_ID
-           ,DATE
-           ,HOUR
+           ,DATE_HOUR
            ,OP_TIME
            ,UNIT_LOAD
            ,LOAD_UOM
            ,LOAD_RANGE
            ,COMMON_STACK_LOAD_RANGE
-           ,HI_FORMULA_CODE
+           ,HI_FORMULA_CD
 		   ,HI_MODC
            ,RPT_HI_RATE
            ,CALC_HI_RATE
@@ -49,14 +48,13 @@ BEGIN
 				HOD.MON_LOC_ID, 
 				HOD.RPT_PERIOD_ID,
 				HOD.HOUR_ID,
-				HOD.BEGIN_DATE AS DATE, 
-				HOD.BEGIN_HOUR AS HOUR, 
+				camdecmpswks.format_date_hour(hod.BEGIN_DATE, hod.BEGIN_HOUR, null) AS DATE_HOUR,
 				HOD.OP_TIME, 
 				HOD.HR_LOAD AS UNIT_LOAD, 
 				HOD.LOAD_UOM_CD AS LOAD_UOM, 
 				HOD.LOAD_RANGE, 
 				HOD.COMMON_STACK_LOAD_RANGE, 
-				MF.EQUATION_CD AS HI_FORMULA_CODE, 
+				MF.EQUATION_CD AS HI_FORMULA_CD, 
 				DHV.MODC_CD AS HI_MODC,
 				DHV.ADJUSTED_HRLY_VALUE AS RPT_HI_RATE, 
 				DHV.CALC_ADJUSTED_HRLY_VALUE AS CALC_HI_RATE, 
@@ -161,7 +159,7 @@ BEGIN
 				END AS F_FACTOR, 
 				HOD.ERROR_CODES,
 				hod.FUEL_CD
-		FROM camdecmpswks.temp_hourly_errors AS HOD 
+		FROM temp_hourly_errors AS HOD 
 				INNER JOIN camdecmpswks.DERIVED_HRLY_VALUE AS DHV ON DHV.HOUR_ID = HOD.HOUR_ID 
 				INNER JOIN camdecmpswks.MONITOR_HRLY_VALUE AS MHV ON DHV.HOUR_ID = MHV.HOUR_ID 
 				LEFT OUTER JOIN camdecmpswks.MONITOR_FORMULA AS MF ON DHV.MON_FORM_ID = MF.MON_FORM_ID 
