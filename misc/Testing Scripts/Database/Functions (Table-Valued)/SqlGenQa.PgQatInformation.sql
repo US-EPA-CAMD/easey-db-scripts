@@ -39,7 +39,7 @@ RETURN
      where  ( fac.ORIS_CODE = @OrisCode or @OrisCode is null )
        and  ( isnull( unt.UNITID, stp.STACK_NAME ) = @LocationNameFilter or @LocationNameFilter is null )
        and  ( tst.TEST_TYPE_CD = @TestTypeCdFilter or @TestTypeCdFilter is null )
-       and  tst.TEST_TYPE_CD in ( '7DAY', 'APPE', 'F2LCHK', 'F2LREF', 'FF2LBAS','FF2LTST', 'HGLINE', 'HGSI3', 'LINE', 'RATA', 'UNITDEF' )
+       and  tst.TEST_TYPE_CD in ( '7DAY', 'APPE', 'F2LCHK', 'F2LREF', 'FF2LBAS','FF2LTST', 'HGLINE', 'HGSI3', 'LINE', 'ONOFF', 'RATA', 'UNITDEF' )
     
 )
 GO

@@ -1,6 +1,6 @@
 with
     sel as  (
-                select 'CAMDECMPS' as Owner, 'AE_HI_OIL' as Table_Name from DUAL
+                select 'CAMDECMPS' as Owner, 'ON_OFF_CAL' as Table_Name from DUAL
             )
 
 select  col.Table_Name,

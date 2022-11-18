@@ -204,6 +204,17 @@ BEGIN
       from  SqlGenQa.PgLinearityInjectionInserts( @vTestInformationTable,  @OrderOffset + 2 )
     
     
+    ----------------------------------------------
+    -- Genereate Online-Offline Calibration SQL --
+    ----------------------------------------------
+
+    -- Linearity Summary
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgOnlineOfflineCalibrationInserts( @vTestInformationTable, @OrderOffset + 1 )
+    
+    
     ---------------------------------------
     -- Genereate RATA Insert SQL --
     ---------------------------------------
@@ -243,13 +254,13 @@ BEGIN
     -- Genereate Unit Default Test Insert SQL --
     --------------------------------------------
 
-    -- Linearity Summary
+    -- Unit Default Test
     insert
       into  @SqlTable
     select  SQL_STATEMENT
       from  SqlGenQa.PgUnitDefaultTestInserts( @vTestInformationTable, @OrderOffset + 1 )
 
-    -- Linearity Injection
+    -- Unit Default Test Run
     insert
       into  @SqlTable
     select  SQL_STATEMENT
