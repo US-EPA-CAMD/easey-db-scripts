@@ -31,6 +31,9 @@ select  distinct
     by  ORIS_CODE,
         LOCATIONS
 
+use ECMPS
+go
+
 -- QA Evaluation Information
 select  fac.ORIS_CODE,
         fac.FACILITY_NAME,

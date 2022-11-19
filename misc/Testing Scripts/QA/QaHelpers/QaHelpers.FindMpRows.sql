@@ -14,6 +14,9 @@ select  fac.ORIS_CODE,
    and  isnull( unt.UNITID, stp.STACK_NAME ) in ( '4' )
    and  dat.SYSTEM_IDENTIFIER in ( 'F43' )
 
+use ECMPS
+go
+
 select  fac.ORIS_CODE,
         fac.FACILITY_NAME,
         isnull( unt.UNITID, stp.STACK_NAME ) as LOCATION_NAME
@@ -23,7 +26,7 @@ select  fac.ORIS_CODE,
         left join STACK_PIPE stp on stp.STACK_PIPE_ID = loc.STACK_PIPE_ID
         join FACILITY fac on fac.FAC_ID in ( unt.FAC_ID, stp.FAC_ID )
         join COMPONENT dat on dat.MON_LOC_ID = loc.MON_LOC_ID
- where  fac.ORIS_CODE = 628
-   and  isnull( unt.UNITID, stp.STACK_NAME ) in ( '1GTA' )
-   and  dat.COMPONENT_IDENTIFIER in ( '001' )
+ where  fac.ORIS_CODE = 7277
+   and  isnull( unt.UNITID, stp.STACK_NAME ) in ( '1' )
+   and  dat.COMPONENT_IDENTIFIER in ( '012' )
  

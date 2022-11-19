@@ -1,6 +1,6 @@
 with
     sel as  (
-                select 'CAMDECMPS' as Owner, 'ON_OFF_CAL' as Table_Name from DUAL
+                select 'CAMDECMPS' as Owner, 'TRANS_ACCURACY' as Table_Name from DUAL
             )
 
 select  col.Table_Name,
@@ -43,5 +43,5 @@ select  col.Table_Name,
  order
     by  col.Owner,
         col.Table_Name,
-        col.Column_Id,
+        decode( upper(col.Column_Name), 'USERID', 1001, 'ADD_DATE', 1002, 'UPDATE_DATE', 1003, col.Column_Id),
         col.Column_Name
