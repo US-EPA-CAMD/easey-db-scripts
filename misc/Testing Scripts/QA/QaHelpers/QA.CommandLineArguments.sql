@@ -1,6 +1,7 @@
 use ECMPS
 go
 
+-- MP Evaluation Information
 select  distinct
         fac.ORIS_CODE,
         fac.FACILITY_NAME,
@@ -30,6 +31,7 @@ select  distinct
     by  ORIS_CODE,
         LOCATIONS
 
+-- QA Evaluation Information
 select  fac.ORIS_CODE,
         fac.FACILITY_NAME,
         isnull( unt.UNITID, stp.STACK_NAME ) as LOCATION_NAME,

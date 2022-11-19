@@ -23,6 +23,7 @@ select  fac.ORIS_CODE,
         left join STACK_PIPE stp on stp.STACK_PIPE_ID = loc.STACK_PIPE_ID
         join FACILITY fac on fac.FAC_ID in ( unt.FAC_ID, stp.FAC_ID )
         join COMPONENT dat on dat.MON_LOC_ID = loc.MON_LOC_ID
- where  fac.ORIS_CODE = 991
-   and  isnull( unt.UNITID, stp.STACK_NAME ) in ( 'GT1' )
+ where  fac.ORIS_CODE = 628
+   and  isnull( unt.UNITID, stp.STACK_NAME ) in ( '1GTA' )
+   and  dat.COMPONENT_IDENTIFIER in ( '001' )
  

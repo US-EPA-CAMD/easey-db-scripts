@@ -136,6 +136,23 @@ BEGIN
       from  SqlGenQa.PgAppendixECorrelationHiFromOil( @vTestInformationTable, @OrderOffset + 4 )
 
     
+    -------------------------------------
+    -- Genereate Cycle Time Insert SQL --
+    -------------------------------------
+
+    -- Cycle Time Summary
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgCycleTimeSummaryInserts( @vTestInformationTable, @OrderOffset + 1 )
+
+    -- Cycle Time Injection
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgCycleTimeInjectionInserts( @vTestInformationTable,  @OrderOffset + 2 )
+    
+    
     ---------------------------------------
     -- Genereate Flow to Load Insert SQL --
     ---------------------------------------
@@ -174,13 +191,13 @@ BEGIN
     -- Genereate Hg Test Insert SQL --
     ---------------------------------------
 
-    -- Linearity Summary
+    -- Hg Test Summary
     insert
       into  @SqlTable
     select  SQL_STATEMENT
       from  SqlGenQa.PgHgTestSummaryInserts( @vTestInformationTable, @OrderOffset + 1 )
 
-    -- Linearity Injection
+    -- Hg Test Injection
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -208,7 +225,7 @@ BEGIN
     -- Genereate Online-Offline Calibration SQL --
     ----------------------------------------------
 
-    -- Linearity Summary
+    -- Online-Offline Summary
     insert
       into  @SqlTable
     select  SQL_STATEMENT
