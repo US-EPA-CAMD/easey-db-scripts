@@ -187,9 +187,15 @@ BEGIN
       from  SqlGenQa.PgFuelFlowToLoadCheckInserts( @vTestInformationTable, @OrderOffset + 1 )
     
     
-    ------------------------------------------------------------------------------
-    -- Genereate Fuel Flowmeter Accuracy Transmitter Transducer Test Insert SQL --
-    ------------------------------------------------------------------------------
+    -----------------------------------------------------------------------------------
+    -- Genereate Fuel Flowmeter Accuracy with Transmitter Transducer Test Insert SQL --
+    -----------------------------------------------------------------------------------
+
+    -- FUEL_FLOWMETER_ACCURACY
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgFuelFlowmeterAccuracyTestInserts( @vTestInformationTable, @OrderOffset + 1 )
 
     -- TRANS_ACCURACY
     insert

@@ -28,5 +28,5 @@ select  fac.ORIS_CODE,
         join COMPONENT dat on dat.MON_LOC_ID = loc.MON_LOC_ID
  where  fac.ORIS_CODE = 7277
    and  isnull( unt.UNITID, stp.STACK_NAME ) in ( '1' )
-   and  dat.COMPONENT_IDENTIFIER in ( '012' )
+   and  dat.COMPONENT_IDENTIFIER in ( '011' )
  
