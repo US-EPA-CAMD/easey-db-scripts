@@ -60,6 +60,7 @@ select  fac.ORIS_CODE,
                 where ex1.MON_LOC_ID = loc.MON_LOC_ID
              )
  --where  tst.TEST_TYPE_CD = 'RATA'
+ where  isnull( unt.UNITID, stp.STACK_NAME ) in ( '4', '5', 'GT1' )
  order
     by  ORIS_CODE,
         LOCATION_NAME,
