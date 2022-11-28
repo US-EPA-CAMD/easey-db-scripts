@@ -11,9 +11,9 @@ select  fac.ORIS_CODE,
         join FACILITY fac on fac.FAC_ID in ( unt.FAC_ID, stp.FAC_ID )
         join MONITOR_METHOD dat on dat.MON_LOC_ID = loc.MON_LOC_ID
  where  fac.ORIS_CODE = 3
-   and  isnull( unt.UNITID, stp.STACK_NAME ) in ( '4' )
-   and  dat.PARAMETER_CD in ( 'CO2' )
-   and  dat.METHOD_CD in ( 'CEM' )
+   and  isnull( unt.UNITID, stp.STACK_NAME ) in ( '2' )
+   and  dat.PARAMETER_CD in ( 'HI' )
+   and  dat.METHOD_CD in ( 'AD' )
 
 use ECMPS
 go

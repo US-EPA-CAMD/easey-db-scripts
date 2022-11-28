@@ -1,6 +1,6 @@
 with
     sel as  (
-                select 'CAMDECMPS' as Owner, 'QA_CERT_EVENT' as Table_Name from DUAL
+                select 'CAMDECMPS' as Owner, 'TEST_EXTENSION_EXEMPTION' as Table_Name from DUAL
             )
 
 select  col.Table_Name,
