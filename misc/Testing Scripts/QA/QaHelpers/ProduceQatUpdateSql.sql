@@ -11,9 +11,9 @@ declare @TestTypeCdFilter varchar(7)
     2) Save the results as a SQL script by right clicking on the results grid using "Save Result As", changing "Save as Type" to "All Files", and using a file name with a ".sql" extension.
 */
 
-select @OrisCode = 3;               /* Replace ORIS_CODE */
+select @OrisCode = null;               /* Replace ORIS_CODE */
 select @LocationNameFilter = null   /* Replace Location or null */
-select @TestTypeCdFilter = 'LINE'   /* Replace Test Type or null */
+select @TestTypeCdFilter = null   /* Replace Test Type or null */
 
 select  lst.ORIS_CODE,
         lst.FACILITY_NAME,

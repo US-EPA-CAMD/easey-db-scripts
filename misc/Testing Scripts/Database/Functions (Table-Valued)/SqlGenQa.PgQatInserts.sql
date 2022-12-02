@@ -136,6 +136,23 @@ BEGIN
       from  SqlGenQa.PgAppendixECorrelationHiFromOil( @vTestInformationTable, @OrderOffset + 4 )
 
     
+    -------------------------------------
+    -- Genereate Cycle Time Insert SQL --
+    -------------------------------------
+
+    -- Cycle Time Summary
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgCycleTimeSummaryInserts( @vTestInformationTable, @OrderOffset + 1 )
+
+    -- Cycle Time Injection
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgCycleTimeInjectionInserts( @vTestInformationTable,  @OrderOffset + 2 )
+    
+    
     ---------------------------------------
     -- Genereate Flow to Load Insert SQL --
     ---------------------------------------
@@ -170,17 +187,34 @@ BEGIN
       from  SqlGenQa.PgFuelFlowToLoadCheckInserts( @vTestInformationTable, @OrderOffset + 1 )
     
     
+    -----------------------------------------------------------------------------------
+    -- Genereate Fuel Flowmeter Accuracy with Transmitter Transducer Test Insert SQL --
+    -----------------------------------------------------------------------------------
+
+    -- FUEL_FLOWMETER_ACCURACY
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgFuelFlowmeterAccuracyTestInserts( @vTestInformationTable, @OrderOffset + 1 )
+
+    -- TRANS_ACCURACY
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgFuelFlowmeterAccuracyTransmitterTransducerTestInserts( @vTestInformationTable, @OrderOffset + 1 )
+
+    
     ---------------------------------------
     -- Genereate Hg Test Insert SQL --
     ---------------------------------------
 
-    -- Linearity Summary
+    -- Hg Test Summary
     insert
       into  @SqlTable
     select  SQL_STATEMENT
       from  SqlGenQa.PgHgTestSummaryInserts( @vTestInformationTable, @OrderOffset + 1 )
 
-    -- Linearity Injection
+    -- Hg Test Injection
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -202,6 +236,17 @@ BEGIN
       into  @SqlTable
     select  SQL_STATEMENT
       from  SqlGenQa.PgLinearityInjectionInserts( @vTestInformationTable,  @OrderOffset + 2 )
+    
+    
+    ----------------------------------------------
+    -- Genereate Online-Offline Calibration SQL --
+    ----------------------------------------------
+
+    -- Online-Offline Summary
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenQa.PgOnlineOfflineCalibrationInserts( @vTestInformationTable, @OrderOffset + 1 )
     
     
     ---------------------------------------
@@ -243,13 +288,13 @@ BEGIN
     -- Genereate Unit Default Test Insert SQL --
     --------------------------------------------
 
-    -- Linearity Summary
+    -- Unit Default Test
     insert
       into  @SqlTable
     select  SQL_STATEMENT
       from  SqlGenQa.PgUnitDefaultTestInserts( @vTestInformationTable, @OrderOffset + 1 )
 
-    -- Linearity Injection
+    -- Unit Default Test Run
     insert
       into  @SqlTable
     select  SQL_STATEMENT
