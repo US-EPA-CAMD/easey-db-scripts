@@ -1,6 +1,6 @@
--- PROCEDURE: camdecmpswks.refresh_emission_view_hicems(character varying, numeric)
+-- PROCEDURE: camdecmpswks.refresh_emission_view_noxappesinglefuel(character varying, numeric)
 
--- DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_hicems(character varying, numeric);
+-- DROP PROCEDURE camdecmpswks.refresh_emission_view_noxappesinglefuel(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_noxappesinglefuel(
 	vmonplanid character varying,

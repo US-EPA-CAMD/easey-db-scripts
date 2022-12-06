@@ -1,6 +1,6 @@
 -- PROCEDURE: camdecmpswks.refresh_emissions_views(character varying, numeric, numeric)
 
--- DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emissions_views(character varying, numeric, numeric);
+-- DROP PROCEDURE camdecmpswks.refresh_emissions_views(character varying, numeric, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emissions_views(
 	vmonplanid character varying,

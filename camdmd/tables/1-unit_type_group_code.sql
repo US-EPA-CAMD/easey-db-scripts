@@ -17,3 +17,10 @@ COMMENT ON COLUMN camdmd.unit_type_group_code.unit_type_group_cd
 
 COMMENT ON COLUMN camdmd.unit_type_group_code.unit_type_group_description
     IS 'Full description of the unit type group.';
+
+INSERT INTO camdmd.unit_type_group_code(unit_type_group_cd, unit_type_group_description)
+VALUES
+    ('B', 'Boilers'),
+    ('F', 'Furnaces'),
+    ('T', 'Turbines')
+;

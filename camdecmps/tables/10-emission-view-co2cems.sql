@@ -1,27 +1,32 @@
-CREATE TABLE IF NOT EXISTS camdecmps.emission_view_co2cems(
-    em_co2_cems_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
-    mon_plan_id VARCHAR(45) NOT NULL,
-    mon_loc_id VARCHAR(45) NOT NULL,
-    rpt_period_id INTEGER NOT NULL,
-    datehour varchar(25) NOT NULL,
-    op_time NUMERIC(3,2),
-    unit_load NUMERIC(6,0),
-    load_uom VARCHAR(7),
-    component_type VARCHAR(3),
-    rpt_pct_co2 NUMERIC(14,4),
-    pct_co2_used NUMERIC(5,1),
-    co2_modc VARCHAR(7),
-    co2_pma NUMERIC(4,1),
-    unadj_flow NUMERIC(13,3),
-    calc_flow_baf NUMERIC(5,3),
-    rpt_adj_flow NUMERIC(13,3),
-    adj_flow_used NUMERIC(13,3),
-    flow_modc VARCHAR(45),
-    flow_pma NUMERIC(4,1),
-    pct_h2o_used NUMERIC(5,1),
-    source_h2o_value VARCHAR(7),
-    co2_formula_code VARCHAR(45),
-    rpt_co2_mass_rate NUMERIC(14,4),
-    calc_co2_mass_rate NUMERIC(14,4),
-    error_codes VARCHAR(1000)
-)
+-- Table: camdecmps.emission_view_co2cems
+
+-- DROP TABLE camdecmps.emission_view_co2cems;
+
+CREATE TABLE camdecmps.emission_view_co2cems
+(
+    em_co2_cems_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    rpt_period_id integer NOT NULL,
+    date_hour character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    op_time numeric(3,2),
+    unit_load numeric(6,0),
+    load_uom character varying(7) COLLATE pg_catalog."default",
+    component_type character varying(3) COLLATE pg_catalog."default",
+    rpt_pct_co2 numeric(14,4),
+    pct_co2_used numeric(5,1),
+    co2_modc character varying(7) COLLATE pg_catalog."default",
+    co2_pma numeric(4,1),
+    unadj_flow numeric(13,3),
+    calc_flow_baf numeric(5,3),
+    rpt_adj_flow numeric(13,3),
+    adj_flow_used numeric(13,3),
+    flow_modc character varying(45) COLLATE pg_catalog."default",
+    flow_pma numeric(4,1),
+    pct_h2o_used numeric(5,1),
+    source_h2o_value character varying(7) COLLATE pg_catalog."default",
+    co2_formula_cd character varying(45) COLLATE pg_catalog."default",
+    rpt_co2_mass_rate numeric(14,4),
+    calc_co2_mass_rate numeric(14,4),
+    error_codes character varying(1000) COLLATE pg_catalog."default"
+);

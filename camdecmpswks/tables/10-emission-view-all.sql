@@ -1,6 +1,6 @@
 -- Table: camdecmpswks.emission_view_all
 
--- DROP TABLE IF EXISTS camdecmpswks.emission_view_all;
+-- DROP TABLE camdecmpswks.emission_view_all;
 
 CREATE TABLE camdecmpswks.emission_view_all
 (

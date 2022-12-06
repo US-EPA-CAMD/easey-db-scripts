@@ -17,3 +17,14 @@ COMMENT ON COLUMN camdmd.account_type_group_code.account_type_group_cd
 
 COMMENT ON COLUMN camdmd.account_type_group_code.account_type_group_description
     IS 'Full description of the account type group.';
+
+INSERT INTO camdmd.account_type_group_code(account_type_group_cd, account_type_group_description)
+VALUES
+    ('FACLTY', 'Facility'),
+    ('GENERAL', 'General'),
+    ('OVERDF', 'Overdraft'),
+    ('RESERVE', 'Reserve'),
+    ('RETIRE', 'Surrender'),
+    ('SHOLD', 'State Holding'),
+    ('UNIT', 'Unit')
+;
