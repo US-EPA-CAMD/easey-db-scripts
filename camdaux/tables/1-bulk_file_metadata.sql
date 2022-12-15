@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdaux.bulk_file_metadata;
 
-CREATE TABLE camdaux.bulk_file_metadata
+CREATE TABLE IF NOT EXISTS camdaux.bulk_file_metadata
 (
     file_name character varying(100) COLLATE pg_catalog."default" NOT NULL,
     s3_path character varying(500) COLLATE pg_catalog."default" NOT NULL,

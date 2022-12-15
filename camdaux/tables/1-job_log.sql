@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdaux.job_log;
 
-CREATE TABLE camdaux.job_log
+CREATE TABLE IF NOT EXISTS camdaux.job_log
 (
     job_id uuid NOT NULL,
     job_system character varying COLLATE pg_catalog."default" NOT NULL,

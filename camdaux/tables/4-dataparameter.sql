@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdaux.dataparameter;
 
-CREATE TABLE camdaux.dataparameter
+CREATE TABLE IF NOT EXISTS camdaux.dataparameter
 (
     parameter_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     datatable_id integer NOT NULL,

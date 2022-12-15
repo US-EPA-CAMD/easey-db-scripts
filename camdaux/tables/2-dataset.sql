@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdaux.dataset;
 
-CREATE TABLE camdaux.dataset
+CREATE TABLE IF NOT EXISTS camdaux.dataset
 (
     dataset_cd character varying(50) COLLATE pg_catalog."default" NOT NULL,
     template_cd character varying(50) COLLATE pg_catalog."default" NOT NULL,

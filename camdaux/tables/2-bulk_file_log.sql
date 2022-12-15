@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdaux.bulk_file_log;
 
-CREATE TABLE camdaux.bulk_file_log
+CREATE TABLE IF NOT EXISTS camdaux.bulk_file_log
 (
     job_id uuid NOT NULL,
     parent_job_id uuid NOT NULL,

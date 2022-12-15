@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdaux.client_config;
 
-CREATE TABLE camdaux.client_config
+CREATE TABLE IF NOT EXISTS camdaux.client_config
 (
     client_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     client_name character varying COLLATE pg_catalog."default" NOT NULL,

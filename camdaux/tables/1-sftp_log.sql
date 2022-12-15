@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdaux.sftp_log;
 
-CREATE TABLE camdaux.sftp_log
+CREATE TABLE IF NOT EXISTS camdaux.sftp_log
 (
     id uuid NOT NULL,
     start_date timestamp with time zone,
