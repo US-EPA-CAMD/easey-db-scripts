@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS camdaux.api CASCADE;
+DROP TABLE IF EXISTS camdaux.cors CASCADE;
+DROP TABLE IF EXISTS camdaux.cors_to_api CASCADE;
