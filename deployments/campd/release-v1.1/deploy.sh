@@ -57,7 +57,14 @@ psql -h $HOST -p $PORT -d $DB_NAME -U $DB_USER <<-EOSQL
 EOSQL
 
 if [ $PRE_DEPLOYMENT == true ]; then
-  echo "NEED TO GENERATE AND LOAD CAMDAUX.CLIENT_CONFIG DATA"
+  echo "IMPORTANT: NEED TO GENERATE TOKENS AND LOAD CAMDAUX.CLIENT_CONFIG DATA..."
+  echo "
+    INSERT INTO camdaux.client_config(client_id, client_name, client_secret, client_passcode, encryption_key, support_email)
+	  VALUES
+      (?, 'campd-ui', ?, ?, ?, 'campd-support@camdsupport.com'),
+      (?, 'quartz', ?, ?, ?, null),
+      (?, 'xml-ppds', ?, ?, ?, null);
+    "
 fi
 
 echo "DEPLOYMENT COMPLETE"

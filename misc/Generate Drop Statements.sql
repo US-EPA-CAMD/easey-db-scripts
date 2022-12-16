@@ -28,12 +28,12 @@ WHERE schemaname like 'camd%'
 ORDER BY schemaname, tablename
 ;
 
-DROP SCHEMA camd;
-DROP SCHEMA camdaux;
-DROP SCHEMA camddmw;
-DROP SCHEMA camddmw_arch;
-DROP SCHEMA camdecmps;
-DROP SCHEMA camdecmpsaux;
-DROP SCHEMA camdecmpsmd;
-DROP SCHEMA camdecmpswks;
-DROP SCHEMA camdmd;
+DROP SCHEMA IF EXISTS camd CASCADE;
+DROP SCHEMA IF EXISTS camdaux CASCADE;
+DROP SCHEMA IF EXISTS camddmw CASCADE;
+DROP SCHEMA IF EXISTS camddmw_arch CASCADE;
+DROP SCHEMA IF EXISTS camdecmps CASCADE;
+DROP SCHEMA IF EXISTS camdecmpsaux CASCADE;
+DROP SCHEMA IF EXISTS camdecmpsmd CASCADE;
+DROP SCHEMA IF EXISTS camdecmpswks CASCADE;
+DROP SCHEMA IF EXISTS camdmd CASCADE;
