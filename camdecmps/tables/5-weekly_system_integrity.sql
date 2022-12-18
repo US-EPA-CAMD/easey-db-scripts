@@ -77,7 +77,7 @@ COMMENT ON COLUMN camdecmps.weekly_system_integrity.mon_loc_id
 
 -- DROP INDEX IF EXISTS camdecmps.idx_wsi_gas_level;
 
-CREATE INDEX IF NOT EXISTS idx_wsi_gas_level
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_wsi_gas_level
     ON camdecmps.weekly_system_integrity USING btree
     (gas_level_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -85,7 +85,7 @@ CREATE INDEX IF NOT EXISTS idx_wsi_gas_level
 
 -- DROP INDEX IF EXISTS camdecmps.idx_wsi_prd_loc;
 
-CREATE INDEX IF NOT EXISTS idx_wsi_prd_loc
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_wsi_prd_loc
     ON camdecmps.weekly_system_integrity USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -93,7 +93,7 @@ CREATE INDEX IF NOT EXISTS idx_wsi_prd_loc
 
 -- DROP INDEX IF EXISTS camdecmps.idx_wsi_weekly_test_sum_id;
 
-CREATE INDEX IF NOT EXISTS idx_wsi_weekly_test_sum_id
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_wsi_weekly_test_sum_id
     ON camdecmps.weekly_system_integrity USING btree
     (weekly_test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

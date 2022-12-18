@@ -54,7 +54,7 @@ COMMENT ON COLUMN camdecmps.unit_stack_configuration.update_date
 
 -- DROP INDEX camdecmps.idx_unit_stack_configuration_b;
 
-CREATE INDEX idx_unit_stack_configuration_b
+CREATE INDEX IF NOT EXISTS idx_unit_stack_configuration_b
     ON camdecmps.unit_stack_configuration USING btree
     (stack_pipe_id COLLATE pg_catalog."default" ASC NULLS LAST, unit_id ASC NULLS LAST);
 
@@ -62,7 +62,7 @@ CREATE INDEX idx_unit_stack_configuration_b
 
 -- DROP INDEX camdecmps.idx_unit_stack_configuration_s;
 
-CREATE INDEX idx_unit_stack_configuration_s
+CREATE INDEX IF NOT EXISTS idx_unit_stack_configuration_s
     ON camdecmps.unit_stack_configuration USING btree
     (stack_pipe_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -70,6 +70,6 @@ CREATE INDEX idx_unit_stack_configuration_s
 
 -- DROP INDEX camdecmps.idx_unit_stack_configuration_u;
 
-CREATE INDEX idx_unit_stack_configuration_u
+CREATE INDEX IF NOT EXISTS idx_unit_stack_configuration_u
     ON camdecmps.unit_stack_configuration USING btree
     (unit_id ASC NULLS LAST);

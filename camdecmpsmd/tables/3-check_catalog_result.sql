@@ -38,7 +38,7 @@ COMMENT ON COLUMN camdecmpsmd.check_catalog_result.es_allowed_ind
 
 -- DROP INDEX camdecmpsmd.idx_check_catalog_r_check_cata;
 
-CREATE INDEX idx_check_catalog_r_check_cata
+CREATE INDEX IF NOT EXISTS idx_check_catalog_r_check_cata
     ON camdecmpsmd.check_catalog_result USING btree
     (check_catalog_id ASC NULLS LAST);
 
@@ -46,7 +46,7 @@ CREATE INDEX idx_check_catalog_r_check_cata
 
 -- DROP INDEX camdecmpsmd.idx_check_catalog_r_response_c;
 
-CREATE INDEX idx_check_catalog_r_response_c
+CREATE INDEX IF NOT EXISTS idx_check_catalog_r_response_c
     ON camdecmpsmd.check_catalog_result USING btree
     (response_catalog_id ASC NULLS LAST);
 
@@ -54,6 +54,6 @@ CREATE INDEX idx_check_catalog_r_response_c
 
 -- DROP INDEX camdecmpsmd.idx_check_catalog_r_severity_c;
 
-CREATE INDEX idx_check_catalog_r_severity_c
+CREATE INDEX IF NOT EXISTS idx_check_catalog_r_severity_c
     ON camdecmpsmd.check_catalog_result USING btree
     (severity_cd COLLATE pg_catalog."default" ASC NULLS LAST);

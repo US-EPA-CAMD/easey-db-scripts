@@ -138,7 +138,7 @@ COMMENT ON COLUMN camdecmpswks.monitor_hrly_value.calc_f2l_status
 
 -- DROP INDEX camdecmpswks.idx_mhv_add_date;
 
-CREATE INDEX idx_mhv_add_date
+CREATE INDEX IF NOT EXISTS idx_mhv_add_date
     ON camdecmpswks.monitor_hrly_value USING btree
     (add_date ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -146,7 +146,7 @@ CREATE INDEX idx_mhv_add_date
 
 -- DROP INDEX camdecmpswks.idx_mon_hrly_param1;
 
-CREATE INDEX idx_mon_hrly_param1
+CREATE INDEX IF NOT EXISTS idx_mon_hrly_param1
     ON camdecmpswks.monitor_hrly_value USING btree
     (hour_id COLLATE pg_catalog."default" ASC NULLS LAST, parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -154,7 +154,7 @@ CREATE INDEX idx_mon_hrly_param1
 
 -- DROP INDEX camdecmpswks.idx_mon_hrly_param2;
 
-CREATE INDEX idx_mon_hrly_param2
+CREATE INDEX IF NOT EXISTS idx_mon_hrly_param2
     ON camdecmpswks.monitor_hrly_value USING btree
     (modc_cd COLLATE pg_catalog."default" ASC NULLS LAST, unadjusted_hrly_value ASC NULLS LAST, hour_id COLLATE pg_catalog."default" ASC NULLS LAST, parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -162,7 +162,7 @@ CREATE INDEX idx_mon_hrly_param2
 
 -- DROP INDEX camdecmpswks.idx_monitor_hrly_va_component;
 
-CREATE INDEX idx_monitor_hrly_va_component
+CREATE INDEX IF NOT EXISTS idx_monitor_hrly_va_component
     ON camdecmpswks.monitor_hrly_value USING btree
     (component_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -170,7 +170,7 @@ CREATE INDEX idx_monitor_hrly_va_component
 
 -- DROP INDEX camdecmpswks.idx_monitor_hrly_va_mon_sys_id;
 
-CREATE INDEX idx_monitor_hrly_va_mon_sys_id
+CREATE INDEX IF NOT EXISTS idx_monitor_hrly_va_mon_sys_id
     ON camdecmpswks.monitor_hrly_value USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -178,7 +178,7 @@ CREATE INDEX idx_monitor_hrly_va_mon_sys_id
 
 -- DROP INDEX camdecmpswks.idx_monitor_hrly_va_parameter_;
 
-CREATE INDEX idx_monitor_hrly_va_parameter_
+CREATE INDEX IF NOT EXISTS idx_monitor_hrly_va_parameter_
     ON camdecmpswks.monitor_hrly_value USING btree
     (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -186,7 +186,7 @@ CREATE INDEX idx_monitor_hrly_va_parameter_
 
 -- DROP INDEX camdecmpswks.monitor_hrly_value_idx003;
 
-CREATE INDEX monitor_hrly_value_idx003
+CREATE INDEX IF NOT EXISTS monitor_hrly_value_idx003
     ON camdecmpswks.monitor_hrly_value USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

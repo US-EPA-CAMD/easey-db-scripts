@@ -148,7 +148,7 @@ ADD CONSTRAINT fk_check_parameter_code_check_parameter_type_code FOREIGN KEY (ch
 REFERENCES camdecmpsmd.check_parameter_type_code (chk_param_type_cd);
 
 --NOT SURE WE NEED INDEC & UNIQUE INDEX
-CREATE INDEX ix_check_parameter_code_name
+CREATE INDEX IF NOT EXISTS ix_check_parameter_code_name
 ON camdecmpsmd.check_parameter_code
 USING BTREE (check_param_id_name ASC);
 

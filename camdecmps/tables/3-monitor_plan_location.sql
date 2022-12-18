@@ -27,6 +27,6 @@ COMMENT ON COLUMN camdecmps.monitor_plan_location.mon_loc_id
 
 -- DROP INDEX camdecmps.idx_mon_plan_loc_plan_loc;
 
-CREATE INDEX idx_mon_plan_loc_plan_loc
+CREATE INDEX IF NOT EXISTS idx_mon_plan_loc_plan_loc
     ON camdecmps.monitor_plan_location USING btree
     (mon_plan_id COLLATE pg_catalog."default" ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);

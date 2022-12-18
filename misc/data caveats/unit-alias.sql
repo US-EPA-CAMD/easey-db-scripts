@@ -42,6 +42,6 @@ COMMENT ON COLUMN camd.unit_alias.add_date
 
 -- DROP INDEX camd.idx_unit_alias_unit;
 
-CREATE INDEX idx_unit_alias_unit
+CREATE INDEX IF NOT EXISTS idx_unit_alias_unit
     ON camd.unit_alias USING btree
     (unit_id ASC NULLS LAST);

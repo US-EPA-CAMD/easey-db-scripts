@@ -66,7 +66,7 @@ COMMENT ON COLUMN camdecmps.fuel_flowmeter_accuracy.update_date
 
 -- DROP INDEX camdecmps.idx_ff_accuracy_001;
 
-CREATE INDEX idx_ff_accuracy_001
+CREATE INDEX IF NOT EXISTS idx_ff_accuracy_001
     ON camdecmps.fuel_flowmeter_accuracy USING btree
     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -74,6 +74,6 @@ CREATE INDEX idx_ff_accuracy_001
 
 -- DROP INDEX camdecmps.idx_fuel_flowmeter_acc_test_m;
 
-CREATE INDEX idx_fuel_flowmeter_acc_test_m
+CREATE INDEX IF NOT EXISTS idx_fuel_flowmeter_acc_test_m
     ON camdecmps.fuel_flowmeter_accuracy USING btree
     (acc_test_method_cd COLLATE pg_catalog."default" ASC NULLS LAST);

@@ -1,6 +1,6 @@
 -- View: camddmw.vw_hour_unit_mats_data
 
--- DROP VIEW camddmw.vw_hour_unit_mats_data;
+DROP VIEW IF EXISTS camddmw.vw_hour_unit_mats_data;
 
 CREATE OR REPLACE VIEW camddmw.vw_hour_unit_mats_data
  AS

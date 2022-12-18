@@ -50,6 +50,6 @@ COMMENT ON COLUMN camdecmpsmd.category_code.es_match_time_type_cd
 
 -- DROP INDEX camdecmpsmd.idx_category_code_process_cd;
 
-CREATE INDEX idx_category_code_process_cd
+CREATE INDEX IF NOT EXISTS idx_category_code_process_cd
     ON camdecmpsmd.category_code USING btree
     (process_cd COLLATE pg_catalog."default" ASC NULLS LAST);

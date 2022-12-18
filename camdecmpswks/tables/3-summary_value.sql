@@ -78,7 +78,7 @@ COMMENT ON COLUMN camdecmpswks.summary_value.update_date
 
 -- DROP INDEX camdecmpswks.idx_summary_value_mon_loc_id;
 
-CREATE INDEX idx_summary_value_mon_loc_id
+CREATE INDEX IF NOT EXISTS idx_summary_value_mon_loc_id
     ON camdecmpswks.summary_value USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -86,7 +86,7 @@ CREATE INDEX idx_summary_value_mon_loc_id
 
 -- DROP INDEX camdecmpswks.idx_sv_add_date;
 
-CREATE INDEX idx_sv_add_date
+CREATE INDEX IF NOT EXISTS idx_sv_add_date
     ON camdecmpswks.summary_value USING btree
     (add_date ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -94,7 +94,7 @@ CREATE INDEX idx_sv_add_date
 
 -- DROP INDEX camdecmpswks.summary_value_idx001;
 
-CREATE INDEX summary_value_idx001
+CREATE INDEX IF NOT EXISTS summary_value_idx001
     ON camdecmpswks.summary_value USING btree
     (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -102,7 +102,7 @@ CREATE INDEX summary_value_idx001
 
 -- DROP INDEX camdecmpswks.summary_value_idx002;
 
-CREATE INDEX summary_value_idx002
+CREATE INDEX IF NOT EXISTS summary_value_idx002
     ON camdecmpswks.summary_value USING btree
     (rpt_period_id ASC NULLS LAST)
     TABLESPACE pg_default;

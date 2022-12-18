@@ -90,7 +90,7 @@ COMMENT ON COLUMN camdecmps.flow_to_load_check.op_level_cd
 
 -- DROP INDEX camdecmps.idx_flow_to_load_ch_op_level_c;
 
-CREATE INDEX idx_flow_to_load_ch_op_level_c
+CREATE INDEX IF NOT EXISTS idx_flow_to_load_ch_op_level_c
     ON camdecmps.flow_to_load_check USING btree
     (op_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -98,7 +98,7 @@ CREATE INDEX idx_flow_to_load_ch_op_level_c
 
 -- DROP INDEX camdecmps.idx_flow_to_load_ch_test_basis;
 
-CREATE INDEX idx_flow_to_load_ch_test_basis
+CREATE INDEX IF NOT EXISTS idx_flow_to_load_ch_test_basis
     ON camdecmps.flow_to_load_check USING btree
     (test_basis_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -106,6 +106,6 @@ CREATE INDEX idx_flow_to_load_ch_test_basis
 
 -- DROP INDEX camdecmps.idx_flow_to_load_check_001;
 
-CREATE INDEX idx_flow_to_load_check_001
+CREATE INDEX IF NOT EXISTS idx_flow_to_load_check_001
     ON camdecmps.flow_to_load_check USING btree
     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

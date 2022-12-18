@@ -131,7 +131,7 @@ COMMENT ON COLUMN camd.plant.update_date
 
 -- DROP INDEX camd.idx_plant_country;
 
-CREATE INDEX idx_plant_country
+CREATE INDEX IF NOT EXISTS idx_plant_country
     ON camd.plant USING btree
     (county_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -139,7 +139,7 @@ CREATE INDEX idx_plant_country
 
 -- DROP INDEX camd.idx_plant_epa_id_oris_name;
 
-CREATE INDEX idx_plant_epa_id_oris_name
+CREATE INDEX IF NOT EXISTS idx_plant_epa_id_oris_name
     ON camd.plant USING btree
     (epa_region ASC NULLS LAST, fac_id ASC NULLS LAST, oris_code ASC NULLS LAST, facility_name COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -147,7 +147,7 @@ CREATE INDEX idx_plant_epa_id_oris_name
 
 -- DROP INDEX camd.idx_plant_epa_region;
 
-CREATE INDEX idx_plant_epa_region
+CREATE INDEX IF NOT EXISTS idx_plant_epa_region
     ON camd.plant USING btree
     (epa_region ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -155,7 +155,7 @@ CREATE INDEX idx_plant_epa_region
 
 -- DROP INDEX camd.idx_plant_nerc;
 
-CREATE INDEX idx_plant_nerc
+CREATE INDEX IF NOT EXISTS idx_plant_nerc
     ON camd.plant USING btree
     (nerc_region COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -163,7 +163,7 @@ CREATE INDEX idx_plant_nerc
 
 -- DROP INDEX camd.idx_plant_sic;
 
-CREATE INDEX idx_plant_sic
+CREATE INDEX IF NOT EXISTS idx_plant_sic
     ON camd.plant USING btree
     (sic_code ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -171,7 +171,7 @@ CREATE INDEX idx_plant_sic
 
 -- DROP INDEX camd.idx_plant_state;
 
-CREATE INDEX idx_plant_state
+CREATE INDEX IF NOT EXISTS idx_plant_state
     ON camd.plant USING btree
     (state COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -179,7 +179,7 @@ CREATE INDEX idx_plant_state
 
 -- DROP INDEX camd.idx_plant_tribal_land;
 
-CREATE INDEX idx_plant_tribal_land
+CREATE INDEX IF NOT EXISTS idx_plant_tribal_land
     ON camd.plant USING btree
     (tribal_land_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

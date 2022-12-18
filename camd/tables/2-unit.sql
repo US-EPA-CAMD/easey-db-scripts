@@ -107,7 +107,7 @@ COMMENT ON COLUMN camd.unit.update_date
 
 -- DROP INDEX camd.idx_unit_naics;
 
-CREATE INDEX idx_unit_naics
+CREATE INDEX IF NOT EXISTS idx_unit_naics
     ON camd.unit USING btree
     (naics_cd ASC NULLS LAST);
 
@@ -115,7 +115,7 @@ CREATE INDEX idx_unit_naics
 
 -- DROP INDEX camd.idx_unit_plant;
 
-CREATE INDEX idx_unit_plant
+CREATE INDEX IF NOT EXISTS idx_unit_plant
     ON camd.unit USING btree
     (fac_id ASC NULLS LAST);
 
@@ -123,6 +123,6 @@ CREATE INDEX idx_unit_plant
 
 -- DROP INDEX camd.idx_unit_source_category;
 
-CREATE INDEX idx_unit_source_category
+CREATE INDEX IF NOT EXISTS idx_unit_source_category
     ON camd.unit USING btree
     (source_category_cd COLLATE pg_catalog."default" ASC NULLS LAST);

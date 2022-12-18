@@ -46,7 +46,7 @@ COMMENT ON COLUMN camdecmps.monitor_location.update_date
 
 -- DROP INDEX camdecmps.idx_monitor_location_stp;
 
-CREATE INDEX idx_monitor_location_stp
+CREATE INDEX IF NOT EXISTS idx_monitor_location_stp
     ON camdecmps.monitor_location USING btree
     (stack_pipe_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -54,6 +54,6 @@ CREATE INDEX idx_monitor_location_stp
 
 -- DROP INDEX camdecmps.idx_monitor_location_unt;
 
-CREATE INDEX idx_monitor_location_unt
+CREATE INDEX IF NOT EXISTS idx_monitor_location_unt
     ON camdecmps.monitor_location USING btree
     (unit_id ASC NULLS LAST);

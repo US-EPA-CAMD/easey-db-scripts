@@ -74,7 +74,7 @@ COMMENT ON COLUMN camdecmps.trans_accuracy.high_level_accuracy_spec_cd
 
 -- DROP INDEX camdecmps.idx_trans_accuracy_001;
 
-CREATE INDEX idx_trans_accuracy_001
+CREATE INDEX IF NOT EXISTS idx_trans_accuracy_001
     ON camdecmps.trans_accuracy USING btree
     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -82,7 +82,7 @@ CREATE INDEX idx_trans_accuracy_001
 
 -- DROP INDEX camdecmps.idx_trans_accuracy_high_level;
 
-CREATE INDEX idx_trans_accuracy_high_level
+CREATE INDEX IF NOT EXISTS idx_trans_accuracy_high_level
     ON camdecmps.trans_accuracy USING btree
     (high_level_accuracy_spec_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -90,7 +90,7 @@ CREATE INDEX idx_trans_accuracy_high_level
 
 -- DROP INDEX camdecmps.idx_trans_accuracy_low_level;
 
-CREATE INDEX idx_trans_accuracy_low_level
+CREATE INDEX IF NOT EXISTS idx_trans_accuracy_low_level
     ON camdecmps.trans_accuracy USING btree
     (low_level_accuracy_spec_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -98,6 +98,6 @@ CREATE INDEX idx_trans_accuracy_low_level
 
 -- DROP INDEX camdecmps.idx_trans_accuracy_mid_level;
 
-CREATE INDEX idx_trans_accuracy_mid_level
+CREATE INDEX IF NOT EXISTS idx_trans_accuracy_mid_level
     ON camdecmps.trans_accuracy USING btree
     (mid_level_accuracy_spec_cd COLLATE pg_catalog."default" ASC NULLS LAST);

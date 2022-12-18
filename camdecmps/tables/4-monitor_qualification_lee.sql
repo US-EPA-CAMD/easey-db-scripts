@@ -78,7 +78,7 @@ COMMENT ON COLUMN camdecmps.monitor_qualification_lee.update_date
 
 -- DROP INDEX camdecmps.idx_monitor_qualification_lee_emission_standard_uom;
 
-CREATE INDEX idx_monitor_qualification_lee_emission_standard_uom
+CREATE INDEX IF NOT EXISTS idx_monitor_qualification_lee_emission_standard_uom
     ON camdecmps.monitor_qualification_lee USING btree
     (emission_standard_uom COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -86,7 +86,7 @@ CREATE INDEX idx_monitor_qualification_lee_emission_standard_uom
 
 -- DROP INDEX camdecmps.idx_monitor_qualification_lee_mon_qual_id;
 
-CREATE INDEX idx_monitor_qualification_lee_mon_qual_id
+CREATE INDEX IF NOT EXISTS idx_monitor_qualification_lee_mon_qual_id
     ON camdecmps.monitor_qualification_lee USING btree
     (mon_qual_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -94,7 +94,7 @@ CREATE INDEX idx_monitor_qualification_lee_mon_qual_id
 
 -- DROP INDEX camdecmps.idx_monitor_qualification_lee_parameter_cd;
 
-CREATE INDEX idx_monitor_qualification_lee_parameter_cd
+CREATE INDEX IF NOT EXISTS idx_monitor_qualification_lee_parameter_cd
     ON camdecmps.monitor_qualification_lee USING btree
     (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -102,6 +102,6 @@ CREATE INDEX idx_monitor_qualification_lee_parameter_cd
 
 -- DROP INDEX camdecmps.idx_monitor_qualification_lee_qaul_lee_test_type_cd;
 
-CREATE INDEX idx_monitor_qualification_lee_qaul_lee_test_type_cd
+CREATE INDEX IF NOT EXISTS idx_monitor_qualification_lee_qaul_lee_test_type_cd
     ON camdecmps.monitor_qualification_lee USING btree
     (qual_lee_test_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);

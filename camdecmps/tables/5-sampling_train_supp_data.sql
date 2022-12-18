@@ -102,7 +102,7 @@ COMMENT ON COLUMN camdecmps.sampling_train_supp_data.sampling_ratio_test_result_
 
 -- DROP INDEX IF EXISTS camdecmps.idx_sampling_train_sd_cmp;
 
-CREATE INDEX IF NOT EXISTS idx_sampling_train_sd_cmp
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_sampling_train_sd_cmp
     ON camdecmps.sampling_train_supp_data USING btree
     (component_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -110,7 +110,7 @@ CREATE INDEX IF NOT EXISTS idx_sampling_train_sd_cmp
 
 -- DROP INDEX IF EXISTS camdecmps.idx_sampling_train_sd_loc;
 
-CREATE INDEX IF NOT EXISTS idx_sampling_train_sd_loc
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_sampling_train_sd_loc
     ON camdecmps.sampling_train_supp_data USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -118,7 +118,7 @@ CREATE INDEX IF NOT EXISTS idx_sampling_train_sd_loc
 
 -- DROP INDEX IF EXISTS camdecmps.idx_sampling_train_sd_prd_loc;
 
-CREATE INDEX IF NOT EXISTS idx_sampling_train_sd_prd_loc
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_sampling_train_sd_prd_loc
     ON camdecmps.sampling_train_supp_data USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -126,7 +126,7 @@ CREATE INDEX IF NOT EXISTS idx_sampling_train_sd_prd_loc
 
 -- DROP INDEX IF EXISTS camdecmps.idx_sampling_train_sd_rrc;
 
-CREATE INDEX IF NOT EXISTS idx_sampling_train_sd_rrc
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_sampling_train_sd_rrc
     ON camdecmps.sampling_train_supp_data USING btree
     (sampling_ratio_test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -134,7 +134,7 @@ CREATE INDEX IF NOT EXISTS idx_sampling_train_sd_rrc
 
 -- DROP INDEX IF EXISTS camdecmps.idx_sampling_train_sd_tqs;
 
-CREATE INDEX IF NOT EXISTS idx_sampling_train_sd_tqs
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_sampling_train_sd_tqs
     ON camdecmps.sampling_train_supp_data USING btree
     (train_qa_status_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -142,6 +142,6 @@ CREATE INDEX IF NOT EXISTS idx_sampling_train_sd_tqs
 
 -- DROP INDEX IF EXISTS camdecmps.idx_sampling_train_sd_trp;
 
-CREATE INDEX IF NOT EXISTS idx_sampling_train_sd_trp
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_sampling_train_sd_trp
     ON camdecmps.sampling_train_supp_data USING btree
     (trap_id COLLATE pg_catalog."default" ASC NULLS LAST);

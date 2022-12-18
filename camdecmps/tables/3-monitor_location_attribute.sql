@@ -86,7 +86,7 @@ COMMENT ON COLUMN camdecmps.monitor_location_attribute.userid
 
 -- DROP INDEX camdecmps.idx_monitor_locatio_material_c;
 
-CREATE INDEX idx_monitor_locatio_material_c
+CREATE INDEX IF NOT EXISTS idx_monitor_locatio_material_c
     ON camdecmps.monitor_location_attribute USING btree
     (material_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -94,7 +94,7 @@ CREATE INDEX idx_monitor_locatio_material_c
 
 -- DROP INDEX camdecmps.idx_monitor_locatio_mon_loc_id;
 
-CREATE INDEX idx_monitor_locatio_mon_loc_id
+CREATE INDEX IF NOT EXISTS idx_monitor_locatio_mon_loc_id
     ON camdecmps.monitor_location_attribute USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -102,7 +102,7 @@ CREATE INDEX idx_monitor_locatio_mon_loc_id
 
 -- DROP INDEX camdecmps.idx_monitor_locatio_shape_cd;
 
-CREATE INDEX idx_monitor_locatio_shape_cd
+CREATE INDEX IF NOT EXISTS idx_monitor_locatio_shape_cd
     ON camdecmps.monitor_location_attribute USING btree
     (shape_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -110,6 +110,6 @@ CREATE INDEX idx_monitor_locatio_shape_cd
 
 -- DROP INDEX camdecmps."monitor_locatio_idx$$_15b0000b";
 
-CREATE INDEX "monitor_locatio_idx$$_15b0000b"
+CREATE INDEX IF NOT EXISTS "monitor_locatio_idx$$_15b0000b"
     ON camdecmps.monitor_location_attribute USING btree
     (begin_date ASC NULLS LAST);

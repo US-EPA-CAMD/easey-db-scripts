@@ -1,8 +1,5 @@
 #!/bin/bash
-export PORT=15210
-export HOST=localhost
-export DB_USER=uImcwuf4K9dyaxeL
-export DB_NAME=cgawsbrokerprodr97macy19l
+source ../../environments.sh $1
 
 FILES=""
 PRE_DEPLOYMENT=false
@@ -48,13 +45,7 @@ if [ $AFTER_BULK_FILE_LOAD == true ]; then
   "
 fi
 
-#echo $FILES
-
-psql -h $HOST -p $PORT -d $DB_NAME -U $DB_USER <<-EOSQL
-  BEGIN;
-    $FILES
-  COMMIT;
-EOSQL
+../../execute-psql.sh "$FILES"
 
 if [ $PRE_DEPLOYMENT == true ]; then
   echo "IMPORTANT: NEED TO GENERATE TOKENS AND LOAD CAMDAUX.CLIENT_CONFIG DATA..."

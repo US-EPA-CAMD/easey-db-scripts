@@ -1,6 +1,6 @@
 -- View: camdecmps.vw_emissions_submissions_progress
 
--- DROP VIEW camdecmps.vw_emissions_submissions_progress;
+DROP VIEW IF EXISTS camdecmps.vw_emissions_submissions_progress;
 
 CREATE OR REPLACE VIEW camdecmps.vw_emissions_submissions_progress
  AS

@@ -81,7 +81,7 @@ COMMENT ON COLUMN camdecmps.nsps4t_summary.update_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_summary_loc;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_summary_loc
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_summary_loc
     ON camdecmps.nsps4t_summary USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -89,7 +89,7 @@ CREATE INDEX IF NOT EXISTS idx_nsps4t_summary_loc
 
 -- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_summary_lod;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_summary_lod
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_summary_lod
     ON camdecmps.nsps4t_summary USING btree
     (electrical_load_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -97,7 +97,7 @@ CREATE INDEX IF NOT EXISTS idx_nsps4t_summary_lod
 
 -- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_summary_prd;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_summary_prd
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_summary_prd
     ON camdecmps.nsps4t_summary USING btree
     (rpt_period_id ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -105,7 +105,7 @@ CREATE INDEX IF NOT EXISTS idx_nsps4t_summary_prd
 
 -- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_summary_rpt;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_summary_rpt
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_summary_rpt
     ON camdecmps.nsps4t_summary USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -113,7 +113,7 @@ CREATE INDEX IF NOT EXISTS idx_nsps4t_summary_rpt
 
 -- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_summary_stn;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_summary_stn
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_summary_stn
     ON camdecmps.nsps4t_summary USING btree
     (emission_standard_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -121,7 +121,7 @@ CREATE INDEX IF NOT EXISTS idx_nsps4t_summary_stn
 
 -- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_summary_uom;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_summary_uom
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_summary_uom
     ON camdecmps.nsps4t_summary USING btree
     (modus_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

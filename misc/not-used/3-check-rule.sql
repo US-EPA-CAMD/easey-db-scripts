@@ -75,7 +75,7 @@ COMMENT ON COLUMN camdecmpsaux.check_rule.is_active
 
 -- DROP INDEX camdecmpsaux.idx_check_rule_type;
 
-CREATE INDEX idx_check_rule_type
+CREATE INDEX IF NOT EXISTS idx_check_rule_type
     ON camdecmpsaux.check_rule USING btree
     (check_rule_type_cd ASC NULLS LAST);
 
@@ -83,6 +83,6 @@ CREATE INDEX idx_check_rule_type
 
 -- DROP INDEX camdecmpsaux.idx_check_rule_category;
 
-CREATE INDEX idx_check_rule_category
+CREATE INDEX IF NOT EXISTS idx_check_rule_category
     ON camdecmpsaux.check_rule USING btree
     (check_rule_category_cd ASC NULLS LAST);

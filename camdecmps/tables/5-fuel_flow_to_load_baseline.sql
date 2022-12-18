@@ -94,7 +94,7 @@ COMMENT ON COLUMN camdecmps.fuel_flow_to_load_baseline.ghr_uom_cd
 
 -- DROP INDEX camdecmps.idx_ffload_baseline_001;
 
-CREATE INDEX idx_ffload_baseline_001
+CREATE INDEX IF NOT EXISTS idx_ffload_baseline_001
     ON camdecmps.fuel_flow_to_load_baseline USING btree
     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -102,7 +102,7 @@ CREATE INDEX idx_ffload_baseline_001
 
 -- DROP INDEX camdecmps.idx_fuel_flow_to_lo_fuel_flow;
 
-CREATE INDEX idx_fuel_flow_to_lo_fuel_flow
+CREATE INDEX IF NOT EXISTS idx_fuel_flow_to_lo_fuel_flow
     ON camdecmps.fuel_flow_to_load_baseline USING btree
     (fuel_flow_load_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -110,6 +110,6 @@ CREATE INDEX idx_fuel_flow_to_lo_fuel_flow
 
 -- DROP INDEX camdecmps.idx_fuel_flow_to_lo_ghr_uom_cd;
 
-CREATE INDEX idx_fuel_flow_to_lo_ghr_uom_cd
+CREATE INDEX IF NOT EXISTS idx_fuel_flow_to_lo_ghr_uom_cd
     ON camdecmps.fuel_flow_to_load_baseline USING btree
     (ghr_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);

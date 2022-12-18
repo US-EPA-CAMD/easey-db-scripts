@@ -90,7 +90,7 @@ COMMENT ON COLUMN camdecmps.rata_run.update_date
 
 -- DROP INDEX camdecmps.idx_rata_run_run_status;
 
-CREATE INDEX idx_rata_run_run_status
+CREATE INDEX IF NOT EXISTS idx_rata_run_run_status
     ON camdecmps.rata_run USING btree
     (run_status_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -98,6 +98,6 @@ CREATE INDEX idx_rata_run_run_status
 
 -- DROP INDEX camdecmps.rata_run_idx001;
 
-CREATE INDEX rata_run_idx001
+CREATE INDEX IF NOT EXISTS rata_run_idx001
     ON camdecmps.rata_run USING btree
     (rata_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

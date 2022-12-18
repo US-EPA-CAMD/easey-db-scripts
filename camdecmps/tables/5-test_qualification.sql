@@ -66,7 +66,7 @@ COMMENT ON COLUMN camdecmps.test_qualification.update_date
 
 -- DROP INDEX camdecmps.idx_test_qualificat_test_claim;
 
-CREATE INDEX idx_test_qualificat_test_claim
+CREATE INDEX IF NOT EXISTS idx_test_qualificat_test_claim
     ON camdecmps.test_qualification USING btree
     (test_claim_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -74,6 +74,6 @@ CREATE INDEX idx_test_qualificat_test_claim
 
 -- DROP INDEX camdecmps.idx_test_qualification_001;
 
-CREATE INDEX idx_test_qualification_001
+CREATE INDEX IF NOT EXISTS idx_test_qualification_001
     ON camdecmps.test_qualification USING btree
     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

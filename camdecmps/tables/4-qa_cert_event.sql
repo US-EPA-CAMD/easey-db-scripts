@@ -122,7 +122,7 @@ COMMENT ON COLUMN camdecmps.qa_cert_event.submission_availability_cd
 
 -- DROP INDEX camdecmps.idx_qa_cert_event_chk_sessio;
 
-CREATE INDEX idx_qa_cert_event_chk_sessio
+CREATE INDEX IF NOT EXISTS idx_qa_cert_event_chk_sessio
     ON camdecmps.qa_cert_event USING btree
     (chk_session_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -130,7 +130,7 @@ CREATE INDEX idx_qa_cert_event_chk_sessio
 
 -- DROP INDEX camdecmps.idx_qa_cert_event_component;
 
-CREATE INDEX idx_qa_cert_event_component
+CREATE INDEX IF NOT EXISTS idx_qa_cert_event_component
     ON camdecmps.qa_cert_event USING btree
     (component_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -138,7 +138,7 @@ CREATE INDEX idx_qa_cert_event_component
 
 -- DROP INDEX camdecmps.idx_qa_cert_event_mon_loc_id;
 
-CREATE INDEX idx_qa_cert_event_mon_loc_id
+CREATE INDEX IF NOT EXISTS idx_qa_cert_event_mon_loc_id
     ON camdecmps.qa_cert_event USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -146,7 +146,7 @@ CREATE INDEX idx_qa_cert_event_mon_loc_id
 
 -- DROP INDEX camdecmps.idx_qa_cert_event_mon_sys_id;
 
-CREATE INDEX idx_qa_cert_event_mon_sys_id
+CREATE INDEX IF NOT EXISTS idx_qa_cert_event_mon_sys_id
     ON camdecmps.qa_cert_event USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -154,7 +154,7 @@ CREATE INDEX idx_qa_cert_event_mon_sys_id
 
 -- DROP INDEX camdecmps.idx_qa_cert_event_qa_cert_ev;
 
-CREATE INDEX idx_qa_cert_event_qa_cert_ev
+CREATE INDEX IF NOT EXISTS idx_qa_cert_event_qa_cert_ev
     ON camdecmps.qa_cert_event USING btree
     (qa_cert_event_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -162,7 +162,7 @@ CREATE INDEX idx_qa_cert_event_qa_cert_ev
 
 -- DROP INDEX camdecmps.idx_qa_cert_event_required_t;
 
-CREATE INDEX idx_qa_cert_event_required_t
+CREATE INDEX IF NOT EXISTS idx_qa_cert_event_required_t
     ON camdecmps.qa_cert_event USING btree
     (required_test_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -170,7 +170,7 @@ CREATE INDEX idx_qa_cert_event_required_t
 
 -- DROP INDEX camdecmps.idx_qa_cert_event_submission;
 
-CREATE INDEX idx_qa_cert_event_submission
+CREATE INDEX IF NOT EXISTS idx_qa_cert_event_submission
     ON camdecmps.qa_cert_event USING btree
     (submission_availability_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -178,6 +178,6 @@ CREATE INDEX idx_qa_cert_event_submission
 
 -- DROP INDEX camdecmps.idx_qa_cert_event_submission1;
 
-CREATE INDEX idx_qa_cert_event_submission1
+CREATE INDEX IF NOT EXISTS idx_qa_cert_event_submission1
     ON camdecmps.qa_cert_event USING btree
     (submission_id ASC NULLS LAST);

@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_component
 
--- DROP VIEW camdecmpswks.vw_component;
+DROP VIEW IF EXISTS camdecmpswks.vw_component;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_component
  AS

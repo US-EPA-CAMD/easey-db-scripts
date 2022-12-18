@@ -62,7 +62,7 @@ COMMENT ON COLUMN camdecmps.monitor_plan_reporting_freq.update_date
 
 -- DROP INDEX camdecmps.idx_monitor_plan_re_begin_rpt_;
 
-CREATE INDEX idx_monitor_plan_re_begin_rpt_
+CREATE INDEX IF NOT EXISTS idx_monitor_plan_re_begin_rpt_
     ON camdecmps.monitor_plan_reporting_freq USING btree
     (begin_rpt_period_id ASC NULLS LAST);
 
@@ -70,7 +70,7 @@ CREATE INDEX idx_monitor_plan_re_begin_rpt_
 
 -- DROP INDEX camdecmps.idx_monitor_plan_re_end_rpt_pe;
 
-CREATE INDEX idx_monitor_plan_re_end_rpt_pe
+CREATE INDEX IF NOT EXISTS idx_monitor_plan_re_end_rpt_pe
     ON camdecmps.monitor_plan_reporting_freq USING btree
     (end_rpt_period_id ASC NULLS LAST);
 
@@ -78,7 +78,7 @@ CREATE INDEX idx_monitor_plan_re_end_rpt_pe
 
 -- DROP INDEX camdecmps.idx_monitor_plan_re_mon_plan_i;
 
-CREATE INDEX idx_monitor_plan_re_mon_plan_i
+CREATE INDEX IF NOT EXISTS idx_monitor_plan_re_mon_plan_i
     ON camdecmps.monitor_plan_reporting_freq USING btree
     (mon_plan_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -86,6 +86,6 @@ CREATE INDEX idx_monitor_plan_re_mon_plan_i
 
 -- DROP INDEX camdecmps.idx_monitor_plan_re_report_fre;
 
-CREATE INDEX idx_monitor_plan_re_report_fre
+CREATE INDEX IF NOT EXISTS idx_monitor_plan_re_report_fre
     ON camdecmps.monitor_plan_reporting_freq USING btree
     (report_freq_cd COLLATE pg_catalog."default" ASC NULLS LAST);

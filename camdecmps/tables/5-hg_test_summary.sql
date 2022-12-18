@@ -78,7 +78,7 @@ COMMENT ON COLUMN camdecmps.hg_test_summary.update_date
 
 -- DROP INDEX camdecmps.idx_hg_test_summary_001;
 
-CREATE INDEX idx_hg_test_summary_001
+CREATE INDEX IF NOT EXISTS idx_hg_test_summary_001
     ON camdecmps.hg_test_summary USING btree
     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -86,6 +86,6 @@ CREATE INDEX idx_hg_test_summary_001
 
 -- DROP INDEX camdecmps.idx_hg_test_summary_gas_level;
 
-CREATE INDEX idx_hg_test_summary_gas_level
+CREATE INDEX IF NOT EXISTS idx_hg_test_summary_gas_level
     ON camdecmps.hg_test_summary USING btree
     (gas_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);

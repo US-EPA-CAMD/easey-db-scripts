@@ -91,6 +91,6 @@ COMMENT ON COLUMN camdmd.program_code.allocation_check_year
 
 -- DROP INDEX camdmd.idx_program_code_allow_comp;
 
-CREATE INDEX idx_program_code_allow_comp
+CREATE INDEX IF NOT EXISTS idx_program_code_allow_comp
     ON camdmd.program_code USING btree
     (allow_comp_ind ASC NULLS LAST);

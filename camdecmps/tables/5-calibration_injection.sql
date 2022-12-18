@@ -122,7 +122,7 @@ COMMENT ON COLUMN camdecmps.calibration_injection.update_date
 
 -- DROP INDEX camdecmps.idx_calibration_inj_upscale_ga;
 
-CREATE INDEX idx_calibration_inj_upscale_ga
+CREATE INDEX IF NOT EXISTS idx_calibration_inj_upscale_ga
     ON camdecmps.calibration_injection USING btree
     (upscale_gas_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -130,6 +130,6 @@ CREATE INDEX idx_calibration_inj_upscale_ga
 
 -- DROP INDEX camdecmps.idx_calibration_injection_001;
 
-CREATE INDEX idx_calibration_injection_001
+CREATE INDEX IF NOT EXISTS idx_calibration_injection_001
     ON camdecmps.calibration_injection USING btree
     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

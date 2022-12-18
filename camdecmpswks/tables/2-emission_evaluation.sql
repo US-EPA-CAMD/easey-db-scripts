@@ -67,7 +67,7 @@ COMMENT ON COLUMN camdecmpswks.emission_evaluation.submission_availability_cd
 
 -- DROP INDEX camdecmpswks.emission_evaluation_idx001;
 
-CREATE INDEX emission_evaluation_idx001
+CREATE INDEX IF NOT EXISTS emission_evaluation_idx001
     ON camdecmpswks.emission_evaluation USING btree
     (rpt_period_id ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -75,7 +75,7 @@ CREATE INDEX emission_evaluation_idx001
 
 -- DROP INDEX camdecmpswks.idx_emission_evalua1;
 
-CREATE INDEX idx_emission_evalua1
+CREATE INDEX IF NOT EXISTS idx_emission_evalua1
     ON camdecmpswks.emission_evaluation USING btree
     (submission_id ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -83,7 +83,7 @@ CREATE INDEX idx_emission_evalua1
 
 -- DROP INDEX camdecmpswks.idx_emission_evalua_chk_sessio;
 
-CREATE INDEX idx_emission_evalua_chk_sessio
+CREATE INDEX IF NOT EXISTS idx_emission_evalua_chk_sessio
     ON camdecmpswks.emission_evaluation USING btree
     (chk_session_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -91,7 +91,7 @@ CREATE INDEX idx_emission_evalua_chk_sessio
 
 -- DROP INDEX camdecmpswks.idx_emission_evalua_submission;
 
-CREATE INDEX idx_emission_evalua_submission
+CREATE INDEX IF NOT EXISTS idx_emission_evalua_submission
     ON camdecmpswks.emission_evaluation USING btree
     (submission_availability_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

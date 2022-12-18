@@ -178,7 +178,7 @@ COMMENT ON COLUMN camdecmps.rata_summary.aps_cd
 
 -- DROP INDEX camdecmps.idx_rata_summary_co2_o2_ref;
 
-CREATE INDEX idx_rata_summary_co2_o2_ref
+CREATE INDEX IF NOT EXISTS idx_rata_summary_co2_o2_ref
     ON camdecmps.rata_summary USING btree
     (co2_o2_ref_method_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -186,7 +186,7 @@ CREATE INDEX idx_rata_summary_co2_o2_ref
 
 -- DROP INDEX camdecmps.idx_rata_summary_op_level_c;
 
-CREATE INDEX idx_rata_summary_op_level_c
+CREATE INDEX IF NOT EXISTS idx_rata_summary_op_level_c
     ON camdecmps.rata_summary USING btree
     (op_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -194,7 +194,7 @@ CREATE INDEX idx_rata_summary_op_level_c
 
 -- DROP INDEX camdecmps.idx_rata_summary_rata_id;
 
-CREATE INDEX idx_rata_summary_rata_id
+CREATE INDEX IF NOT EXISTS idx_rata_summary_rata_id
     ON camdecmps.rata_summary USING btree
     (rata_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -202,6 +202,6 @@ CREATE INDEX idx_rata_summary_rata_id
 
 -- DROP INDEX camdecmps.idx_rata_summary_ref_method;
 
-CREATE INDEX idx_rata_summary_ref_method
+CREATE INDEX IF NOT EXISTS idx_rata_summary_ref_method
     ON camdecmps.rata_summary USING btree
     (ref_method_cd COLLATE pg_catalog."default" ASC NULLS LAST);

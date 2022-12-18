@@ -58,6 +58,6 @@ COMMENT ON COLUMN camdecmps.linearity_injection.update_date
 
 -- DROP INDEX camdecmps.linearity_injection_idx001;
 
-CREATE INDEX linearity_injection_idx001
+CREATE INDEX IF NOT EXISTS linearity_injection_idx001
     ON camdecmps.linearity_injection USING btree
     (lin_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

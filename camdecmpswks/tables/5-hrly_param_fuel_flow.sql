@@ -127,7 +127,7 @@ COMMENT ON COLUMN camdecmpswks.hrly_param_fuel_flow.mon_loc_id
 
 -- DROP INDEX camdecmpswks.hrly_param_fuel_flow_idx001;
 
-CREATE INDEX hrly_param_fuel_flow_idx001
+CREATE INDEX IF NOT EXISTS hrly_param_fuel_flow_idx001
     ON camdecmpswks.hrly_param_fuel_flow USING btree
     (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -135,7 +135,7 @@ CREATE INDEX hrly_param_fuel_flow_idx001
 
 -- DROP INDEX camdecmpswks.hrly_param_fuel_flow_idx002;
 
-CREATE INDEX hrly_param_fuel_flow_idx002
+CREATE INDEX IF NOT EXISTS hrly_param_fuel_flow_idx002
     ON camdecmpswks.hrly_param_fuel_flow USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -143,7 +143,7 @@ CREATE INDEX hrly_param_fuel_flow_idx002
 
 -- DROP INDEX camdecmpswks.idx_hpff_add_date;
 
-CREATE INDEX idx_hpff_add_date
+CREATE INDEX IF NOT EXISTS idx_hpff_add_date
     ON camdecmpswks.hrly_param_fuel_flow USING btree
     (add_date ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -151,7 +151,7 @@ CREATE INDEX idx_hpff_add_date
 
 -- DROP INDEX camdecmpswks.idx_hrly_param_fuel_hrly_fuel;
 
-CREATE INDEX idx_hrly_param_fuel_hrly_fuel
+CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_hrly_fuel
     ON camdecmpswks.hrly_param_fuel_flow USING btree
     (hrly_fuel_flow_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -159,7 +159,7 @@ CREATE INDEX idx_hrly_param_fuel_hrly_fuel
 
 -- DROP INDEX camdecmpswks.idx_hrly_param_fuel_mon_form_i;
 
-CREATE INDEX idx_hrly_param_fuel_mon_form_i
+CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_mon_form_i
     ON camdecmpswks.hrly_param_fuel_flow USING btree
     (mon_form_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -167,7 +167,7 @@ CREATE INDEX idx_hrly_param_fuel_mon_form_i
 
 -- DROP INDEX camdecmpswks.idx_hrly_param_fuel_mon_sys_id;
 
-CREATE INDEX idx_hrly_param_fuel_mon_sys_id
+CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_mon_sys_id
     ON camdecmpswks.hrly_param_fuel_flow USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -175,7 +175,7 @@ CREATE INDEX idx_hrly_param_fuel_mon_sys_id
 
 -- DROP INDEX camdecmpswks.idx_hrly_param_fuel_operating;
 
-CREATE INDEX idx_hrly_param_fuel_operating
+CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_operating
     ON camdecmpswks.hrly_param_fuel_flow USING btree
     (operating_condition_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -183,7 +183,7 @@ CREATE INDEX idx_hrly_param_fuel_operating
 
 -- DROP INDEX camdecmpswks.idx_hrly_param_fuel_parameter;
 
-CREATE INDEX idx_hrly_param_fuel_parameter
+CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_parameter
     ON camdecmpswks.hrly_param_fuel_flow USING btree
     (parameter_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

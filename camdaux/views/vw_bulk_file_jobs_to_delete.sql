@@ -1,6 +1,6 @@
 -- View: camdaux.vw_bulk_file_jobs_to_delete
 
--- DROP VIEW camdaux.vw_bulk_file_jobs_to_delete;
+DROP VIEW IF EXISTS camdaux.vw_bulk_file_jobs_to_delete;
 
 CREATE OR REPLACE VIEW camdaux.vw_bulk_file_jobs_to_delete
  AS

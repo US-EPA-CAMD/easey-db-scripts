@@ -110,7 +110,7 @@ COMMENT ON COLUMN camdecmps.monitor_default.default_uom_cd
 
 -- DROP INDEX camdecmps.idx_monitor_default_default_pu;
 
-CREATE INDEX idx_monitor_default_default_pu
+CREATE INDEX IF NOT EXISTS idx_monitor_default_default_pu
     ON camdecmps.monitor_default USING btree
     (default_purpose_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -118,7 +118,7 @@ CREATE INDEX idx_monitor_default_default_pu
 
 -- DROP INDEX camdecmps.idx_monitor_default_default_so;
 
-CREATE INDEX idx_monitor_default_default_so
+CREATE INDEX IF NOT EXISTS idx_monitor_default_default_so
     ON camdecmps.monitor_default USING btree
     (default_source_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -126,7 +126,7 @@ CREATE INDEX idx_monitor_default_default_so
 
 -- DROP INDEX camdecmps.idx_monitor_default_default_uo;
 
-CREATE INDEX idx_monitor_default_default_uo
+CREATE INDEX IF NOT EXISTS idx_monitor_default_default_uo
     ON camdecmps.monitor_default USING btree
     (default_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -134,7 +134,7 @@ CREATE INDEX idx_monitor_default_default_uo
 
 -- DROP INDEX camdecmps.idx_monitor_default_fuel_cd;
 
-CREATE INDEX idx_monitor_default_fuel_cd
+CREATE INDEX IF NOT EXISTS idx_monitor_default_fuel_cd
     ON camdecmps.monitor_default USING btree
     (fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -142,7 +142,7 @@ CREATE INDEX idx_monitor_default_fuel_cd
 
 -- DROP INDEX camdecmps.idx_monitor_default_loc_prp;
 
-CREATE INDEX idx_monitor_default_loc_prp
+CREATE INDEX IF NOT EXISTS idx_monitor_default_loc_prp
     ON camdecmps.monitor_default USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST, default_purpose_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -150,7 +150,7 @@ CREATE INDEX idx_monitor_default_loc_prp
 
 -- DROP INDEX camdecmps.idx_monitor_default_operating;
 
-CREATE INDEX idx_monitor_default_operating
+CREATE INDEX IF NOT EXISTS idx_monitor_default_operating
     ON camdecmps.monitor_default USING btree
     (operating_condition_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -158,7 +158,7 @@ CREATE INDEX idx_monitor_default_operating
 
 -- DROP INDEX camdecmps."monitor_default_idx$$_15b00006";
 
-CREATE INDEX "monitor_default_idx$$_15b00006"
+CREATE INDEX IF NOT EXISTS "monitor_default_idx$$_15b00006"
     ON camdecmps.monitor_default USING btree
     (begin_date ASC NULLS LAST, begin_hour ASC NULLS LAST, parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -166,6 +166,6 @@ CREATE INDEX "monitor_default_idx$$_15b00006"
 
 -- DROP INDEX camdecmps.monitor_default_idx001;
 
-CREATE INDEX monitor_default_idx001
+CREATE INDEX IF NOT EXISTS monitor_default_idx001
     ON camdecmps.monitor_default USING btree
     (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);

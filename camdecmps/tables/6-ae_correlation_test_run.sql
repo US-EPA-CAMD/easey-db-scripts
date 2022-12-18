@@ -90,6 +90,6 @@ COMMENT ON COLUMN camdecmps.ae_correlation_test_run.update_date
 
 -- DROP INDEX camdecmps.idx_ae_correlation_ae_corr_te;
 
-CREATE INDEX idx_ae_correlation_ae_corr_te
+CREATE INDEX IF NOT EXISTS idx_ae_correlation_ae_corr_te
     ON camdecmps.ae_correlation_test_run USING btree
     (ae_corr_test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

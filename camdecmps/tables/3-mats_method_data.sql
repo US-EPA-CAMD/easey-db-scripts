@@ -70,7 +70,7 @@ COMMENT ON COLUMN camdecmps.mats_method_data.update_date
 
 -- DROP INDEX camdecmps.mats_method_data_method_cd;
 
-CREATE INDEX mats_method_data_method_cd
+CREATE INDEX IF NOT EXISTS mats_method_data_method_cd
     ON camdecmps.mats_method_data USING btree
     (mats_method_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -78,7 +78,7 @@ CREATE INDEX mats_method_data_method_cd
 
 -- DROP INDEX camdecmps.mats_method_data_mon_loc_id;
 
-CREATE INDEX mats_method_data_mon_loc_id
+CREATE INDEX IF NOT EXISTS mats_method_data_mon_loc_id
     ON camdecmps.mats_method_data USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -86,6 +86,6 @@ CREATE INDEX mats_method_data_mon_loc_id
 
 -- DROP INDEX camdecmps.mats_method_data_param_cd;
 
-CREATE INDEX mats_method_data_param_cd
+CREATE INDEX IF NOT EXISTS mats_method_data_param_cd
     ON camdecmps.mats_method_data USING btree
     (mats_method_parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);

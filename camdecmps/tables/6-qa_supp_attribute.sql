@@ -46,6 +46,6 @@ COMMENT ON COLUMN camdecmps.qa_supp_attribute.update_date
 
 -- DROP INDEX camdecmps.qa_supp_attribute_idx001;
 
-CREATE INDEX qa_supp_attribute_idx001
+CREATE INDEX IF NOT EXISTS qa_supp_attribute_idx001
     ON camdecmps.qa_supp_attribute USING btree
     (qa_supp_data_id COLLATE pg_catalog."default" ASC NULLS LAST);

@@ -90,7 +90,7 @@ COMMENT ON COLUMN camdecmps.cycle_time_injection.calc_injection_cycle_time
 
 -- DROP INDEX camdecmps.cycle_time_injection_idx001;
 
-CREATE INDEX cycle_time_injection_idx001
+CREATE INDEX IF NOT EXISTS cycle_time_injection_idx001
     ON camdecmps.cycle_time_injection USING btree
     (cycle_time_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -98,6 +98,6 @@ CREATE INDEX cycle_time_injection_idx001
 
 -- DROP INDEX camdecmps.idx_cycle_time_inje_gas_level;
 
-CREATE INDEX idx_cycle_time_inje_gas_level
+CREATE INDEX IF NOT EXISTS idx_cycle_time_inje_gas_level
     ON camdecmps.cycle_time_injection USING btree
     (gas_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);

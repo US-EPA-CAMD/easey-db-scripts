@@ -38,15 +38,15 @@ CREATE TABLE IF NOT EXISTS camddmw_arch.day_unit_data_a_log
     CONSTRAINT pk_day_unit_data_a_log PRIMARY KEY (skey)
 );
 
-CREATE INDEX idx_day_unit_data_a_log_sql_function
+CREATE INDEX IF NOT EXISTS idx_day_unit_data_a_log_sql_function
     ON camddmw_arch.day_unit_data_a_log USING btree
     (sql_function ASC NULLS LAST);
 
-CREATE INDEX idx_day_unit_data_a_log_unit_id
+CREATE INDEX IF NOT EXISTS idx_day_unit_data_a_log_unit_id
     ON camddmw_arch.day_unit_data_a_log USING btree
     (unit_id ASC NULLS LAST);
 
-CREATE INDEX idx_day_unit_data_a_log_op_date
+CREATE INDEX IF NOT EXISTS idx_day_unit_data_a_log_op_date
     ON camddmw_arch.day_unit_data_a_log USING btree
     (op_date ASC NULLS LAST);
 

@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_qa_calibration_injection
 
--- DROP VIEW camdecmpswks.vw_qa_calibration_injection;
+DROP VIEW IF EXISTS camdecmpswks.vw_qa_calibration_injection;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_qa_calibration_injection
  AS

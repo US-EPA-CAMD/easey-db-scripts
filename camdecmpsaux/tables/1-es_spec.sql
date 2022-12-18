@@ -110,7 +110,7 @@ COMMENT ON COLUMN camdecmpsaux.es_spec.update_date
 
 -- DROP INDEX camdecmpsaux.es_spec_ccr_ix;
 
-CREATE INDEX es_spec_ccr_ix
+CREATE INDEX IF NOT EXISTS es_spec_ccr_ix
     ON camdecmpsaux.es_spec USING btree
     (check_catalog_result_id ASC NULLS LAST);
 
@@ -118,6 +118,6 @@ CREATE INDEX es_spec_ccr_ix
 
 -- DROP INDEX camdecmpsaux.es_spec_fac_ix;
 
-CREATE INDEX es_spec_fac_ix
+CREATE INDEX IF NOT EXISTS es_spec_fac_ix
     ON camdecmpsaux.es_spec USING btree
     (fac_id ASC NULLS LAST);

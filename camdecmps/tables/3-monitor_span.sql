@@ -122,7 +122,7 @@ COMMENT ON COLUMN camdecmps.monitor_span.span_uom_cd
 
 -- DROP INDEX camdecmps.idx_monitor_span_component;
 
-CREATE INDEX idx_monitor_span_component
+CREATE INDEX IF NOT EXISTS idx_monitor_span_component
     ON camdecmps.monitor_span USING btree
     (component_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -130,7 +130,7 @@ CREATE INDEX idx_monitor_span_component
 
 -- DROP INDEX camdecmps.idx_monitor_span_mon_loc_id;
 
-CREATE INDEX idx_monitor_span_mon_loc_id
+CREATE INDEX IF NOT EXISTS idx_monitor_span_mon_loc_id
     ON camdecmps.monitor_span USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -138,7 +138,7 @@ CREATE INDEX idx_monitor_span_mon_loc_id
 
 -- DROP INDEX camdecmps.idx_monitor_span_span_metho;
 
-CREATE INDEX idx_monitor_span_span_metho
+CREATE INDEX IF NOT EXISTS idx_monitor_span_span_metho
     ON camdecmps.monitor_span USING btree
     (span_method_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -146,7 +146,7 @@ CREATE INDEX idx_monitor_span_span_metho
 
 -- DROP INDEX camdecmps.idx_monitor_span_span_scale;
 
-CREATE INDEX idx_monitor_span_span_scale
+CREATE INDEX IF NOT EXISTS idx_monitor_span_span_scale
     ON camdecmps.monitor_span USING btree
     (span_scale_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -154,6 +154,6 @@ CREATE INDEX idx_monitor_span_span_scale
 
 -- DROP INDEX camdecmps.idx_monitor_span_span_uom_c;
 
-CREATE INDEX idx_monitor_span_span_uom_c
+CREATE INDEX IF NOT EXISTS idx_monitor_span_span_uom_c
     ON camdecmps.monitor_span USING btree
     (span_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);

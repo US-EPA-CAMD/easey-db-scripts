@@ -165,7 +165,7 @@ COMMENT ON COLUMN camdecmpswks.daily_calibration.injection_protocol_cd
 
 -- DROP INDEX camdecmpswks.daily_calibration_indx001;
 
-CREATE INDEX daily_calibration_indx001
+CREATE INDEX IF NOT EXISTS daily_calibration_indx001
     ON camdecmpswks.daily_calibration USING btree
     (rpt_period_id ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -173,7 +173,7 @@ CREATE INDEX daily_calibration_indx001
 
 -- DROP INDEX camdecmpswks.idx_daily_calibrati_daily_test;
 
-CREATE INDEX idx_daily_calibrati_daily_test
+CREATE INDEX IF NOT EXISTS idx_daily_calibrati_daily_test
     ON camdecmpswks.daily_calibration USING btree
     (daily_test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -181,7 +181,7 @@ CREATE INDEX idx_daily_calibrati_daily_test
 
 -- DROP INDEX camdecmpswks.idx_daily_calibration_0002;
 
-CREATE INDEX idx_daily_calibration_0002
+CREATE INDEX IF NOT EXISTS idx_daily_calibration_0002
     ON camdecmpswks.daily_calibration USING btree
     (vendor_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -189,7 +189,7 @@ CREATE INDEX idx_daily_calibration_0002
 
 -- DROP INDEX camdecmpswks.idx_dcal_add_date;
 
-CREATE INDEX idx_dcal_add_date
+CREATE INDEX IF NOT EXISTS idx_dcal_add_date
     ON camdecmpswks.daily_calibration USING btree
     (add_date ASC NULLS LAST)
     TABLESPACE pg_default;

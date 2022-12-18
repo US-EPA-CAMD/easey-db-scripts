@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_monitor_formula
 
--- DROP VIEW camdecmpswks.vw_monitor_formula;
+DROP VIEW IF EXISTS camdecmpswks.vw_monitor_formula;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_monitor_formula
  AS

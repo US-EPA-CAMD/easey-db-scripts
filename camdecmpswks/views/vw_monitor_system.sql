@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_monitor_system
 
--- DROP VIEW camdecmpswks.vw_monitor_system;
+DROP VIEW IF EXISTS camdecmpswks.vw_monitor_system;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_monitor_system
  AS

@@ -54,6 +54,6 @@ COMMENT ON COLUMN camdecmps.monitor_qualification_lme.update_date
 
 -- DROP INDEX camdecmps.idx_monitor_qualification_lme_mon_qual_id;
 
-CREATE INDEX idx_monitor_qualification_lme_mon_qual_id
+CREATE INDEX IF NOT EXISTS idx_monitor_qualification_lme_mon_qual_id
     ON camdecmps.monitor_qualification_lme USING btree
     (mon_qual_id COLLATE pg_catalog."default" ASC NULLS LAST);

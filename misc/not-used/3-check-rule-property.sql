@@ -32,7 +32,7 @@ COMMENT ON COLUMN camdecmpsaux.check_rule_property.collection_item_source
 
 -- DROP INDEX camdecmpsaux.idx_check_rule_property_property;
 
-CREATE INDEX idx_check_rule_property_property
+CREATE INDEX IF NOT EXISTS idx_check_rule_property_property
     ON camdecmpsaux.check_rule_property USING btree
     (property_id ASC NULLS LAST);
 
@@ -40,7 +40,7 @@ CREATE INDEX idx_check_rule_property_property
 
 -- DROP INDEX camdecmpsaux.idx_check_rule_property_category;
 
-CREATE INDEX idx_check_rule_property_category
+CREATE INDEX IF NOT EXISTS idx_check_rule_property_category
     ON camdecmpsaux.check_rule_property USING btree
     (check_rule_category_cd ASC NULLS LAST);
 
@@ -48,7 +48,7 @@ CREATE INDEX idx_check_rule_property_category
 
 -- DROP INDEX camdecmpsaux.idx_check_rule_property_collection_item_source;
 
-CREATE INDEX idx_check_rule_property_collection_item_source
+CREATE INDEX IF NOT EXISTS idx_check_rule_property_collection_item_source
     ON camdecmpsaux.check_rule_property USING btree
     (collection_item_source ASC NULLS LAST);
 

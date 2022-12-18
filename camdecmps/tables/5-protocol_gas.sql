@@ -66,6 +66,6 @@ COMMENT ON COLUMN camdecmps.protocol_gas.userid
 
 -- DROP INDEX camdecmps.idx_protocol_gas_0001;
 
-CREATE INDEX idx_protocol_gas_0001
+CREATE INDEX IF NOT EXISTS idx_protocol_gas_0001
     ON camdecmps.protocol_gas USING btree
     (vendor_id COLLATE pg_catalog."default" ASC NULLS LAST);

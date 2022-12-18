@@ -186,7 +186,7 @@ COMMENT ON COLUMN camdecmps.qa_supp_data.fuel_cd
 
 -- DROP INDEX camdecmps.idx_qa_supp_data_001;
 
-CREATE INDEX idx_qa_supp_data_001
+CREATE INDEX IF NOT EXISTS idx_qa_supp_data_001
     ON camdecmps.qa_supp_data USING btree
     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -194,7 +194,7 @@ CREATE INDEX idx_qa_supp_data_001
 
 -- DROP INDEX camdecmps.idx_qa_supp_data_chk_sessio;
 
-CREATE INDEX idx_qa_supp_data_chk_sessio
+CREATE INDEX IF NOT EXISTS idx_qa_supp_data_chk_sessio
     ON camdecmps.qa_supp_data USING btree
     (chk_session_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -202,7 +202,7 @@ CREATE INDEX idx_qa_supp_data_chk_sessio
 
 -- DROP INDEX camdecmps.idx_qa_supp_data_component;
 
-CREATE INDEX idx_qa_supp_data_component
+CREATE INDEX IF NOT EXISTS idx_qa_supp_data_component
     ON camdecmps.qa_supp_data USING btree
     (component_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -210,7 +210,7 @@ CREATE INDEX idx_qa_supp_data_component
 
 -- DROP INDEX camdecmps.idx_qa_supp_data_fuel_cd;
 
-CREATE INDEX idx_qa_supp_data_fuel_cd
+CREATE INDEX IF NOT EXISTS idx_qa_supp_data_fuel_cd
     ON camdecmps.qa_supp_data USING btree
     (fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -218,7 +218,7 @@ CREATE INDEX idx_qa_supp_data_fuel_cd
 
 -- DROP INDEX camdecmps.idx_qa_supp_data_mon_loc_id;
 
-CREATE INDEX idx_qa_supp_data_mon_loc_id
+CREATE INDEX IF NOT EXISTS idx_qa_supp_data_mon_loc_id
     ON camdecmps.qa_supp_data USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -226,7 +226,7 @@ CREATE INDEX idx_qa_supp_data_mon_loc_id
 
 -- DROP INDEX camdecmps.idx_qa_supp_data_mon_sys_id;
 
-CREATE INDEX idx_qa_supp_data_mon_sys_id
+CREATE INDEX IF NOT EXISTS idx_qa_supp_data_mon_sys_id
     ON camdecmps.qa_supp_data USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -234,7 +234,7 @@ CREATE INDEX idx_qa_supp_data_mon_sys_id
 
 -- DROP INDEX camdecmps.idx_qa_supp_data_op_level_c;
 
-CREATE INDEX idx_qa_supp_data_op_level_c
+CREATE INDEX IF NOT EXISTS idx_qa_supp_data_op_level_c
     ON camdecmps.qa_supp_data USING btree
     (op_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -242,7 +242,7 @@ CREATE INDEX idx_qa_supp_data_op_level_c
 
 -- DROP INDEX camdecmps.idx_qa_supp_data_operating_;
 
-CREATE INDEX idx_qa_supp_data_operating_
+CREATE INDEX IF NOT EXISTS idx_qa_supp_data_operating_
     ON camdecmps.qa_supp_data USING btree
     (operating_condition_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -250,7 +250,7 @@ CREATE INDEX idx_qa_supp_data_operating_
 
 -- DROP INDEX camdecmps.idx_qa_supp_data_submission;
 
-CREATE INDEX idx_qa_supp_data_submission
+CREATE INDEX IF NOT EXISTS idx_qa_supp_data_submission
     ON camdecmps.qa_supp_data USING btree
     (submission_availability_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -258,7 +258,7 @@ CREATE INDEX idx_qa_supp_data_submission
 
 -- DROP INDEX camdecmps.idx_qa_supp_data_submission1;
 
-CREATE INDEX idx_qa_supp_data_submission1
+CREATE INDEX IF NOT EXISTS idx_qa_supp_data_submission1
     ON camdecmps.qa_supp_data USING btree
     (submission_id ASC NULLS LAST);
 
@@ -266,7 +266,7 @@ CREATE INDEX idx_qa_supp_data_submission1
 
 -- DROP INDEX camdecmps.idx_qa_supp_data_test_reaso;
 
-CREATE INDEX idx_qa_supp_data_test_reaso
+CREATE INDEX IF NOT EXISTS idx_qa_supp_data_test_reaso
     ON camdecmps.qa_supp_data USING btree
     (test_reason_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -274,7 +274,7 @@ CREATE INDEX idx_qa_supp_data_test_reaso
 
 -- DROP INDEX camdecmps.idx_qa_supp_data_test_resul;
 
-CREATE INDEX idx_qa_supp_data_test_resul
+CREATE INDEX IF NOT EXISTS idx_qa_supp_data_test_resul
     ON camdecmps.qa_supp_data USING btree
     (test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -282,7 +282,7 @@ CREATE INDEX idx_qa_supp_data_test_resul
 
 -- DROP INDEX camdecmps.idx_qa_supp_data_test_type;
 
-CREATE INDEX idx_qa_supp_data_test_type
+CREATE INDEX IF NOT EXISTS idx_qa_supp_data_test_type
     ON camdecmps.qa_supp_data USING btree
     (test_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -290,6 +290,6 @@ CREATE INDEX idx_qa_supp_data_test_type
 
 -- DROP INDEX camdecmps.qa_supp_data_idx001;
 
-CREATE INDEX qa_supp_data_idx001
+CREATE INDEX IF NOT EXISTS qa_supp_data_idx001
     ON camdecmps.qa_supp_data USING btree
     (rpt_period_id ASC NULLS LAST);

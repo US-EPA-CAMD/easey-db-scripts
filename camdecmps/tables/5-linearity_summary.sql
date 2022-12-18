@@ -78,7 +78,7 @@ COMMENT ON COLUMN camdecmps.linearity_summary.update_date
 
 -- DROP INDEX camdecmps.idx_linearity_summa_gas_level;
 
-CREATE INDEX idx_linearity_summa_gas_level
+CREATE INDEX IF NOT EXISTS idx_linearity_summa_gas_level
     ON camdecmps.linearity_summary USING btree
     (gas_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -86,6 +86,6 @@ CREATE INDEX idx_linearity_summa_gas_level
 
 -- DROP INDEX camdecmps.idx_linearity_summary_001;
 
-CREATE INDEX idx_linearity_summary_001
+CREATE INDEX IF NOT EXISTS idx_linearity_summary_001
     ON camdecmps.linearity_summary USING btree
     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

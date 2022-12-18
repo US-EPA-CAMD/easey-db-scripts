@@ -58,7 +58,7 @@ COMMENT ON COLUMN camdecmps.emission_evaluation.submission_availability_cd
 
 -- DROP INDEX camdecmps.emission_evaluation_idx001;
 
-CREATE INDEX emission_evaluation_idx001
+CREATE INDEX IF NOT EXISTS emission_evaluation_idx001
     ON camdecmps.emission_evaluation USING btree
     (rpt_period_id ASC NULLS LAST);
 
@@ -66,7 +66,7 @@ CREATE INDEX emission_evaluation_idx001
 
 -- DROP INDEX camdecmps.idx_emission_evalua1;
 
-CREATE INDEX idx_emission_evalua1
+CREATE INDEX IF NOT EXISTS idx_emission_evalua1
     ON camdecmps.emission_evaluation USING btree
     (submission_id ASC NULLS LAST);
 
@@ -74,7 +74,7 @@ CREATE INDEX idx_emission_evalua1
 
 -- DROP INDEX camdecmps.idx_emission_evalua_chk_sessio;
 
-CREATE INDEX idx_emission_evalua_chk_sessio
+CREATE INDEX IF NOT EXISTS idx_emission_evalua_chk_sessio
     ON camdecmps.emission_evaluation USING btree
     (chk_session_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -82,6 +82,6 @@ CREATE INDEX idx_emission_evalua_chk_sessio
 
 -- DROP INDEX camdecmps.idx_emission_evalua_submission;
 
-CREATE INDEX idx_emission_evalua_submission
+CREATE INDEX IF NOT EXISTS idx_emission_evalua_submission
     ON camdecmps.emission_evaluation USING btree
     (submission_availability_cd COLLATE pg_catalog."default" ASC NULLS LAST);

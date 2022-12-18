@@ -118,7 +118,7 @@ COMMENT ON COLUMN camdecmpsaux.check_log.error_suppress_id
 
 -- DROP INDEX camdecmpsaux.idx_check_log_1471;
 
-CREATE INDEX idx_check_log_1471
+CREATE INDEX IF NOT EXISTS idx_check_log_1471
     ON camdecmpsaux.check_log USING btree
     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -126,7 +126,7 @@ CREATE INDEX idx_check_log_1471
 
 -- DROP INDEX camdecmpsaux.idx_check_log_6400;
 
-CREATE INDEX idx_check_log_6400
+CREATE INDEX IF NOT EXISTS idx_check_log_6400
     ON camdecmpsaux.check_log USING btree
     (suppressed_severity_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -134,7 +134,7 @@ CREATE INDEX idx_check_log_6400
 
 -- DROP INDEX camdecmpsaux.idx_check_log_9600;
 
-CREATE INDEX idx_check_log_9600
+CREATE INDEX IF NOT EXISTS idx_check_log_9600
     ON camdecmpsaux.check_log USING btree
     (rule_check_id ASC NULLS LAST);
 
@@ -142,7 +142,7 @@ CREATE INDEX idx_check_log_9600
 
 -- DROP INDEX camdecmpsaux.idx_check_log_9738;
 
-CREATE INDEX idx_check_log_9738
+CREATE INDEX IF NOT EXISTS idx_check_log_9738
     ON camdecmpsaux.check_log USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -150,6 +150,6 @@ CREATE INDEX idx_check_log_9738
 
 -- DROP INDEX camdecmpsaux.idx_check_log_9814;
 
-CREATE INDEX idx_check_log_9814
+CREATE INDEX IF NOT EXISTS idx_check_log_9814
     ON camdecmpsaux.check_log USING btree
     (severity_cd COLLATE pg_catalog."default" ASC NULLS LAST);

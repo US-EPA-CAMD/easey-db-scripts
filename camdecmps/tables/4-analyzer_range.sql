@@ -67,7 +67,7 @@ COMMENT ON COLUMN camdecmps.analyzer_range.update_date
 
 -- DROP INDEX camdecmps.idx_analyzer_range_analyzer_r;
 
-CREATE INDEX idx_analyzer_range_analyzer_r
+CREATE INDEX IF NOT EXISTS idx_analyzer_range_analyzer_r
     ON camdecmps.analyzer_range USING btree
     (analyzer_range_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -75,6 +75,6 @@ CREATE INDEX idx_analyzer_range_analyzer_r
 
 -- DROP INDEX camdecmps.idx_analyzer_range_component;
 
-CREATE INDEX idx_analyzer_range_component
+CREATE INDEX IF NOT EXISTS idx_analyzer_range_component
     ON camdecmps.analyzer_range USING btree
     (component_id COLLATE pg_catalog."default" ASC NULLS LAST);

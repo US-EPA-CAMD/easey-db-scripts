@@ -119,7 +119,7 @@ COMMENT ON COLUMN camdecmps.hrly_param_fuel_flow.mon_loc_id
 
 -- DROP INDEX IF EXISTS camdecmps.hrly_param_fuel_flow_idx001;
 
-CREATE INDEX IF NOT EXISTS hrly_param_fuel_flow_idx001
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS hrly_param_fuel_flow_idx001
     ON camdecmps.hrly_param_fuel_flow USING btree
     (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -127,7 +127,7 @@ CREATE INDEX IF NOT EXISTS hrly_param_fuel_flow_idx001
 
 -- DROP INDEX IF EXISTS camdecmps.hrly_param_fuel_flow_idx002;
 
-CREATE INDEX IF NOT EXISTS hrly_param_fuel_flow_idx002
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS hrly_param_fuel_flow_idx002
     ON camdecmps.hrly_param_fuel_flow USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -135,7 +135,7 @@ CREATE INDEX IF NOT EXISTS hrly_param_fuel_flow_idx002
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hpff_add_date;
 
-CREATE INDEX IF NOT EXISTS idx_hpff_add_date
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hpff_add_date
     ON camdecmps.hrly_param_fuel_flow USING btree
     (add_date ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -143,7 +143,7 @@ CREATE INDEX IF NOT EXISTS idx_hpff_add_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrly_param_fuel_hrly_fuel;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_hrly_fuel
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_param_fuel_hrly_fuel
     ON camdecmps.hrly_param_fuel_flow USING btree
     (hrly_fuel_flow_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -151,7 +151,7 @@ CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_hrly_fuel
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrly_param_fuel_mon_form_i;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_mon_form_i
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_param_fuel_mon_form_i
     ON camdecmps.hrly_param_fuel_flow USING btree
     (mon_form_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -159,7 +159,7 @@ CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_mon_form_i
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrly_param_fuel_mon_sys_id;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_mon_sys_id
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_param_fuel_mon_sys_id
     ON camdecmps.hrly_param_fuel_flow USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -167,7 +167,7 @@ CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_mon_sys_id
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrly_param_fuel_operating;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_operating
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_param_fuel_operating
     ON camdecmps.hrly_param_fuel_flow USING btree
     (operating_condition_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -175,7 +175,7 @@ CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_operating
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrly_param_fuel_parameter;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_parameter
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_param_fuel_parameter
     ON camdecmps.hrly_param_fuel_flow USING btree
     (parameter_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -183,7 +183,7 @@ CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_parameter
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrly_param_fuel_sample_typ;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_sample_typ
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_param_fuel_sample_typ
     ON camdecmps.hrly_param_fuel_flow USING btree
     (sample_type_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

@@ -86,7 +86,7 @@ COMMENT ON COLUMN camdecmps.monitor_method.update_date
 
 -- DROP INDEX camdecmps.idx_mm_monlocid;
 
-CREATE INDEX idx_mm_monlocid
+CREATE INDEX IF NOT EXISTS idx_mm_monlocid
     ON camdecmps.monitor_method USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -94,7 +94,7 @@ CREATE INDEX idx_mm_monlocid
 
 -- DROP INDEX camdecmps.idx_mm_paramcd;
 
-CREATE INDEX idx_mm_paramcd
+CREATE INDEX IF NOT EXISTS idx_mm_paramcd
     ON camdecmps.monitor_method USING btree
     (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -102,7 +102,7 @@ CREATE INDEX idx_mm_paramcd
 
 -- DROP INDEX camdecmps.idx_monitor_method_bypass_app;
 
-CREATE INDEX idx_monitor_method_bypass_app
+CREATE INDEX IF NOT EXISTS idx_monitor_method_bypass_app
     ON camdecmps.monitor_method USING btree
     (bypass_approach_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -110,7 +110,7 @@ CREATE INDEX idx_monitor_method_bypass_app
 
 -- DROP INDEX camdecmps.idx_monitor_method_method_cd;
 
-CREATE INDEX idx_monitor_method_method_cd
+CREATE INDEX IF NOT EXISTS idx_monitor_method_method_cd
     ON camdecmps.monitor_method USING btree
     (method_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -118,7 +118,7 @@ CREATE INDEX idx_monitor_method_method_cd
 
 -- DROP INDEX camdecmps.idx_monitor_method_sub_data_c;
 
-CREATE INDEX idx_monitor_method_sub_data_c
+CREATE INDEX IF NOT EXISTS idx_monitor_method_sub_data_c
     ON camdecmps.monitor_method USING btree
     (sub_data_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -126,6 +126,6 @@ CREATE INDEX idx_monitor_method_sub_data_c
 
 -- DROP INDEX camdecmps."monitor_method_idx$$_15f60005";
 
-CREATE INDEX "monitor_method_idx$$_15f60005"
+CREATE INDEX IF NOT EXISTS "monitor_method_idx$$_15f60005"
     ON camdecmps.monitor_method USING btree
     (begin_date ASC NULLS LAST, begin_hour ASC NULLS LAST, parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);

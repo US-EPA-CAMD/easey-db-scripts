@@ -106,6 +106,6 @@ COMMENT ON COLUMN camdecmps.flow_rata_run.add_date
 
 -- DROP INDEX camdecmps.flow_rata_run_idx001;
 
-CREATE INDEX flow_rata_run_idx001
+CREATE INDEX IF NOT EXISTS flow_rata_run_idx001
     ON camdecmps.flow_rata_run USING btree
     (rata_run_id COLLATE pg_catalog."default" ASC NULLS LAST);

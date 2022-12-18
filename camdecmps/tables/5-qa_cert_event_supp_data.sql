@@ -82,7 +82,7 @@ COMMENT ON COLUMN camdecmps.qa_cert_event_supp_data.update_date
 
 -- DROP INDEX camdecmps.idx_qa_cert_event_supp_data_ce;
 
-CREATE INDEX idx_qa_cert_event_supp_data_ce
+CREATE INDEX IF NOT EXISTS idx_qa_cert_event_supp_data_ce
     ON camdecmps.qa_cert_event_supp_data USING btree
     (qa_cert_event_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -90,7 +90,7 @@ CREATE INDEX idx_qa_cert_event_supp_data_ce
 
 -- DROP INDEX camdecmps.idx_qa_cert_event_supp_data_da;
 
-CREATE INDEX idx_qa_cert_event_supp_data_da
+CREATE INDEX IF NOT EXISTS idx_qa_cert_event_supp_data_da
     ON camdecmps.qa_cert_event_supp_data USING btree
     (qa_cert_event_supp_data_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -98,7 +98,7 @@ CREATE INDEX idx_qa_cert_event_supp_data_da
 
 -- DROP INDEX camdecmps.idx_qa_cert_event_supp_data_de;
 
-CREATE INDEX idx_qa_cert_event_supp_data_de
+CREATE INDEX IF NOT EXISTS idx_qa_cert_event_supp_data_de
     ON camdecmps.qa_cert_event_supp_data USING btree
     (qa_cert_event_supp_date_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -106,7 +106,7 @@ CREATE INDEX idx_qa_cert_event_supp_data_de
 
 -- DROP INDEX camdecmps.idx_qa_cert_event_supp_data_er;
 
-CREATE INDEX idx_qa_cert_event_supp_data_er
+CREATE INDEX IF NOT EXISTS idx_qa_cert_event_supp_data_er
     ON camdecmps.qa_cert_event_supp_data USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -114,6 +114,6 @@ CREATE INDEX idx_qa_cert_event_supp_data_er
 
 -- DROP INDEX camdecmps.idx_qa_cert_event_supp_data_ml;
 
-CREATE INDEX idx_qa_cert_event_supp_data_ml
+CREATE INDEX IF NOT EXISTS idx_qa_cert_event_supp_data_ml
     ON camdecmps.qa_cert_event_supp_data USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);

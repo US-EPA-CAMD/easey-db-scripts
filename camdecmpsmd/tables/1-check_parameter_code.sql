@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsmd.check_parameter_code
 
 -- DROP INDEX camdecmpsmd.ix_check_parameter_code_name;
 
-CREATE INDEX ix_check_parameter_code_name
+CREATE INDEX IF NOT EXISTS ix_check_parameter_code_name
     ON camdecmpsmd.check_parameter_code USING btree
     (check_param_id_name COLLATE pg_catalog."default" ASC NULLS LAST);
 

@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_location_program
 
--- DROP VIEW camdecmpswks.vw_location_program;
+DROP VIEW IF EXISTS camdecmpswks.vw_location_program;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_location_program
  AS

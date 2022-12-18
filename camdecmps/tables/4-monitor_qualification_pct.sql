@@ -94,7 +94,7 @@ COMMENT ON COLUMN camdecmps.monitor_qualification_pct.update_date
 
 -- DROP INDEX camdecmps.idx_monitor_qualification_pct_mon_qual_id;
 
-CREATE INDEX idx_monitor_qualification_pct_mon_qual_id
+CREATE INDEX IF NOT EXISTS idx_monitor_qualification_pct_mon_qual_id
     ON camdecmps.monitor_qualification_pct USING btree
     (mon_qual_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -102,7 +102,7 @@ CREATE INDEX idx_monitor_qualification_pct_mon_qual_id
 
 -- DROP INDEX camdecmps.idx_monitor_qualification_pct_yr1_qual_data_type_cd;
 
-CREATE INDEX idx_monitor_qualification_pct_yr1_qual_data_type_cd
+CREATE INDEX IF NOT EXISTS idx_monitor_qualification_pct_yr1_qual_data_type_cd
     ON camdecmps.monitor_qualification_pct USING btree
     (yr1_qual_data_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -110,7 +110,7 @@ CREATE INDEX idx_monitor_qualification_pct_yr1_qual_data_type_cd
 
 -- DROP INDEX camdecmps.idx_monitor_qualification_pct_yr2_qual_data_type_cd;
 
-CREATE INDEX idx_monitor_qualification_pct_yr2_qual_data_type_cd
+CREATE INDEX IF NOT EXISTS idx_monitor_qualification_pct_yr2_qual_data_type_cd
     ON camdecmps.monitor_qualification_pct USING btree
     (yr2_qual_data_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -118,6 +118,6 @@ CREATE INDEX idx_monitor_qualification_pct_yr2_qual_data_type_cd
 
 -- DROP INDEX camdecmps.idx_monitor_qualification_pct_yr3_qual_data_type_cd;
 
-CREATE INDEX idx_monitor_qualification_pct_yr3_qual_data_type_cd
+CREATE INDEX IF NOT EXISTS idx_monitor_qualification_pct_yr3_qual_data_type_cd
     ON camdecmps.monitor_qualification_pct USING btree
     (yr3_qual_data_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);

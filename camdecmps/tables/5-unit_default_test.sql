@@ -74,7 +74,7 @@ COMMENT ON COLUMN camdecmps.unit_default_test.update_date
 
 -- DROP INDEX camdecmps.idx_unit_default_te_fuel_cd;
 
-CREATE INDEX idx_unit_default_te_fuel_cd
+CREATE INDEX IF NOT EXISTS idx_unit_default_te_fuel_cd
     ON camdecmps.unit_default_test USING btree
     (fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -82,7 +82,7 @@ CREATE INDEX idx_unit_default_te_fuel_cd
 
 -- DROP INDEX camdecmps.idx_unit_default_te_operating;
 
-CREATE INDEX idx_unit_default_te_operating
+CREATE INDEX IF NOT EXISTS idx_unit_default_te_operating
     ON camdecmps.unit_default_test USING btree
     (operating_condition_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -90,6 +90,6 @@ CREATE INDEX idx_unit_default_te_operating
 
 -- DROP INDEX camdecmps.idx_unit_default_test_001;
 
-CREATE INDEX idx_unit_default_test_001
+CREATE INDEX IF NOT EXISTS idx_unit_default_test_001
     ON camdecmps.unit_default_test USING btree
     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_monitor_default
 
--- DROP VIEW camdecmpswks.vw_monitor_default;
+DROP VIEW IF EXISTS camdecmpswks.vw_monitor_default;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_monitor_default
  AS

@@ -1,6 +1,6 @@
 -- View: camdaux.vw_bulk_file_jobs_to_process
 
--- DROP VIEW camdaux.vw_bulk_file_jobs_to_process;
+DROP VIEW IF EXISTS camdaux.vw_bulk_file_jobs_to_process;
 
 CREATE OR REPLACE VIEW camdaux.vw_bulk_file_jobs_to_process
  AS

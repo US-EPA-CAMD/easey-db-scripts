@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_location_unit_type
 
--- DROP VIEW camdecmpswks.vw_location_unit_type;
+DROP VIEW IF EXISTS camdecmpswks.vw_location_unit_type;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_location_unit_type
  AS

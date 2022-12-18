@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_unit_op_status
 
--- DROP VIEW camdecmpswks.vw_unit_op_status;
+DROP VIEW IF EXISTS camdecmpswks.vw_unit_op_status;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_unit_op_status
  AS

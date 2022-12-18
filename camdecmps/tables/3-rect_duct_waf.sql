@@ -94,7 +94,7 @@ COMMENT ON COLUMN camdecmps.rect_duct_waf.userid
 
 -- DROP INDEX camdecmps.idx_rect_duct_waf_mon_loc_id;
 
-CREATE INDEX idx_rect_duct_waf_mon_loc_id
+CREATE INDEX IF NOT EXISTS idx_rect_duct_waf_mon_loc_id
     ON camdecmps.rect_duct_waf USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -102,7 +102,7 @@ CREATE INDEX idx_rect_duct_waf_mon_loc_id
 
 -- DROP INDEX camdecmps.idx_rect_duct_waf_waf_method;
 
-CREATE INDEX idx_rect_duct_waf_waf_method
+CREATE INDEX IF NOT EXISTS idx_rect_duct_waf_waf_method
     ON camdecmps.rect_duct_waf USING btree
     (waf_method_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -110,6 +110,6 @@ CREATE INDEX idx_rect_duct_waf_waf_method
 
 -- DROP INDEX camdecmps."rect_duct_waf_idx$$_15f60009";
 
-CREATE INDEX "rect_duct_waf_idx$$_15f60009"
+CREATE INDEX IF NOT EXISTS "rect_duct_waf_idx$$_15f60009"
     ON camdecmps.rect_duct_waf USING btree
     (waf_effective_date ASC NULLS LAST, waf_effective_hour ASC NULLS LAST);

@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_qa_test_summary_ff2lbas
 
--- DROP VIEW camdecmpswks.vw_qa_test_summary_ff2lbas;
+DROP VIEW IF EXISTS camdecmpswks.vw_qa_test_summary_ff2lbas;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_qa_test_summary_ff2lbas
  AS

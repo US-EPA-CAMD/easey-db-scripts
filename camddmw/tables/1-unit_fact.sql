@@ -183,7 +183,7 @@ COMMENT ON COLUMN camddmw.unit_fact.last_update_date
 
 -- DROP INDEX camddmw.idx_unit_fact_fac_id;
 
-CREATE INDEX idx_unit_fact_fac_id
+CREATE INDEX IF NOT EXISTS idx_unit_fact_fac_id
     ON camddmw.unit_fact USING btree
     (fac_id ASC NULLS LAST);
 
@@ -191,7 +191,7 @@ CREATE INDEX idx_unit_fact_fac_id
 
 -- DROP INDEX camddmw.idx_unit_fact_orispl_code;
 
-CREATE INDEX idx_unit_fact_orispl_code
+CREATE INDEX IF NOT EXISTS idx_unit_fact_orispl_code
     ON camddmw.unit_fact USING btree
     (orispl_code ASC NULLS LAST);
 
@@ -199,7 +199,7 @@ CREATE INDEX idx_unit_fact_orispl_code
 
 -- DROP INDEX camddmw.idx_unit_fact_state;
 
-CREATE INDEX idx_unit_fact_state
+CREATE INDEX IF NOT EXISTS idx_unit_fact_state
     ON camddmw.unit_fact USING btree
     (state COLLATE pg_catalog."default" ASC NULLS LAST);
 

@@ -50,7 +50,7 @@ COMMENT ON COLUMN camdecmps.stack_pipe.update_date
 
 -- DROP INDEX camdecmps.idx_stack_pipe_fac;
 
-CREATE INDEX idx_stack_pipe_fac
+CREATE INDEX IF NOT EXISTS idx_stack_pipe_fac
     ON camdecmps.stack_pipe USING btree
     (fac_id ASC NULLS LAST);
 
@@ -58,6 +58,6 @@ CREATE INDEX idx_stack_pipe_fac
 
 -- DROP INDEX camdecmps.idx_stack_pipe_fac_name;
 
-CREATE INDEX idx_stack_pipe_fac_name
+CREATE INDEX IF NOT EXISTS idx_stack_pipe_fac_name
     ON camdecmps.stack_pipe USING btree
     (fac_id ASC NULLS LAST, stack_name COLLATE pg_catalog."default" ASC NULLS LAST);

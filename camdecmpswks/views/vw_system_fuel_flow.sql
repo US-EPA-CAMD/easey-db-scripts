@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_system_fuel_flow
 
--- DROP VIEW camdecmpswks.vw_system_fuel_flow;
+DROP VIEW IF EXISTS camdecmpswks.vw_system_fuel_flow;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_system_fuel_flow
  AS

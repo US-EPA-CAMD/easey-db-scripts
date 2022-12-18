@@ -4,12 +4,13 @@ CREATE TABLE IF NOT EXISTS camdaux.missing_oris
 (
     id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     oris_code numeric NOT NULL,
+    state_cd character varying COLLATE pg_catalog."default",
     CONSTRAINT missing_oris_pkey PRIMARY KEY (id)
 );
 
 INSERT INTO camdaux.missing_oris(id, oris_code, state_cd)
 VALUES
-    ('1', 880056, 'TN'),
+  ('1', 880056, 'TN'),
 	('2', 880022, 'DE'),
 	('3', 880026, 'TX'),
 	('4', 55195, 'WI'),

@@ -34,7 +34,7 @@ CREATE TABLE camdecmpswks.monitor_plan_reporting_freq
 
 -- DROP INDEX camdecmpswks.idx_monitor_plan_re_begin_rpt_;
 
-CREATE INDEX idx_monitor_plan_re_begin_rpt_
+CREATE INDEX IF NOT EXISTS idx_monitor_plan_re_begin_rpt_
     ON camdecmpswks.monitor_plan_reporting_freq USING btree
     (begin_rpt_period_id ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -42,7 +42,7 @@ CREATE INDEX idx_monitor_plan_re_begin_rpt_
 
 -- DROP INDEX camdecmpswks.idx_monitor_plan_re_end_rpt_pe;
 
-CREATE INDEX idx_monitor_plan_re_end_rpt_pe
+CREATE INDEX IF NOT EXISTS idx_monitor_plan_re_end_rpt_pe
     ON camdecmpswks.monitor_plan_reporting_freq USING btree
     (end_rpt_period_id ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -50,7 +50,7 @@ CREATE INDEX idx_monitor_plan_re_end_rpt_pe
 
 -- DROP INDEX camdecmpswks.idx_monitor_plan_re_mon_plan_i;
 
-CREATE INDEX idx_monitor_plan_re_mon_plan_i
+CREATE INDEX IF NOT EXISTS idx_monitor_plan_re_mon_plan_i
     ON camdecmpswks.monitor_plan_reporting_freq USING btree
     (mon_plan_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -58,7 +58,7 @@ CREATE INDEX idx_monitor_plan_re_mon_plan_i
 
 -- DROP INDEX camdecmpswks.idx_monitor_plan_re_report_fre;
 
-CREATE INDEX idx_monitor_plan_re_report_fre
+CREATE INDEX IF NOT EXISTS idx_monitor_plan_re_report_fre
     ON camdecmpswks.monitor_plan_reporting_freq USING btree
     (report_freq_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

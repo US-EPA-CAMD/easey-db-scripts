@@ -31,6 +31,6 @@ COMMENT ON COLUMN camdecmpsmd.control_code.control_equip_param_cd
 
 -- DROP INDEX camdecmpsmd.idx_control_code_equip_param;
 
-CREATE INDEX idx_control_code_equip_param
+CREATE INDEX IF NOT EXISTS idx_control_code_equip_param
     ON camdecmpsmd.control_code USING btree
     (control_equip_param_cd COLLATE pg_catalog."default" ASC NULLS LAST);

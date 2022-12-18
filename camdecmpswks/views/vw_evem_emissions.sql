@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_evem_emissions
 
--- DROP VIEW camdecmpswks.vw_evem_emissions;
+DROP VIEW IF EXISTS camdecmpswks.vw_evem_emissions;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_evem_emissions
  AS

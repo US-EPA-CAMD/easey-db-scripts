@@ -50,6 +50,6 @@ COMMENT ON COLUMN camdecmps.unit_capacity.update_date
 
 -- DROP INDEX camdecmps.idx_unit_capacity_unit;
 
-CREATE INDEX idx_unit_capacity_unit
+CREATE INDEX IF NOT EXISTS idx_unit_capacity_unit
     ON camdecmps.unit_capacity USING btree
     (unit_id ASC NULLS LAST);

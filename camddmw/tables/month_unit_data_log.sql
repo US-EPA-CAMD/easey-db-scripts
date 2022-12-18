@@ -39,18 +39,18 @@ CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_log
     CONSTRAINT pk_month_unit_data_log PRIMARY KEY (skey)
 );
 
-CREATE INDEX idx_month_unit_data_log_sql_function
+CREATE INDEX IF NOT EXISTS idx_month_unit_data_log_sql_function
     ON camddmw.month_unit_data_log USING btree
     (sql_function ASC NULLS LAST);
 
-CREATE INDEX idx_month_unit_data_log_unit_id
+CREATE INDEX IF NOT EXISTS idx_month_unit_data_log_unit_id
     ON camddmw.month_unit_data_log USING btree
     (unit_id ASC NULLS LAST);
 
-CREATE INDEX idx_month_unit_data_log_op_year
+CREATE INDEX IF NOT EXISTS idx_month_unit_data_log_op_year
     ON camddmw.month_unit_data_log USING btree
     (op_year ASC NULLS LAST);
 
-CREATE INDEX idx_month_unit_data_log_op_month
+CREATE INDEX IF NOT EXISTS idx_month_unit_data_log_op_month
     ON camddmw.month_unit_data_log USING btree
     (op_month ASC NULLS LAST);

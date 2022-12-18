@@ -86,6 +86,6 @@ COMMENT ON COLUMN camdecmps.monitor_load.max_load_uom_cd
 
 -- DROP INDEX camdecmps.idx_monitor_load_mon_loc_id;
 
-CREATE INDEX idx_monitor_load_mon_loc_id
+CREATE INDEX IF NOT EXISTS idx_monitor_load_mon_loc_id
     ON camdecmps.monitor_load USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);

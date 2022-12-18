@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_mp_evaluation_results
 
--- DROP VIEW camdecmpswks.vw_mp_evaluation_results;
+DROP VIEW IF EXISTS camdecmpswks.vw_mp_evaluation_results;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_mp_evaluation_results
  AS

@@ -26,6 +26,6 @@ COMMENT ON COLUMN camdmd.transaction_type_code.allocation_ind
 
 -- DROP INDEX camdmd.idx_trans_type_allocation;
 
-CREATE INDEX idx_trans_type_allocation
+CREATE INDEX IF NOT EXISTS idx_trans_type_allocation
     ON camdmd.transaction_type_code USING btree
     (allocation_ind ASC NULLS LAST);

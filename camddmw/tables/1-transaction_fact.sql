@@ -191,7 +191,7 @@ COMMENT ON COLUMN camddmw.transaction_fact.last_update_date
 
 -- DROP INDEX camddmw.transaction_fact_idx002;
 
-CREATE INDEX transaction_fact_idx002
+CREATE INDEX IF NOT EXISTS transaction_fact_idx002
     ON camddmw.transaction_fact USING btree
     (transaction_date ASC NULLS LAST, buy_acct_number COLLATE pg_catalog."default" ASC NULLS LAST, sell_acct_number COLLATE pg_catalog."default" ASC NULLS LAST, transaction_id ASC NULLS LAST);
 
@@ -199,7 +199,7 @@ CREATE INDEX transaction_fact_idx002
 
 -- DROP INDEX camddmw.transaction_fact_idx003;
 
-CREATE INDEX transaction_fact_idx003
+CREATE INDEX IF NOT EXISTS transaction_fact_idx003
     ON camddmw.transaction_fact USING btree
     (transaction_id ASC NULLS LAST, buy_acct_number COLLATE pg_catalog."default" ASC NULLS LAST, sell_acct_number COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -207,7 +207,7 @@ CREATE INDEX transaction_fact_idx003
 
 -- DROP INDEX camddmw.transaction_fact_idx004;
 
-CREATE INDEX transaction_fact_idx004
+CREATE INDEX IF NOT EXISTS transaction_fact_idx004
     ON camddmw.transaction_fact USING btree
     (buy_fac_id ASC NULLS LAST, buy_acct_number COLLATE pg_catalog."default" ASC NULLS LAST, buy_source_cat COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -215,7 +215,7 @@ CREATE INDEX transaction_fact_idx004
 
 -- DROP INDEX camddmw.transaction_fact_idx005;
 
-CREATE INDEX transaction_fact_idx005
+CREATE INDEX IF NOT EXISTS transaction_fact_idx005
     ON camddmw.transaction_fact USING btree
     (buy_state COLLATE pg_catalog."default" ASC NULLS LAST, buy_source_cat COLLATE pg_catalog."default" ASC NULLS LAST, buy_fac_id ASC NULLS LAST);
 

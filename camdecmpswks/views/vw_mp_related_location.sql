@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_mp_related_location
 
--- DROP VIEW camdecmpswks.vw_mp_related_location;
+DROP VIEW IF EXISTS camdecmpswks.vw_mp_related_location;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_mp_related_location
  AS

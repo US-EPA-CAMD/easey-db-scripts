@@ -95,7 +95,7 @@ COMMENT ON COLUMN camddmw.transaction_block_dim.last_update_date
 
 -- DROP INDEX camddmw.transaction_block_dim_idx001;
 
-CREATE INDEX transaction_block_dim_idx001
+CREATE INDEX IF NOT EXISTS transaction_block_dim_idx001
     ON camddmw.transaction_block_dim USING btree
     (transaction_id ASC NULLS LAST, vintage_year ASC NULLS LAST, start_block ASC NULLS LAST, end_block ASC NULLS LAST, prg_code COLLATE pg_catalog."default" ASC NULLS LAST);
 

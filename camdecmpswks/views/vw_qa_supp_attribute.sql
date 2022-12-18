@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_qa_supp_attribute
 
--- DROP VIEW camdecmpswks.vw_qa_supp_attribute;
+DROP VIEW IF EXISTS camdecmpswks.vw_qa_supp_attribute;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_qa_supp_attribute
  AS

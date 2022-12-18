@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_qa_ae_hi_oil
 
--- DROP VIEW camdecmpswks.vw_qa_ae_hi_oil;
+DROP VIEW IF EXISTS camdecmpswks.vw_qa_ae_hi_oil;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_qa_ae_hi_oil
  AS

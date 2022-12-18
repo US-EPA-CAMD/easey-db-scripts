@@ -78,7 +78,7 @@ COMMENT ON COLUMN camdecmps.summary_value.update_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_summary_value_mon_loc_id;
 
-CREATE INDEX IF NOT EXISTS idx_summary_value_mon_loc_id
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_summary_value_mon_loc_id
     ON camdecmps.summary_value USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -86,7 +86,7 @@ CREATE INDEX IF NOT EXISTS idx_summary_value_mon_loc_id
 
 -- DROP INDEX IF EXISTS camdecmps.idx_sv_add_date;
 
-CREATE INDEX IF NOT EXISTS idx_sv_add_date
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_sv_add_date
     ON camdecmps.summary_value USING btree
     (add_date ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -94,7 +94,7 @@ CREATE INDEX IF NOT EXISTS idx_sv_add_date
 
 -- DROP INDEX IF EXISTS camdecmps.summary_value_idx001;
 
-CREATE INDEX IF NOT EXISTS summary_value_idx001
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS summary_value_idx001
     ON camdecmps.summary_value USING btree
     (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -102,7 +102,7 @@ CREATE INDEX IF NOT EXISTS summary_value_idx001
 
 -- DROP INDEX IF EXISTS camdecmps.summary_value_idx002;
 
-CREATE INDEX IF NOT EXISTS summary_value_idx002
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS summary_value_idx002
     ON camdecmps.summary_value USING btree
     (rpt_period_id ASC NULLS LAST)
     TABLESPACE pg_default;

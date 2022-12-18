@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS camdaux.bulk_file_metadata
 
 -- DROP INDEX camdaux.idx_bulk_file_metadata_s3_path;
 
-CREATE INDEX idx_bulk_file_metadata_s3_path
+CREATE INDEX IF NOT EXISTS idx_bulk_file_metadata_s3_path
     ON camdaux.bulk_file_metadata USING btree
     (s3_path COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

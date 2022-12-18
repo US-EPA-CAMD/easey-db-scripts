@@ -105,7 +105,7 @@ COMMENT ON COLUMN camdecmpswks.daily_test_summary.mon_sys_id
 
 -- DROP INDEX camdecmpswks.daily_test_summary_idx002;
 
-CREATE INDEX daily_test_summary_idx002
+CREATE INDEX IF NOT EXISTS daily_test_summary_idx002
     ON camdecmpswks.daily_test_summary USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -113,7 +113,7 @@ CREATE INDEX daily_test_summary_idx002
 
 -- DROP INDEX camdecmpswks.idx_daily_test_summ_calc_test;
 
-CREATE INDEX idx_daily_test_summ_calc_test
+CREATE INDEX IF NOT EXISTS idx_daily_test_summ_calc_test
     ON camdecmpswks.daily_test_summary USING btree
     (calc_test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -121,7 +121,7 @@ CREATE INDEX idx_daily_test_summ_calc_test
 
 -- DROP INDEX camdecmpswks.idx_daily_test_summ_component;
 
-CREATE INDEX idx_daily_test_summ_component
+CREATE INDEX IF NOT EXISTS idx_daily_test_summ_component
     ON camdecmpswks.daily_test_summary USING btree
     (component_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -129,7 +129,7 @@ CREATE INDEX idx_daily_test_summ_component
 
 -- DROP INDEX camdecmpswks.idx_daily_test_summ_mon_loc_id;
 
-CREATE INDEX idx_daily_test_summ_mon_loc_id
+CREATE INDEX IF NOT EXISTS idx_daily_test_summ_mon_loc_id
     ON camdecmpswks.daily_test_summary USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -137,7 +137,7 @@ CREATE INDEX idx_daily_test_summ_mon_loc_id
 
 -- DROP INDEX camdecmpswks.idx_daily_test_summ_span_scale;
 
-CREATE INDEX idx_daily_test_summ_span_scale
+CREATE INDEX IF NOT EXISTS idx_daily_test_summ_span_scale
     ON camdecmpswks.daily_test_summary USING btree
     (span_scale_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -145,7 +145,7 @@ CREATE INDEX idx_daily_test_summ_span_scale
 
 -- DROP INDEX camdecmpswks.idx_daily_test_summ_test_resul;
 
-CREATE INDEX idx_daily_test_summ_test_resul
+CREATE INDEX IF NOT EXISTS idx_daily_test_summ_test_resul
     ON camdecmpswks.daily_test_summary USING btree
     (test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -153,7 +153,7 @@ CREATE INDEX idx_daily_test_summ_test_resul
 
 -- DROP INDEX camdecmpswks.idx_daily_test_summ_test_type;
 
-CREATE INDEX idx_daily_test_summ_test_type
+CREATE INDEX IF NOT EXISTS idx_daily_test_summ_test_type
     ON camdecmpswks.daily_test_summary USING btree
     (test_type_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -161,7 +161,7 @@ CREATE INDEX idx_daily_test_summ_test_type
 
 -- DROP INDEX camdecmpswks.idx_daily_test_summary_01;
 
-CREATE INDEX idx_daily_test_summary_01
+CREATE INDEX IF NOT EXISTS idx_daily_test_summary_01
     ON camdecmpswks.daily_test_summary USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -169,7 +169,7 @@ CREATE INDEX idx_daily_test_summary_01
 
 -- DROP INDEX camdecmpswks.idx_dts_add_date;
 
-CREATE INDEX idx_dts_add_date
+CREATE INDEX IF NOT EXISTS idx_dts_add_date
     ON camdecmpswks.daily_test_summary USING btree
     (add_date ASC NULLS LAST)
     TABLESPACE pg_default;

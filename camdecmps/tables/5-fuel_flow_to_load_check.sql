@@ -66,7 +66,7 @@ COMMENT ON COLUMN camdecmps.fuel_flow_to_load_check.update_date
 
 -- DROP INDEX camdecmps.idx_ffload_check_001;
 
-CREATE INDEX idx_ffload_check_001
+CREATE INDEX IF NOT EXISTS idx_ffload_check_001
     ON camdecmps.fuel_flow_to_load_check USING btree
     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -74,6 +74,6 @@ CREATE INDEX idx_ffload_check_001
 
 -- DROP INDEX camdecmps.idx_fuel_flow_to_lo_test_basis;
 
-CREATE INDEX idx_fuel_flow_to_lo_test_basis
+CREATE INDEX IF NOT EXISTS idx_fuel_flow_to_lo_test_basis
     ON camdecmps.fuel_flow_to_load_check USING btree
     (test_basis_cd COLLATE pg_catalog."default" ASC NULLS LAST);

@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_program_parameter
 
--- DROP VIEW camdecmpswks.vw_program_parameter;
+DROP VIEW IF EXISTS camdecmpswks.vw_program_parameter;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_program_parameter
  AS

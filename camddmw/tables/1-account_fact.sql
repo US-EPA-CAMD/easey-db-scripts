@@ -174,7 +174,7 @@ CREATE UNIQUE INDEX account_fact_idx001
 
 -- DROP INDEX camddmw.account_fact_idx002;
 
-CREATE INDEX account_fact_idx002
+CREATE INDEX IF NOT EXISTS account_fact_idx002
     ON camddmw.account_fact USING btree
     (fac_id ASC NULLS LAST);
 
@@ -182,7 +182,7 @@ CREATE INDEX account_fact_idx002
 
 -- DROP INDEX camddmw.account_fact_idx003;
 
-CREATE INDEX account_fact_idx003
+CREATE INDEX IF NOT EXISTS account_fact_idx003
     ON camddmw.account_fact USING btree
     (epa_region ASC NULLS LAST, op_status_info COLLATE pg_catalog."default" ASC NULLS LAST, source_cat COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -190,7 +190,7 @@ CREATE INDEX account_fact_idx003
 
 -- DROP INDEX camddmw.account_fact_idx004;
 
-CREATE INDEX account_fact_idx004
+CREATE INDEX IF NOT EXISTS account_fact_idx004
     ON camddmw.account_fact USING btree
     (nerc_region COLLATE pg_catalog."default" ASC NULLS LAST, op_status_info COLLATE pg_catalog."default" ASC NULLS LAST, source_cat COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -198,7 +198,7 @@ CREATE INDEX account_fact_idx004
 
 -- DROP INDEX camddmw.account_fact_idx005;
 
-CREATE INDEX account_fact_idx005
+CREATE INDEX IF NOT EXISTS account_fact_idx005
     ON camddmw.account_fact USING btree
     (prg_code COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -206,6 +206,6 @@ CREATE INDEX account_fact_idx005
 
 -- DROP INDEX camddmw.account_fact_idx_unit;
 
-CREATE INDEX account_fact_idx_unit
+CREATE INDEX IF NOT EXISTS account_fact_idx_unit
     ON camddmw.account_fact USING btree
     (unit_id ASC NULLS LAST);

@@ -98,7 +98,7 @@ COMMENT ON COLUMN camdecmps.ae_hi_oil.calc_oil_mass
 
 -- DROP INDEX camdecmps.idx_ae_hi_oil_ae_corr_te;
 
-CREATE INDEX idx_ae_hi_oil_ae_corr_te
+CREATE INDEX IF NOT EXISTS idx_ae_hi_oil_ae_corr_te
     ON camdecmps.ae_hi_oil USING btree
     (ae_corr_test_run_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -106,7 +106,7 @@ CREATE INDEX idx_ae_hi_oil_ae_corr_te
 
 -- DROP INDEX camdecmps.idx_ae_hi_oil_mon_sys_id;
 
-CREATE INDEX idx_ae_hi_oil_mon_sys_id
+CREATE INDEX IF NOT EXISTS idx_ae_hi_oil_mon_sys_id
     ON camdecmps.ae_hi_oil USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -114,7 +114,7 @@ CREATE INDEX idx_ae_hi_oil_mon_sys_id
 
 -- DROP INDEX camdecmps.idx_ae_hi_oil_oil_densit;
 
-CREATE INDEX idx_ae_hi_oil_oil_densit
+CREATE INDEX IF NOT EXISTS idx_ae_hi_oil_oil_densit
     ON camdecmps.ae_hi_oil USING btree
     (oil_density_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -122,7 +122,7 @@ CREATE INDEX idx_ae_hi_oil_oil_densit
 
 -- DROP INDEX camdecmps.idx_ae_hi_oil_oil_gcv_uo;
 
-CREATE INDEX idx_ae_hi_oil_oil_gcv_uo
+CREATE INDEX IF NOT EXISTS idx_ae_hi_oil_oil_gcv_uo
     ON camdecmps.ae_hi_oil USING btree
     (oil_gcv_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -130,6 +130,6 @@ CREATE INDEX idx_ae_hi_oil_oil_gcv_uo
 
 -- DROP INDEX camdecmps.idx_ae_hi_oil_oil_volume;
 
-CREATE INDEX idx_ae_hi_oil_oil_volume
+CREATE INDEX IF NOT EXISTS idx_ae_hi_oil_oil_volume
     ON camdecmps.ae_hi_oil USING btree
     (oil_volume_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);

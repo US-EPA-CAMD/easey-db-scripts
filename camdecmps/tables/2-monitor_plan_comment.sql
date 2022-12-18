@@ -58,6 +58,6 @@ COMMENT ON COLUMN camdecmps.monitor_plan_comment.update_date
 
 -- DROP INDEX camdecmps.idx_monitor_plan_comment_mon_plan_id;
 
-CREATE INDEX idx_monitor_plan_comment_mon_plan_id
+CREATE INDEX IF NOT EXISTS idx_monitor_plan_comment_mon_plan_id
     ON camdecmps.monitor_plan_comment USING btree
     (mon_plan_id COLLATE pg_catalog."default" ASC NULLS LAST);

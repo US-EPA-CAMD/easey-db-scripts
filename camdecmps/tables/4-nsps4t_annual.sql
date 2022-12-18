@@ -69,7 +69,7 @@ COMMENT ON COLUMN camdecmps.nsps4t_annual.update_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_annual_loc;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_annual_loc
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_annual_loc
     ON camdecmps.nsps4t_annual USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -77,7 +77,7 @@ CREATE INDEX IF NOT EXISTS idx_nsps4t_annual_loc
 
 -- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_annual_prd;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_annual_prd
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_annual_prd
     ON camdecmps.nsps4t_annual USING btree
     (rpt_period_id ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -85,7 +85,7 @@ CREATE INDEX IF NOT EXISTS idx_nsps4t_annual_prd
 
 -- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_annual_rpt;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_annual_rpt
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_annual_rpt
     ON camdecmps.nsps4t_annual USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -93,7 +93,7 @@ CREATE INDEX IF NOT EXISTS idx_nsps4t_annual_rpt
 
 -- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_annual_sum;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_annual_sum
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_annual_sum
     ON camdecmps.nsps4t_annual USING btree
     (nsps4t_sum_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -101,7 +101,7 @@ CREATE INDEX IF NOT EXISTS idx_nsps4t_annual_sum
 
 -- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_annual_uom;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_annual_uom
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_annual_uom
     ON camdecmps.nsps4t_annual USING btree
     (annual_energy_sold_type_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

@@ -15,7 +15,7 @@ CREATE TABLE camdecmpswks.user_session
 
 -- DROP INDEX camdecmpswks.token_index;
 
-CREATE INDEX token_index
+CREATE INDEX IF NOT EXISTS token_index
     ON camdecmpswks.user_session USING btree
     (security_token COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

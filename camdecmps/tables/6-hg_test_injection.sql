@@ -58,6 +58,6 @@ COMMENT ON COLUMN camdecmps.hg_test_injection.update_date
 
 -- DROP INDEX camdecmps.hg_test_injection_idx001;
 
-CREATE INDEX hg_test_injection_idx001
+CREATE INDEX IF NOT EXISTS hg_test_injection_idx001
     ON camdecmps.hg_test_injection USING btree
     (hg_test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

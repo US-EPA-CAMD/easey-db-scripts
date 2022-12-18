@@ -74,7 +74,7 @@ COMMENT ON COLUMN camdecmps.component_op_supp_data.update_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_component_op_supp_data_cmp;
 
-CREATE INDEX IF NOT EXISTS idx_component_op_supp_data_cmp
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_component_op_supp_data_cmp
     ON camdecmps.component_op_supp_data USING btree
     (component_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -82,7 +82,7 @@ CREATE INDEX IF NOT EXISTS idx_component_op_supp_data_cmp
 
 -- DROP INDEX IF EXISTS camdecmps.idx_component_op_supp_data_cod;
 
-CREATE INDEX IF NOT EXISTS idx_component_op_supp_data_cod
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_component_op_supp_data_cod
     ON camdecmps.component_op_supp_data USING btree
     (op_supp_data_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -90,7 +90,7 @@ CREATE INDEX IF NOT EXISTS idx_component_op_supp_data_cod
 
 -- DROP INDEX IF EXISTS camdecmps.idx_component_op_supp_data_emr;
 
-CREATE INDEX IF NOT EXISTS idx_component_op_supp_data_emr
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_component_op_supp_data_emr
     ON camdecmps.component_op_supp_data USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -98,7 +98,7 @@ CREATE INDEX IF NOT EXISTS idx_component_op_supp_data_emr
 
 -- DROP INDEX IF EXISTS camdecmps.idx_component_op_supp_data_loc;
 
-CREATE INDEX IF NOT EXISTS idx_component_op_supp_data_loc
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_component_op_supp_data_loc
     ON camdecmps.component_op_supp_data USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -106,6 +106,6 @@ CREATE INDEX IF NOT EXISTS idx_component_op_supp_data_loc
 
 -- DROP INDEX IF EXISTS camdecmps.idx_component_op_supp_data_prd;
 
-CREATE INDEX IF NOT EXISTS idx_component_op_supp_data_prd
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_component_op_supp_data_prd
     ON camdecmps.component_op_supp_data USING btree
     (rpt_period_id ASC NULLS LAST);

@@ -1,6 +1,6 @@
 -- View: camdecmpswks.VW_LOCATION_OPERATING_STATUS
 
--- DROP VIEW camdecmpswks.VW_LOCATION_OPERATING_STATUS;
+DROP VIEW IF EXISTS camdecmpswks.VW_LOCATION_OPERATING_STATUS;
 
 create or replace view camdecmpswks.VW_LOCATION_OPERATING_STATUS as
 

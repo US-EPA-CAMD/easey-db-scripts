@@ -1,11 +1,8 @@
 #!/bin/bash
-export PORT=15210
-export HOST=localhost
-export DB_USER=uImcwuf4K9dyaxeL
-export DB_NAME=cgawsbrokerprodr97macy19l
+source ../../environments.sh $1
 
 FILES=""
-TABLES=true
+TABLES=false
 VIEWS=false
 FUNCTIONS=false
 PROCEDURES=false
@@ -107,15 +104,19 @@ fi
 
 if [ $AFTER_DATA_LOAD == true ]; then
   FILES="\i ./after-data-load.sql"
+  FILES="$FILES 
+  \i ../../../camdaux/vw_allowance_based_compliance_bulk_files_to_generate.sql
+  \i ../../../camdaux/vw_annual_emissions_bulk_files_per_state_to_generate.sql
+  \i ../../../camdecmps/vw_emissions_submissions_gdm.sql
+  \i ../../../camdecmps/vw_emissions_submissions_expected.sql
+  \i ../../../camdecmps/vw_emissions_submissions_received.sql
+  \i ../../../camdecmps/vw_emissions_submissions_progress.sql
+  \i ../../../camdecmpswks/vw_qa_test_summary_review_and_submit.sql
+  \i ../../../camdecmpswks/1-vw_em_review_and_submit.sql
+  "
 fi
 
-echo $FILES
-
-# psql -h $HOST -p $PORT -d $DB_NAME -U $DB_USER <<-EOSQL
-#   BEGIN;
-#     $FILES
-#   COMMIT;
-# EOSQL
+../../execute-psql.sh "$FILES"
 
 if [ $PRE_DEPLOYMENT == true ]; then
   echo "IMPORTANT: NEED TO GENERATE TOKENS AND LOAD CAMDAUX.CLIENT_CONFIG DATA..."

@@ -62,7 +62,7 @@ COMMENT ON COLUMN camdecmps.ae_hi_gas.mon_sys_id
 
 -- DROP INDEX camdecmps.idx_ae_hi_gas_ae_corr_te;
 
-CREATE INDEX idx_ae_hi_gas_ae_corr_te
+CREATE INDEX IF NOT EXISTS idx_ae_hi_gas_ae_corr_te
     ON camdecmps.ae_hi_gas USING btree
     (ae_corr_test_run_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -70,6 +70,6 @@ CREATE INDEX idx_ae_hi_gas_ae_corr_te
 
 -- DROP INDEX camdecmps.idx_ae_hi_gas_mon_sys_id;
 
-CREATE INDEX idx_ae_hi_gas_mon_sys_id
+CREATE INDEX IF NOT EXISTS idx_ae_hi_gas_mon_sys_id
     ON camdecmps.ae_hi_gas USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);

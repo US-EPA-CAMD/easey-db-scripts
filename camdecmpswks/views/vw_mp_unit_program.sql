@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_mp_unit_program
 
--- DROP VIEW camdecmpswks.vw_mp_unit_program;
+DROP VIEW IF EXISTS camdecmpswks.vw_mp_unit_program;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_mp_unit_program
  AS

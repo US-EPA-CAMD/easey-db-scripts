@@ -67,7 +67,7 @@ COMMENT ON COLUMN camdecmpsaux.program_parameter.update_date
 
 -- DROP INDEX camdecmpsaux.idx_prg_param_begin_rpt_period;
 
-CREATE INDEX idx_prg_param_begin_rpt_period
+CREATE INDEX IF NOT EXISTS idx_prg_param_begin_rpt_period
     ON camdecmpsaux.program_parameter USING btree
     (begin_rpt_period_id ASC NULLS LAST);
 
@@ -75,7 +75,7 @@ CREATE INDEX idx_prg_param_begin_rpt_period
 
 -- DROP INDEX camdecmpsaux.idx_prg_param_end_rpt_period;
 
-CREATE INDEX idx_prg_param_end_rpt_period
+CREATE INDEX IF NOT EXISTS idx_prg_param_end_rpt_period
     ON camdecmpsaux.program_parameter USING btree
     (end_rpt_period_id ASC NULLS LAST);
 
@@ -83,7 +83,7 @@ CREATE INDEX idx_prg_param_end_rpt_period
 
 -- DROP INDEX camdecmpsaux.idx_prg_param_param_cd;
 
-CREATE INDEX idx_prg_param_param_cd
+CREATE INDEX IF NOT EXISTS idx_prg_param_param_cd
     ON camdecmpsaux.program_parameter USING btree
     (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -91,6 +91,6 @@ CREATE INDEX idx_prg_param_param_cd
 
 -- DROP INDEX camdecmpsaux.idx_prg_param_prg_id;
 
-CREATE INDEX idx_prg_param_prg_id
+CREATE INDEX IF NOT EXISTS idx_prg_param_prg_id
     ON camdecmpsaux.program_parameter USING btree
     (prg_id ASC NULLS LAST);

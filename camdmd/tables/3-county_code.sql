@@ -34,6 +34,6 @@ COMMENT ON COLUMN camdmd.county_code.state_cd
 
 -- DROP INDEX camdmd.idx_county_code_state;
 
-CREATE INDEX idx_county_code_state
+CREATE INDEX IF NOT EXISTS idx_county_code_state
     ON camdmd.county_code USING btree
     (state_cd COLLATE pg_catalog."default" ASC NULLS LAST);

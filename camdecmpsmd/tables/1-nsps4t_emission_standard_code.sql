@@ -38,7 +38,7 @@ COMMENT ON COLUMN camdecmpsmd.nsps4t_emission_standard_code.emission_standard_lo
 
 -- DROP INDEX IF EXISTS camdecmpsmd.idx_nsps4t_emission_standard_l;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_emission_standard_l
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_emission_standard_l
     ON camdecmpsmd.nsps4t_emission_standard_code USING btree
     (emission_standard_load_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -46,7 +46,7 @@ CREATE INDEX IF NOT EXISTS idx_nsps4t_emission_standard_l
 
 -- DROP INDEX IF EXISTS camdecmpsmd.idx_nsps4t_emission_standard_u;
 
-CREATE INDEX IF NOT EXISTS idx_nsps4t_emission_standard_u
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_emission_standard_u
     ON camdecmpsmd.nsps4t_emission_standard_code USING btree
     (emission_standard_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

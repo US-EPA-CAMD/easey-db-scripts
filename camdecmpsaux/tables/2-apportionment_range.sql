@@ -42,6 +42,6 @@ COMMENT ON COLUMN camdecmpsaux.apportionment_range.end_hour
 
 -- DROP INDEX camdecmpsaux.apportionment_range_app_ix;
 
-CREATE INDEX apportionment_range_app_ix
+CREATE INDEX IF NOT EXISTS apportionment_range_app_ix
     ON camdecmpsaux.apportionment_range USING btree
     (apport_id ASC NULLS LAST);

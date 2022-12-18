@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_unit_stack_configuration
 
--- DROP VIEW camdecmpswks.vw_unit_stack_configuration;
+DROP VIEW IF EXISTS camdecmpswks.vw_unit_stack_configuration;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_unit_stack_configuration
  AS

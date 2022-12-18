@@ -57,21 +57,21 @@ COMMENT ON COLUMN camddmw.rep_year_dim.end_date
 
 -- DROP INDEX camddmw.rep_year_dim_idx003;
 
-CREATE INDEX rep_year_dim_idx003
+CREATE INDEX IF NOT EXISTS rep_year_dim_idx003
     ON camddmw.rep_year_dim USING btree
     (unit_id ASC NULLS LAST, op_year ASC NULLS LAST);
 -- Index: rep_year_dim_idx1
 
 -- DROP INDEX camddmw.rep_year_dim_idx1;
 
-CREATE INDEX rep_year_dim_idx1
+CREATE INDEX IF NOT EXISTS rep_year_dim_idx1
     ON camddmw.rep_year_dim USING btree
     (unit_id ASC NULLS LAST, ppl_id ASC NULLS LAST);
 -- Index: rep_year_dim_idx2
 
 -- DROP INDEX camddmw.rep_year_dim_idx2;
 
-CREATE INDEX rep_year_dim_idx2
+CREATE INDEX IF NOT EXISTS rep_year_dim_idx2
     ON camddmw.rep_year_dim USING btree
     (ppl_id ASC NULLS LAST);
 

@@ -78,7 +78,7 @@ COMMENT ON COLUMN camdecmps.monitor_formula.update_date
 
 -- DROP INDEX camdecmps.idx_monitor_formula_equation_c;
 
-CREATE INDEX idx_monitor_formula_equation_c
+CREATE INDEX IF NOT EXISTS idx_monitor_formula_equation_c
     ON camdecmps.monitor_formula USING btree
     (equation_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -86,7 +86,7 @@ CREATE INDEX idx_monitor_formula_equation_c
 
 -- DROP INDEX camdecmps.idx_monitor_formula_mon_loc_id;
 
-CREATE INDEX idx_monitor_formula_mon_loc_id
+CREATE INDEX IF NOT EXISTS idx_monitor_formula_mon_loc_id
     ON camdecmps.monitor_formula USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -94,7 +94,7 @@ CREATE INDEX idx_monitor_formula_mon_loc_id
 
 -- DROP INDEX camdecmps."monitor_formula_idx$$_15b00008";
 
-CREATE INDEX "monitor_formula_idx$$_15b00008"
+CREATE INDEX IF NOT EXISTS "monitor_formula_idx$$_15b00008"
     ON camdecmps.monitor_formula USING btree
     (formula_identifier COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -102,6 +102,6 @@ CREATE INDEX "monitor_formula_idx$$_15b00008"
 
 -- DROP INDEX camdecmps.monitor_formula_idx001;
 
-CREATE INDEX monitor_formula_idx001
+CREATE INDEX IF NOT EXISTS monitor_formula_idx001
     ON camdecmps.monitor_formula USING btree
     (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);

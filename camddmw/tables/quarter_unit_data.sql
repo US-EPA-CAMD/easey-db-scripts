@@ -127,7 +127,7 @@ COMMENT ON COLUMN camddmw.quarter_unit_data.add_date
 
 -- DROP INDEX camddmw.idx_quarter_unit_data_rpt_period_id;
 
-CREATE INDEX idx_quarter_unit_data_rpt_period_id
+CREATE INDEX IF NOT EXISTS idx_quarter_unit_data_rpt_period_id
     ON camddmw.quarter_unit_data USING btree
     (rpt_period_id ASC NULLS LAST);
 

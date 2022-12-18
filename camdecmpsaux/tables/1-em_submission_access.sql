@@ -84,7 +84,7 @@ COMMENT ON COLUMN camdecmpsaux.em_submission_access.sub_availability_cd
 
 -- DROP INDEX camdecmpsaux."em_submission_a_idx$$_15a60001";
 
-CREATE INDEX "em_submission_a_idx$$_15a60001"
+CREATE INDEX IF NOT EXISTS "em_submission_a_idx$$_15a60001"
     ON camdecmpsaux.em_submission_access USING btree
     (mon_plan_id COLLATE pg_catalog."default" ASC NULLS LAST, rpt_period_id ASC NULLS LAST);
 
@@ -92,7 +92,7 @@ CREATE INDEX "em_submission_a_idx$$_15a60001"
 
 -- DROP INDEX camdecmpsaux.idx_em_submission_a_em_status_;
 
-CREATE INDEX idx_em_submission_a_em_status_
+CREATE INDEX IF NOT EXISTS idx_em_submission_a_em_status_
     ON camdecmpsaux.em_submission_access USING btree
     (em_status_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -100,7 +100,7 @@ CREATE INDEX idx_em_submission_a_em_status_
 
 -- DROP INDEX camdecmpsaux.idx_em_submission_a_em_sub_typ;
 
-CREATE INDEX idx_em_submission_a_em_sub_typ
+CREATE INDEX IF NOT EXISTS idx_em_submission_a_em_sub_typ
     ON camdecmpsaux.em_submission_access USING btree
     (em_sub_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -108,6 +108,6 @@ CREATE INDEX idx_em_submission_a_em_sub_typ
 
 -- DROP INDEX camdecmpsaux.idx_em_submission_access_0729;
 
-CREATE INDEX idx_em_submission_access_0729
+CREATE INDEX IF NOT EXISTS idx_em_submission_access_0729
     ON camdecmpsaux.em_submission_access USING btree
     (rpt_period_id ASC NULLS LAST);

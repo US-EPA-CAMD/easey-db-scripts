@@ -38,6 +38,6 @@ COMMENT ON COLUMN camdecmpsmd.fuel_code.fuel_cd_description
 
 -- DROP INDEX camdecmpsmd.idx_fuel_code_fuel_group;
 
-CREATE INDEX idx_fuel_code_fuel_group
+CREATE INDEX IF NOT EXISTS idx_fuel_code_fuel_group
     ON camdecmpsmd.fuel_code USING btree
     (fuel_group_cd COLLATE pg_catalog."default" ASC NULLS LAST);

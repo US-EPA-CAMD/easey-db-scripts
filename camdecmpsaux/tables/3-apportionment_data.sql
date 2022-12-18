@@ -42,6 +42,6 @@ COMMENT ON COLUMN camdecmpsaux.apportionment_data.subtractive_xml
 
 -- DROP INDEX camdecmpsaux.apportionment_data_rng_ix;
 
-CREATE INDEX apportionment_data_rng_ix
+CREATE INDEX IF NOT EXISTS apportionment_data_rng_ix
     ON camdecmpsaux.apportionment_data USING btree
     (apport_range_id ASC NULLS LAST);

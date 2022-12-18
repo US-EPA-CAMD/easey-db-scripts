@@ -131,7 +131,7 @@ COMMENT ON COLUMN camddmw_arch.month_unit_data_a.add_date
 
 -- DROP INDEX camddmw_arch.idx_month_unit_data_op_quarter;
 
-CREATE INDEX idx_month_unit_data_op_quarter
+CREATE INDEX IF NOT EXISTS idx_month_unit_data_op_quarter
     ON camddmw_arch.month_unit_data_a USING btree
     (op_quarter ASC NULLS LAST);
 
@@ -139,7 +139,7 @@ CREATE INDEX idx_month_unit_data_op_quarter
 
 -- DROP INDEX camddmw_arch.idx_month_unit_data_rpt_period_id;
 
-CREATE INDEX idx_month_unit_data_rpt_period_id
+CREATE INDEX IF NOT EXISTS idx_month_unit_data_rpt_period_id
     ON camddmw_arch.month_unit_data_a USING btree
     (rpt_period_id ASC NULLS LAST);
 

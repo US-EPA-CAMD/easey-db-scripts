@@ -44,7 +44,7 @@ COMMENT ON COLUMN camdecmpsaux.check_queue.submitted_on
 
 -- DROP INDEX camdecmpsaux.idx_check_queue_status;
 
-CREATE INDEX idx_check_queue_status
+CREATE INDEX IF NOT EXISTS idx_check_queue_status
     ON camdecmpsaux.check_queue USING btree
     (check_queue_status_cd ASC NULLS LAST);
 
@@ -52,7 +52,7 @@ CREATE INDEX idx_check_queue_status
 
 -- DROP INDEX camdecmpsaux.idx_check_queue_process;
 
-CREATE INDEX idx_check_queue_process
+CREATE INDEX IF NOT EXISTS idx_check_queue_process
     ON camdecmpsaux.check_queue USING btree
     (check_queue_process_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 

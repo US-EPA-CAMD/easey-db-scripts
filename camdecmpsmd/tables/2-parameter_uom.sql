@@ -58,7 +58,7 @@ COMMENT ON COLUMN camdecmpsmd.parameter_uom.decimals_summary
 
 -- DROP INDEX camdecmpsmd.idx_parameter_uom_parameter;
 
-CREATE INDEX idx_parameter_uom_parameter
+CREATE INDEX IF NOT EXISTS idx_parameter_uom_parameter
     ON camdecmpsmd.parameter_uom USING btree
     (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -66,6 +66,6 @@ CREATE INDEX idx_parameter_uom_parameter
 
 -- DROP INDEX camdecmpsmd.idx_parameter_uom_uom_cd;
 
-CREATE INDEX idx_parameter_uom_uom_cd
+CREATE INDEX IF NOT EXISTS idx_parameter_uom_uom_cd
     ON camdecmpsmd.parameter_uom USING btree
     (uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);

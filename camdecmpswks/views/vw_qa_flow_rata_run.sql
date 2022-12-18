@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_qa_flow_rata_run
 
--- DROP VIEW camdecmpswks.vw_qa_flow_rata_run;
+DROP VIEW IF EXISTS camdecmpswks.vw_qa_flow_rata_run;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_qa_flow_rata_run
  AS

@@ -43,18 +43,18 @@ DROP INDEX IF EXISTS camddmw.idx_hour_unit_mats_data_log_op_year;
 DROP INDEX IF EXISTS camddmw.idx_hour_unit_mats_data_log_sql_function;
 DROP INDEX IF EXISTS camddmw.idx_hour_unit_mats_data_log_unit_id;
 
-CREATE INDEX idx_hour_unit_mats_data_log_sql_function
+CREATE INDEX IF NOT EXISTS idx_hour_unit_mats_data_log_sql_function
     ON camddmw.hour_unit_mats_data_log USING btree
     (sql_function ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_mats_data_log_unit_id
+CREATE INDEX IF NOT EXISTS idx_hour_unit_mats_data_log_unit_id
     ON camddmw.hour_unit_mats_data_log USING btree
     (unit_id ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_mats_data_log_op_date
+CREATE INDEX IF NOT EXISTS idx_hour_unit_mats_data_log_op_date
     ON camddmw.hour_unit_mats_data_log USING btree
     (op_date ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_mats_data_log_op_hour
+CREATE INDEX IF NOT EXISTS idx_hour_unit_mats_data_log_op_hour
     ON camddmw.hour_unit_mats_data_log USING btree
     (op_hour ASC NULLS LAST);

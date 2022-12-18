@@ -87,7 +87,7 @@ COMMENT ON COLUMN camdecmpsaux.check_session.submission_id
 
 -- DROP INDEX camdecmpsaux.idx_check_session_1526;
 
-CREATE INDEX idx_check_session_1526
+CREATE INDEX IF NOT EXISTS idx_check_session_1526
     ON camdecmpsaux.check_session USING btree
     (test_extension_exemption_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -95,7 +95,7 @@ CREATE INDEX idx_check_session_1526
 
 -- DROP INDEX camdecmpsaux.idx_check_session_2816;
 
-CREATE INDEX idx_check_session_2816
+CREATE INDEX IF NOT EXISTS idx_check_session_2816
     ON camdecmpsaux.check_session USING btree
     (qa_cert_event_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -103,7 +103,7 @@ CREATE INDEX idx_check_session_2816
 
 -- DROP INDEX camdecmpsaux.idx_check_session_6459;
 
-CREATE INDEX idx_check_session_6459
+CREATE INDEX IF NOT EXISTS idx_check_session_6459
     ON camdecmpsaux.check_session USING btree
     (mon_plan_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -111,7 +111,7 @@ CREATE INDEX idx_check_session_6459
 
 -- DROP INDEX camdecmpsaux.idx_check_session_7529;
 
-CREATE INDEX idx_check_session_7529
+CREATE INDEX IF NOT EXISTS idx_check_session_7529
     ON camdecmpsaux.check_session USING btree
     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -119,7 +119,7 @@ CREATE INDEX idx_check_session_7529
 
 -- DROP INDEX camdecmpsaux.idx_check_session_8070;
 
-CREATE INDEX idx_check_session_8070
+CREATE INDEX IF NOT EXISTS idx_check_session_8070
     ON camdecmpsaux.check_session USING btree
     (rpt_period_id ASC NULLS LAST);
 
@@ -127,7 +127,7 @@ CREATE INDEX idx_check_session_8070
 
 -- DROP INDEX camdecmpsaux.idx_check_session_category_c;
 
-CREATE INDEX idx_check_session_category_c
+CREATE INDEX IF NOT EXISTS idx_check_session_category_c
     ON camdecmpsaux.check_session USING btree
     (category_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -135,7 +135,7 @@ CREATE INDEX idx_check_session_category_c
 
 -- DROP INDEX camdecmpsaux.idx_check_session_process_cd;
 
-CREATE INDEX idx_check_session_process_cd
+CREATE INDEX IF NOT EXISTS idx_check_session_process_cd
     ON camdecmpsaux.check_session USING btree
     (process_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -143,6 +143,6 @@ CREATE INDEX idx_check_session_process_cd
 
 -- DROP INDEX camdecmpsaux.idx_check_session_severity_c;
 
-CREATE INDEX idx_check_session_severity_c
+CREATE INDEX IF NOT EXISTS idx_check_session_severity_c
     ON camdecmpsaux.check_session USING btree
     (severity_cd COLLATE pg_catalog."default" ASC NULLS LAST);

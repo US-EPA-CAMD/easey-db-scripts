@@ -63,7 +63,7 @@ COMMENT ON COLUMN camd.unit_exemption.update_date
 
 -- DROP INDEX camd.idx_unit_exemption_code;
 
-CREATE INDEX idx_unit_exemption_code
+CREATE INDEX IF NOT EXISTS idx_unit_exemption_code
     ON camd.unit_exemption USING btree
     (exemption_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -71,7 +71,7 @@ CREATE INDEX idx_unit_exemption_code
 
 -- DROP INDEX camd.idx_unit_exemption_submit;
 
-CREATE INDEX idx_unit_exemption_submit
+CREATE INDEX IF NOT EXISTS idx_unit_exemption_submit
     ON camd.unit_exemption USING btree
     (submitter_ppl_id ASC NULLS LAST);
 
@@ -79,6 +79,6 @@ CREATE INDEX idx_unit_exemption_submit
 
 -- DROP INDEX camd.idx_unit_exemption_unit;
 
-CREATE INDEX idx_unit_exemption_unit
+CREATE INDEX IF NOT EXISTS idx_unit_exemption_unit
     ON camd.unit_exemption USING btree
     (unit_id ASC NULLS LAST);

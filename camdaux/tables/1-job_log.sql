@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS camdaux.job_log
 
 -- DROP INDEX camdaux.idx_job_log_job_class;
 
-CREATE INDEX idx_job_log_job_class
+CREATE INDEX IF NOT EXISTS idx_job_log_job_class
     ON camdaux.job_log USING btree
     (job_class COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -27,7 +27,7 @@ CREATE INDEX idx_job_log_job_class
 
 -- DROP INDEX camdaux.idx_job_log_job_name;
 
-CREATE INDEX idx_job_log_job_name
+CREATE INDEX IF NOT EXISTS idx_job_log_job_name
     ON camdaux.job_log USING btree
     (job_name COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -35,7 +35,7 @@ CREATE INDEX idx_job_log_job_name
 
 -- DROP INDEX camdaux.idx_job_log_job_system;
 
-CREATE INDEX idx_job_log_job_system
+CREATE INDEX IF NOT EXISTS idx_job_log_job_system
     ON camdaux.job_log USING btree
     (job_system COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -43,7 +43,7 @@ CREATE INDEX idx_job_log_job_system
 
 -- DROP INDEX camdaux.idx_job_log_status_cd;
 
-CREATE INDEX idx_job_log_status_cd
+CREATE INDEX IF NOT EXISTS idx_job_log_status_cd
     ON camdaux.job_log USING btree
     (status_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

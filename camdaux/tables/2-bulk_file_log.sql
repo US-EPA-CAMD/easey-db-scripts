@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS camdaux.bulk_file_log
 
 -- DROP INDEX camdaux.idx_bulk_file_log_data_subtype;
 
-CREATE INDEX idx_bulk_file_log_data_subtype
+CREATE INDEX IF NOT EXISTS idx_bulk_file_log_data_subtype
     ON camdaux.bulk_file_log USING btree
     (data_subtype COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -47,7 +47,7 @@ CREATE INDEX idx_bulk_file_log_data_subtype
 
 -- DROP INDEX camdaux.idx_bulk_file_log_data_type;
 
-CREATE INDEX idx_bulk_file_log_data_type
+CREATE INDEX IF NOT EXISTS idx_bulk_file_log_data_type
     ON camdaux.bulk_file_log USING btree
     (data_type COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -55,7 +55,7 @@ CREATE INDEX idx_bulk_file_log_data_type
 
 -- DROP INDEX camdaux.idx_bulk_file_log_prg_cd;
 
-CREATE INDEX idx_bulk_file_log_prg_cd
+CREATE INDEX IF NOT EXISTS idx_bulk_file_log_prg_cd
     ON camdaux.bulk_file_log USING btree
     (prg_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -63,7 +63,7 @@ CREATE INDEX idx_bulk_file_log_prg_cd
 
 -- DROP INDEX camdaux.idx_bulk_file_log_quarter;
 
-CREATE INDEX idx_bulk_file_log_quarter
+CREATE INDEX IF NOT EXISTS idx_bulk_file_log_quarter
     ON camdaux.bulk_file_log USING btree
     (quarter ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -71,7 +71,7 @@ CREATE INDEX idx_bulk_file_log_quarter
 
 -- DROP INDEX camdaux.idx_bulk_file_log_state_cd;
 
-CREATE INDEX idx_bulk_file_log_state_cd
+CREATE INDEX IF NOT EXISTS idx_bulk_file_log_state_cd
     ON camdaux.bulk_file_log USING btree
     (state_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -79,7 +79,7 @@ CREATE INDEX idx_bulk_file_log_state_cd
 
 -- DROP INDEX camdaux.idx_bulk_file_log_year;
 
-CREATE INDEX idx_bulk_file_log_year
+CREATE INDEX IF NOT EXISTS idx_bulk_file_log_year
     ON camdaux.bulk_file_log USING btree
     (year ASC NULLS LAST)
     TABLESPACE pg_default;

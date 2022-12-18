@@ -78,7 +78,7 @@ COMMENT ON COLUMN camdecmps.unit_control.update_date
 
 -- DROP INDEX camdecmps.idx_unit_control_ce_param;
 
-CREATE INDEX idx_unit_control_ce_param
+CREATE INDEX IF NOT EXISTS idx_unit_control_ce_param
     ON camdecmps.unit_control USING btree
     (ce_param COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -86,7 +86,7 @@ CREATE INDEX idx_unit_control_ce_param
 
 -- DROP INDEX camdecmps.idx_unit_control_indicator_cd;
 
-CREATE INDEX idx_unit_control_indicator_cd
+CREATE INDEX IF NOT EXISTS idx_unit_control_indicator_cd
     ON camdecmps.unit_control USING btree
     (indicator_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -94,6 +94,6 @@ CREATE INDEX idx_unit_control_indicator_cd
 
 -- DROP INDEX camdecmps.idx_unit_control_unit;
 
-CREATE INDEX idx_unit_control_unit
+CREATE INDEX IF NOT EXISTS idx_unit_control_unit
     ON camdecmps.unit_control USING btree
     (unit_id ASC NULLS LAST);

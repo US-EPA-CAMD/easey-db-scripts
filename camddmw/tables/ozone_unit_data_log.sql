@@ -36,14 +36,14 @@ CREATE TABLE IF NOT EXISTS camddmw.ozone_unit_data_log
     CONSTRAINT pk_ozone_unit_data_log PRIMARY KEY (skey)
 );
 
-CREATE INDEX idx_ozone_unit_data_log_sql_function
+CREATE INDEX IF NOT EXISTS idx_ozone_unit_data_log_sql_function
     ON camddmw.ozone_unit_data_log USING btree
     (sql_function ASC NULLS LAST);
 
-CREATE INDEX idx_ozone_unit_data_log_unit_id
+CREATE INDEX IF NOT EXISTS idx_ozone_unit_data_log_unit_id
     ON camddmw.ozone_unit_data_log USING btree
     (unit_id ASC NULLS LAST);
 
-CREATE INDEX idx_ozone_unit_data_log_op_year
+CREATE INDEX IF NOT EXISTS idx_ozone_unit_data_log_op_year
     ON camddmw.ozone_unit_data_log USING btree
     (op_year ASC NULLS LAST);

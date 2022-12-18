@@ -87,7 +87,7 @@ COMMENT ON COLUMN camdecmps.monitor_plan.end_rpt_period_id
 
 -- DROP INDEX camdecmps.idx_monitor_plan_chk_sessio;
 
-CREATE INDEX idx_monitor_plan_chk_sessio
+CREATE INDEX IF NOT EXISTS idx_monitor_plan_chk_sessio
     ON camdecmps.monitor_plan USING btree
     (chk_session_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -95,7 +95,7 @@ CREATE INDEX idx_monitor_plan_chk_sessio
 
 -- DROP INDEX camdecmps.idx_monitor_plan_fac_id;
 
-CREATE INDEX idx_monitor_plan_fac_id
+CREATE INDEX IF NOT EXISTS idx_monitor_plan_fac_id
     ON camdecmps.monitor_plan USING btree
     (fac_id ASC NULLS LAST);
 
@@ -103,7 +103,7 @@ CREATE INDEX idx_monitor_plan_fac_id
 
 -- DROP INDEX camdecmps.idx_monitor_plan_submission;
 
-CREATE INDEX idx_monitor_plan_submission
+CREATE INDEX IF NOT EXISTS idx_monitor_plan_submission
     ON camdecmps.monitor_plan USING btree
     (submission_availability_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -111,7 +111,7 @@ CREATE INDEX idx_monitor_plan_submission
 
 -- DROP INDEX camdecmps.idx_monitor_plan_submission1;
 
-CREATE INDEX idx_monitor_plan_submission1
+CREATE INDEX IF NOT EXISTS idx_monitor_plan_submission1
     ON camdecmps.monitor_plan USING btree
     (submission_id ASC NULLS LAST);
 
@@ -119,7 +119,7 @@ CREATE INDEX idx_monitor_plan_submission1
 
 -- DROP INDEX camdecmps.monitor_plan_idx001;
 
-CREATE INDEX monitor_plan_idx001
+CREATE INDEX IF NOT EXISTS monitor_plan_idx001
     ON camdecmps.monitor_plan USING btree
     (config_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -127,7 +127,7 @@ CREATE INDEX monitor_plan_idx001
 
 -- DROP INDEX camdecmps.monitor_plan_idx002;
 
-CREATE INDEX monitor_plan_idx002
+CREATE INDEX IF NOT EXISTS monitor_plan_idx002
     ON camdecmps.monitor_plan USING btree
     (begin_rpt_period_id ASC NULLS LAST);
 
@@ -135,6 +135,6 @@ CREATE INDEX monitor_plan_idx002
 
 -- DROP INDEX camdecmps.monitor_plan_idx003;
 
-CREATE INDEX monitor_plan_idx003
+CREATE INDEX IF NOT EXISTS monitor_plan_idx003
     ON camdecmps.monitor_plan USING btree
     (end_rpt_period_id ASC NULLS LAST);

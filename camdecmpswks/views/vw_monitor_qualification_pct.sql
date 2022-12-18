@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_monitor_qualification_pct
 
--- DROP VIEW camdecmpswks.vw_monitor_qualification_pct;
+DROP VIEW IF EXISTS camdecmpswks.vw_monitor_qualification_pct;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_monitor_qualification_pct
  AS

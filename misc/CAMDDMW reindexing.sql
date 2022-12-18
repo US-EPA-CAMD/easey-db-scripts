@@ -185,133 +185,133 @@ CREATE UNIQUE INDEX unq_account_fact
     ON camddmw.account_fact USING btree
     (state COLLATE pg_catalog."default" ASC NULLS LAST, account_number COLLATE pg_catalog."default" ASC NULLS LAST, prg_code COLLATE pg_catalog."default" ASC NULLS LAST);
 
-CREATE INDEX idx_account_fact_1
+CREATE INDEX IF NOT EXISTS idx_account_fact_1
     ON camddmw.account_fact USING btree
     (epa_region ASC NULLS LAST, op_status_info COLLATE pg_catalog."default" ASC NULLS LAST, source_cat COLLATE pg_catalog."default" ASC NULLS LAST);
 
-CREATE INDEX idx_account_fact_2
+CREATE INDEX IF NOT EXISTS idx_account_fact_2
     ON camddmw.account_fact USING btree
     (nerc_region COLLATE pg_catalog."default" ASC NULLS LAST, op_status_info COLLATE pg_catalog."default" ASC NULLS LAST, source_cat COLLATE pg_catalog."default" ASC NULLS LAST);
 
-CREATE INDEX idx_account_fact_fac_id
+CREATE INDEX IF NOT EXISTS idx_account_fact_fac_id
     ON camddmw.account_fact USING btree
     (fac_id ASC NULLS LAST);
 
-CREATE INDEX idx_account_fact_prg_code
+CREATE INDEX IF NOT EXISTS idx_account_fact_prg_code
     ON camddmw.account_fact USING btree
     (prg_code COLLATE pg_catalog."default" ASC NULLS LAST);
 
-CREATE INDEX idx_account_fact_unit_id
+CREATE INDEX IF NOT EXISTS idx_account_fact_unit_id
     ON camddmw.account_fact USING btree
     (unit_id ASC NULLS LAST);
 
-CREATE INDEX idx_allowance_holding_dim_1
+CREATE INDEX IF NOT EXISTS idx_allowance_holding_dim_1
     ON camddmw.allowance_holding_dim USING btree
     (prg_code COLLATE pg_catalog."default" ASC NULLS LAST, start_block ASC NULLS LAST);
 
-CREATE INDEX idx_allowance_holding_dim_2
+CREATE INDEX IF NOT EXISTS idx_allowance_holding_dim_2
     ON camddmw.allowance_holding_dim USING btree
     (account_number COLLATE pg_catalog."default" ASC NULLS LAST, prg_code COLLATE pg_catalog."default" ASC NULLS LAST, allowance_type COLLATE pg_catalog."default" ASC NULLS LAST);
 
 ALTER TABLE camddmw.control_year_dim
     ADD CONSTRAINT unq_control_year_dim UNIQUE (unit_id, op_year, control_code, parameter);
 
-CREATE INDEX idx_day_unit_data_op_month
+CREATE INDEX IF NOT EXISTS idx_day_unit_data_op_month
     ON camddmw.day_unit_data USING btree
     (op_month ASC NULLS LAST);
 
-CREATE INDEX idx_day_unit_data_op_year
+CREATE INDEX IF NOT EXISTS idx_day_unit_data_op_year
     ON camddmw.day_unit_data USING btree
     (op_year ASC NULLS LAST);
 
-CREATE INDEX idx_day_unit_data_rpt_period_id
+CREATE INDEX IF NOT EXISTS idx_day_unit_data_rpt_period_id
     ON camddmw.day_unit_data USING btree
     (rpt_period_id ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_data_op_time
+CREATE INDEX IF NOT EXISTS idx_hour_unit_data_op_time
     ON camddmw.hour_unit_data USING btree
     (op_time ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_data_op_year
+CREATE INDEX IF NOT EXISTS idx_hour_unit_data_op_year
     ON camddmw.hour_unit_data USING btree
     (op_year ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_data_rpt_period_id
+CREATE INDEX IF NOT EXISTS idx_hour_unit_data_rpt_period_id
     ON camddmw.hour_unit_data USING btree
     (rpt_period_id ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_data_log_op_date
+CREATE INDEX IF NOT EXISTS idx_hour_unit_data_log_op_date
     ON camddmw.hour_unit_data_log USING btree
     (op_date ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_data_log_op_hour
+CREATE INDEX IF NOT EXISTS idx_hour_unit_data_log_op_hour
     ON camddmw.hour_unit_data_log USING btree
     (op_hour ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_data_log_op_time
+CREATE INDEX IF NOT EXISTS idx_hour_unit_data_log_op_time
     ON camddmw.hour_unit_data_log USING btree
     (op_time ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_data_log_op_year
+CREATE INDEX IF NOT EXISTS idx_hour_unit_data_log_op_year
     ON camddmw.hour_unit_data_log USING btree
     (op_year ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_data_log_sql_function
+CREATE INDEX IF NOT EXISTS idx_hour_unit_data_log_sql_function
     ON camddmw.hour_unit_data_log USING btree
     (sql_function COLLATE pg_catalog."default" ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_data_log_unit_id
+CREATE INDEX IF NOT EXISTS idx_hour_unit_data_log_unit_id
     ON camddmw.hour_unit_data_log USING btree
     (unit_id ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_mats_data_op_time
+CREATE INDEX IF NOT EXISTS idx_hour_unit_mats_data_op_time
     ON camddmw.hour_unit_mats_data USING btree
     (op_time ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_mats_data_op_year
+CREATE INDEX IF NOT EXISTS idx_hour_unit_mats_data_op_year
     ON camddmw.hour_unit_mats_data USING btree
     (op_year ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_mats_data_rpt_period_id
+CREATE INDEX IF NOT EXISTS idx_hour_unit_mats_data_rpt_period_id
     ON camddmw.hour_unit_mats_data USING btree
     (rpt_period_id ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_mats_data_log_op_date
+CREATE INDEX IF NOT EXISTS idx_hour_unit_mats_data_log_op_date
     ON camddmw.hour_unit_mats_data_log USING btree
     (op_date ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_mats_data_log_op_hour
+CREATE INDEX IF NOT EXISTS idx_hour_unit_mats_data_log_op_hour
     ON camddmw.hour_unit_mats_data_log USING btree
     (op_hour ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_mats_data_log_op_time
+CREATE INDEX IF NOT EXISTS idx_hour_unit_mats_data_log_op_time
     ON camddmw.hour_unit_mats_data_log USING btree
     (op_time ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_mats_data_log_op_year
+CREATE INDEX IF NOT EXISTS idx_hour_unit_mats_data_log_op_year
     ON camddmw.hour_unit_mats_data_log USING btree
     (op_year ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_mats_data_log_sql_function
+CREATE INDEX IF NOT EXISTS idx_hour_unit_mats_data_log_sql_function
     ON camddmw.hour_unit_mats_data_log USING btree
     (sql_function COLLATE pg_catalog."default" ASC NULLS LAST);
 
-CREATE INDEX idx_hour_unit_mats_data_log_unit_id
+CREATE INDEX IF NOT EXISTS idx_hour_unit_mats_data_log_unit_id
     ON camddmw.hour_unit_mats_data_log USING btree
     (unit_id ASC NULLS LAST);
 
-CREATE INDEX idx_month_unit_data_op_quarter
+CREATE INDEX IF NOT EXISTS idx_month_unit_data_op_quarter
     ON camddmw.month_unit_data USING btree
     (op_quarter ASC NULLS LAST);
 
-CREATE INDEX idx_month_unit_data_rpt_period_id
+CREATE INDEX IF NOT EXISTS idx_month_unit_data_rpt_period_id
     ON camddmw.month_unit_data USING btree
     (rpt_period_id ASC NULLS LAST);
 
 ALTER TABLE camddmw.owner_year_dim
     ADD CONSTRAINT unq_owner_year_dim UNIQUE (unit_id, op_year, own_id, own_type);
 
-CREATE INDEX idx_quarter_unit_data_rpt_period_id
+CREATE INDEX IF NOT EXISTS idx_quarter_unit_data_rpt_period_id
     ON camddmw.quarter_unit_data USING btree
     (rpt_period_id ASC NULLS LAST);
 
@@ -341,47 +341,47 @@ ALTER TABLE camddmw.transaction_block_dim
     ON DELETE NO ACTION;
 */
 
-CREATE INDEX idx_transaction_block_dim_1
+CREATE INDEX IF NOT EXISTS idx_transaction_block_dim_1
     ON camddmw.transaction_block_dim USING btree
     (transaction_id ASC NULLS LAST, vintage_year ASC NULLS LAST, start_block ASC NULLS LAST, end_block ASC NULLS LAST, prg_code COLLATE pg_catalog."default" ASC NULLS LAST);
 
-CREATE INDEX idx_transaction_fact_1
+CREATE INDEX IF NOT EXISTS idx_transaction_fact_1
     ON camddmw.transaction_fact USING btree
     (transaction_date ASC NULLS LAST, buy_acct_number COLLATE pg_catalog."default" ASC NULLS LAST, sell_acct_number COLLATE pg_catalog."default" ASC NULLS LAST, transaction_id ASC NULLS LAST);
 
-CREATE INDEX idx_transaction_fact_2
+CREATE INDEX IF NOT EXISTS idx_transaction_fact_2
     ON camddmw.transaction_fact USING btree
     (transaction_id ASC NULLS LAST, buy_acct_number COLLATE pg_catalog."default" ASC NULLS LAST, sell_acct_number COLLATE pg_catalog."default" ASC NULLS LAST);
 
-CREATE INDEX idx_transaction_fact_3
+CREATE INDEX IF NOT EXISTS idx_transaction_fact_3
     ON camddmw.transaction_fact USING btree
     (buy_fac_id ASC NULLS LAST, buy_acct_number COLLATE pg_catalog."default" ASC NULLS LAST, buy_source_cat COLLATE pg_catalog."default" ASC NULLS LAST);
 
-CREATE INDEX idx_transaction_fact_4
+CREATE INDEX IF NOT EXISTS idx_transaction_fact_4
     ON camddmw.transaction_fact USING btree
     (buy_state COLLATE pg_catalog."default" ASC NULLS LAST, buy_source_cat COLLATE pg_catalog."default" ASC NULLS LAST, buy_fac_id ASC NULLS LAST);
 
-CREATE INDEX idx_transaction_owner_dim_1
+CREATE INDEX IF NOT EXISTS idx_transaction_owner_dim_1
     ON camddmw.transaction_owner_dim USING btree
     (transaction_id ASC NULLS LAST, prg_code COLLATE pg_catalog."default" ASC NULLS LAST);
 
-CREATE INDEX idx_transaction_owner_dim_2
+CREATE INDEX IF NOT EXISTS idx_transaction_owner_dim_2
     ON camddmw.transaction_owner_dim USING btree
     (own_id ASC NULLS LAST, ppl_id ASC NULLS LAST);
 
-CREATE INDEX idx_transaction_owner_dim_3
+CREATE INDEX IF NOT EXISTS idx_transaction_owner_dim_3
     ON camddmw.transaction_owner_dim USING btree
     (ppl_id ASC NULLS LAST, own_id ASC NULLS LAST);
 
-CREATE INDEX idx_unit_fact_fac_id
+CREATE INDEX IF NOT EXISTS idx_unit_fact_fac_id
     ON camddmw.unit_fact USING btree
     (fac_id ASC NULLS LAST);
 
-CREATE INDEX idx_unit_fact_orispl_code
+CREATE INDEX IF NOT EXISTS idx_unit_fact_orispl_code
     ON camddmw.unit_fact USING btree
     (orispl_code ASC NULLS LAST);
 
-CREATE INDEX idx_unit_fact_state
+CREATE INDEX IF NOT EXISTS idx_unit_fact_state
     ON camddmw.unit_fact USING btree
     (state COLLATE pg_catalog."default" ASC NULLS LAST);
 

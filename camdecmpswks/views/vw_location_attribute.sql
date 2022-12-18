@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_location_attribute
 
--- DROP VIEW camdecmpswks.vw_location_attribute;
+DROP VIEW IF EXISTS camdecmpswks.vw_location_attribute;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_location_attribute
  AS

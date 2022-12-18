@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_monitor_load
 
--- DROP VIEW camdecmpswks.vw_monitor_load;
+DROP VIEW IF EXISTS camdecmpswks.vw_monitor_load;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_monitor_load
  AS

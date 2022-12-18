@@ -75,7 +75,7 @@ COMMENT ON COLUMN camddmw.allowance_holding_dim.last_update_date
 
 -- DROP INDEX camddmw.all_hold_dim_idx1;
 
-CREATE INDEX all_hold_dim_idx1
+CREATE INDEX IF NOT EXISTS all_hold_dim_idx1
     ON camddmw.allowance_holding_dim USING btree
     (prg_code COLLATE pg_catalog."default" ASC NULLS LAST, start_block ASC NULLS LAST);
 
@@ -83,7 +83,7 @@ CREATE INDEX all_hold_dim_idx1
 
 -- DROP INDEX camddmw.allowance_holding_dim_idx002;
 
-CREATE INDEX allowance_holding_dim_idx002
+CREATE INDEX IF NOT EXISTS allowance_holding_dim_idx002
     ON camddmw.allowance_holding_dim USING btree
     (account_number COLLATE pg_catalog."default" ASC NULLS LAST, prg_code COLLATE pg_catalog."default" ASC NULLS LAST, allowance_type COLLATE pg_catalog."default" ASC NULLS LAST);
 

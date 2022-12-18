@@ -110,7 +110,7 @@ COMMENT ON COLUMN camdecmps.rata_traverse.point_used_ind
 
 -- DROP INDEX camdecmps.idx_rata_traverse_flow_rata;
 
-CREATE INDEX idx_rata_traverse_flow_rata
+CREATE INDEX IF NOT EXISTS idx_rata_traverse_flow_rata
     ON camdecmps.rata_traverse USING btree
     (flow_rata_run_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -118,7 +118,7 @@ CREATE INDEX idx_rata_traverse_flow_rata
 
 -- DROP INDEX camdecmps.idx_rata_traverse_pressure_m;
 
-CREATE INDEX idx_rata_traverse_pressure_m
+CREATE INDEX IF NOT EXISTS idx_rata_traverse_pressure_m
     ON camdecmps.rata_traverse USING btree
     (pressure_meas_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -126,6 +126,6 @@ CREATE INDEX idx_rata_traverse_pressure_m
 
 -- DROP INDEX camdecmps.idx_rata_traverse_probe_type;
 
-CREATE INDEX idx_rata_traverse_probe_type
+CREATE INDEX IF NOT EXISTS idx_rata_traverse_probe_type
     ON camdecmps.rata_traverse USING btree
     (probe_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);

@@ -23,7 +23,7 @@ CREATE TABLE camdecmpswks.monitor_qualification_lme
 
 -- DROP INDEX camdecmpswks.idx_monitor_qualification_lme_mon_qual_id;
 
-CREATE INDEX idx_monitor_qualification_lme_mon_qual_id
+CREATE INDEX IF NOT EXISTS idx_monitor_qualification_lme_mon_qual_id
     ON camdecmpswks.monitor_qualification_lme USING btree
     (mon_qual_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

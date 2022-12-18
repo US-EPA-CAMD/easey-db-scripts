@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_used_identifier
 
--- DROP VIEW camdecmpswks.vw_used_identifier;
+DROP VIEW IF EXISTS camdecmpswks.vw_used_identifier;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_used_identifier
  AS

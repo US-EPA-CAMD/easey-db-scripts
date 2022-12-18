@@ -78,7 +78,7 @@ COMMENT ON COLUMN camdecmps.rata.update_date
 
 -- DROP INDEX camdecmps.idx_rata_001;
 
-CREATE INDEX idx_rata_001
+CREATE INDEX IF NOT EXISTS idx_rata_001
     ON camdecmps.rata USING btree
     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -86,7 +86,7 @@ CREATE INDEX idx_rata_001
 
 -- DROP INDEX camdecmps.idx_rata_calc_rata;
 
-CREATE INDEX idx_rata_calc_rata
+CREATE INDEX IF NOT EXISTS idx_rata_calc_rata
     ON camdecmps.rata USING btree
     (calc_rata_frequency_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -94,6 +94,6 @@ CREATE INDEX idx_rata_calc_rata
 
 -- DROP INDEX camdecmps.idx_rata_rata_frequ;
 
-CREATE INDEX idx_rata_rata_frequ
+CREATE INDEX IF NOT EXISTS idx_rata_rata_frequ
     ON camdecmps.rata USING btree
     (rata_frequency_cd COLLATE pg_catalog."default" ASC NULLS LAST);

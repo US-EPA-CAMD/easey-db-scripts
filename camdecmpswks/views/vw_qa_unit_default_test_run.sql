@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_qa_unit_default_test_run
 
--- DROP VIEW camdecmpswks.vw_qa_unit_default_test_run;
+DROP VIEW IF EXISTS camdecmpswks.vw_qa_unit_default_test_run;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_qa_unit_default_test_run
  AS

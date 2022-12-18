@@ -1,6 +1,6 @@
 -- View: camdaux.vw_annual_emissions_bulk_files_per_state_to_generate
 
--- DROP VIEW camdaux.vw_annual_emissions_bulk_files_per_state_to_generate;
+DROP VIEW IF EXISTS camdaux.vw_annual_emissions_bulk_files_per_state_to_generate;
 
 CREATE OR REPLACE VIEW camdaux.vw_annual_emissions_bulk_files_per_state_to_generate
  AS

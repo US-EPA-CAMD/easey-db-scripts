@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_analyzer_range
 
--- DROP VIEW camdecmpswks.vw_analyzer_range;
+DROP VIEW IF EXISTS camdecmpswks.vw_analyzer_range;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_analyzer_range
  AS

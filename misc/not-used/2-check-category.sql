@@ -37,7 +37,7 @@ COMMENT ON COLUMN camdecmpsaux.check_category.flex_source_id
 
 -- DROP INDEX camdecmpsaux.idx_check_category_process;
 
-CREATE INDEX idx_check_category_process
+CREATE INDEX IF NOT EXISTS idx_check_category_process
     ON camdecmpsaux.check_category USING btree
     (check_category_process_cd ASC NULLS LAST);
 

@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_monitor_method
 
--- DROP VIEW camdecmpswks.vw_monitor_method;
+DROP VIEW IF EXISTS camdecmpswks.vw_monitor_method;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_monitor_method
  AS

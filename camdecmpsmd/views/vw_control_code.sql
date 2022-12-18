@@ -1,6 +1,6 @@
 -- View: camdecmpsmd.vw_control_code
 
--- DROP VIEW camdecmpsmd.vw_control_code;
+DROP VIEW IF EXISTS camdecmpsmd.vw_control_code;
 
 CREATE OR REPLACE VIEW camdecmpsmd.vw_control_code
  AS

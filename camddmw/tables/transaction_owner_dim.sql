@@ -70,7 +70,7 @@ COMMENT ON COLUMN camddmw.transaction_owner_dim.last_update_date
 
 -- DROP INDEX camddmw.transaction_owner_dim_fk;
 
-CREATE INDEX transaction_owner_dim_fk
+CREATE INDEX IF NOT EXISTS transaction_owner_dim_fk
     ON camddmw.transaction_owner_dim USING btree
     (transaction_id ASC NULLS LAST, prg_code COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -78,7 +78,7 @@ CREATE INDEX transaction_owner_dim_fk
 
 -- DROP INDEX camddmw.transaction_owner_dim_idx001;
 
-CREATE INDEX transaction_owner_dim_idx001
+CREATE INDEX IF NOT EXISTS transaction_owner_dim_idx001
     ON camddmw.transaction_owner_dim USING btree
     (own_id ASC NULLS LAST, ppl_id ASC NULLS LAST);
 
@@ -86,6 +86,6 @@ CREATE INDEX transaction_owner_dim_idx001
 
 -- DROP INDEX camddmw.transaction_owner_dim_idx002;
 
-CREATE INDEX transaction_owner_dim_idx002
+CREATE INDEX IF NOT EXISTS transaction_owner_dim_idx002
     ON camddmw.transaction_owner_dim USING btree
     (ppl_id ASC NULLS LAST, own_id ASC NULLS LAST);

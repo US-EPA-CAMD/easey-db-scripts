@@ -157,7 +157,7 @@ COMMENT ON COLUMN camdecmpswks.derived_hrly_value.calc_hour_measure_cd
 
 -- DROP INDEX camdecmpswks.derived_hrly_value_idx001;
 
-CREATE INDEX derived_hrly_value_idx001
+CREATE INDEX IF NOT EXISTS derived_hrly_value_idx001
     ON camdecmpswks.derived_hrly_value USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -165,7 +165,7 @@ CREATE INDEX derived_hrly_value_idx001
 
 -- DROP INDEX camdecmpswks.idx_derived_hrly_frm;
 
-CREATE INDEX idx_derived_hrly_frm
+CREATE INDEX IF NOT EXISTS idx_derived_hrly_frm
     ON camdecmpswks.derived_hrly_value USING btree
     (modc_cd COLLATE pg_catalog."default" ASC NULLS LAST, unadjusted_hrly_value ASC NULLS LAST, parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST, hour_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -173,7 +173,7 @@ CREATE INDEX idx_derived_hrly_frm
 
 -- DROP INDEX camdecmpswks.idx_derived_hrly_va_fuel_cd;
 
-CREATE INDEX idx_derived_hrly_va_fuel_cd
+CREATE INDEX IF NOT EXISTS idx_derived_hrly_va_fuel_cd
     ON camdecmpswks.derived_hrly_value USING btree
     (fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -181,7 +181,7 @@ CREATE INDEX idx_derived_hrly_va_fuel_cd
 
 -- DROP INDEX camdecmpswks.idx_derived_hrly_va_hour_id;
 
-CREATE INDEX idx_derived_hrly_va_hour_id
+CREATE INDEX IF NOT EXISTS idx_derived_hrly_va_hour_id
     ON camdecmpswks.derived_hrly_value USING btree
     (hour_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -189,7 +189,7 @@ CREATE INDEX idx_derived_hrly_va_hour_id
 
 -- DROP INDEX camdecmpswks.idx_derived_hrly_va_mon_form_i;
 
-CREATE INDEX idx_derived_hrly_va_mon_form_i
+CREATE INDEX IF NOT EXISTS idx_derived_hrly_va_mon_form_i
     ON camdecmpswks.derived_hrly_value USING btree
     (mon_form_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -197,7 +197,7 @@ CREATE INDEX idx_derived_hrly_va_mon_form_i
 
 -- DROP INDEX camdecmpswks.idx_derived_hrly_va_mon_sys_id;
 
-CREATE INDEX idx_derived_hrly_va_mon_sys_id
+CREATE INDEX IF NOT EXISTS idx_derived_hrly_va_mon_sys_id
     ON camdecmpswks.derived_hrly_value USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -205,7 +205,7 @@ CREATE INDEX idx_derived_hrly_va_mon_sys_id
 
 -- DROP INDEX camdecmpswks.idx_derived_hrly_va_operating;
 
-CREATE INDEX idx_derived_hrly_va_operating
+CREATE INDEX IF NOT EXISTS idx_derived_hrly_va_operating
     ON camdecmpswks.derived_hrly_value USING btree
     (operating_condition_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -213,7 +213,7 @@ CREATE INDEX idx_derived_hrly_va_operating
 
 -- DROP INDEX camdecmpswks.idx_derived_hrly_va_parameter_;
 
-CREATE INDEX idx_derived_hrly_va_parameter_
+CREATE INDEX IF NOT EXISTS idx_derived_hrly_va_parameter_
     ON camdecmpswks.derived_hrly_value USING btree
     (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -221,7 +221,7 @@ CREATE INDEX idx_derived_hrly_va_parameter_
 
 -- DROP INDEX camdecmpswks.idx_dhv_add_date;
 
-CREATE INDEX idx_dhv_add_date
+CREATE INDEX IF NOT EXISTS idx_dhv_add_date
     ON camdecmpswks.derived_hrly_value USING btree
     (add_date ASC NULLS LAST)
     TABLESPACE pg_default;

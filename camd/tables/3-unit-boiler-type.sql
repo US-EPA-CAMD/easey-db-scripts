@@ -55,6 +55,6 @@ COMMENT ON COLUMN camd.unit_boiler_type.update_date
 
 -- DROP INDEX camd.idx_unit_boiler_type_unit;
 
-CREATE INDEX idx_unit_boiler_type_unit
+CREATE INDEX IF NOT EXISTS idx_unit_boiler_type_unit
     ON camd.unit_boiler_type USING btree
     (unit_id ASC NULLS LAST);

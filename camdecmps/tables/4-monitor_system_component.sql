@@ -62,7 +62,7 @@ COMMENT ON COLUMN camdecmps.monitor_system_component.update_date
 
 -- DROP INDEX camdecmps.idx_mon_sys_comp_01;
 
-CREATE INDEX idx_mon_sys_comp_01
+CREATE INDEX IF NOT EXISTS idx_mon_sys_comp_01
     ON camdecmps.monitor_system_component USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -70,6 +70,6 @@ CREATE INDEX idx_mon_sys_comp_01
 
 -- DROP INDEX camdecmps.idx_monitor_system_component_;
 
-CREATE INDEX idx_monitor_system_component_
+CREATE INDEX IF NOT EXISTS idx_monitor_system_component_
     ON camdecmps.monitor_system_component USING btree
     (component_id COLLATE pg_catalog."default" ASC NULLS LAST);

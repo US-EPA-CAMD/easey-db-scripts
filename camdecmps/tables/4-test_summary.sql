@@ -175,7 +175,7 @@ COMMENT ON COLUMN camdecmps.test_summary.injection_protocol_cd
 
 -- DROP INDEX camdecmps.idx_test_summary_calc_test;
 
-CREATE INDEX idx_test_summary_calc_test
+CREATE INDEX IF NOT EXISTS idx_test_summary_calc_test
     ON camdecmps.test_summary USING btree
     (calc_test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -183,7 +183,7 @@ CREATE INDEX idx_test_summary_calc_test
 
 -- DROP INDEX camdecmps.idx_test_summary_chk_sessio;
 
-CREATE INDEX idx_test_summary_chk_sessio
+CREATE INDEX IF NOT EXISTS idx_test_summary_chk_sessio
     ON camdecmps.test_summary USING btree
     (chk_session_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -191,7 +191,7 @@ CREATE INDEX idx_test_summary_chk_sessio
 
 -- DROP INDEX camdecmps.idx_test_summary_component;
 
-CREATE INDEX idx_test_summary_component
+CREATE INDEX IF NOT EXISTS idx_test_summary_component
     ON camdecmps.test_summary USING btree
     (component_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -199,7 +199,7 @@ CREATE INDEX idx_test_summary_component
 
 -- DROP INDEX camdecmps.idx_test_summary_mon_loc_id;
 
-CREATE INDEX idx_test_summary_mon_loc_id
+CREATE INDEX IF NOT EXISTS idx_test_summary_mon_loc_id
     ON camdecmps.test_summary USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -207,7 +207,7 @@ CREATE INDEX idx_test_summary_mon_loc_id
 
 -- DROP INDEX camdecmps.idx_test_summary_mon_sys_id;
 
-CREATE INDEX idx_test_summary_mon_sys_id
+CREATE INDEX IF NOT EXISTS idx_test_summary_mon_sys_id
     ON camdecmps.test_summary USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -215,7 +215,7 @@ CREATE INDEX idx_test_summary_mon_sys_id
 
 -- DROP INDEX camdecmps.idx_test_summary_rpt_period;
 
-CREATE INDEX idx_test_summary_rpt_period
+CREATE INDEX IF NOT EXISTS idx_test_summary_rpt_period
     ON camdecmps.test_summary USING btree
     (rpt_period_id ASC NULLS LAST);
 
@@ -223,7 +223,7 @@ CREATE INDEX idx_test_summary_rpt_period
 
 -- DROP INDEX camdecmps.idx_test_summary_span_scale;
 
-CREATE INDEX idx_test_summary_span_scale
+CREATE INDEX IF NOT EXISTS idx_test_summary_span_scale
     ON camdecmps.test_summary USING btree
     (span_scale_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -231,7 +231,7 @@ CREATE INDEX idx_test_summary_span_scale
 
 -- DROP INDEX camdecmps.idx_test_summary_test_reaso;
 
-CREATE INDEX idx_test_summary_test_reaso
+CREATE INDEX IF NOT EXISTS idx_test_summary_test_reaso
     ON camdecmps.test_summary USING btree
     (test_reason_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -239,7 +239,7 @@ CREATE INDEX idx_test_summary_test_reaso
 
 -- DROP INDEX camdecmps.idx_test_summary_test_resul;
 
-CREATE INDEX idx_test_summary_test_resul
+CREATE INDEX IF NOT EXISTS idx_test_summary_test_resul
     ON camdecmps.test_summary USING btree
     (test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -247,6 +247,6 @@ CREATE INDEX idx_test_summary_test_resul
 
 -- DROP INDEX camdecmps.idx_test_summary_test_type;
 
-CREATE INDEX idx_test_summary_test_type
+CREATE INDEX IF NOT EXISTS idx_test_summary_test_type
     ON camdecmps.test_summary USING btree
     (test_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);

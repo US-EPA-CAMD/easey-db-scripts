@@ -98,7 +98,7 @@ set account_type_description = 'Facility Account'
 where account_type_cd = 'FACLTY';
 
 ALTER TABLE IF EXISTS camdmd.account_type_code
-    ADD CONSTRAINT IF NOT EXISTS fk_account_type_account_type_group FOREIGN KEY (account_type_group_cd)
+    ADD CONSTRAINT fk_account_type_account_type_group FOREIGN KEY (account_type_group_cd)
     REFERENCES camdmd.account_type_group_code (account_type_group_cd) MATCH SIMPLE;
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdmd.unit_type_code
@@ -123,7 +123,7 @@ ALTER TABLE IF EXISTS camdmd.unit_type_code
     ALTER COLUMN unit_type_group_cd SET NOT NULL;
 
 ALTER TABLE IF EXISTS camdmd.unit_type_code
-    ADD CONSTRAINT IF NOT EXISTS fk_unit_type_unit_type_group FOREIGN KEY (unit_type_group_cd)
+    ADD CONSTRAINT fk_unit_type_unit_type_group FOREIGN KEY (unit_type_group_cd)
     REFERENCES camdmd.unit_type_group_code (unit_type_group_cd) MATCH SIMPLE;
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmpsmd.process_code
@@ -206,7 +206,7 @@ ALTER TABLE IF EXISTS camdecmpsmd.severity_code
     ADD COLUMN IF NOT EXISTS eval_status_cd character varying(7);
 
 ALTER TABLE IF EXISTS camdecmpsmd.severity_code
-    ADD CONSTRAINT IF NOT EXISTS fk_severity_code_eval_status_code FOREIGN KEY (eval_status_cd)
+    ADD CONSTRAINT fk_severity_code_eval_status_code FOREIGN KEY (eval_status_cd)
     REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
 
 UPDATE camdecmpsmd.severity_code
@@ -225,7 +225,7 @@ ALTER TABLE IF EXISTS camdecmpsmd.test_type_code
     ADD COLUMN IF NOT EXISTS group_cd character varying(7);
 
 ALTER TABLE IF EXISTS camdecmpsmd.test_type_code
-    ADD CONSTRAINT IF NOT EXISTS fk_test_type_code_group_code FOREIGN KEY (group_cd)
+    ADD CONSTRAINT fk_test_type_code_group_code FOREIGN KEY (group_cd)
     REFERENCES camdecmpsmd.test_type_group_code (test_type_group_cd) MATCH SIMPLE;
 
 UPDATE camdecmpsmd.test_type_code SET group_cd = 'CALINJ' WHERE test_type_cd = '7DAY';
@@ -260,19 +260,16 @@ UPDATE camdecmpsmd.test_type_code SET group_cd = 'MISC' WHERE test_type_cd IN (
 	'PEMSACC'
 );
 --------------------------------------------------------------------------------------------------------------------
-/*  THIS SHOULD HAVE BEEN DONE AS PART OF CAMPD RELEASE 1.1
-    BUT NEEDED WHEN SYNCING DATA FROM NCC ORACLE PRIOR TO ECMPS 2.0 RELEASE
-*/
 ALTER TABLE IF EXISTS camdecmps.dm_emissions
     ADD COLUMN IF NOT EXISTS fac_id numeric(38,0) NOT NULL;
 
 UPDATE camdecmps.dm_emissions dme
 SET fac_id = mp.fac_id
 FROM camdecmps.monitor_plan mp
-WHERE dme.mon_plan_id = mp.mon_plan_id
+WHERE dme.mon_plan_id = mp.mon_plan_id;
 
 ALTER TABLE IF EXISTS camdecmps.dm_emissions
-    ALTER COLUMN IF EXISTS fac_id SET NOT NULL;
+    ALTER COLUMN fac_id SET NOT NULL;
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmpswks.monitor_plan
     ADD COLUMN IF NOT EXISTS eval_status_cd character varying(7) NOT NULL DEFAULT 'EVAL';
@@ -290,23 +287,23 @@ ALTER TABLE IF EXISTS camdecmpswks.emission_evaluation
     ADD COLUMN IF NOT EXISTS eval_status_cd character varying(7) NOT NULL DEFAULT 'EVAL';
 
 ALTER TABLE IF EXISTS camdecmpswks.monitor_plan
-    ADD CONSTRAINT IF NOT EXISTS fk_monitor_plan_eval_status_code FOREIGN KEY (eval_status_cd)
+    ADD CONSTRAINT fk_monitor_plan_eval_status_code FOREIGN KEY (eval_status_cd)
     REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
 
 ALTER TABLE IF EXISTS camdecmpswks.qa_cert_event
-    ADD CONSTRAINT IF NOT EXISTS fk_qa_cert_event_eval_status_code FOREIGN KEY (eval_status_cd)
+    ADD CONSTRAINT fk_qa_cert_event_eval_status_code FOREIGN KEY (eval_status_cd)
     REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
 
 ALTER TABLE IF EXISTS camdecmpswks.test_extension_exemption
-    ADD CONSTRAINT IF NOT EXISTS fk_test_extension_exemption_eval_status_code FOREIGN KEY (eval_status_cd)
+    ADD CONSTRAINT fk_test_extension_exemption_eval_status_code FOREIGN KEY (eval_status_cd)
     REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
 
 ALTER TABLE IF EXISTS camdecmpswks.test_summary
-    ADD CONSTRAINT IF NOT EXISTS fk_test_summary_eval_status_code FOREIGN KEY (eval_status_cd)
+    ADD CONSTRAINT fk_test_summary_eval_status_code FOREIGN KEY (eval_status_cd)
     REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
 
 ALTER TABLE IF EXISTS camdecmpswks.emission_evaluation
-    ADD CONSTRAINT IF NOT EXISTS fk_emission_evaluation_eval_status_code FOREIGN KEY (eval_status_cd)
+    ADD CONSTRAINT fk_emission_evaluation_eval_status_code FOREIGN KEY (eval_status_cd)
     REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
 --------------------------------------------------------------------------------------------------------------------
 DO $$
@@ -320,19 +317,20 @@ BEGIN
 	DROP VIEW IF EXISTS camdecmps.vw_emissions_submissions_gdm;
 	SELECT COALESCE(MAX(em_sub_access_id)+1, 1) FROM camdecmpsaux.em_submission_access INTO startVal;
 	ALTER TABLE IF EXISTS camdecmpsaux.em_submission_access
-		ALTER COLUMN IF EXISTS em_sub_access_id TYPE bigint;
+		ALTER COLUMN em_sub_access_id TYPE bigint;
 	sqlStatement := format('
 	ALTER TABLE IF EXISTS camdecmpsaux.em_submission_access
-		ALTER COLUMN IF EXISTS em_sub_access_id ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START %s MINVALUE 1 MAXVALUE 999999999999 );
+		ALTER COLUMN em_sub_access_id ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START %s MINVALUE 1 MAXVALUE 999999999999 );
 	', startVal);
 	RAISE NOTICE 'Executing...%', sqlStatement;
 	EXECUTE sqlStatement;
 END $$;
 
 ALTER TABLE IF EXISTS camdecmpsaux.em_submission_access
-    ADD CONSTRAINT IF NOT EXISTS em_submission_access_r04 FOREIGN KEY (mon_plan_id)
+    ADD CONSTRAINT em_submission_access_r04 FOREIGN KEY (mon_plan_id)
         REFERENCES camdecmps.monitor_plan (mon_plan_id) MATCH SIMPLE,
-    ADD CONSTRAINT IF NOT EXISTS fk_em_status_cod_em_submission FOREIGN KEY (em_status_cd)
+    ADD CONSTRAINT fk_em_status_cod_em_submission FOREIGN KEY (em_status_cd)
         REFERENCES camdecmpsmd.em_status_code (em_status_cd) MATCH SIMPLE,
-    ADD CONSTRAINT IF NOT EXISTS fk_em_sub_type_c_em_submission FOREIGN KEY (em_sub_type_cd)
+    ADD CONSTRAINT fk_em_sub_type_c_em_submission FOREIGN KEY (em_sub_type_cd)
         REFERENCES camdecmpsmd.em_sub_type_code (em_sub_type_cd) MATCH SIMPLE;
+--------------------------------------------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 -- View: camddmw.vw_rep_display_fact
 
--- DROP VIEW camddmw.vw_rep_display_fact;
+DROP VIEW IF EXISTS camddmw.vw_rep_display_fact;
 
 CREATE OR REPLACE VIEW camddmw.vw_rep_display_fact
  AS

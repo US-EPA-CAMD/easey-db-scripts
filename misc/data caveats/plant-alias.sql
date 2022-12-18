@@ -56,13 +56,13 @@ COMMENT ON COLUMN camd.plant_alias.update_date
 
 -- DROP INDEX camd.idx_plant_alias_plant;
 
-CREATE INDEX idx_plant_alias_plant
+CREATE INDEX IF NOT EXISTS idx_plant_alias_plant
     ON camd.plant_alias USING btree
     (fac_id ASC NULLS LAST);
 -- Index: idx_plant_alias_type
 
 -- DROP INDEX camd.idx_plant_alias_type;
 
-CREATE INDEX idx_plant_alias_type
+CREATE INDEX IF NOT EXISTS idx_plant_alias_type
     ON camd.plant_alias USING btree
     (alias_type COLLATE pg_catalog."default" ASC NULLS LAST);

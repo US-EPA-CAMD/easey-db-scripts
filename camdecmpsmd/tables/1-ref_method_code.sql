@@ -26,6 +26,6 @@ COMMENT ON COLUMN camdecmpsmd.ref_method_code.parameter_cd
 
 -- DROP INDEX camdecmpsmd.idx_ref_method_cod_parameter;
 
-CREATE INDEX idx_ref_method_cod_parameter
+CREATE INDEX IF NOT EXISTS idx_ref_method_cod_parameter
     ON camdecmpsmd.ref_method_code USING btree
     (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);

@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_location_fuel
 
--- DROP VIEW camdecmpswks.vw_location_fuel;
+DROP VIEW IF EXISTS camdecmpswks.vw_location_fuel;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_location_fuel
  AS

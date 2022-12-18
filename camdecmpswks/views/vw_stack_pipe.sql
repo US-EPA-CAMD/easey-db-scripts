@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_stack_pipe
 
--- DROP VIEW camdecmpswks.vw_stack_pipe;
+DROP VIEW IF EXISTS camdecmpswks.vw_stack_pipe;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_stack_pipe
  AS

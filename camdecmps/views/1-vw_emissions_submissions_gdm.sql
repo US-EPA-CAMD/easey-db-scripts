@@ -1,6 +1,6 @@
 -- View: camdecmps.vw_emissions_submissions_gdm
 
--- DROP VIEW camdecmps.vw_emissions_submissions_gdm;
+DROP VIEW IF EXISTS camdecmps.vw_emissions_submissions_gdm;
 
 CREATE OR REPLACE VIEW camdecmps.vw_emissions_submissions_gdm
  AS

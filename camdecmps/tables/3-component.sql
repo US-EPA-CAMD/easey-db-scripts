@@ -82,7 +82,7 @@ COMMENT ON COLUMN camdecmps.component.hg_converter_ind
 
 -- DROP INDEX camdecmps."component_idx$$_15b00009";
 
-CREATE INDEX "component_idx$$_15b00009"
+CREATE INDEX IF NOT EXISTS "component_idx$$_15b00009"
     ON camdecmps.component USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST, component_identifier COLLATE pg_catalog."default" ASC NULLS LAST, component_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -90,7 +90,7 @@ CREATE INDEX "component_idx$$_15b00009"
 
 -- DROP INDEX camdecmps.idx_component_acq_cd;
 
-CREATE INDEX idx_component_acq_cd
+CREATE INDEX IF NOT EXISTS idx_component_acq_cd
     ON camdecmps.component USING btree
     (acq_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -98,7 +98,7 @@ CREATE INDEX idx_component_acq_cd
 
 -- DROP INDEX camdecmps.idx_component_basis_cd;
 
-CREATE INDEX idx_component_basis_cd
+CREATE INDEX IF NOT EXISTS idx_component_basis_cd
     ON camdecmps.component USING btree
     (basis_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -106,7 +106,7 @@ CREATE INDEX idx_component_basis_cd
 
 -- DROP INDEX camdecmps.idx_component_component;
 
-CREATE INDEX idx_component_component
+CREATE INDEX IF NOT EXISTS idx_component_component
     ON camdecmps.component USING btree
     (component_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -114,6 +114,6 @@ CREATE INDEX idx_component_component
 
 -- DROP INDEX camdecmps.idx_component_monlocid;
 
-CREATE INDEX idx_component_monlocid
+CREATE INDEX IF NOT EXISTS idx_component_monlocid
     ON camdecmps.component USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);

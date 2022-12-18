@@ -26,6 +26,6 @@ COMMENT ON COLUMN camdmd.class_code.affected_ind
 
 -- DROP INDEX camdmd.idx_class_code_affected;
 
-CREATE INDEX idx_class_code_affected
+CREATE INDEX IF NOT EXISTS idx_class_code_affected
     ON camdmd.class_code USING btree
     (affected_ind ASC NULLS LAST);

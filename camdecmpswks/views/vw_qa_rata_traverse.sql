@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_qa_rata_traverse
 
--- DROP VIEW camdecmpswks.vw_qa_rata_traverse;
+DROP VIEW IF EXISTS camdecmpswks.vw_qa_rata_traverse;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_qa_rata_traverse
  AS

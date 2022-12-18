@@ -55,7 +55,7 @@ COMMENT ON COLUMN camd.unit_op_status.update_date
 
 -- DROP INDEX camd.idx_unit_op_status_code;
 
-CREATE INDEX idx_unit_op_status_code
+CREATE INDEX IF NOT EXISTS idx_unit_op_status_code
     ON camd.unit_op_status USING btree
     (op_status_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -63,6 +63,6 @@ CREATE INDEX idx_unit_op_status_code
 
 -- DROP INDEX camd.idx_unit_op_status_unit;
 
-CREATE INDEX idx_unit_op_status_unit
+CREATE INDEX IF NOT EXISTS idx_unit_op_status_unit
     ON camd.unit_op_status USING btree
     (unit_id ASC NULLS LAST);

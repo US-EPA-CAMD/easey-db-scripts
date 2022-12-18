@@ -79,7 +79,7 @@ COMMENT ON COLUMN camd.program.update_date
 
 -- DROP INDEX camd.idx_program_code;
 
-CREATE INDEX idx_program_code
+CREATE INDEX IF NOT EXISTS idx_program_code
     ON camd.program USING btree
     (prg_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -87,6 +87,6 @@ CREATE INDEX idx_program_code
 
 -- DROP INDEX camd.idx_program_state;
 
-CREATE INDEX idx_program_state
+CREATE INDEX IF NOT EXISTS idx_program_state
     ON camd.program USING btree
     (state_cd COLLATE pg_catalog."default" ASC NULLS LAST);

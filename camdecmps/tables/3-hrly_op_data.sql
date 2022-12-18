@@ -130,7 +130,7 @@ COMMENT ON COLUMN camdecmps.hrly_op_data.mats_startup_shutdown_flg
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hod_add_date;
 
-CREATE INDEX IF NOT EXISTS idx_hod_add_date
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hod_add_date
     ON camdecmps.hrly_op_data USING btree
     (add_date ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -138,7 +138,7 @@ CREATE INDEX IF NOT EXISTS idx_hod_add_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrly_op_data_1;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_op_data_1
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_op_data_1
     ON camdecmps.hrly_op_data USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -146,7 +146,7 @@ CREATE INDEX IF NOT EXISTS idx_hrly_op_data_1
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrly_op_data_2;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_op_data_2
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_op_data_2
     ON camdecmps.hrly_op_data USING btree
     (rpt_period_id ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -154,7 +154,7 @@ CREATE INDEX IF NOT EXISTS idx_hrly_op_data_2
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrly_op_data_emr;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_op_data_emr
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_op_data_emr
     ON camdecmps.hrly_op_data USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -162,7 +162,7 @@ CREATE INDEX IF NOT EXISTS idx_hrly_op_data_emr
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrly_op_data_fuel_cd;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_op_data_fuel_cd
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_op_data_fuel_cd
     ON camdecmps.hrly_op_data USING btree
     (fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -170,7 +170,7 @@ CREATE INDEX IF NOT EXISTS idx_hrly_op_data_fuel_cd
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrly_op_data_operating_;
 
-CREATE INDEX IF NOT EXISTS idx_hrly_op_data_operating_
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_op_data_operating_
     ON camdecmps.hrly_op_data USING btree
     (operating_condition_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

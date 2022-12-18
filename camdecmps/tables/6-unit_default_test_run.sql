@@ -82,6 +82,6 @@ COMMENT ON COLUMN camdecmps.unit_default_test_run.run_used_ind
 
 -- DROP INDEX camdecmps.idx_unit_default_te_unit_defau;
 
-CREATE INDEX idx_unit_default_te_unit_defau
+CREATE INDEX IF NOT EXISTS idx_unit_default_te_unit_defau
     ON camdecmps.unit_default_test_run USING btree
     (unit_default_test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

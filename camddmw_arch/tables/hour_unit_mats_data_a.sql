@@ -119,7 +119,7 @@ COMMENT ON COLUMN camddmw_arch.hour_unit_mats_data_a.add_date
 
 -- DROP INDEX camddmw_arch.idx_hour_unit_mats_data_op_time;
 
-CREATE INDEX idx_hour_unit_mats_data_op_time
+CREATE INDEX IF NOT EXISTS idx_hour_unit_mats_data_op_time
     ON camddmw_arch.hour_unit_mats_data_a USING btree
     (op_time ASC NULLS LAST);
 
@@ -127,7 +127,7 @@ CREATE INDEX idx_hour_unit_mats_data_op_time
 
 -- DROP INDEX camddmw_arch.idx_hour_unit_mats_data_op_year;
 
-CREATE INDEX idx_hour_unit_mats_data_op_year
+CREATE INDEX IF NOT EXISTS idx_hour_unit_mats_data_op_year
     ON camddmw_arch.hour_unit_mats_data_a USING btree
     (op_year ASC NULLS LAST);
 
@@ -135,7 +135,7 @@ CREATE INDEX idx_hour_unit_mats_data_op_year
 
 -- DROP INDEX camddmw_arch.idx_hour_unit_mats_data_rpt_period_id;
 
-CREATE INDEX idx_hour_unit_mats_data_rpt_period_id
+CREATE INDEX IF NOT EXISTS idx_hour_unit_mats_data_rpt_period_id
     ON camddmw_arch.hour_unit_mats_data_a USING btree
     (rpt_period_id ASC NULLS LAST);
 

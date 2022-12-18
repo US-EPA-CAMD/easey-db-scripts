@@ -93,7 +93,7 @@ COMMENT ON COLUMN camdecmps.mats_derived_hrly_value.update_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_matsdhv_002;
 
-CREATE INDEX IF NOT EXISTS idx_matsdhv_002
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_matsdhv_002
     ON camdecmps.mats_derived_hrly_value USING btree
     (modc_cd COLLATE pg_catalog."default" ASC NULLS LAST, unadjusted_hrly_value COLLATE pg_catalog."default" ASC NULLS LAST, parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST, hour_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -101,7 +101,7 @@ CREATE INDEX IF NOT EXISTS idx_matsdhv_002
 
 -- DROP INDEX IF EXISTS camdecmps.idx_matsdhv_add_date;
 
-CREATE INDEX IF NOT EXISTS idx_matsdhv_add_date
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_matsdhv_add_date
     ON camdecmps.mats_derived_hrly_value USING btree
     (add_date ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -109,7 +109,7 @@ CREATE INDEX IF NOT EXISTS idx_matsdhv_add_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_matsdhv_hour_id;
 
-CREATE INDEX IF NOT EXISTS idx_matsdhv_hour_id
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_matsdhv_hour_id
     ON camdecmps.mats_derived_hrly_value USING btree
     (hour_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -117,7 +117,7 @@ CREATE INDEX IF NOT EXISTS idx_matsdhv_hour_id
 
 -- DROP INDEX IF EXISTS camdecmps.idx_matsdhv_mon_form_id;
 
-CREATE INDEX IF NOT EXISTS idx_matsdhv_mon_form_id
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_matsdhv_mon_form_id
     ON camdecmps.mats_derived_hrly_value USING btree
     (mon_form_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -125,7 +125,7 @@ CREATE INDEX IF NOT EXISTS idx_matsdhv_mon_form_id
 
 -- DROP INDEX IF EXISTS camdecmps.idx_matsdhv_parameter_;
 
-CREATE INDEX IF NOT EXISTS idx_matsdhv_parameter_
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_matsdhv_parameter_
     ON camdecmps.mats_derived_hrly_value USING btree
     (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -133,7 +133,7 @@ CREATE INDEX IF NOT EXISTS idx_matsdhv_parameter_
 
 -- DROP INDEX IF EXISTS camdecmps.matsdhv_idx001;
 
-CREATE INDEX IF NOT EXISTS matsdhv_idx001
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS matsdhv_idx001
     ON camdecmps.mats_derived_hrly_value USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

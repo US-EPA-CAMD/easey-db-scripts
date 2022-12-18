@@ -174,7 +174,7 @@ COMMENT ON COLUMN camdecmps.on_off_cal.update_date
 
 -- DROP INDEX camdecmps.idx_on_off_cal_001;
 
-CREATE INDEX idx_on_off_cal_001
+CREATE INDEX IF NOT EXISTS idx_on_off_cal_001
     ON camdecmps.on_off_cal USING btree
     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -182,6 +182,6 @@ CREATE INDEX idx_on_off_cal_001
 
 -- DROP INDEX camdecmps.idx_on_off_cal_upscale_ga;
 
-CREATE INDEX idx_on_off_cal_upscale_ga
+CREATE INDEX IF NOT EXISTS idx_on_off_cal_upscale_ga
     ON camdecmps.on_off_cal USING btree
     (upscale_gas_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);

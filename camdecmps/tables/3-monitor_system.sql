@@ -82,7 +82,7 @@ COMMENT ON COLUMN camdecmps.monitor_system.update_date
 
 -- DROP INDEX camdecmps.idx_monitor_system_fuel_cd;
 
-CREATE INDEX idx_monitor_system_fuel_cd
+CREATE INDEX IF NOT EXISTS idx_monitor_system_fuel_cd
     ON camdecmps.monitor_system USING btree
     (fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -90,7 +90,7 @@ CREATE INDEX idx_monitor_system_fuel_cd
 
 -- DROP INDEX camdecmps.idx_monitor_system_mon_loc_id;
 
-CREATE INDEX idx_monitor_system_mon_loc_id
+CREATE INDEX IF NOT EXISTS idx_monitor_system_mon_loc_id
     ON camdecmps.monitor_system USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -98,7 +98,7 @@ CREATE INDEX idx_monitor_system_mon_loc_id
 
 -- DROP INDEX camdecmps.idx_monitor_system_sys_design;
 
-CREATE INDEX idx_monitor_system_sys_design
+CREATE INDEX IF NOT EXISTS idx_monitor_system_sys_design
     ON camdecmps.monitor_system USING btree
     (sys_designation_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -106,7 +106,7 @@ CREATE INDEX idx_monitor_system_sys_design
 
 -- DROP INDEX camdecmps.idx_monitor_system_sys_type_c;
 
-CREATE INDEX idx_monitor_system_sys_type_c
+CREATE INDEX IF NOT EXISTS idx_monitor_system_sys_type_c
     ON camdecmps.monitor_system USING btree
     (sys_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 

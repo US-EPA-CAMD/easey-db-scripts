@@ -127,7 +127,7 @@ COMMENT ON COLUMN camd.unit_program.update_date
 
 -- DROP INDEX camd.idx_unit_program_applic;
 
-CREATE INDEX idx_unit_program_applic
+CREATE INDEX IF NOT EXISTS idx_unit_program_applic
     ON camd.unit_program USING btree
     (app_status_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -135,7 +135,7 @@ CREATE INDEX idx_unit_program_applic
 
 -- DROP INDEX camd.idx_unit_program_class;
 
-CREATE INDEX idx_unit_program_class
+CREATE INDEX IF NOT EXISTS idx_unit_program_class
     ON camd.unit_program USING btree
     (prg_cd COLLATE pg_catalog."default" ASC NULLS LAST, class_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -143,7 +143,7 @@ CREATE INDEX idx_unit_program_class
 
 -- DROP INDEX camd.idx_unit_program_id;
 
-CREATE INDEX idx_unit_program_id
+CREATE INDEX IF NOT EXISTS idx_unit_program_id
     ON camd.unit_program USING btree
     (prg_id ASC NULLS LAST);
 
@@ -151,7 +151,7 @@ CREATE INDEX idx_unit_program_id
 
 -- DROP INDEX camd.idx_unit_program_nonstandard;
 
-CREATE INDEX idx_unit_program_nonstandard
+CREATE INDEX IF NOT EXISTS idx_unit_program_nonstandard
     ON camd.unit_program USING btree
     (nonstandard_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -159,7 +159,7 @@ CREATE INDEX idx_unit_program_nonstandard
 
 -- DROP INDEX camd.idx_unit_program_unit;
 
-CREATE INDEX idx_unit_program_unit
+CREATE INDEX IF NOT EXISTS idx_unit_program_unit
     ON camd.unit_program USING btree
     (unit_id ASC NULLS LAST);
 
@@ -167,7 +167,7 @@ CREATE INDEX idx_unit_program_unit
 
 -- DROP INDEX camd.idx_unit_program_unit_class;
 
-CREATE INDEX idx_unit_program_unit_class
+CREATE INDEX IF NOT EXISTS idx_unit_program_unit_class
     ON camd.unit_program USING btree
     (unit_id ASC NULLS LAST, class_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -175,6 +175,6 @@ CREATE INDEX idx_unit_program_unit_class
 
 -- DROP INDEX camd.idx_unit_program_unit_program;
 
-CREATE INDEX idx_unit_program_unit_program
+CREATE INDEX IF NOT EXISTS idx_unit_program_unit_program
     ON camd.unit_program USING btree
     (unit_id ASC NULLS LAST, prg_cd COLLATE pg_catalog."default" ASC NULLS LAST);

@@ -46,6 +46,6 @@ COMMENT ON COLUMN camdecmps.cycle_time_summary.update_date
 
 -- DROP INDEX camdecmps.idx_cycle_time_summary_001;
 
-CREATE INDEX idx_cycle_time_summary_001
+CREATE INDEX IF NOT EXISTS idx_cycle_time_summary_001
     ON camdecmps.cycle_time_summary USING btree
     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

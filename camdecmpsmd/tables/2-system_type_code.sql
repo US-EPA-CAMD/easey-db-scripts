@@ -30,6 +30,6 @@ COMMENT ON COLUMN camdecmpsmd.system_type_code.parameter_cd
 
 -- DROP INDEX camdecmpsmd.idx_system_type_cod_parameter;
 
-CREATE INDEX idx_system_type_cod_parameter
+CREATE INDEX IF NOT EXISTS idx_system_type_cod_parameter
     ON camdecmpsmd.system_type_code USING btree
     (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);

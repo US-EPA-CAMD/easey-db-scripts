@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_rect_duct_waf
 
--- DROP VIEW camdecmpswks.vw_rect_duct_waf;
+DROP VIEW IF EXISTS camdecmpswks.vw_rect_duct_waf;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_rect_duct_waf
  AS

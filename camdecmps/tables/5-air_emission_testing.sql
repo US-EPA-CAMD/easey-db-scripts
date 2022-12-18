@@ -74,6 +74,6 @@ COMMENT ON COLUMN camdecmps.air_emission_testing.userid
 
 -- DROP INDEX camdecmps.idx_aet_testsumid;
 
-CREATE INDEX idx_aet_testsumid
+CREATE INDEX IF NOT EXISTS idx_aet_testsumid
     ON camdecmps.air_emission_testing USING btree
     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

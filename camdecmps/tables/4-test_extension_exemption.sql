@@ -118,7 +118,7 @@ COMMENT ON COLUMN camdecmps.test_extension_exemption.submission_availability_cd
 
 -- DROP INDEX camdecmps.idx_test_extension__chk_sessio;
 
-CREATE INDEX idx_test_extension__chk_sessio
+CREATE INDEX IF NOT EXISTS idx_test_extension__chk_sessio
     ON camdecmps.test_extension_exemption USING btree
     (chk_session_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -126,7 +126,7 @@ CREATE INDEX idx_test_extension__chk_sessio
 
 -- DROP INDEX camdecmps.idx_test_extension__submission;
 
-CREATE INDEX idx_test_extension__submission
+CREATE INDEX IF NOT EXISTS idx_test_extension__submission
     ON camdecmps.test_extension_exemption USING btree
     (submission_id ASC NULLS LAST);
 
@@ -134,7 +134,7 @@ CREATE INDEX idx_test_extension__submission
 
 -- DROP INDEX camdecmps.idx_test_extension_component;
 
-CREATE INDEX idx_test_extension_component
+CREATE INDEX IF NOT EXISTS idx_test_extension_component
     ON camdecmps.test_extension_exemption USING btree
     (component_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -142,7 +142,7 @@ CREATE INDEX idx_test_extension_component
 
 -- DROP INDEX camdecmps.idx_test_extension_extens_exe;
 
-CREATE INDEX idx_test_extension_extens_exe
+CREATE INDEX IF NOT EXISTS idx_test_extension_extens_exe
     ON camdecmps.test_extension_exemption USING btree
     (extens_exempt_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -150,7 +150,7 @@ CREATE INDEX idx_test_extension_extens_exe
 
 -- DROP INDEX camdecmps.idx_test_extension_fuel_cd;
 
-CREATE INDEX idx_test_extension_fuel_cd
+CREATE INDEX IF NOT EXISTS idx_test_extension_fuel_cd
     ON camdecmps.test_extension_exemption USING btree
     (fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -158,7 +158,7 @@ CREATE INDEX idx_test_extension_fuel_cd
 
 -- DROP INDEX camdecmps.idx_test_extension_mon_loc_id;
 
-CREATE INDEX idx_test_extension_mon_loc_id
+CREATE INDEX IF NOT EXISTS idx_test_extension_mon_loc_id
     ON camdecmps.test_extension_exemption USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -166,7 +166,7 @@ CREATE INDEX idx_test_extension_mon_loc_id
 
 -- DROP INDEX camdecmps.idx_test_extension_mon_sys_id;
 
-CREATE INDEX idx_test_extension_mon_sys_id
+CREATE INDEX IF NOT EXISTS idx_test_extension_mon_sys_id
     ON camdecmps.test_extension_exemption USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -174,7 +174,7 @@ CREATE INDEX idx_test_extension_mon_sys_id
 
 -- DROP INDEX camdecmps.idx_test_extension_span_scale;
 
-CREATE INDEX idx_test_extension_span_scale
+CREATE INDEX IF NOT EXISTS idx_test_extension_span_scale
     ON camdecmps.test_extension_exemption USING btree
     (span_scale_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -182,7 +182,7 @@ CREATE INDEX idx_test_extension_span_scale
 
 -- DROP INDEX camdecmps.idx_test_extension_submission;
 
-CREATE INDEX idx_test_extension_submission
+CREATE INDEX IF NOT EXISTS idx_test_extension_submission
     ON camdecmps.test_extension_exemption USING btree
     (submission_availability_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -190,6 +190,6 @@ CREATE INDEX idx_test_extension_submission
 
 -- DROP INDEX camdecmps.test_ext_exempt_idx001;
 
-CREATE INDEX test_ext_exempt_idx001
+CREATE INDEX IF NOT EXISTS test_ext_exempt_idx001
     ON camdecmps.test_extension_exemption USING btree
     (rpt_period_id ASC NULLS LAST);

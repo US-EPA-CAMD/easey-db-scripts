@@ -34,7 +34,7 @@ COMMENT ON COLUMN camdecmpsmd.rule_check.check_catalog_id
 
 -- DROP INDEX camdecmpsmd.idx_rule_check_category_c;
 
-CREATE INDEX idx_rule_check_category_c
+CREATE INDEX IF NOT EXISTS idx_rule_check_category_c
     ON camdecmpsmd.rule_check USING btree
     (category_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 

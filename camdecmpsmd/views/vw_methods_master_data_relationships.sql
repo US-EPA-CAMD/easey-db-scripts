@@ -1,6 +1,6 @@
 -- View: camdecmpsmd.vw_methods_master_data_relationships
 
--- DROP VIEW camdecmpsmd.vw_methods_master_data_relationships;
+DROP VIEW IF EXISTS camdecmpsmd.vw_methods_master_data_relationships;
 
 CREATE OR REPLACE VIEW camdecmpsmd.vw_methods_master_data_relationships
  AS

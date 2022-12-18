@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_location_capacity
 
--- DROP VIEW camdecmpswks.vw_location_capacity;
+DROP VIEW IF EXISTS camdecmpswks.vw_location_capacity;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_location_capacity
  AS

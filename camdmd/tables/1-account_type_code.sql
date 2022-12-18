@@ -31,6 +31,6 @@ COMMENT ON COLUMN camdmd.account_type_code.account_type_description
 
 -- DROP INDEX camdmd.idx_account_type_group_code;
 
-CREATE INDEX idx_account_type_group_code
+CREATE INDEX IF NOT EXISTS idx_account_type_group_code
     ON camdmd.account_type_code USING btree
     (account_type_group_cd COLLATE pg_catalog."default" ASC NULLS LAST);

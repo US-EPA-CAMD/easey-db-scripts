@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_qa_test_claim
 
--- DROP VIEW camdecmpswks.vw_qa_test_claim;
+DROP VIEW IF EXISTS camdecmpswks.vw_qa_test_claim;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_qa_test_claim
  AS

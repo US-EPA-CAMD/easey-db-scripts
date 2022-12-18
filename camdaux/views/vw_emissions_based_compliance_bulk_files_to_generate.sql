@@ -1,6 +1,6 @@
 -- View: camdaux.vw_emissions_based_compliance_bulk_files_to_generate
 
--- DROP VIEW camdaux.vw_emissions_based_compliance_bulk_files_to_generate;
+DROP VIEW IF EXISTS camdaux.vw_emissions_based_compliance_bulk_files_to_generate;
 
 CREATE OR REPLACE VIEW camdaux.vw_emissions_based_compliance_bulk_files_to_generate
  AS

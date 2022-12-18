@@ -93,7 +93,7 @@ COMMENT ON COLUMN camdecmps.long_term_fuel_flow.update_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_long_term_fuel_flow_emr;
 
-CREATE INDEX IF NOT EXISTS idx_long_term_fuel_flow_emr
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_long_term_fuel_flow_emr
     ON camdecmps.long_term_fuel_flow USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -101,7 +101,7 @@ CREATE INDEX IF NOT EXISTS idx_long_term_fuel_flow_emr
 
 -- DROP INDEX IF EXISTS camdecmps.idx_long_term_fuel_fuel_flow;
 
-CREATE INDEX IF NOT EXISTS idx_long_term_fuel_fuel_flow
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_long_term_fuel_fuel_flow
     ON camdecmps.long_term_fuel_flow USING btree
     (fuel_flow_period_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -109,7 +109,7 @@ CREATE INDEX IF NOT EXISTS idx_long_term_fuel_fuel_flow
 
 -- DROP INDEX IF EXISTS camdecmps.idx_long_term_fuel_gcv_uom_cd;
 
-CREATE INDEX IF NOT EXISTS idx_long_term_fuel_gcv_uom_cd
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_long_term_fuel_gcv_uom_cd
     ON camdecmps.long_term_fuel_flow USING btree
     (gcv_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -117,7 +117,7 @@ CREATE INDEX IF NOT EXISTS idx_long_term_fuel_gcv_uom_cd
 
 -- DROP INDEX IF EXISTS camdecmps.idx_long_term_fuel_ltff_uom_c;
 
-CREATE INDEX IF NOT EXISTS idx_long_term_fuel_ltff_uom_c
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_long_term_fuel_ltff_uom_c
     ON camdecmps.long_term_fuel_flow USING btree
     (ltff_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -125,7 +125,7 @@ CREATE INDEX IF NOT EXISTS idx_long_term_fuel_ltff_uom_c
 
 -- DROP INDEX IF EXISTS camdecmps.idx_long_term_fuel_mon_loc_id;
 
-CREATE INDEX IF NOT EXISTS idx_long_term_fuel_mon_loc_id
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_long_term_fuel_mon_loc_id
     ON camdecmps.long_term_fuel_flow USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -133,7 +133,7 @@ CREATE INDEX IF NOT EXISTS idx_long_term_fuel_mon_loc_id
 
 -- DROP INDEX IF EXISTS camdecmps.idx_long_term_fuel_mon_sys_id;
 
-CREATE INDEX IF NOT EXISTS idx_long_term_fuel_mon_sys_id
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_long_term_fuel_mon_sys_id
     ON camdecmps.long_term_fuel_flow USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -141,7 +141,7 @@ CREATE INDEX IF NOT EXISTS idx_long_term_fuel_mon_sys_id
 
 -- DROP INDEX IF EXISTS camdecmps.idx_ltff_add_date;
 
-CREATE INDEX IF NOT EXISTS idx_ltff_add_date
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_ltff_add_date
     ON camdecmps.long_term_fuel_flow USING btree
     (add_date ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -149,7 +149,7 @@ CREATE INDEX IF NOT EXISTS idx_ltff_add_date
 
 -- DROP INDEX IF EXISTS camdecmps.long_term_fuel_flow_idx001;
 
-CREATE INDEX IF NOT EXISTS long_term_fuel_flow_idx001
+CREATE INDEX IF NOT EXISTS IF NOT EXISTS long_term_fuel_flow_idx001
     ON camdecmps.long_term_fuel_flow USING btree
     (rpt_period_id ASC NULLS LAST)
     TABLESPACE pg_default;
