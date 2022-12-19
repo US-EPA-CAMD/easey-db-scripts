@@ -2,7 +2,7 @@
 
 -- DROP TABLE camd.plant_alias;
 
-CREATE TABLE camd.plant_alias
+CREATE TABLE IF NOT EXISTS camd.plant_alias
 (
     plant_alias_id numeric(38,0) NOT NULL,
     fac_id numeric(38,0) NOT NULL,

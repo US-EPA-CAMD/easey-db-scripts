@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.analyzer_range;
 
-CREATE TABLE camdecmpswks.analyzer_range
+CREATE TABLE IF NOT EXISTS camdecmpswks.analyzer_range
 (
     analyzer_range_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     component_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

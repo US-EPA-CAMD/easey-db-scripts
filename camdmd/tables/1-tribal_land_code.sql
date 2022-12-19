@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdmd.tribal_land_code;
 
-CREATE TABLE camdmd.tribal_land_code
+CREATE TABLE IF NOT EXISTS camdmd.tribal_land_code
 (
     tribal_land_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     tribal_land_description character varying(1000) COLLATE pg_catalog."default" NOT NULL,

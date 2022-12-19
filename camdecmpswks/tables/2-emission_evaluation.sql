@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.emission_evaluation;
 
-CREATE TABLE camdecmpswks.emission_evaluation
+CREATE TABLE IF NOT EXISTS camdecmpswks.emission_evaluation
 (
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id numeric(38,0) NOT NULL,

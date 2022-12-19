@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdmd.epa_region_code;
 
-CREATE TABLE camdmd.epa_region_code
+CREATE TABLE IF NOT EXISTS camdmd.epa_region_code
 (
     epa_region_cd numeric(2,0) NOT NULL,
     epa_region_description character varying(1000) COLLATE pg_catalog."default",

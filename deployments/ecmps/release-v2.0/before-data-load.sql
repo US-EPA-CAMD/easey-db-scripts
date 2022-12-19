@@ -88,8 +88,8 @@ ALTER TABLE IF EXISTS camdecmpsmd.process_code
 ALTER TABLE IF EXISTS camdecmpsmd.qual_type_code
     DROP COLUMN IF EXISTS qual_type_group_cd;
 --------------------------------------------------------------------------------------
-ALTER TABLE IF EXISTS camdecmps.dm_emissions
-    DROP COLUMN IF EXISTS fac_id;
+--ALTER TABLE IF EXISTS camdecmps.dm_emissions
+--    DROP COLUMN IF EXISTS fac_id;
 --------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmpsaux.em_submission_access
     ALTER COLUMN em_sub_access_id DROP IDENTITY IF EXISTS;
@@ -107,4 +107,11 @@ ALTER TABLE IF EXISTS camdecmpsmd.test_type_code
 
 ALTER TABLE IF EXISTS camdecmpsmd.test_type_code
     DROP CONSTRAINT IF EXISTS fk_test_type_code_group_code;
+--------------------------------------------------------------------------------------------------------------------
+ALTER TABLE IF EXISTS camdecmpswks.user_check_out
+	DROP CONSTRAINT IF EXISTS pk_user_check_out,
+	DROP CONSTRAINT IF EXISTS uq_user_checkout_out;
+
+ALTER TABLE IF EXISTS camdecmpswks.user_check_out
+	ADD CONSTRAINT pk_user_check_out PRIMARY KEY (mon_plan_id);
 --------------------------------------------------------------------------------------------------------------------

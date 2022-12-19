@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdmd.county_code;
 
-CREATE TABLE camdmd.county_code
+CREATE TABLE IF NOT EXISTS camdmd.county_code
 (
     county_cd character varying(8) COLLATE pg_catalog."default" NOT NULL,
     county_number character varying(3) COLLATE pg_catalog."default" NOT NULL,

@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.hrly_param_fuel_flow;
 
-CREATE TABLE camdecmpswks.hrly_param_fuel_flow
+CREATE TABLE IF NOT EXISTS camdecmpswks.hrly_param_fuel_flow
 (
     hrly_param_ff_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     hrly_fuel_flow_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

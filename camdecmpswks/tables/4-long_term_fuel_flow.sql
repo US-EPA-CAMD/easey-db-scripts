@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.long_term_fuel_flow;
 
-CREATE TABLE camdecmpswks.long_term_fuel_flow
+CREATE TABLE IF NOT EXISTS camdecmpswks.long_term_fuel_flow
 (
     ltff_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id numeric(38,0),

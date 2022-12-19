@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.system_fuel_flow;
 
-CREATE TABLE camdecmpswks.system_fuel_flow
+CREATE TABLE IF NOT EXISTS camdecmpswks.system_fuel_flow
 (
     sys_fuel_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_sys_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

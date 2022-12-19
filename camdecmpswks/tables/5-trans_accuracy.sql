@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.trans_accuracy;
 
-CREATE TABLE camdecmpswks.trans_accuracy
+CREATE TABLE IF NOT EXISTS camdecmpswks.trans_accuracy
 (
     trans_ac_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

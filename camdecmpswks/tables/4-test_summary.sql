@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.test_summary;
 
-CREATE TABLE camdecmpswks.test_summary
+CREATE TABLE IF NOT EXISTS camdecmpswks.test_summary
 (
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

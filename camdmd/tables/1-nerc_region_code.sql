@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdmd.nerc_region_code;
 
-CREATE TABLE camdmd.nerc_region_code
+CREATE TABLE IF NOT EXISTS camdmd.nerc_region_code
 (
     nerc_region_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     nerc_region_description character varying(1000) COLLATE pg_catalog."default",

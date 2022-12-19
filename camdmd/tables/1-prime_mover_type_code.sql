@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdmd.prime_mover_type_code;
 
-CREATE TABLE camdmd.prime_mover_type_code
+CREATE TABLE IF NOT EXISTS camdmd.prime_mover_type_code
 (
     prime_mover_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     prime_mover_type_description character varying(1000) COLLATE pg_catalog."default" NOT NULL,

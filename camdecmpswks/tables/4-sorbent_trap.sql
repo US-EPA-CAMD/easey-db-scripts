@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.sorbent_trap;
 
-CREATE TABLE camdecmpswks.sorbent_trap
+CREATE TABLE IF NOT EXISTS camdecmpswks.sorbent_trap
 (
     trap_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

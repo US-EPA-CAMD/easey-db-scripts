@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.monitor_hrly_value;
 
-CREATE TABLE camdecmpswks.monitor_hrly_value
+CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_hrly_value
 (
     monitor_hrly_val_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     hour_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

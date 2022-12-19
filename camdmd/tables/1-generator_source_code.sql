@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdmd.generator_source_code;
 
-CREATE TABLE camdmd.generator_source_code
+CREATE TABLE IF NOT EXISTS camdmd.generator_source_code
 (
     gen_source_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     gen_source_description character varying(1000) COLLATE pg_catalog."default" NOT NULL,

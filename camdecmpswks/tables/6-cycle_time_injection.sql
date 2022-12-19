@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.cycle_time_injection;
 
-CREATE TABLE camdecmpswks.cycle_time_injection
+CREATE TABLE IF NOT EXISTS camdecmpswks.cycle_time_injection
 (
     cycle_time_inj_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     cycle_time_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.unit_default_test_run;
 
-CREATE TABLE camdecmpswks.unit_default_test_run
+CREATE TABLE IF NOT EXISTS camdecmpswks.unit_default_test_run
 (
     unit_default_test_run_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     unit_default_test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

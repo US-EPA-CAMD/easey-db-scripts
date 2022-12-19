@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.ae_hi_oil;
 
-CREATE TABLE camdecmpswks.ae_hi_oil
+CREATE TABLE IF NOT EXISTS camdecmpswks.ae_hi_oil
 (
     ae_hi_oil_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     ae_corr_test_run_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.nsps4t_summary;
 
-CREATE TABLE camdecmpswks.nsps4t_summary
+CREATE TABLE IF NOT EXISTS camdecmpswks.nsps4t_summary
 (
     nsps4t_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     emission_standard_cd character varying(7) COLLATE pg_catalog."default",

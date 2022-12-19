@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.nsps4t_annual;
 
-CREATE TABLE camdecmpswks.nsps4t_annual
+CREATE TABLE IF NOT EXISTS camdecmpswks.nsps4t_annual
 (
     nsps4t_ann_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     nsps4t_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

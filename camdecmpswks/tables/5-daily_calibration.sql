@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.daily_calibration;
 
-CREATE TABLE camdecmpswks.daily_calibration
+CREATE TABLE IF NOT EXISTS camdecmpswks.daily_calibration
 (
     cal_inj_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     daily_test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmps.emission_view_co2dailyfuel;
 
-CREATE TABLE camdecmps.emission_view_co2dailyfuel
+CREATE TABLE IF NOT EXISTS camdecmps.emission_view_co2dailyfuel
 (
     em_co2_daily_fuel_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

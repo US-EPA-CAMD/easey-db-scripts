@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.on_off_cal;
 
-CREATE TABLE camdecmpswks.on_off_cal
+CREATE TABLE IF NOT EXISTS camdecmpswks.on_off_cal
 (
     on_off_cal_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

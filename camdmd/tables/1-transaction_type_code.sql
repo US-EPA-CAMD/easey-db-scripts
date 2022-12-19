@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdmd.transaction_type_code;
 
-CREATE TABLE camdmd.transaction_type_code
+CREATE TABLE IF NOT EXISTS camdmd.transaction_type_code
 (
     trans_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     trans_type_description character varying(1000) COLLATE pg_catalog."default" NOT NULL,

@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.mats_method_data;
 
-CREATE TABLE camdecmpswks.mats_method_data
+CREATE TABLE IF NOT EXISTS camdecmpswks.mats_method_data
 (
     mats_method_data_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

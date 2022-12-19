@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.weekly_system_integrity;
 
-CREATE TABLE camdecmpswks.weekly_system_integrity
+CREATE TABLE IF NOT EXISTS camdecmpswks.weekly_system_integrity
 (
     weekly_sys_integrity_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     weekly_test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

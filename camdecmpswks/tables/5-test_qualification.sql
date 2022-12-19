@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.test_qualification;
 
-CREATE TABLE camdecmpswks.test_qualification
+CREATE TABLE IF NOT EXISTS camdecmpswks.test_qualification
 (
     test_qualification_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

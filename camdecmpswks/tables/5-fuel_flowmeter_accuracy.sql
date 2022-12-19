@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.fuel_flowmeter_accuracy;
 
-CREATE TABLE camdecmpswks.fuel_flowmeter_accuracy
+CREATE TABLE IF NOT EXISTS camdecmpswks.fuel_flowmeter_accuracy
 (
     fuel_flow_acc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.sampling_train;
 
-CREATE TABLE camdecmpswks.sampling_train
+CREATE TABLE IF NOT EXISTS camdecmpswks.sampling_train
 (
     trap_train_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     trap_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

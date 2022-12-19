@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.fuel_flow_to_load_check;
 
-CREATE TABLE camdecmpswks.fuel_flow_to_load_check
+CREATE TABLE IF NOT EXISTS camdecmpswks.fuel_flow_to_load_check
 (
     fuel_flow_load_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

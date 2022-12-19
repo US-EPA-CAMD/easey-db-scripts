@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.protocol_gas;
 
-CREATE TABLE camdecmpswks.protocol_gas
+CREATE TABLE IF NOT EXISTS camdecmpswks.protocol_gas
 (
     protocol_gas_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

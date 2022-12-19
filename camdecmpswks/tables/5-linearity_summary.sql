@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.linearity_summary;
 
-CREATE TABLE camdecmpswks.linearity_summary
+CREATE TABLE IF NOT EXISTS camdecmpswks.linearity_summary
 (
     lin_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

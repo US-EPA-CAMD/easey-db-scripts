@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.certification_statement;
 
-CREATE TABLE camdecmpswks.certification_statement
+CREATE TABLE IF NOT EXISTS camdecmpswks.certification_statement
 (
     statement_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     statement_text text COLLATE pg_catalog."default" NOT NULL,

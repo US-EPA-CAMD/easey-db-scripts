@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.user_session;
 
-CREATE TABLE camdecmpswks.user_session
+CREATE TABLE IF NOT EXISTS camdecmpswks.user_session
 (
     userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
     session_id character varying(45) COLLATE pg_catalog."default",

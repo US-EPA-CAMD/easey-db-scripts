@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.monitor_load;
 
-CREATE TABLE camdecmpswks.monitor_load
+CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_load
 (
     load_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdmd.source_category_code;
 
-CREATE TABLE camdmd.source_category_code
+CREATE TABLE IF NOT EXISTS camdmd.source_category_code
 (
     source_category_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     source_category_description character varying(1000) COLLATE pg_catalog."default",

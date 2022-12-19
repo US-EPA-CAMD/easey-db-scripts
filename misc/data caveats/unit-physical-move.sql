@@ -2,7 +2,7 @@
 
 -- DROP TABLE camd.unit_physical_move;
 
-CREATE TABLE camd.unit_physical_move
+CREATE TABLE IF NOT EXISTS camd.unit_physical_move
 (
     unit_id numeric(38,0) NOT NULL,
     new_unit_id numeric(38,0) NOT NULL,

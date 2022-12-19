@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.qa_supp_data;
 
-CREATE TABLE camdecmpswks.qa_supp_data
+CREATE TABLE IF NOT EXISTS camdecmpswks.qa_supp_data
 (
     qa_supp_data_id character varying(45) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v4(),
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

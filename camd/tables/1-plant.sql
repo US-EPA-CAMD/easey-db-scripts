@@ -2,7 +2,7 @@
 
 -- DROP TABLE camd.plant;
 
-CREATE TABLE camd.plant
+CREATE TABLE IF NOT EXISTS camd.plant
 (
     fac_id numeric(38,0) NOT NULL,
     oris_code numeric(6,0),

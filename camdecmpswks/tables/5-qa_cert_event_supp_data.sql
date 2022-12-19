@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.qa_cert_event_supp_data;
 
-CREATE TABLE camdecmpswks.qa_cert_event_supp_data
+CREATE TABLE IF NOT EXISTS camdecmpswks.qa_cert_event_supp_data
 (
     qa_cert_event_supp_data_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     qa_cert_event_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

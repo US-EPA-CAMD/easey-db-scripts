@@ -260,16 +260,16 @@ UPDATE camdecmpsmd.test_type_code SET group_cd = 'MISC' WHERE test_type_cd IN (
 	'PEMSACC'
 );
 --------------------------------------------------------------------------------------------------------------------
-ALTER TABLE IF EXISTS camdecmps.dm_emissions
-    ADD COLUMN IF NOT EXISTS fac_id numeric(38,0) NOT NULL;
+--ALTER TABLE IF EXISTS camdecmps.dm_emissions
+--    ADD COLUMN IF NOT EXISTS fac_id numeric(38,0) NOT NULL;
 
-UPDATE camdecmps.dm_emissions dme
-SET fac_id = mp.fac_id
-FROM camdecmps.monitor_plan mp
-WHERE dme.mon_plan_id = mp.mon_plan_id;
+--UPDATE camdecmps.dm_emissions dme
+--SET fac_id = mp.fac_id
+--FROM camdecmps.monitor_plan mp
+--WHERE dme.mon_plan_id = mp.mon_plan_id;
 
-ALTER TABLE IF EXISTS camdecmps.dm_emissions
-    ALTER COLUMN fac_id SET NOT NULL;
+--ALTER TABLE IF EXISTS camdecmps.dm_emissions
+--    ALTER COLUMN fac_id SET NOT NULL;
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmpswks.monitor_plan
     ADD COLUMN IF NOT EXISTS eval_status_cd character varying(7) NOT NULL DEFAULT 'EVAL';
@@ -333,4 +333,11 @@ ALTER TABLE IF EXISTS camdecmpsaux.em_submission_access
         REFERENCES camdecmpsmd.em_status_code (em_status_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_em_sub_type_c_em_submission FOREIGN KEY (em_sub_type_cd)
         REFERENCES camdecmpsmd.em_sub_type_code (em_sub_type_cd) MATCH SIMPLE;
+--------------------------------------------------------------------------------------------------------------------
+ALTER TABLE IF EXISTS camdecmpswks.user_check_out
+	DROP CONSTRAINT IF EXISTS pk_user_check_out,
+	DROP CONSTRAINT IF EXISTS uq_user_checkout_out;
+
+ALTER TABLE IF EXISTS camdecmpswks.user_check_out
+	ADD CONSTRAINT pk_user_check_out PRIMARY KEY (mon_plan_id);
 --------------------------------------------------------------------------------------------------------------------

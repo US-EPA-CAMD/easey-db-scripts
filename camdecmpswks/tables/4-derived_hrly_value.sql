@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.derived_hrly_value;
 
-CREATE TABLE camdecmpswks.derived_hrly_value
+CREATE TABLE IF NOT EXISTS camdecmpswks.derived_hrly_value
 (
     derv_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     hour_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

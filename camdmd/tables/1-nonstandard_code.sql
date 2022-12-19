@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdmd.nonstandard_code;
 
-CREATE TABLE camdmd.nonstandard_code
+CREATE TABLE IF NOT EXISTS camdmd.nonstandard_code
 (
     nonstandard_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     nonstandard_description character varying(1000) COLLATE pg_catalog."default",

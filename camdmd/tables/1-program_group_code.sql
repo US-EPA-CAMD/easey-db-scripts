@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdmd.program_group_code;
 
-CREATE TABLE camdmd.program_group_code
+CREATE TABLE IF NOT EXISTS camdmd.program_group_code
 (
     prg_group_cd character varying(8) COLLATE pg_catalog."default" NOT NULL,
     prg_group_description character varying(1000) COLLATE pg_catalog."default" NOT NULL,

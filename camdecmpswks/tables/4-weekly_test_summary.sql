@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.weekly_test_summary;
 
-CREATE TABLE camdecmpswks.weekly_test_summary
+CREATE TABLE IF NOT EXISTS camdecmpswks.weekly_test_summary
 (
     weekly_test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id numeric(38,0) NOT NULL,

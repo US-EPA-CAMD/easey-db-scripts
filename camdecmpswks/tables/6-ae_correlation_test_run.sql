@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.ae_correlation_test_run;
 
-CREATE TABLE camdecmpswks.ae_correlation_test_run
+CREATE TABLE IF NOT EXISTS camdecmpswks.ae_correlation_test_run
 (
     ae_corr_test_run_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     ae_corr_test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

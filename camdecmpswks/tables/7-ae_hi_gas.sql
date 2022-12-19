@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.ae_hi_gas;
 
-CREATE TABLE camdecmpswks.ae_hi_gas
+CREATE TABLE IF NOT EXISTS camdecmpswks.ae_hi_gas
 (
     ae_hi_gas_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     ae_corr_test_run_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

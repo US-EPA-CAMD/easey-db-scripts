@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdmd.account_type_code;
 
-CREATE TABLE camdmd.account_type_code
+CREATE TABLE IF NOT EXISTS camdmd.account_type_code
 (
     account_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     account_type_group_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,

@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.qa_supp_attribute;
 
-CREATE TABLE camdecmpswks.qa_supp_attribute
+CREATE TABLE IF NOT EXISTS camdecmpswks.qa_supp_attribute
 (
     qa_supp_attribute_id character varying(45) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v4(),
     qa_supp_data_id character varying(45) COLLATE pg_catalog."default",

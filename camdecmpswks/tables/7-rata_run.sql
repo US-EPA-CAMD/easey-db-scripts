@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.rata_run;
 
-CREATE TABLE camdecmpswks.rata_run
+CREATE TABLE IF NOT EXISTS camdecmpswks.rata_run
 (
     rata_run_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rata_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

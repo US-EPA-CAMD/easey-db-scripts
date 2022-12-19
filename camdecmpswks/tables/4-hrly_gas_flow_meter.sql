@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.hrly_gas_flow_meter;
 
-CREATE TABLE camdecmpswks.hrly_gas_flow_meter
+CREATE TABLE IF NOT EXISTS camdecmpswks.hrly_gas_flow_meter
 (
     hrly_gas_flow_meter_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     hour_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

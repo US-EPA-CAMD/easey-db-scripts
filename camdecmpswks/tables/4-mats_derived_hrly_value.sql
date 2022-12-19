@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.mats_derived_hrly_value;
 
-CREATE TABLE camdecmpswks.mats_derived_hrly_value
+CREATE TABLE IF NOT EXISTS camdecmpswks.mats_derived_hrly_value
 (
     mats_dhv_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     hour_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

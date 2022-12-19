@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.test_extension_exemption;
 
-CREATE TABLE camdecmpswks.test_extension_exemption
+CREATE TABLE IF NOT EXISTS camdecmpswks.test_extension_exemption
 (
     test_extension_exemption_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

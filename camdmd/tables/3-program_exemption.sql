@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdmd.program_exemption;
 
-CREATE TABLE camdmd.program_exemption
+CREATE TABLE IF NOT EXISTS camdmd.program_exemption
 (
     prg_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     exemption_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,

@@ -2,7 +2,7 @@
 
 -- DROP TABLE camd.unit_logical_move;
 
-CREATE TABLE camd.unit_logical_move
+CREATE TABLE IF NOT EXISTS camd.unit_logical_move
 (
     unit_id numeric(38,0) NOT NULL,
     old_fac_id numeric(38,0) NOT NULL,

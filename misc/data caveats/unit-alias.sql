@@ -2,7 +2,7 @@
 
 -- DROP TABLE camd.unit_alias;
 
-CREATE TABLE camd.unit_alias
+CREATE TABLE IF NOT EXISTS camd.unit_alias
 (
     unit_alias_id numeric(38,0) NOT NULL,
     unit_id numeric(38,0) NOT NULL,

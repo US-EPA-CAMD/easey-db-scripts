@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdmd.class_code;
 
-CREATE TABLE camdmd.class_code
+CREATE TABLE IF NOT EXISTS camdmd.class_code
 (
     class_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     class_description character varying(1000) COLLATE pg_catalog."default" NOT NULL,

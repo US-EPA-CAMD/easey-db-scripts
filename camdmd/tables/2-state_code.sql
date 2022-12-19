@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdmd.state_code;
 
-CREATE TABLE camdmd.state_code
+CREATE TABLE IF NOT EXISTS camdmd.state_code
 (
     state_cd character varying(2) COLLATE pg_catalog."default" NOT NULL,
     state_name character varying(20) COLLATE pg_catalog."default" NOT NULL,

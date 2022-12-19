@@ -19327,7 +19327,7 @@ coalesce(delivery_mode, aws_oracle_ext.sqs_persistent())
 declare
 	lrT aws_oracle_ext.sqs_queues_tables%rowtype;
 
-	TABLE_DDL  text = 'CREATE TABLE %s.%s '
+	TABLE_DDL  text = 'CREATE TABLE IF NOT EXISTS %s.%s '
 						'(q_name VARCHAR(61), '
 						'msgid BYTEA, '
 						'corrid VARCHAR(128), '

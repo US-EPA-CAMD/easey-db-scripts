@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.check_session;
 
-CREATE TABLE camdecmpswks.check_session
+CREATE TABLE IF NOT EXISTS camdecmpswks.check_session
 (
     chk_session_id character varying(45) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v4(),
     mon_plan_id character varying(45) COLLATE pg_catalog."default",

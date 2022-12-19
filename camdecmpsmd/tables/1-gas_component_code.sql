@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpsmd.gas_component_code;
 
-CREATE TABLE camdecmpsmd.gas_component_code
+CREATE TABLE IF NOT EXISTS camdecmpsmd.gas_component_code
 (
     gas_component_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     gas_component_description character varying(1000) COLLATE pg_catalog."default" NOT NULL,

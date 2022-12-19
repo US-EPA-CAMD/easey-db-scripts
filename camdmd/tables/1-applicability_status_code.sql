@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdmd.applicability_status_code;
 
-CREATE TABLE camdmd.applicability_status_code
+CREATE TABLE IF NOT EXISTS camdmd.applicability_status_code
 (
     app_status_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     app_status_description character varying(1000) COLLATE pg_catalog."default" NOT NULL,

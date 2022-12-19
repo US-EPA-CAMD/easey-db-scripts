@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.calibration_injection;
 
-CREATE TABLE camdecmpswks.calibration_injection
+CREATE TABLE IF NOT EXISTS camdecmpswks.calibration_injection
 (
     cal_inj_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

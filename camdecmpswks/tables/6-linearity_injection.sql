@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.linearity_injection;
 
-CREATE TABLE camdecmpswks.linearity_injection
+CREATE TABLE IF NOT EXISTS camdecmpswks.linearity_injection
 (
     lin_inj_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     lin_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

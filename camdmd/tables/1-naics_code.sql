@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdmd.naics_code;
 
-CREATE TABLE camdmd.naics_code
+CREATE TABLE IF NOT EXISTS camdmd.naics_code
 (
     naics_cd numeric(6,0) NOT NULL,
     naics_description character varying(1000) COLLATE pg_catalog."default",

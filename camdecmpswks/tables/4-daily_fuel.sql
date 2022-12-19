@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.daily_fuel;
 
-CREATE TABLE camdecmpswks.daily_fuel
+CREATE TABLE IF NOT EXISTS camdecmpswks.daily_fuel
 (
     daily_fuel_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     daily_emission_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

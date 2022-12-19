@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.component;
 
-CREATE TABLE camdecmpswks.component
+CREATE TABLE IF NOT EXISTS camdecmpswks.component
 (
     component_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

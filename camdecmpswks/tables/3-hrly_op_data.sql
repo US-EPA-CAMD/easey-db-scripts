@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.hrly_op_data;
 
-CREATE TABLE camdecmpswks.hrly_op_data
+CREATE TABLE IF NOT EXISTS camdecmpswks.hrly_op_data
 (
     hour_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id numeric(38,0) NOT NULL,

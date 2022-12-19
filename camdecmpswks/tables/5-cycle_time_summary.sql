@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.cycle_time_summary;
 
-CREATE TABLE camdecmpswks.cycle_time_summary
+CREATE TABLE IF NOT EXISTS camdecmpswks.cycle_time_summary
 (
     cycle_time_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

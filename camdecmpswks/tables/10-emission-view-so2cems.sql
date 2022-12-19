@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpswks.emission_view_so2cems;
 
-CREATE TABLE camdecmpswks.emission_view_so2cems
+CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_so2cems
 (
     em_so2_cems_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
