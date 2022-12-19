@@ -26,7 +26,7 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_em_review_and_submit
      JOIN camdecmpswks.monitor_location ml USING (mon_loc_id)
      JOIN camdecmpswks.emission_evaluation ee USING (mon_plan_id)
      LEFT JOIN camdecmpsaux.em_submission_access_tmp esa USING (mon_plan_id)
-     LEFT JOIN camdecmpsmd.reporting_period rpt ON esa.rpt_period_id = rpt.rpt_period_id
+     LEFT JOIN camdecmpsmd.reporting_period rpt ON ee.rpt_period_id = rpt.rpt_period_id
      LEFT JOIN camd.unit u USING (unit_id)
      LEFT JOIN camdecmps.stack_pipe sp USING (stack_pipe_id)
   ORDER BY p.oris_code, p.facility_name, mp.mon_plan_id;
