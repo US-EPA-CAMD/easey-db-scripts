@@ -25,7 +25,7 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_em_review_and_submit
      JOIN camdecmpswks.monitor_plan_location mpl USING (mon_plan_id)
      JOIN camdecmpswks.monitor_location ml USING (mon_loc_id)
      JOIN camdecmpswks.emission_evaluation ee USING (mon_plan_id)
-     LEFT JOIN camdecmpsaux.em_submission_access_tmp esa USING (mon_plan_id)
+     LEFT JOIN camdecmpsaux.em_submission_access esa USING (mon_plan_id)
      LEFT JOIN camdecmpsmd.reporting_period rpt ON ee.rpt_period_id = rpt.rpt_period_id
      LEFT JOIN camd.unit u USING (unit_id)
      LEFT JOIN camdecmps.stack_pipe sp USING (stack_pipe_id)
@@ -33,3 +33,4 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_em_review_and_submit
 
 ALTER TABLE camdecmpswks.vw_em_review_and_submit
     OWNER TO "uImcwuf4K9dyaxeL";
+
