@@ -27,11 +27,11 @@ WHERE check_type_cd = 'CONTROL' AND check_number IN (1,2,4,5,6,9,15);
 -----------------------------------------------------------------------------------------------
 INSERT INTO camdecmpsmd.check_catalog_process(check_catalog_id, process_cd)
 SELECT check_catalog_id, 'MP' FROM camdecmpsmd.check_catalog 
-WHERE check_type_cd = 'DEFAULT' AND check_number IN (37, 38, 39, 40, 41, 42 ,47, 48, 49, 50, 51, 52, 53, 54, 56, 58, 73, 74, 75, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 97, 98, 99, );
+WHERE check_type_cd = 'DEFAULT' AND check_number IN (37, 38, 39, 40, 41, 42 ,47, 48, 49, 50, 51, 52, 53, 54, 56, 58, 73, 74, 75, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 97, 98, 99);
 
 INSERT INTO camdecmpsmd.check_catalog_process(check_catalog_id, process_cd)
 SELECT check_catalog_id, 'MPSCRN' FROM camdecmpsmd.check_catalog 
-WHERE check_type_cd = 'DEFAULT' AND check_number IN (37, 38, 39, 40, 41, 42, 47, 48, 49, 50, 51, 52, 53, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89. 90, 91, 98, 95, 96);
+WHERE check_type_cd = 'DEFAULT' AND check_number IN (37, 38, 39, 40, 41, 42, 47, 48, 49, 50, 51, 52, 53, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 98, 95, 96);
 
 -----------------------------------------------------------------------------------------------
 INSERT INTO camdecmpsmd.check_catalog_process(check_catalog_id, process_cd)
