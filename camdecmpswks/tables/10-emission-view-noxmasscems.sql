@@ -29,5 +29,14 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_noxmasscems
     nox_mass_formula_cd character varying(7) COLLATE pg_catalog."default",
     rpt_nox_mass numeric(14,4),
     calc_nox_mass numeric(14,4),
-    error_codes character varying(1000) COLLATE pg_catalog."default"
+    error_codes character varying(1000) COLLATE pg_catalog."default",
+    CONSTRAINT pk_emission_view_noxmasscems PRIMARY KEY (em_nox_mass_cems_id),
+    CONSTRAINT fk_emission_view_noxmasscems_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_emission_view_noxmasscems_monitor_plan FOREIGN KEY (mon_plan_id)
+        REFERENCES camdecmpswks.monitor_plan (mon_plan_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 );

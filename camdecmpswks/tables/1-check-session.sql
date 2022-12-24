@@ -29,10 +29,18 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.check_session
         REFERENCES camdecmpsmd.category_code (category_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
+    CONSTRAINT fk_check_session_monitor_plan FOREIGN KEY (mon_plan_id)
+        REFERENCES camdecmpswks.monitor_plan (mon_plan_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
     CONSTRAINT fk_check_session_process_code FOREIGN KEY (process_cd)
         REFERENCES camdecmpsmd.process_code (process_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
+    CONSTRAINT fk_check_session_qa_cert_event FOREIGN KEY (qa_cert_event_id)
+        REFERENCES camdecmpswks.qa_cert_event (qa_cert_event_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
     CONSTRAINT fk_check_session_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -41,6 +49,14 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.check_session
         REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
+    CONSTRAINT fk_check_session_test_extension_exemption FOREIGN KEY (test_extension_exemption_id)
+        REFERENCES camdecmpswks.test_extension_exemption (test_extension_exemption_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_check_session_test_summary FOREIGN KEY (test_sum_id)
+        REFERENCES camdecmpswks.test_summary (test_sum_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
     CONSTRAINT check_session_c01 CHECK (session_begin_date <= session_end_date)
 );
 

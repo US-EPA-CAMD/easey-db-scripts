@@ -30,8 +30,32 @@ BEGIN
 	SELECT
 		a.qa_supp_attribute_id, a.qa_supp_data_id, a.attribute_name, a.attribute_value, a.userid, a.add_date, a.update_date
 	FROM camdecmps.qa_supp_attribute AS a
-	JOIN camdecmpswks.qa_supp_data USING(qa_supp_data_id)
+	JOIN camdecmps.qa_supp_data USING(qa_supp_data_id)
 	WHERE mon_loc_id = ANY(monLocIds);
 
+	INSERT INTO camdecmpswks.qa_cert_event(
+		mon_loc_id, mon_sys_id, component_id, qa_cert_event_cd, qa_cert_event_date, qa_cert_event_hour, required_test_cd, conditional_data_begin_date, conditional_data_begin_hour, last_test_completed_date, last_test_completed_hour, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, qa_cert_event_id, submission_id, submission_availability_cd, pending_status_cd, eval_status_cd
+	)
+	SELECT
+		mon_loc_id, mon_sys_id, component_id, qa_cert_event_cd, qa_cert_event_date, qa_cert_event_hour, required_test_cd, conditional_data_begin_date, conditional_data_begin_hour, last_test_completed_date, last_test_completed_hour, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, qa_cert_event_id, submission_id, submission_availability_cd, 'UPDATED', 'EVAL'
+	FROM camdecmps.qa_cert_event
+	WHERE mon_loc_id = ANY(monLocIds);
+	
+	INSERT INTO camdecmpswks.qa_cert_event_supp_data(
+		qa_cert_event_supp_data_id, qa_cert_event_id, qa_cert_event_supp_data_cd, qa_cert_event_supp_date_cd, count_from_datehour, count, count_from_included_ind, mon_loc_id, rpt_period_id, delete_ind, userid, add_date, update_date
+	)
+	SELECT
+		a.qa_cert_event_supp_data_id, a.qa_cert_event_id, a.qa_cert_event_supp_data_cd, a.qa_cert_event_supp_date_cd, a.count_from_datehour, a.count, a.count_from_included_ind, a.mon_loc_id, a.rpt_period_id, a.delete_ind, a.userid, a.add_date, a.update_date
+	FROM camdecmps.qa_cert_event_supp_data AS a
+	JOIN camdecmps.qa_cert_event USING(qa_cert_event_id)
+	WHERE a.mon_loc_id = ANY(monLocIds);
+
+	INSERT INTO camdecmpswks.test_extension_exemption(
+		test_extension_exemption_id, mon_loc_id, rpt_period_id, mon_sys_id, component_id, fuel_cd, extens_exempt_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, hours_used, userid, add_date, update_date, span_scale_cd, submission_id, submission_availability_cd, pending_status_cd, eval_status_cd
+	)
+	SELECT
+		test_extension_exemption_id, mon_loc_id, rpt_period_id, mon_sys_id, component_id, fuel_cd, extens_exempt_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, hours_used, userid, add_date, update_date, span_scale_cd, submission_id, submission_availability_cd, 'UPDATED', 'EVAL'
+	FROM camdecmps.test_extension_exemption
+	WHERE mon_loc_id = ANY(monLocIds);
 END;
 $BODY$;

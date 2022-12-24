@@ -19,5 +19,14 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_mats_weekly
     ref_value numeric(13,2),
     measured_value numeric(13,3),
     system_integrity_error numeric(5,1),
-    error_codes character varying(1000) COLLATE pg_catalog."default"
+    error_codes character varying(1000) COLLATE pg_catalog."default",
+    CONSTRAINT pk_emission_view_mats_weekly PRIMARY KEY (em_mats_weekly_id),
+    CONSTRAINT fk_emission_view_mats_weekly_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_emission_view_mats_weekly_monitor_plan FOREIGN KEY (mon_plan_id)
+        REFERENCES camdecmpswks.monitor_plan (mon_plan_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 );

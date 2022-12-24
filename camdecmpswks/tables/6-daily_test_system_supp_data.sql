@@ -16,22 +16,22 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.daily_test_system_supp_data
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_daily_test_sys_sup_data PRIMARY KEY (daily_test_system_supp_data_id),
-    CONSTRAINT fk_daily_test_sys_sup_data_dts FOREIGN KEY (daily_test_supp_data_id)
-        REFERENCES camdecmpswks.daily_test_supp_data (daily_test_supp_data_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_daily_test_sys_sup_data_loc FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
     CONSTRAINT fk_daily_test_sys_sup_data_rpp FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_daily_test_sys_sup_data_tty FOREIGN KEY (mon_sys_id)
+    CONSTRAINT fk_daily_test_system_supp_data_daily_test_supp_data FOREIGN KEY (daily_test_supp_data_id)
+        REFERENCES camdecmpswks.daily_test_supp_data (daily_test_supp_data_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_daily_test_system_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_daily_test_system_supp_data_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmpswks.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmpswks.daily_test_system_supp_data

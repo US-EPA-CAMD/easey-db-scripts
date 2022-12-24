@@ -31,5 +31,14 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_so2cems
     calc_so2_mass_rate numeric(14,4),
     calc_hi_rate numeric(14,4),
     default_so2_emission_rate numeric(15,4),
-    error_codes character varying(1000) COLLATE pg_catalog."default"
+    error_codes character varying(1000) COLLATE pg_catalog."default",
+    CONSTRAINT pk_emission_view_so2cems PRIMARY KEY (em_so2_cems_id),
+    CONSTRAINT fk_emission_view_so2cems_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_emission_view_so2cems_monitor_plan FOREIGN KEY (mon_plan_id)
+        REFERENCES camdecmpswks.monitor_plan (mon_plan_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 );

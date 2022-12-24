@@ -20,5 +20,14 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_co2dailyfuel
     fuel_carbon_burned numeric(13,1),
     calc_fuel_carbon_burned numeric(13,1),
     total_carbon_burned numeric(13,1),
-    calc_total_daily_emission numeric(10,1)
+    calc_total_daily_emission numeric(10,1),
+    CONSTRAINT pk_emission_view_co2dailyfuel PRIMARY KEY (em_co2_daily_fuel_id),
+    CONSTRAINT fk_emission_view_co2dailyfuel_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_emission_view_co2dailyfuel_monitor_plan FOREIGN KEY (mon_plan_id)
+        REFERENCES camdecmpswks.monitor_plan (mon_plan_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 );

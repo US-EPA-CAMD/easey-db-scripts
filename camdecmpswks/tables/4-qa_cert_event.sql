@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.qa_cert_event
     CONSTRAINT fk_qa_cert_event_component FOREIGN KEY (component_id)
         REFERENCES camdecmpswks.component (component_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT fk_qa_cert_event_eval_status_code FOREIGN KEY (eval_status_cd)
         REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -39,11 +39,11 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.qa_cert_event
     CONSTRAINT fk_qa_cert_event_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT fk_qa_cert_event_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmpswks.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT fk_qa_cert_event_pending_status_code FOREIGN KEY (pending_status_cd)
         REFERENCES camdecmpsmd.submission_availability_code (submission_availability_cd) MATCH SIMPLE
         ON UPDATE NO ACTION

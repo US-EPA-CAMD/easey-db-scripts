@@ -22,5 +22,14 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_massoilcalc
     oil_density_sampling_type character varying(7) COLLATE pg_catalog."default",
     rpt_mass_oil_flow numeric(10,1),
     calc_mass_oil_flow numeric(10,1),
-    error_codes character varying(1000) COLLATE pg_catalog."default"
+    error_codes character varying(1000) COLLATE pg_catalog."default",
+    CONSTRAINT pk_emission_view_massoilcalc PRIMARY KEY (em_mass_oil_calc_id),
+    CONSTRAINT fk_emission_view_massoilcalc_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_emission_view_massoilcalc_monitor_plan FOREIGN KEY (mon_plan_id)
+        REFERENCES camdecmpswks.monitor_plan (mon_plan_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 );

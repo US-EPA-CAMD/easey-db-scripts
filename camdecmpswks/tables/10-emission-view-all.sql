@@ -31,5 +31,18 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_all
     error_codes character varying(1000) COLLATE pg_catalog."default",
     adj_flow_used numeric(13,3),
     rpt_adj_flow numeric(13,3),
-    unadj_flow numeric(13,3)
+    unadj_flow numeric(13,3),
+    CONSTRAINT pk_emission_view_all PRIMARY KEY (em_all_params_id),
+    CONSTRAINT fk_emission_view_all_hrly_op_data FOREIGN KEY (hour_id)
+        REFERENCES camdecmpswks.hrly_op_data (hour_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_emission_view_all_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_emission_view_all_monitor_plan FOREIGN KEY (mon_plan_id)
+        REFERENCES camdecmpswks.monitor_plan (mon_plan_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 );

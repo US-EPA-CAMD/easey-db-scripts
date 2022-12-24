@@ -16,18 +16,18 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.component_op_supp_data
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_component_op_supp_data PRIMARY KEY (comp_op_supp_data_id),
-    CONSTRAINT fk_component_op_supp_data_cmp FOREIGN KEY (component_id)
-        REFERENCES camdecmpswks.component (component_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
     CONSTRAINT fk_component_op_supp_data_cod FOREIGN KEY (op_supp_data_type_cd)
         REFERENCES camdecmpsmd.op_supp_data_type_code (op_supp_data_type_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_component_op_supp_data_loc FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_component_op_supp_data_component FOREIGN KEY (component_id)
+        REFERENCES camdecmpswks.component (component_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_component_op_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT fk_component_op_supp_data_prd FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION

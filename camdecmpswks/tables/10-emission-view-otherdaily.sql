@@ -16,5 +16,14 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_otherdaily
     rpt_test_result character varying(7) COLLATE pg_catalog."default" NOT NULL,
     error_codes character varying(1000) COLLATE pg_catalog."default",
     calc_test_result_cd character varying(7) COLLATE pg_catalog."default",
-    test_sum_id character varying(45) COLLATE pg_catalog."default"
+    test_sum_id character varying(45) COLLATE pg_catalog."default",
+    CONSTRAINT pk_emission_view_otherdaily PRIMARY KEY (em_other_daily_id),
+    CONSTRAINT fk_emission_view_otherdaily_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_emission_view_otherdaily_monitor_plan FOREIGN KEY (mon_plan_id)
+        REFERENCES camdecmpswks.monitor_plan (mon_plan_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 );

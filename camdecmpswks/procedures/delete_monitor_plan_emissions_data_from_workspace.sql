@@ -43,16 +43,26 @@ BEGIN
 
 	DELETE FROM camdecmpswks.emission_evaluation
 	WHERE mon_plan_id = mon_plan_id;
+
+	DELETE FROM camdecmpswks.component_op_supp_data
+	WHERE mon_loc_id = ANY(monLocIds);
+
+	DELETE FROM camdecmpswks.daily_test_supp_data
+	WHERE mon_loc_id = ANY(monLocIds);
+
+	DELETE FROM camdecmpswks.last_qa_value_supp_data
+	WHERE mon_loc_id = ANY(monLocIds);
 	
-	--TABLES NOT IN WORKSPACE AND NEED TO WORK OUT SUPPLEMENTAL TABLES PIECE
-	/*
-	camdecmpswks.component_op_supp_data
-	camdecmpswks.daily_test_supp_data
-	camdecmpswks.daily_test_system_supp_data
-	camdecmpswks.last_qa_value_supp_data
-	camdecmpswks.sampling_train_supp_data
-	camdecmpswks.sorbent_trap_supp_data
-	camdecmpswks.system_op_supp_data
-	*/
+	DELETE FROM camdecmpswks.operating_supp_data
+	WHERE mon_loc_id = ANY(monLocIds);
+	
+	DELETE FROM camdecmpswks.sampling_train_supp_data
+	WHERE mon_loc_id = ANY(monLocIds);
+	
+	DELETE FROM camdecmpswks.sorbent_trap_supp_data
+	WHERE mon_loc_id = ANY(monLocIds);
+	
+	DELETE FROM camdecmpswks.system_op_supp_data
+	WHERE mon_loc_id = ANY(monLocIds);
 END;
 $BODY$;

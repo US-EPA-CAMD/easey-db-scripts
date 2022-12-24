@@ -19,5 +19,14 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_moisture
     h2o_formula_cd character varying(7) COLLATE pg_catalog."default",
     rpt_pct_h2o numeric(14,4),
     calc_pct_h2o numeric(14,4),
-    error_codes character varying(1000) COLLATE pg_catalog."default"
+    error_codes character varying(1000) COLLATE pg_catalog."default",
+    CONSTRAINT pk_emission_view_moisture PRIMARY KEY (em_moisture_id),
+    CONSTRAINT fk_emission_view_moisture_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_emission_view_moisture_monitor_plan FOREIGN KEY (mon_plan_id)
+        REFERENCES camdecmpswks.monitor_plan (mon_plan_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 );

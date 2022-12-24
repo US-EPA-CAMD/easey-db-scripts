@@ -34,5 +34,18 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_hicems
     source_h2o_value character varying(7) COLLATE pg_catalog."default",
     f_factor numeric(8,1),
     error_codes character varying(1000) COLLATE pg_catalog."default",
-    fuel_cd character varying(7) COLLATE pg_catalog."default"
+    fuel_cd character varying(7) COLLATE pg_catalog."default",
+    CONSTRAINT pk_emission_view_hicems PRIMARY KEY (em_hi_cems_id),
+    CONSTRAINT fk_emission_view_hicems_hrly_op_data FOREIGN KEY (hour_id)
+        REFERENCES camdecmpswks.hrly_op_data (hour_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_emission_view_hicems_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_emission_view_hicems_monitor_plan FOREIGN KEY (mon_plan_id)
+        REFERENCES camdecmpswks.monitor_plan (mon_plan_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 );

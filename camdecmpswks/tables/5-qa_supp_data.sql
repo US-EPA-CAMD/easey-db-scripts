@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.qa_supp_data
     CONSTRAINT fk_qa_supp_data_component FOREIGN KEY (component_id)
         REFERENCES camdecmpswks.component (component_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT fk_qa_supp_data_fuel_code FOREIGN KEY (fuel_cd)
         REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -48,11 +48,11 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.qa_supp_data
     CONSTRAINT fk_qa_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT fk_qa_supp_data_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmpswks.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT fk_qa_supp_data_operating_condition_code FOREIGN KEY (operating_condition_cd)
         REFERENCES camdecmpsmd.operating_condition_code (operating_condition_cd) MATCH SIMPLE
         ON UPDATE NO ACTION

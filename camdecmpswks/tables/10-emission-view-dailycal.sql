@@ -40,5 +40,13 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_dailycal
     cylinder_id character varying(25) COLLATE pg_catalog."default",
     expiration_date date,
     vendor_id character varying(8) COLLATE pg_catalog."default",
-    CONSTRAINT pk_emission_view_dailycal PRIMARY KEY (em_daily_cal_id)
+    CONSTRAINT pk_emission_view_dailycal PRIMARY KEY (em_daily_cal_id),
+    CONSTRAINT fk_emission_view_dailycal_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_emission_view_dailycal_monitor_plan FOREIGN KEY (mon_plan_id)
+        REFERENCES camdecmpswks.monitor_plan (mon_plan_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 );

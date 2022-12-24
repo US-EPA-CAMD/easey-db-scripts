@@ -30,5 +30,14 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_mats_hf
     hf_uom character varying(10) COLLATE pg_catalog."default",
     hf_modc_cd character varying(7) COLLATE pg_catalog."default",
     error_codes character varying(1000) COLLATE pg_catalog."default",
-    calc_hf_rate character varying(30) COLLATE pg_catalog."default"
+    calc_hf_rate character varying(30) COLLATE pg_catalog."default",
+    CONSTRAINT pk_emission_view_mats_hf PRIMARY KEY (em_mats_hf_id),
+    CONSTRAINT fk_emission_view_mats_hf_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_emission_view_mats_hf_monitor_plan FOREIGN KEY (mon_plan_id)
+        REFERENCES camdecmpswks.monitor_plan (mon_plan_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 );

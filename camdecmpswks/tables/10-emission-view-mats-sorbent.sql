@@ -47,5 +47,14 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_mats_sorbent
     b_sample_damage_explanation character varying(1000) COLLATE pg_catalog."default",
     error_codes character varying(1000) COLLATE pg_catalog."default",
     sorbent_trap_aps_cd character varying(7) COLLATE pg_catalog."default",
-    rata_ind integer
+    rata_ind integer,
+    CONSTRAINT pk_emission_view_mats_sorbent PRIMARY KEY (em_mats_sorbent_id),
+    CONSTRAINT fk_emission_view_mats_sorbent_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_emission_view_mats_sorbent_monitor_plan FOREIGN KEY (mon_plan_id)
+        REFERENCES camdecmpswks.monitor_plan (mon_plan_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 );

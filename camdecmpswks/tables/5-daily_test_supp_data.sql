@@ -26,22 +26,18 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.daily_test_supp_data
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_daily_test_supp_data PRIMARY KEY (daily_test_supp_data_id),
-    CONSTRAINT fk_daily_test_supp_data_cmp FOREIGN KEY (component_id)
+    CONSTRAINT fk_daily_test_supp_data_component FOREIGN KEY (component_id)
         REFERENCES camdecmpswks.component (component_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT fk_daily_test_supp_data_ctr FOREIGN KEY (calc_test_result_cd)
         REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_daily_test_supp_data_dts FOREIGN KEY (daily_test_sum_id)
-        REFERENCES camdecmpswks.daily_test_summary (daily_test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_daily_test_supp_data_loc FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_daily_test_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT fk_daily_test_supp_data_rpp FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -58,7 +54,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.daily_test_supp_data
     CONSTRAINT ck_daily_test_supp_data_dti CHECK (COALESCE(delete_ind, 0::numeric) <> 1::numeric AND daily_test_sum_id IS NOT NULL OR COALESCE(delete_ind, 0::numeric) = 1::numeric AND daily_test_sum_id IS NULL),
     CONSTRAINT ck_daily_test_supp_data_dtt CHECK (COALESCE(delete_ind, 0::numeric) <> 1::numeric AND daily_test_datehourmin IS NOT NULL OR COALESCE(delete_ind, 0::numeric) = 1::numeric AND daily_test_datehourmin IS NULL),
     CONSTRAINT ck_daily_test_supp_data_ohc CHECK (COALESCE(delete_ind, 0::numeric) <> 1::numeric AND op_hour_cnt IS NOT NULL OR COALESCE(delete_ind, 0::numeric) = 1::numeric AND op_hour_cnt IS NULL),
-    CONSTRAINT ck_daily_test_supp_data_ssc CHECK (span_scale_cd::text = ANY (ARRAY['H'::character varying, 'L'::character varying, 'N'::character varying]::text[])),
+    CONSTRAINT ck_daily_test_supp_data_ssc CHECK (span_scale_cd::text = ANY (ARRAY['H'::character varying::text, 'L'::character varying::text, 'N'::character varying::text])),
     CONSTRAINT ck_daily_test_supp_data_stt CHECK (COALESCE(delete_ind, 0::numeric) <> 1::numeric AND sort_daily_test_datehourmin IS NOT NULL OR COALESCE(delete_ind, 0::numeric) = 1::numeric AND sort_daily_test_datehourmin IS NULL),
     CONSTRAINT ck_daily_test_supp_data_trs CHECK (COALESCE(delete_ind, 0::numeric) <> 1::numeric AND test_result_cd IS NOT NULL OR COALESCE(delete_ind, 0::numeric) = 1::numeric AND test_result_cd IS NULL)
 );

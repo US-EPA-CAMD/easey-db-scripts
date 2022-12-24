@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.qa_cert_event_supp_data
     CONSTRAINT fk_qa_cert_event_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT fk_qa_cert_event_supp_data_qa_cert_event FOREIGN KEY (qa_cert_event_id)
         REFERENCES camdecmpswks.qa_cert_event (qa_cert_event_id) MATCH SIMPLE
         ON UPDATE NO ACTION
