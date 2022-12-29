@@ -33,4 +33,4 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_monitor_plan_location
      LEFT JOIN camdecmpsmd.vw_reporting_period rpend ON mp.end_rpt_period_id = rpend.rpt_period_id
      LEFT JOIN camd.unit u ON ml.unit_id = u.unit_id
      LEFT JOIN camdecmpswks.stack_pipe sp ON ml.stack_pipe_id::text = sp.stack_pipe_id::text
-     LEFT JOIN camdecmpsaux.check_session cs ON mp.chk_session_id::text = cs.chk_session_id::text;
+     LEFT JOIN camdecmpswks.check_session cs ON mp.chk_session_id::text = cs.chk_session_id::text;
