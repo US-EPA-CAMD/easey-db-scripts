@@ -1,0 +1,29 @@
+-- FUNCTION: camdecmps.has_active_rep(numeric)
+
+DROP FUNCTION IF EXISTS camdecmps.has_active_rep(numeric);
+
+CREATE OR REPLACE FUNCTION camdecmps.has_active_rep(
+	inupid numeric
+)
+RETURNS character
+LANGUAGE 'plpgsql'
+AS $BODY$
+DECLARE
+	REPCOUNT integer;
+	HASREP char(1) := 'F';
+BEGIN
+	SELECT COUNT(PP.PPL_ID) INTO REPCOUNT
+	FROM CAMD.PLANT_PERSON PP, CAMD.UNIT U, CAMD.UNIT_PROGRAM UP
+	WHERE UP.UNIT_ID = U.UNIT_ID AND
+		U.FAC_ID = PP.FAC_ID	AND
+		PP.END_DATE IS NULL AND
+		PP.RESPONSIBILITY_ID = 'PRM' AND
+		UP.UP_ID = INUPID;
+	
+	IF REPCOUNT > 0 THEN
+		HASREP := 'T';
+	END IF;
+	
+	RETURN HASREP;
+END;
+$BODY$;

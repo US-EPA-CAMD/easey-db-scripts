@@ -967,4 +967,78 @@ BEGIN
 	VALUES
 		(datatableId, 1, 'waf_method_cd', 'wafMethodCode', 'WAF Method Code'),
 		(datatableId, 2, 'waf_method_cd_description', 'wafMethodDescription', 'WAF Method Description');
+
+----------------------------------------------------------------------------------------------------------------------------
+	datasetCode := 'es-severity-codes';
+	INSERT INTO camdaux.dataset(dataset_cd, template_cd, display_name, no_results_msg)
+	VALUES(datasetCode, 'MDM', 'Error Suppression Severity Codes & Descriptions', null);
+
+	/***** DATATABLE 1 *****/
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement, no_results_msg_override)
+	VALUES(datasetCode, 1, 'Error Suppression Severity Codes & Descriptions', 'SELECT * FROM camdecmpsmd.severity_code WHERE es_type_ind = 1 ORDER BY severity_level', null)
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
+	VALUES
+		(datatableId, 1, 'severity_cd', 'severityCode', 'Severity Code'),
+		(datatableId, 2, 'severity_cd_description', 'severityDescription', 'Severity Description');
+
+----------------------------------------------------------------------------------------------------------------------------
+	datasetCode := 'es-reason-codes';
+	INSERT INTO camdaux.dataset(dataset_cd, template_cd, display_name, no_results_msg)
+	VALUES(datasetCode, 'MDM', 'Error Suppression Reason Codes & Descriptions', null);
+
+	/***** DATATABLE 1 *****/
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement, no_results_msg_override)
+	VALUES(datasetCode, 1, 'Error Suppression Reason Codes & Descriptions', 'SELECT * FROM camdecmpsmd.es_reason_code', null)
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
+	VALUES
+		(datatableId, 1, 'es_reason_cd', 'errorSuppressionReasonCode', 'Error Suppresion Reason Code'),
+		(datatableId, 2, 'es_reason_description', 'errorSuppressionReasonDescription', 'Error Suppression Reason Description');
+
+----------------------------------------------------------------------------------------------------------------------------
+	datasetCode := 'es-check-catalog-results';
+	INSERT INTO camdaux.dataset(dataset_cd, template_cd, display_name, no_results_msg)
+	VALUES(datasetCode, 'MDM', 'Error Suppression Check Catalog Results', null);
+
+	/***** DATATABLE 1 *****/
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement, no_results_msg_override)
+	VALUES(datasetCode, 1, 'Error Suppression Check Catalog Results', 'SELECT * FROM camdecmpsmd.vw_es_check_catalog_result', null)
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
+	VALUES
+		(datatableId, 1, 'check_catalog_result_id', 'id', 'Check Catalog Result Id'),
+		(datatableId, 2, 'check_type_cd', 'checkTypeCode', 'Check Type Code'),
+		(datatableId, 3, 'check_type_cd_description', 'checkTypeDescription', 'Check Type Description'),
+		(datatableId, 4, 'check_number', 'checkNumber', 'Check Number'),
+		(datatableId, 5, 'check_result', 'checkResult', 'Check Result'),
+		(datatableId, 6, 'es_match_loc_type_cd', 'locationTypeCode', 'Location Type Code'),
+		(datatableId, 7, 'es_match_time_type_cd', 'timeTypeCode', 'Time Type Code'),
+		(datatableId, 8, 'es_match_data_type_cd', 'dataTypeCode', 'Data Type Code'),
+		(datatableId, 9, 'es_match_data_type_label', 'dataTypeLabel', 'Data Type Label'),
+		(datatableId, 10, 'es_match_data_type_url', 'dataTypeUrl', 'Data Type Url');
+
+----------------------------------------------------------------------------------------------------------------------------
+	datasetCode := 'es-parameter-codes';
+	INSERT INTO camdaux.dataset(dataset_cd, template_cd, display_name, no_results_msg)
+	VALUES(datasetCode, 'MDM', 'Error Suppression Parameter Codes & Descriptions', null);
+
+	/***** DATATABLE 1 *****/
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement, no_results_msg_override)
+	VALUES(datasetCode, 1, 'Error Suppression Parameter Codes & Descriptions', 'SELECT * FROM camdecmpsmd.vw_es_parameter_code', null)
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
+	VALUES
+		(datatableId, 1, 'check_type_cd', 'checkTypeCode', 'Check Type Code'),
+		(datatableId, 2, 'check_number', 'checkNumber', 'Check Number'),
+		(datatableId, 3, 'parameter_cd', 'parameterCode', 'Parameter Code'),
+		(datatableId, 4, 'parameter_cd_description', 'parameterDescription', 'Parameter Description');
 END $$;

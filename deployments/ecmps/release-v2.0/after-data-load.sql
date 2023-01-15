@@ -341,3 +341,71 @@ ALTER TABLE IF EXISTS camdecmpswks.user_check_out
 ALTER TABLE IF EXISTS camdecmpswks.user_check_out
 	ADD CONSTRAINT pk_user_check_out PRIMARY KEY (mon_plan_id);
 --------------------------------------------------------------------------------------------------------------------
+DO $$
+DECLARE
+	startVal bigint := 1;
+	sqlStatement text;
+BEGIN
+	SELECT COALESCE(MAX(es_spec_id)+1, 1) FROM camdecmpsaux.es_spec INTO startVal;
+	ALTER TABLE IF EXISTS camdecmpsaux.es_spec
+		ALTER COLUMN di DROP NOT NULL;
+	ALTER TABLE IF EXISTS camdecmpsaux.es_spec
+		ALTER COLUMN es_spec_id TYPE bigint;
+	sqlStatement := format('
+	ALTER TABLE IF EXISTS camdecmpsaux.es_spec
+		ALTER COLUMN es_spec_id ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START %s MINVALUE 1 MAXVALUE 999999999999 );
+	', startVal);
+	RAISE NOTICE 'Executing...%', sqlStatement;
+	EXECUTE sqlStatement;
+END $$;
+--------------------------------------------------------------------------------------------------------------------
+ALTER TABLE IF EXISTS camdecmpsmd.es_match_data_type_code
+ADD COLUMN es_match_data_type_url character varying(100);
+
+update camdecmpsmd.es_match_data_type_code
+set es_match_data_type_url = '/master-data-mgmt/control-equip-param-codes'
+where es_match_data_type_cd = 'CEPARAM';
+
+update camdecmpsmd.es_match_data_type_code
+set es_match_data_type_url = '/master-data-mgmt/component-type-codes'
+where es_match_data_type_cd = 'COMPTYP';
+
+update camdecmpsmd.es_match_data_type_code
+set es_match_data_type_url = '/master-data-mgmt/fuel-type-codes'
+where es_match_data_type_cd = 'FUELTYP';
+
+update camdecmpsmd.es_match_data_type_code
+set es_match_data_type_url = '/monitor-plan-mgmt/workspace/configurations'
+where es_match_data_type_cd = 'MONPLAN';
+
+update camdecmpsmd.es_match_data_type_code
+set es_match_data_type_url = '/master-data-mgmt/es-parameter-codes'
+where es_match_data_type_cd = 'PARAM';
+
+update camdecmpsmd.es_match_data_type_code
+set es_match_data_type_url = '/master-data-mgmt/program-codes'
+where es_match_data_type_cd = 'PROGRAM';
+
+update camdecmpsmd.es_match_data_type_code
+set es_match_data_type_url = '/master-data-mgmt/qualification-type-codes'
+where es_match_data_type_cd = 'QUALTYP';
+
+update camdecmpsmd.es_match_data_type_code
+set es_match_data_type_url = '/master-data-mgmt/system-type-codes'
+where es_match_data_type_cd = 'SYSTYP';
+
+update camdecmpsmd.es_match_data_type_code
+set es_match_data_type_url = '/qa-certification-mgmt/workspace/locations/{id}/test-summary'
+where es_match_data_type_cd = 'TESTNUM';
+
+update camdecmpsmd.es_match_data_type_code
+set es_match_data_type_url = '/master-data-mgmt/test-type-codes'
+where es_match_data_type_cd = 'TESTTYP';
+
+update camdecmpsmd.es_match_data_type_code
+set es_match_data_type_url = '/master-data-mgmt/mats-method-parameter-codes'
+where es_match_data_type_cd = 'MATSPAR';
+
+ALTER TABLE IF EXISTS camdecmpsmd.es_match_data_type_code
+ALTER COLUMN es_match_data_type_url SET NOT NULL;
+--------------------------------------------------------------------------------------------------------------------
