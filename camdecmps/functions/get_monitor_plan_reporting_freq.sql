@@ -1,0 +1,39 @@
+-- FUNCTION: camdecmps.get_monitor_plan_reporting_freq(numeric, numeric)
+
+DROP FUNCTION IF EXISTS camdecmps.get_monitor_plan_reporting_freq(numeric, numeric);
+
+CREATE OR REPLACE FUNCTION camdecmps.get_monitor_plan_reporting_freq(
+	vcalendaryear numeric,
+	vquarter numeric
+)
+RETURNS TABLE(
+  mon_plan_id character varying,
+  report_freq_cd character varying
+) 
+LANGUAGE 'plpgsql'
+AS $BODY$
+DECLARE
+BEGIN
+	RETURN QUERY
+	SELECT
+		MPRF.MON_PLAN_ID,
+		MPRF.REPORT_FREQ_CD
+	FROM CAMDECMPS.MONITOR_PLAN_REPORTING_FREQ AS MPRF
+	JOIN CAMDECMPSMD.REPORTING_PERIOD AS BRP
+		ON BEGIN_RPT_PERIOD_ID = BRP.RPT_PERIOD_ID
+	LEFT JOIN CAMDECMPSMD.REPORTING_PERIOD AS ERP
+		ON END_RPT_PERIOD_ID = ERP.RPT_PERIOD_ID
+	WHERE (
+		BRP.CALENDAR_YEAR < vCALENDARYEAR OR (
+			BRP.CALENDAR_YEAR = vCALENDARYEAR AND
+			BRP.QUARTER <= vQUARTER
+		)
+	) AND (
+		ERP.CALENDAR_YEAR IS NULL OR
+		ERP.CALENDAR_YEAR > vCALENDARYEAR OR (
+			ERP.CALENDAR_YEAR = vCALENDARYEAR AND
+			ERP.QUARTER >= vQUARTER
+		)
+	);
+END;
+$BODY$;
