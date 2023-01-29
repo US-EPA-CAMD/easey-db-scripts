@@ -1,7 +1,7 @@
 ALTER TABLE IF EXISTS camdaux.dataset
 	ADD COLUMN IF NOT EXISTS group_cd character varying(7),
 	ADD CONSTRAINT ck_group_cd CHECK(
-		group_cd = ANY(ARRAY['MDM', 'REPORT', 'EMVIEW'])
+		group_cd = ANY(ARRAY['MDM', 'MDMREL', 'REPORT', 'EMVIEW'])
 	);
 
 UPDATE camdaux.dataset SET group_cd =
@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS camdaux.template_code(
 
 INSERT INTO camdaux.template_code(template_cd, group_cd, template_type, display_name)
 VALUES
+	('QCE',				'QCE',		'DEFAULT',	'QA Certification Events Details'),
 	('FACINFO',			'ALL',		'1COLTBL',	'Facility Information'),
 	('RPTFREQ',			'MPP',		'DEFAULT',	'Reporting Frequency'),
 	('LOCATTR',			'MPP',		'DEFAULT',	'Location Attributes'),
@@ -54,7 +55,7 @@ VALUES
 ALTER TABLE IF EXISTS camdaux.datatable
 	ALTER COLUMN display_name DROP NOT NULL,
 	DROP CONSTRAINT uq_datatable,
-	ADD CONSTRAINT uq_datatable UNIQUE (dataset_cd, template_cd, table_order),
+	ADD CONSTRAINT uq_datatable UNIQUE (dataset_cd, group_cd, table_order),
 	ADD COLUMN IF NOT EXISTS template_cd character varying(25),
 	DROP CONSTRAINT fk_datatable_template_code,
 	ADD CONSTRAINT fk_datatable_template_code FOREIGN KEY (template_cd)

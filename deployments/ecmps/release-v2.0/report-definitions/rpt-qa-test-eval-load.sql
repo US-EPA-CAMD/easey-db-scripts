@@ -1,14 +1,17 @@
 DO $$
 DECLARE
 	datasetCode text := 'TEST_EVAL';
+	groupCode text := 'REPORT';
 	datatableId integer;
 BEGIN
-	INSERT INTO camdaux.dataset(dataset_cd, template_cd, display_name, no_results_msg)
-	VALUES(datasetCode, 'SUMRPT', 'QA/Certification Tests Evaluation Report', 'Evaluation completed with no errors or informational messages.');
+	DELETE FROM camdaux.dataset WHERE dataset_cd = datasetCode;
 
+	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name, no_results_msg)
+	VALUES(datasetCode, groupCode, 'QA/Certification Tests Evaluation Report', 'Evaluation completed with no errors or informational messages.');
+------------------------------------------------------------------------------------------------
 	/***** DATATABLE 1 *****/
-	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement, no_results_msg_override)
-	VALUES(datasetCode, 1, 'Evaluation Results', 'SELECT * FROM camdecmpswks.rpt_qa_test_evaluation_results($1, $2, $3)', null)
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement)
+	VALUES(datasetCode, 1, 'Evaluation Results', 'SELECT * FROM camdecmpswks.rpt_qa_test_evaluation_results($1, $2, $3)')
 	RETURNING datatable_id INTO datatableId;
 
 	/***** COLUMNS *****/

@@ -15,12 +15,12 @@ INSERT INTO camdecmpsmd.cross_check_catalog(cross_chk_catalog_name
 											, field_type_cd3)
 	VALUES ('Units of Measure to Category'
 			,'Links Units of Measure Codes to the Categories for which they are appropriate'
-			, 'PARAMETER_CODE'
-			, 'PARAMETER_CD'
-			, 'ParameterCode'
+			, 'UNITS_OF_MEASURE_CODE'
+			, 'UOM_CD'
+			, 'UnitsOfMeasureCode'
 			, null
-			, 'UOM_CATEGORY_CODE'
-			, 'UOM_CATEGORY_CD'
+			, 'CATEGORY_CODE'
+			, 'CATEGORY_CD'
 			, 'CategoryCode'
 			, null
 			, null
@@ -48,13 +48,13 @@ INSERT INTO camdecmpsmd.cross_check_catalog(cross_chk_catalog_name
 											, description3
 											, field_type_cd3)
 	VALUES ('Operating Level to Category'
-			,'Links Operaing Level Codes to the Categories for which they are appropriate'
-			, 'PARAMETER_CODE'
-			, 'PARAMETER_CD'
-			, 'ParameterCode'
+			,'Links Operating Level Codes to the Categories for which they are appropriate'
+			, 'OPERATING_LEVEL_CODE'
+			, 'OP_LEVEL_CD'
+			, 'OperatingLevelCode'
 			, null
-			, 'OPERATING_LEVEL_CATEGORY_CODE'
-			, 'OPERATING_LEVEL_CATEGORY_CD'
+			, 'CATEGORY_CODE'
+			, 'CATEGORY_CD'
 			, 'CategoryCode'
 			, null
 			, null

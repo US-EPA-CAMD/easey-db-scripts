@@ -1,13 +1,14 @@
 DO $$
 DECLARE
 	datasetCode text := 'TEST_DETAIL';
+	groupCode text := 'REPORT';
 	tableOrder integer := 1;
 	datatableId integer;
 BEGIN
 	DELETE FROM camdaux.dataset WHERE dataset_cd = datasetCode;
 
-	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name, template_cd)
-	VALUES(datasetCode, 'REPORT', 'QA/Cert Test Detail Report', 'DTLRPT');
+	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
+	VALUES(datasetCode, groupCode, 'QA/Cert Test Detail Report');
 ------------------------------------------------------------------------------------------------
 	tableOrder := tableOrder + 1;
 	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)

@@ -1,10 +1,13 @@
 DO $$
 DECLARE
-	datasetCode text = 'DAILYCAL';
+	datasetCode text := 'DAILYCAL';
+	groupCode text := 'EMVIEW';
 	datatableId integer;
 BEGIN
-	INSERT INTO camdaux.dataset(dataset_cd, template_cd, display_name, sort_order, no_results_msg)
-	VALUES(datasetCode, 'EMVIEW', 'Daily Calibration View', 13, 'Daily Calibration data does not exist for the specified monitor plan and reporting period.');
+	DELETE FROM camdaux.dataset WHERE group_cd = groupCode;
+	
+	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name, sort_order, no_results_msg)
+	VALUES(datasetCode, groupCode, 'Daily Calibration View', 13, 'Daily Calibration data does not exist for the specified monitor plan and reporting period.');
 
 	/***** DATATABLE 1 *****/
 	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement, no_results_msg_override)

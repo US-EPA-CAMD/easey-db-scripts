@@ -19,8 +19,8 @@ INSERT INTO camdecmpsmd.cross_check_catalog(cross_chk_catalog_name
 			, 'COMPONENT_TYPE_CD'
 			, 'ComponentTypeCode'
 			, null
-			, 'COMPONENT_CATEGORY_CODE'
-			, 'COMPONENT_CATEGORY_CD'
+			, 'CATEGORY_CODE'
+			, 'CATEGORY_CD'
 			, 'CategoryCode'
 			, null
 			, null

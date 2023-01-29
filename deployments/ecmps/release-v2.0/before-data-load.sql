@@ -122,4 +122,5 @@ ALTER TABLE IF EXISTS camdecmpsaux.es_spec
 	ALTER COLUMN es_spec_id TYPE numeric(38,0);
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmpsmd.es_match_data_type_code
-DROP COLUMN IF EXISTS es_match_data_type_url;
+    DROP COLUMN IF EXISTS es_match_data_type_url;
+--------------------------------------------------------------------------------------------------------------------
