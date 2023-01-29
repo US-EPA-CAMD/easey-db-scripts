@@ -3,7 +3,7 @@ source ../../environments.sh $1
 
 FILES=""
 PRE_DEPLOYMENT=false
-POST_DEPLOYMENT=false
+POST_DEPLOYMENT=true
 AFTER_BULK_FILE_LOAD=false
 
 function getFiles() {
