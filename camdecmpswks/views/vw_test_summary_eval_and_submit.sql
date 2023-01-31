@@ -1,22 +1,17 @@
 -- View: camdecmpswks.vw_qa_test_summary_review_and_submit
 
--- DROP VIEW camdecmpswks.vw_qa_test_summary_review_and_submit;
+--DROP VIEW camdecmpswks.vw_qa_test_summary_review_and_submit;
 
-CREATE OR REPLACE VIEW camdecmpswks.vw_qa_test_summary_review_and_submit
+CREATE OR REPLACE VIEW camdecmpswks.vw_test_summary_eval_and_submit
  AS
  SELECT p.oris_code,
     p.facility_name,
     mpl.mon_plan_id,
-        CASE
-            WHEN u.unitid IS NOT NULL THEN u.unitid
-            ELSE sp.stack_name
-        END AS location_info,
+    COALESCE(u.unitid, sp.stack_name) AS location_info,
     ts.test_sum_id,
     ts.mon_loc_id,
-        CASE
-            WHEN ts.mon_sys_id IS NOT NULL THEN ts.mon_sys_id
-            ELSE ts.component_id
-        END AS test_info,
+    COALESCE(ts.mon_sys_id, ts.component_id) AS test_info,
+    COALESCE(ms.system_identifier, c.component_identifier) AS system_component_identifier,
     ts.test_num,
     ts.gp_ind,
     ts.test_type_cd,
@@ -44,6 +39,8 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_qa_test_summary_review_and_submit
      JOIN camdecmpswks.monitor_location ml USING (mon_loc_id)
      JOIN camdecmpswks.test_summary ts USING (mon_loc_id)
      LEFT JOIN camdecmpswks.qa_supp_data qsd USING (test_sum_id)
+     LEFT JOIN camdecmpswks.monitor_system ms ON ms.mon_sys_id::text = ts.mon_sys_id::text
+     LEFT JOIN camdecmpswks.component c ON c.component_id::text = ts.component_id::text
      LEFT JOIN camdecmpsmd.reporting_period rp ON rp.rpt_period_id = ts.rpt_period_id
      LEFT JOIN camd.unit u USING (unit_id)
      LEFT JOIN camdecmps.stack_pipe sp USING (stack_pipe_id)
