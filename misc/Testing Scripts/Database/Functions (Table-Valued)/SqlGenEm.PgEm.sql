@@ -22,6 +22,8 @@ RETURNS @SqlTable TABLE ( SQL_STATEMENT varchar(max) )
 AS
 BEGIN
 
+    declare @LoadOrder integer = 1;
+    
     ---------------------
     -- Get Information --
     ---------------------
@@ -58,17 +60,52 @@ BEGIN
     insert
       into  @SqlTable
     select  SQL_STATEMENT
-      from  SqlGenEm.PgHrlyOpDataDeletes(@vEmInformationTable, 1)
+      from  SqlGenEm.PgHrlyOpDataDeletes(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
 
     insert
       into  @SqlTable
     select  SQL_STATEMENT
-      from  SqlGenEm.PgHrlyOpDataUpdates(@vEmInformationTable, 2)
+      from  SqlGenEm.PgDerivedHrlyValueDeletes(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+    
+    --------------------------------------------------
+    -- Genereate HRLY_OP_DATA Update and Insert SQL --
+    --------------------------------------------------
 
     insert
       into  @SqlTable
     select  SQL_STATEMENT
-      from  SqlGenEm.PgHrlyOpDataInserts(@vEmInformationTable, 3)
+      from  SqlGenEm.PgHrlyOpDataUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgHrlyOpDataInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+    
+    --------------------------------------------------------
+    -- Genereate DERIVED_HRLY_VALUE Update and Insert SQL --
+    --------------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgDerivedHrlyValueUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgDerivedHrlyValueInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
 
 
     return;
