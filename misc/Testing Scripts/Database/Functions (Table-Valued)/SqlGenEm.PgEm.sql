@@ -70,6 +70,13 @@ BEGIN
       from  SqlGenEm.PgDerivedHrlyValueDeletes(@vEmInformationTable, @LoadOrder)
 
     set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgMonitorHrlyValueDeletes(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
     
     --------------------------------------------------
     -- Genereate HRLY_OP_DATA Update and Insert SQL --
@@ -104,6 +111,24 @@ BEGIN
       into  @SqlTable
     select  SQL_STATEMENT
       from  SqlGenEm.PgDerivedHrlyValueInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+    
+    --------------------------------------------------------
+    -- Genereate MONITOR_HRLY_VALUE Update and Insert SQL --
+    --------------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgMonitorHrlyValueUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgMonitorHrlyValueInserts(@vEmInformationTable, @LoadOrder)
 
     set @LoadOrder = @LoadOrder + 1
 
