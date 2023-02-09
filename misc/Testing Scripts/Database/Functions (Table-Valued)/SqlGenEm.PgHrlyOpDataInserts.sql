@@ -77,7 +77,7 @@ RETURN
                         case when  tar.MATS_STARTUP_SHUTDOWN_FLG      is not null  then  concat( '''', tar.MATS_STARTUP_SHUTDOWN_FLG, '''' ) else 'NULL' end, ', ',
 
                         '''UNITTEST''', ', ',
-                        concat( '''', format( tar.BEGIN_DATE, 'yyyy-MM-dd'), '''' ), ', ',
+                        concat( '''', format( getdate(), 'yyyy-MM-dd'), '''' ), ', ',
                         'NULL',
                     ' );'
                 )

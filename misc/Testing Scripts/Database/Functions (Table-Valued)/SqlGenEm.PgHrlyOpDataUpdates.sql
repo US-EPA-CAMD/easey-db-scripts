@@ -39,7 +39,10 @@ RETURN
                     ' FUEL_CD_LIST                   = ',  case when  tar.FUEL_CD_LIST                   is not null  then  concat( '''', tar.FUEL_CD_LIST, '''' ) else 'NULL' end, ', ',
                     ' MHHI_INDICATOR                 = ',  case when  tar.MHHI_INDICATOR                 is not null  then  cast( tar.MHHI_INDICATOR as varchar ) else 'NULL' end, ', ',
                     ' MATS_LOAD                      = ',  case when  tar.MATS_LOAD                      is not null  then  cast( tar.MATS_LOAD as varchar ) else 'NULL' end, ', ',
-                    ' MATS_STARTUP_SHUTDOWN_FLG      = ',  case when  tar.MATS_STARTUP_SHUTDOWN_FLG      is not null  then  concat( '''', tar.MATS_STARTUP_SHUTDOWN_FLG, '''' ) else 'NULL' end,
+                    ' MATS_STARTUP_SHUTDOWN_FLG      = ',  case when  tar.MATS_STARTUP_SHUTDOWN_FLG      is not null  then  concat( '''', tar.MATS_STARTUP_SHUTDOWN_FLG, '''' ) else 'NULL' end, ', ',
+
+                    'USERID                          = ', '''UNITTEST''', ', ',
+                    'UPDATE_DATE                     = ', concat( '''', format( getdate(), 'yyyy-MM-dd'), '''' ),
 
                     ' where MON_LOC_ID = ''', tar.MON_LOC_ID, ''' and BEGIN_DATE = ''', format( tar.BEGIN_DATE, 'yyyy-MM-dd' ), ''' and BEGIN_HOUR = ', tar.BEGIN_HOUR, ';' 
                 )
