@@ -58,7 +58,17 @@ BEGIN
     insert
       into  @SqlTable
     select  SQL_STATEMENT
-      from  SqlGenEm.PgHrlyOpDataUpdates(@vEmInformationTable, 1)
+      from  SqlGenEm.PgHrlyOpDataDeletes(@vEmInformationTable, 1)
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgHrlyOpDataUpdates(@vEmInformationTable, 2)
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgHrlyOpDataInserts(@vEmInformationTable, 3)
 
 
     return;

@@ -9,7 +9,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-CREATE FUNCTION SqlGenEm.PgHrlyOpDataUpdates
+CREATE or ALTER FUNCTION SqlGenEm.PgHrlyOpDataUpdates
 (	
 	@TestInformationTable SqlGenEm.Em_Information_Table readonly,
     @TestOrder  integer
@@ -23,12 +23,8 @@ RETURN
                 sel.ORIS_CODE, sel.FACILITY_NAME, sel.LOCATIONS, sel.QUARTER, sel.LOCATION_NAME,  @TestOrder,
                 concat
                 (
-                    'update camdecmpswks.DERIVED_HRLY_VALUE set',
+                    'update camdecmpswks.HRLY_OP_DATA set',
 
-                    ' RPT_PERIOD_ID                  = ',  case when  tar.RPT_PERIOD_ID                  is not null  then  cast( tar.RPT_PERIOD_ID as varchar ) else 'NULL' end, ', ',
-                    ' MON_LOC_ID                     = ',  case when  tar.MON_LOC_ID                     is not null  then  concat( '''', tar.MON_LOC_ID, '''' ) else 'NULL' end, ', ',
-                    ' BEGIN_DATE                     = ',  case when  tar.BEGIN_DATE                     is not null  then  concat( '''', format( tar.BEGIN_DATE, 'yyyy-MM-dd'), '''' ) else 'NULL' end, ', ',
-                    ' BEGIN_HOUR                     = ',  case when  tar.BEGIN_HOUR                     is not null  then  cast( tar.BEGIN_HOUR as varchar ) else 'NULL' end, ', ',
                     ' OP_TIME                        = ',  case when  tar.OP_TIME                        is not null  then  cast( tar.OP_TIME as varchar ) else 'NULL' end, ', ',
                     ' HR_LOAD                        = ',  case when  tar.HR_LOAD                        is not null  then  cast( tar.HR_LOAD as varchar ) else 'NULL' end, ', ',
                     ' LOAD_UOM_CD                    = ',  case when  tar.LOAD_UOM_CD                    is not null  then  concat( '''', tar.LOAD_UOM_CD, '''' ) else 'NULL' end, ', ',
@@ -43,9 +39,9 @@ RETURN
                     ' FUEL_CD_LIST                   = ',  case when  tar.FUEL_CD_LIST                   is not null  then  concat( '''', tar.FUEL_CD_LIST, '''' ) else 'NULL' end, ', ',
                     ' MHHI_INDICATOR                 = ',  case when  tar.MHHI_INDICATOR                 is not null  then  cast( tar.MHHI_INDICATOR as varchar ) else 'NULL' end, ', ',
                     ' MATS_LOAD                      = ',  case when  tar.MATS_LOAD                      is not null  then  cast( tar.MATS_LOAD as varchar ) else 'NULL' end, ', ',
-                    ' MATS_STARTUP_SHUTDOWN_FLG      = ',  case when  tar.MATS_STARTUP_SHUTDOWN_FLG      is not null  then  concat( '''', tar.MATS_STARTUP_SHUTDOWN_FLG, '''' ) else 'NULL' end, ', ',
+                    ' MATS_STARTUP_SHUTDOWN_FLG      = ',  case when  tar.MATS_STARTUP_SHUTDOWN_FLG      is not null  then  concat( '''', tar.MATS_STARTUP_SHUTDOWN_FLG, '''' ) else 'NULL' end,
 
-                    ' where exists( select 1 from camdecmps.HRLY_OP_DATA hod where hod.HOUR_ID = dhv.HOUR_ID and hod.MON_LOC_ID = ''', tar.MON_LOC_ID, ''' and hod.BEGIN_DATE = ''', format( tar.BEGIN_DATE, 'yyyy-MM-dd' ), ''' and hod.BEGIN_HOUR = ', tar.BEGIN_HOUR, ' )', ''';' 
+                    ' where MON_LOC_ID = ''', tar.MON_LOC_ID, ''' and BEGIN_DATE = ''', format( tar.BEGIN_DATE, 'yyyy-MM-dd' ), ''' and BEGIN_HOUR = ', tar.BEGIN_HOUR, ';' 
                 )
             ) as SQL_STATEMENT
       from  (
