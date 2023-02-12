@@ -26,7 +26,7 @@ RETURN
                 (
                     'insert into camdecmpswks.MONITOR_HRLY_VALUE',
                     ' (',
-                        ' DERV_ID', ',',
+                        ' MONITOR_HRLY_VAL_ID_ID', ',',
                         ' HOUR_ID', ',',
 
                         ' MON_LOC_ID', ',',
