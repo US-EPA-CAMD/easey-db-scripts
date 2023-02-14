@@ -102,6 +102,13 @@ BEGIN
     insert
       into  @SqlTable
     select  SQL_STATEMENT
+      from  SqlGenEm.PgHrlyParamFuelFlowDeletes(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
       from  SqlGenEm.PgHrlyGasFlowMeterDeletes(@vEmInformationTable, @LoadOrder)
 
     set @LoadOrder = @LoadOrder + 1
@@ -211,6 +218,24 @@ BEGIN
       into  @SqlTable
     select  SQL_STATEMENT
       from  SqlGenEm.PgHrlyFuelFlowInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+    
+    ----------------------------------------------------------
+    -- Genereate HRLY_PARAM_FUEL_FLOW Update and Insert SQL --
+    ----------------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgHrlyParamFuelFlowUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgHrlyParamFuelFlowInserts(@vEmInformationTable, @LoadOrder)
 
     set @LoadOrder = @LoadOrder + 1
     
