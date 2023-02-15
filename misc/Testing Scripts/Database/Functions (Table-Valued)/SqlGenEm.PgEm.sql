@@ -22,7 +22,7 @@ RETURNS @SqlTable TABLE ( SQL_STATEMENT varchar(max) )
 AS
 BEGIN
 
-    declare @LoadOrder integer = 1;
+    declare @LoadOrder integer = 0;
     
     ---------------------
     -- Get Information --
@@ -53,6 +53,18 @@ BEGIN
       from  SqlGenEm.PgEmInformation( @OrisCode, @Year, @Quarter, @LocationNameFilter ) lst;
     
     
+    ----------------------------------
+    -- Genereate Load Workspace SQL --
+    ----------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgEmLoad(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1   
+    
+
     -----------------------------------
     -- Genereate Delete Existing SQL --
     -----------------------------------
@@ -120,6 +132,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
     
+
     --------------------------------------------------
     -- Genereate HRLY_OP_DATA Update and Insert SQL --
     --------------------------------------------------
@@ -138,6 +151,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
     
+
     --------------------------------------------------------
     -- Genereate DERIVED_HRLY_VALUE Update and Insert SQL --
     --------------------------------------------------------
@@ -156,6 +170,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
     
+
     --------------------------------------------------------
     -- Genereate MONITOR_HRLY_VALUE Update and Insert SQL --
     --------------------------------------------------------
@@ -174,6 +189,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
     
+
     -------------------------------------------------------------
     -- Genereate MATS_DERIVED_HRLY_VALUE Update and Insert SQL --
     -------------------------------------------------------------
@@ -192,6 +208,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
     
+
     -------------------------------------------------------------
     -- Genereate MATS_MONITOR_HRLY_VALUE Update and Insert SQL --
     -------------------------------------------------------------
@@ -210,6 +227,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
     
+
     ----------------------------------------------------
     -- Genereate HRLY_FUEL_FLOW Update and Insert SQL --
     ----------------------------------------------------
@@ -228,6 +246,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
     
+
     ----------------------------------------------------------
     -- Genereate HRLY_PARAM_FUEL_FLOW Update and Insert SQL --
     ----------------------------------------------------------
@@ -246,6 +265,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
     
+
     ---------------------------------------------------------
     -- Genereate HRLY_GAS_FLOW_METER Update and Insert SQL --
     ---------------------------------------------------------
@@ -264,6 +284,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
     
+
     ----------------------------------------------------
     -- Genereate DAILY_EMISSION Update and Insert SQL --
     ----------------------------------------------------
