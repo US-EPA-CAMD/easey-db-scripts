@@ -26,7 +26,7 @@ RETURN
                 (
                     'insert into camdecmpswks.HRLY_FUEL_FLOW',
                     ' (',
-                        ' MATS_DHV_ID', ',',
+                        ' HRLY_FUEL_FLOW_ID', ',',
                         ' HOUR_ID', ',',
 
                         ' MON_LOC_ID', ',',

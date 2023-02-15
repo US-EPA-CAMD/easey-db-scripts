@@ -25,15 +25,15 @@ RETURN
                 sel.ORIS_CODE, sel.FACILITY_NAME, sel.LOCATIONS, sel.QUARTER, sel.LOCATION_NAME,  @TestOrder,
                 concat
                 (
-                    'delete from camdecmpswks.HRLY_PARAM_FUEL_FLOW upd',
+                    'delete from camdecmpswks.HRLY_PARAM_FUEL_FLOW tar',
                     ' where exists',
                     ' (', 
                     ' select 1 from camdecmpswks.HRLY_OP_DATA hod', 
                     ' join camdecmpswks.HRLY_FUEL_FLOW hff on hff.HOUR_ID = hod.HOUR_ID', 
                     ' where hod.MON_LOC_ID = ''', sel.MON_LOC_ID, ''' and hod.BEGIN_DATE = ''', format( sel.BEGIN_DATE, 'yyyy-MM-dd' ), ''' and hod.BEGIN_HOUR = ', sel.BEGIN_HOUR,
                     ' and hff.MON_SYS_ID = ''', sel.HFF_MON_SYS_ID, '''',
-                    ' and upd.HRLY_FUEL_FLOW_ID = hff.HRLY_FUEL_FLOW_ID',
-                    ' and upd.PARAMETER_CD = ''', sel.PARAMETER_CD, '''',
+                    ' and tar.HRLY_FUEL_FLOW_ID = hff.HRLY_FUEL_FLOW_ID',
+                    ' and tar.PARAMETER_CD = ''', sel.PARAMETER_CD, '''',
                     ' )',
                     ';'
                 )

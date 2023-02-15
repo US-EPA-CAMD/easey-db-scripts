@@ -26,7 +26,7 @@ RETURN
                 (
                     'insert into camdecmpswks.HRLY_GAS_FLOW_METER',
                     ' (',
-                        ' MATS_DHV_ID', ',',
+                        ' HRLY_GAS_FLOW_METER_ID', ',',
                         ' HOUR_ID', ',',
 
                         ' MON_LOC_ID', ',',
