@@ -138,6 +138,13 @@ BEGIN
       from  SqlGenEm.PgDailyFuelDeletes(@vEmInformationTable, @LoadOrder)
 
     set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgLongTermFuelFlowDeletes(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
     
 
     --------------------------------------------------
@@ -326,6 +333,25 @@ BEGIN
       into  @SqlTable
     select  SQL_STATEMENT
       from  SqlGenEm.PgDailyFuelInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+    
+
+    ---------------------------------------------------------
+    -- Genereate LONG_TERM_FUEL_FLOW Update and Insert SQL --
+    ---------------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgLongTermFuelFlowUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgLongTermFuelFlowInserts(@vEmInformationTable, @LoadOrder)
 
     set @LoadOrder = @LoadOrder + 1
 
