@@ -152,6 +152,13 @@ BEGIN
       from  SqlGenEm.PgSummaryValueDeletes(@vEmInformationTable, @LoadOrder)
 
     set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgDailyTestSummaryDeletes(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
     
 
     --------------------------------------------------
@@ -363,9 +370,9 @@ BEGIN
     set @LoadOrder = @LoadOrder + 1
     
 
-    ---------------------------------------------------------
+    ---------------------------------------------------
     -- Genereate SUMMARY_VALUE Update and Insert SQL --
-    ---------------------------------------------------------
+    ---------------------------------------------------
 
     insert
       into  @SqlTable
@@ -378,6 +385,25 @@ BEGIN
       into  @SqlTable
     select  SQL_STATEMENT
       from  SqlGenEm.PgSummaryValueInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+
+    --------------------------------------------------------
+    -- Genereate DAILY_TEST_SUMMARY Update and Insert SQL --
+    --------------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgDailyTestSummaryUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgDailyTestSummaryInserts(@vEmInformationTable, @LoadOrder)
 
     set @LoadOrder = @LoadOrder + 1
 
