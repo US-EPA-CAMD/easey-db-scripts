@@ -69,6 +69,7 @@ BEGIN
     -- Genereate Delete Existing SQL --
     -----------------------------------
 
+    -- HRLY_OP_DATA
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -76,6 +77,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- DERIVED_HRLY_VALUE
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -83,6 +85,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- MONITOR_HRLY_VALUE
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -90,6 +93,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- MATS_DERIVED_HRLY_VALUE
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -97,6 +101,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- MATS_MONITOR_HRLY_VALUE
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -104,6 +109,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- HRLY_FUEL_FLOW
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -111,6 +117,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- HRLY_PARAM_FUEL_FLOW
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -118,6 +125,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- HRLY_GAS_FLOW_METER
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -125,6 +133,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- DAILY_EMISSION
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -132,6 +141,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- DAILY_FUEL
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -139,6 +149,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- LONG_TERM_FUEL_FLOW
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -146,6 +157,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- SUMMARY_VALUE
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -153,10 +165,19 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- DAILY_TEST_SUMMARY
     insert
       into  @SqlTable
     select  SQL_STATEMENT
       from  SqlGenEm.PgDailyTestSummaryDeletes(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    -- DAILY_CALIBRATION
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgDailyCalibrationDeletes(@vEmInformationTable, @LoadOrder)
 
     set @LoadOrder = @LoadOrder + 1
     
@@ -404,6 +425,25 @@ BEGIN
       into  @SqlTable
     select  SQL_STATEMENT
       from  SqlGenEm.PgDailyTestSummaryInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+
+    -------------------------------------------------------
+    -- Genereate DAILY_CALIBRATION Update and Insert SQL --
+    -------------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgDailyCalibrationUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgDailyCalibrationInserts(@vEmInformationTable, @LoadOrder)
 
     set @LoadOrder = @LoadOrder + 1
 
