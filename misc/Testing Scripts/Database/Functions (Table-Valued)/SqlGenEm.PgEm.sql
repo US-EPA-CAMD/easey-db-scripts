@@ -180,6 +180,22 @@ BEGIN
       from  SqlGenEm.PgDailyCalibrationDeletes(@vEmInformationTable, @LoadOrder)
 
     set @LoadOrder = @LoadOrder + 1
+
+    -- WEEKLY_TEST_SUMMARY
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgWeeklyTestSummaryDeletes(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    -- WEEKLY_SYSTEM_INTEGRITY
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgWeeklySystemIntegrityDeletes(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
     
 
     --------------------------------------------------
@@ -444,6 +460,44 @@ BEGIN
       into  @SqlTable
     select  SQL_STATEMENT
       from  SqlGenEm.PgDailyCalibrationInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+
+    ---------------------------------------------------------
+    -- Genereate WEEKLY_TEST_SUMMARY Update and Insert SQL --
+    ---------------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgWeeklyTestSummaryUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgWeeklyTestSummaryInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+
+    -------------------------------------------------------------
+    -- Genereate WEEKLY_SYSTEM_INTEGRITY Update and Insert SQL --
+    -------------------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgWeeklySystemIntegrityUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgWeeklySystemIntegrityInserts(@vEmInformationTable, @LoadOrder)
 
     set @LoadOrder = @LoadOrder + 1
 
