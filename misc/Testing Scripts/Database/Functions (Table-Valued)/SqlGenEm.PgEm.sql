@@ -212,6 +212,24 @@ BEGIN
       from  SqlGenEm.PgWeeklySystemIntegrityDeletes(@vEmInformationTable, @LoadOrder)
 
     set @LoadOrder = @LoadOrder + 1
+
+    -- NSPS4T_SUMMARY
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgNsps4tSummaryDeletes(@vEmInformationTable, @LoadOrder)
+
+    -- NSPS4T_ANNUAL
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgNsps4tAnnualDeletes(@vEmInformationTable, @LoadOrder)
+
+    -- NSPS4T_COMPLIANCE_PERIOD
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgNsps4tCompliancePeriodDeletes(@vEmInformationTable, @LoadOrder)
     
 
     --------------------------------------------------
@@ -552,6 +570,63 @@ BEGIN
       into  @SqlTable
     select  SQL_STATEMENT
       from  SqlGenEm.PgWeeklySystemIntegrityInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+
+    ----------------------------------------------------
+    -- Genereate NSPS4T_SUMMARY Update and Insert SQL --
+    ----------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgNsps4tSummaryUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgNsps4tSummaryInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+
+    ---------------------------------------------------
+    -- Genereate NSPS4T_ANNUAL Update and Insert SQL --
+    ---------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgNsps4tAnnualUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgNsps4tAnnualInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+
+    --------------------------------------------------------------
+    -- Genereate NSPS4T_COMPLIANCE_PERIOD Update and Insert SQL --
+    --------------------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgNsps4tCompliancePeriodUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgNsps4tCompliancePeriodInserts(@vEmInformationTable, @LoadOrder)
 
     set @LoadOrder = @LoadOrder + 1
 
