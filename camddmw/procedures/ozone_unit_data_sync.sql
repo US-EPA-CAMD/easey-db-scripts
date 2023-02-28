@@ -1,6 +1,6 @@
 -- PROCEDURE: camddmw.ozone_unit_data_sync()
 
--- DROP PROCEDURE camddmw.ozone_unit_data_sync();
+DROP PROCEDURE IF EXISTS camddmw.ozone_unit_data_sync();
 
 CREATE OR REPLACE PROCEDURE camddmw.ozone_unit_data_sync()
 LANGUAGE 'plpgsql'

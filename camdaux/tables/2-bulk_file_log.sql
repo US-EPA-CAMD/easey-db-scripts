@@ -1,6 +1,6 @@
 -- Table: camdaux.bulk_file_log
 
--- DROP TABLE camdaux.bulk_file_log;
+-- DROP TABLE IF EXISTS camdaux.bulk_file_log;
 
 CREATE TABLE IF NOT EXISTS camdaux.bulk_file_log
 (

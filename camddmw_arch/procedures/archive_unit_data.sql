@@ -1,6 +1,6 @@
 -- PROCEDURE: camddmw_arch.archive_unit_data(integer)
 
--- DROP PROCEDURE camddmw_arch.archive_unit_data(integer);
+DROP PROCEDURE IF EXISTS camddmw_arch.archive_unit_data(integer);
 
 CREATE OR REPLACE PROCEDURE camddmw_arch.archive_unit_data(
 	year integer)

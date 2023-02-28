@@ -1,6 +1,6 @@
 -- PROCEDURE: camddmw.hour_unit_mats_data_sync()
 
--- DROP PROCEDURE camddmw.hour_unit_mats_data_sync();
+DROP PROCEDURE IF EXISTS camddmw.hour_unit_mats_data_sync();
 
 CREATE OR REPLACE PROCEDURE camddmw.hour_unit_mats_data_sync(
 	)

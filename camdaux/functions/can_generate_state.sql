@@ -1,6 +1,6 @@
 -- FUNCTION: camdaux.can_generate_state(integer)
 
--- DROP FUNCTION camdaux.can_generate_state(integer);
+DROP FUNCTION IF EXISTS camdaux.can_generate_state(integer);
 
 CREATE OR REPLACE FUNCTION camdaux.can_generate_state(
 	pyear integer)

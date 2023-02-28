@@ -8,7 +8,7 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_matssorbent(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-	DELETE FROM camdecmpswks.EMISSION_VIEW_MATS_SORBENT
+	DELETE FROM camdecmpswks.EMISSION_VIEW_MATSSORBENT
 		WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
 	--	EC-2393 M.Jones 2015-10-16
@@ -61,7 +61,7 @@ AS
 							 WHERE mpl.MON_PLAN_ID=vmonplanid AND st.RPT_PERIOD_ID=vrptperiodid
 			)
 
-	INSERT INTO camdecmpswks.EMISSION_VIEW_MATS_SORBENT
+	INSERT INTO camdecmpswks.EMISSION_VIEW_MATSSORBENT
            (MON_PLAN_ID,
 			MON_LOC_ID,
 			RPT_PERIOD_ID,

@@ -1,6 +1,6 @@
 -- Table: camdaux.bookmark
 
--- DROP TABLE camdaux.bookmark;
+-- DROP TABLE IF EXISTS camdaux.bookmark;
 
 CREATE TABLE IF NOT EXISTS camdaux.bookmark
 (

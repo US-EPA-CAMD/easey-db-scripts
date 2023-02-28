@@ -1,6 +1,6 @@
 -- Table: camdaux.job_log
 
--- DROP TABLE camdaux.job_log;
+-- DROP TABLE IF EXISTS camdaux.job_log;
 
 CREATE TABLE IF NOT EXISTS camdaux.job_log
 (

@@ -1,6 +1,6 @@
 -- Table: camdaux.bulk_file_metadata
 
--- DROP TABLE camdaux.bulk_file_metadata;
+-- DROP TABLE IF EXISTS camdaux.bulk_file_metadata;
 
 CREATE TABLE IF NOT EXISTS camdaux.bulk_file_metadata
 (

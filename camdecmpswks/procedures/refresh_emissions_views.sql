@@ -95,7 +95,7 @@ BEGIN
 	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
 
 	-- REFRESH EMISSION DATA VIEWS
-	FOR dataset IN SELECT * FROM camdaux.dataset WHERE template_cd = 'EMVIEW'
+	FOR dataset IN SELECT * FROM camdaux.dataset WHERE group_cd = 'EMVIEW'
 	LOOP
 		sqlStatement := format('CALL camdecmpswks.refresh_emission_view_%s(%L, %s);', dataset.dataset_cd, vMonPlanId, vRptPeriodId);
 		RAISE NOTICE 'Refreshing %...', dataset.display_name;
