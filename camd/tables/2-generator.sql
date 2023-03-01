@@ -1,6 +1,6 @@
 -- Table: camd.generator
 
--- DROP TABLE camd.generator;
+-- DROP TABLE IF EXISTS camd.generator;
 
 CREATE TABLE IF NOT EXISTS camd.generator
 (

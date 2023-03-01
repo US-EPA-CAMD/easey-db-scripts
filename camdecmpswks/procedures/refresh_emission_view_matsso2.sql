@@ -8,10 +8,10 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_matsso2(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-	DELETE FROM camdecmpswks.EMISSION_VIEW_MATS_SO2
+	DELETE FROM camdecmpswks.EMISSION_VIEW_MATSSO2
 		WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
-	INSERT INTO camdecmpswks.EMISSION_VIEW_MATS_SO2
+	INSERT INTO camdecmpswks.EMISSION_VIEW_MATSSO2
            (MON_PLAN_ID
            ,MON_LOC_ID
            ,RPT_PERIOD_ID

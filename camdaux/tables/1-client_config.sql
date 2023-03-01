@@ -1,6 +1,6 @@
 -- Table: camdaux.client_config
 
--- DROP TABLE camdaux.client_config;
+-- DROP TABLE IF EXISTS camdaux.client_config;
 
 CREATE TABLE IF NOT EXISTS camdaux.client_config
 (

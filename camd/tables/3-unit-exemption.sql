@@ -1,6 +1,6 @@
 -- Table: camd.unit_exemption
 
--- DROP TABLE camd.unit_exemption;
+-- DROP TABLE IF EXISTS camd.unit_exemption;
 
 CREATE TABLE IF NOT EXISTS camd.unit_exemption
 (

@@ -1,6 +1,6 @@
 -- Table: camd.unit_op_status
 
--- DROP TABLE camd.unit_op_status;
+-- DROP TABLE IF EXISTS camd.unit_op_status;
 
 CREATE TABLE IF NOT EXISTS camd.unit_op_status
 (

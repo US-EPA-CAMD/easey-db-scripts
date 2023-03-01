@@ -1,6 +1,6 @@
 -- Table: camd.plant
 
--- DROP TABLE camd.plant;
+-- DROP TABLE IF EXISTS camd.plant;
 
 CREATE TABLE IF NOT EXISTS camd.plant
 (

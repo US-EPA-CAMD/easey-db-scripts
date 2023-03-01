@@ -1,6 +1,6 @@
 -- PROCEDURE: camddmw.drop_unit_data_partitions(integer)
 
--- DROP PROCEDURE camddmw.drop_unit_data_partitions(integer);
+DROP PROCEDURE IF EXISTS camddmw.drop_unit_data_partitions(integer);
 
 CREATE OR REPLACE PROCEDURE camddmw.drop_unit_data_partitions(
 	year integer)

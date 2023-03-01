@@ -1,8 +1,8 @@
--- Table: camdecmps.emission_view_mats_weekly
+-- Table: camdecmpswks.emission_view_matsweekly
 
--- DROP TABLE camdecmps.emission_view_mats_weekly;
+-- DROP TABLE camdecmpswks.emission_view_matsweekly;
 
-CREATE TABLE IF NOT EXISTS camdecmps.emission_view_mats_weekly
+CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_matsweekly
 (
     em_mats_weekly_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -19,5 +19,14 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_mats_weekly
     ref_value numeric(13,2),
     measured_value numeric(13,3),
     system_integrity_error numeric(5,1),
-    error_codes character varying(1000) COLLATE pg_catalog."default"
+    error_codes character varying(1000) COLLATE pg_catalog."default",
+    CONSTRAINT pk_emission_view_mats_weekly PRIMARY KEY (em_mats_weekly_id),
+    CONSTRAINT fk_emission_view_mats_weekly_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_emission_view_mats_weekly_monitor_plan FOREIGN KEY (mon_plan_id)
+        REFERENCES camdecmpswks.monitor_plan (mon_plan_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 );
