@@ -20,6 +20,10 @@ begin
    select _datadate::TIMESTAMP + _change * '1 year'::INTERVAL into v_date; 
   elsif _interval = 'hour' then
    select _datadate::TIMESTAMP + _change * '1 hour'::INTERVAL into v_date;
+  elsif _interval = 'minute' then
+   select _datadate::TIMESTAMP + _change * '1 minute'::INTERVAL into v_date;
+  elsif _interval = 'second' then
+   select _datadate::TIMESTAMP + _change * '1 second'::INTERVAL into v_date;
   end if;
   
   return v_date;
