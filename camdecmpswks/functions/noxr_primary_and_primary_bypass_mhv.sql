@@ -209,10 +209,10 @@ BEGIN
                                AND  msc.MON_SYS_ID != noxr.MON_SYS_ID
                                AND  msy.SYS_TYPE_CD = 'NOX'
                                AND  msy.SYS_DESIGNATION_CD in ('P', 'PB')
-                               AND  DATE_ADD('hour'::text, msc.BEGIN_HOUR, msc.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                               AND  COALESCE(DATE_ADD('hour'::text, msc.END_HOUR, msc.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                               AND  DATE_ADD('hour'::text, msy.BEGIN_HOUR, msy.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                               AND  COALESCE(DATE_ADD('hour'::text, msy.END_HOUR, msy.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  camdecmpswks.DATE_ADD('hour'::text, msc.BEGIN_HOUR, msc.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, msc.END_HOUR, msc.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  camdecmpswks.DATE_ADD('hour'::text, msy.BEGIN_HOUR, msy.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, msy.END_HOUR, msy.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
                         ) NOT_REPORTED_NOXR_SYSTEM_COUNT,
 
                         (
@@ -223,10 +223,10 @@ BEGIN
                                AND  msc.MON_SYS_ID != noxr.MON_SYS_ID
                                AND  msy.SYS_TYPE_CD = 'NOX'
                                AND  msy.SYS_DESIGNATION_CD in ('P', 'PB')
-                               AND  DATE_ADD('hour'::text, msc.BEGIN_HOUR, msc.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                               AND  COALESCE(DATE_ADD('hour'::text, msc.END_HOUR, msc.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                               AND  DATE_ADD('hour'::text, msy.BEGIN_HOUR, msy.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                               AND  COALESCE(DATE_ADD('hour'::text, msy.END_HOUR, msy.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  camdecmpswks.DATE_ADD('hour'::text, msc.BEGIN_HOUR, msc.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, msc.END_HOUR, msc.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  camdecmpswks.DATE_ADD('hour'::text, msy.BEGIN_HOUR, msy.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, msy.END_HOUR, msy.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
                         ) NOT_REPORTED_NOXR_SYS_DESIGNATION_CD,
 
                         (
@@ -237,10 +237,10 @@ BEGIN
                                AND  msc.MON_SYS_ID != noxr.MON_SYS_ID
                                AND  msy.SYS_TYPE_CD = 'NOX'
                                AND  msy.SYS_DESIGNATION_CD in ('P', 'PB')
-                               AND  DATE_ADD('hour'::text, msc.BEGIN_HOUR, msc.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                               AND  COALESCE(DATE_ADD('hour'::text, msc.END_HOUR, msc.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                               AND  DATE_ADD('hour'::text, msy.BEGIN_HOUR, msy.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                               AND  COALESCE(DATE_ADD('hour'::text, msy.END_HOUR, msy.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  camdecmpswks.DATE_ADD('hour'::text, msc.BEGIN_HOUR, msc.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, msc.END_HOUR, msc.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  camdecmpswks.DATE_ADD('hour'::text, msy.BEGIN_HOUR, msy.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, msy.END_HOUR, msy.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
                         ) NOT_REPORTED_NOXR_MON_SYS_ID,
 
                         (
@@ -251,10 +251,10 @@ BEGIN
                                AND  msc.MON_SYS_ID != noxr.MON_SYS_ID
                                AND  msy.SYS_TYPE_CD = 'NOX'
                                AND  msy.SYS_DESIGNATION_CD in ('P', 'PB')
-                               AND  DATE_ADD('hour'::text, msc.BEGIN_HOUR, msc.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                               AND  COALESCE(DATE_ADD('hour'::text, msc.END_HOUR, msc.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                               AND  DATE_ADD('hour'::text, msy.BEGIN_HOUR, msy.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                               AND  COALESCE(DATE_ADD('hour'::text, msy.END_HOUR, msy.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  camdecmpswks.DATE_ADD('hour'::text, msc.BEGIN_HOUR, msc.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, msc.END_HOUR, msc.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  camdecmpswks.DATE_ADD('hour'::text, msy.BEGIN_HOUR, msy.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, msy.END_HOUR, msy.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
                         ) NOT_REPORTED_NOXR_SYS_TYPE_CD,
 
                         (
@@ -265,10 +265,10 @@ BEGIN
                                AND  msc.MON_SYS_ID != noxr.MON_SYS_ID
                                AND  msy.SYS_TYPE_CD = 'NOX'
                                AND  msy.SYS_DESIGNATION_CD in ('P', 'PB')
-                               AND  DATE_ADD('hour'::text, msc.BEGIN_HOUR, msc.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                               AND  COALESCE(DATE_ADD('hour'::text, msc.END_HOUR, msc.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                               AND  DATE_ADD('hour'::text, msy.BEGIN_HOUR, msy.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                               AND  COALESCE(DATE_ADD('hour'::text, msy.END_HOUR, msy.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  camdecmpswks.DATE_ADD('hour'::text, msc.BEGIN_HOUR, msc.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, msc.END_HOUR, msc.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  camdecmpswks.DATE_ADD('hour'::text, msy.BEGIN_HOUR, msy.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, msy.END_HOUR, msy.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
                         ) NOT_REPORTED_NOXR_SYSTEM_IDENTIFIER,
 
                         /*
@@ -283,8 +283,8 @@ BEGIN
                                                    AND  mdf.PARAMETER_CD = 'O2X'
                                                    AND  mdf.FUEL_CD = 'NFS'
                                                    AND  mdf.DEFAULT_PURPOSE_CD = 'DC'
-                                                   AND  DATE_ADD('hour'::text, mdf.BEGIN_HOUR, mdf.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                                                   AND  COALESCE(DATE_ADD('hour'::text, mdf.END_HOUR, mdf.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  camdecmpswks.DATE_ADD('hour'::text, mdf.BEGIN_HOUR, mdf.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, mdf.END_HOUR, mdf.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
                                             )
                             ELSE NULL
                         END MAX_DEFAULT_COUNT,
@@ -297,8 +297,8 @@ BEGIN
                                                    AND  mdf.PARAMETER_CD = 'O2X'
                                                    AND  mdf.FUEL_CD = 'NFS'
                                                    AND  mdf.DEFAULT_PURPOSE_CD = 'DC'
-                                                   AND  DATE_ADD('hour'::text, mdf.BEGIN_HOUR, mdf.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                                                   AND  COALESCE(DATE_ADD('hour'::text, mdf.END_HOUR, mdf.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  camdecmpswks.DATE_ADD('hour'::text, mdf.BEGIN_HOUR, mdf.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, mdf.END_HOUR, mdf.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
                                             )
                             ELSE NULL
                         END MAX_DEFAULT_VALUE,
@@ -310,8 +310,8 @@ BEGIN
                                                  WHERE  msp.MON_LOC_ID = sel.MON_LOC_ID 
                                                    AND  msp.COMPONENT_TYPE_CD = 'CO2'
                                                    AND  msp.SPAN_SCALE_CD = 'H'
-                                                   AND  DATE_ADD('hour'::text, msp.BEGIN_HOUR, msp.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                                                   AND  COALESCE(DATE_ADD('hour'::text, msp.END_HOUR, msp.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  camdecmpswks.DATE_ADD('hour'::text, msp.BEGIN_HOUR, msp.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, msp.END_HOUR, msp.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
                                              )
                             WHEN 'NOXC' THEN (
                                                 SELECT  COUNT(1)
@@ -319,8 +319,8 @@ BEGIN
                                                  WHERE  msp.MON_LOC_ID = sel.MON_LOC_ID 
                                                    AND  msp.COMPONENT_TYPE_CD = 'NOX'
                                                    AND  msp.SPAN_SCALE_CD = 'H'
-                                                   AND  DATE_ADD('hour'::text, msp.BEGIN_HOUR, msp.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                                                   AND  COALESCE(DATE_ADD('hour'::text, msp.END_HOUR, msp.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  camdecmpswks.DATE_ADD('hour'::text, msp.BEGIN_HOUR, msp.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, msp.END_HOUR, msp.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
                                              )
                             ELSE NULL
                         END HIGH_SPAN_COUNT,
@@ -332,8 +332,8 @@ BEGIN
                                                  WHERE  msp.MON_LOC_ID = sel.MON_LOC_ID 
                                                    AND  msp.COMPONENT_TYPE_CD = 'CO2'
                                                    AND  msp.SPAN_SCALE_CD = 'H'
-                                                   AND  DATE_ADD('hour'::text, msp.BEGIN_HOUR, msp.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                                                   AND  COALESCE(DATE_ADD('hour'::text, msp.END_HOUR, msp.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  camdecmpswks.DATE_ADD('hour'::text, msp.BEGIN_HOUR, msp.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, msp.END_HOUR, msp.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
                                              )
                             WHEN 'NOXC' THEN (
                                                 SELECT  CASE WHEN MAX(msp.DEFAULT_HIGH_RANGE) = MIN(msp.DEFAULT_HIGH_RANGE) THEN MAX(msp.DEFAULT_HIGH_RANGE) ELSE NULL END
@@ -341,8 +341,8 @@ BEGIN
                                                  WHERE  msp.MON_LOC_ID = sel.MON_LOC_ID 
                                                    AND  msp.COMPONENT_TYPE_CD = 'NOX'
                                                    AND  msp.SPAN_SCALE_CD = 'H'
-                                                   AND  DATE_ADD('hour'::text, msp.BEGIN_HOUR, msp.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                                                   AND  COALESCE(DATE_ADD('hour'::text, msp.END_HOUR, msp.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  camdecmpswks.DATE_ADD('hour'::text, msp.BEGIN_HOUR, msp.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, msp.END_HOUR, msp.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
                                              )
                             ELSE NULL
                         END HIGH_SPAN_DEFAULT_HIGH_RANGE,
@@ -354,8 +354,8 @@ BEGIN
                                                  WHERE  msp.MON_LOC_ID = sel.MON_LOC_ID 
                                                    AND  msp.COMPONENT_TYPE_CD = 'CO2'
                                                    AND  msp.SPAN_SCALE_CD = 'H'
-                                                   AND  DATE_ADD('hour'::text, msp.BEGIN_HOUR, msp.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                                                   AND  COALESCE(DATE_ADD('hour'::text, msp.END_HOUR, msp.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  camdecmpswks.DATE_ADD('hour'::text, msp.BEGIN_HOUR, msp.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, msp.END_HOUR, msp.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
                                              )
                             WHEN 'NOXC' THEN (
                                                 SELECT  CASE WHEN MAX(msp.FULL_SCALE_RANGE) = MIN(msp.FULL_SCALE_RANGE) THEN MAX(msp.FULL_SCALE_RANGE) ELSE NULL END
@@ -363,8 +363,8 @@ BEGIN
                                                  WHERE  msp.MON_LOC_ID = sel.MON_LOC_ID 
                                                    AND  msp.COMPONENT_TYPE_CD = 'NOX'
                                                    AND  msp.SPAN_SCALE_CD = 'H'
-                                                   AND  DATE_ADD('hour'::text, msp.BEGIN_HOUR, msp.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                                                   AND  COALESCE(DATE_ADD('hour'::text, msp.END_HOUR, msp.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  camdecmpswks.DATE_ADD('hour'::text, msp.BEGIN_HOUR, msp.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, msp.END_HOUR, msp.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
                                              )
                             ELSE NULL
                         END HIGH_SPAN_FULL_SCALE_RANGE,
@@ -376,8 +376,8 @@ BEGIN
                                                  WHERE  msp.MON_LOC_ID = sel.MON_LOC_ID 
                                                    AND  msp.COMPONENT_TYPE_CD = 'NOX'
                                                    AND  msp.SPAN_SCALE_CD = 'L'
-                                                   AND  DATE_ADD('hour'::text, msp.BEGIN_HOUR, msp.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                                                   AND  COALESCE(DATE_ADD('hour'::text, msp.END_HOUR, msp.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  camdecmpswks.DATE_ADD('hour'::text, msp.BEGIN_HOUR, msp.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, msp.END_HOUR, msp.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
                                              )
                             ELSE NULL
                         END LOW_SPAN_COUNT,
@@ -389,8 +389,8 @@ BEGIN
                                                  WHERE  msp.MON_LOC_ID = sel.MON_LOC_ID 
                                                    AND  msp.COMPONENT_TYPE_CD = 'NOX'
                                                    AND  msp.SPAN_SCALE_CD = 'L'
-                                                   AND  DATE_ADD('hour'::text, msp.BEGIN_HOUR, msp.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                                                   AND  COALESCE(DATE_ADD('hour'::text, msp.END_HOUR, msp.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  camdecmpswks.DATE_ADD('hour'::text, msp.BEGIN_HOUR, msp.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                                                   AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, msp.END_HOUR, msp.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
                                              )
                             ELSE NULL
                         END LOW_SPAN_FULL_SCALE_RANGE,
@@ -404,8 +404,8 @@ BEGIN
                               FROM  camdecmpswks.MONITOR_SYSTEM msy
                              WHERE  msy.MON_LOC_ID = sel.MON_LOC_ID 
                                AND  msy.SYS_TYPE_CD = 'NOX'
-                               AND  DATE_ADD('hour'::text, msy.BEGIN_HOUR, msy.BEGIN_DATE) <= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
-                               AND  COALESCE(DATE_ADD('hour'::text, msy.END_HOUR, msy.END_DATE),  DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  camdecmpswks.DATE_ADD('hour'::text, msy.BEGIN_HOUR, msy.BEGIN_DATE) <= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
+                               AND  COALESCE(camdecmpswks.DATE_ADD('hour'::text, msy.END_HOUR, msy.END_DATE),  camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)) >= camdecmpswks.DATE_ADD('hour'::text, hod.BEGIN_HOUR, hod.BEGIN_DATE)
                         ) PRIMARY_BYPASS_EXIST_IND
 
                     /*

@@ -93,7 +93,7 @@ BEGIN
                                                             sel.CALENDAR_YEAR,
                                                             prd.QUARTER,
                                                             mth.MON_LOC_ID METH_LOC_ID,
-                                                            date_add('hour', mth.BEGIN_HOUR, mth.BEGIN_DATE) METHOD_BEGIN,
+                                                            camdecmpswks.DATE_ADD('hour', mth.BEGIN_HOUR, mth.BEGIN_DATE) METHOD_BEGIN,
                                                             case when loc.UNIT_ID is not null then 'UN' else substring(stp.STACK_NAME, 1, 2) end LOCATION_TYPE_CD,
                                                             mth.PARAMETER_CD,
                                                             mth.METHOD_CD
