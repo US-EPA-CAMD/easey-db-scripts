@@ -69,6 +69,7 @@ BEGIN
     -- Genereate Delete Existing SQL --
     -----------------------------------
 
+    -- HRLY_OP_DATA
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -76,6 +77,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- DERIVED_HRLY_VALUE
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -83,6 +85,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- MONITOR_HRLY_VALUE
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -90,6 +93,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- MATS_DERIVED_HRLY_VALUE
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -97,6 +101,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- MATS_MONITOR_HRLY_VALUE
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -104,6 +109,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- HRLY_FUEL_FLOW
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -111,6 +117,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- HRLY_PARAM_FUEL_FLOW
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -118,6 +125,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- HRLY_GAS_FLOW_METER
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -125,6 +133,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- DAILY_EMISSION
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -132,6 +141,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- DAILY_FUEL
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -139,6 +149,7 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- LONG_TERM_FUEL_FLOW
     insert
       into  @SqlTable
     select  SQL_STATEMENT
@@ -146,12 +157,79 @@ BEGIN
 
     set @LoadOrder = @LoadOrder + 1
 
+    -- SUMMARY_VALUE
     insert
       into  @SqlTable
     select  SQL_STATEMENT
       from  SqlGenEm.PgSummaryValueDeletes(@vEmInformationTable, @LoadOrder)
 
     set @LoadOrder = @LoadOrder + 1
+
+    -- SORBENT_TRA{
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgSorbentTrapDeletes(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    -- SAMPLING_TRAIN
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgSamplingTrainDeletes(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    -- DAILY_TEST_SUMMARY
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgDailyTestSummaryDeletes(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    -- DAILY_CALIBRATION
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgDailyCalibrationDeletes(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    -- WEEKLY_TEST_SUMMARY
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgWeeklyTestSummaryDeletes(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    -- WEEKLY_SYSTEM_INTEGRITY
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgWeeklySystemIntegrityDeletes(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    -- NSPS4T_SUMMARY
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgNsps4tSummaryDeletes(@vEmInformationTable, @LoadOrder)
+
+    -- NSPS4T_ANNUAL
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgNsps4tAnnualDeletes(@vEmInformationTable, @LoadOrder)
+
+    -- NSPS4T_COMPLIANCE_PERIOD
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgNsps4tCompliancePeriodDeletes(@vEmInformationTable, @LoadOrder)
     
 
     --------------------------------------------------
@@ -363,9 +441,9 @@ BEGIN
     set @LoadOrder = @LoadOrder + 1
     
 
-    ---------------------------------------------------------
+    ---------------------------------------------------
     -- Genereate SUMMARY_VALUE Update and Insert SQL --
-    ---------------------------------------------------------
+    ---------------------------------------------------
 
     insert
       into  @SqlTable
@@ -378,6 +456,177 @@ BEGIN
       into  @SqlTable
     select  SQL_STATEMENT
       from  SqlGenEm.PgSummaryValueInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+
+    --------------------------------------------------
+    -- Genereate SORBENT_TRAP Update and Insert SQL --
+    --------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgSorbentTrapUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgSorbentTrapInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+
+    ----------------------------------------------------
+    -- Genereate SAMPLING_TRAIN Update and Insert SQL --
+    ----------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgSamplingTrainUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgSamplingTrainInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+
+    --------------------------------------------------------
+    -- Genereate DAILY_TEST_SUMMARY Update and Insert SQL --
+    --------------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgDailyTestSummaryUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgDailyTestSummaryInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+
+    -------------------------------------------------------
+    -- Genereate DAILY_CALIBRATION Update and Insert SQL --
+    -------------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgDailyCalibrationUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgDailyCalibrationInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+
+    ---------------------------------------------------------
+    -- Genereate WEEKLY_TEST_SUMMARY Update and Insert SQL --
+    ---------------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgWeeklyTestSummaryUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgWeeklyTestSummaryInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+
+    -------------------------------------------------------------
+    -- Genereate WEEKLY_SYSTEM_INTEGRITY Update and Insert SQL --
+    -------------------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgWeeklySystemIntegrityUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgWeeklySystemIntegrityInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+
+    ----------------------------------------------------
+    -- Genereate NSPS4T_SUMMARY Update and Insert SQL --
+    ----------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgNsps4tSummaryUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgNsps4tSummaryInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+
+    ---------------------------------------------------
+    -- Genereate NSPS4T_ANNUAL Update and Insert SQL --
+    ---------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgNsps4tAnnualUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgNsps4tAnnualInserts(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+
+    --------------------------------------------------------------
+    -- Genereate NSPS4T_COMPLIANCE_PERIOD Update and Insert SQL --
+    --------------------------------------------------------------
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgNsps4tCompliancePeriodUpdates(@vEmInformationTable, @LoadOrder)
+
+    set @LoadOrder = @LoadOrder + 1
+
+    insert
+      into  @SqlTable
+    select  SQL_STATEMENT
+      from  SqlGenEm.PgNsps4tCompliancePeriodInserts(@vEmInformationTable, @LoadOrder)
 
     set @LoadOrder = @LoadOrder + 1
 

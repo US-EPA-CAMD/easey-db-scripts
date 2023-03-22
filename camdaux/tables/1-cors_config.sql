@@ -1,6 +1,6 @@
 -- Table: camdaux.cors_config
 
--- DROP TABLE camdaux.cors_config;
+-- DROP TABLE IF EXISTS camdaux.cors_config;
 
 CREATE TABLE IF NOT EXISTS camdaux.cors_config
 (

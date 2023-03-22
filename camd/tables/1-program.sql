@@ -1,6 +1,6 @@
 -- Table: camd.program
 
--- DROP TABLE camd.program;
+-- DROP TABLE IF EXISTS camd.program;
 
 CREATE TABLE IF NOT EXISTS camd.program
 (

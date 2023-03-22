@@ -1,6 +1,6 @@
 -- Table: camdaux.dataparameter
 
--- DROP TABLE camdaux.dataparameter;
+-- DROP TABLE IF EXISTS camdaux.dataparameter;
 
 CREATE TABLE IF NOT EXISTS camdaux.dataparameter
 (
@@ -13,5 +13,5 @@ CREATE TABLE IF NOT EXISTS camdaux.dataparameter
     CONSTRAINT fk_dataparameter_datatable FOREIGN KEY (datatable_id)
         REFERENCES camdaux.datatable (datatable_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );

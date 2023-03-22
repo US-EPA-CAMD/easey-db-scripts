@@ -1,6 +1,6 @@
 -- PROCEDURE: camddmw.annual_unit_data_sync()
 
--- DROP PROCEDURE camddmw.annual_unit_data_sync();
+DROP PROCEDURE IF EXISTS camddmw.annual_unit_data_sync();
 
 CREATE OR REPLACE PROCEDURE camddmw.annual_unit_data_sync()
 LANGUAGE 'plpgsql'

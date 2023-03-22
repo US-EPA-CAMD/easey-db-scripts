@@ -342,3 +342,33 @@ REFERENCES camdecmpsmd.parameter_code (parameter_cd);
 ALTER TABLE camdecmpsmd.parameter_method_to_formula
 ADD CONSTRAINT fk_parameter_method_to_formula_method_code FOREIGN KEY (method_cd) 
 REFERENCES camdecmpsmd.method_code (method_cd);
+-----------------------------------------------------------------------------------------------------------------
+create table if not exists camdecmpsmd.hbha_supp_data_xref
+(
+    hbha_sd_xref_id         integer not null generated always as identity,
+    hourly_type_cd          character varying(7) not null,
+    parameter_cd            character varying(7) not null,
+    moisture_basis          character varying(1),
+    primary_bypass_ind      numeric(38,0) not null,
+    derived_value_source    character varying(1000) collate pg_catalog."default",
+    monitor_value_source    character varying(1000) collate pg_catalog."default"
+);
+
+alter table camdecmpsmd.hbha_supp_data_xref
+    add constraint hbha_supp_data_xref_pk
+    primary key ( hbha_sd_xref_id );
+
+alter table camdecmpsmd.hbha_supp_data_xref
+    add constraint hbha_supp_data_xref_uq
+    unique ( hourly_type_cd, parameter_cd, moisture_basis );
+
+alter table camdecmpsmd.hbha_supp_data_xref
+    add constraint hbha_supp_data_xref_hrt_fk
+    foreign key ( hourly_type_cd ) 
+    references camdecmpsmd.hourly_type_code ( hourly_type_cd );
+
+alter table camdecmpsmd.hbha_supp_data_xref
+    add constraint hbha_supp_data_xref_par_fk
+    foreign key ( parameter_cd ) 
+    references camdecmpsmd.parameter_code ( parameter_cd );
+-----------------------------------------------------------------------------------------------------------------	

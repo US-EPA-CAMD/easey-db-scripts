@@ -1,6 +1,6 @@
 -- Table: camd.unit_boiler_type
 
--- DROP TABLE camd.unit_boiler_type;
+-- DROP TABLE IF EXISTS camd.unit_boiler_type;
 
 CREATE TABLE IF NOT EXISTS camd.unit_boiler_type
 (

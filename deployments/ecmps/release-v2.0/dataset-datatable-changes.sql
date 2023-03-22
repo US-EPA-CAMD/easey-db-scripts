@@ -27,7 +27,8 @@ CREATE TABLE IF NOT EXISTS camdaux.template_code(
 
 INSERT INTO camdaux.template_code(template_cd, group_cd, template_type, display_name)
 VALUES
-	('QCE',				'QCE',		'DEFAULT',	'QA Certification Events Details'),
+	('EVAL',				'EVAL',		'DEFAULT',	'Evaluation Results'),
+	('QCE',					'QCE',		'DEFAULT',	'QA Certification Events Details'),
 	('FACINFO',			'ALL',		'1COLTBL',	'Facility Information'),
 	('RPTFREQ',			'MPP',		'DEFAULT',	'Reporting Frequency'),
 	('LOCATTR',			'MPP',		'DEFAULT',	'Location Attributes'),

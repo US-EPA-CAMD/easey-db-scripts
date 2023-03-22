@@ -197,3 +197,24 @@ select  concat( 'insert into camdecmpsmd.OPERATING_STATUS_CODE ( OP_STATUS_CD, O
                 case when OP_STATUS_CD_DESCRIPTION is not null then '''' + OP_STATUS_CD_DESCRIPTION + '''' else 'NULL' end,
 				' );' )
   from  ECMPS.dbo.OPERATING_STATUS_CODE
+
+union all 
+select  '' 
+union all 
+select  ''
+union all 
+
+select  '-- HBHA_SUPP_DATA_XREF'
+union all
+select  concat( 'insert into camdecmpsmd.HBHA_SUPP_DATA_XREF ( HBHA_SD_XREF_ID, HOURLY_TYPE_CD, PARAMETER_CD, MOISTURE_BASIS, PRIMARY_BYPASS_IND, DERIVED_VALUE_SOURCE, MONITOR_VALUE_SOURCE ) ', 
+                 'overriding system value ',
+                'values ( ', 
+                case when HBHA_SD_XREF_ID       is not null then HBHA_SD_XREF_ID                     else 'NULL' end, ', ', 
+                case when HOURLY_TYPE_CD        is not null then '''' + HOURLY_TYPE_CD + ''''        else 'NULL' end, ', ', 
+                case when PARAMETER_CD          is not null then '''' + PARAMETER_CD + ''''          else 'NULL' end, ', ', 
+                case when MOISTURE_BASIS        is not null then '''' + MOISTURE_BASIS + ''''        else 'NULL' end, ', ', 
+                case when PRIMARY_BYPASS_IND    is not null then PRIMARY_BYPASS_IND                  else 'NULL' end, ', ', 
+                case when DERIVED_VALUE_SOURCE  is not null then '''' + DERIVED_VALUE_SOURCE + ''''  else 'NULL' end, ', ', 
+                case when MONITOR_VALUE_SOURCE  is not null then '''' + MONITOR_VALUE_SOURCE + ''''  else 'NULL' end,
+				' );' )
+  from  ECMPS.Supp.HBHA_SUPP_DATA_XREF

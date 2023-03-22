@@ -2,6 +2,10 @@
 --CALL camddmw.create_partitions(2022, 'N')
 --CALL camddmw.create_partitions(2022, 'Y')
 
+-- PROCEDURE: camddmw.create_partitions(integer, character)
+
+DROP PROCEDURE IF EXISTS camddmw.create_partitions(integer, character);
+
 CREATE OR REPLACE PROCEDURE camddmw.create_partitions(year integer, executeFlag char(1) = 'N')
 LANGUAGE 'plpgsql'
 AS $BODY$

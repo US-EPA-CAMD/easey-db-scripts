@@ -1,6 +1,6 @@
 -- Table: camd.unit_generator
 
--- DROP TABLE camd.unit_generator;
+-- DROP TABLE IF EXISTS camd.unit_generator;
 
 CREATE TABLE IF NOT EXISTS camd.unit_generator
 (

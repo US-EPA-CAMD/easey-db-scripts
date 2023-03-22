@@ -409,3 +409,5 @@ where es_match_data_type_cd = 'MATSPAR';
 ALTER TABLE IF EXISTS camdecmpsmd.es_match_data_type_code
 ALTER COLUMN es_match_data_type_url SET NOT NULL;
 --------------------------------------------------------------------------------------------------------------------
+insert into camdecmpsmd.hourly_type_code ( hourly_type_cd, hourly_type_description ) values ( 'COMBINE', 'Both Monitored and Derived Hourly' );
+--------------------------------------------------------------------------------------------------------------------

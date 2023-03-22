@@ -2,7 +2,7 @@ DO $$
 DECLARE
 	datasetCode text := 'MPP';
 	groupCode text := 'REPORT';
-	tableOrder integer := 1;
+	tableOrder integer := 0;
 	datatableId integer;
 BEGIN
 	DELETE FROM camdaux.dataset WHERE dataset_cd = datasetCode;

@@ -1,6 +1,6 @@
 -- PROCEDURE: camddmw_arch.create_unit_data_a_partitions(integer)
 
--- DROP PROCEDURE camddmw_arch.create_unit_data_a_partitions(integer);
+DROP PROCEDURE IF EXISTS camddmw_arch.create_unit_data_a_partitions(integer);
 
 CREATE OR REPLACE PROCEDURE camddmw_arch.create_unit_data_a_partitions(
 	year integer)

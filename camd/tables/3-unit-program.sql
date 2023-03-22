@@ -1,6 +1,6 @@
 -- Table: camd.unit_program
 
--- DROP TABLE camd.unit_program;
+-- DROP TABLE IF EXISTS camd.unit_program;
 
 CREATE TABLE IF NOT EXISTS camd.unit_program
 (
