@@ -79,7 +79,9 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, 
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Control Code for Unit Control'), 'HCL', 'DSI', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Control Code for Unit Control'), 'HCL', 'SB', null);
 
+/*
 --DATA VALIDATION SCRIPT(S)
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Parameter to Category' and value2='UNITCONTROL'; --6 rows
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Parameter Code to Control Code for Unit Control'; --42 rows
 select * from camdecmpsmd.vw_unitcontrol_master_data_relationships; --42 rows
+*/

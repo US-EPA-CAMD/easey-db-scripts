@@ -113,6 +113,8 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, 
   ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='System Type to Reference Method Codes'), 'FLOW', '2FJ', null),
   ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='System Type to Reference Method Codes'), 'FLOW', '2GJ', null);
 
+/*
 --DATA VALIDATION SCRIPTS
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='System Type to Reference Method Codes';
 select * from camdecmpsmd.vw_rata_summary_master_data_relationships;
+*/

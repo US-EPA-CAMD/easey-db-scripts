@@ -4,7 +4,7 @@ DECLARE
 	groupCode text := 'EMVIEW';
 	datatableId integer;
 BEGIN
-	DELETE FROM camdaux.dataset WHERE group_cd = groupCode;
+	DELETE FROM camdaux.dataset WHERE dataset_cd = datasetCode;
 	
 	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name, sort_order, no_results_msg)
 	VALUES(datasetCode, groupCode, 'Hourly NOx Mass CEMS View', 4, 'Hourly NOx Mass CEMS data does not exist for the specified monitor plan and reporting period.');

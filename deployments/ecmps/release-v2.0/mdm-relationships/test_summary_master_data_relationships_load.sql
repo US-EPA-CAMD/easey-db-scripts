@@ -714,9 +714,11 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, 
   VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Test Type to Gas Level Codes'), 'DSA', 'HIGH', null);
 */
 
+/*
 --DATA VALIDATION SCRIPTS
-select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Test Type to Category' and value2='TESTSUMMARY';
-select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Test Type to Gas Level Codes';
-select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Test Type to Test Result Codes';
-select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Test Type to Test Reason Codes';
-select * from camdecmpsmd.vw_test_summary_master_data_relationships;
+select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Test Type to Category' and value2='TESTSUMMARY'; --25 rows
+select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Test Type to Gas Level Codes'; --24 rows
+select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Test Type to Test Result Codes'; --70 rows
+select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Test Type to Test Reason Codes'; --77 rows
+select * from camdecmpsmd.vw_test_summary_master_data_relationships; --406 rows
+*/

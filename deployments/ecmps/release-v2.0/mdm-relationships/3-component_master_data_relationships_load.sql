@@ -267,7 +267,9 @@ where cross_chk_catalog_id = (select cross_chk_catalog_id from camdecmpsmd.cross
 			and value1 <> ('FLOW');
 */
 
+/*
 --DATA VALIDATION SCRIPTS
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Component Type to Category' and value2='COMPONENT'; --27 rows
 select distinct * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Component Type and Basis to Sample Acquisition Method' order by value1; --285 rows
-select * from camdecmpsmd.vw_systemcomponent_master_data_relationships; --531 rows
+select * from camdecmpsmd.vw_systemcomponent_master_data_relationships; --249 rows
+*/

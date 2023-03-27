@@ -91,8 +91,10 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, 
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type Code to Units of Measure for Span'), 'O2', 'PCT', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type Code to Units of Measure for Span'), 'SO2', 'PPM', null);
 
+/*
 --DATA VALIDATION SCRIPTS
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Component Type to Category' and value2='SPAN'; --7 rows
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Component Type and Span Scale to Span Method'; --31 rows
-select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Component Type Code to Units of Measure for Span'; --10 rows
-select * from camdecmpsmd.vw_span_master_data_relationships; --40 rows
+select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Component Type Code to Units of Measure for Span'; --24 rows
+select * from camdecmpsmd.vw_span_master_data_relationships; --82 rows
+*/

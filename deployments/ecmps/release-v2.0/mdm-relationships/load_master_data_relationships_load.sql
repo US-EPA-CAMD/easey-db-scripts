@@ -66,8 +66,9 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, 
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Operating Level to Category'), 'M', 'LOAD', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Operating Level to Category'), 'H', 'LOAD', null);
 
-
+/*
 --DATA VALIDATION SCRIPTS
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Units of Measure to Category' and value2='LOAD'; --3 rows
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Operating Level to Category' and value2='LOAD'; --3 rows
 select * from camdecmpsmd.vw_load_master_data_relationships; --9 rows
+*/

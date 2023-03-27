@@ -119,7 +119,9 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, 
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Formula Code for Formulas'), 'SO2RE', 'MS-1', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Formula Code for Formulas'), 'SO2RH', 'MS-1', null);
 
+/*
 --DATA VALIDATION SCRIPTS
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Parameter to Category' and value2='FORMULA'; --25 rows
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Parameter Code to Formula Code for Formulas' order by value1; --90 rows
 select * from camdecmpsmd.vw_formula_master_data_relationships; --90 rows
+*/

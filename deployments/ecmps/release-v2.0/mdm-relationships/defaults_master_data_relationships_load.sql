@@ -597,6 +597,7 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, 
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Source Code for Defaults'), 'MNGF', 'DATA', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Source Code for Defaults'), 'BWA', 'DATA', null);
 
+/*
 --DATA VALIDATION SCRIPTS
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Parameter to Category' and value2='DEFAULT'; --20 rows
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Parameter Code to Units of Measure Code for Defaults'; --23 rows
@@ -605,3 +606,4 @@ select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_n
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Operating Condition to Category' and value2='DEFAULT'; --5 rows
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Parameter Code to Source Code for Defaults'; --44 rows
 select * from camdecmpsmd.vw_defaults_master_data_relationships --4725 rows
+*/

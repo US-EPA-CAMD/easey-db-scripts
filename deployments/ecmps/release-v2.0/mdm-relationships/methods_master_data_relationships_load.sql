@@ -98,9 +98,11 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, 
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Method Parameter to Method Code to Bypass Approach for Methods'), 'NOXR', 'CEM', 'BYMAX');
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Method Parameter to Method Code to Bypass Approach for Methods'), 'NOXR', 'CEM', 'BYMAXFS');
 
+/*
 --DATA VALIDATION SCRIPTS
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Parameter to Category' and value2='METHOD'; --19 rows
 select distinct value1, value2 from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Method Parameter to Method to System Type' order by value1; --56 rows
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Method Parameter to Substitute Data Code for Methods'; --28 rows
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Method Parameter to Method Code to Bypass Approach for Methods'; --10 rows
 select * from camdecmpsmd.vw_methods_master_data_relationships; --172 rows
+*/

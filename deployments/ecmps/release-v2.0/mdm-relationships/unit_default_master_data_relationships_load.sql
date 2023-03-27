@@ -53,7 +53,9 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, 
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Operating Condition to Category'), 'B', 'UNITDEFAULT', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Operating Condition to Category'), 'P', 'UNITDEFAULT', null);
 
+/*
 --DATA VALIDATION SCRIPTS
---select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Fuel Codes to Category' and value2='UNITDEFAULT';
---select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Operating Condition to Category' and value2='UNITDEFAULT';
---select * from camdecmpsmd.vw_unit_default_master_data_relationships;
+select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Fuel Codes to Category' and value2='UNITDEFAULT'; --19 rows
+select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Operating Condition to Category' and value2='UNITDEFAULT'; --3 rows
+select * from camdecmpsmd.vw_unit_default_master_data_relationships; --57 rows
+*/

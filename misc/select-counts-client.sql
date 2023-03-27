@@ -32,7 +32,7 @@ SELECT 'camdecmpsmd' AS schema_name, 'rule_check_condition' AS table_name, COUNT
 SELECT 'camdecmpsmd' AS schema_name, 'system_parameter' AS table_name, COUNT(*) FROM camdecmpsmd.system_parameter UNION ALL
 SELECT 'camdecmpsmd' AS schema_name, 'system_parameter_name' AS table_name, COUNT(*) FROM camdecmpsmd.system_parameter_name UNION ALL
 SELECT 'camdecmpsmd' AS schema_name, 'test_frequency_code' AS table_name, COUNT(*) FROM camdecmpsmd.test_frequency_code UNION ALL
-SELECT 'camdecmpsmd' AS schema_name, 'test_type_group_code' AS table_name, COUNT(*) FROM camdecmpsmd.test_type_group_code
+SELECT 'camdecmpsmd' AS schema_name, 'test_type_group_code' AS table_name, COUNT(*) FROM camdecmpsmd.test_type_group_code UNION ALL
+SELECT 'camdmd' AS schema_name, 'account_type_group_code' AS table_name, COUNT(*) FROM camdmd.account_type_group_code UNION ALL
+SELECT 'camdmd' AS schema_name, 'unit_type_group_code' AS table_name, COUNT(*) FROM camdmd.unit_type_group_code
 order by 1,2
-
---select * from camdecmpsmd.category_code where category_cd = 'CO2CDH'

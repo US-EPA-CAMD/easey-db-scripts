@@ -6,6 +6,86 @@ DECLARE
 BEGIN
 	DELETE FROM camdaux.dataset WHERE group_cd = groupCode;
 ----------------------------------------------------------------------------------------------------------------------------
+	datasetCode := 'control-equip-param-codes';
+	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
+	VALUES(datasetCode, 'MDM', 'Control Equipment Parameter Codes & Descriptions');
+
+	/***** DATATABLE 1 *****/
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement)
+	VALUES(datasetCode, 1, 'Control Equipment Parameter Codes & Descriptions', 'SELECT * FROM camdecmpsmd.control_equip_param_code')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
+	VALUES
+		(datatableId, 1, 'control_equip_param_cd', 'controlEquipParamCode', 'Control Equipment Parameter Code'),
+		(datatableId, 2, 'control_equip_param_desc', 'controlEquipParamDescription', 'Control Equipment Parameter Description');
+
+----------------------------------------------------------------------------------------------------------------------------
+	datasetCode := 'parameter-codes';
+	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
+	VALUES(datasetCode, 'MDM', 'Parameter Codes & Descriptions');
+
+	/***** DATATABLE 1 *****/
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement)
+	VALUES(datasetCode, 1, 'Parameter Codes & Descriptions', 'SELECT * FROM camdecmpsmd.parameter_code')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
+	VALUES
+		(datatableId, 1, 'parameter_cd', 'parameterCode', 'Parameter Code'),
+		(datatableId, 2, 'parameter_cd_description', 'parameterDescription', 'Parameter Description');
+
+----------------------------------------------------------------------------------------------------------------------------
+	datasetCode := 'source-category-codes';
+	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
+	VALUES(datasetCode, 'MDM', 'Source Category Codes & Descriptions');
+
+	/***** DATATABLE 1 *****/
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement)
+	VALUES(datasetCode, 1, 'Source Category Codes & Descriptions', 'SELECT * FROM camdmd.source_category_code')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
+	VALUES
+		(datatableId, 1, 'source_category_cd', 'sourceCategoryCode', 'Source Category Code'),
+		(datatableId, 2, 'source_category_description', 'sourceCategoryDescription', 'Source Category Description');
+
+----------------------------------------------------------------------------------------------------------------------------
+	datasetCode := 'state-codes';
+	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
+	VALUES(datasetCode, 'MDM', 'State Codes & Descriptions');
+
+	/***** DATATABLE 1 *****/
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement)
+	VALUES(datasetCode, 1, 'State Codes & Descriptions', 'SELECT * FROM camdmd.state_code')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
+	VALUES
+		(datatableId, 1, 'state_cd', 'stateCode', 'State Code'),
+		(datatableId, 2, 'state_name', 'stateName', 'State Name'),
+		(datatableId, 3, 'epa_region', 'epaRegion', 'EPA Region');
+
+----------------------------------------------------------------------------------------------------------------------------
+	datasetCode := 'transaction-type-codes';
+	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
+	VALUES(datasetCode, 'MDM', 'Transation Type Codes & Descriptions');
+
+	/***** DATATABLE 1 *****/
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement)
+	VALUES(datasetCode, 1, 'Transation Type Codes & Descriptions', 'SELECT * FROM camdmd.transaction_type_code')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
+	VALUES
+		(datatableId, 1, 'trans_type_cd', 'transactionTypeCode', 'Transaction Type Code'),
+		(datatableId, 2, 'trans_type_description', 'transactionTypeDescription', 'Transaction Type Description');
+----------------------------------------------------------------------------------------------------------------------------
 	datasetCode := 'accuracy-spec-codes';
 	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
 	VALUES(datasetCode, 'MDM', 'Accuracy Spec Codes & Descriptions');
@@ -395,7 +475,7 @@ BEGIN
 
 	/***** DATATABLE 1 *****/
 	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement)
-	VALUES(datasetCode, 1, 'MODC Codes & Descriptions', 'SELECT * FROM ', null)
+	VALUES(datasetCode, 1, 'MODC Codes & Descriptions', 'SELECT * FROM camdecmpsmd.modc_code')
 	RETURNING datatable_id INTO datatableId;
 
 	/***** COLUMNS *****/
@@ -912,7 +992,7 @@ BEGIN
 
 	/***** DATATABLE 1 *****/
 	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement)
-	VALUES(datasetCode, 1, 'Error Suppression Severity Codes & Descriptions', 'SELECT * FROM camdecmpsmd.severity_code WHERE es_type_ind = 1 ORDER BY severity_level', null)
+	VALUES(datasetCode, 1, 'Error Suppression Severity Codes & Descriptions', 'SELECT * FROM camdecmpsmd.severity_code WHERE es_type_ind = 1 ORDER BY severity_level')
 	RETURNING datatable_id INTO datatableId;
 
 	/***** COLUMNS *****/
@@ -938,11 +1018,11 @@ BEGIN
 ----------------------------------------------------------------------------------------------------------------------------
 	datasetCode := 'es-check-catalog-results';
 	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
-	VALUES(datasetCode, 'MDM', 'Error Suppression Check Catalog Results', null);
+	VALUES(datasetCode, 'MDM', 'Error Suppression Check Catalog Results');
 
 	/***** DATATABLE 1 *****/
 	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement)
-	VALUES(datasetCode, 1, 'Error Suppression Check Catalog Results', 'SELECT * FROM camdecmpsmd.vw_es_check_catalog_result', null)
+	VALUES(datasetCode, 1, 'Error Suppression Check Catalog Results', 'SELECT * FROM camdecmpsmd.vw_es_check_catalog_result')
 	RETURNING datatable_id INTO datatableId;
 
 	/***** COLUMNS *****/
