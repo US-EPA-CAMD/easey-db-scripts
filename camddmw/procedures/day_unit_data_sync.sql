@@ -2,7 +2,8 @@
 
 DROP PROCEDURE IF EXISTS camddmw.day_unit_data_sync();
 
-CREATE OR REPLACE PROCEDURE camddmw.day_unit_data_sync()
+CREATE OR REPLACE PROCEDURE camddmw.day_unit_data_sync(
+	)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN

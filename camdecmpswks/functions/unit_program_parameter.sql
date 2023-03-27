@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.unit_program_parameter(character varying)
 
--- DROP FUNCTION camdecmpswks.unit_program_parameter(character varying);
+DROP FUNCTION IF EXISTS camdecmpswks.unit_program_parameter(character varying);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.unit_program_parameter(
 	monplanid character varying)

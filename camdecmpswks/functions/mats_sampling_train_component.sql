@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.mats_sampling_train_component(character varying, date, numeric)
 
--- DROP FUNCTION camdecmpswks.mats_sampling_train_component(character varying, date, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.mats_sampling_train_component(character varying, date, numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.mats_sampling_train_component(
 	v_mon_sys_id character varying,
@@ -47,10 +47,9 @@ BEGIN
 END
 $BODY$;
 
-
 -- FUNCTION: camdecmpswks.mats_sampling_train_component(character varying, date, numeric, integer)
 
--- DROP FUNCTION camdecmpswks.mats_sampling_train_component(character varying, date, numeric, integer);
+DROP FUNCTION IF EXISTS camdecmpswks.mats_sampling_train_component(character varying, date, numeric, integer);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.mats_sampling_train_component(
 	v_mon_sys_id character varying,

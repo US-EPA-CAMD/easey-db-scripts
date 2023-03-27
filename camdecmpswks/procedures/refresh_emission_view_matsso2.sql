@@ -1,6 +1,6 @@
 -- PROCEDURE: camdecmpswks.refresh_emission_view_matsso2(character varying, numeric)
 
--- DROP PROCEDURE camdecmpswks.refresh_emission_view_matsso2(character varying, numeric);
+DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_matsso2(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_matsso2(
 	vmonplanid character varying,

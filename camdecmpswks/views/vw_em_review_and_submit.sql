@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_em_review_and_submit
 
--- DROP VIEW camdecmpswks.vw_em_review_and_submit;
+DROP VIEW IF EXISTS camdecmpswks.vw_em_review_and_submit;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_em_review_and_submit
  AS
@@ -25,12 +25,8 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_em_review_and_submit
      JOIN camdecmpswks.monitor_plan_location mpl USING (mon_plan_id)
      JOIN camdecmpswks.monitor_location ml USING (mon_loc_id)
      JOIN camdecmpswks.emission_evaluation ee USING (mon_plan_id)
-     LEFT JOIN camdecmpsaux.em_submission_access esa USING (mon_plan_id)
-     LEFT JOIN camdecmpsmd.reporting_period rpt ON ee.rpt_period_id = rpt.rpt_period_id
+     JOIN camdecmpsmd.reporting_period rpt ON ee.rpt_period_id = rpt.rpt_period_id
+     LEFT JOIN camdecmpsaux.em_submission_access esa ON ee.mon_plan_id::text = esa.mon_plan_id::text AND ee.rpt_period_id = esa.rpt_period_id AND esa.em_status_cd::text <> 'RECVD'::text
      LEFT JOIN camd.unit u USING (unit_id)
      LEFT JOIN camdecmps.stack_pipe sp USING (stack_pipe_id)
   ORDER BY p.oris_code, p.facility_name, mp.mon_plan_id;
-
-ALTER TABLE camdecmpswks.vw_em_review_and_submit
-    OWNER TO "uImcwuf4K9dyaxeL";
-

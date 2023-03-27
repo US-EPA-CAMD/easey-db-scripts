@@ -1,24 +1,17 @@
-CREATE OR REPLACE 
-FUNCTION camdecmpswks.noxr_summary_required_for_lme_annual
-(
-	monPlanId       character varying,
-	rptPeriodId     numeric
-)
-    RETURNS TABLE   (
-                        mon_plan_id             character varying,
-                        rpt_period_id           numeric,
-                        mon_loc_id              character varying,
-                        location_name           character varying,
-                        calendar_year           numeric,  
-                        quarter                 numeric,  
-                        lme_noxr_summary_ind    integer,
-                        lme_noxr_begin          timestamp without time zone
-                    ) 
-    LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
+-- FUNCTION: camdecmpswks.noxr_summary_required_for_lme_annual(character varying, numeric)
 
+DROP FUNCTION IF EXISTS camdecmpswks.noxr_summary_required_for_lme_annual(character varying, numeric);
+
+CREATE OR REPLACE FUNCTION camdecmpswks.noxr_summary_required_for_lme_annual(
+	monplanid character varying,
+	rptperiodid numeric)
+    RETURNS TABLE(mon_plan_id character varying, rpt_period_id numeric, mon_loc_id character varying, location_name character varying, calendar_year numeric, quarter numeric, lme_noxr_summary_ind integer, lme_noxr_begin timestamp without time zone) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN  
     RETURN QUERY

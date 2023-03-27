@@ -1,13 +1,16 @@
---DROP FUNCTION IF EXISTS camdecmpswks.error_suppression_spec_gather();
+-- FUNCTION: camdecmpswks.error_suppression_spec_gather()
+
+DROP FUNCTION IF EXISTS camdecmpswks.error_suppression_spec_gather();
 
 CREATE OR REPLACE FUNCTION camdecmpswks.error_suppression_spec_gather(
 	)
     RETURNS TABLE(es_spec_id bigint, check_catalog_result_id numeric, check_catalog_id numeric, check_type_cd character varying, check_number numeric, check_result character varying, severity_cd character varying, fac_id numeric, location_name_list character varying, es_match_data_type_cd character varying, match_data_value character varying, es_match_time_type_cd character varying, match_historical_ind numeric, match_time_begin_value timestamp without time zone, match_time_end_value timestamp without time zone, active_ind numeric, di character varying) 
     LANGUAGE 'sql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
 
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 SELECT	sup.ES_SPEC_ID,
           sup.CHECK_CATALOG_RESULT_ID,
@@ -33,6 +36,3 @@ SELECT	sup.ES_SPEC_ID,
             ON chk.CHECK_CATALOG_ID = res.CHECK_CATALOG_ID
     WHERE sup.ACTIVE_IND = 1;
 $BODY$;
-
-ALTER FUNCTION camdecmpswks.error_suppression_spec_gather()
-    OWNER TO "uImcwuf4K9dyaxeL";

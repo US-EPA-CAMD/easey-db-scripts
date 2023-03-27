@@ -3,20 +3,16 @@
 DROP FUNCTION IF EXISTS camdecmps.rpt_mp_unit_program(character varying);
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_mp_unit_program(
-	monplanid character varying
-)
-RETURNS TABLE(
-	"unitIdentifier" text, 
-	"programCode" text, 
-	"programCodeGroup" text, 
-	"programCodeDescription" text, 
-	"unitClassification" text, 
-	"unitMonitorCertBeginDate" text, 
-	"unitMonitorCertDeadline" text
-)
-LANGUAGE 'sql'
+	monplanid character varying)
+    RETURNS TABLE("unitIdentifier" text, "programCode" text, "programCodeGroup" text, "programCodeDescription" text, "unitClassification" text, "unitMonitorCertBeginDate" text, "unitMonitorCertDeadline" text) 
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
-	SELECT
+SELECT
 		u.unitid AS "unitIdentifier",
 		up.prg_cd AS "programCode",
 		'Program Codes' AS "programCodeGroup",

@@ -1,11 +1,16 @@
+-- FUNCTION: camdecmpswks.mp_location_nonload_based_indication(character varying)
+
+DROP FUNCTION IF EXISTS camdecmpswks.mp_location_nonload_based_indication(character varying);
+
 CREATE OR REPLACE FUNCTION camdecmpswks.mp_location_nonload_based_indication(
 	monplanid character varying)
     RETURNS TABLE(mon_loc_id character varying, oris_code numeric, location_name character varying, non_load_based_ind numeric, mon_plan_id character varying) 
     LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
 
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN
  RETURN QUERY

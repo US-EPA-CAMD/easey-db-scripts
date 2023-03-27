@@ -3,19 +3,16 @@
 DROP FUNCTION IF EXISTS camdecmps.rpt_facility_information(text);
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_facility_information(
-	facilityId text
-)
-RETURNS TABLE(
-	"facilityName" text,
-	"orisCode" numeric,
-	"stateCode" text,
-	"countyName" text,
-	"latitude" numeric,
-	"longitude" numeric
-)
-LANGUAGE 'sql'
+	facilityid text)
+    RETURNS TABLE("facilityName" text, "orisCode" numeric, "stateCode" text, "countyName" text, latitude numeric, longitude numeric) 
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
-	SELECT
+SELECT
 		p.facility_name AS "facilityName",
 		p.oris_code AS "orisCode",
 		p.state AS "stateCode",

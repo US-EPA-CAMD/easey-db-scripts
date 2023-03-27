@@ -1,30 +1,18 @@
-CREATE OR REPLACE 
-FUNCTION camdecmpswks.combined_hourly_value_data
-(
-	monPlanId       character varying,
-	rptPeriodId     numeric,
-	parameterCd     character varying
-)
-    RETURNS TABLE   (
-                        mon_plan_id             character varying, 
-                        rpt_period_id           numeric, 
-                        begin_date              date, 
-                        begin_hour              numeric,  
-                        mon_loc_id              character varying, 
-                        op_time                 numeric,
-                        parameter_cd            character varying,
-                        hrly_value              numeric,
-                        adjusted_hrly_value     numeric,
-                        unadjusted_hrly_value   numeric,
-                        modc_cd                 character varying,
-                        source_table            character varying(3),
-                        hour_id                 character varying
-                    ) 
-    LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
+-- FUNCTION: camdecmpswks.combined_hourly_value_data(character varying, numeric, character varying)
 
+DROP FUNCTION IF EXISTS camdecmpswks.combined_hourly_value_data(character varying, numeric, character varying);
+
+CREATE OR REPLACE FUNCTION camdecmpswks.combined_hourly_value_data(
+	monplanid character varying,
+	rptperiodid numeric,
+	parametercd character varying)
+    RETURNS TABLE(mon_plan_id character varying, rpt_period_id numeric, begin_date date, begin_hour numeric, mon_loc_id character varying, op_time numeric, parameter_cd character varying, hrly_value numeric, adjusted_hrly_value numeric, unadjusted_hrly_value numeric, modc_cd character varying, source_table character varying, hour_id character varying) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN  
     RETURN QUERY

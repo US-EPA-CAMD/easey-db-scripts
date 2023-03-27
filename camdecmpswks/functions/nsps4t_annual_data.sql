@@ -1,27 +1,17 @@
-CREATE OR REPLACE 
-FUNCTION camdecmpswks.nsps4t_annual_data
-(
-	monPlanId       character varying,
-	rptPeriodId     numeric
-)
-    RETURNS TABLE   (
-                        ORIS_CODE                               numeric,
-                        LOCATION_NAME                           character varying,
-                        ANNUAL_ENERGY_SOLD                      numeric,
-                        ANNUAL_ENERGY_SOLD_TYPE_CD              character varying,
-                        ANNUAL_ENERGY_SOLD_TYPE_DESCRIPTION     character varying,
-                        ANNUAL_POTENTIAL_OUTPUT                 numeric,
-                        NSPS4T_ANN_ID                           character varying,
-                        NSPS4T_SUM_ID                           character varying,
-                        MON_PLAN_ID                             character varying,
-                        RPT_PERIOD_ID                           numeric,
-                        MON_LOC_ID                              character varying
-                    ) 
-    LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
+-- FUNCTION: camdecmpswks.nsps4t_annual_data(character varying, numeric)
 
+DROP FUNCTION IF EXISTS camdecmpswks.nsps4t_annual_data(character varying, numeric);
+
+CREATE OR REPLACE FUNCTION camdecmpswks.nsps4t_annual_data(
+	monplanid character varying,
+	rptperiodid numeric)
+    RETURNS TABLE(oris_code numeric, location_name character varying, annual_energy_sold numeric, annual_energy_sold_type_cd character varying, annual_energy_sold_type_description character varying, annual_potential_output numeric, nsps4t_ann_id character varying, nsps4t_sum_id character varying, mon_plan_id character varying, rpt_period_id numeric, mon_loc_id character varying) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN  
     RETURN QUERY

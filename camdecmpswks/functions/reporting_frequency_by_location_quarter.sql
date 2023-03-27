@@ -1,11 +1,16 @@
+-- FUNCTION: camdecmpswks.reporting_frequency_by_location_quarter(character varying)
+
+DROP FUNCTION IF EXISTS camdecmpswks.reporting_frequency_by_location_quarter(character varying);
+
 CREATE OR REPLACE FUNCTION camdecmpswks.reporting_frequency_by_location_quarter(
 	monplanid character varying)
     RETURNS TABLE(mon_loc_id character varying, oris_code numeric, location_name character varying, calendar_year numeric, quarter numeric, report_freq_cd character varying) 
     LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
 
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN
 RETURN QUERY

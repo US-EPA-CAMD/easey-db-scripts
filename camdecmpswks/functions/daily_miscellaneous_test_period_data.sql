@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.daily_miscellaneous_test_period_data(character varying, date, date)
 
--- DROP FUNCTION camdecmpswks.daily_miscellaneous_test_period_data(character varying, date, date);
+DROP FUNCTION IF EXISTS camdecmpswks.daily_miscellaneous_test_period_data(character varying, date, date);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.daily_miscellaneous_test_period_data(
 	monplanid character varying,
@@ -8,10 +8,11 @@ CREATE OR REPLACE FUNCTION camdecmpswks.daily_miscellaneous_test_period_data(
 	evalperiodendeddate date)
     RETURNS TABLE(daily_test_sum_id character varying, mon_plan_id character varying, rpt_period_id numeric, oris_code numeric, location_name character varying, test_type_cd character varying, daily_test_date date, daily_test_hour numeric, daily_test_min numeric, daily_test_datetime timestamp without time zone, daily_test_datehour timestamp without time zone, mon_sys_id character varying, system_identifier character varying, sys_type_cd character varying, component_id character varying, component_identifier character varying, component_type_cd character varying, span_scale_cd character varying, test_result_cd character varying, calc_test_result_cd character varying, mon_loc_id character varying, fac_id numeric) 
     LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
 
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN
      RETURN QUERY

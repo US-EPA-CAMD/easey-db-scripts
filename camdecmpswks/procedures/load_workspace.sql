@@ -1,6 +1,6 @@
 -- PROCEDURE: camdecmpswks.load_workspace()
 
--- DROP PROCEDURE camdecmpswks.load_workspace();
+DROP PROCEDURE IF EXISTS camdecmpswks.load_workspace();
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.load_workspace(
 	)

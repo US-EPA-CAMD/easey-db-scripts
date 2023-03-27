@@ -1,6 +1,6 @@
 -- PROCEDURE: camdecmpswks.ins_check_session(character varying)
 
--- DROP PROCEDURE camdecmpswks.ins_check_session(character varying);
+DROP PROCEDURE IF EXISTS camdecmpswks.ins_check_session(character varying);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.ins_check_session(
 	p_v_batch_id character varying DEFAULT NULL::character varying)

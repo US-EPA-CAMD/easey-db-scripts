@@ -7,6 +7,10 @@ CREATE OR REPLACE FUNCTION camdecmps.format_time(
 	minute numeric)
     RETURNS text
     LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
 AS $BODY$
 DECLARE
 	result text;

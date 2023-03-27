@@ -1,12 +1,17 @@
+-- FUNCTION: camdecmpswks.mats_sorbent_trap_record(character varying, numeric)
+
+DROP FUNCTION IF EXISTS camdecmpswks.mats_sorbent_trap_record(character varying, numeric);
+
 CREATE OR REPLACE FUNCTION camdecmpswks.mats_sorbent_trap_record(
 	monplanid character varying,
 	rptperiodid numeric)
     RETURNS TABLE(location_name character varying, begin_datehour timestamp without time zone, end_datehour timestamp without time zone, system_identifier character varying, sys_type_cd character varying, paired_trap_agreement numeric, absolute_difference_ind numeric, modc_cd character varying, hg_concentration character varying, trap_id character varying, begin_date date, begin_hour numeric, end_date date, end_hour numeric, rata_ind numeric, sorbent_trap_aps_cd character varying, system_begin_datehour timestamp without time zone, system_end_datehour timestamp without time zone, border_trap_ind integer, supp_data_ind integer, mon_sys_id character varying, mon_loc_id character varying, mon_plan_id character varying, rpt_period_id numeric) 
     LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
 
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN
 return query

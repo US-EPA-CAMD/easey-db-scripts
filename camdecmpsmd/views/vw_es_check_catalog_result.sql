@@ -1,6 +1,6 @@
 -- View: camdecmpsmd.vw_es_check_catalog_result
 
--- DROP VIEW camdecmpsmd.vw_es_check_catalog_result;
+DROP VIEW IF EXISTS camdecmpsmd.vw_es_check_catalog_result;
 
 CREATE OR REPLACE VIEW camdecmpsmd.vw_es_check_catalog_result
  AS
@@ -33,7 +33,7 @@ CREATE OR REPLACE VIEW camdecmpsmd.vw_es_check_catalog_result
              JOIN camdecmpsmd.rule_check rul ON rul.category_cd::text = cat.category_cd::text
              JOIN camdecmpsmd.check_catalog chk ON chk.check_catalog_id = rul.check_catalog_id
              JOIN camdecmpsmd.check_catalog_result ccr_1 ON ccr_1.check_catalog_id = chk.check_catalog_id
-          WHERE cat.process_cd::text = ANY (ARRAY['HOURLY'::character varying, 'MP'::character varying, 'OTHERQA'::character varying, 'TEST'::character varying]::text[])
+          WHERE cat.process_cd::text = ANY (ARRAY['HOURLY'::character varying::text, 'MP'::character varying::text, 'OTHERQA'::character varying::text, 'TEST'::character varying::text])
           GROUP BY ccr_1.check_catalog_id, chk.check_type_cd, chk.check_number) lst
      JOIN camdecmpsmd.check_type_code ctc ON ctc.check_type_cd::text = lst.check_type_cd::text
      JOIN camdecmpsmd.check_catalog_result ccr ON ccr.check_catalog_id = lst.check_catalog_id

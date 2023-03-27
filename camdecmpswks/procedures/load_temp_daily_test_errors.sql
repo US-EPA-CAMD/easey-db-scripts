@@ -1,6 +1,6 @@
 -- PROCEDURE: camdecmpswks.load_temp_daily_test_errors(character varying, numeric)
 
--- DROP PROCEDURE IF EXISTS camdecmpswks.load_temp_daily_test_errors(character varying, numeric);
+DROP PROCEDURE IF EXISTS camdecmpswks.load_temp_daily_test_errors(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.load_temp_daily_test_errors(
 	vmonplanid character varying,

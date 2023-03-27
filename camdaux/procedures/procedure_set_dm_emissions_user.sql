@@ -6,7 +6,7 @@ CREATE OR REPLACE PROCEDURE camdaux.procedure_set_dm_emissions_user(
 	)
 LANGUAGE 'sql'
 AS $BODY$
-	SET timezone = 'America/New_York';
+SET timezone = 'America/New_York';
 	
 	INSERT INTO camdecmps.dm_emissions_user(
 		dm_emissions_id, dm_emissions_user_cd, process_date, complete_date, note, note_date

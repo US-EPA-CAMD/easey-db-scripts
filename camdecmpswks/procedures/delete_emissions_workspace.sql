@@ -1,18 +1,18 @@
 -- PROCEDURE: camdecmpswks.delete_emissions_workspace()
 
--- DROP PROCEDURE camdecmpswks.delete_emissions_workspace();
+DROP PROCEDURE IF EXISTS camdecmpswks.delete_emissions_workspace();
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.delete_emissions_workspace(
 	)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+	TRUNCATE TABLE camdecmpswks.check_session CASCADE;
+	TRUNCATE TABLE camdecmpsaux.evaluation_set CASCADE;
 	TRUNCATE TABLE camdecmpswks.component_op_supp_data CASCADE;
 	TRUNCATE TABLE camdecmpswks.daily_test_supp_data CASCADE;
-	TRUNCATE TABLE camdecmpswks.daily_test_system_supp_data CASCADE;
 	TRUNCATE TABLE camdecmpswks.last_qa_value_supp_data CASCADE;
 	TRUNCATE TABLE camdecmpswks.operating_supp_data CASCADE;
-	TRUNCATE TABLE camdecmpswks.sampling_train_supp_data CASCADE;
 	TRUNCATE TABLE camdecmpswks.sorbent_trap_supp_data CASCADE;
 	TRUNCATE TABLE camdecmpswks.system_op_supp_data CASCADE;
 	TRUNCATE TABLE camdecmpswks.sorbent_trap CASCADE;

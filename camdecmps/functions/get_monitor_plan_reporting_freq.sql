@@ -4,13 +4,14 @@ DROP FUNCTION IF EXISTS camdecmps.get_monitor_plan_reporting_freq(numeric, numer
 
 CREATE OR REPLACE FUNCTION camdecmps.get_monitor_plan_reporting_freq(
 	vcalendaryear numeric,
-	vquarter numeric
-)
-RETURNS TABLE(
-  mon_plan_id character varying,
-  report_freq_cd character varying
-) 
-LANGUAGE 'plpgsql'
+	vquarter numeric)
+    RETURNS TABLE(mon_plan_id character varying, report_freq_cd character varying) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 DECLARE
 BEGIN

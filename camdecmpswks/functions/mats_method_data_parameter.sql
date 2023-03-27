@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.mats_method_data_parameter(character varying)
 
--- DROP FUNCTION camdecmpswks.mats_method_data_parameter(character varying);
+DROP FUNCTION IF EXISTS camdecmpswks.mats_method_data_parameter(character varying);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.mats_method_data_parameter(
 	monplanid character varying)

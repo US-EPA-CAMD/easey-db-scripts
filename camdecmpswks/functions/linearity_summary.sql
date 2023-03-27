@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.linearity_summary(text)
 
--- DROP FUNCTION camdecmpswks.linearity_summary(text);
+DROP FUNCTION IF EXISTS camdecmpswks.linearity_summary(text);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.linearity_summary(
 	v_test_sum_id text)
@@ -13,7 +13,7 @@ CREATE OR REPLACE FUNCTION camdecmpswks.linearity_summary(
     
 AS $BODY$
 BEGIN	
-	SELECT ts.TEST_NUM,
+	return query SELECT ts.TEST_NUM,
 		ts.GP_IND,
 		ts.TEST_TYPE_CD,
 		ts.TEST_REASON_CD, 
@@ -37,7 +37,7 @@ BEGIN
 	FROM camdecmpswks.LINEARITY_SUMMARY ls
 		INNER JOIN camdecmpswks.TEST_SUMMARY ts on ls.TEST_SUM_ID=ts.TEST_SUM_ID
 		LEFT OUTER JOIN camdecmpswks.COMPONENT c ON ts.COMPONENT_ID = c.COMPONENT_ID
-	WHERE TEST_TYPE_CD IN ('LINE')
+	WHERE ts.TEST_TYPE_CD IN ('LINE')
 	and ls.TEST_SUM_ID=V_TEST_SUM_ID
 
 	UNION ALL
@@ -65,7 +65,7 @@ BEGIN
 	FROM camdecmpswks.HG_TEST_SUMMARY hts
 		INNER JOIN camdecmpswks.TEST_SUMMARY ts on hts.TEST_SUM_ID=ts.TEST_SUM_ID
 		LEFT OUTER JOIN camdecmpswks.COMPONENT c ON ts.COMPONENT_ID = c.COMPONENT_ID
-		WHERE TEST_TYPE_CD IN ('HGLINE', 'HGSI3')
+		WHERE ts.TEST_TYPE_CD IN ('HGLINE', 'HGSI3')
 		and hts.TEST_SUM_ID=V_TEST_SUM_ID;
 	
 END;

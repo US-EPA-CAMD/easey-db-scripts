@@ -5,20 +5,16 @@ DROP FUNCTION IF EXISTS camdecmps.get_linearity_statistics(text, text, text);
 CREATE OR REPLACE FUNCTION camdecmps.get_linearity_statistics(
 	testsumid text,
 	tablename text,
-	columnname text
-)
-RETURNS TABLE(
-	"rowName" text,
-	"highReportedValue" numeric,
-	"highCalculatedValue" numeric,
-	"midReportedValue" numeric,
-	"midCalculatedValue" numeric,
-	"lowReportedValue" numeric,
-	"lowCalculatedValue" numeric
-)
-LANGUAGE 'sql'
+	columnname text)
+    RETURNS TABLE("rowName" text, "highReportedValue" numeric, "highCalculatedValue" numeric, "midReportedValue" numeric, "midCalculatedValue" numeric, "lowReportedValue" numeric, "lowCalculatedValue" numeric) 
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
-	SELECT
+SELECT
 		CASE
 			WHEN columnName = 'mean_ref_value' THEN 'Reference Value'
 			WHEN columnName = 'mean_measured_value' THEN 'Mass CEM Value'
@@ -57,21 +53,16 @@ DROP FUNCTION IF EXISTS camdecmps.get_linearity_statistics(text, text);
 
 CREATE OR REPLACE FUNCTION camdecmps.get_linearity_statistics(
 	testsumid text,
-	tablename text
-)
-RETURNS TABLE(
-	"rowNumber" integer,
-	"rowName" text,
-	"highReportedValue" numeric,
-	"highCalculatedValue" numeric,
-	"midReportedValue" numeric,
-	"midCalculatedValue" numeric,
-	"lowReportedValue" numeric,
-	"lowCalculatedValue" numeric
-)
-LANGUAGE 'sql'
+	tablename text)
+    RETURNS TABLE("rowNumber" integer, "rowName" text, "highReportedValue" numeric, "highCalculatedValue" numeric, "midReportedValue" numeric, "midCalculatedValue" numeric, "lowReportedValue" numeric, "lowCalculatedValue" numeric) 
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
-	SELECT 1 AS "rowNumber", *
+SELECT 1 AS "rowNumber", *
 	FROM camdecmps.get_linearity_statistics(
 		testSumId,
 		tableName,

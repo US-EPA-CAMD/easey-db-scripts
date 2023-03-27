@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.combined_methods(integer)
 
--- DROP FUNCTION camdecmpswks.combined_methods(integer);
+DROP FUNCTION IF EXISTS camdecmpswks.combined_methods(integer);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.combined_methods(
 	p_facilityid integer)

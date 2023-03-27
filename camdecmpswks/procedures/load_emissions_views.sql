@@ -1,8 +1,13 @@
+-- PROCEDURE: camdecmpswks.load_emissions_views(integer, integer, integer[])
+
+DROP PROCEDURE IF EXISTS camdecmpswks.load_emissions_views(integer, integer, integer[]);
+
 CREATE OR REPLACE PROCEDURE camdecmpswks.load_emissions_views(
-	beginYear integer,
-	endYear integer,
-	orisCodes integer[],
-)
+	beginyear integer,
+	endyear integer,
+	oriscodes integer[])
+LANGUAGE 'plpgsql'
+AS $BODY$
 DECLARE
 	facility text;
 	monPlanId text;
@@ -25,4 +30,5 @@ BEGIN
 		END LOOP;
 	END LOOP;
 
-END $$;
+END;
+$BODY$;

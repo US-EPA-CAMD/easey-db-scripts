@@ -1,6 +1,5 @@
 -- View: camdecmpsmd.vw_check_catalog_plugin
 
-DROP VIEW IF EXISTS camdecmpswks.vw_check_catalog_plugin;
 DROP VIEW IF EXISTS camdecmpsmd.vw_check_catalog_plugin;
 
 CREATE OR REPLACE VIEW camdecmpsmd.vw_check_catalog_plugin

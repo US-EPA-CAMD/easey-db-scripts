@@ -1,51 +1,45 @@
--- View: camdecmpswks.VW_LOCATION_OPERATING_STATUS
+-- View: camdecmpswks.vw_location_operating_status
 
-DROP VIEW IF EXISTS camdecmpswks.VW_LOCATION_OPERATING_STATUS;
+DROP VIEW IF EXISTS camdecmpswks.vw_location_operating_status;
 
-create or replace view camdecmpswks.VW_LOCATION_OPERATING_STATUS as
-
-    select  up.UNIT_OP_STATUS_ID as UOS_ID, 
-            ml.ORIS_CODE, 
-            ml.LOCATION_IDENTIFIER,
-            ml.MON_LOC_ID, 
-            ml.FAC_ID, 
-            up.UNIT_ID, 
-            u.UNITID,
-            up.OP_STATUS_CD,
-            case 
-                WHEN usc.BEGIN_DATE is null THEN up.BEGIN_DATE
-                WHEN up.BEGIN_DATE is null THEN usc.BEGIN_DATE
-                WHEN up.BEGIN_DATE >= usc.BEGIN_DATE THEN up.BEGIN_DATE
-                ELSE usc.BEGIN_DATE 
-            end as BEGIN_DATE,
-            case 
-                WHEN usc.END_DATE is null THEN up.END_DATE
-                WHEN up.END_DATE is null THEN usc.END_DATE
-                WHEN up.END_DATE <= usc.END_DATE THEN up.END_DATE
-                ELSE usc.END_DATE 
-            end as END_DATE
-      from 	camdecmpswks.VW_MONITOR_LOCATION ml 
-            join camdecmpswks.UNIT_STACK_CONFIGURATION usc 
-              on ml.STACK_PIPE_ID = usc.STACK_PIPE_ID
-            join camd.UNIT_OP_STATUS up 
-              on usc.UNIT_ID = up.UNIT_ID
-            join camd.UNIT u 
-              on u.UNIT_ID = usc.UNIT_ID
-     where	( usc.END_DATE is null or up.BEGIN_DATE <= usc.END_DATE )
-       and	( up.END_DATE is null or up.END_DATE >= usc.BEGIN_DATE )
-    union
-    select 	up.UNIT_OP_STATUS_ID as UOS_ID, 
-            ml.ORIS_CODE, 
-            ml.LOCATION_IDENTIFIER,
-            ml.MON_LOC_ID, 
-            ml.FAC_ID, 
-            up.UNIT_ID, 
-            u.UNITID,
-            up.OP_STATUS_CD, 
-            up.BEGIN_DATE, 
-            up.END_DATE
-      from 	camdecmpswks.VW_MONITOR_LOCATION ml 
-            join camd.UNIT_OP_STATUS up 
-              on ml.UNIT_ID = up.UNIT_ID
-            join camd.UNIT u 
-              on u.UNIT_ID = ml.UNIT_ID
+CREATE OR REPLACE VIEW camdecmpswks.vw_location_operating_status
+ AS
+ SELECT up.unit_op_status_id AS uos_id,
+    ml.oris_code,
+    ml.location_identifier,
+    ml.mon_loc_id,
+    ml.fac_id,
+    up.unit_id,
+    u.unitid,
+    up.op_status_cd,
+        CASE
+            WHEN usc.begin_date IS NULL THEN up.begin_date
+            WHEN up.begin_date IS NULL THEN usc.begin_date
+            WHEN up.begin_date >= usc.begin_date THEN up.begin_date
+            ELSE usc.begin_date
+        END AS begin_date,
+        CASE
+            WHEN usc.end_date IS NULL THEN up.end_date
+            WHEN up.end_date IS NULL THEN usc.end_date
+            WHEN up.end_date <= usc.end_date THEN up.end_date
+            ELSE usc.end_date
+        END AS end_date
+   FROM camdecmpswks.vw_monitor_location ml
+     JOIN camdecmpswks.unit_stack_configuration usc ON ml.stack_pipe_id::text = usc.stack_pipe_id::text
+     JOIN camd.unit_op_status up ON usc.unit_id = up.unit_id
+     JOIN camd.unit u ON u.unit_id = usc.unit_id
+  WHERE (usc.end_date IS NULL OR up.begin_date <= usc.end_date) AND (up.end_date IS NULL OR up.end_date >= usc.begin_date)
+UNION
+ SELECT up.unit_op_status_id AS uos_id,
+    ml.oris_code,
+    ml.location_identifier,
+    ml.mon_loc_id,
+    ml.fac_id,
+    up.unit_id,
+    u.unitid,
+    up.op_status_cd,
+    up.begin_date,
+    up.end_date
+   FROM camdecmpswks.vw_monitor_location ml
+     JOIN camd.unit_op_status up ON ml.unit_id = up.unit_id
+     JOIN camd.unit u ON u.unit_id = ml.unit_id;

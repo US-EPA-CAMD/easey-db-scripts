@@ -3,27 +3,16 @@
 DROP FUNCTION IF EXISTS camdecmps.rpt_mp_system_fuel_flow(character varying);
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_mp_system_fuel_flow(
-	monplanid character varying
-)
-RETURNS TABLE(
-	"unitStack" text,
-  "systemIdentifier" text,
-  "fuelCode" text, 
-	"fuelCodeGroup" text, 
-  "fuelCodeDescription" text,
-  "maxFuelFlowRate" numeric,
-  "unitsOfMeasureCode" text,
-  "unitsOfMeasureCodeGroup" text,
-  "unitsOfMeasureCodeDescription" text,
-  "maxRateSourceCode" text,
-  "maxRateSourceCodeGroup" text,
-  "maxRateSourceCodeDescription" text,
-  "beginDateHour" text,
-  "endDateHour" text
-)
-LANGUAGE 'sql'
+	monplanid character varying)
+    RETURNS TABLE("unitStack" text, "systemIdentifier" text, "fuelCode" text, "fuelCodeGroup" text, "fuelCodeDescription" text, "maxFuelFlowRate" numeric, "unitsOfMeasureCode" text, "unitsOfMeasureCodeGroup" text, "unitsOfMeasureCodeDescription" text, "maxRateSourceCode" text, "maxRateSourceCodeGroup" text, "maxRateSourceCodeDescription" text, "beginDateHour" text, "endDateHour" text) 
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
-	SELECT
+SELECT
 		CASE
 			WHEN ml.stack_pipe_id IS NOT NULL THEN sp.stack_name
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid

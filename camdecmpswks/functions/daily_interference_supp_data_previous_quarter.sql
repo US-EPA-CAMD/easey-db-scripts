@@ -1,34 +1,17 @@
-CREATE OR REPLACE 
-FUNCTION camdecmpswks.daily_interference_supp_data_previous_quarter
-(
-	monPlanId       character varying,
-	rptPeriodId     numeric
-)
-    RETURNS TABLE   (
-                        component_id                    character varying, 
-                        component_identifier            character varying, 
-                        test_type_cd                    character varying, 
-                        key_online_ind                  numeric,
-                        key_valid_ind                   numeric,
-                        op_hour_cnt                     numeric,
-                        last_covered_nonop_datehour     timestamp without time zone,
-                        first_op_after_nonop_datehour   timestamp without time zone,
-                        test_result_cd                  character varying,
-                        calc_test_result_cd             character varying,
-                        daily_test_date                 date,
-                        daily_test_hour                 numeric,
-                        daily_test_min                  numeric,
-                        daily_test_datehour             timestamp without time zone,
-                        daily_test_sum_id               character varying,
-                        mon_loc_id                      character varying,
-                        rpt_period_id                   numeric,
-                        daily_test_supp_data_id         character varying
-                    ) 
-    LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
+-- FUNCTION: camdecmpswks.daily_interference_supp_data_previous_quarter(character varying, numeric)
 
+DROP FUNCTION IF EXISTS camdecmpswks.daily_interference_supp_data_previous_quarter(character varying, numeric);
+
+CREATE OR REPLACE FUNCTION camdecmpswks.daily_interference_supp_data_previous_quarter(
+	monplanid character varying,
+	rptperiodid numeric)
+    RETURNS TABLE(component_id character varying, component_identifier character varying, test_type_cd character varying, key_online_ind numeric, key_valid_ind numeric, op_hour_cnt numeric, last_covered_nonop_datehour timestamp without time zone, first_op_after_nonop_datehour timestamp without time zone, test_result_cd character varying, calc_test_result_cd character varying, daily_test_date date, daily_test_hour numeric, daily_test_min numeric, daily_test_datehour timestamp without time zone, daily_test_sum_id character varying, mon_loc_id character varying, rpt_period_id numeric, daily_test_supp_data_id character varying) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN  
     RETURN QUERY    

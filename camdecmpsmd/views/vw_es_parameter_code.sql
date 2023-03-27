@@ -1,6 +1,6 @@
 -- View: camdecmpsmd.vw_es_parameter_code
 
--- DROP VIEW camdecmpsmd.vw_es_parameter_code;
+DROP VIEW IF EXISTS camdecmpsmd.vw_es_parameter_code;
 
 CREATE OR REPLACE VIEW camdecmpsmd.vw_es_parameter_code
  AS
@@ -14,4 +14,4 @@ CREATE OR REPLACE VIEW camdecmpsmd.vw_es_parameter_code
      JOIN camdecmpsmd.es_parameter_category xrf ON xrf.category_cd::text = cat.category_cd::text
      JOIN camdecmpsmd.es_parameter esp ON esp.es_parameter_group_cd::text = xrf.es_parameter_group_cd::text
      JOIN camdecmpsmd.parameter_code pc USING (parameter_cd)
-  WHERE cat.process_cd::text = ANY (ARRAY['HOURLY'::character varying, 'MP'::character varying, 'OTHERQA'::character varying, 'TEST'::character varying]::text[]);
+  WHERE cat.process_cd::text = ANY (ARRAY['HOURLY'::character varying::text, 'MP'::character varying::text, 'OTHERQA'::character varying::text, 'TEST'::character varying::text]);

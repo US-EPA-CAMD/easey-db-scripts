@@ -1,23 +1,17 @@
-CREATE OR REPLACE 
-FUNCTION camdecmpswks.daily_calibration_supp_data_previous_quarter_for_system
-(
-	monPlanId       character varying,
-	rptPeriodId     numeric
-)
-    RETURNS TABLE   (
-                        daily_test_supp_data_id         character varying, 
-                        mon_sys_id                      character varying, 
-                        op_hour_cnt                     numeric,
-                        last_covered_nonop_datehour     timestamp without time zone,
-                        first_op_after_nonop_datehour   timestamp without time zone,
-                        mon_loc_id                      character varying,
-                        rpt_period_id                   numeric
-                    ) 
-    LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
+-- FUNCTION: camdecmpswks.daily_calibration_supp_data_previous_quarter_for_system(character varying, numeric)
 
+DROP FUNCTION IF EXISTS camdecmpswks.daily_calibration_supp_data_previous_quarter_for_system(character varying, numeric);
+
+CREATE OR REPLACE FUNCTION camdecmpswks.daily_calibration_supp_data_previous_quarter_for_system(
+	monplanid character varying,
+	rptperiodid numeric)
+    RETURNS TABLE(daily_test_supp_data_id character varying, mon_sys_id character varying, op_hour_cnt numeric, last_covered_nonop_datehour timestamp without time zone, first_op_after_nonop_datehour timestamp without time zone, mon_loc_id character varying, rpt_period_id numeric) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 DECLARE
     quarterOrd  integer;

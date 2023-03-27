@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.check_out_monitor_plan(text, text)
 
--- DROP FUNCTION camdecmpswks.check_out_monitor_plan(text, text);
+DROP FUNCTION IF EXISTS camdecmpswks.check_out_monitor_plan(text, text);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.check_out_monitor_plan(
 	monplanid text,

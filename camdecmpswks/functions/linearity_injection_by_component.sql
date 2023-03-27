@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.linearity_injection_by_component(text)
 
--- DROP FUNCTION camdecmpswks.linearity_injection_by_component(text);
+DROP FUNCTION IF EXISTS camdecmpswks.linearity_injection_by_component(text);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.linearity_injection_by_component(
 	v_test_sum_id text)
@@ -13,7 +13,7 @@ CREATE OR REPLACE FUNCTION camdecmpswks.linearity_injection_by_component(
     
 AS $BODY$
 BEGIN	
-	SELECT	li.LIN_INJ_ID,
+	RETURN QUERY SELECT	li.LIN_INJ_ID,
 		li.LIN_SUM_ID, 
 		null as HG_TEST_INJ_ID,
 		null as HG_TEST_SUM_ID,
@@ -40,8 +40,8 @@ BEGIN
 		INNER JOIN camdecmpswks.LINEARITY_SUMMARY ls on ls.LIN_SUM_ID = li.LIN_SUM_ID
 		INNER JOIN camdecmpswks.TEST_SUMMARY ts on ls.TEST_SUM_ID = ts.TEST_SUM_ID
 		LEFT OUTER JOIN camdecmpswks.COMPONENT c ON ts.COMPONENT_ID = c.COMPONENT_ID
-	WHERE ts.COMPONENT_ID in (select COMPONENT_ID from camdecmpswks.TEST_SUMMARY
-				 where TEST_SUM_ID=V_TEST_SUM_ID and COMPONENT_ID is not null)
+	WHERE ts.COMPONENT_ID in (select tssq.COMPONENT_ID from camdecmpswks.TEST_SUMMARY tssq
+				 where tssq.TEST_SUM_ID=V_TEST_SUM_ID and tssq.COMPONENT_ID is not null)
 
 UNION
 SELECT	null as LIN_INJ_ID,
@@ -72,8 +72,8 @@ SELECT	null as LIN_INJ_ID,
 		INNER JOIN  camdecmpswks.LINEARITY_SUMMARY ls on ls.TEST_SUM_ID = hgt.TEST_SUM_ID
 		INNER JOIN  camdecmpswks.TEST_SUMMARY ts on hgt.TEST_SUM_ID = ts.TEST_SUM_ID
 		LEFT OUTER JOIN camdecmpswks.COMPONENT c ON ts.COMPONENT_ID = c.COMPONENT_ID
-	WHERE ts.COMPONENT_ID in (select COMPONENT_ID from camdecmpswks.TEST_SUMMARY
-				 where TEST_SUM_ID=V_TEST_SUM_ID and COMPONENT_ID is not null);
+	WHERE ts.COMPONENT_ID in (select tssq2.COMPONENT_ID from camdecmpswks.TEST_SUMMARY tssq2
+				 where tssq2.TEST_SUM_ID=V_TEST_SUM_ID and tssq2.COMPONENT_ID is not null);
 	
 END;
 $BODY$;

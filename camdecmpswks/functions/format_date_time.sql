@@ -1,11 +1,17 @@
+-- FUNCTION: camdecmpswks.format_date_time(date, numeric, numeric)
+
+DROP FUNCTION IF EXISTS camdecmpswks.format_date_time(date, numeric, numeric);
+
 CREATE OR REPLACE FUNCTION camdecmpswks.format_date_time(
 	_datelabel date,
 	_timehour numeric,
 	_timeminute numeric)
     RETURNS timestamp without time zone
     LANGUAGE 'plpgsql'
+
     COST 100
-    VOLATILE PARALLEL UNSAFE
+    VOLATILE 
+    
 AS $BODY$
 DECLARE returnVal TIMESTAMP;
 

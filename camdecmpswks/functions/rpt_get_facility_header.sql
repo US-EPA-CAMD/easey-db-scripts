@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_get_facility_header(character varying, numeric)
 
--- DROP FUNCTION camdecmpswks.rpt_get_facility_header(character varying, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_get_facility_header(character varying, numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_get_facility_header(
 	v_fac_name character varying,

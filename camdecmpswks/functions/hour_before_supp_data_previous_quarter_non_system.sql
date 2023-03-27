@@ -1,28 +1,17 @@
-CREATE OR REPLACE 
-FUNCTION camdecmpswks.hour_before_supp_data_previous_quarter_non_system
-(
-	monPlanId       character varying,
-	rptPeriodId     numeric
-)
-    RETURNS TABLE   (
-                        mon_loc_id                      character varying,
-                        hourly_type_cd                  character varying,
-                        parameter_cd                    character varying,
-                        moisture_basis                  character varying,
-                        op_datehour                     timestamp without time zone,
-                        unadjusted_hrly_value           numeric,
-                        adjusted_hrly_value             numeric,
-                        hrly_value                      numeric,
-                        primary_bypass_ind              integer,
-                        last_qa_value_supp_data_id      character varying,
-                        rpt_period_id                   numeric,
-                        mon_plan_id                     character varying
-                    ) 
-    LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
+-- FUNCTION: camdecmpswks.hour_before_supp_data_previous_quarter_non_system(character varying, numeric)
 
+DROP FUNCTION IF EXISTS camdecmpswks.hour_before_supp_data_previous_quarter_non_system(character varying, numeric);
+
+CREATE OR REPLACE FUNCTION camdecmpswks.hour_before_supp_data_previous_quarter_non_system(
+	monplanid character varying,
+	rptperiodid numeric)
+    RETURNS TABLE(mon_loc_id character varying, hourly_type_cd character varying, parameter_cd character varying, moisture_basis character varying, op_datehour timestamp without time zone, unadjusted_hrly_value numeric, adjusted_hrly_value numeric, hrly_value numeric, primary_bypass_ind integer, last_qa_value_supp_data_id character varying, rpt_period_id numeric, mon_plan_id character varying) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 DECLARE
     previousQuarterRptPeriodId  integer;

@@ -3,27 +3,16 @@
 DROP FUNCTION IF EXISTS camdecmps.rpt_mp_location_attribute(character varying);
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_mp_location_attribute(
-	monplanid character varying
-)
-RETURNS TABLE(
-	"unitStack" text, 
-	"ductIndicator" text, 
-	"groundElevation" numeric, 
-	"stackHeight" numeric, 
-	"crossAreaExit" numeric, 
-	"crossAreaFlow" numeric, 
-	"materialCode" text, 
-	"materialCodeGroup" text, 
-	"materialCodeDescription" text, 
-	"shapeCode" text, 
-	"shapeCodeGroup" text, 
-	"shapeCodeDescription" text, 
-	"beginDate" text, 
-	"endDate" text
-) 
-LANGUAGE 'sql'
+	monplanid character varying)
+    RETURNS TABLE("unitStack" text, "ductIndicator" text, "groundElevation" numeric, "stackHeight" numeric, "crossAreaExit" numeric, "crossAreaFlow" numeric, "materialCode" text, "materialCodeGroup" text, "materialCodeDescription" text, "shapeCode" text, "shapeCodeGroup" text, "shapeCodeDescription" text, "beginDate" text, "endDate" text) 
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
-	SELECT
+SELECT
 		CASE
 			WHEN ml.unit_id IS NULL THEN sp.stack_name
 			ELSE u.unitid

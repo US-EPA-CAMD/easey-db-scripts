@@ -1,6 +1,6 @@
 -- PROCEDURE: camdecmpswks.upd_check_session()
 
--- DROP PROCEDURE camdecmpswks.upd_check_session();
+DROP PROCEDURE IF EXISTS camdecmpswks.upd_check_session();
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.upd_check_session(
 	)

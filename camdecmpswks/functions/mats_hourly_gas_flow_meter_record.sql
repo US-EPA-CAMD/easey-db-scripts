@@ -1,12 +1,17 @@
+-- FUNCTION: camdecmpswks.mats_hourly_gas_flow_meter_record(character varying, numeric)
+
+DROP FUNCTION IF EXISTS camdecmpswks.mats_hourly_gas_flow_meter_record(character varying, numeric);
+
 CREATE OR REPLACE FUNCTION camdecmpswks.mats_hourly_gas_flow_meter_record(
 	monplanid character varying,
 	rptperiodid numeric)
     RETURNS TABLE(location_name character varying, begin_datehour timestamp without time zone, component_identifier character varying, component_type_cd character varying, begin_end_hour_flg character varying, gfm_reading numeric, avg_sampling_rate numeric, sampling_rate_uom character varying, flow_to_sampling_ratio numeric, hrly_gas_flow_meter_id character varying, hour_id character varying, component_id character varying, mon_loc_id character varying, mon_plan_id character varying, rpt_period_id numeric) 
     LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
 
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN
  RETURN QUERY

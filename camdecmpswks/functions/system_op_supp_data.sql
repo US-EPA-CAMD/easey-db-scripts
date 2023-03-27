@@ -1,11 +1,16 @@
+-- FUNCTION: camdecmpswks.system_op_supp_data(character varying)
+
+DROP FUNCTION IF EXISTS camdecmpswks.system_op_supp_data(character varying);
+
 CREATE OR REPLACE FUNCTION camdecmpswks.system_op_supp_data(
 	monplanid character varying)
     RETURNS TABLE(mon_plan_id character varying, sys_op_supp_data_id character varying, mon_loc_id character varying, mon_sys_id character varying, rpt_period_id numeric, calendar_year numeric, quarter numeric, op_supp_data_type_cd character varying, days numeric, hours numeric) 
     LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
 
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN  
   RETURN QUERY

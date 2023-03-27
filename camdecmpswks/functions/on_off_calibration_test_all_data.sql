@@ -1,11 +1,16 @@
+-- FUNCTION: camdecmpswks.on_off_calibration_test_all_data(character varying)
+
+DROP FUNCTION IF EXISTS camdecmpswks.on_off_calibration_test_all_data(character varying);
+
 CREATE OR REPLACE FUNCTION camdecmpswks.on_off_calibration_test_all_data(
 	monplanid character varying)
     RETURNS TABLE(oris_code numeric, location_name character varying, component_type_cd character varying, component_identifier character varying, test_num character varying, test_reason_cd character varying, test_result_cd character varying, begin_date date, begin_hour numeric, begin_min numeric, begin_datetime timestamp without time zone, end_date date, end_hour numeric, end_min numeric, end_datetime timestamp without time zone, span_scale_cd character varying, acq_cd character varying, online_zero_injection_date date, online_zero_injection_hour numeric, on_off_cal_id character varying, online_zero_measured_value numeric, online_zero_ref_value numeric, online_zero_cal_error numeric, online_zero_aps_ind numeric, offline_zero_injection_date date, offline_zero_injection_hour numeric, offline_zero_measured_value numeric, offline_zero_ref_value numeric, offline_zero_cal_error numeric, offline_zero_aps_ind numeric, upscale_gas_level_cd character varying, online_upscale_injection_date date, online_upscale_injection_hour numeric, online_upscale_measured_value numeric, online_upscale_ref_value numeric, online_upscale_cal_error numeric, online_upscale_aps_ind numeric, offline_upscale_injection_date date, offline_upscale_injection_hour numeric, offline_upscale_measured_value numeric, offline_upscale_ref_value numeric, offline_upscale_cal_error numeric, offline_upscale_aps_ind numeric, mon_plan_id character varying, mon_loc_id character varying, test_sum_id character varying, component_id character varying, fac_id numeric) 
     LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
 
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN
  RETURN QUERY

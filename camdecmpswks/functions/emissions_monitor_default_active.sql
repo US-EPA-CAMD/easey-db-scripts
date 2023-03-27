@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.emissions_monitor_default_active(timestamp without time zone, numeric, timestamp without time zone, numeric, timestamp without time zone, numeric)
 
--- DROP FUNCTION IF EXISTS camdecmpswks.emissions_monitor_default_active(timestamp without time zone, numeric, timestamp without time zone, numeric, timestamp without time zone, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.emissions_monitor_default_active(timestamp without time zone, numeric, timestamp without time zone, numeric, timestamp without time zone, numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.emissions_monitor_default_active(
 	p_md_begin_date timestamp without time zone,
@@ -11,8 +11,10 @@ CREATE OR REPLACE FUNCTION camdecmpswks.emissions_monitor_default_active(
 	p_hod_begin_hour numeric)
     RETURNS integer
     LANGUAGE 'plpgsql'
+
     COST 100
-    VOLATILE PARALLEL UNSAFE
+    VOLATILE 
+    
 AS $BODY$
 DECLARE
 
@@ -36,6 +38,3 @@ begin
     
 END;
 $BODY$;
-
-ALTER FUNCTION camdecmpswks.emissions_monitor_default_active(timestamp without time zone, numeric, timestamp without time zone, numeric, timestamp without time zone, numeric)
-    OWNER TO "uImcwuf4K9dyaxeL";

@@ -5,10 +5,13 @@ DROP FUNCTION IF EXISTS camdecmps.get_em_submission_status(character varying, nu
 CREATE OR REPLACE FUNCTION camdecmps.get_em_submission_status(
 	inmonplanid character varying,
 	incalendaryear numeric,
-	inquarter numeric
-)
-RETURNS text
-LANGUAGE 'plpgsql'
+	inquarter numeric)
+    RETURNS text
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
 AS $BODY$
 DECLARE
 	LENDDATE   date;

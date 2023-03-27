@@ -1,13 +1,18 @@
+-- FUNCTION: camdecmpswks.mats_monitor_hourly_value_data(character varying, numeric, character varying)
+
+DROP FUNCTION IF EXISTS camdecmpswks.mats_monitor_hourly_value_data(character varying, numeric, character varying);
+
 CREATE OR REPLACE FUNCTION camdecmpswks.mats_monitor_hourly_value_data(
 	monplanid character varying,
 	rptperiodid numeric,
 	parametercd character varying)
     RETURNS TABLE(location_name character varying, begin_hour numeric, begin_date date, begin_datehour timestamp without time zone, parameter_cd character varying, unadjusted_hrly_value character varying, modc_cd character varying, pct_available numeric, mats_mhv_id character varying, mon_plan_id character varying, rpt_period_id numeric, mon_loc_id character varying, hour_id character varying, mon_sys_id character varying, system_identifier character varying, sys_type_cd character varying, sys_designation_cd character varying, component_id character varying, component_type_cd character varying, component_identifier character varying, serial_number character varying, acq_cd character varying, hg_converter_ind numeric, component_begin_date date, component_begin_datehour timestamp without time zone) 
     LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
 
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN
  RETURN QUERY

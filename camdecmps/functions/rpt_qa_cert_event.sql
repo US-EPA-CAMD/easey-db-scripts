@@ -3,28 +3,16 @@
 DROP FUNCTION IF EXISTS camdecmps.rpt_qa_cert_event(text);
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_cert_event(
-	qaCertEventId text
-)
-RETURNS TABLE(
-	"unitStack" text,
-	"eventCode" text,
-	"eventCodeGroup" text,
-	"eventCodeDescription" text,
-	"eventDateHour" text,
-	"systemIdentifier" text,
-	"systemTypeCode" text,
-	"componentIdentifier" text,
-	"componentTypeCode" text,
-	"requiredTestCode" text,
-	"requiredTestCodeGroup" text,
-	"requiredTestCodeDescription" text,
-	"conditionalBeginDateHour" text,
-	"lastTestCompletedDateHour" text,
-	"submissionStatus" text
-)
-LANGUAGE 'sql'
+	qacerteventid text)
+    RETURNS TABLE("unitStack" text, "eventCode" text, "eventCodeGroup" text, "eventCodeDescription" text, "eventDateHour" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "requiredTestCode" text, "requiredTestCodeGroup" text, "requiredTestCodeDescription" text, "conditionalBeginDateHour" text, "lastTestCompletedDateHour" text, "submissionStatus" text) 
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
-	SELECT
+SELECT
 		CASE
 			WHEN ml.stack_pipe_id IS NOT NULL THEN sp.stack_name
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid
@@ -50,7 +38,7 @@ AS $BODY$
 	LEFT JOIN camdecmps.component c USING(component_id)
 	LEFT JOIN camdecmpsmd.qa_cert_event_code qcec USING(qa_cert_event_cd)
 	LEFT JOIN camdecmpsmd.required_test_code rtc USING(required_test_cd)
-	LEFT JOIN camdecmpswks.stack_pipe sp USING(stack_pipe_id)
+	LEFT JOIN camdecmps.stack_pipe sp USING(stack_pipe_id)
 	LEFT JOIN camd.unit u USING(unit_id)
 	WHERE qce.qa_cert_event_id = qaCertEventId;
 $BODY$;

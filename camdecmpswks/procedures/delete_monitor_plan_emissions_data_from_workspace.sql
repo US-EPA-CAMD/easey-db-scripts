@@ -1,6 +1,6 @@
 -- PROCEDURE: camdecmpswks.delete_monitor_plan_emissions_data_from_workspace(text)
 
--- DROP PROCEDURE camdecmpswks.delete_monitor_plan_emissions_data_from_workspace(text);
+DROP PROCEDURE IF EXISTS camdecmpswks.delete_monitor_plan_emissions_data_from_workspace(text);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.delete_monitor_plan_emissions_data_from_workspace(
 	monplanid text)
@@ -16,6 +16,15 @@ BEGIN
 		FROM camdecmpswks.monitor_plan_location
 		WHERE mon_plan_id = monPlanId
 	) INTO monLocIds;
+
+	DELETE FROM camdecmpswks.check_session
+	WHERE mon_plan_id = monPlanId;
+
+	DELETE FROM camdecmpsaux.evaluation_set
+	WHERE mon_plan_id = monPlanId;
+	
+	DELETE FROM camdecmpswks.emission_evaluation
+	WHERE mon_plan_id = monPlanId;
 
 	DELETE FROM camdecmpswks.sorbent_trap
 	WHERE mon_loc_id = ANY(monLocIds);
@@ -41,9 +50,6 @@ BEGIN
 	DELETE FROM camdecmpswks.long_term_fuel_flow
 	WHERE mon_loc_id = ANY(monLocIds);
 
-	DELETE FROM camdecmpswks.emission_evaluation
-	WHERE mon_plan_id = mon_plan_id;
-
 	DELETE FROM camdecmpswks.component_op_supp_data
 	WHERE mon_loc_id = ANY(monLocIds);
 
@@ -54,9 +60,6 @@ BEGIN
 	WHERE mon_loc_id = ANY(monLocIds);
 	
 	DELETE FROM camdecmpswks.operating_supp_data
-	WHERE mon_loc_id = ANY(monLocIds);
-	
-	DELETE FROM camdecmpswks.sampling_train_supp_data
 	WHERE mon_loc_id = ANY(monLocIds);
 	
 	DELETE FROM camdecmpswks.sorbent_trap_supp_data

@@ -1,5 +1,34 @@
-CREATE OR REPLACE VIEW camdecmpswks.vw_mp_derived_hrly_value_so2r (derv_id, mon_plan_id, mon_loc_id, hour_id, rpt_period_id, calendar_year, quarter, begin_date, begin_hour, parameter_cd, unadjusted_hrly_value, adjusted_hrly_value, modc_cd, mon_sys_id, mon_form_id, pct_available, diluent_cap_ind, operating_condition_cd, segment_num, fuel_cd, system_identifier, sys_type_cd, sys_designation_cd, formula_identifier, formula_parameter_cd, equation_cd) AS
-SELECT
-    *
-    FROM camdecmpswks.vw_mp_derived_hrly_value
-    WHERE parameter_cd = 'SO2R';
+-- View: camdecmpswks.vw_mp_derived_hrly_value_so2r
+
+DROP VIEW IF EXISTS camdecmpswks.vw_mp_derived_hrly_value_so2r;
+
+CREATE OR REPLACE VIEW camdecmpswks.vw_mp_derived_hrly_value_so2r
+ AS
+ SELECT vw_mp_derived_hrly_value.derv_id,
+    vw_mp_derived_hrly_value.mon_plan_id,
+    vw_mp_derived_hrly_value.mon_loc_id,
+    vw_mp_derived_hrly_value.hour_id,
+    vw_mp_derived_hrly_value.rpt_period_id,
+    vw_mp_derived_hrly_value.calendar_year,
+    vw_mp_derived_hrly_value.quarter,
+    vw_mp_derived_hrly_value.begin_date,
+    vw_mp_derived_hrly_value.begin_hour,
+    vw_mp_derived_hrly_value.parameter_cd,
+    vw_mp_derived_hrly_value.unadjusted_hrly_value,
+    vw_mp_derived_hrly_value.adjusted_hrly_value,
+    vw_mp_derived_hrly_value.modc_cd,
+    vw_mp_derived_hrly_value.mon_sys_id,
+    vw_mp_derived_hrly_value.mon_form_id,
+    vw_mp_derived_hrly_value.pct_available,
+    vw_mp_derived_hrly_value.diluent_cap_ind,
+    vw_mp_derived_hrly_value.operating_condition_cd,
+    vw_mp_derived_hrly_value.segment_num,
+    vw_mp_derived_hrly_value.fuel_cd,
+    vw_mp_derived_hrly_value.system_identifier,
+    vw_mp_derived_hrly_value.sys_type_cd,
+    vw_mp_derived_hrly_value.sys_designation_cd,
+    vw_mp_derived_hrly_value.formula_identifier,
+    vw_mp_derived_hrly_value.formula_parameter_cd,
+    vw_mp_derived_hrly_value.equation_cd
+   FROM camdecmpswks.vw_mp_derived_hrly_value
+  WHERE vw_mp_derived_hrly_value.parameter_cd::text = 'SO2R'::text;

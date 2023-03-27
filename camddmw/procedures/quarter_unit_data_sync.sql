@@ -2,7 +2,8 @@
 
 DROP PROCEDURE IF EXISTS camddmw.quarter_unit_data_sync();
 
-CREATE OR REPLACE PROCEDURE camddmw.quarter_unit_data_sync()
+CREATE OR REPLACE PROCEDURE camddmw.quarter_unit_data_sync(
+	)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN

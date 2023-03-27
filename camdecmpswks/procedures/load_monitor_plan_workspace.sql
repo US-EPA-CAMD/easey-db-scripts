@@ -1,6 +1,6 @@
 -- PROCEDURE: camdecmpswks.load_monitor_plan_workspace()
 
--- DROP PROCEDURE camdecmpswks.load_monitor_plan_workspace();
+DROP PROCEDURE IF EXISTS camdecmpswks.load_monitor_plan_workspace();
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.load_monitor_plan_workspace(
 	)

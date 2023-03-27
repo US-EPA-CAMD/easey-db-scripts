@@ -1,43 +1,17 @@
-CREATE OR REPLACE 
-FUNCTION camdecmpswks.weekly_system_integrity_data
-(
-	monPlanId       character varying,
-	rptPeriodId     numeric
-)
-    RETURNS TABLE   (
-                        location_name               character varying, 
-                        test_type_cd                character varying, 
-                        system_identifier           character varying, 
-                        sys_type_cd                 character varying, 
-                        component_identifier        character varying, 
-                        component_type_cd           character varying,
-                        test_datetime               timestamp without time zone, 
-                        span_scale_cd               character varying, 
-                        test_result_cd              character varying,
-                        hg_converter_ind            numeric,
-                        gas_level_cd                character varying, 
-                        ref_value                   numeric,
-                        measured_value              numeric,
-                        aps_ind                     numeric,
-                        system_integrity_error      numeric,
-                        test_datehour               timestamp without time zone, 
-                        test_date                   date,
-                        test_hour                   numeric,
-                        test_min                    numeric,
-                        formatted_test_date         character varying, 
-                        mon_sys_id                  character varying, 
-                        component_id                character varying, 
-                        weekly_sys_integrity_id     character varying, 
-                        weekly_test_sum_id          character varying, 
-                        mon_loc_id                  character varying, 
-                        mon_plan_id                 character varying, 
-                        rpt_period_id               numeric
-                    ) 
-    LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
+-- FUNCTION: camdecmpswks.weekly_system_integrity_data(character varying, numeric)
 
+DROP FUNCTION IF EXISTS camdecmpswks.weekly_system_integrity_data(character varying, numeric);
+
+CREATE OR REPLACE FUNCTION camdecmpswks.weekly_system_integrity_data(
+	monplanid character varying,
+	rptperiodid numeric)
+    RETURNS TABLE(location_name character varying, test_type_cd character varying, system_identifier character varying, sys_type_cd character varying, component_identifier character varying, component_type_cd character varying, test_datetime timestamp without time zone, span_scale_cd character varying, test_result_cd character varying, hg_converter_ind numeric, gas_level_cd character varying, ref_value numeric, measured_value numeric, aps_ind numeric, system_integrity_error numeric, test_datehour timestamp without time zone, test_date date, test_hour numeric, test_min numeric, formatted_test_date character varying, mon_sys_id character varying, component_id character varying, weekly_sys_integrity_id character varying, weekly_test_sum_id character varying, mon_loc_id character varying, mon_plan_id character varying, rpt_period_id numeric) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN  
     RETURN QUERY

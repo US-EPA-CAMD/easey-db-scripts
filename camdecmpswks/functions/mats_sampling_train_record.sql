@@ -1,12 +1,17 @@
+-- FUNCTION: camdecmpswks.mats_sampling_train_record(character varying, numeric)
+
+DROP FUNCTION IF EXISTS camdecmpswks.mats_sampling_train_record(character varying, numeric);
+
 CREATE OR REPLACE FUNCTION camdecmpswks.mats_sampling_train_record(
 	monplanid character varying,
 	rptperiodid numeric)
     RETURNS TABLE(location_name character varying, begin_datehour timestamp without time zone, end_datehour timestamp without time zone, component_identifier character varying, component_type_cd character varying, trap_modc_cd character varying, train_qa_status_cd character varying, ref_flow_to_sampling_ratio numeric, hg_concentration character varying, main_trap_hg character varying, breakthrough_trap_hg character varying, spike_trap_hg character varying, spike_ref_value character varying, total_sample_volume numeric, percent_breakthrough numeric, percent_spike_recovery numeric, sampling_ratio_test_result_cd character varying, post_leak_test_result_cd character varying, sample_damage_explanation character varying, sorbent_trap_serial_number character varying, rata_ind numeric, sorbent_trap_aps_cd character varying, sfsr_total_count numeric, sfsr_deviated_count numeric, gfm_total_count numeric, gfm_not_available_count numeric, description text, border_trap_ind integer, supp_data_ind integer, trap_train_id character varying, trap_id character varying, component_id character varying, mon_loc_id character varying, mon_plan_id character varying, rpt_period_id numeric) 
     LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
 
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN
 return query

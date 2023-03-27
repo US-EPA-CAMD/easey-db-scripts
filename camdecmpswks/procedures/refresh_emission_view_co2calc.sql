@@ -1,6 +1,6 @@
 -- PROCEDURE: camdecmpswks.refresh_emission_view_co2calc(character varying, numeric)
 
--- DROP PROCEDURE camdecmpswks.refresh_emission_view_co2calc(character varying, numeric);
+DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_co2calc(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_co2calc(
 	vmonplanid character varying,

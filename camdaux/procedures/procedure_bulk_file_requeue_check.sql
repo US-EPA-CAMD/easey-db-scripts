@@ -1,3 +1,7 @@
+-- PROCEDURE: camdaux.procedure_bulk_file_requeue_check()
+
+DROP PROCEDURE IF EXISTS camdaux.procedure_bulk_file_requeue_check();
+
 CREATE OR REPLACE PROCEDURE camdaux.procedure_bulk_file_requeue_check(
 	)
 LANGUAGE 'sql'

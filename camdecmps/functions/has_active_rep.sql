@@ -3,10 +3,13 @@
 DROP FUNCTION IF EXISTS camdecmps.has_active_rep(numeric);
 
 CREATE OR REPLACE FUNCTION camdecmps.has_active_rep(
-	inupid numeric
-)
-RETURNS character
-LANGUAGE 'plpgsql'
+	inupid numeric)
+    RETURNS character
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
 AS $BODY$
 DECLARE
 	REPCOUNT integer;

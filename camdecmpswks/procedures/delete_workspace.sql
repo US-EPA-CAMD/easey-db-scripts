@@ -1,6 +1,6 @@
 -- PROCEDURE: camdecmpswks.delete_workspace()
 
--- DROP PROCEDURE camdecmpswks.delete_workspace();
+DROP PROCEDURE IF EXISTS camdecmpswks.delete_workspace();
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.delete_workspace(
 	)

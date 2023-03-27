@@ -5,10 +5,13 @@ DROP FUNCTION IF EXISTS camdecmps.format_date_hour(date, numeric, numeric);
 CREATE OR REPLACE FUNCTION camdecmps.format_date_hour(
 	_datelabel date,
 	_timehour numeric,
-	_timeminute numeric
-)
-RETURNS character varying
-LANGUAGE 'plpgsql'
+	_timeminute numeric)
+    RETURNS character varying
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
 AS $BODY$
 DECLARE 
 	returnVal varchar(25);

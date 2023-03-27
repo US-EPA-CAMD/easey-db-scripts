@@ -1,6 +1,6 @@
 -- PROCEDURE: camdecmpswks.refresh_emission_view_so2appd(character varying, numeric)
 
--- DROP PROCEDURE camdecmpswks.refresh_emission_view_so2appd(character varying, numeric);
+DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_so2appd(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_so2appd(
 	vmonplanid character varying,

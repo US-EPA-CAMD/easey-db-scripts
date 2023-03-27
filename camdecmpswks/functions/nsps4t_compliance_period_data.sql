@@ -1,35 +1,17 @@
-CREATE OR REPLACE 
-FUNCTION camdecmpswks.nsps4t_compliance_period_data
-(
-	monPlanId       character varying,
-	rptPeriodId     numeric
-)
-    RETURNS TABLE   (
-                        ORIS_CODE                       numeric,
-                        LOCATION_NAME                   character varying,
-                        BEGIN_YEAR                      numeric,
-                        BEGIN_MONTH                     numeric,
-                        END_YEAR                        numeric,
-                        END_MONTH                       numeric,
-                        AVG_CO2_EMISSION_RATE           numeric,
-                        CO2_EMISSION_RATE_UOM_CD        character varying,
-                        CO2_EMISSION_RATE_UOM_LABEL     character varying,
-                        PCT_VALID_OP_HOURS              numeric,
-                        CO2_VIOLATION_IND               numeric,
-                        CO2_VIOLATION_COMMENT           character varying,
-                        BEGIN_MONTH_ORD                 numeric,
-                        END_MONTH_ORD                   numeric,
-                        NSPS4T_CMP_ID                   character varying,
-                        NSPS4T_SUM_ID                   character varying,
-                        MON_PLAN_ID                     character varying,
-                        RPT_PERIOD_ID                   numeric,
-                        MON_LOC_ID                      character varying
-                    ) 
-    LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
+-- FUNCTION: camdecmpswks.nsps4t_compliance_period_data(character varying, numeric)
 
+DROP FUNCTION IF EXISTS camdecmpswks.nsps4t_compliance_period_data(character varying, numeric);
+
+CREATE OR REPLACE FUNCTION camdecmpswks.nsps4t_compliance_period_data(
+	monplanid character varying,
+	rptperiodid numeric)
+    RETURNS TABLE(oris_code numeric, location_name character varying, begin_year numeric, begin_month numeric, end_year numeric, end_month numeric, avg_co2_emission_rate numeric, co2_emission_rate_uom_cd character varying, co2_emission_rate_uom_label character varying, pct_valid_op_hours numeric, co2_violation_ind numeric, co2_violation_comment character varying, begin_month_ord numeric, end_month_ord numeric, nsps4t_cmp_id character varying, nsps4t_sum_id character varying, mon_plan_id character varying, rpt_period_id numeric, mon_loc_id character varying) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN  
     RETURN QUERY
@@ -72,7 +54,7 @@ BEGIN
                   on loc.MON_LOC_ID = cmp.MON_LOC_ID
                 left join camd.UNIT unt 
                   on unt.UNIT_ID = loc.UNIT_ID
-                left join STACK_PIPE stp 
+                left join camdecmpswks.STACK_PIPE stp 
                   on stp.STACK_PIPE_ID = loc.STACK_PIPE_ID
                 join camd.PLANT fac
                   on fac.FAC_ID in (unt.FAC_ID, stp.FAC_ID)

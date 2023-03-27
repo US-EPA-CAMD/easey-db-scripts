@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.delete_calculated_qa_data_from_workspace()
 
--- DROP FUNCTION camdecmpswks.delete_calculated_qa_data_from_workspace();
+DROP FUNCTION IF EXISTS camdecmpswks.delete_calculated_qa_data_from_workspace();
 
 CREATE OR REPLACE FUNCTION camdecmpswks.delete_calculated_qa_data_from_workspace(
 	)

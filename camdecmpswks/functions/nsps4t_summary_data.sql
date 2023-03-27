@@ -1,32 +1,17 @@
-CREATE OR REPLACE 
-FUNCTION camdecmpswks.nsps4t_summary_data
-(
-	monPlanId       character varying,
-	rptPeriodId     numeric
-)
-    RETURNS TABLE   (
-                        ORIS_CODE                       numeric,
-                        LOCATION_NAME                   character varying,
-                        EMISSION_STANDARD_CD            character varying,
-                        EMISSION_STANDARD_LOAD_CD       character varying,
-                        EMISSION_STANDARD_UOM_CD        character varying,
-                        EMISSION_STANDARD_UOM_LABEL     character varying,
-                        MODUS_VALUE                     numeric,
-                        MODUS_UOM_CD                    character varying,
-                        MODUS_UOM_LABEL                 character varying,
-                        ELECTRICAL_LOAD_CD              character varying,
-                        NO_PERIOD_ENDED_IND             numeric,
-                        NO_PERIOD_ENDED_COMMENT         character varying,
-                        NSPS4T_SUM_ID                   character varying,
-                        MON_PLAN_ID                     character varying,
-                        RPT_PERIOD_ID                   numeric,
-                        MON_LOC_ID                      character varying
-                    ) 
-    LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
+-- FUNCTION: camdecmpswks.nsps4t_summary_data(character varying, numeric)
 
+DROP FUNCTION IF EXISTS camdecmpswks.nsps4t_summary_data(character varying, numeric);
+
+CREATE OR REPLACE FUNCTION camdecmpswks.nsps4t_summary_data(
+	monplanid character varying,
+	rptperiodid numeric)
+    RETURNS TABLE(oris_code numeric, location_name character varying, emission_standard_cd character varying, emission_standard_load_cd character varying, emission_standard_uom_cd character varying, emission_standard_uom_label character varying, modus_value numeric, modus_uom_cd character varying, modus_uom_label character varying, electrical_load_cd character varying, no_period_ended_ind numeric, no_period_ended_comment character varying, nsps4t_sum_id character varying, mon_plan_id character varying, rpt_period_id numeric, mon_loc_id character varying) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN  
     RETURN QUERY

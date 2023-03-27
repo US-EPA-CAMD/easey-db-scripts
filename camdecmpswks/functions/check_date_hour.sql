@@ -1,11 +1,17 @@
+-- FUNCTION: camdecmpswks.check_date_hour(date, numeric, integer)
+
+DROP FUNCTION IF EXISTS camdecmpswks.check_date_hour(date, numeric, integer);
+
 CREATE OR REPLACE FUNCTION camdecmpswks.check_date_hour(
 	indate date,
 	inhour numeric,
 	inother integer DEFAULT NULL::integer)
     RETURNS integer
     LANGUAGE 'plpgsql'
+
     COST 100
-    VOLATILE PARALLEL UNSAFE
+    VOLATILE 
+    
 AS $BODY$
 DECLARE
  v_result		integer default null;

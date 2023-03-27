@@ -1,38 +1,17 @@
-CREATE OR REPLACE 
-FUNCTION camdecmpswks.daily_calibration_supp_data_previous_quarter_non_system
-(
-	monPlanId       character varying,
-	rptPeriodId     numeric
-)
-    RETURNS TABLE   (
-                        component_id                    character varying,
-                        component_identifier            character varying,
-                        test_type_cd                    character varying,
-                        span_scale_cd                   character varying,
-                        key_online_ind                  numeric,
-                        key_valid_ind                   numeric,
-                        op_hour_cnt                     numeric,
-                        last_covered_nonop_datehour     timestamp without time zone,
-                        first_op_after_nonop_datehour   timestamp without time zone,
-                        daily_test_datehourmin          timestamp without time zone,
-                        daily_test_date                 date, 
-                        daily_test_hour                 numeric,
-                        daily_test_min                  numeric,
-                        formatted_test_date             character varying,
-                        test_result_cd                  character varying,
-                        online_offline_ind              numeric,
-                        sort_daily_test_datehourmin     timestamp without time zone,
-                        calc_test_result_cd             character varying,
-                        daily_test_sum_id               character varying,
-                        mon_loc_id                      character varying,
-                        rpt_period_id                   numeric,
-                        daily_test_supp_data_id         character varying
-                    ) 
-    LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
+-- FUNCTION: camdecmpswks.daily_calibration_supp_data_previous_quarter_non_system(character varying, numeric)
 
+DROP FUNCTION IF EXISTS camdecmpswks.daily_calibration_supp_data_previous_quarter_non_system(character varying, numeric);
+
+CREATE OR REPLACE FUNCTION camdecmpswks.daily_calibration_supp_data_previous_quarter_non_system(
+	monplanid character varying,
+	rptperiodid numeric)
+    RETURNS TABLE(component_id character varying, component_identifier character varying, test_type_cd character varying, span_scale_cd character varying, key_online_ind numeric, key_valid_ind numeric, op_hour_cnt numeric, last_covered_nonop_datehour timestamp without time zone, first_op_after_nonop_datehour timestamp without time zone, daily_test_datehourmin timestamp without time zone, daily_test_date date, daily_test_hour numeric, daily_test_min numeric, formatted_test_date character varying, test_result_cd character varying, online_offline_ind numeric, sort_daily_test_datehourmin timestamp without time zone, calc_test_result_cd character varying, daily_test_sum_id character varying, mon_loc_id character varying, rpt_period_id numeric, daily_test_supp_data_id character varying) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 DECLARE
     quarterOrd  integer;

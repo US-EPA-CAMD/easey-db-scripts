@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.daily_calibration_test_period_data(character varying, date, date)
 
--- DROP FUNCTION camdecmpswks.daily_calibration_test_period_data(character varying, date, date);
+DROP FUNCTION IF EXISTS camdecmpswks.daily_calibration_test_period_data(character varying, date, date);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.daily_calibration_test_period_data(
 	monplanid character varying,
@@ -8,10 +8,11 @@ CREATE OR REPLACE FUNCTION camdecmpswks.daily_calibration_test_period_data(
 	evalperiodendeddate date)
     RETURNS TABLE(mon_plan_id character varying, mon_loc_id character varying, rpt_period_id numeric, oris_code numeric, location_name character varying, calendar_year numeric, quarter numeric, component_id character varying, mon_sys_id character varying, component_type_cd character varying, component_identifier character varying, acq_cd character varying, test_type_cd character varying, test_result_cd character varying, span_scale_cd character varying, daily_test_date date, daily_test_hour numeric, daily_test_min numeric, daily_test_datetime timestamp without time zone, daily_test_datehour timestamp without time zone, online_offline_ind numeric, upscale_gas_level_cd character varying, upscale_injection_date date, upscale_injection_hour numeric, upscale_injection_min numeric, upscale_injection_datetime timestamp without time zone, upscale_measured_value numeric, upscale_ref_value numeric, upscale_cal_error numeric, upscale_aps_ind numeric, upscale_op_time numeric, zero_injection_date date, zero_injection_hour numeric, zero_injection_min numeric, zero_injection_datetime timestamp without time zone, zero_measured_value numeric, zero_ref_value numeric, zero_cal_error numeric, zero_aps_ind numeric, zero_op_time numeric, system_identifier character varying, first_test_date date, first_test_hour numeric, first_test_min numeric, first_test_datetime timestamp without time zone, fac_id numeric, cal_inj_id character varying, daily_test_sum_id character varying, formatted_test_date text, overlap_exists integer, upscale_gas_type_cd character varying, vendor_id character varying, cylinder_id character varying, expiration_date date) 
     LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
 
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN
    RETURN QUERY

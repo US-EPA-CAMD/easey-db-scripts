@@ -3,15 +3,17 @@
 DROP FUNCTION IF EXISTS camdecmps.get_oris_codes_for_configurations_last_updated(timestamp without time zone);
 
 CREATE OR REPLACE FUNCTION camdecmps.get_oris_codes_for_configurations_last_updated(
-	p_date timestamp without time zone
-)
-RETURNS TABLE(
-  oris_code numeric,
-  last_updated_time timestamp without time zone
-) 
-LANGUAGE 'plpgsql'
+	p_date timestamp without time zone)
+    RETURNS TABLE(oris_code numeric, last_updated_time timestamp without time zone) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN
+	
 	Return Query Select distinct pl.oris_code, records.update_date
 	FROM(
 	(
@@ -56,5 +58,6 @@ BEGIN
 	Join camd.plant pl
 		On records.fac_id = pl.fac_id 
 	Order By records.update_date Desc;
+
 END;
 $BODY$;

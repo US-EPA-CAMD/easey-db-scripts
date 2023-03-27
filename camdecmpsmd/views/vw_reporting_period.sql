@@ -1,6 +1,5 @@
 -- View: camdecmpsmd.vw_reporting_period
 
-DROP VIEW IF EXISTS camdecmpswks.vw_reporting_period;
 DROP VIEW IF EXISTS camdecmpsmd.vw_reporting_period;
 
 CREATE OR REPLACE VIEW camdecmpsmd.vw_reporting_period

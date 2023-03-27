@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.linearity_injection(text)
 
--- DROP FUNCTION camdecmpswks.linearity_injection(text);
+DROP FUNCTION IF EXISTS camdecmpswks.linearity_injection(text);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.linearity_injection(
 	v_test_sum_id text)
@@ -13,7 +13,7 @@ CREATE OR REPLACE FUNCTION camdecmpswks.linearity_injection(
     
 AS $BODY$
 BEGIN	
-	SELECT	li.LIN_INJ_ID,
+	return query SELECT	li.LIN_INJ_ID,
 		li.LIN_SUM_ID, 
 		li.INJECTION_DATE, 
 		li.INJECTION_HOUR,

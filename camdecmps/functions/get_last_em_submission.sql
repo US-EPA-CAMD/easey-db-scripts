@@ -6,10 +6,13 @@ CREATE OR REPLACE FUNCTION camdecmps.get_last_em_submission(
 	inmonplanid character varying,
 	inrptperiodid numeric,
 	inbegindate date,
-	inenddate date
-)
-RETURNS numeric
-LANGUAGE 'plpgsql'
+	inenddate date)
+    RETURNS numeric
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
 AS $BODY$
 DECLARE
 	V_SUBMISSION_ID numeric := NULL;

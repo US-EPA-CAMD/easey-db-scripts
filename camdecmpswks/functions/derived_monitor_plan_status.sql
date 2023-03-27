@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.derived_monitor_plan_status()
 
--- DROP FUNCTION camdecmpswks.derived_monitor_plan_status();
+DROP FUNCTION IF EXISTS camdecmpswks.derived_monitor_plan_status();
 
 CREATE OR REPLACE FUNCTION camdecmpswks.derived_monitor_plan_status(
 	)

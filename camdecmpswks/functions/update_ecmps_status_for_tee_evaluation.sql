@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.update_ecmps_status_for_tee_evaluation(character varying, character varying)
 
--- DROP FUNCTION camdecmpswks.update_ecmps_status_for_tee_evaluation(character varying, character varying);
+DROP FUNCTION IF EXISTS camdecmpswks.update_ecmps_status_for_tee_evaluation(character varying, character varying);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.update_ecmps_status_for_tee_evaluation(
 	vchksessionid character varying,

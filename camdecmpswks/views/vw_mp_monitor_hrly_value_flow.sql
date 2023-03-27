@@ -1,5 +1,32 @@
-CREATE OR REPLACE VIEW camdecmpswks.vw_mp_monitor_hrly_value_flow (monitor_hrly_val_id, mon_plan_id, mon_loc_id, hour_id, rpt_period_id, calendar_year, quarter, mon_sys_id, component_id, parameter_cd, modc_cd, adjusted_hrly_value, unadjusted_hrly_value, pct_available, moisture_basis, begin_date, begin_hour, system_identifier, sys_type_cd, sys_designation_cd, component_type_cd, component_identifier, serial_number, acq_cd) AS
-SELECT
-    *
-    FROM camdecmpswks.vw_mp_monitor_hrly_value
-    WHERE parameter_cd = 'FLOW';
+-- View: camdecmpswks.vw_mp_monitor_hrly_value_flow
+
+DROP VIEW IF EXISTS camdecmpswks.vw_mp_monitor_hrly_value_flow;
+
+CREATE OR REPLACE VIEW camdecmpswks.vw_mp_monitor_hrly_value_flow
+ AS
+ SELECT vw_mp_monitor_hrly_value.monitor_hrly_val_id,
+    vw_mp_monitor_hrly_value.mon_plan_id,
+    vw_mp_monitor_hrly_value.mon_loc_id,
+    vw_mp_monitor_hrly_value.hour_id,
+    vw_mp_monitor_hrly_value.rpt_period_id,
+    vw_mp_monitor_hrly_value.calendar_year,
+    vw_mp_monitor_hrly_value.quarter,
+    vw_mp_monitor_hrly_value.mon_sys_id,
+    vw_mp_monitor_hrly_value.component_id,
+    vw_mp_monitor_hrly_value.parameter_cd,
+    vw_mp_monitor_hrly_value.modc_cd,
+    vw_mp_monitor_hrly_value.adjusted_hrly_value,
+    vw_mp_monitor_hrly_value.unadjusted_hrly_value,
+    vw_mp_monitor_hrly_value.pct_available,
+    vw_mp_monitor_hrly_value.moisture_basis,
+    vw_mp_monitor_hrly_value.begin_date,
+    vw_mp_monitor_hrly_value.begin_hour,
+    vw_mp_monitor_hrly_value.system_identifier,
+    vw_mp_monitor_hrly_value.sys_type_cd,
+    vw_mp_monitor_hrly_value.sys_designation_cd,
+    vw_mp_monitor_hrly_value.component_type_cd,
+    vw_mp_monitor_hrly_value.component_identifier,
+    vw_mp_monitor_hrly_value.serial_number,
+    vw_mp_monitor_hrly_value.acq_cd
+   FROM camdecmpswks.vw_mp_monitor_hrly_value
+  WHERE vw_mp_monitor_hrly_value.parameter_cd::text = 'FLOW'::text;

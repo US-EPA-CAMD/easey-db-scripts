@@ -3,27 +3,16 @@
 DROP FUNCTION IF EXISTS camdecmps.rpt_mp_unit_fuel(character varying);
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_mp_unit_fuel(
-	monplanid character varying
-)
-RETURNS TABLE(
-	"unitIdentifier" text, 
-  "fuelTypeCode" text, 
-  "fuelTypeCodeGroup" text, 
-  "fuelTypeCodeDescription" text, 
-  "fuelIndicator" text,
-  "gcvDemMethodCode" text,
-  "gcvDemMethodCodeGroup" text,
-  "gcvDemMethodCodeDescription" text,
-  "so2DemMethodCode" text,
-  "so2DemMethodCodeGroup" text,
-  "so2DemMethodCodeDescription" text,
-  "ozoneSeasonIndicator" text,
-  "beginDate" text,
-  "endDate" text
-)
-LANGUAGE 'sql'
+	monplanid character varying)
+    RETURNS TABLE("unitIdentifier" text, "fuelTypeCode" text, "fuelTypeCodeGroup" text, "fuelTypeCodeDescription" text, "fuelIndicator" text, "gcvDemMethodCode" text, "gcvDemMethodCodeGroup" text, "gcvDemMethodCodeDescription" text, "so2DemMethodCode" text, "so2DemMethodCodeGroup" text, "so2DemMethodCodeDescription" text, "ozoneSeasonIndicator" text, "beginDate" text, "endDate" text) 
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
-	SELECT
+SELECT
 		u.unitid AS "unitIdentifier",
 		uf.fuel_type AS "fuelTypeCode",
 		'Fuel Type Codes' AS "fuelTypeCodeGroup",

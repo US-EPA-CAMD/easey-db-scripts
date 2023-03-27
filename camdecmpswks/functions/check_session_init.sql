@@ -1,6 +1,6 @@
--- FUNCTION: camdecmpswks.check_session_init(text, text, text, integer, text, text, text, date, date, text, text)
+-- FUNCTION: camdecmpswks.check_session_init(text, text, text, integer, text, text, text, date, date, text)
 
--- DROP FUNCTION camdecmpswks.check_session_init(text, text, text, integer, text, text, text, date, date, text, text);
+DROP FUNCTION IF EXISTS camdecmpswks.check_session_init(text, text, text, integer, text, text, text, date, date, text);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.check_session_init(
 	v_process_cd text,
@@ -39,7 +39,7 @@ BEGIN
     -- do our insert now
 	 INSERT INTO camdecmpswks.CHECK_SESSION
 		   (CHK_SESSION_ID, PROCESS_CD,CATEGORY_CD,MON_PLAN_ID,RPT_PERIOD_ID,TEST_SUM_ID,QA_CERT_EVENT_ID,
-			TEST_EXTENSION_EXEMPTION_ID, EVAL_BEGIN_DATE, EVAL_END_DATE, SESSION_COMMENT,USERID,LAST_UPDATED, BATCH_ID)
+			TEST_EXTENSION_EXEMPTION_ID, EVAL_BEGIN_DATE, EVAL_END_DATE, SESSION_COMMENT,USERID,LAST_UPDATED)
 		VALUES(chk_session,v_process_cd,V_CATEGORY_CD,V_MON_PLAN_ID, V_RPT_PERIOD_ID,V_TEST_SUM_ID,V_QA_CERT_EVENT_ID, 
 		  V_TEST_EXTENSION_EXEMPTION_ID,V_EVAL_BEGIN_DATE, V_EVAL_END_DATE,'Check Session Started',V_USERID,
 		NOW());

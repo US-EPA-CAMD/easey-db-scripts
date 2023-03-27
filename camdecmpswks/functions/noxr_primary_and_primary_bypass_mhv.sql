@@ -1,71 +1,17 @@
-CREATE OR REPLACE 
-FUNCTION camdecmpswks.noxr_primary_and_primary_bypass_mhv
-(
-	monPlanId       character varying,
-	rptPeriodId     numeric
-)
-    RETURNS TABLE   (
-                        monitor_hrly_val_id                     character varying, 
-                        mon_plan_id                             character varying, 
-                        mon_loc_id                              character varying, 
-                        hour_id                                 character varying, 
-                        rpt_period_id                           numeric, 
-                        calendar_year                           numeric, 
-                        quarter                                 numeric, 
-                        mon_sys_id                              character varying, 
-                        component_id                            character varying, 
-                        parameter_cd                            character varying, 
-                        modc_cd                                 character varying, 
-                        adjusted_hrly_value                     numeric, 
-                        unadjusted_hrly_value                   numeric, 
-                        pct_available                           numeric, 
-                        moisture_basis                          character varying, 
-                        begin_date                              date, 
-                        begin_hour                              numeric,
-                        system_identifier                       character varying, 
-                        sys_type_cd                             character varying,
-                        sys_designation_cd                      character varying, 
-                        component_type_cd                       character varying,
-                        component_identifier                    character varying, 
-                        serial_number                           character varying,
-                        acq_cd                                  character varying,
-                        /*
-                          The following are in addition to columns also in VW_MP_MONITOR_HRLY_VALUE
-                        */
-                        not_reported_noxr_system_count          integer,
-                        not_reported_noxr_sys_designation_cd    character varying,
-                        not_reported_noxr_mon_sys_id            character varying,
-                        not_reported_noxr_sys_type_cd           character varying,
-                        not_reported_noxr_system_identifier     character varying,
-                        max_default_count                       integer,
-                        max_default_value                       numeric,
-                        high_span_count                         integer,
-                        high_span_default_high_range            numeric,
-                        high_span_full_scale_range              numeric,
-                        low_span_count                          integer,
-                        low_span_full_scale_range               numeric,
-                        primary_bypass_exist_ind                integer,
-                        -- This secton gets the counts for the four types ofMODC 47/48 MHV Records covering the NOXC and diluent used and unused MHV combinations.
-                        used_noxc_count                         integer,
-                        used_diluent_count                      integer,
-                        unused_noxc_count                       integer,
-                        unused_diluent_count                    integer,
-                        -- This secton gets the MODCs for the four expected MHV records, used and unused NOXC and used and unused diluent.
-                        used_noxc_modc_cd                       character varying,
-                        used_diluent_modc_cd                    character varying,
-                        unused_noxc_modc_cd                     character varying,
-                        unused_diluent_modc_cd                  character varying,
-                        -- This secton gets the component ids for the four expected MHV records, used and unused NOXC and used and unused diluent.
-                        used_noxc_component_id                  character varying,
-                        used_diluent_component_id               character varying,
-                        unused_noxc_component_id                character varying,
-                        unused_diluent_component_id             character varying
-                    ) 
-    LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
+-- FUNCTION: camdecmpswks.noxr_primary_and_primary_bypass_mhv(character varying, numeric)
 
+DROP FUNCTION IF EXISTS camdecmpswks.noxr_primary_and_primary_bypass_mhv(character varying, numeric);
+
+CREATE OR REPLACE FUNCTION camdecmpswks.noxr_primary_and_primary_bypass_mhv(
+	monplanid character varying,
+	rptperiodid numeric)
+    RETURNS TABLE(monitor_hrly_val_id character varying, mon_plan_id character varying, mon_loc_id character varying, hour_id character varying, rpt_period_id numeric, calendar_year numeric, quarter numeric, mon_sys_id character varying, component_id character varying, parameter_cd character varying, modc_cd character varying, adjusted_hrly_value numeric, unadjusted_hrly_value numeric, pct_available numeric, moisture_basis character varying, begin_date date, begin_hour numeric, system_identifier character varying, sys_type_cd character varying, sys_designation_cd character varying, component_type_cd character varying, component_identifier character varying, serial_number character varying, acq_cd character varying, not_reported_noxr_system_count integer, not_reported_noxr_sys_designation_cd character varying, not_reported_noxr_mon_sys_id character varying, not_reported_noxr_sys_type_cd character varying, not_reported_noxr_system_identifier character varying, max_default_count integer, max_default_value numeric, high_span_count integer, high_span_default_high_range numeric, high_span_full_scale_range numeric, low_span_count integer, low_span_full_scale_range numeric, primary_bypass_exist_ind integer, used_noxc_count integer, used_diluent_count integer, unused_noxc_count integer, unused_diluent_count integer, used_noxc_modc_cd character varying, used_diluent_modc_cd character varying, unused_noxc_modc_cd character varying, unused_diluent_modc_cd character varying, used_noxc_component_id character varying, used_diluent_component_id character varying, unused_noxc_component_id character varying, unused_diluent_component_id character varying) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN  
     RETURN QUERY    

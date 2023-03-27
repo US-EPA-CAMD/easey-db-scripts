@@ -1,23 +1,16 @@
--- FUNCTION: camdecmpswks.format_indicator(numeric)
+-- FUNCTION: camdecmpswks.format_indicator(numeric, boolean)
 
-DROP FUNCTION IF EXISTS camdecmpswks.format_indicator(numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.format_indicator(numeric, boolean);
 
-CREATE OR REPLACE FUNCTION camdecmpswks.format_indicator(value numeric)
-RETURNS text
-LANGUAGE 'plpgsql'
-AS $BODY$
-BEGIN
-	RETURN camdecmpswks.format_indicator(value, false);
-END;
-$BODY$;
+CREATE OR REPLACE FUNCTION camdecmpswks.format_indicator(
+	value numeric,
+	allownull boolean)
+    RETURNS text
+    LANGUAGE 'plpgsql'
 
--- FUNCTION: camdecmpswks.format_indicator(numeric, bool)
-
-DROP FUNCTION IF EXISTS camdecmpswks.format_indicator(numeric, bool);
-
-CREATE OR REPLACE FUNCTION camdecmpswks.format_indicator(value numeric, allowNull bool)
-RETURNS text
-LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE 
+    
 AS $BODY$
 BEGIN
 	IF value IS NULL AND allowNull = true THEN
@@ -26,5 +19,23 @@ BEGIN
 		RETURN 'Yes';
 	ELSE RETURN 'No';
 	END IF;
+END;
+$BODY$;
+
+-- FUNCTION: camdecmpswks.format_indicator(numeric)
+
+DROP FUNCTION IF EXISTS camdecmpswks.format_indicator(numeric);
+
+CREATE OR REPLACE FUNCTION camdecmpswks.format_indicator(
+	value numeric)
+    RETURNS text
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
+AS $BODY$
+BEGIN
+	RETURN camdecmpswks.format_indicator(value, false);
 END;
 $BODY$;

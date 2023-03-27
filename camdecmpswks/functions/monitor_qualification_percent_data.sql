@@ -1,11 +1,16 @@
+-- FUNCTION: camdecmpswks.monitor_qualification_percent_data(character varying)
+
+DROP FUNCTION IF EXISTS camdecmpswks.monitor_qualification_percent_data(character varying);
+
 CREATE OR REPLACE FUNCTION camdecmpswks.monitor_qualification_percent_data(
 	monplanid character varying)
     RETURNS TABLE(mon_loc_id character varying, mon_qual_id character varying, begin_date date, end_date date, qual_year numeric) 
     LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
 
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN
  RETURN QUERY

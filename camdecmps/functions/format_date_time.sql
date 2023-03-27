@@ -8,6 +8,10 @@ CREATE OR REPLACE FUNCTION camdecmps.format_date_time(
 	_timeminute numeric)
     RETURNS timestamp without time zone
     LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
 AS $BODY$
 DECLARE returnVal TIMESTAMP;
 

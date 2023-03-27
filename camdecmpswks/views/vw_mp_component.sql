@@ -1,6 +1,20 @@
-CREATE OR REPLACE VIEW camdecmpswks.vw_mp_component (component_id, mon_plan_id, mon_loc_id, component_identifier, model_version, serial_number, manufacturer, component_type_cd, acq_cd, basis_cd, fac_id, location_name) AS
-SELECT
-    component_id, mon_plan_id, vwMl.mon_loc_id, component_identifier, model_version, serial_number, manufacturer, component_type_cd, acq_cd, basis_cd, fac_id, location_name
-    FROM camdecmpswks.component c
-    INNER JOIN camdecmpswks.vw_mp_monitor_location vwMl
-        ON c.mon_loc_id = vwMl.mon_loc_id;
+-- View: camdecmpswks.vw_mp_component
+
+DROP VIEW IF EXISTS camdecmpswks.vw_mp_component;
+
+CREATE OR REPLACE VIEW camdecmpswks.vw_mp_component
+ AS
+ SELECT c.component_id,
+    vwml.mon_plan_id,
+    vwml.mon_loc_id,
+    c.component_identifier,
+    c.model_version,
+    c.serial_number,
+    c.manufacturer,
+    c.component_type_cd,
+    c.acq_cd,
+    c.basis_cd,
+    vwml.fac_id,
+    vwml.location_name
+   FROM camdecmpswks.component c
+     JOIN camdecmpswks.vw_mp_monitor_location vwml ON c.mon_loc_id::text = vwml.mon_loc_id::text;

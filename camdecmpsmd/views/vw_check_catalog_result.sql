@@ -1,6 +1,5 @@
 -- View: camdecmpsmd.vw_check_catalog_result
 
-DROP VIEW IF EXISTS camdecmpswks.vw_check_catalog_result;
 DROP VIEW IF EXISTS camdecmpsmd.vw_check_catalog_result;
 
 CREATE OR REPLACE VIEW camdecmpsmd.vw_check_catalog_result
@@ -19,3 +18,4 @@ CREATE OR REPLACE VIEW camdecmpsmd.vw_check_catalog_result
      LEFT JOIN camdecmpsmd.response_catalog rc ON ccr.response_catalog_id = rc.response_catalog_id::numeric
      LEFT JOIN camdecmpsmd.severity_code sc ON ccr.severity_cd::text = sc.severity_cd::text
      LEFT JOIN camdecmpsmd.check_catalog cc ON cc.check_catalog_id = ccr.check_catalog_id;
+

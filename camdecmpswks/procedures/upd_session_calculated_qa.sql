@@ -1,9 +1,12 @@
+-- PROCEDURE: camdecmpswks.upd_session_calculated_qa(character varying, character varying, character, character varying)
+
+DROP PROCEDURE IF EXISTS camdecmpswks.upd_session_calculated_qa(character varying, character varying, character, character varying);
+
 CREATE OR REPLACE PROCEDURE camdecmpswks.upd_session_calculated_qa(
-	v_session_id character varying(45),
-	v_current_userid character varying(45), 
-	inout v_result character(1),
-	inout v_error_msg character varying(200)
-	)
+	v_session_id character varying,
+	v_current_userid character varying,
+	INOUT v_result character,
+	INOUT v_error_msg character varying)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
@@ -336,11 +339,19 @@ BEGIN
 			--TEST_EXPIRE_HOUR,
 			v_current_userid AS USERID, 
 			CURRENT_TIMESTAMP AS ADD_DATE
-		FROM camdecmpscalc.QA_SUPP_DATA
-		WHERE CHK_SESSION_ID = v_session_id 
-			AND TEST_SUM_ID NOT IN (
+		FROM camdecmpscalc.QA_SUPP_DATA qsd
+		WHERE CHK_SESSION_ID = v_session_id 		
+              /* Use of Not Exists to replace failed Not In */
+          and not exists
+              (
+                select  1
+                  from  camdecmpswks.QA_SUPP_DATA exs
+                 where  exs.test_sum_id = qsd.test_sum_id 
+              )
+		/*	AND TEST_SUM_ID NOT IN (
 				SELECT TEST_SUM_ID FROM camdecmpswks.QA_SUPP_DATA
-			)
+			
+		*/
 	)
 
 	INSERT INTO camdecmpswks.QA_SUPP_DATA(

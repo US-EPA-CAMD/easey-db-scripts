@@ -3,36 +3,16 @@
 DROP FUNCTION IF EXISTS camdecmps.rpt_mp_qualification_pct(character varying);
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_mp_qualification_pct(
-	monplanid character varying
-)
-RETURNS TABLE(
-	"unitStack" text,
-  "qualificationTypeCode" text,
-	"qualificationTypeCodeGroup" text,
-  "qualificationTypeCodeDescription" text,
-  "beginDate" text,
-  "endDate" text,
-  "qualificationYear" numeric,
-  "averagePercentValue" numeric,
-  "year1" numeric,
-  "year1DataTypeCode" text,
-  "year1DataTypeCodeGroup" text,
-  "year1DataTypeCodeDescription" text,
-  "year1PercentValue" numeric,
-  "year2" numeric,
-  "year2DataTypeCode" text,
-  "year2DataTypeCodeGroup" text,
-  "year2DataTypeCodeDescription" text,
-  "year2PercentValue" numeric,
-  "year3" numeric,
-  "year3DataTypeCode" text,
-  "year3DataTypeCodeGroup" text,
-  "year3DataTypeCodeDescription" text,
-  "year3PercentValue" numeric
-)
-LANGUAGE 'sql'
+	monplanid character varying)
+    RETURNS TABLE("unitStack" text, "qualificationTypeCode" text, "qualificationTypeCodeGroup" text, "qualificationTypeCodeDescription" text, "beginDate" text, "endDate" text, "qualificationYear" numeric, "averagePercentValue" numeric, year1 numeric, "year1DataTypeCode" text, "year1DataTypeCodeGroup" text, "year1DataTypeCodeDescription" text, "year1PercentValue" numeric, year2 numeric, "year2DataTypeCode" text, "year2DataTypeCodeGroup" text, "year2DataTypeCodeDescription" text, "year2PercentValue" numeric, year3 numeric, "year3DataTypeCode" text, "year3DataTypeCodeGroup" text, "year3DataTypeCodeDescription" text, "year3PercentValue" numeric) 
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
-	SELECT
+SELECT
 		CASE
 			WHEN ml.stack_pipe_id IS NOT NULL THEN sp.stack_name
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid

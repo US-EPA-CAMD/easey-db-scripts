@@ -4,13 +4,14 @@ DROP FUNCTION IF EXISTS camdecmps.get_operating_unit_retire_date(date, date);
 
 CREATE OR REPLACE FUNCTION camdecmps.get_operating_unit_retire_date(
 	vbegindate date,
-	venddate date
-)
-RETURNS TABLE(
-  unit_id numeric,
-  retire_date date
-) 
-LANGUAGE 'plpgsql'
+	venddate date)
+    RETURNS TABLE(unit_id numeric, retire_date date) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 DECLARE
 BEGIN

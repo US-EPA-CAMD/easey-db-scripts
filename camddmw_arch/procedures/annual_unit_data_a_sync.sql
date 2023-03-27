@@ -2,7 +2,8 @@
 
 DROP PROCEDURE IF EXISTS camddmw_arch.annual_unit_data_a_sync();
 
-CREATE OR REPLACE PROCEDURE camddmw_arch.annual_unit_data_a_sync()
+CREATE OR REPLACE PROCEDURE camddmw_arch.annual_unit_data_a_sync(
+	)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
@@ -60,5 +61,3 @@ BEGIN
 	) d USING(skey)
 	WHERE aud.unit_id = l.unit_id
 		AND aud.op_year = l.op_year;
-END
-$BODY$;

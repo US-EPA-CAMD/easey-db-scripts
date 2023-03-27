@@ -3,23 +3,16 @@
 DROP FUNCTION IF EXISTS camdecmps.rpt_mp_qualification_lme(character varying);
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_mp_qualification_lme(
-	monplanid character varying
-)
-RETURNS TABLE(
-	"unitStack" text,
-  "qualificationTypeCode" text,
-  "qualificationTypeCodeGroup" text,
-  "qualificationTypeCodeDescription" text,
-  "beginDate" text,
-  "endDate" text,
-  "qualificationYear" numeric,
-  "operatingHours" numeric,
-  "so2Tons" numeric,
-  "noxTons" numeric
-)
-LANGUAGE 'sql'
+	monplanid character varying)
+    RETURNS TABLE("unitStack" text, "qualificationTypeCode" text, "qualificationTypeCodeGroup" text, "qualificationTypeCodeDescription" text, "beginDate" text, "endDate" text, "qualificationYear" numeric, "operatingHours" numeric, "so2Tons" numeric, "noxTons" numeric) 
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
-	SELECT
+SELECT
 		CASE
 			WHEN ml.stack_pipe_id IS NOT NULL THEN sp.stack_name
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid

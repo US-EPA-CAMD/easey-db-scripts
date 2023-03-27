@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.check_session_completed(text, text)
 
--- DROP FUNCTION camdecmpswks.check_session_completed(text, text);
+DROP FUNCTION IF EXISTS camdecmpswks.check_session_completed(text, text);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.check_session_completed(
 	v_chk_session_id text,
@@ -49,4 +49,3 @@ BEGIN
 	
 END;
 $BODY$;
-

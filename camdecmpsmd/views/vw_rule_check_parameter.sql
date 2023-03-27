@@ -1,6 +1,5 @@
 -- View: camdecmpsmd.vw_rule_check_parameter
 
-DROP VIEW IF EXISTS camdecmpswks.vw_rule_check_parameter;
 DROP VIEW IF EXISTS camdecmpsmd.vw_rule_check_parameter;
 
 CREATE OR REPLACE VIEW camdecmpsmd.vw_rule_check_parameter

@@ -3,20 +3,16 @@
 DROP FUNCTION IF EXISTS camdecmps.rpt_qa_protocol_gas(text);
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_protocol_gas(
-	testsumid text
-)
-RETURNS TABLE(
-	"rowNumber" integer,
-	"unitStack" text,
-	"gasLevelCode" text,
-	"gasTypeCode" text,
-	"vendorIdentifier" text,
-	"cylinderIdentifier" text,
-	"expirationDate" text
-) 
-LANGUAGE 'sql'
+	testsumid text)
+    RETURNS TABLE("rowNumber" integer, "unitStack" text, "gasLevelCode" text, "gasTypeCode" text, "vendorIdentifier" text, "cylinderIdentifier" text, "expirationDate" text) 
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
-	SELECT
+SELECT
 		CASE
 			WHEN pg.gas_level_cd = 'HIGH' THEN 1
 			WHEN pg.gas_level_cd = 'MID' THEN 2
@@ -35,7 +31,7 @@ AS $BODY$
 	FROM camdecmps.protocol_gas pg
 	JOIN camdecmps.test_summary ts USING(test_sum_id)
 	JOIN camdecmps.monitor_location ml USING(mon_loc_id)
-	LEFT JOIN camdecmpswks.stack_pipe sp USING(stack_pipe_id)
+	LEFT JOIN camdecmps.stack_pipe sp USING(stack_pipe_id)
 	LEFT JOIN camd.unit u USING(unit_id)
 	WHERE ts.test_sum_id = testSumId
 	ORDER BY "rowNumber";
