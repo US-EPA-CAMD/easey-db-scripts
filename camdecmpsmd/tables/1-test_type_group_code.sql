@@ -19,24 +19,38 @@ COMMENT ON COLUMN camdecmpsmd.test_type_group_code.test_type_group_cd
 COMMENT ON COLUMN camdecmpsmd.test_type_group_code.test_type_group_cd_description
     IS 'Description of a test type group code. ';
 
+
 INSERT INTO camdecmpsmd.test_type_group_code(test_type_group_cd, test_type_group_cd_description, child_depth)
 VALUES
-    ('APPESUM', 'Appendix E Correlation Test Summary', 4),
-    ('CALINJ', 'Calibration Injection', 2),
-    ('CYCSUM', 'Cycle Time Summary', 3),
-    ('FLC', 'Flow to Load Check', 2),
-    ('FLR', 'Flow to Load Reference', 2),
-    ('FFLB', 'Fuel Flow to Load Baseline', 2),
-    ('FFL', 'Fuel Flow to Load', 2),
+    ('APPE', 'Appendix E Correlation Summary', 4),
+    ('7DAY', 'Calibration Injection', 2),
+    ('CYCLE', 'Cycle Time Summary', 3),
+    ('F2LCHK', 'Flow to Load Check', 2),
+    ('F2LREF', 'Flow to Load Reference', 2),
+    ('FF2LBAS', 'Fuel Flow to Load Baseline', 2),
+    ('FF2LTST', 'Fuel Flow to Load', 2),
     ('FFACC', 'Fuel Flowmeter Accuracy', 2),
-    ('HGL3LS', 'Hg Linearity and 3-Level Summary', 3),
-    ('LINSUM', 'Linearity Summary', 3),
-    ('OLOLCAL', 'Online Offline Calibration', 2),
-    ('RELACC', 'Relative Accuracy', 6),
-    ('TTACC', 'Transmitter Transducer Accuracy', 2),
+    ('HG', 'Mercury Linearity and 3-Level Summary', 3),
+    ('LINE', 'Linearity Summary', 3),
+    ('ONOFF', 'Online Offline Calibration', 2),
+    ('RATA', 'Relative Accuracy', 6),
+    ('FFACCTT', 'Transmitter Transducer Accuracy', 2),
     ('PEI', 'Primary Element Inspection', 1),
-    ('LME', 'Unit Default', 3),
+    ('UNITDEF', 'Unit Default', 3),
     ('MISC', 'Miscellaneous', 1)
+/*
+    ('PS11CT', 'PS11 Correlation Test', 3),
+    ('RCA', 'Response Correlation Audit', 3),
+    ('RRA', 'Relative Response Audit', 3),
+    ('SVA', 'Sample Volume Audit', 3),
+    ('ACA', 'Absolute Correlation Audit', 3),
+    ('3ME', 'Three-Level Measurement Error', 3),
+    ('IBI', 'Beam Intensity Test', 2),
+    ('RAA', 'Relative Accuracy Audit', 3),
+    ('CGA', 'Cylinder Gas Audit', 3),
+    ('QGA', 'Quarterly Gas Audit', 2),
+    ('DSA', 'Dynamic Spiking Audit', 3)
+*/
 ;
 
 

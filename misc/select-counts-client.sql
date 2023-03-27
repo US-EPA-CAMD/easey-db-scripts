@@ -1,0 +1,38 @@
+SELECT 'camdecmpsmd' AS schema_name, 'begin_end_hour_flag' AS table_name, COUNT(*) FROM camdecmpsmd.begin_end_hour_flag UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'check_applicability_code' AS table_name, COUNT(*) FROM camdecmpsmd.check_applicability_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'check_catalog_parameter' AS table_name, COUNT(*) FROM camdecmpsmd.check_catalog_parameter UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'check_catalog_plugin' AS table_name, COUNT(*) FROM camdecmpsmd.check_catalog_plugin UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'check_catalog_process' AS table_name, COUNT(*) FROM camdecmpsmd.check_catalog_process UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'check_data_type_code' AS table_name, COUNT(*) FROM camdecmpsmd.check_data_type_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'check_operator_code' AS table_name, COUNT(*) FROM camdecmpsmd.check_operator_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'check_operator_data_type' AS table_name, COUNT(*) FROM camdecmpsmd.check_operator_data_type UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'check_parameter_code' AS table_name, COUNT(*) FROM camdecmpsmd.check_parameter_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'check_parameter_type_code' AS table_name, COUNT(*) FROM camdecmpsmd.check_parameter_type_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'check_parameter_usage_code' AS table_name, COUNT(*) FROM camdecmpsmd.check_parameter_usage_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'check_status_code' AS table_name, COUNT(*) FROM camdecmpsmd.check_status_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'common_stack_test_code' AS table_name, COUNT(*) FROM camdecmpsmd.common_stack_test_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'configuration_type_code' AS table_name, COUNT(*) FROM camdecmpsmd.configuration_type_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'cross_check_catalog' AS table_name, COUNT(*) FROM camdecmpsmd.cross_check_catalog UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'cross_check_catalog_value' AS table_name, COUNT(*) FROM camdecmpsmd.cross_check_catalog_value UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'eval_score_code' AS table_name, COUNT(*) FROM camdecmpsmd.eval_score_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'eval_status_code' AS table_name, COUNT(*) FROM camdecmpsmd.eval_status_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'exemption_type_code' AS table_name, COUNT(*) FROM camdecmpsmd.exemption_type_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'gas_component_code' AS table_name, COUNT(*) FROM camdecmpsmd.gas_component_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'hbha_supp_data_xref' AS table_name, COUNT(*) FROM camdecmpsmd.hbha_supp_data_xref UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'indicator_code' AS table_name, COUNT(*) FROM camdecmpsmd.indicator_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'op_date_code' AS table_name, COUNT(*) FROM camdecmpsmd.op_date_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'operating_status_code' AS table_name, COUNT(*) FROM camdecmpsmd.operating_status_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'parameter_group_override_code' AS table_name, COUNT(*) FROM camdecmpsmd.parameter_group_override_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'parameter_method_to_formula' AS table_name, COUNT(*) FROM camdecmpsmd.parameter_method_to_formula UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'plugin_type_code' AS table_name, COUNT(*) FROM camdecmpsmd.plugin_type_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'process_group_code' AS table_name, COUNT(*) FROM camdecmpsmd.process_group_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'response_catalog' AS table_name, COUNT(*) FROM camdecmpsmd.response_catalog UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'response_type_code' AS table_name, COUNT(*) FROM camdecmpsmd.response_type_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'rule_check_condition' AS table_name, COUNT(*) FROM camdecmpsmd.rule_check_condition UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'system_parameter' AS table_name, COUNT(*) FROM camdecmpsmd.system_parameter UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'system_parameter_name' AS table_name, COUNT(*) FROM camdecmpsmd.system_parameter_name UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'test_frequency_code' AS table_name, COUNT(*) FROM camdecmpsmd.test_frequency_code UNION ALL
+SELECT 'camdecmpsmd' AS schema_name, 'test_type_group_code' AS table_name, COUNT(*) FROM camdecmpsmd.test_type_group_code
+order by 1,2
+
+--select * from camdecmpsmd.category_code where category_cd = 'CO2CDH'

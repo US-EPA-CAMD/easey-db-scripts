@@ -12,7 +12,7 @@ BEGIN
 ------------------------------------------------------------------------------------------------
 	tableOrder := tableOrder + 1;
 	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
-	VALUES(datasetCode, tableOrder, 'FACINFO', 'SELECT * FROM {SCHEMA}.rpt_facility_information($1)')
+	VALUES(datasetCode, tableOrder, 'FACINFO1C', 'SELECT * FROM {SCHEMA}.rpt_facility_information($1)')
 	RETURNING datatable_id INTO datatableId;
 
 	/***** COLUMNS *****/

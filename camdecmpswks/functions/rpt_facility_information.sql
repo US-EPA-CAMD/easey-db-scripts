@@ -1,9 +1,9 @@
--- FUNCTION: camdecmpswks.rpt_facility_information(text)
+-- FUNCTION: camdecmpswks.rpt_facility_information(numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_facility_information(text);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_facility_information(numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_facility_information(
-	facilityId text
+	vFacilityId numeric
 )
 RETURNS TABLE(
 	"facilityName" text,
@@ -24,5 +24,61 @@ AS $BODY$
 		p.longitude AS "longitude"
 	FROM camd.plant p
 	JOIN camdmd.county_code cc USING(county_cd)
-	WHERE p.oris_code = facilityId::numeric;
+	WHERE p.oris_code = vFacilityId;
+$BODY$;
+
+
+-- FUNCTION: camdecmpswks.rpt_facility_information(numeric, text, numeric, numeric)
+
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_facility_information(numeric, text, numeric, numeric);
+
+CREATE OR REPLACE FUNCTION camdecmpswks.rpt_facility_information(
+	vFacilityId numeric,
+	vMonPlanId text,
+	vYear numeric,
+	vQuarter numeric
+)
+RETURNS TABLE(
+	"facilityName" text,
+	"orisCode" numeric,
+	"locationInfo" text,
+	"stateCode" text,
+	"countyName" text,
+	"latitude" numeric,
+	"longitude" numeric,
+	"yearQuarter" text,
+	"totalHours" numeric
+)
+LANGUAGE 'sql'
+AS $BODY$
+	SELECT
+		p.facility_name AS "facilityName",
+		p.oris_code AS "orisCode",
+		(
+			SELECT
+				string_agg(coalesce(unitid, stack_name), ', ')
+			FROM (
+				SELECT
+					u.unitid,
+					sp.stack_name
+				FROM camdecmpswks.monitor_plan_location mpl
+				JOIN camdecmpswks.monitor_location ml USING(mon_loc_id)
+				LEFT JOIN camdecmpswks.stack_pipe sp USING(stack_pipe_id)
+				LEFT JOIN camd.unit u USING(unit_id)
+				WHERE mon_plan_id = vMonPlanId
+				GROUP BY u.unitid, sp.stack_name
+				ORDER BY u.unitid, sp.stack_name
+			) d
+		) AS "locationInfo",
+		p.state AS "stateCode",
+		cc.county_name AS "countyName",
+		p.latitude AS "latitude",
+		p.longitude AS "longitude",
+		rp.period_abbreviation AS "yearQuarter",
+		((end_date + 1) - begin_date) * 24::numeric AS "totalHours"
+	FROM camd.plant p
+	JOIN camdmd.county_code cc USING(county_cd),
+	camdecmpsmd.reporting_period rp
+	WHERE p.oris_code = vFacilityId AND
+	rp.calendar_year = vYear AND rp.quarter = vQuarter;
 $BODY$;

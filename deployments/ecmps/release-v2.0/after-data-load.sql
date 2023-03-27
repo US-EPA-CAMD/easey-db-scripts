@@ -38,10 +38,6 @@ set compliance_ui_filter = 1
 where prg_cd in ('ARP', 'CSNOX', 'CSOSG1', 'CSOSG2', 'CSOSG3', 'CSSO2G1', 'CSSO2G2', 'TXSO2', 'CSNOXOS');
 
 update camdmd.program_code
-set bulk_file_active = 1
-where prg_cd in ('ARP', 'CSNOX', 'CSOSG1', 'CSOSG2', 'CSOSG3', 'CSSO2G1', 'CSSO2G2', 'TXSO2', 'CSNOXOS');
-
-update camdmd.program_code
 set trading_end_date = '2003-05-06',
 penalty_factor = 3,
 first_comp_year = 1999,
@@ -222,28 +218,16 @@ SET eval_status_cd = 'ERR'
 WHERE severity_cd IN ('CRIT1', 'CRIT2', 'CRIT3', 'FATAL');
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmpsmd.test_type_code
-    ADD COLUMN IF NOT EXISTS group_cd character varying(7);
+    ADD COLUMN IF NOT EXISTS group_cd character varying(7) DEFAULT 'MISC';
 
 ALTER TABLE IF EXISTS camdecmpsmd.test_type_code
     ADD CONSTRAINT fk_test_type_code_group_code FOREIGN KEY (group_cd)
     REFERENCES camdecmpsmd.test_type_group_code (test_type_group_cd) MATCH SIMPLE;
 
-UPDATE camdecmpsmd.test_type_code SET group_cd = 'CALINJ' WHERE test_type_cd = '7DAY';
-UPDATE camdecmpsmd.test_type_code SET group_cd = 'CYCSUM' WHERE test_type_cd = 'CYCLE';
-UPDATE camdecmpsmd.test_type_code SET group_cd = 'LINSUM' WHERE test_type_cd = 'LINE';
-UPDATE camdecmpsmd.test_type_code SET group_cd = 'RELACC' WHERE test_type_cd = 'RATA';
-UPDATE camdecmpsmd.test_type_code SET group_cd = 'FLR' WHERE test_type_cd = 'F2LREF';
-UPDATE camdecmpsmd.test_type_code SET group_cd = 'FLC' WHERE test_type_cd = 'F2LCHK';
-UPDATE camdecmpsmd.test_type_code SET group_cd = 'OLOLCAL' WHERE test_type_cd = 'ONOFF';
-UPDATE camdecmpsmd.test_type_code SET group_cd = 'APPESUM' WHERE test_type_cd = 'APPE';
-UPDATE camdecmpsmd.test_type_code SET group_cd = 'FFACC' WHERE test_type_cd = 'FFACC';
-UPDATE camdecmpsmd.test_type_code SET group_cd = 'TTACC' WHERE test_type_cd = 'FFACCTT';
-UPDATE camdecmpsmd.test_type_code SET group_cd = 'FFLB' WHERE test_type_cd = 'FF2LBAS';
-UPDATE camdecmpsmd.test_type_code SET group_cd = 'FFL' WHERE test_type_cd = 'FF2LTST';
-UPDATE camdecmpsmd.test_type_code SET group_cd = 'LME' WHERE test_type_cd = 'UNITDEF';
-UPDATE camdecmpsmd.test_type_code SET group_cd = 'PEI' WHERE test_type_cd = 'PEI';
+UPDATE camdecmpsmd.test_type_code SET group_cd = test_type_cd
+WHERE test_type_cd IN (SELECT test_type_group_cd FROM camdecmpsmd.test_type_group_code);
 
-UPDATE camdecmpsmd.test_type_code SET group_cd = 'HGL3LS' WHERE test_type_cd IN (
+UPDATE camdecmpsmd.test_type_code SET group_cd = 'HG' WHERE test_type_cd IN (
 	'HGLINE',
 	'HGSI3'	
 );
@@ -254,11 +238,19 @@ UPDATE camdecmpsmd.test_type_code SET group_cd = 'MISC' WHERE test_type_cd IN (
 	'MFMCAL',
 	'TSCAL',
 	'BCAL',
-	'QGA',
 	'LEAK',
 	'OTHER',
 	'PEMSACC'
 );
+
+UPDATE camdecmpsmd.test_type_code SET group_cd = null WHERE test_type_cd IN (
+	'AF2LCHK',
+	'DAYCAL',
+    'HGSI1',
+    'INTCHK',
+    'PEMSCAL'
+);
+
 --------------------------------------------------------------------------------------------------------------------
 --ALTER TABLE IF EXISTS camdecmps.dm_emissions
 --    ADD COLUMN IF NOT EXISTS fac_id numeric(38,0) NOT NULL;
@@ -408,4 +400,31 @@ where es_match_data_type_cd = 'MATSPAR';
 
 ALTER TABLE IF EXISTS camdecmpsmd.es_match_data_type_code
 ALTER COLUMN es_match_data_type_url SET NOT NULL;
+--------------------------------------------------------------------------------------------------------------------
+/* NEW MATS REQ
+ALTER TABLE IF EXISTS camdecmps.test_summary
+    ADD COLUMN aps_formula_used_cd character varying(7),
+    ADD COLUMN instrument_span;
+
+ALTER TABLE IF EXISTS camdecmpswks.test_summary
+    ADD COLUMN aps_formula_used_cd character varying(7),
+    ADD COLUMN instrument_span;
+
+--------------------------------------------------------------------------------------------------------------------
+-- NEED PARAMETER CODES
+INSERT INTO camdecmpsmd.ref_method_code(ref_method_cd, parameter_cd, ref_method_cd_description)
+VALUES
+    ('321', '', 'EPA Method 321 in Append A to 40 CFR Part 63 (extractive method for Portland Cement Kiln industry)'),
+    ('D634812', '', 'ASTM D6348-12 “Standard Test Method for Determination of Gaseous Compounds by Extractive Direct Interface Fourier Transform Infrared (FTIR) Spectroscopy”')
+;
+--------------------------------------------------------------------------------------------------------------------
+-- NEED DESCRIPTIONS AND RESTRICT FOR SVA TEST TYPE
+INSERT INTO camdecmpsmd.units_of_measure_code(uom_cd, uom_cd_description)
+VALUES
+    ('DSCF', ''),
+    ('DSCM', ''),
+    ('SCF', ''),
+    ('SCM', '')
+;
+NEW MATS REQ */
 --------------------------------------------------------------------------------------------------------------------

@@ -4,8 +4,12 @@ DROP VIEW IF EXISTS camdecmps.vw_emissions_submissions_received;
 DROP VIEW IF EXISTS camdecmps.vw_emissions_submissions_gdm;
 DROP VIEW IF EXISTS camdecmpswks.vw_em_review_and_submit;
 DROP VIEW IF EXISTS camdecmpswks.vw_qa_test_summary_review_and_submit;
+DROP VIEW IF EXISTS camdecmpswks.vw_test_summary_eval_and_submit;
+DROP VIEW IF EXISTS camdecmpswks.vw_qa_cert_event_eval_and_submit;
+DROP VIEW IF EXISTS camdecmpswks.vw_test_extension_exemption_eval_and_submit;
 DROP VIEW IF EXISTS camdaux.vw_allowance_based_compliance_bulk_files_to_generate;
 DROP VIEW IF EXISTS camdaux.vw_annual_emissions_bulk_files_per_state_to_generate;
+DROP VIEW IF EXISTS camdecmpsmd.vw_es_check_catalog_result;
 --------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdmd.account_type_code
     DROP CONSTRAINT IF EXISTS fk_account_type_account_type_group;
@@ -123,4 +127,14 @@ ALTER TABLE IF EXISTS camdecmpsaux.es_spec
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmpsmd.es_match_data_type_code
     DROP COLUMN IF EXISTS es_match_data_type_url;
+--------------------------------------------------------------------------------------------------------------------
+/* NEW MATS REQ
+ALTER TABLE IF EXISTS camdecmps.test_summary
+    DROP COLUMN IF EXISTS aps_formula_used_cd,
+    DROP COLUMN IF EXISTS instrument_span;
+
+ALTER TABLE IF EXISTS camdecmpswks.test_summary
+    DROP COLUMN IF EXISTS aps_formula_used_cd,
+    DROP COLUMN IF EXISTS instrument_span;
+NEW MATS REQ */
 --------------------------------------------------------------------------------------------------------------------

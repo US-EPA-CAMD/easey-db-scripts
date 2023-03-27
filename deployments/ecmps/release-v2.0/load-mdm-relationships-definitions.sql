@@ -85,8 +85,8 @@ BEGIN
 	VALUES
 		(datatableId, 1, 'parameter_code', 'parameterCode', 'Parameter Code'),
 		(datatableId, 2, 'method_Code', 'monitoringMethodCode', 'Method Code'),
-		(datatableId, 3, 'bypass_approach_code', 'substituteDataCode', 'Substitute Data Code'),
-		(datatableId, 4, 'substitute_data_code', 'bypassApproachCode', 'Bypass Approach Code');
+		(datatableId, 3, 'bypass_approach_code', 'bypassApproachCode', 'Bypass Approach Code'),
+		(datatableId, 4, 'substitute_data_code', 'substituteDataCode', 'Substitute Data Code');
 ----------------------------------------------------------------------------------------------------------------------------
 	datasetCode := 'lee-qualifications';
 	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
