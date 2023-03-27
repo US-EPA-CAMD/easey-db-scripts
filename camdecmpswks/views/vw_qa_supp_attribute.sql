@@ -43,7 +43,7 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_qa_supp_attribute
     ms.sys_type_cd,
     ms.sys_designation_cd,
         CASE
-            WHEN qa.submission_availability_cd IS NULL OR (qa.submission_availability_cd::text = ANY (ARRAY['GRANTED'::character varying, 'REQUIRE'::character varying]::text[])) THEN 'Y'::text
+            WHEN qa.submission_availability_cd IS NULL OR (qa.submission_availability_cd::text = ANY (ARRAY['GRANTED'::character varying::text, 'REQUIRE'::character varying::text])) THEN 'Y'::text
             ELSE 'N'::text
         END AS can_submit,
     qa.fuel_cd,

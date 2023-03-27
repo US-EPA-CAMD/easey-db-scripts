@@ -14,6 +14,6 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_program_parameter
     pp.userid,
     pp.add_date,
     pp.update_date
-   FROM camdecmpswksaux.program_parameter pp
+   FROM camdecmpsaux.program_parameter pp
      JOIN camd.program p ON p.prg_id = pp.prg_id
      JOIN camdmd.program_code pc ON pc.prg_cd::text = p.prg_cd::text;

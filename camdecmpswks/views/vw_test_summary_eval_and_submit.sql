@@ -1,6 +1,6 @@
--- View: camdecmpswks.vw_qa_test_summary_review_and_submit
+-- View: camdecmpswks.vw_test_summary_eval_and_submit
 
---DROP VIEW camdecmpswks.vw_qa_test_summary_review_and_submit;
+DROP VIEW IF EXISTS camdecmpswks.vw_test_summary_eval_and_submit;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_test_summary_eval_and_submit
  AS
@@ -45,6 +45,3 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_test_summary_eval_and_submit
      LEFT JOIN camd.unit u USING (unit_id)
      LEFT JOIN camdecmps.stack_pipe sp USING (stack_pipe_id)
   ORDER BY p.oris_code, p.facility_name, mp.mon_plan_id;
-
-ALTER TABLE camdecmpswks.vw_qa_test_summary_review_and_submit
-    OWNER TO "uImcwuf4K9dyaxeL";

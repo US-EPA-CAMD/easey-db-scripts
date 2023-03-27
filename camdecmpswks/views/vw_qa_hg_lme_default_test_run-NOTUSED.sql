@@ -1,6 +1,0 @@
-CREATE OR REPLACE  VIEW camdecmpswks.vw_qa_hg_lme_default_test_run (test_num, run_num, test_reason_cd, begin_date, begin_hour, begin_min, end_date, end_hour, end_min, ref_method_cd, reference_value_average, train_value_1, train_value_2, aps_ind, gross_unit_load, run_relative_deviation, hg_lme_default_test_run_id, hg_op_level_cd, hg_lme_default_test_data_id, hg_default_test_sum_id, test_sum_id, mon_loc_id, test_location_id, userid, add_date, update_date) AS
-SELECT
-    hs.test_num, hr.run_num, hs.test_reason_cd, hs.begin_date, hs.begin_hour, hs.begin_min, hs.end_date, hs.end_hour, hs.end_min, hs.ref_method_cd, hr.reference_value_average, hr.train_value_1, hr.train_value_2, hr.aps_ind, hr.gross_unit_load, hr.run_relative_deviation, hr.hg_lme_default_test_run_id, hs.hg_op_level_cd, hs.hg_lme_default_test_data_id, hs.hg_default_test_sum_id, hs.test_sum_id, hs.mon_loc_id, hs.test_location_id, hr.userid, hr.add_date, hr.update_date
-    FROM camdecmpswks.hg_lme_default_test_run AS hr
-    INNER JOIN camdecmpswks.vw_qa_hg_lme_default_test_data AS hs
-        ON hr.hg_lme_default_test_data_id = hs.hg_lme_default_test_data_id;

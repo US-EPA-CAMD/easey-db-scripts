@@ -12,5 +12,5 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_used_identifier
     ml.oris_code,
     ml.location_identifier,
     ml.fac_id
-   FROM camdecmpswks.used_identifier ui
+   FROM camdecmps.used_identifier ui
      JOIN camdecmpswks.vw_monitor_location ml ON ui.mon_loc_id::text = ml.mon_loc_id::text;

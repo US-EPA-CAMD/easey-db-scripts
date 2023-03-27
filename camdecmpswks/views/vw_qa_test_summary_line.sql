@@ -38,5 +38,4 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_qa_test_summary_line
    FROM camdecmpswks.test_summary ts
      LEFT JOIN camdecmpswks.vw_monitor_location ml ON ts.mon_loc_id::text = ml.mon_loc_id::text
      LEFT JOIN camdecmpswks.component c ON ts.component_id::text = c.component_id::text
-  WHERE ts.test_type_cd::text = ANY (ARRAY['LINE'::character varying, 'HGLINE'::character varying, 'HGSI3'::character varying]::text[]);
-
+  WHERE ts.test_type_cd::text = ANY (ARRAY['LINE'::character varying::text, 'HGLINE'::character varying::text, 'HGSI3'::character varying::text]);
