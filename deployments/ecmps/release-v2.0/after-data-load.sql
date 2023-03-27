@@ -428,3 +428,6 @@ VALUES
 ;
 NEW MATS REQ */
 --------------------------------------------------------------------------------------------------------------------
+INSERT INTO camdecmpsmd.hourly_type_code ( hourly_type_cd, hourly_type_description )
+VALUES ( 'COMBINE', 'Both Monitored and Derived Hourly' );
+--------------------------------------------------------------------------------------------------------------------
