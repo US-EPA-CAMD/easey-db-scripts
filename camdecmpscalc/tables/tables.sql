@@ -436,15 +436,18 @@ CREATE TABLE IF NOT EXISTS camdecmpscalc.sorbent_trap
 
 CREATE TABLE IF NOT EXISTS camdecmpscalc.summary_value
 (
-	pk integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 ),
-    chk_session_id character varying(45) NOT NULL,
-    sum_value_id character varying(45) NOT NULL,
+    pk integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    mon_loc_id character varying(45) COLLATE pg_catalog."default",
+    rpt_period_id numeric(38,0),
+    parameter_cd character varying(7) COLLATE pg_catalog."default",
+    chk_session_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     calc_current_rpt_period_total numeric(13,3),
     calc_os_total numeric(13,3),
     calc_year_total numeric(13,3),
     CONSTRAINT pk_summary_value PRIMARY KEY (pk),
     CONSTRAINT fk_summary_value_check_session FOREIGN KEY (chk_session_id)
         REFERENCES camdecmpswks.check_session (chk_session_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -541,5 +544,236 @@ CREATE TABLE IF NOT EXISTS camdecmpscalc.qa_supp_attribute
     CONSTRAINT pk_qa_supp_attribute PRIMARY KEY (pk),
     CONSTRAINT fk_qa_supp_attribute_check_session FOREIGN KEY (chk_session_id)
         REFERENCES camdecmpswks.check_session (chk_session_id) MATCH SIMPLE
+        ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS camdecmpscalc.operating_supp_data
+(
+    pk character varying(45) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v4(),
+    parameter_cd character varying(7) COLLATE pg_catalog."default",
+    chk_session_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    mon_loc_id character varying(45) COLLATE pg_catalog."default",
+    rpt_period_id numeric(38,0),
+    fuel_cd character varying(7) COLLATE pg_catalog."default",
+    op_type_cd character varying(7) COLLATE pg_catalog."default",
+    op_value numeric(13,3),
+    CONSTRAINT pk_ce_osd_id PRIMARY KEY (pk),
+    CONSTRAINT fk_summary_value_check_session FOREIGN KEY (chk_session_id)
+        REFERENCES camdecmpswks.check_session (chk_session_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS camdecmpscalc.qa_cert_event_supp_data
+(
+    pk character varying(45) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v4(),
+    qa_cert_event_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    qa_cert_event_supp_data_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
+    qa_cert_event_supp_date_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
+    count_from_datehour timestamp without time zone NOT NULL,
+    count numeric(38,0),
+    count_from_included_ind numeric(38,0) NOT NULL,
+    mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    rpt_period_id numeric(38,0) NOT NULL,
+    chk_session_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT pk_qa_cert_event_supp_data PRIMARY KEY (pk),
+    CONSTRAINT fk_qa_cert_event_supp_data_check_session FOREIGN KEY (chk_session_id)
+        REFERENCES camdecmpswks.check_session (chk_session_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_qa_cert_event_supp_data_data_cd FOREIGN KEY (qa_cert_event_supp_data_cd)
+        REFERENCES camdecmpsmd.qa_cert_event_supp_data_code (qa_cert_event_supp_data_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_qa_cert_event_supp_data_date_cd FOREIGN KEY (qa_cert_event_supp_date_cd)
+        REFERENCES camdecmpsmd.qa_cert_event_supp_date_code (qa_cert_event_supp_date_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_qa_cert_event_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_qa_cert_event_supp_data_qa_cert_event FOREIGN KEY (qa_cert_event_id)
+        REFERENCES camdecmpswks.qa_cert_event (qa_cert_event_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS camdecmpscalc.system_op_supp_data
+(
+    pk character varying(45) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v4(),
+    mon_sys_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    rpt_period_id numeric(38,0) NOT NULL,
+    op_supp_data_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
+    days numeric(38,0) NOT NULL,
+    hours numeric(38,0) NOT NULL,
+    mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    chk_session_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT pk_system_op_supp_data PRIMARY KEY (pk),
+    CONSTRAINT fk_system_op_supp_data_check_session FOREIGN KEY (chk_session_id)
+        REFERENCES camdecmpswks.check_session (chk_session_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_system_op_supp_data_cod FOREIGN KEY (op_supp_data_type_cd)
+        REFERENCES camdecmpsmd.op_supp_data_type_code (op_supp_data_type_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_system_op_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_system_op_supp_data_monitor_system FOREIGN KEY (mon_sys_id)
+        REFERENCES camdecmpswks.monitor_system (mon_sys_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_system_op_supp_data_prd FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS camdecmpscalc.component_op_supp_data
+(
+    pk character varying(45) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v4(),
+    component_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    rpt_period_id numeric(38,0) NOT NULL,
+    op_supp_data_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
+    days numeric(38,0) NOT NULL,
+    hours numeric(38,0) NOT NULL,
+    mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    add_date timestamp without time zone,
+    chk_session_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT pk_component_op_supp_data PRIMARY KEY (pk),
+    CONSTRAINT fk_component_op_supp_data_check_session FOREIGN KEY (chk_session_id)
+        REFERENCES camdecmpswks.check_session (chk_session_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_component_op_supp_data_cod FOREIGN KEY (op_supp_data_type_cd)
+        REFERENCES camdecmpsmd.op_supp_data_type_code (op_supp_data_type_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_component_op_supp_data_component FOREIGN KEY (component_id)
+        REFERENCES camdecmpswks.component (component_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_component_op_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_component_op_supp_data_prd FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS camdecmpscalc.last_qa_value_supp_data
+(
+    pk character varying(45) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v4(),
+    mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    rpt_period_id numeric(38,0) NOT NULL,
+    parameter_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
+    moisture_basis character varying(7) COLLATE pg_catalog."default",
+    hourly_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
+    mon_sys_id character varying(45) COLLATE pg_catalog."default",
+    component_id character varying(45) COLLATE pg_catalog."default",
+    op_datehour timestamp without time zone NOT NULL,
+    unadjusted_hrly_value numeric(13,3),
+    adjusted_hrly_value numeric(13,3),
+    chk_session_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT pk_last_qa_value_supp_data PRIMARY KEY (pk),
+    CONSTRAINT fk_last_qa_value_supp_data_check_session FOREIGN KEY (chk_session_id)
+        REFERENCES camdecmpswks.check_session (chk_session_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_last_qa_value_supp_data_component FOREIGN KEY (component_id)
+        REFERENCES camdecmpswks.component (component_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_last_qa_value_supp_data_ht FOREIGN KEY (hourly_type_cd)
+        REFERENCES camdecmpsmd.hourly_type_code (hourly_type_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_last_qa_value_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_last_qa_value_supp_data_monitor_system FOREIGN KEY (mon_sys_id)
+        REFERENCES camdecmpswks.monitor_system (mon_sys_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_last_qa_value_supp_data_pc FOREIGN KEY (parameter_cd)
+        REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_last_qa_value_supp_data_pr FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS camdecmpscalc.daily_test_supp_data
+(
+    pk character varying(45) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v4(),
+    daily_test_sum_id character varying(45) COLLATE pg_catalog."default",
+    rpt_period_id numeric(38,0) NOT NULL,
+    key_online_ind numeric(1,0) NOT NULL,
+    key_valid_ind numeric(1,0) NOT NULL,
+    op_hour_cnt numeric(38,0),
+    last_covered_nonop_datehour timestamp without time zone,
+    first_op_after_nonop_datehour timestamp without time zone,
+    sort_daily_test_datehourmin timestamp without time zone,
+    calc_test_result_cd character varying(7) COLLATE pg_catalog."default",
+    chk_session_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT pk_daily_test_supp_data PRIMARY KEY (pk),
+    CONSTRAINT fk_daily_test_supp_data_check_session FOREIGN KEY (chk_session_id)
+        REFERENCES camdecmpswks.check_session (chk_session_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_daily_test_supp_data_rpp FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS camdecmpscalc.daily_test_system_supp_data
+(
+    pk character varying(45) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v4(),
+    daily_test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    rpt_period_id numeric(38,0) NOT NULL,
+    key_online_ind numeric(1,0) NOT NULL,
+    key_valid_ind numeric(1,0) NOT NULL,
+    mon_sys_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    op_hour_cnt numeric(38,0) NOT NULL,
+    last_covered_nonop_datehour timestamp without time zone,
+    first_op_after_nonop_datehour timestamp without time zone,
+    chk_session_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT pk_daily_test_sys_sup_data PRIMARY KEY (pk),
+    CONSTRAINT fk_daily_test_sys_sup_data_rpp FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_daily_test_system_supp_data_check_session FOREIGN KEY (chk_session_id)
+        REFERENCES camdecmpswks.check_session (chk_session_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_daily_test_system_supp_data_monitor_system FOREIGN KEY (mon_sys_id)
+        REFERENCES camdecmpswks.monitor_system (mon_sys_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS camdecmpscalc.sampling_train_supp_data
+(
+    pk character varying(45) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v4(),
+    trap_train_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    chk_session_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    sfsr_total_count numeric(38,0),
+    sfsr_deviated_count numeric(38,0),
+    gfm_total_count numeric(38,0),
+    gfm_not_available_count numeric(38,0),
+    CONSTRAINT pk_sampling_train_sd PRIMARY KEY (pk),
+    CONSTRAINT fk_sampling_train_supp_data_check_session FOREIGN KEY (chk_session_id)
+        REFERENCES camdecmpswks.check_session (chk_session_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
