@@ -1,9 +1,9 @@
 -- PROCEDURE: camdecmpswks.upd_session_calculated_em(numeric, character varying, integer, character varying, character, character varying)
 
-DROP PROCEDURE IF EXISTS camdecmpswks.upd_session_calculated_em(numeric, character varying, integer, character varying, character, character varying);
+-- DROP PROCEDURE IF EXISTS camdecmpswks.upd_session_calculated_em(numeric, character varying, integer, character varying, character, character varying);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.upd_session_calculated_em(
-	par_v_session_id numeric,
+	par_v_session_id character varying,
 	par_v_mon_plan_id character varying,
 	par_v_rpt_period_id integer,
 	par_v_current_userid character varying,
@@ -13,12 +13,16 @@ LANGUAGE 'plpgsql'
 AS $BODY$
 DECLARE
     var_V_SUBMISSION_AVAILABILITY_CD VARCHAR(7);
+    var_V_MON_LOC_ID VARCHAR(45);
+    var_V_PERIOD_BEGIN_DATE DATE;
+    var_V_PERIOD_END_DATE DATE;
     error_catch$ERROR_NUMBER TEXT;
     error_catch$ERROR_SEVERITY TEXT;
     error_catch$ERROR_STATE TEXT;
     error_catch$ERROR_LINE TEXT;
     error_catch$ERROR_PROCEDURE TEXT;
     error_catch$ERROR_MESSAGE TEXT;
+	l_context TEXT;
 BEGIN
     par_V_RESULT := 'F';
     par_V_ERROR_MSG := '';
@@ -28,8 +32,23 @@ BEGIN
         SELECT
             sub_availability_cd
             INTO var_V_SUBMISSION_AVAILABILITY_CD
-            FROM camdaux.em_submission_access
+            FROM camdecmpsaux.em_submission_access
             WHERE mon_plan_id = par_V_MON_PLAN_ID AND rpt_period_id = par_V_RPT_PERIOD_ID;
+
+        /* Get Reporting period end / start date */
+        SELECT
+            begin_date, end_date
+            INTO var_V_PERIOD_BEGIN_DATE, var_V_PERIOD_END_DATE
+            FROM camdecmpsmd.reporting_period
+            WHERE rpt_period_id = par_V_RPT_PERIOD_ID;
+
+        /* Get mon_loc_id period end / start date */
+        SELECT
+            mpl.mon_loc_id
+            INTO var_V_MON_LOC_ID
+            FROM camdecmpswks.monitor_plan_location AS mpl
+            WHERE mpl.mon_plan_id = par_V_MON_PLAN_ID;
+
         /* Derived Hourly Value */
         UPDATE camdecmpswks.derived_hrly_value AS wks
         SET 
@@ -114,11 +133,15 @@ BEGIN
         WHERE calc.CHK_SESSION_ID = par_v_session_id
 	    AND wks.TRAP_TRAIN_ID = calc.TRAP_TRAIN_ID;
         /* Hourly Gas Flow Meter */
+		
+	
         UPDATE camdecmpswks.hrly_gas_flow_meter AS wks
         SET calc_flow_to_sampling_mult = calc.calc_flow_to_sampling_mult, calc_flow_to_sampling_ratio = calc.calc_flow_to_sampling_ratio, userid = par_V_CURRENT_USERID, update_date = CURRENT_TIMESTAMP
         FROM camdecmpscalc.hrly_gas_flow_meter calc
         WHERE calc.CHK_SESSION_ID = par_v_session_id
-	    AND wks.HRLY_GFM_ID = calc.HRLY_GFM_ID;        /* ------------------------- */
+	    AND wks.hrly_gas_flow_meter_id = calc.hrly_gas_flow_meter_id;        /* ------------------------- */
+		
+		
         /* Summary Value Updates -- */
         /* ------------------------- */
         /* Summary Value Updates */
@@ -134,11 +157,13 @@ BEGIN
         SELECT
             uuid_generate_v4(), calc.mon_loc_id, calc.rpt_period_id, calc.parameter_cd, calc.calc_current_rpt_period_total, calc.calc_os_total, calc.calc_year_total, par_V_CURRENT_USERID, CURRENT_TIMESTAMP
             FROM camdecmpscalc.summary_value calc
+			left join camdecmpswks.summary_value wks on 
+				wks.MON_LOC_ID = calc.MON_LOC_ID AND 
+				wks.RPT_PERIOD_ID = calc.RPT_PERIOD_ID AND 
+				wks.PARAMETER_CD = calc.PARAMETER_CD
             WHERE calc.CHK_SESSION_ID = par_v_session_id
-            AND wks.MON_LOC_ID = calc.MON_LOC_ID
-            AND wks.RPT_PERIOD_ID = calc.RPT_PERIOD_ID
-            AND wks.PARAMETER_CD = calc.PARAMETER_CD
             AND wks.mon_loc_id IS NULL AND (calc.calc_current_rpt_period_total IS NOT NULL OR calc.calc_os_total IS NOT NULL OR calc.calc_year_total IS NOT NULL);
+			
         /* -------------------------------- */
         /* Emission Test Updates -- */
         /* -------------------------------- */
@@ -173,54 +198,113 @@ BEGIN
         /* Delete and read op supp data records for submittable em files */
 
         IF LOWER(var_V_SUBMISSION_AVAILABILITY_CD) = LOWER('REQUIRE') OR LOWER(var_V_SUBMISSION_AVAILABILITY_CD) = LOWER('GRANTED') THEN
+           -- Operating Supp Data
             DELETE FROM camdecmpswks.operating_supp_data
-                WHERE rpt_period_id = par_V_RPT_PERIOD_ID AND mon_loc_id = par_V_MON_PLAN_ID;
-                    
+                WHERE rpt_period_id = par_V_RPT_PERIOD_ID AND mon_loc_id = var_V_MON_LOC_ID;
             INSERT INTO camdecmpswks.operating_supp_data (op_supp_data_id, mon_loc_id, rpt_period_id, fuel_cd, op_type_cd, op_value, userid, update_date)
             SELECT
                 uuid_generate_v4(), calc.mon_loc_id, calc.rpt_period_id, calc.fuel_cd, calc.op_type_cd, calc.op_value, par_V_CURRENT_USERID, CURRENT_TIMESTAMP
                 FROM camdecmpscalc.operating_supp_data calc
                 WHERE calc.CHK_SESSION_ID = par_v_session_id;
+
+            -- sorbent train supplemental data
+            DELETE FROM camdecmpswks.sorbent_trap_supp_data
+                WHERE rpt_period_id = par_V_RPT_PERIOD_ID AND mon_loc_id = var_V_MON_LOC_ID;
+            INSERT INTO camdecmpswks.sorbent_trap_supp_data (trap_id, mon_sys_id, begin_date, begin_hour, end_date, end_hour, modc_cd, rata_ind, sorbent_trap_aps_cd, hg_concentration, mon_loc_id, rpt_period_id, userid, add_date, update_date)
+            SELECT
+                src.trap_id, src.mon_sys_id, src.begin_date, src.begin_hour, src.end_date, src.end_hour, src.modc_cd, src.rata_ind, src.sorbent_trap_aps_cd, src.hg_concentration, src.mon_loc_id, src.rpt_period_id, par_V_CURRENT_USERID, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+                FROM camdecmpswks.sorbent_trap src
+                WHERE src.rpt_period_id = par_V_RPT_PERIOD_ID AND src.mon_loc_id = var_V_MON_LOC_ID;
+
+            -- sampling_train_supp_data
+            DELETE FROM camdecmpswks.sampling_train_supp_data
+                WHERE rpt_period_id = par_V_RPT_PERIOD_ID AND mon_loc_id = var_V_MON_LOC_ID;
+            INSERT INTO camdecmpswks.sampling_train_supp_data (trap_train_id, trap_id, component_id, train_qa_status_cd, ref_flow_to_sampling_ratio, sampling_ratio_test_result_cd, hg_concentration, sfsr_total_count, sfsr_deviated_count, gfm_total_count, gfm_not_available_count, mon_loc_id, rpt_period_id, userid, add_date, update_date)
+            SELECT
+                src.trap_train_id, src.trap_id, src.component_id, src.train_qa_status_cd, src.ref_flow_to_sampling_ratio, src.sampling_ratio_test_result_cd, src.hg_concentration, src.sfsr_total_count, src.sfsr_deviated_count, src.gfm_total_count, src.gfm_not_available_count, src.mon_loc_id, src.rpt_period_id, par_V_CURRENT_USERID, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+                FROM camdecmpswks.sampling_train src
+                JOIN camdecmpscalc.sampling_train_supp_data sup ON sup.chk_session_id = par_V_SESSION_ID AND sup.trap_train_id = src.trap_train_id
+                WHERE src.rpt_period_id = par_V_RPT_PERIOD_ID AND src.mon_loc_id = var_V_MON_LOC_ID; 
+
+            -- qa_cert_event_supp_data
+            DELETE FROM camdecmpswks.qa_cert_event_supp_data
+                WHERE rpt_period_id = par_V_RPT_PERIOD_ID AND mon_loc_id  = var_V_MON_LOC_ID;
+            /* Insert the new supplemental data from the check session. */
+            INSERT INTO camdecmpswks.qa_cert_event_supp_data (qa_cert_event_supp_data_id, qa_cert_event_id, qa_cert_event_supp_data_cd, qa_cert_event_supp_date_cd, count_from_datehour, count, count_from_included_ind, mon_loc_id, rpt_period_id, userid, add_date)
+            SELECT
+                uuid_generate_v4(), src.qa_cert_event_id, src.qa_cert_event_supp_data_cd, src.qa_cert_event_supp_date_cd, src.count_from_datehour, src.count, src.count_from_included_ind, src.mon_loc_id, src.rpt_period_id, par_V_CURRENT_USERID, CURRENT_TIMESTAMP
+                FROM camdecmpscalc.qa_cert_event_supp_data AS src
+                WHERE src.chk_session_id = par_V_SESSION_ID;
+
+            -- system_op_supp_data
+            DELETE FROM camdecmpswks.system_op_supp_data
+                WHERE rpt_period_id = par_V_RPT_PERIOD_ID AND mon_sys_id IN (SELECT
+                    sys.mon_sys_id
+                    FROM camdecmpswks.monitor_plan_location AS mpl
+                    JOIN camdecmpswks.monitor_system AS sys
+                        ON sys.mon_loc_id = mpl.mon_loc_id
+                    WHERE mpl.mon_plan_id = par_V_MON_PLAN_ID);
+            /* Insert the new supplemental data from the check session. */
+            INSERT INTO camdecmpswks.system_op_supp_data (sys_op_supp_data_id, mon_sys_id, rpt_period_id, op_supp_data_type_cd, days, hours, mon_loc_id, userid, add_date)
+            SELECT
+                uuid_generate_v4(), src.mon_sys_id, src.rpt_period_id, src.op_supp_data_type_cd, src.days, src.hours, src.mon_loc_id, par_V_CURRENT_USERID, CURRENT_TIMESTAMP
+                FROM camdecmpscalc.system_op_supp_data AS src
+                WHERE src.chk_session_id = par_V_SESSION_ID;
+
+            -- component_op_supp_data
+            DELETE FROM camdecmpswks.component_op_supp_data
+                WHERE rpt_period_id = par_V_RPT_PERIOD_ID AND component_id IN (SELECT
+                    cmp.component_id
+                    FROM camdecmpswks.monitor_plan_location AS mpl
+                    JOIN camdecmpswks.component AS cmp
+                        ON cmp.mon_loc_id = mpl.mon_loc_id
+                    WHERE mpl.mon_plan_id = par_V_MON_PLAN_ID);
+            /* Insert the new supplemental data from the check session. */
+            INSERT INTO camdecmpswks.component_op_supp_data (comp_op_supp_data_id, component_id, rpt_period_id, op_supp_data_type_cd, days, hours, mon_loc_id, userid, add_date)
+            SELECT
+                uuid_generate_v4(), src.component_id, src.rpt_period_id, src.op_supp_data_type_cd, src.days, src.hours, src.mon_loc_id, par_V_CURRENT_USERID, CURRENT_TIMESTAMP
+                FROM camdecmpscalc.component_op_supp_data AS src
+                WHERE src.chk_session_id = par_V_SESSION_ID;
+
+            -- last_qa_value_supp_data
+            DELETE FROM camdecmpswks.last_qa_value_supp_data
+                WHERE rpt_period_id = par_V_RPT_PERIOD_ID AND mon_loc_id = var_V_MON_LOC_ID;
+            /* Insert the new supplemental data from the check session. */
+            INSERT INTO camdecmpswks.last_qa_value_supp_data (last_qa_value_supp_data_id, mon_loc_id, rpt_period_id, parameter_cd, moisture_basis, hourly_type_cd, mon_sys_id, component_id, op_datehour, unadjusted_hrly_value, adjusted_hrly_value, userid, add_date)
+            SELECT
+                uuid_generate_v4(), src.mon_loc_id, src.rpt_period_id, src.parameter_cd, src.moisture_basis, src.hourly_type_cd, src.mon_sys_id, src.component_id, src.op_datehour, src.unadjusted_hrly_value, src.adjusted_hrly_value, par_V_CURRENT_USERID, CURRENT_TIMESTAMP
+                FROM camdecmpscalc.last_qa_value_supp_data AS src
+                WHERE src.chk_session_id = par_V_SESSION_ID;
+
+
+            --daily_test_system_supp_data / daily_test_supp_data
+            DELETE FROM camdecmpswks.daily_test_system_supp_data
+                WHERE rpt_period_id = par_V_RPT_PERIOD_ID AND mon_loc_id  = var_V_MON_LOC_ID;
+            DELETE FROM camdecmpswks.daily_test_supp_data
+                WHERE rpt_period_id = par_V_RPT_PERIOD_ID AND mon_loc_id = var_V_MON_LOC_ID;
+
+            INSERT INTO camdecmpswks.daily_test_supp_data (daily_test_supp_data_id, component_id, rpt_period_id, test_type_cd, span_scale_cd, key_online_ind, key_valid_ind, op_hour_cnt, last_covered_nonop_datehour, first_op_after_nonop_datehour, daily_test_datehourmin, test_result_cd, online_offline_ind, sort_daily_test_datehourmin, calc_test_result_cd, daily_test_sum_id, mon_loc_id, userid, add_date)
+            SELECT
+                uuid_generate_v4(), dts.component_id, src.rpt_period_id, dts.test_type_cd, COALESCE(dts.span_scale_cd, 'N') AS span_scale_cd, src.key_online_ind, src.key_valid_ind, src.op_hour_cnt, src.last_covered_nonop_datehour, src.first_op_after_nonop_datehour, dts.daily_test_date + (dts.daily_test_hour::NUMERIC || ' HOUR')::INTERVAL + (dts.daily_test_min::NUMERIC || ' MINUTE')::INTERVAL AS daily_test_datehourmin, dts.test_result_cd, dcl.online_offline_ind, src.sort_daily_test_datehourmin, src.calc_test_result_cd, src.daily_test_sum_id, dts.mon_loc_id, par_V_CURRENT_USERID AS userid, CURRENT_TIMESTAMP AS add_date
+                FROM camdecmpscalc.daily_test_supp_data AS src
+                JOIN camdecmpswks.daily_test_summary AS dts
+                    ON dts.daily_test_sum_id = src.daily_test_sum_id
+                LEFT OUTER JOIN camdecmpswks.daily_calibration AS dcl
+                    ON dcl.daily_test_sum_id = src.daily_test_sum_id
+                WHERE src.chk_session_id = par_V_SESSION_ID AND (dts.test_type_cd = 'DAYCAL' AND dcl.daily_test_sum_id IS NOT NULL OR dts.test_type_cd != 'DAYCAL' AND dcl.daily_test_sum_id IS NULL);
+
+            INSERT INTO camdecmpswks.daily_test_system_supp_data (daily_test_system_supp_data_id, daily_test_supp_data_id, mon_sys_id, op_hour_cnt, last_covered_nonop_datehour, first_op_after_nonop_datehour, mon_loc_id, rpt_period_id, userid, add_date)
+            SELECT
+                uuid_generate_v4(), sup.daily_test_supp_data_id, src.mon_sys_id, src.op_hour_cnt, src.last_covered_nonop_datehour, src.first_op_after_nonop_datehour, sup.mon_loc_id, src.rpt_period_id, par_V_CURRENT_USERID AS userid, CURRENT_TIMESTAMP AS add_date
+                FROM camdecmpscalc.daily_test_system_supp_data AS src
+                JOIN camdecmpswks.daily_test_supp_data AS sup
+                    ON sup.daily_test_sum_id = src.daily_test_sum_id AND sup.rpt_period_id = src.rpt_period_id
+                WHERE src.chk_session_id = par_V_SESSION_ID;
+            
         END IF;
-        /* Recreate the View Emission grid data */
-        /* EXEC Client_EM_Grid_Data @V_MON_PLAN_ID, @V_RPT_PERIOD_ID; */
+		
+
         par_V_RESULT := 'T';
-
-        /* TODO: Implement these procedures
-
-        -- Handle Sorbent Trap and Sampling Train Supplemental Data Tables 
-        CALL camdecmpswks.upd_session_calculated_em_st_supp(par_V_MON_PLAN_ID, par_V_RPT_PERIOD_ID, par_V_CURRENT_USERID, par_V_RESULT => par_V_RESULT, par_V_ERROR_MSG => par_V_ERROR_MSG);
-
-        IF LOWER(par_V_RESULT) = LOWER('T') THEN
-            CALL camdecmpswks.upd_session_calculated_em_train_supp(par_V_SESSION_ID, par_V_MON_PLAN_ID, par_V_RPT_PERIOD_ID, par_V_CURRENT_USERID, par_V_RESULT => par_V_RESULT, par_V_ERROR_MSG => par_V_ERROR_MSG);
-        END IF;
-        -- Handle QA Certification Event Supplementa Data 
-
-        IF LOWER(par_V_RESULT) = LOWER('T') THEN
-            CALL "ECMPS_2022-04-26_Supp".upd_session_calculated_em_qce_supp(par_V_SESSION_ID, par_V_MON_PLAN_ID, par_V_RPT_PERIOD_ID, par_V_CURRENT_USERID, par_V_RESULT => par_V_RESULT, par_V_ERROR_MSG => par_V_ERROR_MSG);
-        END IF;
-        -- Handle QA Certification Event Supplementa Data 
-
-        IF LOWER(par_V_RESULT) = LOWER('T') THEN
-            CALL "ECMPS_2022-04-26_Supp".upd_session_calculated_em_sys_supp(par_V_SESSION_ID, par_V_MON_PLAN_ID, par_V_RPT_PERIOD_ID, par_V_CURRENT_USERID, par_V_RESULT => par_V_RESULT, par_V_ERROR_MSG => par_V_ERROR_MSG);
-        END IF;
-        -- Handle QA Certification Event Supplementa Data 
-
-        IF LOWER(par_V_RESULT) = LOWER('T') THEN
-            CALL "ECMPS_2022-04-26_Supp".upd_session_calculated_em_cmp_supp(par_V_SESSION_ID, par_V_MON_PLAN_ID, par_V_RPT_PERIOD_ID, par_V_CURRENT_USERID, par_V_RESULT => par_V_RESULT, par_V_ERROR_MSG => par_V_ERROR_MSG);
-        END IF;
-        -- Handle Last Quality Assured Value Supplementa Data 
-
-        IF LOWER(par_V_RESULT) = LOWER('T') THEN
-            CALL "ECMPS_2022-04-26_Supp".upd_session_calculated_em_lqa_supp(par_V_SESSION_ID, par_V_MON_PLAN_ID, par_V_RPT_PERIOD_ID, par_V_CURRENT_USERID, par_V_RESULT => par_V_RESULT, par_V_ERROR_MSG => par_V_ERROR_MSG);
-        END IF;
-         Handle Daily Test (and Daily Test System) Supplementa Data
-
-        IF LOWER(par_V_RESULT) = LOWER('T') THEN
-            CALL "ECMPS_2022-04-26_Supp".upd_session_calculated_em_dt_supp(par_V_SESSION_ID, par_V_MON_PLAN_ID, par_V_RPT_PERIOD_ID, par_V_CURRENT_USERID, par_V_RESULT => par_V_RESULT, par_V_ERROR_MSG => par_V_ERROR_MSG);
-        END IF;
-
-        */
 
         EXCEPTION
             WHEN OTHERS THEN
@@ -229,8 +313,10 @@ BEGIN
                 error_catch$ERROR_LINE := '0';
                 error_catch$ERROR_PROCEDURE := 'UPD_SESSION_CALCULATED_EM';
                 GET STACKED DIAGNOSTICS error_catch$ERROR_STATE = RETURNED_SQLSTATE,
-                    error_catch$ERROR_MESSAGE = MESSAGE_TEXT;
-                par_V_ERROR_MSG := error_catch$ERROR_PROCEDURE || ': ' || error_catch$ERROR_MESSAGE || ' (' || CAST (error_catch$ERROR_LINE AS VARCHAR(30)) || ')';
+                    error_catch$ERROR_MESSAGE = MESSAGE_TEXT,
+				    l_context = PG_EXCEPTION_CONTEXT;
+				
+                par_V_ERROR_MSG := error_catch$ERROR_PROCEDURE || ': ' || l_context || error_catch$ERROR_MESSAGE || ' (' || CAST (error_catch$ERROR_LINE AS VARCHAR(30)) || ')';
                 par_V_RESULT := 'F';
     END;
 END;
