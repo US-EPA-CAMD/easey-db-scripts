@@ -1,6 +1,6 @@
 -- PROCEDURE: camdecmpswks.upd_session_calculated_em(numeric, character varying, integer, character varying, character, character varying)
 
--- DROP PROCEDURE IF EXISTS camdecmpswks.upd_session_calculated_em(numeric, character varying, integer, character varying, character, character varying);
+DROP PROCEDURE IF EXISTS camdecmpswks.upd_session_calculated_em(numeric, character varying, integer, character varying, character, character varying);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.upd_session_calculated_em(
 	par_v_session_id character varying,
