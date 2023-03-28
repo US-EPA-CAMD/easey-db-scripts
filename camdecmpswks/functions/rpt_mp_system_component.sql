@@ -4,29 +4,7 @@ DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_system_component(character varying);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_system_component(
 	monplanid character varying)
-    RETURNS TABLE("unitStack" text,
-				  "systemIdentifier" text,
-				  "systemTypeCode" text,
-				  "systemTypeCodeGroup" text,				  
-				  "systemTypeCodeDescription" text, 
-				  "systemDesignation" text,
-				  "systemBeginDateHour" text,
-				  "systemEndDateHour" text,
-				  "componentIdentifier" text,
-				  "componentTypeCode" text,
-				  "componentTypeCodeGroup" text,
-				  "componentTypeCodeDescription" text,
-				  "acquisitionMethodCode" text,
-				  "acquisitionMethodCodeGroup" text,
-				  "acquisitionMethodCodeDescription" text,
-				  "basis" text,
-				  "manufacturer" text,
-				  "modelVersion" text,
-				  "serialNumber" text,
-				  "componentBeginDateHour" text,
-				  "componentEndDateHour" text,
-				  "hgConverterIndicator" text
-				 )
+    RETURNS TABLE("unitStack" text, "systemIdentifier" text, "systemTypeCode" text, "systemTypeCodeGroup" text, "systemTypeCodeDescription" text, "systemDesignation" text, "systemBeginDateHour" text, "systemEndDateHour" text, "componentIdentifier" text, "componentTypeCode" text, "componentTypeCodeGroup" text, "componentTypeCodeDescription" text, "acquisitionMethodCode" text, "acquisitionMethodCodeGroup" text, "acquisitionMethodCodeDescription" text, basis text, manufacturer text, "modelVersion" text, "serialNumber" text, "componentBeginDateHour" text, "componentEndDateHour" text, "hgConverterIndicator" text) 
     LANGUAGE 'sql'
 
     COST 100
@@ -34,7 +12,7 @@ CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_system_component(
     ROWS 1000
     
 AS $BODY$
-	SELECT
+SELECT
 		CASE
 			WHEN ml.stack_pipe_id IS NOT NULL THEN sp.stack_name
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid

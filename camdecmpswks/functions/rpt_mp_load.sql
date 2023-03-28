@@ -4,20 +4,7 @@ DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_load(character varying);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_load(
 	monplanid character varying)
-    RETURNS TABLE("unitStack" text,
-				  "maxLoadValue" numeric,
-				  "unitsOfMeasureCode" text, 
-				  "unitsOfMeasureCodeGroup" text, 
-				  "unitsOfMeasureCodeDescription" text,
-				  "upperOperatingBoundry" numeric,
-				  "lowerOperatingBoundry" numeric,
-				  "normalOperatingLevel" text,
-				  "secondOperatingLevel" text,
-				  "secondNormalIndicator" text,
-				  "loadAnalysisDate" text,
-				  "beginDateHour" text,
-				  "endDateHour" text
-				 )
+    RETURNS TABLE("unitStack" text, "maxLoadValue" numeric, "unitsOfMeasureCode" text, "unitsOfMeasureCodeGroup" text, "unitsOfMeasureCodeDescription" text, "upperOperatingBoundry" numeric, "lowerOperatingBoundry" numeric, "normalOperatingLevel" text, "secondOperatingLevel" text, "secondNormalIndicator" text, "loadAnalysisDate" text, "beginDateHour" text, "endDateHour" text) 
     LANGUAGE 'sql'
 
     COST 100
@@ -25,7 +12,7 @@ CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_load(
     ROWS 1000
     
 AS $BODY$
-	SELECT
+SELECT
 		CASE
 			WHEN ml.stack_pipe_id IS NOT NULL THEN sp.stack_name
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid

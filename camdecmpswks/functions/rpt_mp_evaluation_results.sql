@@ -3,18 +3,16 @@
 DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_evaluation_results(text);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_evaluation_results(
-	monPlanId text
-)
-RETURNS TABLE(
-	"unitStack" text,
-	"severityCode" text,
-	"categoryDescription" text,
-	"checkCode" text,
-	"resultMessage" text
-) 
-LANGUAGE 'sql'
+	monplanid text)
+    RETURNS TABLE("unitStack" text, "severityCode" text, "categoryDescription" text, "checkCode" text, "resultMessage" text) 
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
-	SELECT
+SELECT
 		CASE
 			WHEN ml.stack_pipe_id IS NOT NULL THEN sp.stack_name
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid

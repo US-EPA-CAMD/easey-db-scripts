@@ -3,23 +3,18 @@
 DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_evaluation_qa_error_results(text, numeric, numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_evaluation_qa_error_results(
-	vMonPlanId text,
-	vYear numeric,
-	vQuarter numeric
-)
-RETURNS TABLE(
-	"unitStack" text,
-	"categoryDescription" text,
-	"severityCode" text,
-	"checkResult" text,
-	"resultMessage" text,
-	"beginPeriod" text,
-	"endPeriod" text,
-	"consecutiveHours" numeric
-)
-LANGUAGE 'sql'
+	vmonplanid text,
+	vyear numeric,
+	vquarter numeric)
+    RETURNS TABLE("unitStack" text, "categoryDescription" text, "severityCode" text, "checkResult" text, "resultMessage" text, "beginPeriod" text, "endPeriod" text, "consecutiveHours" numeric) 
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
-	SELECT DISTINCT
+SELECT DISTINCT
 		CASE
 			WHEN ml.stack_pipe_id IS NOT NULL THEN sp.stack_name
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid

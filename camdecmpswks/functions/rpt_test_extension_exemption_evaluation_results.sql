@@ -3,21 +3,16 @@
 DROP FUNCTION IF EXISTS camdecmpswks.rpt_test_extension_exemption_evaluation_results(text);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_test_extension_exemption_evaluation_results(
-	testExtensionExemptionId text
-)
-RETURNS TABLE(
-	"unitStack" text,
-	"extensionExemptionCode" text,
-	"yearQuarter" text,
-	"systemIdType" text,
-	"componentIdType" text,
-	"severityCode" text,
-	"checkCode" text,
-	"resultMessage" text
-)
-LANGUAGE 'sql'
+	testextensionexemptionid text)
+    RETURNS TABLE("unitStack" text, "extensionExemptionCode" text, "yearQuarter" text, "systemIdType" text, "componentIdType" text, "severityCode" text, "checkCode" text, "resultMessage" text) 
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
-	SELECT
+SELECT
 		CASE
 			WHEN ml.stack_pipe_id IS NOT NULL THEN sp.stack_name
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid

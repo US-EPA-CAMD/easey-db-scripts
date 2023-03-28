@@ -4,29 +4,7 @@ DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_default(character varying);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_default(
 	monplanid character varying)
-    RETURNS TABLE("unitStack" text,
-				  "parameterCode" text,
-				  "parameterCodeGroup" text,
-				  "parameterCodeDescription" text,
-				  "defaultValue" numeric,
-				  "unitsOfMeasureCode" text,
-				  "unitsOfMeasureCodeGroup" text,
-				  "unitsOfMeasureCodeDescription" text,
-				  "defaultPurposeCode" text,
-				  "defaultPurposeCodeGroup" text,
-				  "defaultPurposeCodeDescription" text,
-				  "fuelCode" text,
-				  "fuelCodeGroup" text,
-				  "fuelCodeDescription" text,
-				  "operatingConditionCode" text,
-				  "operatingConditionCodeGroup" text,
-				  "operatingConditionCodeDescription" text,
-				  "defaultSourceCode" text,
-				  "defaultSourceCodeGroup" text,
-				  "defaultSourceCodeDescription" text,
-				  "beginDateHour" text,
-				  "endDateHour" text
-				 )
+    RETURNS TABLE("unitStack" text, "parameterCode" text, "parameterCodeGroup" text, "parameterCodeDescription" text, "defaultValue" numeric, "unitsOfMeasureCode" text, "unitsOfMeasureCodeGroup" text, "unitsOfMeasureCodeDescription" text, "defaultPurposeCode" text, "defaultPurposeCodeGroup" text, "defaultPurposeCodeDescription" text, "fuelCode" text, "fuelCodeGroup" text, "fuelCodeDescription" text, "operatingConditionCode" text, "operatingConditionCodeGroup" text, "operatingConditionCodeDescription" text, "defaultSourceCode" text, "defaultSourceCodeGroup" text, "defaultSourceCodeDescription" text, "beginDateHour" text, "endDateHour" text) 
     LANGUAGE 'sql'
 
     COST 100
@@ -34,7 +12,7 @@ CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_default(
     ROWS 1000
     
 AS $BODY$
-	SELECT
+SELECT
 		CASE
 			WHEN ml.stack_pipe_id IS NOT NULL THEN sp.stack_name
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid

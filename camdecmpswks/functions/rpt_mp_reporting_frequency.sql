@@ -4,12 +4,7 @@ DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_reporting_frequency(character varyin
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_reporting_frequency(
 	monplanid character varying)
-    RETURNS TABLE(
-		"unitStack" text, 
-		"reportFrequency" text, 
-		"beginQuarter" text, 
-		"endQuarter" text
-	) 
+    RETURNS TABLE("unitStack" text, "reportFrequency" text, "beginQuarter" text, "endQuarter" text) 
     LANGUAGE 'sql'
 
     COST 100
@@ -17,7 +12,7 @@ CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_reporting_frequency(
     ROWS 1000
     
 AS $BODY$
-	SELECT
+SELECT
 		CASE
 			WHEN ml.unit_id IS NULL THEN sp.stack_name
 			ELSE u.unitid

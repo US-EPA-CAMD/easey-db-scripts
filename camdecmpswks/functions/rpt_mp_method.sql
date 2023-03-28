@@ -4,22 +4,7 @@ DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_method(character varying);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_method(
 	monplanid character varying)
-    RETURNS TABLE("unitStack" text, 
-				  "parameterCode" text, 
-				  "parameterCodeGroup" text, 
-				  "parameterCodeDescription" text, 
-				  "methodCode" text,
-				  "methodCodeGroup" text,
-				  "methodCodeDescription" text,
-				  "substituteDataCode" text,
-				  "substituteDataCodeGroup" text,
-				  "substituteDataCodeDescription" text,
-				  "bypassApproachCode" text,
-				  "bypassApproachCodeGroup" text,
-				  "bypassApproachCodeDescription" text,
-				  "beginDateHour" text,
-				  "endDateHour" text
-				 )
+    RETURNS TABLE("unitStack" text, "parameterCode" text, "parameterCodeGroup" text, "parameterCodeDescription" text, "methodCode" text, "methodCodeGroup" text, "methodCodeDescription" text, "substituteDataCode" text, "substituteDataCodeGroup" text, "substituteDataCodeDescription" text, "bypassApproachCode" text, "bypassApproachCodeGroup" text, "bypassApproachCodeDescription" text, "beginDateHour" text, "endDateHour" text) 
     LANGUAGE 'sql'
 
     COST 100
@@ -27,7 +12,7 @@ CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_method(
     ROWS 1000
     
 AS $BODY$
-	SELECT
+SELECT
 		CASE
 			WHEN ml.stack_pipe_id IS NOT NULL THEN sp.stack_name
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid

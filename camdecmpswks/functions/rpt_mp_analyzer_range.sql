@@ -4,16 +4,7 @@ DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_analyzer_range(character varying);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_analyzer_range(
 	monplanid character varying)
-    RETURNS TABLE("unitStack" text,
-				  "componentTypeCode" text,
-				  "componentTypeCodeGroup" text,
-				  "componentTypeCodeDescription" text,
-				  "componentIdentifier" text,
-				  "analyzerRangeLevel" text,
-				  "dualRangeIndicator" text,
-				  "beginDateHour" text,
-				  "endDateHour" text
-				 )
+    RETURNS TABLE("unitStack" text, "componentTypeCode" text, "componentTypeCodeGroup" text, "componentTypeCodeDescription" text, "componentIdentifier" text, "analyzerRangeLevel" text, "dualRangeIndicator" text, "beginDateHour" text, "endDateHour" text) 
     LANGUAGE 'sql'
 
     COST 100
@@ -21,7 +12,7 @@ CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_analyzer_range(
     ROWS 1000
     
 AS $BODY$
-	SELECT
+SELECT
 		CASE
 			WHEN ml.stack_pipe_id IS NOT NULL THEN sp.stack_name
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid

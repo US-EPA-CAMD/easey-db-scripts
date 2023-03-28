@@ -4,18 +4,7 @@ DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_formula(character varying);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_formula(
 	monplanid character varying)
-    RETURNS TABLE("unitStack" text, 
-				  "parameterCode" text, 
-				  "parameterCodeGroup" text, 
-				  "parameterCodeDescription" text,
-				  "formulaIdentifier" text,
-				  "equationCode" text,
-				  "equationCodeGroup" text,
-				  "equationCodeDescription" text,
-				  "equationFormula" text,
-				  "beginDateHour" text,
-				  "endDateHour" text
-				 )
+    RETURNS TABLE("unitStack" text, "parameterCode" text, "parameterCodeGroup" text, "parameterCodeDescription" text, "formulaIdentifier" text, "equationCode" text, "equationCodeGroup" text, "equationCodeDescription" text, "equationFormula" text, "beginDateHour" text, "endDateHour" text) 
     LANGUAGE 'sql'
 
     COST 100
@@ -23,7 +12,7 @@ CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_formula(
     ROWS 1000
     
 AS $BODY$
-	SELECT
+SELECT
 		CASE
 			WHEN ml.stack_pipe_id IS NOT NULL THEN sp.stack_name
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid

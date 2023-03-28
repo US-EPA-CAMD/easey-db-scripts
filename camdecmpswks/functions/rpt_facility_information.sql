@@ -3,19 +3,16 @@
 DROP FUNCTION IF EXISTS camdecmpswks.rpt_facility_information(numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_facility_information(
-	vFacilityId numeric
-)
-RETURNS TABLE(
-	"facilityName" text,
-	"orisCode" numeric,
-	"stateCode" text,
-	"countyName" text,
-	"latitude" numeric,
-	"longitude" numeric
-)
-LANGUAGE 'sql'
+	vfacilityid numeric)
+    RETURNS TABLE("facilityName" text, "orisCode" numeric, "stateCode" text, "countyName" text, latitude numeric, longitude numeric) 
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
-	SELECT
+SELECT
 		p.facility_name AS "facilityName",
 		p.oris_code AS "orisCode",
 		p.state AS "stateCode",
@@ -27,31 +24,24 @@ AS $BODY$
 	WHERE p.oris_code = vFacilityId;
 $BODY$;
 
-
 -- FUNCTION: camdecmpswks.rpt_facility_information(numeric, text, numeric, numeric)
 
 DROP FUNCTION IF EXISTS camdecmpswks.rpt_facility_information(numeric, text, numeric, numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_facility_information(
-	vFacilityId numeric,
-	vMonPlanId text,
-	vYear numeric,
-	vQuarter numeric
-)
-RETURNS TABLE(
-	"facilityName" text,
-	"orisCode" numeric,
-	"locationInfo" text,
-	"stateCode" text,
-	"countyName" text,
-	"latitude" numeric,
-	"longitude" numeric,
-	"yearQuarter" text,
-	"totalHours" numeric
-)
-LANGUAGE 'sql'
+	vfacilityid numeric,
+	vmonplanid text,
+	vyear numeric,
+	vquarter numeric)
+    RETURNS TABLE("facilityName" text, "orisCode" numeric, "locationInfo" text, "stateCode" text, "countyName" text, latitude numeric, longitude numeric, "yearQuarter" text, "totalHours" numeric) 
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
-	SELECT
+SELECT
 		p.facility_name AS "facilityName",
 		p.oris_code AS "orisCode",
 		(

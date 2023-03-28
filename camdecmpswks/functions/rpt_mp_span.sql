@@ -4,28 +4,7 @@ DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_span(character varying);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_span(
 	monplanid character varying)
-    RETURNS TABLE("unitStack" text,
-				  "componentTypeCode" text,
-				  "componentTypeCodeGroup" text, 
-				  "componentTypeCodeDescription" text, 
-				  "spanScaleLevel" text,
-				  "spanMethodCode" text,
-				  "spanMethodCodeGroup" text,
-				  "spanMethodCodeDescription" text,
-				  "mpcOrMpfValue" numeric,
-				  "mecValue" numeric,
-				  "spanValue" numeric,
-				  "fullScaleRange" numeric,
-				  "unitsOfMeasureCode" text,
-				  "unitsOfMeasureCodeGroup" text,
-				  "unitsOfMeasureCodeDescription" text,
-				  "scaleTransitionPoint" numeric,
-				  "defaultHighRange" numeric,
-				  "flowFullScaleRange" numeric,
-				  "flowSpanValue" numeric,				  
-				  "beginDateHour" text,
-				  "endDateHour" text
-				 )
+    RETURNS TABLE("unitStack" text, "componentTypeCode" text, "componentTypeCodeGroup" text, "componentTypeCodeDescription" text, "spanScaleLevel" text, "spanMethodCode" text, "spanMethodCodeGroup" text, "spanMethodCodeDescription" text, "mpcOrMpfValue" numeric, "mecValue" numeric, "spanValue" numeric, "fullScaleRange" numeric, "unitsOfMeasureCode" text, "unitsOfMeasureCodeGroup" text, "unitsOfMeasureCodeDescription" text, "scaleTransitionPoint" numeric, "defaultHighRange" numeric, "flowFullScaleRange" numeric, "flowSpanValue" numeric, "beginDateHour" text, "endDateHour" text) 
     LANGUAGE 'sql'
 
     COST 100
@@ -33,7 +12,7 @@ CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_span(
     ROWS 1000
     
 AS $BODY$
-	SELECT
+SELECT
 		CASE
 			WHEN ml.stack_pipe_id IS NOT NULL THEN sp.stack_name
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid

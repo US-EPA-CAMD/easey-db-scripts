@@ -3,23 +3,16 @@
 DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_test_evaluation_results(text);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_test_evaluation_results(
-	testSumId text
-)
-RETURNS TABLE(
-	"unitStack" text,
-	"testTypeCode" text,
-	"testNumber" text,
-	"beginPeriod" text,
-	"endPeriod" text,
-	"sysCompType" text,
-	"severityCode" text,
-	"categoryDescription" text,
-	"checkCode" text,
-	"resultMessage" text
-)
-LANGUAGE 'sql'
+	testsumid text)
+    RETURNS TABLE("unitStack" text, "testTypeCode" text, "testNumber" text, "beginPeriod" text, "endPeriod" text, "sysCompType" text, "severityCode" text, "categoryDescription" text, "checkCode" text, "resultMessage" text) 
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
-	SELECT
+SELECT
 		CASE
 			WHEN ml.stack_pipe_id IS NOT NULL THEN sp.stack_name
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid

@@ -4,20 +4,7 @@ DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_unit_capacity(character varying);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_unit_capacity(
 	monplanid character varying)
-    RETURNS TABLE(
-		"unitIdentifier" text, 
-		"nonLoadBasedIndicator" text, 
-		"commercialOpDate" text, 
-		"commenceOpDate" text, 
-		"unitTypeCode" text, 
-		"unitTypeCodeGroup" text, 
-		"unitTypeCodeDescription" text, 
-		"unitBeginDate" text, 
-		"unitEndDate" text, 
-		"maxHeatInput" numeric, 
-		"maxHeatInputBeginDate" text, 
-		"maxHeatInputEndDate" text
-	) 
+    RETURNS TABLE("unitIdentifier" text, "nonLoadBasedIndicator" text, "commercialOpDate" text, "commenceOpDate" text, "unitTypeCode" text, "unitTypeCodeGroup" text, "unitTypeCodeDescription" text, "unitBeginDate" text, "unitEndDate" text, "maxHeatInput" numeric, "maxHeatInputBeginDate" text, "maxHeatInputEndDate" text) 
     LANGUAGE 'sql'
 
     COST 100
@@ -25,7 +12,7 @@ CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_unit_capacity(
     ROWS 1000
     
 AS $BODY$
-	SELECT
+SELECT
 		u.unitid AS "unitIdentifier",
 		camdecmpswks.format_indicator(u.non_load_based_ind, true) AS "nonLoadBasedIndicator",
 		camdecmpswks.format_date_hour(u.comr_op_date, null, null) AS "commercialOpDate",

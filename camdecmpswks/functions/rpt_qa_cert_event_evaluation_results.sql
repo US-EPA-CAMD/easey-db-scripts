@@ -3,21 +3,16 @@
 DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_cert_event_evaluation_results(text);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_cert_event_evaluation_results(
-	qaCertEventId text
-)
-RETURNS TABLE(
-	"unitStack" text,
-	"eventCode" text,
-	"eventDateHour" text,
-	"systemIdType" text,
-	"componentIdType" text,
-	"severityCode" text,
-	"checkCode" text,
-	"resultMessage" text
-)
-LANGUAGE 'sql'
+	qacerteventid text)
+    RETURNS TABLE("unitStack" text, "eventCode" text, "eventDateHour" text, "systemIdType" text, "componentIdType" text, "severityCode" text, "checkCode" text, "resultMessage" text) 
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
-	SELECT
+SELECT
 		CASE
 			WHEN ml.stack_pipe_id IS NOT NULL THEN sp.stack_name
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid
