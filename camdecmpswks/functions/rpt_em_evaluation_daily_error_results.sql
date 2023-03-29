@@ -1,12 +1,12 @@
--- FUNCTION: camdecmpswks.rpt_em_evaluation_qa_error_results(text, numeric, numeric)
+-- FUNCTION: camdecmpswks.rpt_em_evaluation_daily_error_results(text, numeric, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_evaluation_qa_error_results(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_evaluation_daily_error_results(text, numeric, numeric);
 
-CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_evaluation_qa_error_results(
+CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_evaluation_daily_error_results(
 	vmonplanid text,
 	vyear numeric,
 	vquarter numeric)
-    RETURNS TABLE("unitStack" text, "categoryDescription" text, "severityCode" text, "checkResult" text, "resultMessage" text, "beginPeriod" text, "endPeriod" text, "consecutiveHours" numeric) 
+    RETURNS TABLE("unitStack" text, "severityCode" text, "checkResult" text, "resultMessage" text, "beginPeriod" text, "endPeriod" text, "consecutiveHours" numeric) 
     LANGUAGE 'sql'
 
     COST 100
@@ -20,10 +20,6 @@ SELECT DISTINCT
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid
 			ELSE '*'
 		END AS "unitStack",
-		CASE
-			WHEN (cc.check_type_cd = 'ADESTAT' AND cc.check_number = 1) THEN 'Appendix E Status Analysis'
-			ELSE LTRIM(TRIM(leading '-' from ccd.category_cd_description))
-		END AS "categoryDescription",
 		cl.severity_cd AS "severityCode",
 		cc.check_type_cd || '-' || cc.check_number || '-' || ccr.check_result AS "checkCode",
 		cl.result_message AS "resultMessage",
@@ -41,5 +37,5 @@ SELECT DISTINCT
 	LEFT JOIN camdecmpswks.stack_pipe sp USING(stack_pipe_id)
 	LEFT JOIN camd.unit u USING(unit_id)
 	WHERE cs.mon_plan_id = vMonPlanId AND rp.calendar_year = vYear AND rp.quarter = vQuarter AND
-	ccd.process_cd = 'HOURLY' AND cc.check_type_cd LIKE '%STAT';
+	ccd.process_cd = 'HOURLY' AND cc.check_type_cd = 'DAILY';
 $BODY$;

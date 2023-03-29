@@ -34,11 +34,9 @@ SELECT DISTINCT
 	JOIN camdecmpsmd.rule_check rc ON cc.check_catalog_id = rc.check_catalog_id
 	JOIN camdecmpsmd.category_code ccd ON rc.category_cd = ccd.category_cd
 	JOIN camdecmpswks.monitor_location ml USING(mon_loc_id)
-	LEFT JOIN camdecmpswks.daily_test_summary dts ON cl.test_sum_id = dts.daily_test_sum_id
-	LEFT JOIN camdecmpswks.component c ON dts.component_id = c.component_id
 	LEFT JOIN camdecmpswks.stack_pipe sp USING(stack_pipe_id)
 	LEFT JOIN camd.unit u USING(unit_id)
 	WHERE cs.mon_plan_id = vMonPlanId AND rp.calendar_year = vYear AND rp.quarter = vQuarter AND
 	ccd.process_cd = 'HOURLY' AND cc.check_type_cd NOT LIKE '%STAT' AND
-	cc.check_type_cd NOT IN ('HOURGEN', 'LME', 'HOURAGG', 'DAILY', 'DAYCAL', 'EMTEST', 'EMWTS', 'EMWSI', 'NSPS4T', 'EMAUDIT');
+	cc.check_type_cd NOT IN ('HOURGEN', 'LME', 'HOURAGG', 'DAILY', 'DAYCAL', 'EMTEST', 'EMWTS', 'EMWSI', 'NSPS4T', 'EMAUDIT', 'MATSTRN', 'MATSTRP');
 $BODY$;

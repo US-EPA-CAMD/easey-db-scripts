@@ -109,6 +109,26 @@ BEGIN
 ------------------------------------------------------------------------------------------------
 	tableOrder := tableOrder + 1;
 	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'TRPERR', 'SELECT * FROM camdecmpswks.rpt_em_evaluation_trap_error_results($1, $2, $3)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'unitStack', 'Unit/Stack'),
+		(datatableId, 2, 'severityCode', 'Severity'),
+		(datatableId, 3, 'checkCode', 'Check Code'),
+		(datatableId, 4, 'resultMessage', 'Result Message');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES
+		(datatableId, 1, 'monitorPlanId', null),
+		(datatableId, 2, 'year', null),
+		(datatableId, 3, 'quarter', null);
+------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
 	VALUES(datasetCode, tableOrder, 'HRLYERR', 'SELECT * FROM camdecmpswks.rpt_em_evaluation_hourly_error_results($1, $2, $3)')
 	RETURNING datatable_id INTO datatableId;
 
@@ -122,27 +142,6 @@ BEGIN
 		(datatableId, 6, 'beginPeriod', 'Begin Date/Hr'),
 		(datatableId, 7, 'endPeriod', 'End Date/Hr'),
 		(datatableId, 8, 'consecutiveHours', 'Consecutive Hours');
-
-	/***** PARAMETERS *****/
-	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
-	VALUES
-		(datatableId, 1, 'monitorPlanId', null),
-		(datatableId, 2, 'year', null),
-		(datatableId, 3, 'quarter', null);
-------------------------------------------------------------------------------------------------
-/*
-	tableOrder := tableOrder + 1;
-	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
-	VALUES(datasetCode, tableOrder, 'TRPERR', 'SELECT * FROM camdecmpswks.rpt_em_evaluation_trap_error_results($1, $2, $3)')
-	RETURNING datatable_id INTO datatableId;
-
-	/***** COLUMNS *****/
-	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
-	VALUES
-		(datatableId, 1, 'unitStack', 'Unit/Stack'),
-		(datatableId, 2, 'severityCode', 'Severity'),
-		(datatableId, 3, 'checkCode', 'Check Code'),
-		(datatableId, 4, 'resultMessage', 'Result Message');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -216,7 +215,7 @@ BEGIN
 ------------------------------------------------------------------------------------------------
 	tableOrder := tableOrder + 1;
 	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
-	VALUES(datasetCode, tableOrder, 'ADTERR', 'SELECT * FROM camdecmpswks.rpt_em_evaluation_audit_results($1, $2, $3)')
+	VALUES(datasetCode, tableOrder, 'ADTERR', 'SELECT * FROM camdecmpswks.rpt_em_evaluation_audit_error_results($1, $2, $3)')
 	RETURNING datatable_id INTO datatableId;
 
 	/***** COLUMNS *****/
@@ -233,5 +232,4 @@ BEGIN
 		(datatableId, 1, 'monitorPlanId', null),
 		(datatableId, 2, 'year', null),
 		(datatableId, 3, 'quarter', null);
-*/
 END $$;
