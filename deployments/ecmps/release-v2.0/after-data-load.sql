@@ -224,10 +224,22 @@ ALTER TABLE IF EXISTS camdecmpsmd.test_type_code
     ADD CONSTRAINT fk_test_type_code_group_code FOREIGN KEY (group_cd)
     REFERENCES camdecmpsmd.test_type_group_code (test_type_group_cd) MATCH SIMPLE;
 
-UPDATE camdecmpsmd.test_type_code SET group_cd = test_type_cd
-WHERE test_type_cd IN (SELECT test_type_group_cd FROM camdecmpsmd.test_type_group_code);
+UPDATE camdecmpsmd.test_type_code SET group_cd = 'CALINJ' WHERE test_type_cd = '7DAY';
+UPDATE camdecmpsmd.test_type_code SET group_cd = 'CYCSUM' WHERE test_type_cd = 'CYCLE';
+UPDATE camdecmpsmd.test_type_code SET group_cd = 'LINSUM' WHERE test_type_cd = 'LINE';
+UPDATE camdecmpsmd.test_type_code SET group_cd = 'RELACC' WHERE test_type_cd = 'RATA';
+UPDATE camdecmpsmd.test_type_code SET group_cd = 'FLR' WHERE test_type_cd = 'F2LREF';
+UPDATE camdecmpsmd.test_type_code SET group_cd = 'FLC' WHERE test_type_cd = 'F2LCHK';
+UPDATE camdecmpsmd.test_type_code SET group_cd = 'OLOLCAL' WHERE test_type_cd = 'ONOFF';
+UPDATE camdecmpsmd.test_type_code SET group_cd = 'APPESUM' WHERE test_type_cd = 'APPE';
+UPDATE camdecmpsmd.test_type_code SET group_cd = 'FFACC' WHERE test_type_cd = 'FFACC';
+UPDATE camdecmpsmd.test_type_code SET group_cd = 'TTACC' WHERE test_type_cd = 'FFACCTT';
+UPDATE camdecmpsmd.test_type_code SET group_cd = 'FFLB' WHERE test_type_cd = 'FF2LBAS';
+UPDATE camdecmpsmd.test_type_code SET group_cd = 'FFL' WHERE test_type_cd = 'FF2LTST';
+UPDATE camdecmpsmd.test_type_code SET group_cd = 'LME' WHERE test_type_cd = 'UNITDEF';
+UPDATE camdecmpsmd.test_type_code SET group_cd = 'PEI' WHERE test_type_cd = 'PEI';
 
-UPDATE camdecmpsmd.test_type_code SET group_cd = 'HG' WHERE test_type_cd IN (
+UPDATE camdecmpsmd.test_type_code SET group_cd = 'HGL3LS' WHERE test_type_cd IN (
 	'HGLINE',
 	'HGSI3'	
 );
@@ -238,6 +250,7 @@ UPDATE camdecmpsmd.test_type_code SET group_cd = 'MISC' WHERE test_type_cd IN (
 	'MFMCAL',
 	'TSCAL',
 	'BCAL',
+	'QGA',
 	'LEAK',
 	'OTHER',
 	'PEMSACC'

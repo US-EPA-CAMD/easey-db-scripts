@@ -42,19 +42,19 @@ BEGIN
 		op_supp_data_id, mon_loc_id, fuel_cd, op_type_cd, rpt_period_id, op_value, userid, add_date, update_date
 	FROM camdecmps.operating_supp_data;
 
-	INSERT INTO camdecmpswks.sampling_train_supp_data(
-		trap_train_id, trap_id, component_id, train_qa_status_cd, ref_flow_to_sampling_ratio, hg_concentration, sfsr_total_count, sfsr_deviated_count, gfm_total_count, gfm_not_available_count, mon_loc_id, rpt_period_id, userid, add_date, update_date, sampling_ratio_test_result_cd
-	)
-	SELECT
-		trap_train_id, trap_id, component_id, train_qa_status_cd, ref_flow_to_sampling_ratio, hg_concentration, sfsr_total_count, sfsr_deviated_count, gfm_total_count, gfm_not_available_count, mon_loc_id, rpt_period_id, userid, add_date, update_date, sampling_ratio_test_result_cd
-	FROM camdecmps.sampling_train_supp_data;
-
 	INSERT INTO camdecmpswks.sorbent_trap_supp_data(
 		trap_id, mon_sys_id, begin_date, begin_hour, end_date, end_hour, modc_cd, hg_concentration, mon_loc_id, rpt_period_id, userid, add_date, update_date, delete_ind, sorbent_trap_aps_cd, rata_ind
 	)
 	SELECT
 		trap_id, mon_sys_id, begin_date, begin_hour, end_date, end_hour, modc_cd, hg_concentration, mon_loc_id, rpt_period_id, userid, add_date, update_date, delete_ind, sorbent_trap_aps_cd, rata_ind
 	FROM camdecmps.sorbent_trap_supp_data;
+
+	INSERT INTO camdecmpswks.sampling_train_supp_data(
+		trap_train_id, trap_id, component_id, train_qa_status_cd, ref_flow_to_sampling_ratio, hg_concentration, sfsr_total_count, sfsr_deviated_count, gfm_total_count, gfm_not_available_count, mon_loc_id, rpt_period_id, userid, add_date, update_date, sampling_ratio_test_result_cd
+	)
+	SELECT
+		trap_train_id, trap_id, component_id, train_qa_status_cd, ref_flow_to_sampling_ratio, hg_concentration, sfsr_total_count, sfsr_deviated_count, gfm_total_count, gfm_not_available_count, mon_loc_id, rpt_period_id, userid, add_date, update_date, sampling_ratio_test_result_cd
+	FROM camdecmps.sampling_train_supp_data;
 
 	INSERT INTO camdecmpswks.system_op_supp_data(
 		sys_op_supp_data_id, mon_sys_id, rpt_period_id, op_supp_data_type_cd, days, hours, mon_loc_id, delete_ind, userid, add_date, update_date
