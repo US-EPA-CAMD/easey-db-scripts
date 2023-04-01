@@ -14,20 +14,20 @@ CREATE OR REPLACE FUNCTION camdecmpswks.emissions_get_default_so2_rate(
     
 AS $BODY$
 DECLARE
-    result NUMERIC(15,4);
-begin 
-
-    SELECT result = MAX(DEFAULT_VALUE)
+    result numeric;
+BEGIN 
+    SELECT MAX(DEFAULT_VALUE)
 	FROM camdecmpswks.MONITOR_DEFAULT
 	WHERE MON_LOC_ID = p_MON_LOC_ID
 	  AND PARAMETER_CD = 'SO2R'
 	  AND DEFAULT_PURPOSE_CD = 'F23'
-	  AND (DATEADD(hour, p_START_HOUR, p_START_DATE) >= DATEADD(hour, BEGIN_HOUR, BEGIN_DATE))
-	  AND (  (END_DATE IS NULL) 
-	      OR (DATEADD(hour, p_START_HOUR, p_START_DATE) <= DATEADD(hour, END_HOUR, END_DATE)));
+	  AND p_START_DATE + (p_START_HOUR * interval '1 hour') >= BEGIN_DATE + (BEGIN_HOUR * interval '1 hour')
+	  AND (
+		  END_DATE IS NULL OR
+		  p_START_DATE + (p_START_HOUR * interval '1 hour') <= END_DATE + (END_HOUR * interval '1 hour')
+	  ) INTO result;
 
 	RETURN result;
-    
 END;
 $BODY$;
 
@@ -47,19 +47,19 @@ CREATE OR REPLACE FUNCTION camdecmpswks.emissions_get_default_so2_rate(
     
 AS $BODY$
 DECLARE
-    result NUMERIC(15,4);
-begin 
-
-    SELECT result = MAX(DEFAULT_VALUE)
+    result numeric;
+BEGIN 
+    SELECT MAX(DEFAULT_VALUE)
 	FROM camdecmpswks.MONITOR_DEFAULT
 	WHERE MON_LOC_ID = p_MON_LOC_ID
 	  AND PARAMETER_CD = 'SO2R'
 	  AND DEFAULT_PURPOSE_CD = 'F23'
-	  AND (DATEADD(hour, p_START_HOUR, p_START_DATE) >= DATEADD(hour, BEGIN_HOUR, BEGIN_DATE))
-	  AND (  (END_DATE IS NULL) 
-	      OR (DATEADD(hour, p_START_HOUR, p_START_DATE) <= DATEADD(hour, END_HOUR, END_DATE)));
+	  AND p_START_DATE + (p_START_HOUR * interval '1 hour') >= BEGIN_DATE + (BEGIN_HOUR * interval '1 hour')
+	  AND (
+		  END_DATE IS NULL OR
+		  p_START_DATE + (p_START_HOUR * interval '1 hour') <= END_DATE + (END_HOUR * interval '1 hour')
+	  ) INTO result;
 
 	RETURN result;
-    
 END;
 $BODY$;

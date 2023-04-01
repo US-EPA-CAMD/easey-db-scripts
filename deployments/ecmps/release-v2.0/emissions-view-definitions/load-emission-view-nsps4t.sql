@@ -1,6 +1,6 @@
 DO $$
 DECLARE
-	datasetCode text := 'NSP4T';
+	datasetCode text := 'NSPS4T';
 	groupCode text := 'EMVIEW';
 	datatableId integer;
 BEGIN
