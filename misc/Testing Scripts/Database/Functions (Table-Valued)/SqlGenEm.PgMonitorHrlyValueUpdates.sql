@@ -55,6 +55,7 @@ RETURN
                         dat.BEGIN_DATE,
                         dat.BEGIN_HOUR,
                         dat.PARAMETER_CD,
+                        dat.MOISTURE_BASIS,
                         count( 1 ) as ROW_COUNT
                   from  (
                             select  -- ECMPSP
@@ -119,7 +120,8 @@ RETURN
                         dat.BEGIN_DATE,
                         dat.BEGIN_HOUR,
                         dat.RPT_PERIOD_ID,
-                        dat.PARAMETER_CD
+                        dat.PARAMETER_CD,
+                        dat.MOISTURE_BASIS
                 having  ( count( 1 ) > 1 )
             ) sel
         join ECMPS.dbo.HRLY_OP_DATA hod
@@ -129,6 +131,7 @@ RETURN
         join ECMPS.dbo.MONITOR_HRLY_VALUE tar 
             on tar.HOUR_ID = hod.HOUR_ID
            and tar.PARAMETER_CD = sel.PARAMETER_CD
+           and isnull( tar.MOISTURE_BASIS, 'B' ) = isnull( sel.MOISTURE_BASIS, 'B' )
 )
 GO
 
