@@ -4,7 +4,6 @@
 
 CREATE TABLE IF NOT EXISTS camdecmps.emission_view_hiappd
 (
-    em_hi_appd_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id integer NOT NULL,
@@ -25,5 +24,6 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_hiappd
     formula_cd character varying(7) COLLATE pg_catalog."default",
     rpt_hi_rate numeric(13,5),
     calc_hi_rate numeric(13,5),
-    error_codes character varying(1000) COLLATE pg_catalog."default"
-);
+    error_codes character varying(1000) COLLATE pg_catalog."default",
+    CONSTRAINT pk_emission_view_hiappd PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, fuel_type, fuel_sys_id, date_hour)
+) PARTITION BY RANGE (rpt_period_id);

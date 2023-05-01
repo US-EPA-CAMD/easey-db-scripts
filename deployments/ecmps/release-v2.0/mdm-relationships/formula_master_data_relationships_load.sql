@@ -1,3 +1,9 @@
+/* MATS/GNP REQ
+--Parameter Codes for Formulas
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter to Category'), 'PMRE', 'FORMULA', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter to Category'), 'PMRH', 'FORMULA', null);
+*/
+
 --Parameter Code to Formula Code
 INSERT INTO camdecmpsmd.cross_check_catalog(cross_chk_catalog_name
 											, cross_chk_catalog_description
@@ -118,6 +124,19 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, 
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Formula Code for Formulas'), 'SO2RE', 'S-3', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Formula Code for Formulas'), 'SO2RE', 'MS-1', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Formula Code for Formulas'), 'SO2RH', 'MS-1', null);
+
+/* MATS/GNP REQ
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Formula Code for Formulas'), 'HI', 'F-18C', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Formula Code for Formulas'), 'NOX', 'F-27B', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Formula Code for Formulas'), 'NOX', 'F-28', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Formula Code for Formulas'), 'PMRE', 'MS-1', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Formula Code for Formulas'), 'PMRH', 'MS-1', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Formula Code for Formulas'), 'PMRE', 'MS-2', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Formula Code for Formulas'), 'HGRE', 'MS-2', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Formula Code for Formulas'), 'HCLRE', 'MS-2', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Formula Code for Formulas'), 'HFRE', 'MS-2', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Formula Code for Formulas'), 'SO2RE', 'MS-2', null);
+*/
 
 /*
 --DATA VALIDATION SCRIPTS

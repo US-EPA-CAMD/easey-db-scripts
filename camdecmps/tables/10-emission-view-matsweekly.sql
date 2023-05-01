@@ -4,7 +4,6 @@
 
 CREATE TABLE IF NOT EXISTS camdecmps.emission_view_matsweekly
 (
-    em_mats_weekly_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id integer NOT NULL,
@@ -19,5 +18,6 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_matsweekly
     ref_value numeric(13,2),
     measured_value numeric(13,3),
     system_integrity_error numeric(5,1),
-    error_codes character varying(1000) COLLATE pg_catalog."default"
-);
+    error_codes character varying(1000) COLLATE pg_catalog."default",
+    CONSTRAINT pk_emission_view_matsweekly PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, weekly_test_sum_id)
+) PARTITION BY RANGE (rpt_period_id);

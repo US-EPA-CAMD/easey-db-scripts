@@ -4,7 +4,6 @@
 
 CREATE TABLE IF NOT EXISTS camdecmps.emission_view_noxratecems
 (
-    em_nox_rate_cems_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id integer NOT NULL,
@@ -33,5 +32,6 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_noxratecems
     rpt_nox_mass numeric(14,4),
     calc_nox_mass numeric(14,4),
     error_codes character varying(1000) COLLATE pg_catalog."default",
-    rpt_diluent numeric(13,3)
-);
+    rpt_diluent numeric(13,3),
+    CONSTRAINT pk_emission_view_noxratecems PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, date_hour)
+) PARTITION BY RANGE (rpt_period_id);

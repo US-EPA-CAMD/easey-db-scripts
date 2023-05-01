@@ -18,7 +18,7 @@ BEGIN
 	WHERE calendar_year = vYear AND quarter = vQuarter
 	INTO vRptPeriodId;
 
-	RAISE NOTICE 'Refreshing Emissions data views for Monitor Plan [%] and Reportiong Period [Id: %, Yr: %, Qrt: %],', vMonPlanId, vRptPeriodId, vYear, vQuarter;
+	RAISE NOTICE 'Refreshing Emissions data views for Monitor Plan [%] and Reporting Period [Id: %, Yr: %, Qrt: %],', vMonPlanId, vRptPeriodId, vYear, vQuarter;
 
 	-- DROP TEMP TABLES
 	DROP TABLE IF EXISTS temp_hourly_errors;
@@ -95,12 +95,15 @@ BEGIN
 	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
 
 	-- REFRESH EMISSION DATA VIEWS
-	FOR dataset IN SELECT * FROM camdaux.dataset WHERE group_cd = 'EMVIEW' AND dataset_cd NOT IN ('LTFF', 'NSPS4T')
+	FOR dataset IN SELECT * FROM camdaux.dataset WHERE group_cd = 'EMVIEW' AND dataset_cd NOT IN ('LTFF', 'NSPS4T', 'COUNTS')
 	LOOP
 		sqlStatement := format('CALL camdecmpswks.refresh_emission_view_%s(%L, %s);', dataset.dataset_cd, vMonPlanId, vRptPeriodId);
 		RAISE NOTICE 'Refreshing %...', dataset.display_name;
 		RAISE NOTICE '%', sqlStatement;
 		EXECUTE sqlStatement;
 	END LOOP;
+
+	-- REFRESH EMISSION VIEW COUNTS
+	CALL camdecmpswks.refresh_emission_view_count(vMonPlanId, vRptPeriodId);
 END;
 $BODY$;

@@ -1,3 +1,18 @@
+/* MATS/GNP REQ
+--Parameter Code for Method
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter to Category'), 'PMRE', 'METHOD', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter to Category'), 'PMRH', 'METHOD', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter to Category'), 'PMPM', 'METHOD', null);
+
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Method Parameter to Method to System Type'), 'NOX', 'CALC', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Method Parameter to Method to System Type'), 'PMRE', 'CEM', 'PM');
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Method Parameter to Method to System Type'), 'PMRE', 'CALC', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Method Parameter to Method to System Type'), 'PMRH', 'CEM', 'PM');
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Method Parameter to Method to System Type'), 'PMRH', 'CALC', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Method Parameter to Method to System Type'), 'PMPM', 'CPMS', 'CPMS');
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Method Parameter to Method to System Type'), 'PMPM', 'CALC', null);
+*/
+
 --Susbtitute Data Code for Method
 INSERT INTO camdecmpsmd.cross_check_catalog(cross_chk_catalog_name
 											, cross_chk_catalog_description

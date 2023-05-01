@@ -148,6 +148,7 @@ CREATE TABLE IF NOT EXISTS camdecmpscalc.derived_hrly_value
     derv_id character varying(45) NOT NULL,
     calc_unadjusted_hrly_value numeric(13,3),
     calc_adjusted_hrly_value numeric(14,4),
+    applicable_bias_adj_factor numeric(5,3),
     calc_pct_diluent character varying(10),
     calc_pct_moisture character varying(10),
     calc_rata_status character varying(75),

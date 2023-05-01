@@ -1,13 +1,18 @@
+-- FUNCTION: camdecmpswks.get_locations_by_unit_and_stack(numeric, text[], text[])
+
+DROP FUNCTION IF EXISTS camdecmpswks.get_locations_by_unit_and_stack(numeric, text[], text[]);
+
 CREATE OR REPLACE FUNCTION camdecmpswks.get_locations_by_unit_and_stack(
 	poriscode numeric,
 	punitid text[],
 	pstackpipeid text[])
     RETURNS SETOF character varying 
     LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-    ROWS 1000
 
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 BEGIN
 	return query 
