@@ -4,7 +4,8 @@ DROP VIEW IF EXISTS camdecmpswks.emission_view_ltff;
 
 CREATE OR REPLACE VIEW camdecmpswks.emission_view_ltff
  AS
- SELECT ltff.mon_loc_id,
+ SELECT mpl.mon_plan_id,
+    ltff.mon_loc_id,
     rp.rpt_period_id,
     rp.begin_date,
     rp.end_date,
@@ -18,8 +19,8 @@ CREATE OR REPLACE VIEW camdecmpswks.emission_view_ltff
     ltff.gross_calorific_value,
     ltff.gcv_uom_cd AS gcv_uom,
     ltff.total_heat_input AS rpt_heat_input,
-    ltff.calc_total_heat_input AS calc_heat_input,
-    NULL::text AS error_codes
+    ltff.calc_total_heat_input AS calc_heat_input
    FROM camdecmpswks.long_term_fuel_flow ltff
-     LEFT JOIN camdecmpswks.monitor_system ms ON ms.mon_sys_id::text = ltff.mon_sys_id::text
-     JOIN camdecmpsmd.reporting_period rp ON rp.rpt_period_id = ltff.rpt_period_id;
+     JOIN camdecmpswks.monitor_plan_location mpl USING (mon_loc_id)
+     JOIN camdecmpsmd.reporting_period rp USING (rpt_period_id)
+     LEFT JOIN camdecmpswks.monitor_system ms USING (mon_sys_id);

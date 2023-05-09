@@ -4,7 +4,8 @@ DROP VIEW IF EXISTS camdecmps.emission_view_nsps4t;
 
 CREATE OR REPLACE VIEW camdecmps.emission_view_nsps4t
  AS
- SELECT nsm.mon_loc_id,
+ SELECT mpl.mon_plan_id,
+    nsm.mon_loc_id,
     rp.rpt_period_id,
         CASE
             WHEN (12::numeric * ncp.end_year + ncp.end_month) = sel.include_all_month OR sel.include_all_month IS NULL THEN nsm.emission_standard_cd
@@ -58,5 +59,6 @@ CREATE OR REPLACE VIEW camdecmps.emission_view_nsps4t
           GROUP BY ans.nsps4t_sum_id, ans.rpt_period_id, prd.period_abbreviation) sel
      JOIN camdecmps.nsps4t_summary nsm ON nsm.nsps4t_sum_id::text = sel.nsps4t_sum_id::text
      JOIN camdecmps.nsps4t_compliance_period ncp ON ncp.nsps4t_sum_id::text = sel.nsps4t_sum_id::text
+     JOIN camdecmps.monitor_plan_location mpl ON mpl.mon_loc_id::text = nsm.mon_loc_id::text
      JOIN camdecmpsmd.reporting_period rp ON rp.rpt_period_id = nsm.rpt_period_id
      LEFT JOIN camdecmps.nsps4t_annual nan ON nan.nsps4t_sum_id::text = sel.nsps4t_sum_id::text;

@@ -4,7 +4,8 @@ DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_matshg(character var
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_matshg(
 	vmonplanid character varying,
-	vrptperiodid numeric)
+	vrptperiodid numeric
+)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN

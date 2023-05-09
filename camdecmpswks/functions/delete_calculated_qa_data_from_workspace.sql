@@ -31,6 +31,7 @@ BEGIN
 	 -- Update for 20 tables--
 		UPDATE camdecmpswks.TEST_SUMMARY
 		SET NEEDS_EVAL_FLG = 'Y',
+			EVAL_STATUS_CD = 'EVAL',
 			CHK_SESSION_ID = null,
 			CALC_GP_IND = NULL,
 			CALC_TEST_RESULT_CD = NULL,

@@ -3,8 +3,8 @@
 DROP FUNCTION IF EXISTS camdecmpswks.update_ecmps_status_for_qce_evaluation(character varying, character varying);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.update_ecmps_status_for_qce_evaluation(
-	vchksessionid character varying,
-	vqceid character varying)
+	vqceid character varying
+	vchksessionid character varying)
     RETURNS TABLE(result text, error_msg character varying) 
     LANGUAGE 'plpgsql'
 
