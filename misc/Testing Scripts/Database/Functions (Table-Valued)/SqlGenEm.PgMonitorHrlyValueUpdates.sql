@@ -41,7 +41,9 @@ RETURN
                     ' UPDATE_DATE                    = ', concat( '''', format( getdate(), 'yyyy-MM-dd'), '''' ),
 
                     ' where  exists( select 1 from camdecmpswks.HRLY_OP_DATA hod where hod.HOUR_ID = dhv.HOUR_ID and hod.MON_LOC_ID = ''', sel.MON_LOC_ID, ''' and hod.BEGIN_DATE = ''', format( sel.BEGIN_DATE, 'yyyy-MM-dd' ), ''' and hod.BEGIN_HOUR = ', sel.BEGIN_HOUR, ' )',
-                    ' and  PARAMETER_CD = ''', sel.PARAMETER_CD, '''', ';'
+                    ' and  PARAMETER_CD = ''', sel.PARAMETER_CD, '''',
+                    ' and  coalesce( MOISTURE_BASIS, ''B'' ) = ''', isnull( sel.MOISTURE_BASIS, 'B' ), '''',
+                    ' and  coalesce( MODC_CD, ''00'' ) = ''', isnull( sel.MODC_CD, '00' ), '''', ';'
                 )
             ) as SQL_STATEMENT
       from  (
@@ -56,6 +58,7 @@ RETURN
                         dat.BEGIN_HOUR,
                         dat.PARAMETER_CD,
                         dat.MOISTURE_BASIS,
+                        dat.MODC_CD,
                         count( 1 ) as ROW_COUNT
                   from  (
                             select  -- ECMPSP
@@ -121,7 +124,8 @@ RETURN
                         dat.BEGIN_HOUR,
                         dat.RPT_PERIOD_ID,
                         dat.PARAMETER_CD,
-                        dat.MOISTURE_BASIS
+                        dat.MOISTURE_BASIS,
+                        dat.MODC_CD
                 having  ( count( 1 ) > 1 )
             ) sel
         join ECMPS.dbo.HRLY_OP_DATA hod
@@ -132,6 +136,7 @@ RETURN
             on tar.HOUR_ID = hod.HOUR_ID
            and tar.PARAMETER_CD = sel.PARAMETER_CD
            and isnull( tar.MOISTURE_BASIS, 'B' ) = isnull( sel.MOISTURE_BASIS, 'B' )
+           and isnull( tar.MODC_CD, '00' ) = isnull( sel.MODC_CD, '00' )
 )
 GO
 

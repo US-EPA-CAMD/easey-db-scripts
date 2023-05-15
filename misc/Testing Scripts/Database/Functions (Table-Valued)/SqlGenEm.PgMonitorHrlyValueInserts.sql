@@ -77,6 +77,7 @@ RETURN
                         lst.LOCATION_NAME,
                         mhv.PARAMETER_CD,
                         mhv.MOISTURE_BASIS,
+                        mhv.MODC_CD,
                         hod.BEGIN_DATE,
                         hod.BEGIN_HOUR,
                         hod.MON_LOC_ID,
@@ -96,6 +97,7 @@ RETURN
                         lst.LOCATION_NAME,
                         mhv.PARAMETER_CD,
                         mhv.MOISTURE_BASIS,
+                        mhv.MODC_CD,
                         hod.BEGIN_DATE,
                         hod.BEGIN_HOUR,
                         hod.MON_LOC_ID,
@@ -115,6 +117,7 @@ RETURN
             on tar.HOUR_ID = hod.HOUR_ID
            and tar.PARAMETER_CD = sel.PARAMETER_CD
            and isnull( tar.MOISTURE_BASIS, 'B' ) = isnull( sel.MOISTURE_BASIS, 'B' )
+           and isnull( tar.MODC_CD, '00' ) = isnull( sel.MODC_CD, '00' )
 )
 GO
 

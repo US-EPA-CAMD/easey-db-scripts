@@ -27,7 +27,9 @@ RETURN
                 (
                     'delete from camdecmpswks.MONITOR_HRLY_VALUE tar',
                     ' where  exists( select 1 from camdecmpswks.HRLY_OP_DATA hod where hod.HOUR_ID = tar.HOUR_ID and hod.MON_LOC_ID = ''', sel.MON_LOC_ID, ''' and hod.BEGIN_DATE = ''', format( sel.BEGIN_DATE, 'yyyy-MM-dd' ), ''' and hod.BEGIN_HOUR = ', sel.BEGIN_HOUR, ' )',
-                    ' and  PARAMETER_CD = ''', sel.PARAMETER_CD, '''', ';'
+                    ' and  PARAMETER_CD = ''', sel.PARAMETER_CD, '''',
+                    ' and  coalesce( MOISTURE_BASIS, ''B'' ) = ''', isnull( sel.MOISTURE_BASIS, 'B' ), '''',
+                    ' and  coalesce( MODC_CD, ''00'' ) = ''', isnull( sel.MODC_CD, '00' ), '''', ';'
                 )
             ) as SQL_STATEMENT
       from  (
@@ -39,6 +41,7 @@ RETURN
                         lst.LOCATION_NAME,
                         mhv.PARAMETER_CD,
                         mhv.MOISTURE_BASIS,
+                        mhv.MODC_CD,
                         hod.BEGIN_DATE,
                         hod.BEGIN_HOUR,
                         hod.MON_LOC_ID,
@@ -58,6 +61,7 @@ RETURN
                         lst.LOCATION_NAME,
                         mhv.PARAMETER_CD,
                         mhv.MOISTURE_BASIS,
+                        mhv.MODC_CD,
                         hod.BEGIN_DATE,
                         hod.BEGIN_HOUR,
                         hod.MON_LOC_ID,
