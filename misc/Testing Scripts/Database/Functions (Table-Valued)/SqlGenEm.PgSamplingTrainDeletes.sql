@@ -29,7 +29,7 @@ RETURN
                     ' where  exists', 
                     ' (', 
                         ' select 1 from camdecmpswks.SORBENT_TRAP trp', 
-                        ' join SAMPLING_TRAIN trn on trn.TRAP_ID = trp.TRAP_ID',
+                        ' join camdecmpswks.SAMPLING_TRAIN trn on trn.TRAP_ID = trp.TRAP_ID',
                         ' where trp.MON_LOC_ID = ''', sel.MON_LOC_ID, '''',
                         ' and trp.RPT_PERIOD_ID = ', sel.RPT_PERIOD_ID,
                         ' and trp.MON_SYS_ID = ''', sel.MON_SYS_ID, '''',
