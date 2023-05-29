@@ -35,8 +35,9 @@ RETURN
                         ' and trp.MON_SYS_ID = ''', sel.MON_SYS_ID, '''',
                         ' and trp.BEGIN_DATE = ''', format( sel.BEGIN_DATE, 'yyyy-MM-dd' ), ''' and BEGIN_HOUR = ', sel.BEGIN_HOUR,
                         ' and trp.END_DATE = ''', format( sel.END_DATE, 'yyyy-MM-dd' ), ''' and END_HOUR = ', sel.END_HOUR,
-                        ' and trp.TRAP_ID = trp.TRAP_ID',
                         ' and trn.COMPONENT_ID = ''', sel.COMPONENT_ID, '''',
+                        ' and trp.TRAP_ID = tar.TRAP_ID',
+                        ' and trn.COMPONENT_ID = tar.COMPONENT_ID',
                     ' )',
                     ';'
                 )
