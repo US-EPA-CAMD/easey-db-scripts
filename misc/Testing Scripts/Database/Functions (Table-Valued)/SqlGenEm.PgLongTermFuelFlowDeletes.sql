@@ -26,7 +26,7 @@ RETURN
                 concat
                 (
                     'delete from camdecmpswks.LONG_TERM_FUEL_FLOW',
-                    ' where MON_LOC_ID = ''', sel.MON_LOC_ID, ''' and RPT_PERIOD_ID = ', sel.RPT_PERIOD_ID, ' and MON_SYS_ID = ''', sel.MON_SYS_ID, ''' and FUEL_FLOW_PERIOD_CD = ''', sel.FUEL_FLOW_PERIOD_CD, ''';' 
+                    ' where MON_LOC_ID = ''', sel.MON_LOC_ID, ''' and RPT_PERIOD_ID = ', sel.RPT_PERIOD_ID, ' and MON_SYS_ID = ''', sel.MON_SYS_ID, ''' and coalesce( FUEL_FLOW_PERIOD_CD, ''NULL'' ) = ''', isnull( sel.FUEL_FLOW_PERIOD_CD, 'NULL' ), ''';' 
                 )
             ) as SQL_STATEMENT
       from  (
