@@ -30,28 +30,32 @@ CREATE TABLE IF NOT EXISTS camdecmps.sampling_train
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_sampling_train PRIMARY KEY (trap_train_id),
-    CONSTRAINT fk_train_component_id FOREIGN KEY (component_id)
+    CONSTRAINT fk_sampling_train_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_train_leak_result_cd FOREIGN KEY (post_leak_test_result_cd)
-        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_train_mon_loc_id FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_sampling_train_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_train_rpt_period_id FOREIGN KEY (rpt_period_id)
+    CONSTRAINT fk_sampling_train_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_train_sfsr_result_cd FOREIGN KEY (sampling_ratio_test_result_cd)
+    CONSTRAINT fk_sampling_train_sorbent_trap FOREIGN KEY (trap_id)
+        REFERENCES camdecmps.sorbent_trap (trap_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_sampling_train_test_result_code_post_leak FOREIGN KEY (post_leak_test_result_cd)
         REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_train_sorbent_trap_id FOREIGN KEY (trap_id)
-        REFERENCES camdecmps.sorbent_trap (trap_id) MATCH SIMPLE
+    CONSTRAINT fk_sampling_train_test_result_code_sampling_ratio FOREIGN KEY (sampling_ratio_test_result_cd)
+        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_sampling_train_train_qa_status_code FOREIGN KEY (train_qa_status_cd)
+        REFERENCES camdecmpsmd.train_qa_status_code (train_qa_status_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );

@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.daily_test_supp_data
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_daily_test_supp_data PRIMARY KEY (daily_test_supp_data_id),
-    CONSTRAINT fk_daily_test_supp_data_cmp FOREIGN KEY (component_id)
+    CONSTRAINT fk_daily_test_supp_data_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
@@ -34,11 +34,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.daily_test_supp_data
         REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_daily_test_supp_data_dts FOREIGN KEY (daily_test_sum_id)
-        REFERENCES camdecmps.daily_test_summary (daily_test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_daily_test_supp_data_loc FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_daily_test_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,

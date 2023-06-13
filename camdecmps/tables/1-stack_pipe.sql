@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.stack_pipe
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_stack_pipe PRIMARY KEY (stack_pipe_id),
-    CONSTRAINT fk_stack_pipe_fac FOREIGN KEY (fac_id)
+    CONSTRAINT fk_stack_pipe_plant FOREIGN KEY (fac_id)
         REFERENCES camd.plant (fac_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

@@ -37,4 +37,4 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_test_extension_exemption_eval_and_submit
      LEFT JOIN camdecmpsmd.reporting_period rp ON rp.rpt_period_id = tee.rpt_period_id
      LEFT JOIN camd.unit u USING (unit_id)
      LEFT JOIN camdecmps.stack_pipe sp USING (stack_pipe_id)
-  ORDER BY p.oris_code, p.facility_name, mp.mon_plan_id;
+  ORDER BY p.oris_code, mp.mon_plan_id, u.unitid, sp.stack_name, tee.rpt_period_id;

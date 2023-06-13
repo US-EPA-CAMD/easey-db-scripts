@@ -20,15 +20,15 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_location_attribute
     update_date timestamp without time zone,
     userid character varying(25) COLLATE pg_catalog."default",
     CONSTRAINT pk_monitor_location_attribute PRIMARY KEY (mon_loc_attrib_id),
-    CONSTRAINT fk_material_code_monitor_locat FOREIGN KEY (material_cd)
+    CONSTRAINT fk_monitor_location_attribute_material_code FOREIGN KEY (material_cd)
         REFERENCES camdecmpsmd.material_code (material_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_locat_monitor_locat FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_monitor_location_attribute_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_shape_code_monitor_locat FOREIGN KEY (shape_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_monitor_location_attribute_shape_code FOREIGN KEY (shape_cd)
         REFERENCES camdecmpsmd.shape_code (shape_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

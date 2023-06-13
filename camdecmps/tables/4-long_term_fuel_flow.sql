@@ -19,27 +19,27 @@ CREATE TABLE IF NOT EXISTS camdecmps.long_term_fuel_flow
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_long_term_fuel_flow PRIMARY KEY (ltff_id),
-    CONSTRAINT fk_fuel_flow_per_long_term_fue FOREIGN KEY (fuel_flow_period_cd)
+    CONSTRAINT fk_long_term_fuel_flow_fuel_flow_period_code FOREIGN KEY (fuel_flow_period_cd)
         REFERENCES camdecmpsmd.fuel_flow_period_code (fuel_flow_period_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_locat_long_term_fue FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_long_term_fuel_flow_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_syste_long_term_fue FOREIGN KEY (mon_sys_id)
+    CONSTRAINT fk_long_term_fuel_flow_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_reporting_per_long_term_fue FOREIGN KEY (rpt_period_id)
+    CONSTRAINT fk_long_term_fuel_flow_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_units_of_meas_long_term_fu2 FOREIGN KEY (gcv_uom_cd)
+    CONSTRAINT fk_long_term_fuel_flow_units_of_measure_code_gcv FOREIGN KEY (gcv_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_units_of_meas_long_term_fue FOREIGN KEY (ltff_uom_cd)
+    CONSTRAINT fk_long_term_fuel_flow_units_of_measure_code_ltff FOREIGN KEY (ltff_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

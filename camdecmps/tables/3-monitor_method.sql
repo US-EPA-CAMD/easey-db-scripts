@@ -18,23 +18,23 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_method
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_monitor_method PRIMARY KEY (mon_method_id),
-    CONSTRAINT fk_bypass_approa_monitor_metho FOREIGN KEY (bypass_approach_cd)
+    CONSTRAINT fk_monitor_method_bypass_approach_code FOREIGN KEY (bypass_approach_cd)
         REFERENCES camdecmpsmd.bypass_approach_code (bypass_approach_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_method_code_monitor_metho FOREIGN KEY (method_cd)
+    CONSTRAINT fk_monitor_method_method_code FOREIGN KEY (method_cd)
         REFERENCES camdecmpsmd.method_code (method_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_locat_monitor_metho FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_monitor_method_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_parameter_cod_monitor_metho FOREIGN KEY (parameter_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_monitor_method_parameter_code FOREIGN KEY (parameter_cd)
         REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_substitute_da_monitor_metho FOREIGN KEY (sub_data_cd)
+    CONSTRAINT fk_monitor_method_substitute_data_code FOREIGN KEY (sub_data_cd)
         REFERENCES camdecmpsmd.substitute_data_code (sub_data_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

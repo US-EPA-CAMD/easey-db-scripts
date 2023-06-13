@@ -27,23 +27,23 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_span
     update_date timestamp without time zone,
     span_uom_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_monitor_span PRIMARY KEY (span_id),
-    CONSTRAINT fk_component_typ_monitor_span FOREIGN KEY (component_type_cd)
+    CONSTRAINT fk_monitor_span_component_type_code FOREIGN KEY (component_type_cd)
         REFERENCES camdecmpsmd.component_type_code (component_type_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_locat_monitor_span FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_monitor_span_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_span_method_c_monitor_span FOREIGN KEY (span_method_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_monitor_span_span_method_code FOREIGN KEY (span_method_cd)
         REFERENCES camdecmpsmd.span_method_code (span_method_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_span_scale_co_monitor_span FOREIGN KEY (span_scale_cd)
+    CONSTRAINT fk_monitor_span_span_scale_code FOREIGN KEY (span_scale_cd)
         REFERENCES camdecmpsmd.span_scale_code (span_scale_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_units_of_meas_monitor_span FOREIGN KEY (span_uom_cd)
+    CONSTRAINT fk_monitor_span_units_of_measure_code FOREIGN KEY (span_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

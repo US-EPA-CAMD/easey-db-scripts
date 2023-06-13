@@ -26,15 +26,15 @@ CREATE TABLE IF NOT EXISTS camdecmps.rata_traverse
     update_date timestamp without time zone,
     point_used_ind numeric(38,0),
     CONSTRAINT pk_rata_traverse PRIMARY KEY (rata_traverse_id),
-    CONSTRAINT fk_flow_rata_run_rata_traverse FOREIGN KEY (flow_rata_run_id)
+    CONSTRAINT fk_rata_traverse_flow_rata_run FOREIGN KEY (flow_rata_run_id)
         REFERENCES camdecmps.flow_rata_run (flow_rata_run_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_pressure_meas_rata_traverse FOREIGN KEY (pressure_meas_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_rata_traverse_pressure_measure_code FOREIGN KEY (pressure_meas_cd)
         REFERENCES camdecmpsmd.pressure_measure_code (pressure_meas_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_probe_type_co_rata_traverse FOREIGN KEY (probe_type_cd)
+    CONSTRAINT fk_rata_traverse_probe_type_code FOREIGN KEY (probe_type_cd)
         REFERENCES camdecmpsmd.probe_type_code (probe_type_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

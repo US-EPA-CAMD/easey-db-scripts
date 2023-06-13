@@ -20,38 +20,38 @@ CREATE TABLE IF NOT EXISTS camdecmps.daily_test_summary
     span_scale_cd character varying(7) COLLATE pg_catalog."default",
     mon_sys_id character varying(45) COLLATE pg_catalog."default",
     CONSTRAINT pk_daily_test_summary PRIMARY KEY (daily_test_sum_id),
-    CONSTRAINT fk_component_daily_test_su FOREIGN KEY (component_id)
+    CONSTRAINT fk_daily_test_summary_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_locat_daily_test_su FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_daily_test_summary_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_syste_daily_test_su FOREIGN KEY (mon_sys_id)
+    CONSTRAINT fk_daily_test_summary_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_reporting_per_daily_test_su FOREIGN KEY (rpt_period_id)
+    CONSTRAINT fk_daily_test_summary_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_span_scale_co_daily_test_su FOREIGN KEY (span_scale_cd)
+    CONSTRAINT fk_daily_test_summary_span_scale_code FOREIGN KEY (span_scale_cd)
         REFERENCES camdecmpsmd.span_scale_code (span_scale_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_test_result_c_daily_test40 FOREIGN KEY (calc_test_result_cd)
+    CONSTRAINT fk_daily_test_summary_test_result_code FOREIGN KEY (test_result_cd)
         REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_test_result_c_daily_test_su FOREIGN KEY (test_result_cd)
+    CONSTRAINT fk_daily_test_summary_test_result_code_calc FOREIGN KEY (calc_test_result_cd)
         REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_test_type_cod_daily_test_su FOREIGN KEY (test_type_cd)
+    CONSTRAINT fk_daily_test_summary_test_type_code FOREIGN KEY (test_type_cd)
         REFERENCES camdecmpsmd.test_type_code (test_type_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE NO ACTIO
 );
 
 COMMENT ON TABLE camdecmps.daily_test_summary

@@ -21,18 +21,18 @@ CREATE TABLE IF NOT EXISTS camdecmps.flow_to_load_check
     update_date timestamp without time zone,
     op_level_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_flow_to_load_check PRIMARY KEY (flow_load_check_id),
-    CONSTRAINT fk_operating_lev_flow_to_load FOREIGN KEY (op_level_cd)
+    CONSTRAINT fk_flow_to_load_check_operating_level_code FOREIGN KEY (op_level_cd)
         REFERENCES camdecmpsmd.operating_level_code (op_level_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_test_basis_flow_to_load_che FOREIGN KEY (test_basis_cd)
+    CONSTRAINT fk_flow_to_load_check_test_basis_code FOREIGN KEY (test_basis_cd)
         REFERENCES camdecmpsmd.test_basis_code (test_basis_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_test_summary_flow_to_l103 FOREIGN KEY (test_sum_id)
+    CONSTRAINT fk_flow_to_load_check_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.flow_to_load_check

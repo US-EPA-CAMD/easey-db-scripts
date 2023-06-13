@@ -22,11 +22,11 @@ CREATE TABLE IF NOT EXISTS camdecmps.rata_run
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_rata_run PRIMARY KEY (rata_run_id),
-    CONSTRAINT fk_rata_summary_rata_run FOREIGN KEY (rata_sum_id)
+    CONSTRAINT fk_rata_run_rata_summary FOREIGN KEY (rata_sum_id)
         REFERENCES camdecmps.rata_summary (rata_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_run_status_co_rata_run FOREIGN KEY (run_status_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_rata_run_run_status_code FOREIGN KEY (run_status_cd)
         REFERENCES camdecmpsmd.run_status_code (run_status_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

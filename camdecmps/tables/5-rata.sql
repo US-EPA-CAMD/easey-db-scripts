@@ -18,18 +18,18 @@ CREATE TABLE IF NOT EXISTS camdecmps.rata
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_rata PRIMARY KEY (rata_id),
-    CONSTRAINT fk_rata_frequenc_rata FOREIGN KEY (rata_frequency_cd)
+    CONSTRAINT fk_rata_rata_frequency_code FOREIGN KEY (rata_frequency_cd)
         REFERENCES camdecmpsmd.rata_frequency_code (rata_frequency_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_rata_frequenc_rata2 FOREIGN KEY (calc_rata_frequency_cd)
+    CONSTRAINT fk_rata_rata_frequency_code_calc FOREIGN KEY (calc_rata_frequency_cd)
         REFERENCES camdecmpsmd.rata_frequency_code (rata_frequency_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_test_summary_rata FOREIGN KEY (test_sum_id)
+    CONSTRAINT fk_rata_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.rata

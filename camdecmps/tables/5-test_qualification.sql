@@ -16,14 +16,14 @@ CREATE TABLE IF NOT EXISTS camdecmps.test_qualification
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_test_qualification PRIMARY KEY (test_qualification_id),
-    CONSTRAINT fk_test_claim_co_test_qualific FOREIGN KEY (test_claim_cd)
+    CONSTRAINT fk_test_qualification_test_claim_code FOREIGN KEY (test_claim_cd)
         REFERENCES camdecmpsmd.test_claim_code (test_claim_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_test_summary_test_qualific FOREIGN KEY (test_sum_id)
+    CONSTRAINT fk_test_qualification_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.test_qualification

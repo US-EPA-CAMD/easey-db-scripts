@@ -23,31 +23,31 @@ CREATE TABLE IF NOT EXISTS camdecmps.mats_monitor_hrly_value
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_mats_monitor_hrly_value PRIMARY KEY (mats_mhv_id),
-    CONSTRAINT fk_mmhv_component_id FOREIGN KEY (component_id)
+    CONSTRAINT fk_mats_monitor_hrly_value_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_mmhv_hour_id FOREIGN KEY (hour_id)
+    CONSTRAINT fk_mats_monitor_hrly_value_hrly_op_data FOREIGN KEY (hour_id)
         REFERENCES camdecmps.hrly_op_data (hour_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_mmhv_modc_cd FOREIGN KEY (modc_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_mats_monitor_hrly_value_modc_code FOREIGN KEY (modc_cd)
         REFERENCES camdecmpsmd.modc_code (modc_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_mmhv_mon_loc_id FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_mats_monitor_hrly_value_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_mmhv_mon_sys_id FOREIGN KEY (mon_sys_id)
+    CONSTRAINT fk_mats_monitor_hrly_value_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_mmhv_parameter_cd FOREIGN KEY (parameter_cd)
+    CONSTRAINT fk_mats_monitor_hrly_value_parameter_code FOREIGN KEY (parameter_cd)
         REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_mmhv_rpt_period_id FOREIGN KEY (rpt_period_id)
+    CONSTRAINT fk_mats_monitor_hrly_value_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

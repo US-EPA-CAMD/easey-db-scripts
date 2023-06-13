@@ -22,31 +22,31 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_default
     update_date timestamp without time zone,
     default_uom_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_monitor_default PRIMARY KEY (mondef_id),
-    CONSTRAINT fk_default_purpo_monitor_defau FOREIGN KEY (default_purpose_cd)
+    CONSTRAINT fk_monitor_default_default_purpose_code FOREIGN KEY (default_purpose_cd)
         REFERENCES camdecmpsmd.default_purpose_code (default_purpose_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_default_sourc_monitor_defau FOREIGN KEY (default_source_cd)
+    CONSTRAINT fk_monitor_default_default_source_code FOREIGN KEY (default_source_cd)
         REFERENCES camdecmpsmd.default_source_code (default_source_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_fuel_code_monitor_defau FOREIGN KEY (fuel_cd)
+    CONSTRAINT fk_monitor_default_fuel_code FOREIGN KEY (fuel_cd)
         REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_locat_monitor_defau FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_monitor_default_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_operating_con_monitor_defau FOREIGN KEY (operating_condition_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_monitor_default_operating_condition_code FOREIGN KEY (operating_condition_cd)
         REFERENCES camdecmpsmd.operating_condition_code (operating_condition_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_parameter_cod_monitor_defau FOREIGN KEY (parameter_cd)
+    CONSTRAINT fk_monitor_default_parameter_code FOREIGN KEY (parameter_cd)
         REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_units_of_meas_monitor_defau FOREIGN KEY (default_uom_cd)
+    CONSTRAINT fk_monitor_default_units_of_measure_code FOREIGN KEY (default_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

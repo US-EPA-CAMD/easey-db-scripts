@@ -13,11 +13,11 @@ CREATE TABLE IF NOT EXISTS camdecmps.unit_stack_configuration
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_unit_stack_configuration PRIMARY KEY (config_id),
-    CONSTRAINT fk_unit_stack_configuration_sp FOREIGN KEY (stack_pipe_id)
+    CONSTRAINT fk_unit_stack_configuration_stack_pipe FOREIGN KEY (stack_pipe_id)
         REFERENCES camdecmps.stack_pipe (stack_pipe_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_unit_stack_configuration_un FOREIGN KEY (unit_id)
+    CONSTRAINT fk_unit_stack_configuration_unit FOREIGN KEY (unit_id)
         REFERENCES camd.unit (unit_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_qualification_lee
     CONSTRAINT fk_monitor_qualification_lee_monitor_qualification FOREIGN KEY (mon_qual_id)
         REFERENCES camdecmps.monitor_qualification (mon_qual_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT fk_monitor_qualification_lee_parameter_code FOREIGN KEY (parameter_cd)
         REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
         ON UPDATE NO ACTION

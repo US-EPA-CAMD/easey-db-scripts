@@ -28,24 +28,32 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_hrly_value
     calc_dayint_status character varying(75) COLLATE pg_catalog."default",
     calc_f2l_status character varying(75) COLLATE pg_catalog."default",
     CONSTRAINT pk_monitor_hrly_value PRIMARY KEY (monitor_hrly_val_id),
-    CONSTRAINT fk_modc_code_monitor_hrly_ FOREIGN KEY (modc_cd)
-        REFERENCES camdecmpsmd.modc_code (modc_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_syste_component FOREIGN KEY (component_id)
+    CONSTRAINT fk_monitor_hrly_value_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_syste_monitor_hrly FOREIGN KEY (mon_sys_id)
+    CONSTRAINT fk_monitor_hrly_value_hrly_op_data FOREIGN KEY (hour_id)
+        REFERENCES camdecmps.hrly_op_data (hour_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_monitor_hrly_value_modc_code FOREIGN KEY (modc_cd)
+        REFERENCES camdecmpsmd.modc_code (modc_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_monitor_hrly_value_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_monitor_hrly_value_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_parameter_cod_monitor_hrly_ FOREIGN KEY (parameter_cd)
+    CONSTRAINT fk_monitor_hrly_value_parameter_code FOREIGN KEY (parameter_cd)
         REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT monitor_hrly_value_r01 FOREIGN KEY (hour_id)
-        REFERENCES camdecmps.hrly_op_data (hour_id) MATCH SIMPLE
+    CONSTRAINT fk_monitor_hrly_value_reporting_period FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT monitor_hrly_value_hour_id_check CHECK (hour_id IS NOT NULL),

@@ -11,11 +11,11 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_location
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_monitor_location PRIMARY KEY (mon_loc_id),
-    CONSTRAINT fk_monitor_location_stp FOREIGN KEY (stack_pipe_id)
+    CONSTRAINT fk_monitor_location_stack_pipe FOREIGN KEY (stack_pipe_id)
         REFERENCES camdecmps.stack_pipe (stack_pipe_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_location_unt FOREIGN KEY (unit_id)
+    CONSTRAINT fk_monitor_location_unit FOREIGN KEY (unit_id)
         REFERENCES camd.unit (unit_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

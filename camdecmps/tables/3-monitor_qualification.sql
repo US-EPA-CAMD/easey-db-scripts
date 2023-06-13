@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_qualification
     CONSTRAINT fk_monitor_qualification_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT fk_monitor_qualification_qual_type_code FOREIGN KEY (qual_type_cd)
         REFERENCES camdecmpsmd.qual_type_code (qual_type_cd) MATCH SIMPLE
         ON UPDATE NO ACTION

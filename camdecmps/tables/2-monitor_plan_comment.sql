@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_plan_comment
     CONSTRAINT fk_monitor_plan_comment_monitor_plan FOREIGN KEY (mon_plan_id)
         REFERENCES camdecmps.monitor_plan (mon_plan_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT fk_monitor_plan_comment_submission_availability_code FOREIGN KEY (submission_availability_cd)
         REFERENCES camdecmpsmd.submission_availability_code (submission_availability_cd) MATCH SIMPLE
         ON UPDATE NO ACTION

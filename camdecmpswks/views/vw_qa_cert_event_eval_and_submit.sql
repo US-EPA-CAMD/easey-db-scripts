@@ -12,7 +12,6 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_qa_cert_event_eval_and_submit
     qce.qa_cert_event_cd,
     qce.mon_loc_id,
     COALESCE(ms.system_identifier, c.component_identifier) AS system_component_identifier,
-    qsd.rpt_period_id,
         CASE
             WHEN qce.qa_cert_event_date IS NULL THEN NULL::text
             ELSE concat(qce.qa_cert_event_date, ' ', lpad(COALESCE(qce.qa_cert_event_hour, 0::numeric)::text, 2, '0'::text), ':00')
@@ -31,8 +30,7 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_qa_cert_event_eval_and_submit
     qce.eval_status_cd,
     esc.eval_status_cd_description,
     qce.submission_availability_cd,
-    sac.sub_avail_cd_description as submission_availability_cd_description,
-    rp.period_abbreviation
+    sac.sub_avail_cd_description as submission_availability_cd_description
    FROM camd.plant p
      JOIN camdecmpswks.monitor_plan mp USING (fac_id)
      JOIN camdecmpswks.monitor_plan_location mpl USING (mon_plan_id)
@@ -44,8 +42,6 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_qa_cert_event_eval_and_submit
 	 	ON sac.submission_availability_cd = qce.submission_availability_cd	 
      LEFT JOIN camdecmpswks.monitor_system ms USING (mon_sys_id)
      LEFT JOIN camdecmpswks.component c USING (component_id)
-     LEFT JOIN camdecmpswks.qa_cert_event_supp_data qsd USING (qa_cert_event_id)
-     LEFT JOIN camdecmpsmd.reporting_period rp ON rp.rpt_period_id = qsd.rpt_period_id
      LEFT JOIN camd.unit u USING (unit_id)
      LEFT JOIN camdecmps.stack_pipe sp USING (stack_pipe_id)
-  ORDER BY p.oris_code, p.facility_name, mp.mon_plan_id;
+  ORDER BY p.oris_code, mp.mon_plan_id, u.unitid, sp.stack_name, qce.qa_cert_event_date, qce.qa_cert_event_hour;

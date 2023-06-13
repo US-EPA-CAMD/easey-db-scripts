@@ -35,44 +35,44 @@ CREATE TABLE IF NOT EXISTS camdecmps.test_summary
     span_scale_cd character varying(7) COLLATE pg_catalog."default",
     injection_protocol_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_test_summary PRIMARY KEY (test_sum_id),
-    CONSTRAINT test_summary_u01 UNIQUE (mon_loc_id, test_num, test_type_cd),
-    CONSTRAINT fk_component_test_summary FOREIGN KEY (component_id)
+    CONSTRAINT uq_test_summary UNIQUE (mon_loc_id, test_num, test_type_cd),
+    CONSTRAINT fk_test_summary_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_locat_test_summary FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_syste_test_summary FOREIGN KEY (mon_sys_id)
-        REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_reporting_per_test_summary FOREIGN KEY (rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_span_scale_test_summary FOREIGN KEY (span_scale_cd)
-        REFERENCES camdecmpsmd.span_scale_code (span_scale_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_test_reason_c_test_summary FOREIGN KEY (test_reason_cd)
-        REFERENCES camdecmpsmd.test_reason_code (test_reason_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_test_result_c_test_sum205 FOREIGN KEY (test_result_cd)
-        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_test_result_c_test_summary FOREIGN KEY (calc_test_result_cd)
-        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_test_summary_inj_protocol FOREIGN KEY (injection_protocol_cd)
+    CONSTRAINT fk_test_summary_injection_protocol_code FOREIGN KEY (injection_protocol_cd)
         REFERENCES camdecmpsmd.injection_protocol_code (injection_protocol_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_test_type_cod_test_summary FOREIGN KEY (test_type_cd)
+    CONSTRAINT fk_test_summary_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_test_summary_monitor_system FOREIGN KEY (mon_sys_id)
+        REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_test_summary_reporting_period FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_test_summary_span_scale_code FOREIGN KEY (span_scale_cd)
+        REFERENCES camdecmpsmd.span_scale_code (span_scale_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_test_summary_test_reason_code FOREIGN KEY (test_reason_cd)
+        REFERENCES camdecmpsmd.test_reason_code (test_reason_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_test_summary_test_result_code FOREIGN KEY (test_result_cd)
+        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_test_summary_test_result_code_calc FOREIGN KEY (calc_test_result_cd)
+        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_test_summary_test_type_code FOREIGN KEY (test_type_cd)
         REFERENCES camdecmpsmd.test_type_code (test_type_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

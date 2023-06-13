@@ -12,10 +12,10 @@ CREATE TABLE IF NOT EXISTS camdecmps.cycle_time_summary
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_cycle_time_summary PRIMARY KEY (cycle_time_sum_id),
-    CONSTRAINT fk_test_summary_cycle_time_su FOREIGN KEY (test_sum_id)
+    CONSTRAINT fk_cycle_time_summary_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.cycle_time_summary

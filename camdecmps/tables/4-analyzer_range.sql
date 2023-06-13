@@ -16,15 +16,15 @@ CREATE TABLE IF NOT EXISTS camdecmps.analyzer_range
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_analyzer_range PRIMARY KEY (analyzer_range_id),
-    CONSTRAINT fk_analyzer_rang_analyzer_rang FOREIGN KEY (analyzer_range_cd)
+    CONSTRAINT fk_analyzer_range_analyzer_range_code FOREIGN KEY (analyzer_range_cd)
         REFERENCES camdecmpsmd.analyzer_range_code (analyzer_range_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_component_analyzer_rang FOREIGN KEY (component_id)
+    CONSTRAINT fk_analyzer_range_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT analyzer_range_c01 CHECK (begin_date <= end_date)
+        ON DELETE CASCADE,
+    CONSTRAINT ck_analyzer_range_begin_date_end_date CHECK (begin_date <= end_date)
 );
 
 COMMENT ON TABLE camdecmps.analyzer_range
