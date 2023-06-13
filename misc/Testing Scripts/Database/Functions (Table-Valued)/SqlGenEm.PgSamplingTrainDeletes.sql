@@ -29,14 +29,15 @@ RETURN
                     ' where  exists', 
                     ' (', 
                         ' select 1 from camdecmpswks.SORBENT_TRAP trp', 
-                        ' join SAMPLING_TRAIN trn on trn.TRAP_ID = trp.TRAP_ID',
+                        ' join camdecmpswks.SAMPLING_TRAIN trn on trn.TRAP_ID = trp.TRAP_ID',
                         ' where trp.MON_LOC_ID = ''', sel.MON_LOC_ID, '''',
                         ' and trp.RPT_PERIOD_ID = ', sel.RPT_PERIOD_ID,
                         ' and trp.MON_SYS_ID = ''', sel.MON_SYS_ID, '''',
                         ' and trp.BEGIN_DATE = ''', format( sel.BEGIN_DATE, 'yyyy-MM-dd' ), ''' and BEGIN_HOUR = ', sel.BEGIN_HOUR,
                         ' and trp.END_DATE = ''', format( sel.END_DATE, 'yyyy-MM-dd' ), ''' and END_HOUR = ', sel.END_HOUR,
-                        ' and trp.TRAP_ID = trp.TRAP_ID',
                         ' and trn.COMPONENT_ID = ''', sel.COMPONENT_ID, '''',
+                        ' and trp.TRAP_ID = tar.TRAP_ID',
+                        ' and trn.COMPONENT_ID = tar.COMPONENT_ID',
                     ' )',
                     ';'
                 )

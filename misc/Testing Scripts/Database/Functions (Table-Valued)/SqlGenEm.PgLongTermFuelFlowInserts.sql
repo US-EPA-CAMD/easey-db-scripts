@@ -97,7 +97,7 @@ RETURN
             on tar.MON_LOC_ID = sel.MON_LOC_ID
             and tar.RPT_PERIOD_ID = sel.RPT_PERIOD_ID
             and tar.MON_SYS_ID = sel.MON_SYS_ID
-            and tar.FUEL_FLOW_PERIOD_CD = sel.FUEL_FLOW_PERIOD_CD
+            and isnull( tar.FUEL_FLOW_PERIOD_CD, 'NULL' ) = isnull( sel.FUEL_FLOW_PERIOD_CD, 'NULL' )
 )
 GO
 

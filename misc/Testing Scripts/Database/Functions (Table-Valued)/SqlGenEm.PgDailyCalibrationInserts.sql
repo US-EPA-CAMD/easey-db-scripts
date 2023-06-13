@@ -64,7 +64,7 @@ RETURN
                         ' where dts.MON_LOC_ID = ''', sel.MON_LOC_ID, ''' and dts.RPT_PERIOD_ID = ', sel.RPT_PERIOD_ID, ' and dts.TEST_TYPE_CD = ''', sel.TEST_TYPE_CD, '''',
                         ' and coalesce( dts.COMPONENT_ID, ''nothing'' ) = ''', isnull( sel.COMPONENT_ID, 'nothing' ), '''',
                         ' and coalesce( dts.MON_SYS_ID, ''nothing'' ) = ''', isnull( sel.MON_SYS_ID, 'nothing' ), '''',
-                        ' and dts.DAILY_TEST_DATE = ''', format( sel.DAILY_TEST_DATE, 'yyyy-MM-dd' ), ''' and dts.DAILY_TEST_HOUR = ', sel.DAILY_TEST_HOUR, ' and dts.DAILY_TEST_MIN = ', sel.DAILY_TEST_MIN,
+                        ' and dts.DAILY_TEST_DATE = ''', format( sel.DAILY_TEST_DATE, 'yyyy-MM-dd' ), ''' and dts.DAILY_TEST_HOUR = ', sel.DAILY_TEST_HOUR, ' and coalesce( dts.DAILY_TEST_MIN, -1 ) = ', coalesce( sel.DAILY_TEST_MIN, -1 ),
                         ' and coalesce( dts.SPAN_SCALE_CD, ''nothing'' ) = ''', isnull( sel.SPAN_SCALE_CD, 'nothing' ), '''',
                         ' )', ', ',
                         
@@ -150,7 +150,7 @@ RETURN
             and isnull( dts.MON_SYS_ID, 'nothing' ) = isnull( sel.MON_SYS_ID, 'nothing' )
             and dts.DAILY_TEST_DATE = sel.DAILY_TEST_DATE
             and dts.DAILY_TEST_HOUR = sel.DAILY_TEST_HOUR
-            and dts.DAILY_TEST_MIN = sel.DAILY_TEST_MIN
+            and isnull( dts.DAILY_TEST_MIN, -1 ) = isnull( sel.DAILY_TEST_MIN, -1 )
             and isnull( dts.SPAN_SCALE_CD, 'nothing' ) = isnull( sel.SPAN_SCALE_CD, 'nothing' )
         join ECMPS.dbo.DAILY_CALIBRATION tar 
             on tar.DAILY_TEST_SUM_ID = dts.DAILY_TEST_SUM_ID

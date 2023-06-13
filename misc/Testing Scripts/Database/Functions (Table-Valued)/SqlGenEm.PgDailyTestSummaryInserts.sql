@@ -113,7 +113,7 @@ RETURN
             and isnull( tar.MON_SYS_ID, 'nothing' ) = isnull( sel.MON_SYS_ID, 'nothing' )
             and tar.DAILY_TEST_DATE = sel.DAILY_TEST_DATE
             and tar.DAILY_TEST_HOUR = sel.DAILY_TEST_HOUR
-            and tar.DAILY_TEST_MIN = sel.DAILY_TEST_MIN
+            and isnull( tar.DAILY_TEST_MIN, -1 ) = isnull( sel.DAILY_TEST_MIN, -1 )
             and isnull( tar.SPAN_SCALE_CD, 'nothing' ) = isnull( sel.SPAN_SCALE_CD, 'nothing' )
 )
 GO

@@ -1,0 +1,8 @@
+-- ORIS 628, 1GTA for 2021 Q4
+CALL camdecmpswks.revert_to_official_record('PEL-L3G357-17BDDE8C3F034931ABF74700FB9F34C6');
+
+-- ORIS 628, 1GTB for 2021 Q4
+CALL camdecmpswks.revert_to_official_record('PEL-L3G357-DB936F7379194FD9BE477F7CB720005B');
+
+-- ORIS 628, 2GTA for 2021 Q4
+CALL camdecmpswks.revert_to_official_record('PEL-L3G357-7E0D2E1792664FEEAD5278B0B00BB572');

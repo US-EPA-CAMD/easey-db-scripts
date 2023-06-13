@@ -75,7 +75,9 @@ RETURN
                         lst.LOCATIONS, 
                         lst.QUARTER, 
                         lst.LOCATION_NAME,
-                        dhv.PARAMETER_CD,
+                        mhv.PARAMETER_CD,
+                        mhv.MOISTURE_BASIS,
+                        mhv.MODC_CD,
                         hod.BEGIN_DATE,
                         hod.BEGIN_HOUR,
                         hod.MON_LOC_ID,
@@ -84,8 +86,8 @@ RETURN
                         join ECMPS.dbo.HRLY_OP_DATA hod 
                             on hod.MON_LOC_ID = lst.MON_LOC_ID
                             and hod.RPT_PERIOD_ID = lst.RPT_PERIOD_ID
-                        join ECMPS.dbo.MONITOR_HRLY_VALUE dhv 
-                            on dhv.HOUR_ID = hod.HOUR_ID
+                        join ECMPS.dbo.MONITOR_HRLY_VALUE mhv 
+                            on mhv.HOUR_ID = hod.HOUR_ID
                 except
                 select  -- ECMPSP
                         lst.ORIS_CODE, 
@@ -93,7 +95,9 @@ RETURN
                         lst.LOCATIONS, 
                         lst.QUARTER, 
                         lst.LOCATION_NAME,
-                        dhv.PARAMETER_CD,
+                        mhv.PARAMETER_CD,
+                        mhv.MOISTURE_BASIS,
+                        mhv.MODC_CD,
                         hod.BEGIN_DATE,
                         hod.BEGIN_HOUR,
                         hod.MON_LOC_ID,
@@ -102,8 +106,8 @@ RETURN
                         join [CHV-DWHITTEN2\ECMPSP].ECMPS.dbo.HRLY_OP_DATA hod 
                             on hod.MON_LOC_ID = lst.MON_LOC_ID
                             and hod.RPT_PERIOD_ID = lst.RPT_PERIOD_ID
-                        join [CHV-DWHITTEN2\ECMPSP].ECMPS.dbo.MONITOR_HRLY_VALUE dhv 
-                            on dhv.HOUR_ID = hod.HOUR_ID
+                        join [CHV-DWHITTEN2\ECMPSP].ECMPS.dbo.MONITOR_HRLY_VALUE mhv 
+                            on mhv.HOUR_ID = hod.HOUR_ID
             ) sel
         join ECMPS.dbo.HRLY_OP_DATA hod
             on hod.MON_LOC_ID = sel.MON_LOC_ID
@@ -112,6 +116,8 @@ RETURN
         join ECMPS.dbo.MONITOR_HRLY_VALUE tar 
             on tar.HOUR_ID = hod.HOUR_ID
            and tar.PARAMETER_CD = sel.PARAMETER_CD
+           and isnull( tar.MOISTURE_BASIS, 'B' ) = isnull( sel.MOISTURE_BASIS, 'B' )
+           and isnull( tar.MODC_CD, '00' ) = isnull( sel.MODC_CD, '00' )
 )
 GO
 
