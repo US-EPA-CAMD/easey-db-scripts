@@ -21,10 +21,10 @@ CREATE TABLE IF NOT EXISTS camdecmps.unit_default_test_run
     update_date timestamp without time zone,
     run_used_ind numeric(38,0),
     CONSTRAINT pk_unit_default_test_run PRIMARY KEY (unit_default_test_run_id),
-    CONSTRAINT fk_unt_default_t_unit_default_ FOREIGN KEY (unit_default_test_sum_id)
+    CONSTRAINT fk_unit_default_test_run_unit_default_test FOREIGN KEY (unit_default_test_sum_id)
         REFERENCES camdecmps.unit_default_test (unit_default_test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.unit_default_test_run

@@ -16,22 +16,22 @@ CREATE TABLE IF NOT EXISTS camdecmps.trans_accuracy
     mid_level_accuracy_spec_cd character varying(7) COLLATE pg_catalog."default",
     high_level_accuracy_spec_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_trans_accuracy PRIMARY KEY (trans_ac_id),
-    CONSTRAINT fk_accuracy_spec_trans_accura1 FOREIGN KEY (low_level_accuracy_spec_cd)
+    CONSTRAINT fk_trans_accuracy_accuracy_spec_code_high FOREIGN KEY (high_level_accuracy_spec_cd)
         REFERENCES camdecmpsmd.accuracy_spec_code (accuracy_spec_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_accuracy_spec_trans_accura2 FOREIGN KEY (mid_level_accuracy_spec_cd)
+    CONSTRAINT fk_trans_accuracy_accuracy_spec_code_low FOREIGN KEY (low_level_accuracy_spec_cd)
         REFERENCES camdecmpsmd.accuracy_spec_code (accuracy_spec_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_accuracy_spec_trans_accura3 FOREIGN KEY (high_level_accuracy_spec_cd)
+    CONSTRAINT fk_trans_accuracy_accuracy_spec_code_mid FOREIGN KEY (mid_level_accuracy_spec_cd)
         REFERENCES camdecmpsmd.accuracy_spec_code (accuracy_spec_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_test_summary_trans_accurac FOREIGN KEY (test_sum_id)
+    CONSTRAINT fk_trans_accuracy_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.trans_accuracy

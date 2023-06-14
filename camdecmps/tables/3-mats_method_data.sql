@@ -16,18 +16,18 @@ CREATE TABLE IF NOT EXISTS camdecmps.mats_method_data
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_mats_method_data PRIMARY KEY (mats_method_data_id),
-    CONSTRAINT fk_mats_method_data_mats_mc FOREIGN KEY (mats_method_cd)
+    CONSTRAINT fk_mats_method_data_mats_method_code FOREIGN KEY (mats_method_cd)
         REFERENCES camdecmpsmd.mats_method_code (mats_method_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_mats_method_data_mon_loc FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_mats_method_data_par_code FOREIGN KEY (mats_method_parameter_cd)
+    CONSTRAINT fk_mats_method_data_mats_method_parameter_code FOREIGN KEY (mats_method_parameter_cd)
         REFERENCES camdecmpsmd.mats_method_parameter_code (mats_method_parameter_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mats_method_data_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.mats_method_data

@@ -20,15 +20,15 @@ CREATE TABLE IF NOT EXISTS camdecmps.daily_emission
     calc_total_daily_emission numeric(10,1),
     calc_total_op_time numeric(4,2),
     CONSTRAINT pk_daily_emission PRIMARY KEY (daily_emission_id),
-    CONSTRAINT fk_monitor_locat_daily_emissio FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_daily_emission_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_parameter_cod_daily_emissio FOREIGN KEY (parameter_cd)
+    CONSTRAINT fk_daily_emission_parameter_code FOREIGN KEY (parameter_cd)
         REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_reporting_per_daily_emissio FOREIGN KEY (rpt_period_id)
+    CONSTRAINT fk_daily_emission_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

@@ -16,14 +16,14 @@ CREATE TABLE IF NOT EXISTS camdecmps.fuel_flow_to_load_check
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_fuel_flow_to_load_check PRIMARY KEY (fuel_flow_load_id),
-    CONSTRAINT fk_test_basis_fuel_flow_to FOREIGN KEY (test_basis_cd)
+    CONSTRAINT fk_fuel_flow_to_load_check_test_basis_code FOREIGN KEY (test_basis_cd)
         REFERENCES camdecmpsmd.test_basis_code (test_basis_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_test_summary_fuel_flow116 FOREIGN KEY (test_sum_id)
+    CONSTRAINT fk_fuel_flow_to_load_check_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.fuel_flow_to_load_check

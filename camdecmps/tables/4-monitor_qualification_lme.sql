@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_qualification_lme
     CONSTRAINT fk_monitor_qualification_lme_monitor_qualification FOREIGN KEY (mon_qual_id)
         REFERENCES camdecmps.monitor_qualification (mon_qual_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.monitor_qualification_lme

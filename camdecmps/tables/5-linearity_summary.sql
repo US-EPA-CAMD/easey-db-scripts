@@ -19,14 +19,14 @@ CREATE TABLE IF NOT EXISTS camdecmps.linearity_summary
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_linearity_summary PRIMARY KEY (lin_sum_id),
-    CONSTRAINT fk_gas_level_cod_linearity_sum FOREIGN KEY (gas_level_cd)
+    CONSTRAINT fk_linearity_summary_gas_level_code FOREIGN KEY (gas_level_cd)
         REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_test_summary_linearity_sum FOREIGN KEY (test_sum_id)
+    CONSTRAINT fk_linearity_summary_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.linearity_summary

@@ -16,14 +16,14 @@ CREATE TABLE IF NOT EXISTS camdecmps.fuel_flowmeter_accuracy
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_fuel_flowmeter_accuracy PRIMARY KEY (fuel_flow_acc_id),
-    CONSTRAINT fk_accuracy_test_fuel_flowmete FOREIGN KEY (acc_test_method_cd)
+    CONSTRAINT fk_fuel_flowmeter_accuracy_accuracy_test_method_code FOREIGN KEY (acc_test_method_cd)
         REFERENCES camdecmpsmd.accuracy_test_method_code (acc_test_method_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_test_summary_fuel_flowmete FOREIGN KEY (test_sum_id)
+    CONSTRAINT fk_fuel_flowmeter_accuracy_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.fuel_flowmeter_accuracy

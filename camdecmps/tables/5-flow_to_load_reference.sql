@@ -22,14 +22,14 @@ CREATE TABLE IF NOT EXISTS camdecmps.flow_to_load_reference
     update_date timestamp without time zone,
     calc_sep_ref_ind numeric(38,0),
     CONSTRAINT pk_flow_to_load_reference PRIMARY KEY (flow_load_ref_id),
-    CONSTRAINT fk_operating_lev_flow_to_load_ FOREIGN KEY (op_level_cd)
+    CONSTRAINT fk_flow_to_load_reference_operating_level_code FOREIGN KEY (op_level_cd)
         REFERENCES camdecmpsmd.operating_level_code (op_level_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_test_summary_flow_to_load_ FOREIGN KEY (test_sum_id)
+    CONSTRAINT fk_flow_to_load_reference_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.flow_to_load_reference

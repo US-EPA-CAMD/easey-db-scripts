@@ -17,18 +17,18 @@ CREATE TABLE IF NOT EXISTS camdecmps.unit_default_test
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_unt_default_test PRIMARY KEY (unit_default_test_sum_id),
-    CONSTRAINT fk_fuel_code_unt_default_t FOREIGN KEY (fuel_cd)
+    CONSTRAINT fk_unt_default_test_fuel_code FOREIGN KEY (fuel_cd)
         REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_operating_con_unt_default_t FOREIGN KEY (operating_condition_cd)
+    CONSTRAINT fk_unt_default_test_operating_condition_code FOREIGN KEY (operating_condition_cd)
         REFERENCES camdecmpsmd.operating_condition_code (operating_condition_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_test_summary_unt_default_t FOREIGN KEY (test_sum_id)
+    CONSTRAINT fk_unt_default_test_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.unit_default_test

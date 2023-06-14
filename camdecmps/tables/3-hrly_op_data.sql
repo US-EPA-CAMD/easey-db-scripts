@@ -28,31 +28,26 @@ CREATE TABLE IF NOT EXISTS camdecmps.hrly_op_data
     mats_load numeric(6,0),
     mats_startup_shutdown_flg character varying(1) COLLATE pg_catalog."default",
     CONSTRAINT pk_hrly_op_data PRIMARY KEY (hour_id),
-    CONSTRAINT fk_fuel_code_hrly_op_data FOREIGN KEY (fuel_cd)
+    CONSTRAINT fk_hrly_op_data_fuel_code FOREIGN KEY (fuel_cd)
         REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_locat_hrly_op_data FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_hrly_op_data_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_operating_con_hrly_op_data FOREIGN KEY (operating_condition_cd)
+    CONSTRAINT fk_hrly_op_data_operating_condition_code FOREIGN KEY (operating_condition_cd)
         REFERENCES camdecmpsmd.operating_condition_code (operating_condition_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_reporting_per_hrly_op_data FOREIGN KEY (rpt_period_id)
+    CONSTRAINT fk_hrly_op_data_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_units_of_meas_hrly_op_data FOREIGN KEY (load_uom_cd)
+    CONSTRAINT fk_hrly_op_data_units_of_measure_code FOREIGN KEY (load_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT hrly_op_data_begin_date_check CHECK (begin_date IS NOT NULL),
-    CONSTRAINT hrly_op_data_begin_hour_check CHECK (begin_hour IS NOT NULL),
-    CONSTRAINT hrly_op_data_hour_id_check CHECK (hour_id IS NOT NULL),
-    CONSTRAINT hrly_op_data_mon_loc_id_check CHECK (mon_loc_id IS NOT NULL),
-    CONSTRAINT hrly_op_data_rpt_period_id_check CHECK (rpt_period_id IS NOT NULL)
+        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.hrly_op_data

@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.last_qa_value_supp_data
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_last_qa_value_supp_data PRIMARY KEY (last_qa_value_supp_data_id),
-    CONSTRAINT fk_last_qa_value_supp_data_cp FOREIGN KEY (component_id)
+    CONSTRAINT fk_last_qa_value_supp_data_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
@@ -28,11 +28,11 @@ CREATE TABLE IF NOT EXISTS camdecmps.last_qa_value_supp_data
         REFERENCES camdecmpsmd.hourly_type_code (hourly_type_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_last_qa_value_supp_data_ml FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_last_qa_value_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_last_qa_value_supp_data_ms FOREIGN KEY (mon_sys_id)
+    CONSTRAINT fk_last_qa_value_supp_data_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,

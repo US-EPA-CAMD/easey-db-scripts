@@ -20,31 +20,35 @@ CREATE TABLE IF NOT EXISTS camdecmps.weekly_test_summary
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_weekly_test_summary PRIMARY KEY (weekly_test_sum_id),
-    CONSTRAINT fk_wts_component_id FOREIGN KEY (component_id)
+    CONSTRAINT fk_weekly_test_summary_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_wts_mon_loc_id FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_weekly_test_summary_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_wts_mon_sys_id FOREIGN KEY (mon_sys_id)
+    CONSTRAINT fk_weekly_test_summary_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_wts_rpt_period_id FOREIGN KEY (rpt_period_id)
+    CONSTRAINT fk_weekly_test_summary_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_wts_span_scale_cd FOREIGN KEY (span_scale_cd)
+    CONSTRAINT fk_weekly_test_summary_span_scale_code FOREIGN KEY (span_scale_cd)
         REFERENCES camdecmpsmd.span_scale_code (span_scale_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_wts_test_result_cd FOREIGN KEY (test_result_cd)
+    CONSTRAINT fk_weekly_test_summary_test_result_code FOREIGN KEY (test_result_cd)
         REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_wts_test_type_cd FOREIGN KEY (test_type_cd)
+    CONSTRAINT fk_weekly_test_summary_test_result_code_calc FOREIGN KEY (calc_test_result_cd)
+        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_weekly_test_summary_test_type_code FOREIGN KEY (test_type_cd)
         REFERENCES camdecmpsmd.test_type_code (test_type_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

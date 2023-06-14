@@ -17,23 +17,23 @@ CREATE TABLE IF NOT EXISTS camdecmps.nsps4t_summary
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone,
     CONSTRAINT pk_nsps4t_summary PRIMARY KEY (nsps4t_sum_id),
-    CONSTRAINT fk_nsps4t_summary_loc FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_nsps4t_summary_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_nsps4t_summary_lod FOREIGN KEY (electrical_load_cd)
+    CONSTRAINT fk_nsps4t_summary_nsps4t_electrical_load_code FOREIGN KEY (electrical_load_cd)
         REFERENCES camdecmpsmd.nsps4t_electrical_load_code (electrical_load_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_nsps4t_summary_prd FOREIGN KEY (rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_nsps4t_summary_stn FOREIGN KEY (emission_standard_cd)
+    CONSTRAINT fk_nsps4t_summary_nsps4t_emission_standard_code FOREIGN KEY (emission_standard_cd)
         REFERENCES camdecmpsmd.nsps4t_emission_standard_code (emission_standard_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_nsps4t_summary_uom FOREIGN KEY (modus_uom_cd)
+    CONSTRAINT fk_nsps4t_summary_reporting_period FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_nsps4t_summary_units_of_measure_code FOREIGN KEY (modus_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

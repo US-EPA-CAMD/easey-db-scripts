@@ -22,18 +22,18 @@ CREATE TABLE IF NOT EXISTS camdecmps.fuel_flow_to_load_baseline
     fuel_flow_load_uom_cd character varying(7) COLLATE pg_catalog."default",
     ghr_uom_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_fuel_flow_to_load_baseline PRIMARY KEY (fuel_flow_baseline_id),
-    CONSTRAINT fk_test_summary_fuel_flow_to_ FOREIGN KEY (test_sum_id)
+    CONSTRAINT fk_fuel_flow_to_load_baseline_fuel_flow_load_uom FOREIGN KEY (fuel_flow_load_uom_cd)
+        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_fuel_flow_to_load_baseline_ghr_uom FOREIGN KEY (ghr_uom_cd)
+        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_fuel_flow_to_load_baseline_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_units_of_meas_fuel_flow_to1 FOREIGN KEY (fuel_flow_load_uom_cd)
-        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_units_of_meas_fuel_flow_to2 FOREIGN KEY (ghr_uom_cd)
-        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.fuel_flow_to_load_baseline

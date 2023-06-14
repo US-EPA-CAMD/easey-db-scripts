@@ -41,23 +41,23 @@ CREATE TABLE IF NOT EXISTS camdecmps.rata_summary
     update_date timestamp without time zone,
     aps_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_rata_summary PRIMARY KEY (rata_sum_id),
-    CONSTRAINT fk_operating_lev_rata_summary FOREIGN KEY (op_level_cd)
-        REFERENCES camdecmpsmd.operating_level_code (op_level_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_rata_rata_summary FOREIGN KEY (rata_id)
-        REFERENCES camdecmps.rata (rata_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_rata_summary_aps FOREIGN KEY (aps_cd)
+    CONSTRAINT fk_rata_summary_aps_code FOREIGN KEY (aps_cd)
         REFERENCES camdecmpsmd.aps_code (aps_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_ref_method_co_rata_sum180 FOREIGN KEY (co2_o2_ref_method_cd)
+    CONSTRAINT fk_rata_summary_operating_level_code FOREIGN KEY (op_level_cd)
+        REFERENCES camdecmpsmd.operating_level_code (op_level_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_rata_summary_rata FOREIGN KEY (rata_id)
+        REFERENCES camdecmps.rata (rata_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_rata_summary_ref_method_code FOREIGN KEY (ref_method_cd)
         REFERENCES camdecmpsmd.ref_method_code (ref_method_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_ref_method_co_rata_summary FOREIGN KEY (ref_method_cd)
+    CONSTRAINT fk_rata_summary_ref_method_code_co2o2 FOREIGN KEY (co2_o2_ref_method_cd)
         REFERENCES camdecmpsmd.ref_method_code (ref_method_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

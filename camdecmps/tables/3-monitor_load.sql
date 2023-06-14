@@ -22,10 +22,10 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_load
     update_date timestamp without time zone,
     max_load_uom_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_monitor_load PRIMARY KEY (load_id),
-    CONSTRAINT fk_monitor_locat_monitor_load FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_monitor_load_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.monitor_load

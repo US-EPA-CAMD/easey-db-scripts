@@ -37,7 +37,7 @@ BEGIN
 END $$;
 
 --SELECT * FROM cron.job;
---SELECT * FROM cron.job_run_details;
+--SELECT * FROM cron.job_run_details order by end_time desc;
 --SELECT * FROM cron.job_run_details WHERE status = 'failed';
 
 --SELECT cron.unschedule('Job Run Details Maintenance');

@@ -21,23 +21,23 @@ CREATE TABLE IF NOT EXISTS camdecmps.sorbent_trap_supp_data
     sorbent_trap_aps_cd character varying(7) COLLATE pg_catalog."default",
     rata_ind numeric(38,0),
     CONSTRAINT pk_st_supp_data PRIMARY KEY (trap_id),
-    CONSTRAINT fk_st_supp_data_aps_cd FOREIGN KEY (sorbent_trap_aps_cd)
-        REFERENCES camdecmpsmd.sorbent_trap_aps_code (sorbent_trap_aps_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_st_supp_data_modc_cd FOREIGN KEY (modc_cd)
-        REFERENCES camdecmpsmd.modc_code (modc_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_st_supp_data_mon_loc_id FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_sorbent_trap_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_st_supp_data_mon_sys_id FOREIGN KEY (mon_sys_id)
+    ADD CONSTRAINT fk_sorbent_trap_supp_data_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_st_supp_data_rpt_period_id FOREIGN KEY (rpt_period_id)
+    ADD CONSTRAINT fk_st_supp_data_aps_cd FOREIGN KEY (sorbent_trap_aps_cd)
+        REFERENCES camdecmpsmd.sorbent_trap_aps_code (sorbent_trap_aps_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    ADD CONSTRAINT fk_st_supp_data_modc_cd FOREIGN KEY (modc_cd)
+        REFERENCES camdecmpsmd.modc_code (modc_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    ADD CONSTRAINT fk_st_supp_data_rpt_period_id FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

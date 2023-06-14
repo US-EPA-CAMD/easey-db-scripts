@@ -17,15 +17,15 @@ CREATE TABLE IF NOT EXISTS camdecmps.system_fuel_flow
     update_date timestamp without time zone,
     sys_fuel_uom_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT pk_system_fuel_flow PRIMARY KEY (sys_fuel_id),
-    CONSTRAINT fk_max_rate_sour_system_fuel_f FOREIGN KEY (max_rate_source_cd)
+    CONSTRAINT fk_system_fuel_flow_max_rate_source_code FOREIGN KEY (max_rate_source_cd)
         REFERENCES camdecmpsmd.max_rate_source_code (max_rate_source_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_syste_system_fuel_f FOREIGN KEY (mon_sys_id)
+    CONSTRAINT fk_system_fuel_flow_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_units_of_meas_system_fuel_f FOREIGN KEY (sys_fuel_uom_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_system_fuel_flow_units_of_measure_code FOREIGN KEY (sys_fuel_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

@@ -23,35 +23,35 @@ CREATE TABLE IF NOT EXISTS camdecmps.test_extension_exemption
     submission_id numeric(38,0),
     submission_availability_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_test_extension_exemption PRIMARY KEY (test_extension_exemption_id),
-    CONSTRAINT fk_component_test_extensio FOREIGN KEY (component_id)
+    CONSTRAINT fk_test_extension_exemption_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_extension_exe_test_extensio FOREIGN KEY (extens_exempt_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_test_extension_exemption_extension_exemption_code FOREIGN KEY (extens_exempt_cd)
         REFERENCES camdecmpsmd.extension_exemption_code (extens_exempt_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_fuel_code_test_extensio FOREIGN KEY (fuel_cd)
+    CONSTRAINT fk_test_extension_exemption_fuel_code FOREIGN KEY (fuel_cd)
         REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_locat_test_extensio FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_test_extension_exemption_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_syste_test_extensio FOREIGN KEY (mon_sys_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_test_extension_exemption_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_reporting_per_test_extensio FOREIGN KEY (rpt_period_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_test_extension_exemption_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_span_scale_test_extensio FOREIGN KEY (span_scale_cd)
+    CONSTRAINT fk_test_extension_exemption_span_scale_code FOREIGN KEY (span_scale_cd)
         REFERENCES camdecmpsmd.span_scale_code (span_scale_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_submission_av_test_extensio FOREIGN KEY (submission_availability_cd)
+    CONSTRAINT fk_test_extension_exemption_submission_availability_code FOREIGN KEY (submission_availability_cd)
         REFERENCES camdecmpsmd.submission_availability_code (submission_availability_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

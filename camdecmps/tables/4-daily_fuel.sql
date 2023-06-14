@@ -16,9 +16,21 @@ CREATE TABLE IF NOT EXISTS camdecmps.daily_fuel
     update_date timestamp without time zone,
     rpt_period_id numeric(38,0) NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT daily_fuel_pk PRIMARY KEY (daily_fuel_id),
-    CONSTRAINT daily_fuel_r02 FOREIGN KEY (fuel_cd)
+    CONSTRAINT pk_daily_fuel PRIMARY KEY (daily_fuel_id),
+    CONSTRAINT fk_daily_fuel_daily_emission FOREIGN KEY (daily_emission_id)
+        REFERENCES camdecmps.daily_emission (daily_emission_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_daily_fuel_fuel_code FOREIGN KEY (fuel_cd)
         REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_daily_fuel_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_daily_fuel_reporting_period FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );

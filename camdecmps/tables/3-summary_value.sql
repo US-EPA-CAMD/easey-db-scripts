@@ -18,16 +18,16 @@ CREATE TABLE IF NOT EXISTS camdecmps.summary_value
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_summary_value PRIMARY KEY (sum_value_id),
-    CONSTRAINT summary_value_u01 UNIQUE (mon_loc_id, rpt_period_id, parameter_cd),
-    CONSTRAINT fk_monitor_locat_summary_value FOREIGN KEY (mon_loc_id)
+    CONSTRAINT uq_summary_value UNIQUE (mon_loc_id, rpt_period_id, parameter_cd),
+    CONSTRAINT fk_summary_value_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_parameter_cod_summary_value FOREIGN KEY (parameter_cd)
+    CONSTRAINT fk_summary_value_parameter_code FOREIGN KEY (parameter_cd)
         REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_reporting_per_summary_value FOREIGN KEY (rpt_period_id)
+    CONSTRAINT fk_summary_value_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

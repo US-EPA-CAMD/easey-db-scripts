@@ -18,22 +18,22 @@ CREATE TABLE IF NOT EXISTS camdecmps.component
     update_date timestamp without time zone,
     hg_converter_ind numeric(1,0),
     CONSTRAINT pk_component PRIMARY KEY (component_id),
-    CONSTRAINT fk_acquisition_m_component FOREIGN KEY (acq_cd)
+    CONSTRAINT fk_component_acquisition_method_code FOREIGN KEY (acq_cd)
         REFERENCES camdecmpsmd.acquisition_method_code (acq_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_basis_code_component FOREIGN KEY (basis_cd)
+    CONSTRAINT fk_component_basis_code FOREIGN KEY (basis_cd)
         REFERENCES camdecmpsmd.basis_code (basis_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_component_typ_component FOREIGN KEY (component_type_cd)
+    CONSTRAINT fk_component_component_type_code FOREIGN KEY (component_type_cd)
         REFERENCES camdecmpsmd.component_type_code (component_type_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_locat_component FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_component_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.component

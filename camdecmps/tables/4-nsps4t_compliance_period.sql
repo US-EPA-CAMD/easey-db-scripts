@@ -20,20 +20,20 @@ CREATE TABLE IF NOT EXISTS camdecmps.nsps4t_compliance_period
     userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone,
-    CONSTRAINT pk_nsps4t_compliance_prd PRIMARY KEY (nsps4t_cmp_id),
-    CONSTRAINT fk_nsps4t_compliance_prd_loc FOREIGN KEY (mon_loc_id)
+    CONSTRAINT pk_nsps4t_compliance_period PRIMARY KEY (nsps4t_cmp_id),
+    CONSTRAINT fk_nsps4t_compliance_period_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_nsps4t_compliance_prd_prd FOREIGN KEY (rpt_period_id)
+    CONSTRAINT fk_nsps4t_compliance_period_nsps4t_summary FOREIGN KEY (nsps4t_sum_id)
+        REFERENCES camdecmps.nsps4t_summary (nsps4t_sum_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_nsps4t_compliance_period_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_nsps4t_compliance_prd_sum FOREIGN KEY (nsps4t_sum_id)
-        REFERENCES camdecmps.nsps4t_summary (nsps4t_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_nsps4t_compliance_prd_uom FOREIGN KEY (co2_emission_rate_uom_cd)
+    CONSTRAINT fk_nsps4t_compliance_period_units_of_measure_code FOREIGN KEY (co2_emission_rate_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

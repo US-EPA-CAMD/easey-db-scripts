@@ -15,14 +15,14 @@ CREATE TABLE IF NOT EXISTS camdecmps.ae_hi_gas
     update_date timestamp without time zone,
     mon_sys_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT pk_ae_hi_gas PRIMARY KEY (ae_hi_gas_id),
-    CONSTRAINT fk_ae_correlatio_ae_hi_gas FOREIGN KEY (ae_corr_test_run_id)
+    CONSTRAINT fk_ae_hi_gas_ae_correlation_test_run FOREIGN KEY (ae_corr_test_run_id)
         REFERENCES camdecmps.ae_correlation_test_run (ae_corr_test_run_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_system_ae_hi_gas FOREIGN KEY (mon_sys_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_ae_hi_gas_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.ae_hi_gas
