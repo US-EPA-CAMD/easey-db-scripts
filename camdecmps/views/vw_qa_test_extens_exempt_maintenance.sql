@@ -1,4 +1,4 @@
--- View: camdecmps.vw_qa_test_extens_exempt_maintenance source
+-- View: camdecmps.vw_qa_test_extens_exempt_maintenance
 
 DROP VIEW IF EXISTS camdecmps.vw_qa_test_extens_exempt_maintenance;
 

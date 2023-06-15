@@ -1,4 +1,4 @@
--- View: camdecmps.vw_qa_cert_event_maintenance source
+-- View: camdecmps.vw_qa_cert_event_maintenance
 
 DROP VIEW IF EXISTS camdecmps.vw_qa_cert_event_maintenance;
 
