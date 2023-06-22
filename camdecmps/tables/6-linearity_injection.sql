@@ -15,10 +15,10 @@ CREATE TABLE IF NOT EXISTS camdecmps.linearity_injection
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_linearity_injection PRIMARY KEY (lin_inj_id),
-    CONSTRAINT fk_linearity_sum_linearity_inj FOREIGN KEY (lin_sum_id)
+    CONSTRAINT fk_linearity_injection_linearity_summary FOREIGN KEY (lin_sum_id)
         REFERENCES camdecmps.linearity_summary (lin_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.linearity_injection

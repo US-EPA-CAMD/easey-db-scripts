@@ -14,15 +14,15 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_system_component
     userid character varying(25) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
-    CONSTRAINT monitor_system_component_pk PRIMARY KEY (mon_sys_comp_id),
-    CONSTRAINT fk_component_monitor_syste FOREIGN KEY (component_id)
+    CONSTRAINT pk_monitor_system_component PRIMARY KEY (mon_sys_comp_id),
+    CONSTRAINT fk_monitor_system_component_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_syste_monitor_syste FOREIGN KEY (mon_sys_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_monitor_system_component_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.monitor_system_component

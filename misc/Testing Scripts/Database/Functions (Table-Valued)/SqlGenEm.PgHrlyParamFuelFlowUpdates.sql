@@ -141,7 +141,7 @@ RETURN
             and hod.BEGIN_HOUR = sel.BEGIN_HOUR
         join ECMPS.dbo.HRLY_FUEL_FLOW hff 
             on hff.HOUR_ID = hod.HOUR_ID
-           and hff.MON_SYS_ID = sel.HFF_MON_SYS_ID
+           and isnull( hff.MON_SYS_ID, 'NULL' ) = isnull( sel.HFF_MON_SYS_ID, 'NULL' )
         join ECMPS.dbo.HRLY_PARAM_FUEL_FLOW tar 
             on tar.HRLY_FUEL_FLOW_ID = hff.HRLY_FUEL_FLOW_ID
            and tar.PARAMETER_CD = sel.PARAMETER_CD

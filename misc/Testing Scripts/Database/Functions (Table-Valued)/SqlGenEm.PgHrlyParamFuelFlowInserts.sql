@@ -51,7 +51,7 @@ RETURN
                         ' select hff.HRLY_FUEL_FLOW_ID from camdecmpswks.HRLY_OP_DATA hod', 
                         ' join camdecmpswks.HRLY_FUEL_FLOW hff on hff.HOUR_ID = hod.HOUR_ID', 
                         ' where hod.MON_LOC_ID = ''', sel.MON_LOC_ID, ''' and hod.BEGIN_DATE = ''', format( sel.BEGIN_DATE, 'yyyy-MM-dd' ), ''' and hod.BEGIN_HOUR = ', sel.BEGIN_HOUR, 
-                        ' and hff.MON_SYS_ID = ''', sel.HFF_MON_SYS_ID, '''',
+                        ' and coalesce( hff.MON_SYS_ID, ''NULL'' ) = ''', isnull( sel.HFF_MON_SYS_ID, 'NULL' ), '''',
                         ' )', ', ',
                         
                         case when  tar.MON_LOC_ID                     is not null  then  concat( '''', tar.MON_LOC_ID, '''' ) else 'NULL' end, ', ',
@@ -120,7 +120,7 @@ RETURN
             and hod.BEGIN_HOUR = sel.BEGIN_HOUR
         join ECMPS.dbo.HRLY_FUEL_FLOW hff 
             on hff.HOUR_ID = hod.HOUR_ID
-           and hff.MON_SYS_ID = sel.HFF_MON_SYS_ID
+           and isnull( hff.MON_SYS_ID, 'NULL' ) = isnull( sel.HFF_MON_SYS_ID, 'NULL' )
         join ECMPS.dbo.HRLY_PARAM_FUEL_FLOW tar 
             on tar.HRLY_FUEL_FLOW_ID = hff.HRLY_FUEL_FLOW_ID
            and tar.PARAMETER_CD = sel.PARAMETER_CD

@@ -32,7 +32,7 @@ RETURN
                     ' where MON_LOC_ID = ''', sel.MON_LOC_ID, ''' and RPT_PERIOD_ID = ', sel.RPT_PERIOD_ID, ' and TEST_TYPE_CD = ''', sel.TEST_TYPE_CD, '''',
                     ' and coalesce( COMPONENT_ID, ''nothing'' ) = ''', isnull( sel.COMPONENT_ID, 'nothing' ), '''',
                     ' and coalesce( MON_SYS_ID, ''nothing'' ) = ''', isnull( sel.MON_SYS_ID, 'nothing' ), '''',
-                    ' and DAILY_TEST_DATE = ''', format( sel.DAILY_TEST_DATE, 'yyyy-MM-dd' ), ''' and DAILY_TEST_HOUR = ', sel.DAILY_TEST_HOUR, ' and DAILY_TEST_MIN = ', sel.DAILY_TEST_MIN,
+                    ' and DAILY_TEST_DATE = ''', format( sel.DAILY_TEST_DATE, 'yyyy-MM-dd' ), ''' and DAILY_TEST_HOUR = ', sel.DAILY_TEST_HOUR, ' and coalesce( DAILY_TEST_MIN, -1 ) = ', coalesce( sel.DAILY_TEST_MIN, -1 ),
                     ' and coalesce( SPAN_SCALE_CD, ''nothing'' ) = ''', isnull( sel.SPAN_SCALE_CD, 'nothing' ), '''',
                     ' and tar.DAILY_TEST_SUM_ID = dts.DAILY_TEST_SUM_ID',
                     ' )',

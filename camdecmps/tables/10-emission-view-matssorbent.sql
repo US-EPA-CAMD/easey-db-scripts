@@ -4,7 +4,6 @@
 
 CREATE TABLE IF NOT EXISTS camdecmps.emission_view_matssorbent
 (
-    em_mats_sorbent_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id integer NOT NULL,
@@ -47,5 +46,6 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_matssorbent
     b_sample_damage_explanation character varying(1000) COLLATE pg_catalog."default",
     error_codes character varying(1000) COLLATE pg_catalog."default",
     sorbent_trap_aps_cd character varying(7) COLLATE pg_catalog."default",
-    rata_ind integer
-);
+    rata_ind integer,
+    CONSTRAINT pk_emission_view_matssorbent PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, system_identifier, date_hour, end_date_time)
+) PARTITION BY RANGE (rpt_period_id);

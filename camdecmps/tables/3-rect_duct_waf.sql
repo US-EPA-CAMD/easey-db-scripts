@@ -23,11 +23,11 @@ CREATE TABLE IF NOT EXISTS camdecmps.rect_duct_waf
     update_date timestamp without time zone,
     userid character varying(25) COLLATE pg_catalog."default",
     CONSTRAINT pk_rect_duct_waf PRIMARY KEY (rect_duct_waf_data_id),
-    CONSTRAINT fk_monitor_locat_rect_duct_waf FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_rect_duct_waf_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_waf_method_co_rect_duct_waf FOREIGN KEY (waf_method_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_rect_duct_waf_waf_method_code FOREIGN KEY (waf_method_cd)
         REFERENCES camdecmpsmd.waf_method_code (waf_method_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

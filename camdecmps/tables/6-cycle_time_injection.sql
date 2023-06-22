@@ -22,11 +22,11 @@ CREATE TABLE IF NOT EXISTS camdecmps.cycle_time_injection
     injection_cycle_time numeric(2,0),
     calc_injection_cycle_time numeric(2,0),
     CONSTRAINT pk_cycle_time_injection PRIMARY KEY (cycle_time_inj_id),
-    CONSTRAINT fk_cycle_time_su_cycle_time_in FOREIGN KEY (cycle_time_sum_id)
+    CONSTRAINT fk_cycle_time_injection_cycle_time_summary FOREIGN KEY (cycle_time_sum_id)
         REFERENCES camdecmps.cycle_time_summary (cycle_time_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_gas_level_cod_cycle_time_in FOREIGN KEY (gas_level_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_cycle_time_injection_gas_level_code FOREIGN KEY (gas_level_cd)
         REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

@@ -22,44 +22,42 @@ CREATE TABLE IF NOT EXISTS camdecmps.hrly_param_fuel_flow
     rpt_period_id numeric(38,0) NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT pk_hrly_param_fuel_flow PRIMARY KEY (hrly_param_ff_id),
-    CONSTRAINT fk_hrly_fuel_flo_hrly_param_fu FOREIGN KEY (hrly_fuel_flow_id)
+    CONSTRAINT fk_hrly_param_fuel_flow_hrly_fuel_flow FOREIGN KEY (hrly_fuel_flow_id)
         REFERENCES camdecmps.hrly_fuel_flow (hrly_fuel_flow_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_formu_hrly_param_fu FOREIGN KEY (mon_form_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_hrly_param_fuel_flow_monitor_formula FOREIGN KEY (mon_form_id)
         REFERENCES camdecmps.monitor_formula (mon_form_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_syste_hrly_param_fu FOREIGN KEY (mon_sys_id)
+    CONSTRAINT fk_hrly_param_fuel_flow_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_hrly_param_fuel_flow_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_operating_con_hrly_param_fu FOREIGN KEY (operating_condition_cd)
+    CONSTRAINT fk_hrly_param_fuel_flow_operating_condition_code FOREIGN KEY (operating_condition_cd)
         REFERENCES camdecmpsmd.operating_condition_code (operating_condition_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_parameter_cod_hrly_param_fu FOREIGN KEY (parameter_cd)
+    CONSTRAINT fk_hrly_param_fuel_flow_parameter_code FOREIGN KEY (parameter_cd)
         REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_sample_type_c_hrly_param_fu FOREIGN KEY (sample_type_cd)
+    CONSTRAINT fk_hrly_param_fuel_flow_reporting_period FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_hrly_param_fuel_flow_sample_type_code FOREIGN KEY (sample_type_cd)
         REFERENCES camdecmpsmd.sample_type_code (sample_type_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_units_of_meas_hrly_param_fu FOREIGN KEY (parameter_uom_cd)
+    CONSTRAINT fk_hrly_param_fuel_flow_units_of_measure_code FOREIGN KEY (parameter_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT hrly_param_fuel_flow_hrly_fuel_flow_id_check CHECK (hrly_fuel_flow_id IS NOT NULL),
-    CONSTRAINT hrly_param_fuel_flow_hrly_fuel_flow_id_check1 CHECK (hrly_fuel_flow_id IS NOT NULL),
-    CONSTRAINT hrly_param_fuel_flow_hrly_param_ff_id_check CHECK (hrly_param_ff_id IS NOT NULL),
-    CONSTRAINT hrly_param_fuel_flow_hrly_param_ff_id_check1 CHECK (hrly_param_ff_id IS NOT NULL),
-    CONSTRAINT hrly_param_fuel_flow_mon_loc_id_check CHECK (mon_loc_id IS NOT NULL),
-    CONSTRAINT hrly_param_fuel_flow_mon_loc_id_check1 CHECK (mon_loc_id IS NOT NULL),
-    CONSTRAINT hrly_param_fuel_flow_parameter_cd_check CHECK (parameter_cd IS NOT NULL),
-    CONSTRAINT hrly_param_fuel_flow_parameter_cd_check1 CHECK (parameter_cd IS NOT NULL),
-    CONSTRAINT hrly_param_fuel_flow_rpt_period_id_check CHECK (rpt_period_id IS NOT NULL),
-    CONSTRAINT hrly_param_fuel_flow_rpt_period_id_check1 CHECK (rpt_period_id IS NOT NULL)
+        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.hrly_param_fuel_flow

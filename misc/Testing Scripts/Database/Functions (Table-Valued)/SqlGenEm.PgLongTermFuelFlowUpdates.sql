@@ -38,7 +38,7 @@ RETURN
                     'USERID                          = ', '''UNITTEST''', ', ',
                     'UPDATE_DATE                     = ', concat( '''', format( getdate(), 'yyyy-MM-dd'), '''' ),
 
-                    ' where MON_LOC_ID = ''', sel.MON_LOC_ID, ''' and RPT_PERIOD_ID = ', sel.RPT_PERIOD_ID, ' and MON_SYS_ID = ''', sel.MON_SYS_ID, ''' and FUEL_FLOW_PERIOD_CD = ''', sel.FUEL_FLOW_PERIOD_CD, ''';' 
+                    ' where MON_LOC_ID = ''', sel.MON_LOC_ID, ''' and RPT_PERIOD_ID = ', sel.RPT_PERIOD_ID, ' and MON_SYS_ID = ''', sel.MON_SYS_ID, ''' and coalesce( FUEL_FLOW_PERIOD_CD, ''NULL'' ) = ''', isnull( sel.FUEL_FLOW_PERIOD_CD, 'NULL' ), ''';' 
                 )
             ) as SQL_STATEMENT
       from  (
@@ -109,7 +109,7 @@ RETURN
             on tar.MON_LOC_ID = sel.MON_LOC_ID
             and tar.RPT_PERIOD_ID = sel.RPT_PERIOD_ID
             and tar.MON_SYS_ID = sel.MON_SYS_ID
-            and tar.FUEL_FLOW_PERIOD_CD = sel.FUEL_FLOW_PERIOD_CD
+            and isnull( tar.FUEL_FLOW_PERIOD_CD, 'NULL' ) = isnull( sel.FUEL_FLOW_PERIOD_CD, 'NULL' )
 )
 GO
 

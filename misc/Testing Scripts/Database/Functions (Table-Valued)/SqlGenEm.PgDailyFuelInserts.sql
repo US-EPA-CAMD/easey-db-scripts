@@ -33,6 +33,9 @@ RETURN
                         ' DAILY_FUEL_FEED', ',',
                         ' CARBON_CONTENT_USED', ',',
                         ' FUEL_CARBON_BURNED', ',',
+                        
+                        ' MON_LOC_ID', ',',
+                        ' RPT_PERIOD_ID', ',',
 
                         ' USERID', ',',
                         ' ADD_DATE', ',',
@@ -47,6 +50,9 @@ RETURN
                         case when  tar.DAILY_FUEL_FEED                is not null  then  cast( tar.DAILY_FUEL_FEED as varchar ) else 'NULL' end, ', ',
                         case when  tar.CARBON_CONTENT_USED            is not null  then  cast( tar.CARBON_CONTENT_USED as varchar ) else 'NULL' end, ', ',
                         case when  tar.FUEL_CARBON_BURNED             is not null  then  cast( tar.FUEL_CARBON_BURNED as varchar ) else 'NULL' end, ', ',
+                        
+                        case when  dem.MON_LOC_ID                     is not null  then  concat( '''', dem.MON_LOC_ID, '''' ) else 'NULL' end, ', ',
+                        case when  dem.RPT_PERIOD_ID                  is not null  then  cast( dem.RPT_PERIOD_ID as varchar ) else 'NULL' end, ', ',
 
                         '''UNITTEST''', ', ',
                         concat( '''', format( getdate(), 'yyyy-MM-dd'), '''' ), ', ',

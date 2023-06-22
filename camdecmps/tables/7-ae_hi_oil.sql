@@ -21,23 +21,23 @@ CREATE TABLE IF NOT EXISTS camdecmps.ae_hi_oil
     mon_sys_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     calc_oil_mass numeric(10,1),
     CONSTRAINT pk_ae_hi_oil PRIMARY KEY (ae_hi_oil_id),
-    CONSTRAINT fk_ae_correlatio_ae_hi_oil FOREIGN KEY (ae_corr_test_run_id)
+    CONSTRAINT fk_ae_hi_oil_ae_correlation_test_run FOREIGN KEY (ae_corr_test_run_id)
         REFERENCES camdecmps.ae_correlation_test_run (ae_corr_test_run_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_system_ae_hi_oil FOREIGN KEY (mon_sys_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_ae_hi_oil_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_units_of_meas_ae_hi144 FOREIGN KEY (oil_volume_uom_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_ae_hi_oil_oil_density_uom FOREIGN KEY (oil_density_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_units_of_meas_ae_hi146 FOREIGN KEY (oil_gcv_uom_cd)
+    CONSTRAINT fk_ae_hi_oil_oil_gcv_uom FOREIGN KEY (oil_gcv_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_units_of_meas_ae_hi_oil FOREIGN KEY (oil_density_uom_cd)
+    CONSTRAINT fk_ae_hi_oil_oil_volume_uom FOREIGN KEY (oil_volume_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

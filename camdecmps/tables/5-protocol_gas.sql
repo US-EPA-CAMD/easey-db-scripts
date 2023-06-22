@@ -15,18 +15,14 @@ CREATE TABLE IF NOT EXISTS camdecmps.protocol_gas
     update_date timestamp without time zone,
     userid character varying(25) COLLATE pg_catalog."default",
     CONSTRAINT pk_protocol_gas PRIMARY KEY (protocol_gas_id),
-    CONSTRAINT fk_gas_level_cd FOREIGN KEY (gas_level_cd)
+    CONSTRAINT fk_protocol_gas_gas_level_code FOREIGN KEY (gas_level_cd)
         REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_test_summary_protocol_gas FOREIGN KEY (test_sum_id)
+    CONSTRAINT fk_protocol_gas_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_vendor_id FOREIGN KEY (vendor_id)
-        REFERENCES camdecmps.protocol_gas_vendor (vendor_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.protocol_gas

@@ -43,14 +43,14 @@ CREATE TABLE IF NOT EXISTS camdecmps.on_off_cal
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_on_off_cal PRIMARY KEY (on_off_cal_id),
-    CONSTRAINT fk_gas_level_cod_on_off_cal FOREIGN KEY (upscale_gas_level_cd)
+    CONSTRAINT fk_on_off_cal_gas_level_code FOREIGN KEY (upscale_gas_level_cd)
         REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_test_summary_on_off_cal FOREIGN KEY (test_sum_id)
+    CONSTRAINT fk_on_off_cal_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.on_off_cal

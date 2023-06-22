@@ -15,10 +15,10 @@ CREATE TABLE IF NOT EXISTS camdecmps.hg_test_injection
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_hg_test_injection PRIMARY KEY (hg_test_inj_id),
-    CONSTRAINT fk_hg_test_inj_hg_test_sum_id FOREIGN KEY (hg_test_sum_id)
+    CONSTRAINT fk_hg_test_injection_hg_test_summary FOREIGN KEY (hg_test_sum_id)
         REFERENCES camdecmps.hg_test_summary (hg_test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.hg_test_injection

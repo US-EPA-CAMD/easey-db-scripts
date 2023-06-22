@@ -30,14 +30,14 @@ CREATE TABLE IF NOT EXISTS camdecmps.calibration_injection
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_calibration_injection PRIMARY KEY (cal_inj_id),
-    CONSTRAINT fk_gas_level_cod_calibration_i FOREIGN KEY (upscale_gas_level_cd)
+    CONSTRAINT fk_calibration_injection_gas_level_code FOREIGN KEY (upscale_gas_level_cd)
         REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_test_summary_calibration_i FOREIGN KEY (test_sum_id)
+    CONSTRAINT fk_calibration_injection_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.calibration_injection

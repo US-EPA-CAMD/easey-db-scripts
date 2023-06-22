@@ -21,14 +21,6 @@ CREATE TABLE IF NOT EXISTS camdecmps.sampling_train_supp_data
     update_date timestamp without time zone,
     sampling_ratio_test_result_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_sampling_train_sd PRIMARY KEY (trap_train_id),
-    CONSTRAINT fk_sampling_train_sd_cmp FOREIGN KEY (component_id)
-        REFERENCES camdecmps.component (component_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_sampling_train_sd_loc FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
     CONSTRAINT fk_sampling_train_sd_prd FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -41,10 +33,18 @@ CREATE TABLE IF NOT EXISTS camdecmps.sampling_train_supp_data
         REFERENCES camdecmpsmd.train_qa_status_code (train_qa_status_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_sampling_train_sd_trp FOREIGN KEY (trap_id)
+    CONSTRAINT fk_sampling_train_supp_data_component FOREIGN KEY (component_id)
+        REFERENCES camdecmps.component (component_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_sampling_train_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_sampling_train_supp_data_sorbent_trap_supp_data FOREIGN KEY (trap_id)
         REFERENCES camdecmps.sorbent_trap_supp_data (trap_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.sampling_train_supp_data

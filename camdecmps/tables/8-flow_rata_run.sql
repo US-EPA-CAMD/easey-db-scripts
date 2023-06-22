@@ -27,10 +27,10 @@ CREATE TABLE IF NOT EXISTS camdecmps.flow_rata_run
     update_date timestamp without time zone,
     add_date timestamp without time zone,
     CONSTRAINT pk_flow_rata_run PRIMARY KEY (flow_rata_run_id),
-    CONSTRAINT fk_rata_run_flow_rata_run FOREIGN KEY (rata_run_id)
+    CONSTRAINT fk_flow_rata_run_rata_run FOREIGN KEY (rata_run_id)
         REFERENCES camdecmps.rata_run (rata_run_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.flow_rata_run

@@ -20,19 +20,19 @@ CREATE TABLE IF NOT EXISTS camdecmps.hrly_gas_flow_meter
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_hrly_gas_flow_meter PRIMARY KEY (hrly_gas_flow_meter_id),
-    CONSTRAINT fk_gfm_component_id FOREIGN KEY (component_id)
+    CONSTRAINT fk_hrly_gas_flow_meter_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_gfm_hour_id FOREIGN KEY (hour_id)
+    CONSTRAINT fk_hrly_gas_flow_meter_hrly_op_data FOREIGN KEY (hour_id)
         REFERENCES camdecmps.hrly_op_data (hour_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_gfm_mon_loc_id FOREIGN KEY (mon_loc_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_hrly_gas_flow_meter_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_gfm_rpt_period_id FOREIGN KEY (rpt_period_id)
+    CONSTRAINT fk_hrly_gas_flow_meter_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

@@ -18,28 +18,28 @@ CREATE TABLE IF NOT EXISTS camdecmps.mats_derived_hrly_value
     userid character varying(25) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
-    CONSTRAINT pk_matsdhv PRIMARY KEY (mats_dhv_id),
-    CONSTRAINT fk_mdhv_hour_id FOREIGN KEY (hour_id)
+    CONSTRAINT pk_mats_derived_hrly_value PRIMARY KEY (mats_dhv_id),
+    CONSTRAINT fk_mats_derived_hrly_value_hrly_op_data FOREIGN KEY (hour_id)
         REFERENCES camdecmps.hrly_op_data (hour_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_mdhv_modc_cd FOREIGN KEY (modc_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_mats_derived_hrly_value_modc_code FOREIGN KEY (modc_cd)
         REFERENCES camdecmpsmd.modc_code (modc_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_mdhv_mon_form_id FOREIGN KEY (mon_form_id)
+    CONSTRAINT fk_mats_derived_hrly_value_monitor_formula FOREIGN KEY (mon_form_id)
         REFERENCES camdecmps.monitor_formula (mon_form_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_mdhv_mon_loc_id FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_mats_derived_hrly_value_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_mdhv_parameter_cd FOREIGN KEY (parameter_cd)
+    CONSTRAINT fk_mats_derived_hrly_value_parameter_code FOREIGN KEY (parameter_cd)
         REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_mdhv_rpt_period_id FOREIGN KEY (rpt_period_id)
+    CONSTRAINT fk_mats_derived_hrly_value_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

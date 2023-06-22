@@ -12,10 +12,10 @@ CREATE TABLE IF NOT EXISTS camdecmps.qa_supp_attribute
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_qa_supp_attribute PRIMARY KEY (qa_supp_attribute_id),
-    CONSTRAINT fk_qa_supp_data_qa_supp_attri FOREIGN KEY (qa_supp_data_id)
+    CONSTRAINT fk_qa_supp_attribute_qa_supp_data FOREIGN KEY (qa_supp_data_id)
         REFERENCES camdecmps.qa_supp_data (qa_supp_data_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.qa_supp_attribute

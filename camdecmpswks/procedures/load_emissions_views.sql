@@ -32,3 +32,35 @@ BEGIN
 
 END;
 $BODY$;
+
+-- PROCEDURE: camdecmpswks.load_emissions_views(integer, integer, text)
+
+DROP PROCEDURE IF EXISTS camdecmpswks.load_emissions_views(integer, integer, text);
+
+CREATE OR REPLACE PROCEDURE camdecmpswks.load_emissions_views(
+	beginyear integer,
+	endyear integer,
+	monPlanId text
+)
+LANGUAGE 'plpgsql'
+AS $BODY$
+DECLARE
+	facility text;
+	currentQtr integer;
+	currentYear integer;
+BEGIN
+	SELECT p.facility_name
+	FROM camdecmps.monitor_plan mp
+	JOIN camd.plant p USING(fac_id)
+	WHERE mp.mon_plan_id = monPlanId
+	INTO facility;
+
+	RAISE NOTICE 'Loading emissions data for % %', facility, monPlanId;
+	FOR currentYear IN beginYear..endyear LOOP
+		FOR currentQtr IN 1..4 LOOP
+			CALL camdecmpswks.load_emissions_workspace(monPlanId, currentYear, currentQtr);
+			CALL camdecmpswks.refresh_emissions_views(monPlanId, currentYear, currentQtr);				
+		END LOOP;
+	END LOOP;
+END;
+$BODY$;

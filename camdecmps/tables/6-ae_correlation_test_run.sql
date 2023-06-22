@@ -23,10 +23,10 @@ CREATE TABLE IF NOT EXISTS camdecmps.ae_correlation_test_run
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_ae_correlation_test_run PRIMARY KEY (ae_corr_test_run_id),
-    CONSTRAINT fk_ae_correlatio_ae_correlatio FOREIGN KEY (ae_corr_test_sum_id)
+    CONSTRAINT fk_ae_correlation_test_run_ae_correlation_test_sum FOREIGN KEY (ae_corr_test_sum_id)
         REFERENCES camdecmps.ae_correlation_test_sum (ae_corr_test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.ae_correlation_test_run

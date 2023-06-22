@@ -444,3 +444,5 @@ NEW MATS REQ */
 INSERT INTO camdecmpsmd.hourly_type_code ( hourly_type_cd, hourly_type_description )
 VALUES ( 'COMBINE', 'Both Monitored and Derived Hourly' );
 --------------------------------------------------------------------------------------------------------------------
+ALTER TABLE IF EXISTS camdecmpswks.check_session
+    ADD COLUMN IF NOT EXISTS batch_id character varying(45);

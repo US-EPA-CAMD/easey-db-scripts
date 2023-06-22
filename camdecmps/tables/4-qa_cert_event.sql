@@ -26,27 +26,27 @@ CREATE TABLE IF NOT EXISTS camdecmps.qa_cert_event
     submission_id numeric(38,0),
     submission_availability_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_qa_cert_event PRIMARY KEY (qa_cert_event_id),
-    CONSTRAINT fk_component_qa_cert_event FOREIGN KEY (component_id)
+    CONSTRAINT fk_qa_cert_event_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_locat_qa_cert_event FOREIGN KEY (mon_loc_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_qa_cert_event_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_syste_qa_cert_event FOREIGN KEY (mon_sys_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_qa_cert_event_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_qa_cert_event_qa_cert_event FOREIGN KEY (qa_cert_event_cd)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_qa_cert_event_qa_cert_event_code FOREIGN KEY (qa_cert_event_cd)
         REFERENCES camdecmpsmd.qa_cert_event_code (qa_cert_event_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_required_test_qa_cert_event FOREIGN KEY (required_test_cd)
+    CONSTRAINT fk_qa_cert_event_required_test_code FOREIGN KEY (required_test_cd)
         REFERENCES camdecmpsmd.required_test_code (required_test_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_submission_av_qa_cert_event FOREIGN KEY (submission_availability_cd)
+    CONSTRAINT fk_qa_cert_event_submission_availability_code FOREIGN KEY (submission_availability_cd)
         REFERENCES camdecmpsmd.submission_availability_code (submission_availability_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

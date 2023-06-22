@@ -4,14 +4,15 @@ DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_all(character varyin
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_all(
 	vmonplanid character varying,
-	vrptperiodid numeric)
+	vrptperiodid numeric
+)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-    DELETE FROM camdecmpswks.EMISSION_VIEW_ALL 
+	DELETE FROM camdecmpswks.EMISSION_VIEW_ALL
 	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
 
-    INSERT INTO camdecmpswks.EMISSION_VIEW_ALL(
+	INSERT INTO camdecmpswks.EMISSION_VIEW_ALL(
 		MON_PLAN_ID,
 		MON_LOC_ID,
 		RPT_PERIOD_ID,
@@ -35,7 +36,9 @@ BEGIN
 		CO2_FORMULA_cd,
 		RPT_CO2_MASS_RATE,
 		CALC_CO2_MASS_RATE,
-		ADJ_FLOW_USED, RPT_ADJ_FLOW, UNADJ_FLOW,
+		ADJ_FLOW_USED,
+		RPT_ADJ_FLOW,
+		UNADJ_FLOW,
 		ERROR_CODES
 	)
 	SELECT DISTINCT	
@@ -99,5 +102,5 @@ BEGIN
 		FROM camdecmpswks.MONITOR_HRLY_VALUE
 		WHERE HOUR_ID = hod.HOUR_ID AND PARAMETER_CD = 'FLOW'
 	);
-END;
+END
 $BODY$;

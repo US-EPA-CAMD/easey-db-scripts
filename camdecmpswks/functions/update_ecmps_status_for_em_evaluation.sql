@@ -1,11 +1,11 @@
 -- FUNCTION: camdecmpswks.update_ecmps_status_for_em_evaluation(character varying, character varying, integer)
 
--- DROP FUNCTION camdecmpswks.update_ecmps_status_for_em_evaluation(character varying, character varying, integer);
+DROP FUNCTION IF EXISTS camdecmpswks.update_ecmps_status_for_em_evaluation(character varying, character varying, integer);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.update_ecmps_status_for_em_evaluation(
 	vmon_plan_id character varying,
-	vchk_session_id character varying,
-	vperiod_id integer)
+	vperiod_id integer,
+    vchk_session_id character varying)
     RETURNS TABLE(result text, error_msg character varying) 
     LANGUAGE 'plpgsql'
     COST 100

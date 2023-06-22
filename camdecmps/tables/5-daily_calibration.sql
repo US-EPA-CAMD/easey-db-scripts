@@ -37,12 +37,24 @@ CREATE TABLE IF NOT EXISTS camdecmps.daily_calibration
     expiration_date date,
     injection_protocol_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_daily_calibration PRIMARY KEY (cal_inj_id),
-    CONSTRAINT fk_daily_cal_vendor_id FOREIGN KEY (vendor_id)
+    CONSTRAINT fk_daily_calibration_daily_test_summary FOREIGN KEY (daily_test_sum_id)
+        REFERENCES camdecmps.daily_test_summary (daily_test_sum_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_daily_calibration_gas_level_code FOREIGN KEY (upscale_gas_level_cd)
+        REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_daily_calibration_injection_protocol_code FOREIGN KEY (injection_protocol_cd)
+        REFERENCES camdecmpsmd.injection_protocol_code (injection_protocol_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_daily_calibration_protocol_gas_vendor FOREIGN KEY (vendor_id)
         REFERENCES camdecmps.protocol_gas_vendor (vendor_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_daily_test_su_daily_calibra FOREIGN KEY (daily_test_sum_id)
-        REFERENCES camdecmps.daily_test_summary (daily_test_sum_id) MATCH SIMPLE
+    CONSTRAINT fk_daily_calibration_reporting_period FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );

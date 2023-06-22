@@ -4,7 +4,6 @@
 
 CREATE TABLE IF NOT EXISTS camdecmps.emission_view_co2dailyfuel
 (
-    em_co2_daily_fuel_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id integer NOT NULL,
@@ -20,5 +19,6 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_co2dailyfuel
     fuel_carbon_burned numeric(13,1),
     calc_fuel_carbon_burned numeric(13,1),
     total_carbon_burned numeric(13,1),
-    calc_total_daily_emission numeric(10,1)
-);
+    calc_total_daily_emission numeric(10,1),
+    CONSTRAINT pk_emission_view_co2dailyfuel PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, fuel_cd, date)
+) PARTITION BY RANGE (rpt_period_id);

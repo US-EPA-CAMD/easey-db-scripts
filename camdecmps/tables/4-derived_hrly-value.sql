@@ -32,32 +32,40 @@ CREATE TABLE IF NOT EXISTS camdecmps.derived_hrly_value
     calc_fuel_flow_total numeric(15,4),
     calc_hour_measure_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_derived_hrly_value PRIMARY KEY (derv_id),
-    CONSTRAINT derived_hrly_value_r01 FOREIGN KEY (hour_id)
-        REFERENCES camdecmps.hrly_op_data (hour_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_fuel_code_derived_hrly_ FOREIGN KEY (fuel_cd)
+    CONSTRAINT fk_derived_hrly_value_fuel_code FOREIGN KEY (fuel_cd)
         REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_modc_code_derived_hrly_ FOREIGN KEY (modc_cd)
+    CONSTRAINT fk_derived_hrly_value_hrly_op_data FOREIGN KEY (hour_id)
+        REFERENCES camdecmps.hrly_op_data (hour_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT fk_derived_hrly_value_modc_code FOREIGN KEY (modc_cd)
         REFERENCES camdecmpsmd.modc_code (modc_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_formu_derived_hrly_ FOREIGN KEY (mon_form_id)
+    CONSTRAINT fk_derived_hrly_value_monitor_formula FOREIGN KEY (mon_form_id)
         REFERENCES camdecmps.monitor_formula (mon_form_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_monitor_syste_derived_hrly_ FOREIGN KEY (mon_sys_id)
+    CONSTRAINT fk_derived_hrly_value_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_derived_hrly_value_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_operating_con_derived_hrly_ FOREIGN KEY (operating_condition_cd)
+    CONSTRAINT fk_derived_hrly_value_operating_condition_code FOREIGN KEY (operating_condition_cd)
         REFERENCES camdecmpsmd.operating_condition_code (operating_condition_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_parameter_cod_derived_hrly_ FOREIGN KEY (parameter_cd)
+    CONSTRAINT fk_derived_hrly_value_parameter_code FOREIGN KEY (parameter_cd)
         REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_derived_hrly_value_reporting_period FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );

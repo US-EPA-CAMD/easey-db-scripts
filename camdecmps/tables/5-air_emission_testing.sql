@@ -19,10 +19,10 @@ CREATE TABLE IF NOT EXISTS camdecmps.air_emission_testing
     update_date timestamp without time zone,
     userid character varying(25) COLLATE pg_catalog."default",
     CONSTRAINT pk_air_emission_testing PRIMARY KEY (air_emission_test_id),
-    CONSTRAINT fk_test_summary_aet FOREIGN KEY (test_sum_id)
+    CONSTRAINT fk_air_emission_testing_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE camdecmps.air_emission_testing
