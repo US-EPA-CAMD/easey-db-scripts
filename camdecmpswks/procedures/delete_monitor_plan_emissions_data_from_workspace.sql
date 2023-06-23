@@ -41,6 +41,9 @@ BEGIN
 	DELETE FROM camdecmpswks.daily_emission
 	WHERE mon_loc_id = ANY(monLocIds);
 
+	DELETE FROM camdecmpswks.daily_backstop
+	WHERE mon_loc_id = ANY(monLocIds);
+
 	DELETE FROM camdecmpswks.daily_test_summary
 	WHERE mon_loc_id = ANY(monLocIds);
 

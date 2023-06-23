@@ -20,6 +20,7 @@ BEGIN
 	TRUNCATE TABLE camdecmpswks.summary_value CASCADE;
 	TRUNCATE TABLE camdecmpswks.nsps4t_summary CASCADE;
 	TRUNCATE TABLE camdecmpswks.daily_emission CASCADE;
+ 	TRUNCATE TABLE camdecmpswks.daily_backstop CASCADE;
 	TRUNCATE TABLE camdecmpswks.daily_test_summary CASCADE;
 	TRUNCATE TABLE camdecmpswks.weekly_test_summary CASCADE;
 	TRUNCATE TABLE camdecmpswks.long_term_fuel_flow CASCADE;
