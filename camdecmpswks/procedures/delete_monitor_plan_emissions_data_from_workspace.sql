@@ -113,6 +113,9 @@ BEGIN
 	DELETE FROM camdecmpswks.daily_emission
 	WHERE mon_loc_id = ANY(monLocIds) and rpt_period_id = rptperiodid;
 
+	DELETE FROM camdecmpswks.daily_backstop
+	WHERE mon_loc_id = ANY(monLocIds) and rpt_period_id = rptperiodid;
+
 	DELETE FROM camdecmpswks.daily_test_summary
 	WHERE mon_loc_id = ANY(monLocIds) and rpt_period_id = rptperiodid;
 

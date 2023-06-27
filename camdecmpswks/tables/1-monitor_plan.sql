@@ -47,3 +47,19 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_plan
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
+
+-- Index: idx_monitor_plan_chk_session
+
+-- DROP INDEX camdecmps.idx_monitor_plan_chk_session;
+
+CREATE INDEX IF NOT EXISTS idx_monitor_plan_chk_session
+    ON camdecmpswks.monitor_plan USING btree
+    (chk_session_id COLLATE pg_catalog."default" ASC NULLS LAST);
+
+-- Index: idx_monitor_plan_submission
+
+-- DROP INDEX camdecmps.idx_monitor_plan_submission;
+
+CREATE INDEX IF NOT EXISTS idx_monitor_plan_submission
+    ON camdecmpswks.monitor_plan USING btree
+    (submission_id ASC NULLS LAST);

@@ -48,5 +48,5 @@ SELECT
 	LEFT JOIN camdecmps.stack_pipe sp USING(stack_pipe_id)
     LEFT JOIN camd.unit u USING(unit_id)
 	WHERE mpl.mon_plan_id = monPlanId
-	ORDER BY u.unitid, sp.stack_name, ms.begin_date, ms.begin_hour;
+	ORDER BY u.unitid, sp.stack_name, ms.component_type_cd, ssc.span_scale_cd_description, ms.span_method_cd, ms.begin_date, ms.begin_hour;
 $BODY$;
