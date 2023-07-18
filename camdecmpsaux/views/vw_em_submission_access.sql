@@ -37,7 +37,7 @@ CREATE OR REPLACE VIEW camdecmpsaux.vw_em_submission_access
      JOIN camd.plant pl ON pl.fac_id = mp.fac_id
      JOIN camdecmpsmd.reporting_period rp USING (rpt_period_id)
      LEFT JOIN camdecmps.emission_evaluation ee ON ee.rpt_period_id = em.rpt_period_id AND ee.mon_plan_id::text = em.mon_plan_id::text
-     LEFT JOIN camdecmpsaux.check_session cs ON cs.rpt_period_id = em.rpt_period_id AND cs.mon_plan_id::text = em.mon_plan_id::text AND cs.submission_id = ee.submission_id::double precision
+     LEFT JOIN camdecmpsaux.check_session cs ON cs.chk_session_id::text = ee.chk_session_id::text
      LEFT JOIN camdecmpsmd.severity_code sc USING (severity_cd)
      JOIN camdecmpsmd.em_sub_type_code st USING (em_sub_type_cd)
      JOIN camdecmps.monitor_plan_reporting_freq rf ON mp.mon_plan_id::text = rf.mon_plan_id::text AND (rf.begin_rpt_period_id <= em.rpt_period_id AND rf.end_rpt_period_id IS NULL OR rf.begin_rpt_period_id <= em.rpt_period_id AND rf.end_rpt_period_id >= em.rpt_period_id)
