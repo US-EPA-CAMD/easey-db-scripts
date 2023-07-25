@@ -38,6 +38,7 @@ VALUES
     ('origin', 'https://ecmps.epa.gov'),
     ('origin', 'https://api-easey.app.cloud.gov'),
     ('origin', 'https://cam-api.app.cloud.gov'),
+    ('origin', 'https://usepa.github.io'),
     ('origin', 'https://api.epa.gov'),
     ('origin', 'https://www.epa.gov'),
     ('header', 'authorization'),
