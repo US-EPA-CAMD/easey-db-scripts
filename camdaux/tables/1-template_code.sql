@@ -25,6 +25,7 @@ VALUES
 	('QUADTERR',	'EVAL',		'DEFAULT',	'NSPS4T Summary Data Errors'),
 	('ADTERR',		'EVAL',		'DEFAULT',	'Audit Results'),
 	('QCE',			'QCE',		'DEFAULT',	'QA Certification Events Details'),
+	('TEE',			'TEE',		'DEFAULT',	'Test Extensions and Exemptions Details'),
 	('FACINFO1C',	'ALL',		'1COLTBL',	'Facility Information'),
 	('FACINFO2C',	'ALL',		'2COLTBL',	'Facility Information'),
 	('FACINFO3C',	'ALL',		'3COLTBL',	'Facility Information'),	
