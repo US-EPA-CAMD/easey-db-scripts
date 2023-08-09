@@ -1,3 +1,7 @@
+-- PROCEDURE: camdecmps.copy_monitor_plan_from_workspace_to_global(text)
+
+-- DROP PROCEDURE IF EXISTS camdecmps.copy_monitor_plan_from_workspace_to_global(text);
+
 CREATE OR REPLACE PROCEDURE camdecmps.copy_monitor_plan_from_workspace_to_global(
 	monplanid text)
 LANGUAGE 'plpgsql'

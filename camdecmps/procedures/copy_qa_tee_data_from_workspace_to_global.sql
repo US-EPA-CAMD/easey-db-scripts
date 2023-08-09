@@ -1,3 +1,7 @@
+-- PROCEDURE: camdecmps.copy_qa_tee_data_from_workspace_to_global(character varying)
+
+-- DROP PROCEDURE IF EXISTS camdecmps.copy_qa_tee_data_from_workspace_to_global(character varying);
+
 CREATE OR REPLACE PROCEDURE camdecmps.copy_qa_tee_data_from_workspace_to_global(
 	teeid character varying)
 LANGUAGE 'plpgsql'
