@@ -102,7 +102,7 @@ BEGIN
 			mon_plan_id, rpt_period_id, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, submission_id, submission_availability_cd--, eval_status_cd, pending_status_cd
 		)
 		SELECT
-			mon_plan_id, rpt_period_id, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, submission_id, submission_availability_cd--, 'EVAL', pending_status_cd
+			mon_plan_id, rpt_period_id, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, submission_id, 'UPDATED'--, 'EVAL', pending_status_cd
 		FROM camdecmpswks.emission_evaluation
 		WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 

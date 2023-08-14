@@ -45,7 +45,7 @@ BEGIN
 		mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, begin_rpt_period_id, end_rpt_period_id, last_evaluated_date
 	)
 	SELECT
-		mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, begin_rpt_period_id, end_rpt_period_id, last_evaluated_date
+		mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, 'UPDATED', begin_rpt_period_id, end_rpt_period_id, last_evaluated_date
 	FROM camdecmpswks.monitor_plan
 	WHERE mon_plan_id = monPlanId
 	ON CONFLICT (mon_plan_id) DO UPDATE
@@ -59,7 +59,7 @@ BEGIN
 		add_date = EXCLUDED.add_date,
 		update_date = EXCLUDED.update_date,
 		submission_id = EXCLUDED.submission_id,
-		submission_availability_cd = EXCLUDED.submission_availability_cd,
+		submission_availability_cd = 'UPDATED',
 		begin_rpt_period_id = EXCLUDED.begin_rpt_period_id,
 		end_rpt_period_id = EXCLUDED.end_rpt_period_id,
 		last_evaluated_date = EXCLUDED.last_evaluated_date;
@@ -69,7 +69,7 @@ BEGIN
 		mon_plan_comment_id, mon_plan_id, mon_plan_comment, begin_date, end_date, userid, add_date, submission_availability_cd, update_date
 	)
 	SELECT
-		mon_plan_comment_id, mon_plan_id, mon_plan_comment, begin_date, end_date, userid, add_date, submission_availability_cd, update_date
+		mon_plan_comment_id, mon_plan_id, mon_plan_comment, begin_date, end_date, userid, add_date, 'UPDATED', update_date
 	FROM camdecmpswks.monitor_plan_comment
 	WHERE mon_plan_id = monPlanId
 	ON CONFLICT (mon_plan_comment_id) DO UPDATE
@@ -79,7 +79,7 @@ BEGIN
 		end_date = EXCLUDED.end_date,
 		userid = EXCLUDED.userid,
 		add_date = EXCLUDED.add_date,
-		submission_availability_cd = EXCLUDED.submission_availability_cd,
+		submission_availability_cd = 'UPDATED',
 		update_date = EXCLUDED.update_date;
 
 	-- MONITOR_PLAN_REPORTING_FREQ --
