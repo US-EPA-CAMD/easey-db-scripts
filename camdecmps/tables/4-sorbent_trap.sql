@@ -117,7 +117,7 @@ COMMENT ON COLUMN camdecmps.sorbent_trap.rata_ind
 
 -- DROP INDEX IF EXISTS camdecmps.idx_sorbent_trap_001;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_sorbent_trap_001
+CREATE INDEX IF NOT EXISTS idx_sorbent_trap_001
     ON camdecmps.sorbent_trap USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -125,7 +125,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_sorbent_trap_001
 
 -- DROP INDEX IF EXISTS camdecmps.idx_trap_add_date;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_trap_add_date
+CREATE INDEX IF NOT EXISTS idx_trap_add_date
     ON camdecmps.sorbent_trap USING btree
     (add_date ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -133,7 +133,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_trap_add_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_trap_modc_cd;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_trap_modc_cd
+CREATE INDEX IF NOT EXISTS idx_trap_modc_cd
     ON camdecmps.sorbent_trap USING btree
     (modc_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -141,7 +141,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_trap_modc_cd
 
 -- DROP INDEX IF EXISTS camdecmps.idx_trap_sys_id;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_trap_sys_id
+CREATE INDEX IF NOT EXISTS idx_trap_sys_id
     ON camdecmps.sorbent_trap USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

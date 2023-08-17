@@ -166,7 +166,7 @@ COMMENT ON COLUMN camddmw.account_fact.last_update_date
 
 -- DROP INDEX camddmw.account_fact_idx001;
 
-CREATE UNIQUE INDEX account_fact_idx001
+CREATE UNIQUE INDEX IF NOT EXISTS account_fact_idx001
     ON camddmw.account_fact USING btree
     (state COLLATE pg_catalog."default" ASC NULLS LAST, account_number COLLATE pg_catalog."default" ASC NULLS LAST, prg_code COLLATE pg_catalog."default" ASC NULLS LAST);
 

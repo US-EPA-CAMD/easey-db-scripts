@@ -126,7 +126,7 @@ COMMENT ON COLUMN camdecmpswks.daily_test_supp_data.update_date
 
 -- DROP INDEX IF EXISTS camdecmpswks.idx_daily_test_supp_data_cmp;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_cmp
+CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_cmp
     ON camdecmpswks.daily_test_supp_data USING btree
     (component_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -134,7 +134,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_cmp
 
 -- DROP INDEX IF EXISTS camdecmpswks.idx_daily_test_supp_data_ctr;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_ctr
+CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_ctr
     ON camdecmpswks.daily_test_supp_data USING btree
     (calc_test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -142,7 +142,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_ctr
 
 -- DROP INDEX IF EXISTS camdecmpswks.idx_daily_test_supp_data_dst;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_dst
+CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_dst
     ON camdecmpswks.daily_test_supp_data USING btree
     (daily_test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -150,7 +150,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_dst
 
 -- DROP INDEX IF EXISTS camdecmpswks.idx_daily_test_supp_data_emr;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_emr
+CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_emr
     ON camdecmpswks.daily_test_supp_data USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -158,7 +158,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_emr
 
 -- DROP INDEX IF EXISTS camdecmpswks.idx_daily_test_supp_data_kyo;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_kyo
+CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_kyo
     ON camdecmpswks.daily_test_supp_data USING btree
     (key_online_ind ASC NULLS LAST);
 
@@ -166,7 +166,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_kyo
 
 -- DROP INDEX IF EXISTS camdecmpswks.idx_daily_test_supp_data_kyv;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_kyv
+CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_kyv
     ON camdecmpswks.daily_test_supp_data USING btree
     (key_valid_ind ASC NULLS LAST);
 
@@ -174,7 +174,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_kyv
 
 -- DROP INDEX IF EXISTS camdecmpswks.idx_daily_test_supp_data_ool;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_ool
+CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_ool
     ON camdecmpswks.daily_test_supp_data USING btree
     (online_offline_ind ASC NULLS LAST);
 
@@ -182,7 +182,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_ool
 
 -- DROP INDEX IF EXISTS camdecmpswks.idx_daily_test_supp_data_prd;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_prd
+CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_prd
     ON camdecmpswks.daily_test_supp_data USING btree
     (rpt_period_id ASC NULLS LAST);
 
@@ -190,7 +190,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_prd
 
 -- DROP INDEX IF EXISTS camdecmpswks.idx_daily_test_supp_data_ssc;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_ssc
+CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_ssc
     ON camdecmpswks.daily_test_supp_data USING btree
     (span_scale_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -198,7 +198,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_ssc
 
 -- DROP INDEX IF EXISTS camdecmpswks.idx_daily_test_supp_data_trs;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_trs
+CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_trs
     ON camdecmpswks.daily_test_supp_data USING btree
     (test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -206,6 +206,6 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_trs
 
 -- DROP INDEX IF EXISTS camdecmpswks.idx_daily_test_supp_data_tty;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_supp_data_tty
+CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_tty
     ON camdecmpswks.daily_test_supp_data USING btree
     (test_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);

@@ -47,6 +47,6 @@ COMMENT ON COLUMN camdecmpsmd.reporting_period.archive_ind
 
 -- DROP INDEX camdecmpsmd.uq_reporting_period_begin_date;
 
-CREATE UNIQUE INDEX uq_reporting_period_begin_date
+CREATE UNIQUE INDEX IF NOT EXISTS uq_reporting_period_begin_date
     ON camdecmpsmd.reporting_period USING btree
     (begin_date ASC NULLS LAST);

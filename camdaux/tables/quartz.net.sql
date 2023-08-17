@@ -143,14 +143,14 @@ CREATE TABLE IF NOT EXISTS camdaux.qrtz_locks
     PRIMARY KEY (sched_name,lock_name)
 );
 
-create index idx_qrtz_j_req_recovery on camdaux.qrtz_job_details(requests_recovery);
-create index idx_qrtz_t_next_fire_time on camdaux.qrtz_triggers(next_fire_time);
-create index idx_qrtz_t_state on camdaux.qrtz_triggers(trigger_state);
-create index idx_qrtz_t_nft_st on camdaux.qrtz_triggers(next_fire_time,trigger_state);
-create index idx_qrtz_ft_trig_name on camdaux.qrtz_fired_triggers(trigger_name);
-create index idx_qrtz_ft_trig_group on camdaux.qrtz_fired_triggers(trigger_group);
-create index idx_qrtz_ft_trig_nm_gp on camdaux.qrtz_fired_triggers(sched_name,trigger_name,trigger_group);
-create index idx_qrtz_ft_trig_inst_name on camdaux.qrtz_fired_triggers(instance_name);
-create index idx_qrtz_ft_job_name on camdaux.qrtz_fired_triggers(job_name);
-create index idx_qrtz_ft_job_group on camdaux.qrtz_fired_triggers(job_group);
-create index idx_qrtz_ft_job_req_recovery on camdaux.qrtz_fired_triggers(requests_recovery);
+create index if not exists idx_qrtz_j_req_recovery on camdaux.qrtz_job_details(requests_recovery);
+create index if not exists idx_qrtz_t_next_fire_time on camdaux.qrtz_triggers(next_fire_time);
+create index if not exists idx_qrtz_t_state on camdaux.qrtz_triggers(trigger_state);
+create index if not exists idx_qrtz_t_nft_st on camdaux.qrtz_triggers(next_fire_time,trigger_state);
+create index if not exists idx_qrtz_ft_trig_name on camdaux.qrtz_fired_triggers(trigger_name);
+create index if not exists idx_qrtz_ft_trig_group on camdaux.qrtz_fired_triggers(trigger_group);
+create index if not exists idx_qrtz_ft_trig_nm_gp on camdaux.qrtz_fired_triggers(sched_name,trigger_name,trigger_group);
+create index if not exists idx_qrtz_ft_trig_inst_name on camdaux.qrtz_fired_triggers(instance_name);
+create index if not exists idx_qrtz_ft_job_name on camdaux.qrtz_fired_triggers(job_name);
+create index if not exists idx_qrtz_ft_job_group on camdaux.qrtz_fired_triggers(job_group);
+create index if not exists idx_qrtz_ft_job_req_recovery on camdaux.qrtz_fired_triggers(requests_recovery);

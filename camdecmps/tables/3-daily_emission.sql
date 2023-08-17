@@ -85,7 +85,7 @@ COMMENT ON COLUMN camdecmps.daily_emission.calc_total_op_time
 
 -- DROP INDEX IF EXISTS camdecmps.daily_emission_idx001;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS daily_emission_idx001
+CREATE INDEX IF NOT EXISTS daily_emission_idx001
     ON camdecmps.daily_emission USING btree
     (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -93,7 +93,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS daily_emission_idx001
 
 -- DROP INDEX IF EXISTS camdecmps.daily_emission_idx003;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS daily_emission_idx003
+CREATE INDEX IF NOT EXISTS daily_emission_idx003
     ON camdecmps.daily_emission USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -101,7 +101,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS daily_emission_idx003
 
 -- DROP INDEX IF EXISTS camdecmps.idx_daily_emission_mon_loc_id;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_emission_mon_loc_id
+CREATE INDEX IF NOT EXISTS idx_daily_emission_mon_loc_id
     ON camdecmps.daily_emission USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -109,7 +109,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_emission_mon_loc_id
 
 -- DROP INDEX IF EXISTS camdecmps.idx_de_add_date;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_de_add_date
+CREATE INDEX IF NOT EXISTS idx_de_add_date
     ON camdecmps.daily_emission USING btree
     (add_date ASC NULLS LAST)
     TABLESPACE pg_default;

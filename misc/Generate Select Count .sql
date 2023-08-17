@@ -7,5 +7,6 @@ WHERE table_schema LIKE 'camd%'
 	AND table_name NOT LIKE '%data_a_%'
 	AND table_name NOT LIKE '%data_dm_%'
 	AND table_name NOT LIKE '%fact_%'
+	AND table_name NOT LIKE '%emission_view%'
 ORDER BY table_schema, table_name
 ;

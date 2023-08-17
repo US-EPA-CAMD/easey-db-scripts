@@ -181,7 +181,7 @@ ALTER TABLE camddmw.account_compliance_dim
     ON UPDATE NO ACTION
     ON DELETE CASCADE;
 
-CREATE UNIQUE INDEX unq_account_fact
+CREATE UNIQUE INDEX IF NOT EXISTS unq_account_fact
     ON camddmw.account_fact USING btree
     (state COLLATE pg_catalog."default" ASC NULLS LAST, account_number COLLATE pg_catalog."default" ASC NULLS LAST, prg_code COLLATE pg_catalog."default" ASC NULLS LAST);
 

@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.hrly_fuel_flow
     CONSTRAINT fk_hrly_fuel_flow_units_of_measure_code FOREIGN KEY (volumetric_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTIONN
+        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.hrly_fuel_flow
@@ -117,7 +117,7 @@ COMMENT ON COLUMN camdecmps.hrly_fuel_flow.mon_loc_id
 
 -- DROP INDEX IF EXISTS camdecmps.hrly_fuel_flow_idx001;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS hrly_fuel_flow_idx001
+CREATE INDEX IF NOT EXISTS hrly_fuel_flow_idx001
     ON camdecmps.hrly_fuel_flow USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -125,7 +125,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS hrly_fuel_flow_idx001
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hff_add_date;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hff_add_date
+CREATE INDEX IF NOT EXISTS idx_hff_add_date
     ON camdecmps.hrly_fuel_flow USING btree
     (add_date ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -133,7 +133,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hff_add_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrly_fuel_flow_fuel_cd;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_fuel_flow_fuel_cd
+CREATE INDEX IF NOT EXISTS idx_hrly_fuel_flow_fuel_cd
     ON camdecmps.hrly_fuel_flow USING btree
     (fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -141,7 +141,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_fuel_flow_fuel_cd
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrly_fuel_flow_hour_id;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_fuel_flow_hour_id
+CREATE INDEX IF NOT EXISTS idx_hrly_fuel_flow_hour_id
     ON camdecmps.hrly_fuel_flow USING btree
     (hour_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -149,7 +149,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_fuel_flow_hour_id
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrly_fuel_flow_mon_sys_id;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_fuel_flow_mon_sys_id
+CREATE INDEX IF NOT EXISTS idx_hrly_fuel_flow_mon_sys_id
     ON camdecmps.hrly_fuel_flow USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -157,7 +157,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_fuel_flow_mon_sys_id
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrly_fuel_flow_sod_mass_c;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_fuel_flow_sod_mass_c
+CREATE INDEX IF NOT EXISTS idx_hrly_fuel_flow_sod_mass_c
     ON camdecmps.hrly_fuel_flow USING btree
     (sod_mass_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -165,7 +165,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_fuel_flow_sod_mass_c
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrly_fuel_flow_sod_volume;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_fuel_flow_sod_volume
+CREATE INDEX IF NOT EXISTS idx_hrly_fuel_flow_sod_volume
     ON camdecmps.hrly_fuel_flow USING btree
     (sod_volumetric_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -173,7 +173,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_fuel_flow_sod_volume
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrly_fuel_flow_volumetric;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrly_fuel_flow_volumetric
+CREATE INDEX IF NOT EXISTS idx_hrly_fuel_flow_volumetric
     ON camdecmps.hrly_fuel_flow USING btree
     (volumetric_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

@@ -98,7 +98,7 @@ COMMENT ON COLUMN camdecmps.last_qa_value_supp_data.update_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_last_qa_value_supp_data_cp;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_last_qa_value_supp_data_cp
+CREATE INDEX IF NOT EXISTS idx_last_qa_value_supp_data_cp
     ON camdecmps.last_qa_value_supp_data USING btree
     (component_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -106,7 +106,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_last_qa_value_supp_data_cp
 
 -- DROP INDEX IF EXISTS camdecmps.idx_last_qa_value_supp_data_er;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_last_qa_value_supp_data_er
+CREATE INDEX IF NOT EXISTS idx_last_qa_value_supp_data_er
     ON camdecmps.last_qa_value_supp_data USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -114,7 +114,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_last_qa_value_supp_data_er
 
 -- DROP INDEX IF EXISTS camdecmps.idx_last_qa_value_supp_data_ml;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_last_qa_value_supp_data_ml
+CREATE INDEX IF NOT EXISTS idx_last_qa_value_supp_data_ml
     ON camdecmps.last_qa_value_supp_data USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -122,7 +122,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_last_qa_value_supp_data_ml
 
 -- DROP INDEX IF EXISTS camdecmps.idx_last_qa_value_supp_data_ms;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_last_qa_value_supp_data_ms
+CREATE INDEX IF NOT EXISTS idx_last_qa_value_supp_data_ms
     ON camdecmps.last_qa_value_supp_data USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -130,7 +130,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_last_qa_value_supp_data_ms
 
 -- DROP INDEX IF EXISTS camdecmps.idx_last_qa_value_supp_data_pc;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_last_qa_value_supp_data_pc
+CREATE INDEX IF NOT EXISTS idx_last_qa_value_supp_data_pc
     ON camdecmps.last_qa_value_supp_data USING btree
     (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -138,6 +138,6 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_last_qa_value_supp_data_pc
 
 -- DROP INDEX IF EXISTS camdecmps.idx_last_qa_value_supp_data_pr;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_last_qa_value_supp_data_pr
+CREATE INDEX IF NOT EXISTS idx_last_qa_value_supp_data_pr
     ON camdecmps.last_qa_value_supp_data USING btree
     (rpt_period_id ASC NULLS LAST);

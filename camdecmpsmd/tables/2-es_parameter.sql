@@ -2,7 +2,7 @@
 
 -- DROP TABLE camdecmpsmd.es_parameter;
 
-CREATE TABLE IF EXISTS camdecmpsmd.es_parameter
+CREATE TABLE IF NOT EXISTS camdecmpsmd.es_parameter
 (
     es_parameter_group_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     parameter_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,

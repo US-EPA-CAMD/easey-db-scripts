@@ -105,7 +105,7 @@ COMMENT ON COLUMN camdecmps.weekly_test_summary.update_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_wts_add_date;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_wts_add_date
+CREATE INDEX IF NOT EXISTS idx_wts_add_date
     ON camdecmps.weekly_test_summary USING btree
     (add_date ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -113,7 +113,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_wts_add_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_wts_calc_test;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_wts_calc_test
+CREATE INDEX IF NOT EXISTS idx_wts_calc_test
     ON camdecmps.weekly_test_summary USING btree
     (calc_test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -121,7 +121,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_wts_calc_test
 
 -- DROP INDEX IF EXISTS camdecmps.idx_wts_component;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_wts_component
+CREATE INDEX IF NOT EXISTS idx_wts_component
     ON camdecmps.weekly_test_summary USING btree
     (component_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -129,7 +129,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_wts_component
 
 -- DROP INDEX IF EXISTS camdecmps.idx_wts_mon_loc_id;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_wts_mon_loc_id
+CREATE INDEX IF NOT EXISTS idx_wts_mon_loc_id
     ON camdecmps.weekly_test_summary USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -137,7 +137,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_wts_mon_loc_id
 
 -- DROP INDEX IF EXISTS camdecmps.idx_wts_span_scale;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_wts_span_scale
+CREATE INDEX IF NOT EXISTS idx_wts_span_scale
     ON camdecmps.weekly_test_summary USING btree
     (span_scale_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -145,7 +145,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_wts_span_scale
 
 -- DROP INDEX IF EXISTS camdecmps.idx_wts_sys;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_wts_sys
+CREATE INDEX IF NOT EXISTS idx_wts_sys
     ON camdecmps.weekly_test_summary USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -153,7 +153,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_wts_sys
 
 -- DROP INDEX IF EXISTS camdecmps.idx_wts_test_resul;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_wts_test_resul
+CREATE INDEX IF NOT EXISTS idx_wts_test_resul
     ON camdecmps.weekly_test_summary USING btree
     (test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -161,7 +161,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_wts_test_resul
 
 -- DROP INDEX IF EXISTS camdecmps.idx_wts_test_type;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_wts_test_type
+CREATE INDEX IF NOT EXISTS idx_wts_test_type
     ON camdecmps.weekly_test_summary USING btree
     (test_type_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -169,7 +169,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_wts_test_type
 
 -- DROP INDEX IF EXISTS camdecmps.weekly_test_summary_idx002;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS weekly_test_summary_idx002
+CREATE INDEX IF NOT EXISTS weekly_test_summary_idx002
     ON camdecmps.weekly_test_summary USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

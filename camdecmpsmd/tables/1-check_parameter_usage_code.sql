@@ -13,6 +13,6 @@ CREATE TABLE IF NOT EXISTS camdecmpsmd.check_parameter_usage_code
 
 -- DROP INDEX camdecmpsmd.uq_check_parameter_usage_code;
 
-CREATE UNIQUE INDEX uq_check_parameter_usage_code
+CREATE UNIQUE INDEX IF NOT EXISTS uq_check_parameter_usage_code
     ON camdecmpsmd.check_parameter_usage_code USING btree
     (check_param_usage_cd_name COLLATE pg_catalog."default" ASC NULLS LAST);

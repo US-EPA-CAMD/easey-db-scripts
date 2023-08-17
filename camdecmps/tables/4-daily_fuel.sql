@@ -77,7 +77,7 @@ COMMENT ON COLUMN camdecmps.daily_fuel.mon_loc_id
 
 -- DROP INDEX IF EXISTS camdecmps.idx_daily_fuel_01;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_fuel_01
+CREATE INDEX IF NOT EXISTS idx_daily_fuel_01
     ON camdecmps.daily_fuel USING btree
     (daily_emission_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -85,7 +85,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_fuel_01
 
 -- DROP INDEX IF EXISTS camdecmps.idx_daily_fuel_prd_loc;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_fuel_prd_loc
+CREATE INDEX IF NOT EXISTS idx_daily_fuel_prd_loc
     ON camdecmps.daily_fuel USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

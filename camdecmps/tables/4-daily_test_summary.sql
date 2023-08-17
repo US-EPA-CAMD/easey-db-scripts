@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.daily_test_summary
     CONSTRAINT fk_daily_test_summary_test_type_code FOREIGN KEY (test_type_cd)
         REFERENCES camdecmpsmd.test_type_code (test_type_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTIO
+        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.daily_test_summary
@@ -105,7 +105,7 @@ COMMENT ON COLUMN camdecmps.daily_test_summary.mon_sys_id
 
 -- DROP INDEX IF EXISTS camdecmps.daily_test_summary_idx002;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS daily_test_summary_idx002
+CREATE INDEX IF NOT EXISTS daily_test_summary_idx002
     ON camdecmps.daily_test_summary USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -113,7 +113,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS daily_test_summary_idx002
 
 -- DROP INDEX IF EXISTS camdecmps.idx_daily_test_summ_calc_test;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_summ_calc_test
+CREATE INDEX IF NOT EXISTS idx_daily_test_summ_calc_test
     ON camdecmps.daily_test_summary USING btree
     (calc_test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -121,7 +121,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_summ_calc_test
 
 -- DROP INDEX IF EXISTS camdecmps.idx_daily_test_summ_component;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_summ_component
+CREATE INDEX IF NOT EXISTS idx_daily_test_summ_component
     ON camdecmps.daily_test_summary USING btree
     (component_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -129,7 +129,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_summ_component
 
 -- DROP INDEX IF EXISTS camdecmps.idx_daily_test_summ_mon_loc_id;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_summ_mon_loc_id
+CREATE INDEX IF NOT EXISTS idx_daily_test_summ_mon_loc_id
     ON camdecmps.daily_test_summary USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -137,7 +137,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_summ_mon_loc_id
 
 -- DROP INDEX IF EXISTS camdecmps.idx_daily_test_summ_span_scale;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_summ_span_scale
+CREATE INDEX IF NOT EXISTS idx_daily_test_summ_span_scale
     ON camdecmps.daily_test_summary USING btree
     (span_scale_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -145,7 +145,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_summ_span_scale
 
 -- DROP INDEX IF EXISTS camdecmps.idx_daily_test_summ_test_resul;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_summ_test_resul
+CREATE INDEX IF NOT EXISTS idx_daily_test_summ_test_resul
     ON camdecmps.daily_test_summary USING btree
     (test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -153,7 +153,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_summ_test_resul
 
 -- DROP INDEX IF EXISTS camdecmps.idx_daily_test_summ_test_type;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_summ_test_type
+CREATE INDEX IF NOT EXISTS idx_daily_test_summ_test_type
     ON camdecmps.daily_test_summary USING btree
     (test_type_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -161,7 +161,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_summ_test_type
 
 -- DROP INDEX IF EXISTS camdecmps.idx_daily_test_summary_01;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_summary_01
+CREATE INDEX IF NOT EXISTS idx_daily_test_summary_01
     ON camdecmps.daily_test_summary USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -169,7 +169,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_summary_01
 
 -- DROP INDEX IF EXISTS camdecmps.idx_dts_add_date;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_dts_add_date
+CREATE INDEX IF NOT EXISTS idx_dts_add_date
     ON camdecmps.daily_test_summary USING btree
     (add_date ASC NULLS LAST)
     TABLESPACE pg_default;
