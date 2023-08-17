@@ -30,6 +30,9 @@ BEGIN
 	DELETE FROM camdecmpswks.qa_cert_event
 	WHERE mon_loc_id = ANY(monLocIds);
 
+	DELETE FROM camdecmpswks.qa_cert_event_supp_data
+	WHERE mon_loc_id = ANY(monLocIds); 
+
 	DELETE FROM camdecmpswks.test_extension_exemption
 	WHERE mon_loc_id = ANY(monLocIds);
 END;

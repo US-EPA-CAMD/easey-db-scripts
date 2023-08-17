@@ -97,7 +97,8 @@ BEGIN
 		SELECT 1
 		FROM camdecmpswks.emission_evaluation
 		WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId
-	) THEN
+	) THEN	
+	
 		INSERT INTO camdecmps.emission_evaluation(
 			mon_plan_id, rpt_period_id, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, submission_id, submission_availability_cd--, eval_status_cd, pending_status_cd
 		)
@@ -105,6 +106,25 @@ BEGIN
 			mon_plan_id, rpt_period_id, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, submission_id, 'UPDATED'--, 'EVAL', pending_status_cd
 		FROM camdecmpswks.emission_evaluation
 		WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
+
+			-- Check Session
+		INSERT INTO camdecmpsaux.check_session(
+		chk_session_id, mon_plan_id, test_sum_id, qa_cert_event_id, test_extension_exemption_id, rpt_period_id, session_begin_date, session_end_date, session_comment, severity_cd, category_cd, process_cd, userid)
+		SELECT
+			cs.chk_session_id, cs.mon_plan_id, cs.test_sum_id, cs.qa_cert_event_id, cs.test_extension_exemption_id, cs.rpt_period_id, cs.session_begin_date, cs.session_end_date, cs.session_comment, cs.severity_cd, cs.category_cd, cs.process_cd, cs.userid
+		FROM camdecmpswks.emission_evaluation ee
+		JOIN camdecmpswks.check_session cs on ee.chk_session_id = cs.chk_session_id
+		WHERE ee.mon_plan_id = monPlanId and ee.rpt_period_id = rptPeriodId;
+		
+		INSERT INTO camdecmpsaux.check_log(
+		chk_log_id, chk_session_id, begin_date, rule_check_id, result_message, chk_log_comment, check_catalog_result_id, mon_loc_id, source_table, row_id, test_sum_id, op_begin_date, op_begin_hour, op_end_date, op_end_hour, check_date, check_hour, check_result, severity_cd, suppressed_severity_cd, check_cd, error_suppress_id)
+		SELECT
+			cl.chk_log_id, cl.chk_session_id, cl.begin_date, cl.rule_check_id, cl.result_message, cl.chk_log_comment, cl.check_catalog_result_id, cl.mon_loc_id, cl.source_table, cl.row_id, cl.test_sum_id, cl.op_begin_date, cl.op_begin_hour, cl.op_end_date, cl.op_end_hour, cl.check_date, cl.check_hour, cl.check_result, cl.severity_cd, cl.suppressed_severity_cd, cl.check_cd, cl.error_suppress_id
+		FROM camdecmpswks.emission_evaluation ee
+		JOIN camdecmpswks.check_session cs on ee.chk_session_id = cs.chk_session_id
+		JOIN camdecmpswks.check_log cl on cs.chk_session_id = cl.chk_session_id
+		WHERE ee.mon_plan_id = monPlanId and ee.rpt_period_id = rptPeriodId;
+
 
 		INSERT INTO camdecmps.summary_value(
 			sum_value_id, rpt_period_id, mon_loc_id, parameter_cd, current_rpt_period_total, calc_current_rpt_period_total, os_total, calc_os_total, year_total, calc_year_total, userid, add_date, update_date
@@ -363,6 +383,82 @@ BEGIN
 			sys_op_supp_data_id, mon_sys_id, rpt_period_id, op_supp_data_type_cd, days, hours, mon_loc_id, delete_ind, userid, add_date, update_date
 		FROM camdecmpswks.system_op_supp_data
 		WHERE mon_loc_id = ANY(monLocIds) AND rpt_period_id = rptPeriodId;
+		
+		-- DELETE WORKSPACE DATA
+		DELETE FROM camdecmpswks.emission_evaluation
+		WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
+
+		DELETE FROM camdecmpswks.summary_value a
+		WHERE a.rpt_period_id = rptPeriodId
+		AND EXISTS (
+			SELECT 1
+			FROM camdecmpswks.monitor_plan_location mpl
+			WHERE mpl.mon_loc_id = a.mon_loc_id
+			AND mpl.mon_plan_id = monPlanId
+		);
+
+		DELETE FROM camdecmpswks.daily_test_summary a
+		WHERE a.rpt_period_id = rptPeriodId
+		AND EXISTS (
+			SELECT 1
+			FROM camdecmpswks.monitor_plan_location mpl
+			WHERE mpl.mon_loc_id = a.mon_loc_id
+			AND mpl.mon_plan_id = monPlanId
+		);
+
+		DELETE FROM camdecmpswks.weekly_test_summary a
+		WHERE a.rpt_period_id = rptPeriodId
+		AND EXISTS (
+			SELECT 1
+			FROM camdecmpswks.monitor_plan_location mpl
+			WHERE mpl.mon_loc_id = a.mon_loc_id
+			AND mpl.mon_plan_id = monPlanId
+		);
+		
+		DELETE FROM camdecmpswks.daily_emission a
+		WHERE a.rpt_period_id = rptPeriodId
+		AND EXISTS (
+			SELECT 1
+			FROM camdecmpswks.monitor_plan_location mpl
+			WHERE mpl.mon_loc_id = a.mon_loc_id
+			AND mpl.mon_plan_id = monPlanId
+		);
+
+		DELETE FROM camdecmpswks.hrly_op_data a
+		WHERE a.rpt_period_id = rptPeriodId
+		AND EXISTS (
+			SELECT 1
+			FROM camdecmpswks.monitor_plan_location mpl
+			WHERE mpl.mon_loc_id = a.mon_loc_id
+			AND mpl.mon_plan_id = monPlanId
+		);
+		
+		DELETE FROM camdecmpswks.long_term_fuel_flow a
+		WHERE a.rpt_period_id = rptPeriodId
+		AND EXISTS (
+			SELECT 1
+			FROM camdecmpswks.monitor_plan_location mpl
+			WHERE mpl.mon_loc_id = a.mon_loc_id
+			AND mpl.mon_plan_id = monPlanId
+		);
+
+		DELETE FROM camdecmpswks.sorbent_trap a
+		WHERE a.rpt_period_id = rptPeriodId
+		AND EXISTS (
+			SELECT 1
+			FROM camdecmpswks.monitor_plan_location mpl
+			WHERE mpl.mon_loc_id = a.mon_loc_id
+			AND mpl.mon_plan_id = monPlanId
+		);
+
+		DELETE FROM camdecmpswks.nsps4t_summary a
+		WHERE a.rpt_period_id = rptPeriodId
+		AND EXISTS (
+			SELECT 1
+			FROM camdecmpswks.monitor_plan_location mpl
+			WHERE mpl.mon_loc_id = a.mon_loc_id
+			AND mpl.mon_plan_id = monPlanId
+		);
 	END IF;
 END
 $BODY$;
