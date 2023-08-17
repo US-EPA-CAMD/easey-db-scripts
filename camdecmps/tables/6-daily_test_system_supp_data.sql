@@ -68,7 +68,7 @@ COMMENT ON COLUMN camdecmps.daily_test_system_supp_data.update_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_daily_test_sys_sup_data_dt;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_sys_sup_data_dt
+CREATE INDEX IF NOT EXISTS idx_daily_test_sys_sup_data_dt
     ON camdecmps.daily_test_system_supp_data USING btree
     (daily_test_supp_data_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -76,7 +76,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_sys_sup_data_dt
 
 -- DROP INDEX IF EXISTS camdecmps.idx_daily_test_sys_sup_data_em;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_sys_sup_data_em
+CREATE INDEX IF NOT EXISTS idx_daily_test_sys_sup_data_em
     ON camdecmps.daily_test_system_supp_data USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -84,7 +84,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_sys_sup_data_em
 
 -- DROP INDEX IF EXISTS camdecmps.idx_daily_test_sys_sup_data_ml;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_sys_sup_data_ml
+CREATE INDEX IF NOT EXISTS idx_daily_test_sys_sup_data_ml
     ON camdecmps.daily_test_system_supp_data USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -92,7 +92,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_sys_sup_data_ml
 
 -- DROP INDEX IF EXISTS camdecmps.idx_daily_test_sys_sup_data_ms;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_sys_sup_data_ms
+CREATE INDEX IF NOT EXISTS idx_daily_test_sys_sup_data_ms
     ON camdecmps.daily_test_system_supp_data USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -100,6 +100,6 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_sys_sup_data_ms
 
 -- DROP INDEX IF EXISTS camdecmps.idx_daily_test_sys_sup_data_rp;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_daily_test_sys_sup_data_rp
+CREATE INDEX IF NOT EXISTS idx_daily_test_sys_sup_data_rp
     ON camdecmps.daily_test_system_supp_data USING btree
     (rpt_period_id ASC NULLS LAST);

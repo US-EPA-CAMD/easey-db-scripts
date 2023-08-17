@@ -1,0 +1,2 @@
+CREATE SCHEMA IF NOT EXISTS camdecmpswks;
+CREATE SCHEMA IF NOT EXISTS camdecmpscalc;

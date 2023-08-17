@@ -93,7 +93,7 @@ COMMENT ON COLUMN camdecmps.nsps4t_compliance_period.update_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_compliance_prd_loc;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_compliance_prd_loc
+CREATE INDEX IF NOT EXISTS idx_nsps4t_compliance_prd_loc
     ON camdecmps.nsps4t_compliance_period USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -101,7 +101,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_compliance_prd_loc
 
 -- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_compliance_prd_prd;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_compliance_prd_prd
+CREATE INDEX IF NOT EXISTS idx_nsps4t_compliance_prd_prd
     ON camdecmps.nsps4t_compliance_period USING btree
     (rpt_period_id ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -109,7 +109,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_compliance_prd_prd
 
 -- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_compliance_prd_rpt;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_compliance_prd_rpt
+CREATE INDEX IF NOT EXISTS idx_nsps4t_compliance_prd_rpt
     ON camdecmps.nsps4t_compliance_period USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -117,7 +117,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_compliance_prd_rpt
 
 -- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_compliance_prd_sum;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_compliance_prd_sum
+CREATE INDEX IF NOT EXISTS idx_nsps4t_compliance_prd_sum
     ON camdecmps.nsps4t_compliance_period USING btree
     (nsps4t_sum_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -125,7 +125,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_compliance_prd_sum
 
 -- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_compliance_prd_uom;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_nsps4t_compliance_prd_uom
+CREATE INDEX IF NOT EXISTS idx_nsps4t_compliance_prd_uom
     ON camdecmps.nsps4t_compliance_period USING btree
     (co2_emission_rate_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

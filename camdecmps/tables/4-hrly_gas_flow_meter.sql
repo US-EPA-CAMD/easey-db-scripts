@@ -89,7 +89,7 @@ COMMENT ON COLUMN camdecmps.hrly_gas_flow_meter.update_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_component_id;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_component_id
+CREATE INDEX IF NOT EXISTS idx_component_id
     ON camdecmps.hrly_gas_flow_meter USING btree
     (component_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -97,7 +97,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_component_id
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrlygfm_001;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrlygfm_001
+CREATE INDEX IF NOT EXISTS idx_hrlygfm_001
     ON camdecmps.hrly_gas_flow_meter USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -105,7 +105,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrlygfm_001
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrlygfm_add_date;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrlygfm_add_date
+CREATE INDEX IF NOT EXISTS idx_hrlygfm_add_date
     ON camdecmps.hrly_gas_flow_meter USING btree
     (add_date ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -113,7 +113,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrlygfm_add_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_hrlygfm_hour_id;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_hrlygfm_hour_id
+CREATE INDEX IF NOT EXISTS idx_hrlygfm_hour_id
     ON camdecmps.hrly_gas_flow_meter USING btree
     (hour_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

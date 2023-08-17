@@ -42,6 +42,6 @@ CREATE INDEX IF NOT EXISTS idx_rule_check_category_c
 
 -- DROP INDEX camdecmpsmd.uq_rule_chk_chk_cata_cate;
 
-CREATE UNIQUE INDEX uq_rule_chk_chk_cata_cate
+CREATE UNIQUE INDEX IF NOT EXISTS uq_rule_chk_chk_cata_cate
     ON camdecmpsmd.rule_check USING btree
     (check_catalog_id ASC NULLS LAST, category_cd COLLATE pg_catalog."default" ASC NULLS LAST);

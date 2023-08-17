@@ -65,43 +65,43 @@ COMMENT ON COLUMN camdecmpsmd.check_catalog.code_status_cd
 
 COMMENT ON COLUMN camdecmpsmd.check_catalog.run_check_flg
     IS ' Flag indicating the run check status.';
-
 -- Index: idx_check_catalog_check_appl
 
 -- DROP INDEX camdecmpsmd.idx_check_catalog_check_appl;
 
-CREATE INDEX IF NOT EXISTS idx_check_catalog_check_appl
+CREATE INDEX idx_check_catalog_check_appl
     ON camdecmpsmd.check_catalog USING btree
-    (check_applicability_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (check_applicability_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_check_catalog_check_stat
 
 -- DROP INDEX camdecmpsmd.idx_check_catalog_check_stat;
 
-CREATE INDEX IF NOT EXISTS idx_check_catalog_check_stat
+CREATE INDEX idx_check_catalog_check_stat
     ON camdecmpsmd.check_catalog USING btree
-    (check_status_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (check_status_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_check_catalog_code_statu
 
 -- DROP INDEX camdecmpsmd.idx_check_catalog_code_statu;
 
-CREATE INDEX IF NOT EXISTS idx_check_catalog_code_statu
+CREATE INDEX idx_check_catalog_code_statu
     ON camdecmpsmd.check_catalog USING btree
-    (code_status_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (code_status_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_check_catalog_test_statu
 
 -- DROP INDEX camdecmpsmd.idx_check_catalog_test_statu;
 
-CREATE INDEX IF NOT EXISTS idx_check_catalog_test_statu
+CREATE INDEX idx_check_catalog_test_statu
     ON camdecmpsmd.check_catalog USING btree
-    (test_status_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
+    (test_status_cd COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
 -- Index: idx_check_catalog_type_number
 
 -- DROP INDEX camdecmpsmd.idx_check_catalog_type_number;
 
-CREATE UNIQUE INDEX idx_check_catalog_type_number
+CREATE UNIQUE INDEX IF NOT EXISTS idx_check_catalog_type_number
     ON camdecmpsmd.check_catalog USING btree
-    (check_type_cd COLLATE pg_catalog."default" ASC NULLS LAST, check_number ASC NULLS LAST);
+    (check_type_cd COLLATE pg_catalog."default" ASC NULLS LAST, check_number ASC NULLS LAST)
+    TABLESPACE pg_default;

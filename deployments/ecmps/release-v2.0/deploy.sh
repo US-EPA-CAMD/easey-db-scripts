@@ -6,10 +6,9 @@ TABLES=false
 VIEWS=false
 FUNCTIONS=false
 PROCEDURES=false
-PRE_DEPLOYMENT=false
-POST_DEPLOYMENT=false
-BEFORE_DATA_LOAD=false
+BEFORE_DATA_LOAD=true
 AFTER_DATA_LOAD=false
+POST_DEPLOYMENT_CLEANUP=false
 
 function getFiles() {
   for FILE in $1/*.sql
@@ -19,13 +18,19 @@ function getFiles() {
 }
 
 function createTables() {
+  FILES="$FILES
+  \i ./create-schemas.sql
+  "
+
   getFiles "../../../camdmd/tables"
   getFiles "../../../camdecmpsmd/tables"
   getFiles "../../../camd/tables"
   getFiles "../../../camdaux/tables"
   getFiles "../../../camdecmps/tables"
-  getFiles "../../../camdecmpsaux/tables"
+  getFiles "../../../camdecmps/tables/emission-views"
   getFiles "../../../camdecmpswks/tables"
+  getFiles "../../../camdecmpswks/tables/emission-views"
+  getFiles "../../../camdecmpsaux/tables"
   getFiles "../../../camdecmpscalc/tables"
 }
 
@@ -78,53 +83,48 @@ if [ $VIEWS == true ]; then
   createOrReplaceViews
 fi
 
-if [ $PRE_DEPLOYMENT == true ]; then
-  createTables
-  createOrReplaceFunctions
-  createOrReplaceProcedures
-  createOrReplaceViews
-
-  FILES="
-    $FILES
-    \i ./load-dataset-template-codes.sql
-    \i ./load-master-data-definitions.sql
-  "
-  getFiles "./mdm-relationships"
-  getFiles "./report-definitions"
-  getFiles "./emissions-view-definitions"
-fi
-
-if [ $POST_DEPLOYMENT == true ]; then
-  echo "nothing here to do yet"
-fi
-
 if [ $BEFORE_DATA_LOAD == true ]; then
-  FILES="\i ./before-data-load.sql"
+  createTables
+
+  FILES="$FILES
+  \i ./before-data-load.sql
+  "
 fi
 
 if [ $AFTER_DATA_LOAD == true ]; then
-  FILES="\i ./after-data-load.sql"
-  FILES="$FILES 
-  \i ../../../camdaux/vw_allowance_based_compliance_bulk_files_to_generate.sql
-  \i ../../../camdaux/vw_annual_emissions_bulk_files_per_state_to_generate.sql
-  \i ../../../camdecmps/vw_emissions_submissions_gdm.sql
-  \i ../../../camdecmps/vw_emissions_submissions_expected.sql
-  \i ../../../camdecmps/vw_emissions_submissions_received.sql
-  \i ../../../camdecmps/vw_emissions_submissions_progress.sql
-  \i ../../../camdecmpswks/vw_qa_test_summary_review_and_submit.sql
-  \i ../../../camdecmpswks/1-vw_em_review_and_submit.sql
+  FILES="\i ./after-data-load.sql
+  \i ./load-master-data-definitions.sql
+  \i ./load-mdm-relationships-definitions.sql
   "
+  
+  getFiles "./mdm-relationships"
+  getFiles "./report-definitions"
+  getFiles "./emissions-view-definitions"
+
+  FILES="$FILES
+  \i ./check-tables/PopulateCheckTables.sql
+  \i ./client-tables/PopulateClientOnlyTables.sql
+  \i ./check-tables/mp-check-catalog-process-load.sql
+  \i ./check-tables/qa-check-catalog-process-load.sql
+  \i ./check-tables/import-check-catalog-process-load.sql
+  "
+
+  createOrReplaceFunctions
+  createOrReplaceProcedures
+  createOrReplaceViews
+fi
+
+if [ $POST_DEPLOYMENT_CLEANUP == true ]; then
+  echo "nothing here to do yet"
 fi
 
 ../../execute-psql.sh "$FILES"
 
-if [ $PRE_DEPLOYMENT == true ]; then
-  echo "IMPORTANT: NEED TO GENERATE TOKENS AND LOAD CAMDAUX.CLIENT_CONFIG DATA..."
-  echo "
-    INSERT INTO camdaux.client_config(client_id, client_name, client_secret, client_passcode, encryption_key, support_email)
-	  VALUES
-      (?, 'ecmps-ui', ?, ?, ?, '????');
-    "
-fi
+echo "IMPORTANT: NEED TO GENERATE TOKENS AND LOAD CAMDAUX.CLIENT_CONFIG DATA...
 
-echo "DEPLOYMENT COMPLETE"
+INSERT INTO camdaux.client_config(client_id, client_name, client_secret, client_passcode, encryption_key, support_email)
+VALUES
+  (?, 'ecmps-ui', ?, ?, ?, '????');
+
+***** DEPLOYMENT COMPLETE *****
+"

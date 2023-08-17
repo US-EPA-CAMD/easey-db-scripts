@@ -35,6 +35,6 @@ CREATE INDEX IF NOT EXISTS ix_check_parameter_code_name
 
 -- DROP INDEX camdecmpsmd.uq_check_parameter_code_name;
 
-CREATE UNIQUE INDEX uq_check_parameter_code_name
+CREATE UNIQUE INDEX IF NOT EXISTS uq_check_parameter_code_name
     ON camdecmpsmd.check_parameter_code USING btree
     (check_param_id_name COLLATE pg_catalog."default" ASC NULLS LAST);

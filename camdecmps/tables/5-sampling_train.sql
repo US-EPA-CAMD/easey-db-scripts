@@ -135,7 +135,7 @@ COMMENT ON COLUMN camdecmps.sampling_train.update_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_sampling_train_001;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_sampling_train_001
+CREATE INDEX IF NOT EXISTS idx_sampling_train_001
     ON camdecmps.sampling_train USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -143,7 +143,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_sampling_train_001
 
 -- DROP INDEX IF EXISTS camdecmps.idx_sampling_train_trp;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_sampling_train_trp
+CREATE INDEX IF NOT EXISTS idx_sampling_train_trp
     ON camdecmps.sampling_train USING btree
     (trap_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -151,7 +151,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_sampling_train_trp
 
 -- DROP INDEX IF EXISTS camdecmps.idx_train_add_date;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_train_add_date
+CREATE INDEX IF NOT EXISTS idx_train_add_date
     ON camdecmps.sampling_train USING btree
     (add_date ASC NULLS LAST)
     TABLESPACE pg_default;
@@ -159,7 +159,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_train_add_date
 
 -- DROP INDEX IF EXISTS camdecmps.idx_train_component_id;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_train_component_id
+CREATE INDEX IF NOT EXISTS idx_train_component_id
     ON camdecmps.sampling_train USING btree
     (component_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

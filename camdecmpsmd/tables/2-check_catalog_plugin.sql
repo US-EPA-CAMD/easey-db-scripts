@@ -25,6 +25,6 @@ CREATE TABLE IF NOT EXISTS camdecmpsmd.check_catalog_plugin
 
 -- DROP INDEX camdecmpsmd.uq_check_catalog_plugin_check_catalog_plugin_name;
 
-CREATE UNIQUE INDEX uq_check_catalog_plugin_check_catalog_plugin_name
+CREATE UNIQUE INDEX IF NOT EXISTS uq_check_catalog_plugin_check_catalog_plugin_name
     ON camdecmpsmd.check_catalog_plugin USING btree
     (check_catalog_id ASC NULLS LAST, plugin_name COLLATE pg_catalog."default" ASC NULLS LAST);

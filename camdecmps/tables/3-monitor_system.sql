@@ -114,6 +114,6 @@ CREATE INDEX IF NOT EXISTS idx_monitor_system_sys_type_c
 
 -- DROP INDEX camdecmps.idx_monitor_system_uq;
 
-CREATE UNIQUE INDEX idx_monitor_system_uq
+CREATE UNIQUE INDEX IF NOT EXISTS idx_monitor_system_uq
     ON camdecmps.monitor_system USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST, mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST, system_identifier COLLATE pg_catalog."default" ASC NULLS LAST);

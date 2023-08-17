@@ -20,6 +20,3 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.evaluation_set
 )
 
 TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS camdecmpsaux.evaluation_set
-    OWNER to "uImcwuf4K9dyaxeL";

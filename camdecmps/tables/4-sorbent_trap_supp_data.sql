@@ -25,19 +25,19 @@ CREATE TABLE IF NOT EXISTS camdecmps.sorbent_trap_supp_data
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    ADD CONSTRAINT fk_sorbent_trap_supp_data_monitor_system FOREIGN KEY (mon_sys_id)
+    CONSTRAINT fk_sorbent_trap_supp_data_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    ADD CONSTRAINT fk_st_supp_data_aps_cd FOREIGN KEY (sorbent_trap_aps_cd)
+    CONSTRAINT fk_st_supp_data_aps_cd FOREIGN KEY (sorbent_trap_aps_cd)
         REFERENCES camdecmpsmd.sorbent_trap_aps_code (sorbent_trap_aps_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    ADD CONSTRAINT fk_st_supp_data_modc_cd FOREIGN KEY (modc_cd)
+    CONSTRAINT fk_st_supp_data_modc_cd FOREIGN KEY (modc_cd)
         REFERENCES camdecmpsmd.modc_code (modc_cd) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    ADD CONSTRAINT fk_st_supp_data_rpt_period_id FOREIGN KEY (rpt_period_id)
+    CONSTRAINT fk_st_supp_data_rpt_period_id FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -98,7 +98,7 @@ COMMENT ON COLUMN camdecmps.sorbent_trap_supp_data.rata_ind
 
 -- DROP INDEX IF EXISTS camdecmps.idx_st_supp_data_emr;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_st_supp_data_emr
+CREATE INDEX IF NOT EXISTS idx_st_supp_data_emr
     ON camdecmps.sorbent_trap_supp_data USING btree
     (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -106,7 +106,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_st_supp_data_emr
 
 -- DROP INDEX IF EXISTS camdecmps.idx_st_supp_data_modc;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_st_supp_data_modc
+CREATE INDEX IF NOT EXISTS idx_st_supp_data_modc
     ON camdecmps.sorbent_trap_supp_data USING btree
     (modc_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -114,7 +114,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_st_supp_data_modc
 
 -- DROP INDEX IF EXISTS camdecmps.idx_st_supp_data_mon_loc_id;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_st_supp_data_mon_loc_id
+CREATE INDEX IF NOT EXISTS idx_st_supp_data_mon_loc_id
     ON camdecmps.sorbent_trap_supp_data USING btree
     (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -122,7 +122,7 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_st_supp_data_mon_loc_id
 
 -- DROP INDEX IF EXISTS camdecmps.idx_st_supp_data_mon_sys_id;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_st_supp_data_mon_sys_id
+CREATE INDEX IF NOT EXISTS idx_st_supp_data_mon_sys_id
     ON camdecmps.sorbent_trap_supp_data USING btree
     (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
@@ -130,6 +130,6 @@ CREATE INDEX IF NOT EXISTS IF NOT EXISTS idx_st_supp_data_mon_sys_id
 
 -- DROP INDEX IF EXISTS camdecmps.st_supp_data_idx001;
 
-CREATE INDEX IF NOT EXISTS IF NOT EXISTS st_supp_data_idx001
+CREATE INDEX IF NOT EXISTS st_supp_data_idx001
     ON camdecmps.sorbent_trap_supp_data USING btree
     (rpt_period_id ASC NULLS LAST);

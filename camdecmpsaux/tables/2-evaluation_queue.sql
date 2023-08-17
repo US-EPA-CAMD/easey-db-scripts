@@ -38,6 +38,3 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.evaluation_queue
 )
 
 TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS camdecmpsaux.evaluation_queue
-    OWNER to "uImcwuf4K9dyaxeL";
