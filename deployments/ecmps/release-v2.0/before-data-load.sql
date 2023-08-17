@@ -100,8 +100,8 @@ ALTER TABLE IF EXISTS camdecmpsaux.em_submission_access
 
 ALTER TABLE IF EXISTS camdecmpsaux.em_submission_access
     DROP CONSTRAINT IF EXISTS em_submission_access_r04,--camdecmps.monitor_plan
-	DROP CONSTRAINT IF EXISTS fk_em_status_cod_em_submission,
-	DROP CONSTRAINT IF EXISTS fk_em_sub_type_c_em_submission;
+	  DROP CONSTRAINT IF EXISTS fk_em_status_cod_em_submission,
+	  DROP CONSTRAINT IF EXISTS fk_em_sub_type_c_em_submission;
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmpswks.check_session
     DROP COLUMN IF EXISTS batch_id;
@@ -120,7 +120,7 @@ ALTER TABLE IF EXISTS camdecmpswks.user_check_out
 	ADD CONSTRAINT pk_user_check_out PRIMARY KEY (mon_plan_id);
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmpsaux.es_spec
-	ALTER COLUMN es_spec_id DROP IDENTITY;
+	ALTER COLUMN es_spec_id DROP IDENTITY IF EXISTS;
 	
 ALTER TABLE IF EXISTS camdecmpsaux.es_spec
 	ALTER COLUMN es_spec_id TYPE numeric(38,0);

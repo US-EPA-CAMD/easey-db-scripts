@@ -446,3 +446,27 @@ VALUES ( 'COMBINE', 'Both Monitored and Derived Hourly' );
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmpswks.check_session
     ADD COLUMN IF NOT EXISTS batch_id character varying(45);
+--------------------------------------------------------------------------------------------------------------------
+ALTER TABLE IF EXISTS camdaux.dataset
+	ADD COLUMN IF NOT EXISTS group_cd character varying(7),
+	ADD CONSTRAINT ck_group_cd CHECK(
+		group_cd = ANY(ARRAY['MDM', 'MDMREL', 'REPORT', 'EMVIEW'])
+	);
+
+UPDATE camdaux.dataset SET group_cd =
+	CASE
+		WHEN template_cd = 'SUMRPT' OR template_cd = 'DTLRPT' THEN 'REPORT'
+		ELSE template_cd
+	END;
+
+ALTER TABLE IF EXISTS camdaux.dataset
+	ALTER COLUMN group_cd SET NOT NULL;
+
+ALTER TABLE IF EXISTS camdaux.datatable
+	ALTER COLUMN display_name DROP NOT NULL,
+	DROP CONSTRAINT uq_datatable,
+	ADD CONSTRAINT uq_datatable UNIQUE (dataset_cd, group_cd, table_order),
+	ADD COLUMN IF NOT EXISTS template_cd character varying(25),
+	DROP CONSTRAINT fk_datatable_template_code,
+	ADD CONSTRAINT fk_datatable_template_code FOREIGN KEY (template_cd)
+		REFERENCES camdaux.template_code (template_cd) MATCH SIMPLE;
