@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.email_template
 INSERT INTO camdecmpsaux.email_template(
   template_id, template_location, template_subject
 ) VALUES
+  (150,	'templates/submission-confirmation.html', 'Submission Completion Notification')
   (151,	'templates/submission-151.html', 'Emissions Submission Reminder'),
   (152,	'templates/submission-152.html', 'Emissions Submission Reminder'),
   (155,	'templates/submission-155.html', 'Submission Window Open for Quarterly Emission File'),
