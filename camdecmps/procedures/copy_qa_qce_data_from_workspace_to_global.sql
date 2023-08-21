@@ -113,9 +113,5 @@ BEGIN
 			suppressed_severity_cd = EXCLUDED.suppressed_severity_cd,
 			check_cd = EXCLUDED.check_cd,
 			error_suppress_id = EXCLUDED.error_suppress_id;
-
-	-- Delete Workspace Data
-	DELETE FROM camdecmpswks.qa_cert_event
-	WHERE qa_cert_event_id = qceId;
 END;
 $BODY$;

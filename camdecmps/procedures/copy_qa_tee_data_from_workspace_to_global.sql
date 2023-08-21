@@ -89,10 +89,5 @@ BEGIN
 			suppressed_severity_cd = EXCLUDED.suppressed_severity_cd,
 			check_cd = EXCLUDED.check_cd,
 			error_suppress_id = EXCLUDED.error_suppress_id;
-
-
-		-- Delete workspace data
-	DELETE FROM camdecmpswks.test_extension_exemption
-	WHERE test_extension_exemption_id = teeId;
 END;
 $BODY$;
