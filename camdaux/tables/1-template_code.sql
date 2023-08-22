@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS camdaux.template_code
 
 INSERT INTO camdaux.template_code(template_cd, group_cd, template_type, display_name)
 VALUES
+	('DLYTESTSUM',	'EM',		'DEFAULT',	'Daily Test Summaries'),
 	('SUMVAL',		'EM',		'DEFAULT',	'Summary Values'),
 	('EVAL',		'EVAL',		'DEFAULT',	'Evaluation Results'),
 	('GENERR',		'EVAL',		'DEFAULT',	'General Errors'),

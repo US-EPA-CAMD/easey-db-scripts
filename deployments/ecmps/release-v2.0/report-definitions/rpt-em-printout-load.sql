@@ -41,7 +41,7 @@ BEGIN
 ------------------------------------------------------------------------------------------------
 	tableOrder := tableOrder + 1;
 	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
-	VALUES(datasetCode, tableOrder, 'SUMVAL', 'SELECT * FROM camdecmpswks.rpt_em_summary_value($1, $2, $3)')
+	VALUES(datasetCode, tableOrder, 'SUMVAL', 'SELECT * FROM {SCHEMA}.rpt_em_summary_value($1, $2, $3)')
 	RETURNING datatable_id INTO datatableId;
 
 	/***** COLUMNS *****/
@@ -51,11 +51,37 @@ BEGIN
 		(datatableId, 2, 'parameterCode', 'Parameter Code'),
 		(datatableId, 3, 'currentRptPeriodTotal', 'Current Reporting Period Total'),
 		(datatableId, 4, 'calcCurrentRptPeriodTotal', 'Calculated Current Reporting Period Total'),
-		(datatableId, 4, 'osTotal', 'OS Total'),
-		(datatableId, 4, 'calcOsTotal', 'Calculated OS Total'),
-		(datatableId, 4, 'yearTotal', 'Year Total'),
-		(datatableId, 4, 'calcYearTotal', 'Calculated Year Total');
+		(datatableId, 5, 'osTotal', 'OS Total'),
+		(datatableId, 6, 'calcOsTotal', 'Calculated OS Total'),
+		(datatableId, 7, 'yearTotal', 'Year Total'),
+		(datatableId, 8, 'calcYearTotal', 'Calculated Year Total');
 
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES
+		(datatableId, 1, 'monitorPlanId', null),
+		(datatableId, 2, 'year', null),
+		(datatableId, 3, 'quarter', null);
+------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'DLYTESTSUM', 'SELECT * FROM {SCHEMA}.rpt_em_daily_test_sum($1, $2, $3)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'location', 'Location'),
+		(datatableId, 2, 'systemIdentifier', 'System Identifier'),
+		(datatableId, 3, 'componentIdentifier', 'Component Identifier'),
+		(datatableId, 4, 'dailyTestDate', 'Daily Test Date'),
+		(datatableId, 5, 'dailyTestHour', 'Daily Test Hour'),
+		(datatableId, 6, 'dailyTestMin', 'Daily Test Minute'),
+		(datatableId, 7, 'testTypeCode', 'Test Type Code'),
+		(datatableId, 8, 'testResultCode', 'Test Result Code'),
+		(datatableId, 9, 'calcTestResultCode', 'Calculated Test Result Code'),
+		(datatableId, 10, 'spanScaleCode', 'Span Scale Code');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
