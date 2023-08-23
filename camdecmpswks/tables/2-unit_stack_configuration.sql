@@ -22,3 +22,15 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.unit_stack_configuration
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
+
+CREATE INDEX IF NOT EXISTS idx_unit_stack_configuration_s
+    ON camdecmpswks.unit_stack_configuration USING btree
+    (stack_pipe_id COLLATE pg_catalog."default" ASC NULLS LAST);
+
+-- Index: idx_unit_stack_configuration_u
+
+-- DROP INDEX camdecmps.idx_unit_stack_configuration_u;
+
+CREATE INDEX IF NOT EXISTS idx_unit_stack_configuration_u
+    ON camdecmpswks.unit_stack_configuration USING btree
+    (unit_id ASC NULLS LAST);

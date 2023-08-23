@@ -24,3 +24,15 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_system_component
         ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
+
+
+CREATE INDEX IF NOT EXISTS idx_monitor_system_component_component_id
+    ON camdecmpswks.monitor_system_component USING btree
+    (component_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+
+CREATE INDEX IF NOT EXISTS idx_monitor_system_component_system_id
+    ON camdecmpswks.monitor_system_component USING btree
+    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

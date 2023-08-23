@@ -33,3 +33,8 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_location_attribute
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
+
+CREATE INDEX IF NOT EXISTS idx_mon_loc_attribute_mon_loc_id
+    ON camdecmpswks.monitor_location_attribute USING btree
+    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

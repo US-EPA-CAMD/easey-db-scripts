@@ -27,3 +27,8 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_load
         ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
+
+CREATE INDEX IF NOT EXISTS idx_monitor_load_mon_loc_id
+    ON camdecmpswks.monitor_load USING btree
+    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

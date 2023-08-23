@@ -31,3 +31,8 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.unit_control
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
+
+
+CREATE INDEX IF NOT EXISTS idx_unit_control_unit_id
+    ON camdecmpswks.unit_control USING btree
+    (unit_id ASC NULLS LAST);
