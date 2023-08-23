@@ -37,4 +37,9 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.evaluation_queue
         ON DELETE CASCADE
 )
 
+CREATE INDEX IF NOT EXISTS idx_evaluation_queue_evaluation_set_id
+    ON camdecmpsaux.evaluation_queue USING btree
+    (evaluation_set_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
+
 TABLESPACE pg_default;

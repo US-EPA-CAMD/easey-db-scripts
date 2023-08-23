@@ -33,3 +33,8 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.trans_accuracy
         ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
+
+CREATE INDEX IF NOT EXISTS idx_trans_accuracy_test_sum_id
+    ON camdecmpswks.trans_accuracy USING btree
+    (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

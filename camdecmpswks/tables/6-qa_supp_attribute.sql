@@ -17,3 +17,8 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.qa_supp_attribute
         ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
+
+CREATE INDEX IF NOT EXISTS idx_qa_supp_attribute_qa_supp_data_id
+    ON camdecmpswks.qa_supp_attribute USING btree
+    (qa_supp_data_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

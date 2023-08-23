@@ -153,3 +153,8 @@ CREATE INDEX IF NOT EXISTS idx_check_log_9814
     ON camdecmpswks.check_log USING btree
     (severity_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
+
+CREATE INDEX IF NOT EXISTS idx_check_log_check_session
+    ON camdecmpswks.check_log USING btree
+    (chk_session_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

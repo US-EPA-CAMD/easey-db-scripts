@@ -61,3 +61,8 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.qa_cert_event
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
+
+CREATE INDEX IF NOT EXISTS idx_qa_cert_event_mon_loc_id
+    ON camdecmpswks.qa_cert_event USING btree
+    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

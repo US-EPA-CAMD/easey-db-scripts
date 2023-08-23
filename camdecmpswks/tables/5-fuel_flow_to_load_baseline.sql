@@ -35,3 +35,9 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.fuel_flow_to_load_baseline
         ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
+
+
+CREATE INDEX IF NOT EXISTS idx_fuel_flow_to_load_baseline_test_sum_id
+    ON camdecmpswks.fuel_flow_to_load_baseline USING btree
+    (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
