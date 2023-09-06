@@ -42,3 +42,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.unit_fuel
         ON DELETE NO ACTION,
     CONSTRAINT ck_unit_fuel_act_or_proj_cd CHECK (act_or_proj_cd::text = ANY (ARRAY['A'::character varying::text, 'P'::character varying::text, NULL::character varying::text]))
 );
+
+CREATE INDEX IF NOT EXISTS idx_unit_fuel_unit_id
+    ON camdecmpswks.unit_fuel USING btree
+    (unit_id ASC NULLS LAST);

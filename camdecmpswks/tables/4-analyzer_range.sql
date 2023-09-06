@@ -26,3 +26,8 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.analyzer_range
         ON DELETE CASCADE,
     CONSTRAINT ck_analyzer_range_begin_date_end_date CHECK (begin_date <= end_date)
 );
+
+CREATE INDEX IF NOT EXISTS idx_analyzer_range_component
+    ON camdecmpswks.analyzer_range USING btree
+    (component_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

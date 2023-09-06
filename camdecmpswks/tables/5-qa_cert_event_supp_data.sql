@@ -35,3 +35,13 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.qa_cert_event_supp_data
         ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
+
+CREATE INDEX IF NOT EXISTS idx_qa_cert_event_supp_data_qa_cert_event_id
+    ON camdecmpswks.qa_cert_event_supp_data USING btree
+    (qa_cert_event_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+CREATE INDEX IF NOT EXISTS idx_qa_cert_event_supp_data_mon_loc_id
+    ON camdecmpswks.qa_cert_event_supp_data USING btree
+    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

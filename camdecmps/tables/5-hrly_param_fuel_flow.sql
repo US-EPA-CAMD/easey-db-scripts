@@ -60,6 +60,11 @@ CREATE TABLE IF NOT EXISTS camdecmps.hrly_param_fuel_flow
         ON DELETE NO ACTION
 );
 
+CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_flow_fuel_flow_id
+    ON camdecmps.hrly_param_fuel_flow USING btree
+    (hrly_fuel_flow_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
+
 COMMENT ON TABLE camdecmps.hrly_param_fuel_flow
     IS 'Calculated SO2, CO2 or heat input determined from fuel flow information.  Record Types 302, 303, 313 and 314.';
 

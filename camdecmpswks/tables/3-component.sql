@@ -35,3 +35,8 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.component
         ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
+
+CREATE INDEX IF NOT EXISTS idx_component_mon_loc_id
+    ON camdecmpswks.component USING btree
+    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

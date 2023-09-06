@@ -30,3 +30,9 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.system_fuel_flow
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
+
+
+CREATE INDEX IF NOT EXISTS idx_system_fuel_flow_system_id
+    ON camdecmpswks.system_fuel_flow USING btree
+    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

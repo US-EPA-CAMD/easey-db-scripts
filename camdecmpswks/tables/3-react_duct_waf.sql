@@ -32,3 +32,8 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.rect_duct_waf
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
+
+CREATE INDEX IF NOT EXISTS idx_rect_duct_waf_mon_loc_id
+    ON camdecmpswks.rect_duct_waf USING btree
+    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

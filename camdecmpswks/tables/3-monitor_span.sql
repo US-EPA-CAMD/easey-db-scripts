@@ -48,3 +48,8 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_span
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
+
+CREATE INDEX IF NOT EXISTS idx_monitor_span_mon_loc_id
+    ON camdecmpswks.monitor_span USING btree
+    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
