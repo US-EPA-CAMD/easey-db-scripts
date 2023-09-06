@@ -18,7 +18,7 @@ BEGIN
 	(
 		Select mp.fac_id, coalesce(mp.update_date, mp.add_date) as update_date
 		From camdecmps.monitor_plan mp
-		WHERE coalesce(update_date, add_date) >= p_date
+		WHERE coalesce(update_date, add_date) > p_date
 	)
 	Union -- Mon Loc
 	(
@@ -28,7 +28,7 @@ BEGIN
 			On ml.mon_loc_id = mpl.mon_loc_id
 		Join camdecmps.monitor_plan mp
 			On mpl.mon_plan_id = mp.mon_plan_id
-		WHERE coalesce(ml.update_date, ml.add_date) >= p_date
+		WHERE coalesce(ml.update_date, ml.add_date) > p_date
 	)
 	Union -- Stack Pipe
 	( 
@@ -40,7 +40,7 @@ BEGIN
 			On ml.mon_loc_id = mpl.mon_loc_id
 		Join camdecmps.monitor_plan mp
 			On mpl.mon_plan_id = mp.mon_plan_id
-		WHERE coalesce(sp.update_date, sp.add_date) >= p_date
+		WHERE coalesce(sp.update_date, sp.add_date) > p_date
 	)
 	Union --Unit Stack Config
 	(
@@ -52,7 +52,7 @@ BEGIN
 			On ml.mon_loc_id = mpl.mon_loc_id
 		Join camdecmps.monitor_plan mp
 			On mpl.mon_plan_id = mp.mon_plan_id
-		WHERE coalesce(usc.update_date, usc.add_date) >= p_date
+		WHERE coalesce(usc.update_date, usc.add_date) > p_date
 	)) records
 	Join camd.plant pl
 		On records.fac_id = pl.fac_id 
