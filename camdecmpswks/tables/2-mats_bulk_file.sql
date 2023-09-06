@@ -7,9 +7,9 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.mats_bulk_file
     mats_bulk_file_id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
     fac_id numeric(38,0) NOT NULL,
     oris_code numeric(6,0) NOT NULL,
-	location character varying NOT NULL,
-	testTypeGroup character varying NOT NULL,
-	testTypeGroupDescription character varying NOT NULL,
+    location character varying COLLATE pg_catalog."default" NOT NULL,
+    test_type_code character varying COLLATE pg_catalog."default" NOT NULL,
+    test_type_code_description character varying COLLATE pg_catalog."default" NOT NULL,
     facility_name character varying(100) COLLATE pg_catalog."default" NOT NULL,
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     test_num character varying(18) COLLATE pg_catalog."default" NOT NULL,
@@ -20,6 +20,8 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.mats_bulk_file
     submission_availability_cd character varying(7) COLLATE pg_catalog."default" DEFAULT 'REQUIRE'::character varying,
     userid character varying(25) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
+    bucket_location character varying COLLATE pg_catalog."default",
+    eval_status_cd character varying(7) COLLATE pg_catalog."default" DEFAULT 'PASS'::character varying,
     CONSTRAINT pk_mats_bulk_file PRIMARY KEY (mats_bulk_file_id),
     CONSTRAINT fk_mats_bulk_file_monitor_plan FOREIGN KEY (mon_plan_id)
         REFERENCES camdecmpswks.monitor_plan (mon_plan_id) MATCH SIMPLE
