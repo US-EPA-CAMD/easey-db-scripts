@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_em_daily_fuel(text, numeric, numeric)
 
--- DROP FUNCTION camdecmpswks.rpt_em_daily_fuel(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_daily_fuel(text, numeric, numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_daily_fuel(
 	monplanid text,
@@ -48,6 +48,3 @@ BEGIN
     WHERE df.mon_loc_id = ANY (monLocIds) and df.rpt_period_id = rptperiodid; 
 END;
 $BODY$;
-
-ALTER FUNCTION camdecmpswks.rpt_em_daily_fuel(text, numeric, numeric)
-    OWNER TO "uImcwuf4K9dyaxeL";

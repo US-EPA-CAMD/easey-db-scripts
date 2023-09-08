@@ -1,12 +1,12 @@
 -- FUNCTION: camdecmpswks.rpt_em_daily_calibration(text, numeric, numeric)
 
--- DROP FUNCTION camdecmpswks.rpt_em_daily_calibration(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_daily_calibration(text, numeric, numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_daily_calibration(
 	monplanid text,
 	vyear numeric,
 	vquarter numeric)
-    RETURNS TABLE(location character varying, "onlineOfflineInd" numeric, "calcOnlineOfflineInd" numeric, "zeroInjectionDate" date, "zeroInjectionHour" numeric, "zeroInjectionMin" numeric, "upscaleInjectionDate" date, "upscaleInjectionHour" numeric, "upscaleInjectionMin" numeric, "zeroMeasuredValue" numeric, "upscaleMeasuredValue" numeric, "zeroApsInd" numeric, "calcZeroApsInd" numeric, "upscaleApsInd" numeric, "calcUpscaleApsInd" numeric, "zeroCalError" numeric, "calcZeroCalError" numeric, "upscaleCalError" numeric, "calcUpscaleCalError" numeric, "zeroRefValue" numeric, "upscaleRefValue" numeric, "vendorId" character varying, "cylinderIdentifier" character varying, "expirationDate" date, "upscaleGasLevelCode" character varying, "upscaleGasLevelCodeGroup" text, "upscaleGasLevelCodeDescription" character varying, "upscaleGasTypeCode" character varying, "upscaleGasTypeCodeGroup" text, "upscaleGasTypeCodeDescription" character varying, "injectionProtocolCode" character varying, "injectionProtocolCodeGroup" text, "injectionPorotcolCodeDescription" character varying) 
+    RETURNS TABLE(location character varying, "onlineOfflineInd" numeric, "calcOnlineOfflineInd" numeric, "zeroInjectionDate" date, "zeroInjectionHour" numeric, "zeroInjectionMin" numeric, "upscaleInjectionDate" date, "upscaleInjectionHour" numeric, "upscaleInjectionMin" numeric, "zeroMeasuredValue" numeric, "upscaleMeasuredValue" numeric, "zeroApsInd" numeric, "calcZeroApsInd" numeric, "upscaleApsInd" numeric, "calcUpscaleApsInd" numeric, "zeroCalError" numeric, "calcZeroCalError" numeric, "upscaleCalError" numeric, "calcUpscaleCalError" numeric, "zeroRefValue" numeric, "upscaleRefValue" numeric, "vendorId" character varying, "cylinderIdentifier" character varying, "expirationDate" date, "upscaleGasTypeCode" character varying, "upscaleGasLevelCode" character varying, "upscaleGasLevelCodeGroup" text, "upscaleGasLevelCodeDescription" character varying, "injectionProtocolCode" character varying, "injectionProtocolCodeGroup" text, "injectionPorotcolCodeDescription" character varying) 
     LANGUAGE 'plpgsql'
 
     COST 100
@@ -56,14 +56,11 @@ BEGIN
 		dc.vendor_id as "vendorId",
 		dc.cylinder_identifier as "cylinderIdentifier",
 		dc.expiration_date as "expirationDate",
+		dc.upscale_gas_type_cd as "upscaleGasTypeCode",
 		
 		dc.upscale_gas_level_cd as "upscaleGasLevelCode",
 		'Upscale Gas Level Codes' as "upscaleGasLevelCodeGroup",
 		glc.gas_level_description as "upscaleGasLevelCodeDescription",
-		
-		dc.upscale_gas_type_cd as "upscaleGasTypeCode",
-		'Upscale Gas Type Codes' as "upscaleGasTypeCodeGroup",
-		gtc.gas_type_description as "upscaleGasTypeCodeDescription",
 		
 		dc.injection_protocol_cd as "injectionProtocolCode",
 		'Injection Protocol Codes' as "injectionProtocolCodeGroup",
@@ -72,11 +69,7 @@ BEGIN
     FROM camdecmpswks.daily_calibration dc
 	join camdecmpswks.daily_test_summary dts using (daily_test_sum_id)
 	left join camdecmpsmd.gas_level_code glc ON glc.gas_level_cd = dc.upscale_gas_level_cd
-	left join camdecmpsmd.gas_type_code gtc ON gtc.gas_type_cd = dc.upscale_gas_type_cd
 	left join camdecmpsmd.injection_protocol_code ipc using (injection_protocol_cd)
 	WHERE dts.mon_loc_id = ANY (monLocIds) and dc.rpt_period_id = rptperiodid; 
 END;
 $BODY$;
-
-ALTER FUNCTION camdecmpswks.rpt_em_daily_calibration(text, numeric, numeric)
-    OWNER TO "uImcwuf4K9dyaxeL";

@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_em_mats_monitor_hourly_value(text, numeric, numeric)
 
--- DROP FUNCTION camdecmpswks.rpt_em_mats_monitor_hourly_value(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_mats_monitor_hourly_value(text, numeric, numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_mats_monitor_hourly_value(
 	monplanid text,
@@ -59,6 +59,3 @@ BEGIN
     WHERE mmhv.mon_loc_id = ANY (monLocIds) and mmhv.rpt_period_id = rptperiodid; 
 END;
 $BODY$;
-
-ALTER FUNCTION camdecmpswks.rpt_em_mats_monitor_hourly_value(text, numeric, numeric)
-    OWNER TO "uImcwuf4K9dyaxeL";

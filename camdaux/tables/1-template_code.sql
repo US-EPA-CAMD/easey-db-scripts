@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS camdaux.template_code
 
 INSERT INTO camdaux.template_code(template_cd, group_cd, template_type, display_name)
 VALUES
+	('LTFF',	 	 'EM',		'DEFAULT',	'Long Term Fuel Flow'),
 	('NSPS4TANNU',	 'EM',		'DEFAULT',	'NSPS4T Fourth Quarter'),
 	('NSPS4TCOMP',	 'EM',		'DEFAULT',	'NSPS4T Compliance Period'),
 	('NSPS4TSUM',	 'EM',		'DEFAULT',	'NSPS4T Summary'),

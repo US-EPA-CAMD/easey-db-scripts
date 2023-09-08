@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_em_weekly_test_sum(text, numeric, numeric)
 
--- DROP FUNCTION camdecmpswks.rpt_em_weekly_test_sum(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_weekly_test_sum(text, numeric, numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_weekly_test_sum(
 	monplanid text,
@@ -57,13 +57,10 @@ BEGIN
 		
     FROM camdecmpswks.weekly_test_summary wts
 	left join camdecmpsmd.test_type_code ttc using (test_type_cd)
-	left join camdecmpsmd.test_result_code trc using (test_result_cd)
+	left join camdecmpsmd.test_result_code trc on trc.test_result_cd = wts.test_result_cd and trc.test_result_cd = wts.calc_test_result_cd
 	left join camdecmpsmd.span_scale_code ssc using(span_scale_cd)
 	left join camdecmpswks.monitor_system ms using(mon_sys_id)
 	left join camdecmpswks.component c using (component_id)
 	WHERE wts.mon_loc_id = ANY (monLocIds) and wts.rpt_period_id = rptperiodid; 
 END;
 $BODY$;
-
-ALTER FUNCTION camdecmpswks.rpt_em_weekly_test_sum(text, numeric, numeric)
-    OWNER TO "uImcwuf4K9dyaxeL";
