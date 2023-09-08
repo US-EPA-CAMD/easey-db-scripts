@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_em_sorbent_trap(text, numeric, numeric)
 
--- DROP FUNCTION camdecmpswks.rpt_em_sorbent_trap(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_sorbent_trap(text, numeric, numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_sorbent_trap(
 	monplanid text,
@@ -61,11 +61,8 @@ BEGIN
 		
     FROM camdecmpswks.sorbent_trap st
 	left join camdecmpswks.monitor_system ms using(mon_sys_id)
-	left join camdecmpsmd.modc_code mc using (modc_cd)
+	left join camdecmpsmd.modc_code mc on mc.modc_cd = st.modc_cd and mc.modc_cd = st.calc_modc_cd
     left join camdecmpsmd.sorbent_trap_aps_code stac using (sorbent_trap_aps_cd)
     WHERE st.mon_loc_id = ANY (monLocIds) and st.rpt_period_id = rptperiodid; 
 END;
 $BODY$;
-
-ALTER FUNCTION camdecmpswks.rpt_em_sorbent_trap(text, numeric, numeric)
-    OWNER TO "uImcwuf4K9dyaxeL";

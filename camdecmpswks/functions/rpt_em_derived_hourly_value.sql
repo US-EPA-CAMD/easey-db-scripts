@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_em_derived_hourly_value(text, numeric, numeric)
 
--- DROP FUNCTION camdecmpswks.rpt_em_derived_hourly_value(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_derived_hourly_value(text, numeric, numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_derived_hourly_value(
 	monplanid text,
@@ -80,6 +80,3 @@ BEGIN
     WHERE dhv.mon_loc_id = ANY (monLocIds) and dhv.rpt_period_id = rptperiodid; 
 END;
 $BODY$;
-
-ALTER FUNCTION camdecmpswks.rpt_em_derived_hourly_value(text, numeric, numeric)
-    OWNER TO "uImcwuf4K9dyaxeL";

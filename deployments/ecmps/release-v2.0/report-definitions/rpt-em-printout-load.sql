@@ -238,6 +238,7 @@ BEGIN
 		(datatableId, 2, 'year', null),
 		(datatableId, 3, 'quarter', null);
 ------------------------------------------------------------------------------------------------
+/*****
 ------------------------------------------------------------------------------------------------
 	tableOrder := tableOrder + 1;
 	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
@@ -265,9 +266,6 @@ BEGIN
 		(datatableId, 16, 'loadUomCode', 'Load Units of Measure Code'),
 		(datatableId, 17, 'operatingConditionCode', 'Operating Condition Code'),
 		(datatableId, 18, 'fuelCode', 'Fuel Code');
-
-		
-
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -409,7 +407,7 @@ BEGIN
 ------------------------------------------------------------------------------------------------
 	tableOrder := tableOrder + 1;
 	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
-	VALUES(datasetCode, tableOrder, 'HRLYFUEL', 'SELECT * FROM {SCHEMA}.rpt_em_hrly_fuel_flow($1, $2, $3)')
+	VALUES(datasetCode, tableOrder, 'HRLYFUEL', 'SELECT * FROM {SCHEMA}.rpt_em_hourly_fuel_flow($1, $2, $3)')
 	RETURNING datatable_id INTO datatableId;
 
 	/***** COLUMNS *****/
@@ -480,6 +478,33 @@ BEGIN
 		(datatableId, 7, 'calcFlowToSamplingRatio', 'Calculated Flow to Sampling Ratio'),
 		(datatableId, 8, 'calcFlowToSamplingMult', 'Calcualted Flow to Sampling Multiple'),		
 		(datatableId, 9, 'samplingRateUomCode', 'Sampling Rate Unit of Measure Code');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES
+		(datatableId, 1, 'monitorPlanId', null),
+		(datatableId, 2, 'year', null),
+		(datatableId, 3, 'quarter', null);
+------------------------------------------------------------------------------------------------
+*****/
+-----------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'LTFF', 'SELECT * FROM {SCHEMA}.rpt_em_long_term_fuel_flow($1, $2, $3)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'location', 'Location'),
+		(datatableId, 2, 'systemIdentifier', 'System Identifier'),
+		(datatableId, 3, 'longTermFuelFlowValue', 'Long Term Fuel Flow Value'),
+		(datatableId, 4, 'grossCalorificValue', 'Gross Calorific Value '),
+		(datatableId, 5, 'totalHeatInput', 'Total Heat Input'),
+		(datatableId, 6, 'calcTotalHeatInput', 'Calculated Total Heat Input'),
+		(datatableId, 7, 'fuelFlowPeriodCode', 'Fuel Flow Period Code'),
+		(datatableId, 8, 'ltffUomCode', 'LTFF Unit of Measure Codes'),		
+		(datatableId, 9, 'gcvUomCode', 'GCV Unit of Measure Codes');		
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)

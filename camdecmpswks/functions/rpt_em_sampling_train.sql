@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_em_sampling_train(text, numeric, numeric)
 
--- DROP FUNCTION camdecmpswks.rpt_em_sampling_train(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_sampling_train(text, numeric, numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_sampling_train(
 	monplanid text,
@@ -66,10 +66,7 @@ BEGIN
     FROM camdecmpswks.sampling_train st
 	left join camdecmpswks.component c using (component_id)
     left join camdecmpsmd.train_qa_status_code tqsc using (train_qa_status_cd)
-    left join camdecmpsmd.test_result_code trc on trc.test_result_cd = st.sampling_ratio_test_result_cd
+    left join camdecmpsmd.test_result_code trc on trc.test_result_cd = st.sampling_ratio_test_result_cd and trc.test_result_cd = st.post_leak_test_result_cd
     WHERE st.mon_loc_id = ANY (monLocIds) and st.rpt_period_id = rptperiodid; 
 END;
 $BODY$;
-
-ALTER FUNCTION camdecmpswks.rpt_em_sampling_train(text, numeric, numeric)
-    OWNER TO "uImcwuf4K9dyaxeL";

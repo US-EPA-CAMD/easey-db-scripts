@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_em_hourly_op(text, numeric, numeric)
 
--- DROP FUNCTION camdecmpswks.rpt_em_hourly_op(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_hourly_op(text, numeric, numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_hourly_op(
 	monplanid text,
@@ -69,6 +69,3 @@ BEGIN
     WHERE hop.mon_loc_id = ANY (monLocIds) and hop.rpt_period_id = rptperiodid; 
 END;
 $BODY$;
-
-ALTER FUNCTION camdecmpswks.rpt_em_hourly_op(text, numeric, numeric)
-    OWNER TO "uImcwuf4K9dyaxeL";

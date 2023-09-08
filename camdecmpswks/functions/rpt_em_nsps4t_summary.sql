@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_em_nsps4t_summary(text, numeric, numeric)
 
--- DROP FUNCTION camdecmpswks.rpt_em_nsps4t_summary(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_nsps4t_summary(text, numeric, numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_nsps4t_summary(
 	monplanid text,
@@ -57,6 +57,3 @@ BEGIN
     WHERE ns.mon_loc_id = ANY (monLocIds) and ns.rpt_period_id = rptperiodid; 
 END;
 $BODY$;
-
-ALTER FUNCTION camdecmpswks.rpt_em_nsps4t_summary(text, numeric, numeric)
-    OWNER TO "uImcwuf4K9dyaxeL";
