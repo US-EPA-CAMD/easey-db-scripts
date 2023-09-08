@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.test_extension_exemption
     span_scale_cd character varying(7) COLLATE pg_catalog."default",
     submission_id numeric(38,0),
     submission_availability_cd character varying(7) COLLATE pg_catalog."default",
+    resub_explanation character varying(4000) COLLATE pg_catalog."default",
     CONSTRAINT pk_test_extension_exemption PRIMARY KEY (test_extension_exemption_id),
     CONSTRAINT fk_test_extension_exemption_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
