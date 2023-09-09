@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.qa_supp_data
     chk_session_id character varying(45) COLLATE pg_catalog."default",
     operating_condition_cd character varying(7) COLLATE pg_catalog."default",
     fuel_cd character varying(7) COLLATE pg_catalog."default",
+    resub_explanation character varying(4000) COLLATE pg_catalog."default",
     CONSTRAINT pk_qa_supp_data PRIMARY KEY (qa_supp_data_id),
     CONSTRAINT fk_qa_supp_data_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE

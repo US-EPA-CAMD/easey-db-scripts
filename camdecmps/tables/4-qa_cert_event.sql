@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.qa_cert_event
     qa_cert_event_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     submission_id numeric(38,0),
     submission_availability_cd character varying(7) COLLATE pg_catalog."default",
+    resub_explanation character varying(4000) COLLATE pg_catalog."default",
     CONSTRAINT pk_qa_cert_event PRIMARY KEY (qa_cert_event_id),
     CONSTRAINT fk_qa_cert_event_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE

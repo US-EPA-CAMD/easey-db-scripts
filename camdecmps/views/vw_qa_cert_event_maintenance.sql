@@ -5,6 +5,7 @@ DROP VIEW IF EXISTS camdecmps.vw_qa_cert_event_maintenance;
 CREATE OR REPLACE VIEW camdecmps.vw_qa_cert_event_maintenance
 AS SELECT qce.qa_cert_event_id AS cert_event_id,
     qce.mon_loc_id AS location_id,
+    qce.resub_explanation,
     COALESCE(up.oris_code, spp.oris_code) AS oris_code,
     COALESCE(u.unitid, sp.stack_name) AS unit_stack,
     ms.system_identifier,
