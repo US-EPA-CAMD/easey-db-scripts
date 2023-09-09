@@ -1,7 +1,3 @@
--- Table: camdecmps.monitor_formula
-
--- DROP TABLE camdecmps.monitor_formula;
-
 CREATE TABLE IF NOT EXISTS camdecmps.monitor_formula
 (
     mon_form_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -19,17 +15,12 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_formula
     update_date timestamp without time zone,
     CONSTRAINT pk_monitor_formula PRIMARY KEY (mon_form_id),
     CONSTRAINT fk_monitor_formula_equation_code FOREIGN KEY (equation_cd)
-        REFERENCES camdecmpsmd.equation_code (equation_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.equation_code (equation_cd) MATCH SIMPLE=,
     CONSTRAINT fk_monitor_formula_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_monitor_formula_parameter_code FOREIGN KEY (parameter_cd)
         REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.monitor_formula
@@ -73,35 +64,3 @@ COMMENT ON COLUMN camdecmps.monitor_formula.add_date
 
 COMMENT ON COLUMN camdecmps.monitor_formula.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: idx_monitor_formula_equation_c
-
--- DROP INDEX camdecmps.idx_monitor_formula_equation_c;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_formula_equation_c
-    ON camdecmps.monitor_formula USING btree
-    (equation_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_formula_mon_loc_id
-
--- DROP INDEX camdecmps.idx_monitor_formula_mon_loc_id;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_formula_mon_loc_id
-    ON camdecmps.monitor_formula USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: monitor_formula_idx$$_15b00008
-
--- DROP INDEX camdecmps."monitor_formula_idx$$_15b00008";
-
-CREATE INDEX IF NOT EXISTS "monitor_formula_idx$$_15b00008"
-    ON camdecmps.monitor_formula USING btree
-    (formula_identifier COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: monitor_formula_idx001
-
--- DROP INDEX camdecmps.monitor_formula_idx001;
-
-CREATE INDEX IF NOT EXISTS monitor_formula_idx001
-    ON camdecmps.monitor_formula USING btree
-    (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);

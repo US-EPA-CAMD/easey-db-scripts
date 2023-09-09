@@ -1,7 +1,3 @@
--- Table: camdecmpsaux.apportionment_data
-
--- DROP TABLE camdecmpsaux.apportionment_data;
-
 CREATE TABLE IF NOT EXISTS camdecmpsaux.apportionment_data
 (
     apport_data_id numeric(38,0) NOT NULL,
@@ -10,11 +6,9 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.apportionment_data
     condition_xml xml,
     formulae_xml xml,
     subtractive_xml xml,
-    CONSTRAINT apportionment_data_pk PRIMARY KEY (apport_data_id),
-    CONSTRAINT apportionment_data_rng_fk FOREIGN KEY (apport_range_id)
+    CONSTRAINT pk_apportionment_data PRIMARY KEY (apport_data_id),
+    CONSTRAINT fk_apportionment_data_apportionment_range FOREIGN KEY (apport_range_id)
         REFERENCES camdecmpsaux.apportionment_range (apport_range_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmpsaux.apportionment_data
@@ -37,11 +31,3 @@ COMMENT ON COLUMN camdecmpsaux.apportionment_data.formulae_xml
 
 COMMENT ON COLUMN camdecmpsaux.apportionment_data.subtractive_xml
     IS 'The substractive specification indicating ducts that empty into stacks.';
-
--- Index: apportionment_data_rng_ix
-
--- DROP INDEX camdecmpsaux.apportionment_data_rng_ix;
-
-CREATE INDEX IF NOT EXISTS apportionment_data_rng_ix
-    ON camdecmpsaux.apportionment_data USING btree
-    (apport_range_id ASC NULLS LAST);

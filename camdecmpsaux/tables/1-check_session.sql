@@ -1,7 +1,3 @@
--- Table: camdecmpsaux.check_session
-
--- DROP TABLE camdecmpsaux.check_session;
-
 CREATE TABLE IF NOT EXISTS camdecmpsaux.check_session
 (
     chk_session_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -19,23 +15,15 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.check_session
     test_sum_id character varying(45) COLLATE pg_catalog."default",
     submission_id double precision,
     CONSTRAINT pk_check_session PRIMARY KEY (chk_session_id),
-    CONSTRAINT check_session_r05 FOREIGN KEY (rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_category_code_check_session FOREIGN KEY (category_cd)
-        REFERENCES camdecmpsmd.category_code (category_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_process_code_check_session FOREIGN KEY (process_cd)
-        REFERENCES camdecmpsmd.process_code (process_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_severity_code_check_session FOREIGN KEY (severity_cd)
-        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT check_session_c01 CHECK (session_begin_date <= session_end_date)
+    CONSTRAINT fk_check_session_reporting_period FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
+    CONSTRAINT fk_check_session_category_code FOREIGN KEY (category_cd)
+        REFERENCES camdecmpsmd.category_code (category_cd) MATCH SIMPLE,
+    CONSTRAINT fk_check_session_process_code FOREIGN KEY (process_cd)
+        REFERENCES camdecmpsmd.process_code (process_cd) MATCH SIMPLE,
+    CONSTRAINT fk_check_session_severity_code FOREIGN KEY (severity_cd)
+        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE,
+    CONSTRAINT chk_check_session_begin_date_lte_end_date CHECK (session_begin_date <= session_end_date)
 );
 
 COMMENT ON TABLE camdecmpsaux.check_session
@@ -82,67 +70,3 @@ COMMENT ON COLUMN camdecmpsaux.check_session.test_sum_id
 
 COMMENT ON COLUMN camdecmpsaux.check_session.submission_id
     IS ' Unique identifier of a submission.';
-
--- Index: idx_check_session_1526
-
--- DROP INDEX camdecmpsaux.idx_check_session_1526;
-
-CREATE INDEX IF NOT EXISTS idx_check_session_1526
-    ON camdecmpsaux.check_session USING btree
-    (test_extension_exemption_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_check_session_2816
-
--- DROP INDEX camdecmpsaux.idx_check_session_2816;
-
-CREATE INDEX IF NOT EXISTS idx_check_session_2816
-    ON camdecmpsaux.check_session USING btree
-    (qa_cert_event_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_check_session_6459
-
--- DROP INDEX camdecmpsaux.idx_check_session_6459;
-
-CREATE INDEX IF NOT EXISTS idx_check_session_6459
-    ON camdecmpsaux.check_session USING btree
-    (mon_plan_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_check_session_7529
-
--- DROP INDEX camdecmpsaux.idx_check_session_7529;
-
-CREATE INDEX IF NOT EXISTS idx_check_session_7529
-    ON camdecmpsaux.check_session USING btree
-    (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_check_session_8070
-
--- DROP INDEX camdecmpsaux.idx_check_session_8070;
-
-CREATE INDEX IF NOT EXISTS idx_check_session_8070
-    ON camdecmpsaux.check_session USING btree
-    (rpt_period_id ASC NULLS LAST);
-
--- Index: idx_check_session_category_c
-
--- DROP INDEX camdecmpsaux.idx_check_session_category_c;
-
-CREATE INDEX IF NOT EXISTS idx_check_session_category_c
-    ON camdecmpsaux.check_session USING btree
-    (category_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_check_session_process_cd
-
--- DROP INDEX camdecmpsaux.idx_check_session_process_cd;
-
-CREATE INDEX IF NOT EXISTS idx_check_session_process_cd
-    ON camdecmpsaux.check_session USING btree
-    (process_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_check_session_severity_c
-
--- DROP INDEX camdecmpsaux.idx_check_session_severity_c;
-
-CREATE INDEX IF NOT EXISTS idx_check_session_severity_c
-    ON camdecmpsaux.check_session USING btree
-    (severity_cd COLLATE pg_catalog."default" ASC NULLS LAST);

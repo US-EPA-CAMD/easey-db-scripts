@@ -1,7 +1,3 @@
--- Table: camdecmps.rata
-
--- DROP TABLE camdecmps.rata;
-
 CREATE TABLE IF NOT EXISTS camdecmps.rata
 (
     rata_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -19,16 +15,11 @@ CREATE TABLE IF NOT EXISTS camdecmps.rata
     update_date timestamp without time zone,
     CONSTRAINT pk_rata PRIMARY KEY (rata_id),
     CONSTRAINT fk_rata_rata_frequency_code FOREIGN KEY (rata_frequency_cd)
-        REFERENCES camdecmpsmd.rata_frequency_code (rata_frequency_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.rata_frequency_code (rata_frequency_cd) MATCH SIMPLE,
     CONSTRAINT fk_rata_rata_frequency_code_calc FOREIGN KEY (calc_rata_frequency_cd)
-        REFERENCES camdecmpsmd.rata_frequency_code (rata_frequency_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.rata_frequency_code (rata_frequency_cd) MATCH SIMPLE,
     CONSTRAINT fk_rata_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -73,27 +64,3 @@ COMMENT ON COLUMN camdecmps.rata.add_date
 
 COMMENT ON COLUMN camdecmps.rata.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: idx_rata_001
-
--- DROP INDEX camdecmps.idx_rata_001;
-
-CREATE INDEX IF NOT EXISTS idx_rata_001
-    ON camdecmps.rata USING btree
-    (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_rata_calc_rata
-
--- DROP INDEX camdecmps.idx_rata_calc_rata;
-
-CREATE INDEX IF NOT EXISTS idx_rata_calc_rata
-    ON camdecmps.rata USING btree
-    (calc_rata_frequency_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_rata_rata_frequ
-
--- DROP INDEX camdecmps.idx_rata_rata_frequ;
-
-CREATE INDEX IF NOT EXISTS idx_rata_rata_frequ
-    ON camdecmps.rata USING btree
-    (rata_frequency_cd COLLATE pg_catalog."default" ASC NULLS LAST);

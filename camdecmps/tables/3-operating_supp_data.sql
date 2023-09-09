@@ -1,7 +1,3 @@
--- Table: camdecmps.operating_supp_data
-
--- DROP TABLE camdecmps.operating_supp_data;
-
 CREATE TABLE camdecmps.operating_supp_data
 (
     op_supp_data_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -14,22 +10,14 @@ CREATE TABLE camdecmps.operating_supp_data
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_operating_supp_data PRIMARY KEY (op_supp_data_id),
-    CONSTRAINT fk_fuel_code_operating_sup FOREIGN KEY (fuel_cd)
-        REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+    CONSTRAINT fk_operating_supp_data_fuel_code FOREIGN KEY (fuel_cd)
+        REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE,
     CONSTRAINT fk_operating_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_operating_typ_operating_sup FOREIGN KEY (op_type_cd)
-        REFERENCES camdecmpsmd.operating_type_code (op_type_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_reporting_per_operating_sup FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE,
+    CONSTRAINT fk_operating_supp_data_operating_type_code FOREIGN KEY (op_type_cd)
+        REFERENCES camdecmpsmd.operating_type_code (op_type_cd) MATCH SIMPLE,
+    CONSTRAINT fk_operating_supp_data_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.operating_supp_data
@@ -61,43 +49,3 @@ COMMENT ON COLUMN camdecmps.operating_supp_data.add_date
 
 COMMENT ON COLUMN camdecmps.operating_supp_data.update_date
     IS 'Date and time in which record was last updated.';
--- Index: idx_operating_supp_data_emr
-
--- DROP INDEX camdecmps.idx_operating_supp_data_emr;
-
-CREATE INDEX idx_operating_supp_data_emr
-    ON camdecmps.operating_supp_data USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_operating_supp_fuel_cd
-
--- DROP INDEX camdecmps.idx_operating_supp_fuel_cd;
-
-CREATE INDEX idx_operating_supp_fuel_cd
-    ON camdecmps.operating_supp_data USING btree
-    (fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_operating_supp_mon_loc_id
-
--- DROP INDEX camdecmps.idx_operating_supp_mon_loc_id;
-
-CREATE INDEX idx_operating_supp_mon_loc_id
-    ON camdecmps.operating_supp_data USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_operating_supp_op_type_cd
-
--- DROP INDEX camdecmps.idx_operating_supp_op_type_cd;
-
-CREATE INDEX idx_operating_supp_op_type_cd
-    ON camdecmps.operating_supp_data USING btree
-    (op_type_cd COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: operating_supp_data_idx001
-
--- DROP INDEX camdecmps.operating_supp_data_idx001;
-
-CREATE INDEX operating_supp_data_idx001
-    ON camdecmps.operating_supp_data USING btree
-    (rpt_period_id ASC NULLS LAST)
-    TABLESPACE pg_default;

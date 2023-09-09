@@ -1,7 +1,3 @@
--- Table: camdecmps.fuel_flow_to_load_baseline
-
--- DROP TABLE camdecmps.fuel_flow_to_load_baseline;
-
 CREATE TABLE IF NOT EXISTS camdecmps.fuel_flow_to_load_baseline
 (
     fuel_flow_baseline_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -23,16 +19,11 @@ CREATE TABLE IF NOT EXISTS camdecmps.fuel_flow_to_load_baseline
     ghr_uom_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_fuel_flow_to_load_baseline PRIMARY KEY (fuel_flow_baseline_id),
     CONSTRAINT fk_fuel_flow_to_load_baseline_fuel_flow_load_uom FOREIGN KEY (fuel_flow_load_uom_cd)
-        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE,
     CONSTRAINT fk_fuel_flow_to_load_baseline_ghr_uom FOREIGN KEY (ghr_uom_cd)
-        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE,
     CONSTRAINT fk_fuel_flow_to_load_baseline_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -89,27 +80,3 @@ COMMENT ON COLUMN camdecmps.fuel_flow_to_load_baseline.fuel_flow_load_uom_cd
 
 COMMENT ON COLUMN camdecmps.fuel_flow_to_load_baseline.ghr_uom_cd
     IS 'Code used to identify baseline gross heat rate (GHR) units of measure. ';
-
--- Index: idx_ffload_baseline_001
-
--- DROP INDEX camdecmps.idx_ffload_baseline_001;
-
-CREATE INDEX IF NOT EXISTS idx_ffload_baseline_001
-    ON camdecmps.fuel_flow_to_load_baseline USING btree
-    (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_fuel_flow_to_lo_fuel_flow
-
--- DROP INDEX camdecmps.idx_fuel_flow_to_lo_fuel_flow;
-
-CREATE INDEX IF NOT EXISTS idx_fuel_flow_to_lo_fuel_flow
-    ON camdecmps.fuel_flow_to_load_baseline USING btree
-    (fuel_flow_load_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_fuel_flow_to_lo_ghr_uom_cd
-
--- DROP INDEX camdecmps.idx_fuel_flow_to_lo_ghr_uom_cd;
-
-CREATE INDEX IF NOT EXISTS idx_fuel_flow_to_lo_ghr_uom_cd
-    ON camdecmps.fuel_flow_to_load_baseline USING btree
-    (ghr_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);

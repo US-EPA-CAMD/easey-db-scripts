@@ -1,7 +1,3 @@
--- Table: camdecmps.daily_test_supp_data
-
--- DROP TABLE IF EXISTS camdecmps.daily_test_supp_data;
-
 CREATE TABLE IF NOT EXISTS camdecmps.daily_test_supp_data
 (
     daily_test_supp_data_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -27,29 +23,15 @@ CREATE TABLE IF NOT EXISTS camdecmps.daily_test_supp_data
     update_date timestamp without time zone,
     CONSTRAINT pk_daily_test_supp_data PRIMARY KEY (daily_test_supp_data_id),
     CONSTRAINT fk_daily_test_supp_data_component FOREIGN KEY (component_id)
-        REFERENCES camdecmps.component (component_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_daily_test_supp_data_ctr FOREIGN KEY (calc_test_result_cd)
-        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.component (component_id) MATCH SIMPLE,
     CONSTRAINT fk_daily_test_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_daily_test_supp_data_rpp FOREIGN KEY (rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_daily_test_supp_data_trs FOREIGN KEY (test_result_cd)
-        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_daily_test_supp_data_tty FOREIGN KEY (test_type_cd)
-        REFERENCES camdecmpsmd.test_type_code (test_type_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE,
+    CONSTRAINT fk_daily_test_supp_data_reporting_period FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
+    CONSTRAINT fk_daily_test_supp_data_test_result_code FOREIGN KEY (test_result_cd)
+        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE,
+    CONSTRAINT fk_daily_test_supp_data_test_type_code FOREIGN KEY (test_type_cd)
+        REFERENCES camdecmpsmd.test_type_code (test_type_cd) MATCH SIMPLE,
     CONSTRAINT ck_daily_test_supp_data_cmp CHECK (COALESCE(delete_ind, 0::numeric) <> 1::numeric AND component_id IS NOT NULL OR COALESCE(delete_ind, 0::numeric) = 1::numeric AND component_id IS NULL),
     CONSTRAINT ck_daily_test_supp_data_dti CHECK (COALESCE(delete_ind, 0::numeric) <> 1::numeric AND daily_test_sum_id IS NOT NULL OR COALESCE(delete_ind, 0::numeric) = 1::numeric AND daily_test_sum_id IS NULL),
     CONSTRAINT ck_daily_test_supp_data_dtt CHECK (COALESCE(delete_ind, 0::numeric) <> 1::numeric AND daily_test_datehourmin IS NOT NULL OR COALESCE(delete_ind, 0::numeric) = 1::numeric AND daily_test_datehourmin IS NULL),
@@ -121,91 +103,3 @@ COMMENT ON COLUMN camdecmps.daily_test_supp_data.add_date
 
 COMMENT ON COLUMN camdecmps.daily_test_supp_data.update_date
     IS 'Date and time in which record was last updated.';
-
--- Index: idx_daily_test_supp_data_cmp
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_test_supp_data_cmp;
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_cmp
-    ON camdecmps.daily_test_supp_data USING btree
-    (component_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_daily_test_supp_data_ctr
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_test_supp_data_ctr;
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_ctr
-    ON camdecmps.daily_test_supp_data USING btree
-    (calc_test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_daily_test_supp_data_dst
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_test_supp_data_dst;
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_dst
-    ON camdecmps.daily_test_supp_data USING btree
-    (daily_test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_daily_test_supp_data_emr
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_test_supp_data_emr;
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_emr
-    ON camdecmps.daily_test_supp_data USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_daily_test_supp_data_kyo
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_test_supp_data_kyo;
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_kyo
-    ON camdecmps.daily_test_supp_data USING btree
-    (key_online_ind ASC NULLS LAST);
-
--- Index: idx_daily_test_supp_data_kyv
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_test_supp_data_kyv;
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_kyv
-    ON camdecmps.daily_test_supp_data USING btree
-    (key_valid_ind ASC NULLS LAST);
-
--- Index: idx_daily_test_supp_data_ool
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_test_supp_data_ool;
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_ool
-    ON camdecmps.daily_test_supp_data USING btree
-    (online_offline_ind ASC NULLS LAST);
-
--- Index: idx_daily_test_supp_data_prd
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_test_supp_data_prd;
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_prd
-    ON camdecmps.daily_test_supp_data USING btree
-    (rpt_period_id ASC NULLS LAST);
-
--- Index: idx_daily_test_supp_data_ssc
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_test_supp_data_ssc;
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_ssc
-    ON camdecmps.daily_test_supp_data USING btree
-    (span_scale_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_daily_test_supp_data_trs
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_test_supp_data_trs;
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_trs
-    ON camdecmps.daily_test_supp_data USING btree
-    (test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_daily_test_supp_data_tty
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_test_supp_data_tty;
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_tty
-    ON camdecmps.daily_test_supp_data USING btree
-    (test_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);

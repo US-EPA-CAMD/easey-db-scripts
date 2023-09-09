@@ -1,7 +1,3 @@
--- Table: camdecmps.protocol_gas_vendor
-
--- DROP TABLE camdecmps.protocol_gas_vendor;
-
 CREATE TABLE IF NOT EXISTS camdecmps.protocol_gas_vendor
 (
     vendor_id character varying(8) COLLATE pg_catalog."default" NOT NULL,

@@ -1,7 +1,3 @@
--- Table: camdecmps.unit_capacity
-
--- DROP TABLE camdecmps.unit_capacity;
-
 CREATE TABLE IF NOT EXISTS camdecmps.unit_capacity
 (
     unit_cap_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -15,8 +11,6 @@ CREATE TABLE IF NOT EXISTS camdecmps.unit_capacity
     CONSTRAINT pk_unit_capacity PRIMARY KEY (unit_cap_id),
     CONSTRAINT fk_unit_capacity_unit FOREIGN KEY (unit_id)
         REFERENCES camd.unit (unit_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.unit_capacity
@@ -45,11 +39,3 @@ COMMENT ON COLUMN camdecmps.unit_capacity.add_date
 
 COMMENT ON COLUMN camdecmps.unit_capacity.update_date
     IS 'Date of the last record update.';
-
--- Index: idx_unit_capacity_unit
-
--- DROP INDEX camdecmps.idx_unit_capacity_unit;
-
-CREATE INDEX IF NOT EXISTS idx_unit_capacity_unit
-    ON camdecmps.unit_capacity USING btree
-    (unit_id ASC NULLS LAST);

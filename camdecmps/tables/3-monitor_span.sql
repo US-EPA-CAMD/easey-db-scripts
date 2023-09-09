@@ -1,7 +1,3 @@
--- Table: camdecmps.monitor_span
-
--- DROP TABLE camdecmps.monitor_span;
-
 CREATE TABLE IF NOT EXISTS camdecmps.monitor_span
 (
     span_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -28,25 +24,16 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_span
     span_uom_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_monitor_span PRIMARY KEY (span_id),
     CONSTRAINT fk_monitor_span_component_type_code FOREIGN KEY (component_type_cd)
-        REFERENCES camdecmpsmd.component_type_code (component_type_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.component_type_code (component_type_cd) MATCH SIMPLE,
     CONSTRAINT fk_monitor_span_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_monitor_span_span_method_code FOREIGN KEY (span_method_cd)
-        REFERENCES camdecmpsmd.span_method_code (span_method_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.span_method_code (span_method_cd) MATCH SIMPLE,
     CONSTRAINT fk_monitor_span_span_scale_code FOREIGN KEY (span_scale_cd)
-        REFERENCES camdecmpsmd.span_scale_code (span_scale_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.span_scale_code (span_scale_cd) MATCH SIMPLE,
     CONSTRAINT fk_monitor_span_units_of_measure_code FOREIGN KEY (span_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.monitor_span
@@ -117,43 +104,3 @@ COMMENT ON COLUMN camdecmps.monitor_span.update_date
 
 COMMENT ON COLUMN camdecmps.monitor_span.span_uom_cd
     IS 'Code used to identify the calibration units of measure. ';
-
--- Index: idx_monitor_span_component
-
--- DROP INDEX camdecmps.idx_monitor_span_component;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_span_component
-    ON camdecmps.monitor_span USING btree
-    (component_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_span_mon_loc_id
-
--- DROP INDEX camdecmps.idx_monitor_span_mon_loc_id;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_span_mon_loc_id
-    ON camdecmps.monitor_span USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_span_span_metho
-
--- DROP INDEX camdecmps.idx_monitor_span_span_metho;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_span_span_metho
-    ON camdecmps.monitor_span USING btree
-    (span_method_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_span_span_scale
-
--- DROP INDEX camdecmps.idx_monitor_span_span_scale;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_span_span_scale
-    ON camdecmps.monitor_span USING btree
-    (span_scale_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_span_span_uom_c
-
--- DROP INDEX camdecmps.idx_monitor_span_span_uom_c;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_span_span_uom_c
-    ON camdecmps.monitor_span USING btree
-    (span_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);

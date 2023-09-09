@@ -1,7 +1,3 @@
--- Table: camdecmps.trans_accuracy
-
--- DROP TABLE camdecmps.trans_accuracy;
-
 CREATE TABLE IF NOT EXISTS camdecmps.trans_accuracy
 (
     trans_ac_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -17,20 +13,13 @@ CREATE TABLE IF NOT EXISTS camdecmps.trans_accuracy
     high_level_accuracy_spec_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_trans_accuracy PRIMARY KEY (trans_ac_id),
     CONSTRAINT fk_trans_accuracy_accuracy_spec_code_high FOREIGN KEY (high_level_accuracy_spec_cd)
-        REFERENCES camdecmpsmd.accuracy_spec_code (accuracy_spec_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.accuracy_spec_code (accuracy_spec_cd) MATCH SIMPLE,
     CONSTRAINT fk_trans_accuracy_accuracy_spec_code_low FOREIGN KEY (low_level_accuracy_spec_cd)
-        REFERENCES camdecmpsmd.accuracy_spec_code (accuracy_spec_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.accuracy_spec_code (accuracy_spec_cd) MATCH SIMPLE,
     CONSTRAINT fk_trans_accuracy_accuracy_spec_code_mid FOREIGN KEY (mid_level_accuracy_spec_cd)
-        REFERENCES camdecmpsmd.accuracy_spec_code (accuracy_spec_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.accuracy_spec_code (accuracy_spec_cd) MATCH SIMPLE,
     CONSTRAINT fk_trans_accuracy_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -69,35 +58,3 @@ COMMENT ON COLUMN camdecmps.trans_accuracy.mid_level_accuracy_spec_cd
 
 COMMENT ON COLUMN camdecmps.trans_accuracy.high_level_accuracy_spec_cd
     IS 'Code used to identify the accuracy determination methodology for high level. ';
-
--- Index: idx_trans_accuracy_001
-
--- DROP INDEX camdecmps.idx_trans_accuracy_001;
-
-CREATE INDEX IF NOT EXISTS idx_trans_accuracy_001
-    ON camdecmps.trans_accuracy USING btree
-    (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_trans_accuracy_high_level
-
--- DROP INDEX camdecmps.idx_trans_accuracy_high_level;
-
-CREATE INDEX IF NOT EXISTS idx_trans_accuracy_high_level
-    ON camdecmps.trans_accuracy USING btree
-    (high_level_accuracy_spec_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_trans_accuracy_low_level
-
--- DROP INDEX camdecmps.idx_trans_accuracy_low_level;
-
-CREATE INDEX IF NOT EXISTS idx_trans_accuracy_low_level
-    ON camdecmps.trans_accuracy USING btree
-    (low_level_accuracy_spec_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_trans_accuracy_mid_level
-
--- DROP INDEX camdecmps.idx_trans_accuracy_mid_level;
-
-CREATE INDEX IF NOT EXISTS idx_trans_accuracy_mid_level
-    ON camdecmps.trans_accuracy USING btree
-    (mid_level_accuracy_spec_cd COLLATE pg_catalog."default" ASC NULLS LAST);

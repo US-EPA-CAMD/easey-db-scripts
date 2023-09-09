@@ -1,7 +1,3 @@
--- Table: camdecmps.mats_method_data
-
--- DROP TABLE camdecmps.mats_method_data;
-
 CREATE TABLE IF NOT EXISTS camdecmps.mats_method_data
 (
     mats_method_data_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -17,16 +13,11 @@ CREATE TABLE IF NOT EXISTS camdecmps.mats_method_data
     update_date timestamp without time zone,
     CONSTRAINT pk_mats_method_data PRIMARY KEY (mats_method_data_id),
     CONSTRAINT fk_mats_method_data_mats_method_code FOREIGN KEY (mats_method_cd)
-        REFERENCES camdecmpsmd.mats_method_code (mats_method_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.mats_method_code (mats_method_cd) MATCH SIMPLE,
     CONSTRAINT fk_mats_method_data_mats_method_parameter_code FOREIGN KEY (mats_method_parameter_cd)
-        REFERENCES camdecmpsmd.mats_method_parameter_code (mats_method_parameter_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.mats_method_parameter_code (mats_method_parameter_cd) MATCH SIMPLE,
     CONSTRAINT fk_mats_method_data_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -65,27 +56,3 @@ COMMENT ON COLUMN camdecmps.mats_method_data.add_date
 
 COMMENT ON COLUMN camdecmps.mats_method_data.update_date
     IS 'Date and time in which record was last updated.';
-
--- Index: mats_method_data_method_cd
-
--- DROP INDEX camdecmps.mats_method_data_method_cd;
-
-CREATE INDEX IF NOT EXISTS mats_method_data_method_cd
-    ON camdecmps.mats_method_data USING btree
-    (mats_method_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: mats_method_data_mon_loc_id
-
--- DROP INDEX camdecmps.mats_method_data_mon_loc_id;
-
-CREATE INDEX IF NOT EXISTS mats_method_data_mon_loc_id
-    ON camdecmps.mats_method_data USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: mats_method_data_param_cd
-
--- DROP INDEX camdecmps.mats_method_data_param_cd;
-
-CREATE INDEX IF NOT EXISTS mats_method_data_param_cd
-    ON camdecmps.mats_method_data USING btree
-    (mats_method_parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);

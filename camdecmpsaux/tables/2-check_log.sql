@@ -1,7 +1,3 @@
--- Table: camdecmpsaux.check_log
-
--- DROP TABLE camdecmpsaux.check_log;
-
 CREATE TABLE IF NOT EXISTS camdecmpsaux.check_log
 (
     chk_log_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -27,22 +23,25 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.check_log
     check_cd character varying(30) COLLATE pg_catalog."default",
     error_suppress_id numeric(38,0),
     CONSTRAINT pk_check_log PRIMARY KEY (chk_log_id),
-    CONSTRAINT check_log_r01 FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT check_log_severity_fk FOREIGN KEY (severity_cd)
-        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT check_log_suppress_severity_fk FOREIGN KEY (suppressed_severity_cd)
-        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT pk_check_session_check_log FOREIGN KEY (chk_session_id)
+    CONSTRAINT fk_check_log_check_session FOREIGN KEY (chk_session_id)
         REFERENCES camdecmpsaux.check_session (chk_session_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+		    ON DELETE CASCADE,
+    CONSTRAINT fk_check_log_rule_check FOREIGN KEY (rule_check_id)
+        REFERENCES camdecmpsmd.rule_check (rule_check_id) MATCH SIMPLE,
+    CONSTRAINT fk_check_log_check_catalog_result FOREIGN KEY (check_catalog_result_id)
+        REFERENCES camdecmpsmd.check_catalog_result (check_catalog_result_id) MATCH SIMPLE,
+	  CONSTRAINT fk_check_log_monitor_location FOREIGN KEY (mon_loc_id)
+        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
+		    ON DELETE CASCADE,
+	  CONSTRAINT fk_check_log_test_summary FOREIGN KEY (test_sum_id)
+        REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
+		    ON DELETE CASCADE,
+    CONSTRAINT fk_check_log_severity_code FOREIGN KEY (severity_cd)
+        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE,
+    CONSTRAINT fk_check_log_severity_code_suppressed FOREIGN KEY (suppressed_severity_cd)
+        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE,
+    CONSTRAINT fk_check_log_es_spec FOREIGN KEY (error_suppress_id)
+        REFERENCES camdecmpsaux.es_spec (es_spec_id) MATCH SIMPLE
 );
 
 COMMENT ON TABLE camdecmpsaux.check_log
@@ -113,43 +112,3 @@ COMMENT ON COLUMN camdecmpsaux.check_log.check_cd
 
 COMMENT ON COLUMN camdecmpsaux.check_log.error_suppress_id
     IS 'Unique identifier of Error Suppression record.';
-
--- Index: idx_check_log_1471
-
--- DROP INDEX camdecmpsaux.idx_check_log_1471;
-
-CREATE INDEX IF NOT EXISTS idx_check_log_1471
-    ON camdecmpsaux.check_log USING btree
-    (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_check_log_6400
-
--- DROP INDEX camdecmpsaux.idx_check_log_6400;
-
-CREATE INDEX IF NOT EXISTS idx_check_log_6400
-    ON camdecmpsaux.check_log USING btree
-    (suppressed_severity_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_check_log_9600
-
--- DROP INDEX camdecmpsaux.idx_check_log_9600;
-
-CREATE INDEX IF NOT EXISTS idx_check_log_9600
-    ON camdecmpsaux.check_log USING btree
-    (rule_check_id ASC NULLS LAST);
-
--- Index: idx_check_log_9738
-
--- DROP INDEX camdecmpsaux.idx_check_log_9738;
-
-CREATE INDEX IF NOT EXISTS idx_check_log_9738
-    ON camdecmpsaux.check_log USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_check_log_9814
-
--- DROP INDEX camdecmpsaux.idx_check_log_9814;
-
-CREATE INDEX IF NOT EXISTS idx_check_log_9814
-    ON camdecmpsaux.check_log USING btree
-    (severity_cd COLLATE pg_catalog."default" ASC NULLS LAST);

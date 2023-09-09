@@ -1,7 +1,3 @@
--- Table: camdecmps.qa_cert_event
-
--- DROP TABLE camdecmps.qa_cert_event;
-
 CREATE TABLE IF NOT EXISTS camdecmps.qa_cert_event
 (
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -28,28 +24,19 @@ CREATE TABLE IF NOT EXISTS camdecmps.qa_cert_event
     CONSTRAINT pk_qa_cert_event PRIMARY KEY (qa_cert_event_id),
     CONSTRAINT fk_qa_cert_event_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_qa_cert_event_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_qa_cert_event_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_qa_cert_event_qa_cert_event_code FOREIGN KEY (qa_cert_event_cd)
-        REFERENCES camdecmpsmd.qa_cert_event_code (qa_cert_event_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.qa_cert_event_code (qa_cert_event_cd) MATCH SIMPLE,
     CONSTRAINT fk_qa_cert_event_required_test_code FOREIGN KEY (required_test_cd)
-        REFERENCES camdecmpsmd.required_test_code (required_test_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.required_test_code (required_test_cd) MATCH SIMPLE,
     CONSTRAINT fk_qa_cert_event_submission_availability_code FOREIGN KEY (submission_availability_cd)
         REFERENCES camdecmpsmd.submission_availability_code (submission_availability_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.qa_cert_event
@@ -117,67 +104,3 @@ COMMENT ON COLUMN camdecmps.qa_cert_event.submission_id
 
 COMMENT ON COLUMN camdecmps.qa_cert_event.submission_availability_cd
     IS 'Unique code value for a lookup table.';
-
--- Index: idx_qa_cert_event_chk_sessio
-
--- DROP INDEX camdecmps.idx_qa_cert_event_chk_sessio;
-
-CREATE INDEX IF NOT EXISTS idx_qa_cert_event_chk_sessio
-    ON camdecmps.qa_cert_event USING btree
-    (chk_session_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_qa_cert_event_component
-
--- DROP INDEX camdecmps.idx_qa_cert_event_component;
-
-CREATE INDEX IF NOT EXISTS idx_qa_cert_event_component
-    ON camdecmps.qa_cert_event USING btree
-    (component_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_qa_cert_event_mon_loc_id
-
--- DROP INDEX camdecmps.idx_qa_cert_event_mon_loc_id;
-
-CREATE INDEX IF NOT EXISTS idx_qa_cert_event_mon_loc_id
-    ON camdecmps.qa_cert_event USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_qa_cert_event_mon_sys_id
-
--- DROP INDEX camdecmps.idx_qa_cert_event_mon_sys_id;
-
-CREATE INDEX IF NOT EXISTS idx_qa_cert_event_mon_sys_id
-    ON camdecmps.qa_cert_event USING btree
-    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_qa_cert_event_qa_cert_ev
-
--- DROP INDEX camdecmps.idx_qa_cert_event_qa_cert_ev;
-
-CREATE INDEX IF NOT EXISTS idx_qa_cert_event_qa_cert_ev
-    ON camdecmps.qa_cert_event USING btree
-    (qa_cert_event_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_qa_cert_event_required_t
-
--- DROP INDEX camdecmps.idx_qa_cert_event_required_t;
-
-CREATE INDEX IF NOT EXISTS idx_qa_cert_event_required_t
-    ON camdecmps.qa_cert_event USING btree
-    (required_test_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_qa_cert_event_submission
-
--- DROP INDEX camdecmps.idx_qa_cert_event_submission;
-
-CREATE INDEX IF NOT EXISTS idx_qa_cert_event_submission
-    ON camdecmps.qa_cert_event USING btree
-    (submission_availability_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_qa_cert_event_submission1
-
--- DROP INDEX camdecmps.idx_qa_cert_event_submission1;
-
-CREATE INDEX IF NOT EXISTS idx_qa_cert_event_submission1
-    ON camdecmps.qa_cert_event USING btree
-    (submission_id ASC NULLS LAST);

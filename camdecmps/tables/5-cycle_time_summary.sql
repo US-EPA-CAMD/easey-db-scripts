@@ -1,7 +1,3 @@
--- Table: camdecmps.cycle_time_summary
-
--- DROP TABLE camdecmps.cycle_time_summary;
-
 CREATE TABLE IF NOT EXISTS camdecmps.cycle_time_summary
 (
     cycle_time_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -14,7 +10,6 @@ CREATE TABLE IF NOT EXISTS camdecmps.cycle_time_summary
     CONSTRAINT pk_cycle_time_summary PRIMARY KEY (cycle_time_sum_id),
     CONSTRAINT fk_cycle_time_summary_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -41,11 +36,3 @@ COMMENT ON COLUMN camdecmps.cycle_time_summary.add_date
 
 COMMENT ON COLUMN camdecmps.cycle_time_summary.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: idx_cycle_time_summary_001
-
--- DROP INDEX camdecmps.idx_cycle_time_summary_001;
-
-CREATE INDEX IF NOT EXISTS idx_cycle_time_summary_001
-    ON camdecmps.cycle_time_summary USING btree
-    (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

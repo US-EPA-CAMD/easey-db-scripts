@@ -2,11 +2,11 @@
 source ../../environments.sh $1
 
 FILES=""
-TABLES=false
+TABLES=true
 VIEWS=false
 FUNCTIONS=false
 PROCEDURES=false
-BEFORE_DATA_LOAD=true
+BEFORE_DATA_LOAD=false
 AFTER_DATA_LOAD=false
 POST_DEPLOYMENT_CLEANUP=false
 
@@ -87,23 +87,25 @@ if [ $BEFORE_DATA_LOAD == true ]; then
   createTables
 
   FILES="$FILES
+  \i ./drop-constraints-indexes.sql
   \i ./before-data-load.sql
   "
 fi
 
 if [ $AFTER_DATA_LOAD == true ]; then
-  FILES="\i ./after-data-load.sql
+  FILES="\i ./check-tables/PopulateCheckTables.sql
+  \i ./client-tables/PopulateClientOnlyTables.sql
+  \i ./after-data-load.sql
   \i ./load-master-data-definitions.sql
   \i ./load-mdm-relationships-definitions.sql
   "
-  
+
   getFiles "./mdm-relationships"
   getFiles "./report-definitions"
   getFiles "./emissions-view-definitions"
 
   FILES="$FILES
-  \i ./check-tables/PopulateCheckTables.sql
-  \i ./client-tables/PopulateClientOnlyTables.sql
+  \i ./load-mats-2-0-gnp-cross-checks.sql
   \i ./check-tables/mp-check-catalog-process-load.sql
   \i ./check-tables/qa-check-catalog-process-load.sql
   \i ./check-tables/import-check-catalog-process-load.sql

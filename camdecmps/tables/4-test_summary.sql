@@ -1,7 +1,3 @@
--- Table: camdecmps.test_summary
-
--- DROP TABLE camdecmps.test_summary;
-
 CREATE TABLE IF NOT EXISTS camdecmps.test_summary
 (
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -37,45 +33,25 @@ CREATE TABLE IF NOT EXISTS camdecmps.test_summary
     CONSTRAINT pk_test_summary PRIMARY KEY (test_sum_id),
     CONSTRAINT uq_test_summary UNIQUE (mon_loc_id, test_num, test_type_cd),
     CONSTRAINT fk_test_summary_component FOREIGN KEY (component_id)
-        REFERENCES camdecmps.component (component_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.component (component_id) MATCH SIMPLE,
     CONSTRAINT fk_test_summary_injection_protocol_code FOREIGN KEY (injection_protocol_cd)
-        REFERENCES camdecmpsmd.injection_protocol_code (injection_protocol_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.injection_protocol_code (injection_protocol_cd) MATCH SIMPLE,
     CONSTRAINT fk_test_summary_monitor_location FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE,
     CONSTRAINT fk_test_summary_monitor_system FOREIGN KEY (mon_sys_id)
-        REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE,
     CONSTRAINT fk_test_summary_reporting_period FOREIGN KEY (rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
     CONSTRAINT fk_test_summary_span_scale_code FOREIGN KEY (span_scale_cd)
-        REFERENCES camdecmpsmd.span_scale_code (span_scale_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.span_scale_code (span_scale_cd) MATCH SIMPLE,
     CONSTRAINT fk_test_summary_test_reason_code FOREIGN KEY (test_reason_cd)
-        REFERENCES camdecmpsmd.test_reason_code (test_reason_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.test_reason_code (test_reason_cd) MATCH SIMPLE,
     CONSTRAINT fk_test_summary_test_result_code FOREIGN KEY (test_result_cd)
-        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE,
     CONSTRAINT fk_test_summary_test_result_code_calc FOREIGN KEY (calc_test_result_cd)
-        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE,
     CONSTRAINT fk_test_summary_test_type_code FOREIGN KEY (test_type_cd)
         REFERENCES camdecmpsmd.test_type_code (test_type_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.test_summary
@@ -170,83 +146,3 @@ COMMENT ON COLUMN camdecmps.test_summary.span_scale_cd
 
 COMMENT ON COLUMN camdecmps.test_summary.injection_protocol_cd
     IS 'Injection protocol code to indicate the use of either elemental or oxidized NIST-traceable Hg standards. ';
-
--- Index: idx_test_summary_calc_test
-
--- DROP INDEX camdecmps.idx_test_summary_calc_test;
-
-CREATE INDEX IF NOT EXISTS idx_test_summary_calc_test
-    ON camdecmps.test_summary USING btree
-    (calc_test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_test_summary_chk_sessio
-
--- DROP INDEX camdecmps.idx_test_summary_chk_sessio;
-
-CREATE INDEX IF NOT EXISTS idx_test_summary_chk_sessio
-    ON camdecmps.test_summary USING btree
-    (chk_session_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_test_summary_component
-
--- DROP INDEX camdecmps.idx_test_summary_component;
-
-CREATE INDEX IF NOT EXISTS idx_test_summary_component
-    ON camdecmps.test_summary USING btree
-    (component_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_test_summary_mon_loc_id
-
--- DROP INDEX camdecmps.idx_test_summary_mon_loc_id;
-
-CREATE INDEX IF NOT EXISTS idx_test_summary_mon_loc_id
-    ON camdecmps.test_summary USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_test_summary_mon_sys_id
-
--- DROP INDEX camdecmps.idx_test_summary_mon_sys_id;
-
-CREATE INDEX IF NOT EXISTS idx_test_summary_mon_sys_id
-    ON camdecmps.test_summary USING btree
-    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_test_summary_rpt_period
-
--- DROP INDEX camdecmps.idx_test_summary_rpt_period;
-
-CREATE INDEX IF NOT EXISTS idx_test_summary_rpt_period
-    ON camdecmps.test_summary USING btree
-    (rpt_period_id ASC NULLS LAST);
-
--- Index: idx_test_summary_span_scale
-
--- DROP INDEX camdecmps.idx_test_summary_span_scale;
-
-CREATE INDEX IF NOT EXISTS idx_test_summary_span_scale
-    ON camdecmps.test_summary USING btree
-    (span_scale_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_test_summary_test_reaso
-
--- DROP INDEX camdecmps.idx_test_summary_test_reaso;
-
-CREATE INDEX IF NOT EXISTS idx_test_summary_test_reaso
-    ON camdecmps.test_summary USING btree
-    (test_reason_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_test_summary_test_resul
-
--- DROP INDEX camdecmps.idx_test_summary_test_resul;
-
-CREATE INDEX IF NOT EXISTS idx_test_summary_test_resul
-    ON camdecmps.test_summary USING btree
-    (test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_test_summary_test_type
-
--- DROP INDEX camdecmps.idx_test_summary_test_type;
-
-CREATE INDEX IF NOT EXISTS idx_test_summary_test_type
-    ON camdecmps.test_summary USING btree
-    (test_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);

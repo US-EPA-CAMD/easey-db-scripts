@@ -1,7 +1,3 @@
--- Table: camdecmps.calibration_injection
-
--- DROP TABLE camdecmps.calibration_injection;
-
 CREATE TABLE IF NOT EXISTS camdecmps.calibration_injection
 (
     cal_inj_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -31,12 +27,9 @@ CREATE TABLE IF NOT EXISTS camdecmps.calibration_injection
     update_date timestamp without time zone,
     CONSTRAINT pk_calibration_injection PRIMARY KEY (cal_inj_id),
     CONSTRAINT fk_calibration_injection_gas_level_code FOREIGN KEY (upscale_gas_level_cd)
-        REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE,
     CONSTRAINT fk_calibration_injection_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -117,19 +110,3 @@ COMMENT ON COLUMN camdecmps.calibration_injection.add_date
 
 COMMENT ON COLUMN camdecmps.calibration_injection.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: idx_calibration_inj_upscale_ga
-
--- DROP INDEX camdecmps.idx_calibration_inj_upscale_ga;
-
-CREATE INDEX IF NOT EXISTS idx_calibration_inj_upscale_ga
-    ON camdecmps.calibration_injection USING btree
-    (upscale_gas_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_calibration_injection_001
-
--- DROP INDEX camdecmps.idx_calibration_injection_001;
-
-CREATE INDEX IF NOT EXISTS idx_calibration_injection_001
-    ON camdecmps.calibration_injection USING btree
-    (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

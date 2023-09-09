@@ -1,7 +1,3 @@
--- Table: camdecmps.monitor_system
-
--- DROP TABLE camdecmps.monitor_system;
-
 CREATE TABLE IF NOT EXISTS camdecmps.monitor_system
 (
     mon_sys_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -19,21 +15,14 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_system
     update_date timestamp without time zone,
     CONSTRAINT pk_monitor_system PRIMARY KEY (mon_sys_id),
     CONSTRAINT fk_monitor_system_fuel_code FOREIGN KEY (fuel_cd)
-        REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE,
     CONSTRAINT fk_monitor_system_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_monitor_system_system_designation_code FOREIGN KEY (sys_designation_cd)
-        REFERENCES camdecmpsmd.system_designation_code (sys_designation_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.system_designation_code (sys_designation_cd) MATCH SIMPLE,
     CONSTRAINT fk_monitor_system_system_type_code FOREIGN KEY (sys_type_cd)
         REFERENCES camdecmpsmd.system_type_code (sys_type_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.monitor_system
@@ -77,43 +66,3 @@ COMMENT ON COLUMN camdecmps.monitor_system.add_date
 
 COMMENT ON COLUMN camdecmps.monitor_system.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: idx_monitor_system_fuel_cd
-
--- DROP INDEX camdecmps.idx_monitor_system_fuel_cd;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_system_fuel_cd
-    ON camdecmps.monitor_system USING btree
-    (fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_system_mon_loc_id
-
--- DROP INDEX camdecmps.idx_monitor_system_mon_loc_id;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_system_mon_loc_id
-    ON camdecmps.monitor_system USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_system_sys_design
-
--- DROP INDEX camdecmps.idx_monitor_system_sys_design;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_system_sys_design
-    ON camdecmps.monitor_system USING btree
-    (sys_designation_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_system_sys_type_c
-
--- DROP INDEX camdecmps.idx_monitor_system_sys_type_c;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_system_sys_type_c
-    ON camdecmps.monitor_system USING btree
-    (sys_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_system_uq
-
--- DROP INDEX camdecmps.idx_monitor_system_uq;
-
-CREATE UNIQUE INDEX IF NOT EXISTS idx_monitor_system_uq
-    ON camdecmps.monitor_system USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST, mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST, system_identifier COLLATE pg_catalog."default" ASC NULLS LAST);

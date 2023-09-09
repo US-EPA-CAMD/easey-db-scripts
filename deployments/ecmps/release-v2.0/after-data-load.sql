@@ -470,3 +470,22 @@ ALTER TABLE IF EXISTS camdaux.datatable
 	DROP CONSTRAINT fk_datatable_template_code,
 	ADD CONSTRAINT fk_datatable_template_code FOREIGN KEY (template_cd)
 		REFERENCES camdaux.template_code (template_cd) MATCH SIMPLE;
+--------------------------------------------------------------------------------------------------------------------
+ALTER TABLE IF EXISTS camdecmps.component
+	ADD COLUMN IF NOT EXISTS analytical_principle_cd character varying(7),
+	ADD CONSTRAINT fk_component_analytical_principle_code FOREIGN KEY (analytical_principle_cd)
+		REFERENCES camdecmpsmd.analytical_principle_code (analytical_principle_cd) MATCH SIMPLE;
+
+CREATE INDEX IF NOT EXISTS idx_component_analytical_principle_cd
+  ON camdecmps.component USING btree
+    (analytical_principle_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+
+ALTER TABLE IF EXISTS camdecmpswks.component
+	ADD COLUMN IF NOT EXISTS analytical_principle_cd character varying(7),
+	ADD CONSTRAINT fk_component_analytical_principle_code FOREIGN KEY (analytical_principle_cd)
+		REFERENCES camdecmpsmd.analytical_principle_code (analytical_principle_cd) MATCH SIMPLE;
+
+CREATE INDEX IF NOT EXISTS idx_component_analytical_principle_cd
+  ON camdecmpswks.component USING btree
+    (analytical_principle_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+--------------------------------------------------------------------------------------------------------------------

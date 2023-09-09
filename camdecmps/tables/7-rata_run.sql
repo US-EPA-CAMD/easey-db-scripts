@@ -1,7 +1,3 @@
--- Table: camdecmps.rata_run
-
--- DROP TABLE camdecmps.rata_run;
-
 CREATE TABLE IF NOT EXISTS camdecmps.rata_run
 (
     rata_run_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -24,12 +20,9 @@ CREATE TABLE IF NOT EXISTS camdecmps.rata_run
     CONSTRAINT pk_rata_run PRIMARY KEY (rata_run_id),
     CONSTRAINT fk_rata_run_rata_summary FOREIGN KEY (rata_sum_id)
         REFERENCES camdecmps.rata_summary (rata_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_rata_run_run_status_code FOREIGN KEY (run_status_cd)
         REFERENCES camdecmpsmd.run_status_code (run_status_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.rata_run
@@ -85,19 +78,3 @@ COMMENT ON COLUMN camdecmps.rata_run.add_date
 
 COMMENT ON COLUMN camdecmps.rata_run.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: idx_rata_run_run_status
-
--- DROP INDEX camdecmps.idx_rata_run_run_status;
-
-CREATE INDEX IF NOT EXISTS idx_rata_run_run_status
-    ON camdecmps.rata_run USING btree
-    (run_status_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: rata_run_idx001
-
--- DROP INDEX camdecmps.rata_run_idx001;
-
-CREATE INDEX IF NOT EXISTS rata_run_idx001
-    ON camdecmps.rata_run USING btree
-    (rata_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

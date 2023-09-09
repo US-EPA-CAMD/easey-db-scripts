@@ -1,7 +1,3 @@
--- Table: camdecmps.rata_summary
-
--- DROP TABLE camdecmps.rata_summary;
-
 CREATE TABLE IF NOT EXISTS camdecmps.rata_summary
 (
     rata_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -42,25 +38,16 @@ CREATE TABLE IF NOT EXISTS camdecmps.rata_summary
     aps_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_rata_summary PRIMARY KEY (rata_sum_id),
     CONSTRAINT fk_rata_summary_aps_code FOREIGN KEY (aps_cd)
-        REFERENCES camdecmpsmd.aps_code (aps_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.aps_code (aps_cd) MATCH SIMPLE,
     CONSTRAINT fk_rata_summary_operating_level_code FOREIGN KEY (op_level_cd)
-        REFERENCES camdecmpsmd.operating_level_code (op_level_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.operating_level_code (op_level_cd) MATCH SIMPLE,
     CONSTRAINT fk_rata_summary_rata FOREIGN KEY (rata_id)
         REFERENCES camdecmps.rata (rata_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_rata_summary_ref_method_code FOREIGN KEY (ref_method_cd)
-        REFERENCES camdecmpsmd.ref_method_code (ref_method_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.ref_method_code (ref_method_cd) MATCH SIMPLE,
     CONSTRAINT fk_rata_summary_ref_method_code_co2o2 FOREIGN KEY (co2_o2_ref_method_cd)
         REFERENCES camdecmpsmd.ref_method_code (ref_method_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.rata_summary
@@ -173,35 +160,3 @@ COMMENT ON COLUMN camdecmps.rata_summary.update_date
 
 COMMENT ON COLUMN camdecmps.rata_summary.aps_cd
     IS 'Code used to identify the Alternate Performance Spec.';
-
--- Index: idx_rata_summary_co2_o2_ref
-
--- DROP INDEX camdecmps.idx_rata_summary_co2_o2_ref;
-
-CREATE INDEX IF NOT EXISTS idx_rata_summary_co2_o2_ref
-    ON camdecmps.rata_summary USING btree
-    (co2_o2_ref_method_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_rata_summary_op_level_c
-
--- DROP INDEX camdecmps.idx_rata_summary_op_level_c;
-
-CREATE INDEX IF NOT EXISTS idx_rata_summary_op_level_c
-    ON camdecmps.rata_summary USING btree
-    (op_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_rata_summary_rata_id
-
--- DROP INDEX camdecmps.idx_rata_summary_rata_id;
-
-CREATE INDEX IF NOT EXISTS idx_rata_summary_rata_id
-    ON camdecmps.rata_summary USING btree
-    (rata_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_rata_summary_ref_method
-
--- DROP INDEX camdecmps.idx_rata_summary_ref_method;
-
-CREATE INDEX IF NOT EXISTS idx_rata_summary_ref_method
-    ON camdecmps.rata_summary USING btree
-    (ref_method_cd COLLATE pg_catalog."default" ASC NULLS LAST);

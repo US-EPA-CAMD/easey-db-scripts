@@ -1,7 +1,3 @@
--- Table: camdecmps.monitor_plan_reporting_freq
-
--- DROP TABLE camdecmps.monitor_plan_reporting_freq;
-
 CREATE TABLE IF NOT EXISTS camdecmps.monitor_plan_reporting_freq
 (
     mon_plan_rf_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -14,21 +10,14 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_plan_reporting_freq
     update_date timestamp without time zone,
     CONSTRAINT pk_monitor_plan_reporting_freq PRIMARY KEY (mon_plan_rf_id),
     CONSTRAINT fk_monitor_plan_reporting_freq_begin_rpt_period FOREIGN KEY (begin_rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
     CONSTRAINT fk_monitor_plan_reporting_freq_end_rpt_period FOREIGN KEY (end_rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
     CONSTRAINT fk_monitor_plan_reporting_freq_monitor_plan FOREIGN KEY (mon_plan_id)
         REFERENCES camdecmps.monitor_plan (mon_plan_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_monitor_plan_reporting_freq_report_freq_code FOREIGN KEY (report_freq_cd)
         REFERENCES camdecmpsmd.report_freq_code (report_freq_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.monitor_plan_reporting_freq
@@ -57,35 +46,3 @@ COMMENT ON COLUMN camdecmps.monitor_plan_reporting_freq.add_date
 
 COMMENT ON COLUMN camdecmps.monitor_plan_reporting_freq.update_date
     IS 'Date and time in which record was last updated.';
-
--- Index: idx_monitor_plan_re_begin_rpt_
-
--- DROP INDEX camdecmps.idx_monitor_plan_re_begin_rpt_;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_plan_re_begin_rpt_
-    ON camdecmps.monitor_plan_reporting_freq USING btree
-    (begin_rpt_period_id ASC NULLS LAST);
-
--- Index: idx_monitor_plan_re_end_rpt_pe
-
--- DROP INDEX camdecmps.idx_monitor_plan_re_end_rpt_pe;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_plan_re_end_rpt_pe
-    ON camdecmps.monitor_plan_reporting_freq USING btree
-    (end_rpt_period_id ASC NULLS LAST);
-
--- Index: idx_monitor_plan_re_mon_plan_i
-
--- DROP INDEX camdecmps.idx_monitor_plan_re_mon_plan_i;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_plan_re_mon_plan_i
-    ON camdecmps.monitor_plan_reporting_freq USING btree
-    (mon_plan_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_plan_re_report_fre
-
--- DROP INDEX camdecmps.idx_monitor_plan_re_report_fre;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_plan_re_report_fre
-    ON camdecmps.monitor_plan_reporting_freq USING btree
-    (report_freq_cd COLLATE pg_catalog."default" ASC NULLS LAST);

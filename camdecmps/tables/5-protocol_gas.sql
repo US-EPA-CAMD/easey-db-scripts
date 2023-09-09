@@ -1,7 +1,3 @@
--- Table: camdecmps.protocol_gas
-
--- DROP TABLE camdecmps.protocol_gas;
-
 CREATE TABLE IF NOT EXISTS camdecmps.protocol_gas
 (
     protocol_gas_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -16,12 +12,13 @@ CREATE TABLE IF NOT EXISTS camdecmps.protocol_gas
     userid character varying(25) COLLATE pg_catalog."default",
     CONSTRAINT pk_protocol_gas PRIMARY KEY (protocol_gas_id),
     CONSTRAINT fk_protocol_gas_gas_level_code FOREIGN KEY (gas_level_cd)
-        REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE,
+    CONSTRAINT fk_protocol_gas_gas_type_code FOREIGN KEY (gas_type_cd)
+        REFERENCES camdecmpsmd.gas_type_code (gas_type_cd) MATCH SIMPLE,
+    CONSTRAINT fk_protocol_gas_protocol_gas_vendor FOREIGN KEY (vendor_id)
+        REFERENCES camdecmpsmd.protocol_gas_vendor (vendor_id) MATCH SIMPLE,
     CONSTRAINT fk_protocol_gas_test_summary FOREIGN KEY (test_sum_id)
-        REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
+        REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE;
         ON DELETE CASCADE
 );
 
@@ -57,11 +54,3 @@ COMMENT ON COLUMN camdecmps.protocol_gas.update_date
 
 COMMENT ON COLUMN camdecmps.protocol_gas.userid
     IS 'The user name of the person or process that created the record if the Update Date is empty.  Otherwise this is the user name of the person or process that made the last update.';
-
--- Index: idx_protocol_gas_0001
-
--- DROP INDEX camdecmps.idx_protocol_gas_0001;
-
-CREATE INDEX IF NOT EXISTS idx_protocol_gas_0001
-    ON camdecmps.protocol_gas USING btree
-    (vendor_id COLLATE pg_catalog."default" ASC NULLS LAST);

@@ -1,7 +1,3 @@
--- Table: camdecmps.hg_test_injection
-
--- DROP TABLE camdecmps.hg_test_injection;
-
 CREATE TABLE IF NOT EXISTS camdecmps.hg_test_injection
 (
     hg_test_inj_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -17,7 +13,6 @@ CREATE TABLE IF NOT EXISTS camdecmps.hg_test_injection
     CONSTRAINT pk_hg_test_injection PRIMARY KEY (hg_test_inj_id),
     CONSTRAINT fk_hg_test_injection_hg_test_summary FOREIGN KEY (hg_test_sum_id)
         REFERENCES camdecmps.hg_test_summary (hg_test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -53,11 +48,3 @@ COMMENT ON COLUMN camdecmps.hg_test_injection.add_date
 
 COMMENT ON COLUMN camdecmps.hg_test_injection.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: hg_test_injection_idx001
-
--- DROP INDEX camdecmps.hg_test_injection_idx001;
-
-CREATE INDEX IF NOT EXISTS hg_test_injection_idx001
-    ON camdecmps.hg_test_injection USING btree
-    (hg_test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

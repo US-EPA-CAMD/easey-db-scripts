@@ -1,7 +1,3 @@
--- Table: camdecmps.hrly_param_fuel_flow
-
--- DROP TABLE IF EXISTS camdecmps.hrly_param_fuel_flow;
-
 CREATE TABLE IF NOT EXISTS camdecmps.hrly_param_fuel_flow
 (
     hrly_param_ff_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -24,46 +20,24 @@ CREATE TABLE IF NOT EXISTS camdecmps.hrly_param_fuel_flow
     CONSTRAINT pk_hrly_param_fuel_flow PRIMARY KEY (hrly_param_ff_id),
     CONSTRAINT fk_hrly_param_fuel_flow_hrly_fuel_flow FOREIGN KEY (hrly_fuel_flow_id)
         REFERENCES camdecmps.hrly_fuel_flow (hrly_fuel_flow_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_hrly_param_fuel_flow_monitor_formula FOREIGN KEY (mon_form_id)
-        REFERENCES camdecmps.monitor_formula (mon_form_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.monitor_formula (mon_form_id) MATCH SIMPLE,
     CONSTRAINT fk_hrly_param_fuel_flow_monitor_location FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE,
     CONSTRAINT fk_hrly_param_fuel_flow_monitor_system FOREIGN KEY (mon_sys_id)
-        REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE,
     CONSTRAINT fk_hrly_param_fuel_flow_operating_condition_code FOREIGN KEY (operating_condition_cd)
-        REFERENCES camdecmpsmd.operating_condition_code (operating_condition_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.operating_condition_code (operating_condition_cd) MATCH SIMPLE,
     CONSTRAINT fk_hrly_param_fuel_flow_parameter_code FOREIGN KEY (parameter_cd)
-        REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE,
     CONSTRAINT fk_hrly_param_fuel_flow_reporting_period FOREIGN KEY (rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
     CONSTRAINT fk_hrly_param_fuel_flow_sample_type_code FOREIGN KEY (sample_type_cd)
-        REFERENCES camdecmpsmd.sample_type_code (sample_type_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.sample_type_code (sample_type_cd) MATCH SIMPLE,
     CONSTRAINT fk_hrly_param_fuel_flow_units_of_measure_code FOREIGN KEY (parameter_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
-
-CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_flow_fuel_flow_id
-    ON camdecmps.hrly_param_fuel_flow USING btree
-    (hrly_fuel_flow_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
 
 COMMENT ON TABLE camdecmps.hrly_param_fuel_flow
     IS 'Calculated SO2, CO2 or heat input determined from fuel flow information.  Record Types 302, 303, 313 and 314.';

@@ -1,7 +1,3 @@
--- Table: camdecmps.qa_supp_data
-
--- DROP TABLE camdecmps.qa_supp_data;
-
 CREATE TABLE IF NOT EXISTS camdecmps.qa_supp_data
 (
     qa_supp_data_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -38,48 +34,29 @@ CREATE TABLE IF NOT EXISTS camdecmps.qa_supp_data
     CONSTRAINT pk_qa_supp_data PRIMARY KEY (qa_supp_data_id),
     CONSTRAINT fk_qa_supp_data_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_qa_supp_data_fuel_code FOREIGN KEY (fuel_cd)
-        REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE,
     CONSTRAINT fk_qa_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_qa_supp_data_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_qa_supp_data_operating_condition_code FOREIGN KEY (operating_condition_cd)
-        REFERENCES camdecmpsmd.operating_condition_code (operating_condition_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.operating_condition_code (operating_condition_cd) MATCH SIMPLE,
     CONSTRAINT fk_qa_supp_data_operating_level_code FOREIGN KEY (op_level_cd)
-        REFERENCES camdecmpsmd.operating_level_code (op_level_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.operating_level_code (op_level_cd) MATCH SIMPLE,
     CONSTRAINT fk_qa_supp_data_reporting_period FOREIGN KEY (rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
     CONSTRAINT fk_qa_supp_data_submission_availability_code FOREIGN KEY (submission_availability_cd)
-        REFERENCES camdecmpsmd.submission_availability_code (submission_availability_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.submission_availability_code (submission_availability_cd) MATCH SIMPLE,
     CONSTRAINT fk_qa_supp_data_submission_test_reason_code FOREIGN KEY (test_reason_cd)
-        REFERENCES camdecmpsmd.test_reason_code (test_reason_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.test_reason_code (test_reason_cd) MATCH SIMPLE,
     CONSTRAINT fk_qa_supp_data_submission_test_result_code FOREIGN KEY (test_result_cd)
-        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE,
     CONSTRAINT fk_qa_supp_data_submission_test_type_code FOREIGN KEY (test_type_cd)
         REFERENCES camdecmpsmd.test_type_code (test_type_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.qa_supp_data

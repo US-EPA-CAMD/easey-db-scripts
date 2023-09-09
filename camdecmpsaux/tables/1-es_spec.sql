@@ -1,7 +1,3 @@
--- Table: camdecmpsaux.es_spec
-
--- DROP TABLE camdecmpsaux.es_spec;
-
 CREATE TABLE IF NOT EXISTS camdecmpsaux.es_spec
 (
     es_spec_id numeric(38,0) NOT NULL,
@@ -22,31 +18,19 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.es_spec
     userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone,
-    CONSTRAINT es_spec_pk PRIMARY KEY (es_spec_id),
-    CONSTRAINT es_spec_ccr_fk FOREIGN KEY (check_catalog_result_id)
-        REFERENCES camdecmpsmd.check_catalog_result (check_catalog_result_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT es_spec_dat_fk FOREIGN KEY (es_match_data_type_cd)
-        REFERENCES camdecmpsmd.es_match_data_type_code (es_match_data_type_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT es_spec_fac_fk FOREIGN KEY (fac_id)
-        REFERENCES camd.plant (fac_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT es_spec_rea_fk FOREIGN KEY (es_reason_cd)
-        REFERENCES camdecmpsmd.es_reason_code (es_reason_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT es_spec_sev_fk FOREIGN KEY (severity_cd)
-        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT es_spec_tim_fk FOREIGN KEY (es_match_time_type_cd)
+    CONSTRAINT pk_es_spec PRIMARY KEY (es_spec_id),
+    CONSTRAINT fk_es_spec_check_catalog_result FOREIGN KEY (check_catalog_result_id)
+        REFERENCES camdecmpsmd.check_catalog_result (check_catalog_result_id) MATCH SIMPLE,
+    CONSTRAINT fk_es_spec_es_match_data_type_code FOREIGN KEY (es_match_data_type_cd)
+        REFERENCES camdecmpsmd.es_match_data_type_code (es_match_data_type_cd) MATCH SIMPLE,
+    CONSTRAINT fk_es_spec_plant FOREIGN KEY (fac_id)
+        REFERENCES camd.plant (fac_id) MATCH SIMPLE,
+    CONSTRAINT fk_es_spec_es_reason_code FOREIGN KEY (es_reason_cd)
+        REFERENCES camdecmpsmd.es_reason_code (es_reason_cd) MATCH SIMPLE,
+    CONSTRAINT fk_es_spec_severity_code FOREIGN KEY (severity_cd)
+        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE,
+    CONSTRAINT fk_es_spec_es_match_time_type_code FOREIGN KEY (es_match_time_type_cd)
         REFERENCES camdecmpsmd.es_match_time_type_code (es_match_time_type_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmpsaux.es_spec
@@ -105,19 +89,3 @@ COMMENT ON COLUMN camdecmpsaux.es_spec.add_date
 
 COMMENT ON COLUMN camdecmpsaux.es_spec.update_date
     IS 'Date and time in which record was last updated.';
-
--- Index: es_spec_ccr_ix
-
--- DROP INDEX camdecmpsaux.es_spec_ccr_ix;
-
-CREATE INDEX IF NOT EXISTS es_spec_ccr_ix
-    ON camdecmpsaux.es_spec USING btree
-    (check_catalog_result_id ASC NULLS LAST);
-
--- Index: es_spec_fac_ix
-
--- DROP INDEX camdecmpsaux.es_spec_fac_ix;
-
-CREATE INDEX IF NOT EXISTS es_spec_fac_ix
-    ON camdecmpsaux.es_spec USING btree
-    (fac_id ASC NULLS LAST);

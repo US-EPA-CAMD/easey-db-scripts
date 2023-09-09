@@ -1,7 +1,3 @@
--- Table: camdecmps.dm_emissions
-
--- DROP TABLE camdecmps.dm_emissions;
-
 CREATE TABLE IF NOT EXISTS camdecmps.dm_emissions
 (
     dm_emissions_id character varying(45) COLLATE pg_catalog."default" NOT NULL DEFAULT NULL::character varying,
@@ -12,12 +8,16 @@ CREATE TABLE IF NOT EXISTS camdecmps.dm_emissions
     data_source character varying(35) COLLATE pg_catalog."default" NOT NULL,
     userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
-    CONSTRAINT dm_emissions_pk PRIMARY KEY (dm_emissions_id),
-    CONSTRAINT dm_emissions_uq UNIQUE (mon_plan_id, rpt_period_id),
-    CONSTRAINT dm_emissions_apptype_fk FOREIGN KEY (apportionment_type_cd)
+    CONSTRAINT pk_dm_emissions PRIMARY KEY (dm_emissions_id),
+    CONSTRAINT uq_dm_emissions UNIQUE (mon_plan_id, rpt_period_id),
+    CONSTRAINT fk_dm_emissions_plant FOREIGN KEY (fac_id)
+        REFERENCES camd.plant (fac_id) MATCH SIMPLE,
+    CONSTRAINT fk_dm_emissions_monitor_plan FOREIGN KEY (mon_plan_id)
+        REFERENCES camdecmps.monitor_plan (mon_plan_id) MATCH SIMPLE,
+    CONSTRAINT fk_dm_emissions_reporting_period FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
+    CONSTRAINT fk_dm_emissions_apportionment_type_code FOREIGN KEY (apportionment_type_cd)
         REFERENCES camdecmpsmd.apportionment_type_code (apportionment_type_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.dm_emissions

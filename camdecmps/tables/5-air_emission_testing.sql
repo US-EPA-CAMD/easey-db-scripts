@@ -1,7 +1,3 @@
--- Table: camdecmps.air_emission_testing
-
--- DROP TABLE camdecmps.air_emission_testing;
-
 CREATE TABLE IF NOT EXISTS camdecmps.air_emission_testing
 (
     air_emission_test_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -21,7 +17,6 @@ CREATE TABLE IF NOT EXISTS camdecmps.air_emission_testing
     CONSTRAINT pk_air_emission_testing PRIMARY KEY (air_emission_test_id),
     CONSTRAINT fk_air_emission_testing_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -69,11 +64,3 @@ COMMENT ON COLUMN camdecmps.air_emission_testing.update_date
 
 COMMENT ON COLUMN camdecmps.air_emission_testing.userid
     IS 'The user name of the person or process that created the record if the Update Date is empty.  Otherwise this is the user name of the person or process that made the last update.';
-
--- Index: idx_aet_testsumid
-
--- DROP INDEX camdecmps.idx_aet_testsumid;
-
-CREATE INDEX IF NOT EXISTS idx_aet_testsumid
-    ON camdecmps.air_emission_testing USING btree
-    (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

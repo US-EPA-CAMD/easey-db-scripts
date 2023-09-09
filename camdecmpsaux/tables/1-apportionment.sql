@@ -1,7 +1,3 @@
--- Table: camdecmpsaux.apportionment
-
--- DROP TABLE camdecmpsaux.apportionment;
-
 CREATE TABLE IF NOT EXISTS camdecmpsaux.apportionment
 (
     apport_id numeric(38,0) NOT NULL,
@@ -11,23 +7,13 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.apportionment
     userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone,
-    CONSTRAINT apportionment_pk PRIMARY KEY (apport_id),
-    CONSTRAINT apportionment_bprd_fk FOREIGN KEY (begin_rpt_period_id)
+    CONSTRAINT pk_apportionment PRIMARY KEY (apport_id),
+    CONSTRAINT fk_apportionment_monitor_plan FOREIGN KEY (mon_plan_id)
+        REFERENCES camdecmps.monitor_plan (mon_plan_id) MATCH SIMPLE,
+    CONSTRAINT fk_apportionment_begin_rpt_period_id FOREIGN KEY (begin_rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
+    CONSTRAINT fk_apportionment_end_rpt_period_id FOREIGN KEY (end_rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT apportionment_eprd_fk FOREIGN KEY (end_rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT apportionment_pln_fk FOREIGN KEY (mon_plan_id)
-        REFERENCES camdecmps.monitor_plan (mon_plan_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT apportionment_mon_plan_id_check CHECK (mon_plan_id IS NOT NULL),
-    CONSTRAINT apportionment_begin_rpt_period_id_check CHECK (begin_rpt_period_id IS NOT NULL),
-    CONSTRAINT apportionment_userid_check CHECK (userid IS NOT NULL),
-    CONSTRAINT apportionment_add_date_check CHECK (add_date IS NOT NULL)
 );
 
 COMMENT ON TABLE camdecmpsaux.apportionment

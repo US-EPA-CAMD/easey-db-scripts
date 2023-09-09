@@ -1,7 +1,3 @@
--- Table: camdecmps.unit_default_test_run
-
--- DROP TABLE camdecmps.unit_default_test_run;
-
 CREATE TABLE IF NOT EXISTS camdecmps.unit_default_test_run
 (
     unit_default_test_run_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -23,7 +19,6 @@ CREATE TABLE IF NOT EXISTS camdecmps.unit_default_test_run
     CONSTRAINT pk_unit_default_test_run PRIMARY KEY (unit_default_test_run_id),
     CONSTRAINT fk_unit_default_test_run_unit_default_test FOREIGN KEY (unit_default_test_sum_id)
         REFERENCES camdecmps.unit_default_test (unit_default_test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -77,11 +72,3 @@ COMMENT ON COLUMN camdecmps.unit_default_test_run.update_date
 
 COMMENT ON COLUMN camdecmps.unit_default_test_run.run_used_ind
     IS 'Used to indicate that this run is used to calculate highest 3-run NOx emission rate average at any tested load level. ';
-
--- Index: idx_unit_default_te_unit_defau
-
--- DROP INDEX camdecmps.idx_unit_default_te_unit_defau;
-
-CREATE INDEX IF NOT EXISTS idx_unit_default_te_unit_defau
-    ON camdecmps.unit_default_test_run USING btree
-    (unit_default_test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

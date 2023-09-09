@@ -1,7 +1,3 @@
--- Table: camdecmps.flow_to_load_check
-
--- DROP TABLE camdecmps.flow_to_load_check;
-
 CREATE TABLE IF NOT EXISTS camdecmps.flow_to_load_check
 (
     flow_load_check_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -22,16 +18,11 @@ CREATE TABLE IF NOT EXISTS camdecmps.flow_to_load_check
     op_level_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_flow_to_load_check PRIMARY KEY (flow_load_check_id),
     CONSTRAINT fk_flow_to_load_check_operating_level_code FOREIGN KEY (op_level_cd)
-        REFERENCES camdecmpsmd.operating_level_code (op_level_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.operating_level_code (op_level_cd) MATCH SIMPLE,
     CONSTRAINT fk_flow_to_load_check_test_basis_code FOREIGN KEY (test_basis_cd)
-        REFERENCES camdecmpsmd.test_basis_code (test_basis_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.test_basis_code (test_basis_cd) MATCH SIMPLE,
     CONSTRAINT fk_flow_to_load_check_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -85,27 +76,3 @@ COMMENT ON COLUMN camdecmps.flow_to_load_check.update_date
 
 COMMENT ON COLUMN camdecmps.flow_to_load_check.op_level_cd
     IS 'Code used to identify the operating level. ';
-
--- Index: idx_flow_to_load_ch_op_level_c
-
--- DROP INDEX camdecmps.idx_flow_to_load_ch_op_level_c;
-
-CREATE INDEX IF NOT EXISTS idx_flow_to_load_ch_op_level_c
-    ON camdecmps.flow_to_load_check USING btree
-    (op_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_flow_to_load_ch_test_basis
-
--- DROP INDEX camdecmps.idx_flow_to_load_ch_test_basis;
-
-CREATE INDEX IF NOT EXISTS idx_flow_to_load_ch_test_basis
-    ON camdecmps.flow_to_load_check USING btree
-    (test_basis_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_flow_to_load_check_001
-
--- DROP INDEX camdecmps.idx_flow_to_load_check_001;
-
-CREATE INDEX IF NOT EXISTS idx_flow_to_load_check_001
-    ON camdecmps.flow_to_load_check USING btree
-    (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

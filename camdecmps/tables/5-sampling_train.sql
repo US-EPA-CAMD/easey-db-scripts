@@ -1,7 +1,3 @@
--- Table: camdecmps.sampling_train
-
--- DROP TABLE IF EXISTS camdecmps.sampling_train;
-
 CREATE TABLE IF NOT EXISTS camdecmps.sampling_train
 (
     trap_train_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -31,33 +27,20 @@ CREATE TABLE IF NOT EXISTS camdecmps.sampling_train
     update_date timestamp without time zone,
     CONSTRAINT pk_sampling_train PRIMARY KEY (trap_train_id),
     CONSTRAINT fk_sampling_train_component FOREIGN KEY (component_id)
-        REFERENCES camdecmps.component (component_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.component (component_id) MATCH SIMPLE,
     CONSTRAINT fk_sampling_train_monitor_location FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE,
     CONSTRAINT fk_sampling_train_reporting_period FOREIGN KEY (rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
     CONSTRAINT fk_sampling_train_sorbent_trap FOREIGN KEY (trap_id)
         REFERENCES camdecmps.sorbent_trap (trap_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_sampling_train_test_result_code_post_leak FOREIGN KEY (post_leak_test_result_cd)
-        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE,
     CONSTRAINT fk_sampling_train_test_result_code_sampling_ratio FOREIGN KEY (sampling_ratio_test_result_cd)
-        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE,
     CONSTRAINT fk_sampling_train_train_qa_status_code FOREIGN KEY (train_qa_status_cd)
         REFERENCES camdecmpsmd.train_qa_status_code (train_qa_status_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.sampling_train
@@ -131,35 +114,3 @@ COMMENT ON COLUMN camdecmps.sampling_train.add_date
 
 COMMENT ON COLUMN camdecmps.sampling_train.update_date
     IS 'Date and time in which record was last updated. ';
--- Index: idx_sampling_train_001
-
--- DROP INDEX IF EXISTS camdecmps.idx_sampling_train_001;
-
-CREATE INDEX IF NOT EXISTS idx_sampling_train_001
-    ON camdecmps.sampling_train USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_sampling_train_trp
-
--- DROP INDEX IF EXISTS camdecmps.idx_sampling_train_trp;
-
-CREATE INDEX IF NOT EXISTS idx_sampling_train_trp
-    ON camdecmps.sampling_train USING btree
-    (trap_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_train_add_date
-
--- DROP INDEX IF EXISTS camdecmps.idx_train_add_date;
-
-CREATE INDEX IF NOT EXISTS idx_train_add_date
-    ON camdecmps.sampling_train USING btree
-    (add_date ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_train_component_id
-
--- DROP INDEX IF EXISTS camdecmps.idx_train_component_id;
-
-CREATE INDEX IF NOT EXISTS idx_train_component_id
-    ON camdecmps.sampling_train USING btree
-    (component_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;

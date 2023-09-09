@@ -1,7 +1,3 @@
--- Table: camdecmps.unit_default_test
-
--- DROP TABLE camdecmps.unit_default_test;
-
 CREATE TABLE IF NOT EXISTS camdecmps.unit_default_test
 (
     unit_default_test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -18,16 +14,11 @@ CREATE TABLE IF NOT EXISTS camdecmps.unit_default_test
     update_date timestamp without time zone,
     CONSTRAINT pk_unt_default_test PRIMARY KEY (unit_default_test_sum_id),
     CONSTRAINT fk_unt_default_test_fuel_code FOREIGN KEY (fuel_cd)
-        REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE,
     CONSTRAINT fk_unt_default_test_operating_condition_code FOREIGN KEY (operating_condition_cd)
-        REFERENCES camdecmpsmd.operating_condition_code (operating_condition_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.operating_condition_code (operating_condition_cd) MATCH SIMPLE,
     CONSTRAINT fk_unt_default_test_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -69,27 +60,3 @@ COMMENT ON COLUMN camdecmps.unit_default_test.add_date
 
 COMMENT ON COLUMN camdecmps.unit_default_test.update_date
     IS 'Date and time in which record was last updated.';
-
--- Index: idx_unit_default_te_fuel_cd
-
--- DROP INDEX camdecmps.idx_unit_default_te_fuel_cd;
-
-CREATE INDEX IF NOT EXISTS idx_unit_default_te_fuel_cd
-    ON camdecmps.unit_default_test USING btree
-    (fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_unit_default_te_operating
-
--- DROP INDEX camdecmps.idx_unit_default_te_operating;
-
-CREATE INDEX IF NOT EXISTS idx_unit_default_te_operating
-    ON camdecmps.unit_default_test USING btree
-    (operating_condition_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_unit_default_test_001
-
--- DROP INDEX camdecmps.idx_unit_default_test_001;
-
-CREATE INDEX IF NOT EXISTS idx_unit_default_test_001
-    ON camdecmps.unit_default_test USING btree
-    (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

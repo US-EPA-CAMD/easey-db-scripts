@@ -1,7 +1,3 @@
--- Table: camdecmps.fuel_flowmeter_accuracy
-
--- DROP TABLE camdecmps.fuel_flowmeter_accuracy;
-
 CREATE TABLE IF NOT EXISTS camdecmps.fuel_flowmeter_accuracy
 (
     fuel_flow_acc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -17,12 +13,9 @@ CREATE TABLE IF NOT EXISTS camdecmps.fuel_flowmeter_accuracy
     update_date timestamp without time zone,
     CONSTRAINT pk_fuel_flowmeter_accuracy PRIMARY KEY (fuel_flow_acc_id),
     CONSTRAINT fk_fuel_flowmeter_accuracy_accuracy_test_method_code FOREIGN KEY (acc_test_method_cd)
-        REFERENCES camdecmpsmd.accuracy_test_method_code (acc_test_method_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.accuracy_test_method_code (acc_test_method_cd) MATCH SIMPLE,
     CONSTRAINT fk_fuel_flowmeter_accuracy_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -61,19 +54,3 @@ COMMENT ON COLUMN camdecmps.fuel_flowmeter_accuracy.add_date
 
 COMMENT ON COLUMN camdecmps.fuel_flowmeter_accuracy.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: idx_ff_accuracy_001
-
--- DROP INDEX camdecmps.idx_ff_accuracy_001;
-
-CREATE INDEX IF NOT EXISTS idx_ff_accuracy_001
-    ON camdecmps.fuel_flowmeter_accuracy USING btree
-    (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_fuel_flowmeter_acc_test_m
-
--- DROP INDEX camdecmps.idx_fuel_flowmeter_acc_test_m;
-
-CREATE INDEX IF NOT EXISTS idx_fuel_flowmeter_acc_test_m
-    ON camdecmps.fuel_flowmeter_accuracy USING btree
-    (acc_test_method_cd COLLATE pg_catalog."default" ASC NULLS LAST);

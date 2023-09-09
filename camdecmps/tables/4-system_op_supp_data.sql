@@ -1,7 +1,3 @@
--- Table: camdecmps.system_op_supp_data
-
--- DROP TABLE IF EXISTS camdecmps.system_op_supp_data;
-
 CREATE TABLE IF NOT EXISTS camdecmps.system_op_supp_data
 (
     sys_op_supp_data_id character varying(45) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v4(),
@@ -17,21 +13,13 @@ CREATE TABLE IF NOT EXISTS camdecmps.system_op_supp_data
     update_date timestamp without time zone,
     CONSTRAINT pk_system_op_supp_data PRIMARY KEY (sys_op_supp_data_id),
     CONSTRAINT fk_system_op_supp_data_cod FOREIGN KEY (op_supp_data_type_cd)
-        REFERENCES camdecmpsmd.op_supp_data_type_code (op_supp_data_type_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.op_supp_data_type_code (op_supp_data_type_cd) MATCH SIMPLE,
     CONSTRAINT fk_system_op_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE,
     CONSTRAINT fk_system_op_supp_data_monitor_system FOREIGN KEY (mon_sys_id)
-        REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE,
     CONSTRAINT fk_system_op_supp_data_prd FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.system_op_supp_data
@@ -69,43 +57,3 @@ COMMENT ON COLUMN camdecmps.system_op_supp_data.add_date
 
 COMMENT ON COLUMN camdecmps.system_op_supp_data.update_date
     IS 'Date and time in which record was last updated.';
-
--- Index: idx_system_op_supp_data_cod
-
--- DROP INDEX IF EXISTS camdecmps.idx_system_op_supp_data_cod;
-
-CREATE INDEX IF NOT EXISTS idx_system_op_supp_data_cod
-    ON camdecmps.system_op_supp_data USING btree
-    (op_supp_data_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_system_op_supp_data_emr
-
--- DROP INDEX IF EXISTS camdecmps.idx_system_op_supp_data_emr;
-
-CREATE INDEX IF NOT EXISTS idx_system_op_supp_data_emr
-    ON camdecmps.system_op_supp_data USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_system_op_supp_data_loc
-
--- DROP INDEX IF EXISTS camdecmps.idx_system_op_supp_data_loc;
-
-CREATE INDEX IF NOT EXISTS idx_system_op_supp_data_loc
-    ON camdecmps.system_op_supp_data USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_system_op_supp_data_prd
-
--- DROP INDEX IF EXISTS camdecmps.idx_system_op_supp_data_prd;
-
-CREATE INDEX IF NOT EXISTS idx_system_op_supp_data_prd
-    ON camdecmps.system_op_supp_data USING btree
-    (rpt_period_id ASC NULLS LAST);
-
--- Index: idx_system_op_supp_data_sys
-
--- DROP INDEX IF EXISTS camdecmps.idx_system_op_supp_data_sys;
-
-CREATE INDEX IF NOT EXISTS idx_system_op_supp_data_sys
-    ON camdecmps.system_op_supp_data USING btree
-    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);

@@ -1,7 +1,3 @@
--- Table: camdecmps.monitor_location
-
--- DROP TABLE camdecmps.monitor_location;
-
 CREATE TABLE IF NOT EXISTS camdecmps.monitor_location
 (
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -12,13 +8,9 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_location
     update_date timestamp without time zone,
     CONSTRAINT pk_monitor_location PRIMARY KEY (mon_loc_id),
     CONSTRAINT fk_monitor_location_stack_pipe FOREIGN KEY (stack_pipe_id)
-        REFERENCES camdecmps.stack_pipe (stack_pipe_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.stack_pipe (stack_pipe_id) MATCH SIMPLE,
     CONSTRAINT fk_monitor_location_unit FOREIGN KEY (unit_id)
         REFERENCES camd.unit (unit_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.monitor_location
@@ -41,19 +33,3 @@ COMMENT ON COLUMN camdecmps.monitor_location.add_date
 
 COMMENT ON COLUMN camdecmps.monitor_location.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: idx_monitor_location_stp
-
--- DROP INDEX camdecmps.idx_monitor_location_stp;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_location_stp
-    ON camdecmps.monitor_location USING btree
-    (stack_pipe_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_location_unt
-
--- DROP INDEX camdecmps.idx_monitor_location_unt;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_location_unt
-    ON camdecmps.monitor_location USING btree
-    (unit_id ASC NULLS LAST);

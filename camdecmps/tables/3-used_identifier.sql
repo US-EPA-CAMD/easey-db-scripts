@@ -1,7 +1,3 @@
--- Table: camdecmps.used_identifier
-
--- DROP TABLE camdecmps.used_identifier;
-
 CREATE TABLE IF NOT EXISTS camdecmps.used_identifier
 (
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -14,10 +10,8 @@ CREATE TABLE IF NOT EXISTS camdecmps.used_identifier
     update_date timestamp without time zone,
     idkey character varying(45) COLLATE pg_catalog."default",
     CONSTRAINT pk_used_identifier PRIMARY KEY (mon_loc_id, table_cd, identifier),
-    CONSTRAINT fk_monitor_locat_used_identifi FOREIGN KEY (mon_loc_id)
+    CONSTRAINT fk_used_identifier_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.used_identifier

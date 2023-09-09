@@ -1,7 +1,3 @@
--- Table: camdecmps.monitor_plan
-
--- DROP TABLE camdecmps.monitor_plan;
-
 CREATE TABLE IF NOT EXISTS camdecmps.monitor_plan
 (
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -21,21 +17,13 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_plan
     last_evaluated_date timestamp without time zone,
     CONSTRAINT pk_monitor_plan PRIMARY KEY (mon_plan_id),
     CONSTRAINT fk_monitor_plan_plant FOREIGN KEY (fac_id)
-        REFERENCES camd.plant (fac_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camd.plant (fac_id) MATCH SIMPLE,
     CONSTRAINT fk_monitor_plan_reporting_period_begin_rpt_period FOREIGN KEY (begin_rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
     CONSTRAINT fk_monitor_plan_reporting_period_end_rpt_period FOREIGN KEY (end_rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
     CONSTRAINT fk_monitor_plan_submission_availability_code FOREIGN KEY (submission_availability_cd)
         REFERENCES camdecmpsmd.submission_availability_code (submission_availability_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.monitor_plan
@@ -82,19 +70,3 @@ COMMENT ON COLUMN camdecmps.monitor_plan.begin_rpt_period_id
 
 COMMENT ON COLUMN camdecmps.monitor_plan.end_rpt_period_id
     IS 'Unique identifier of a reporting period record. ';
-
--- Index: idx_monitor_plan_chk_session
-
--- DROP INDEX camdecmps.idx_monitor_plan_chk_session;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_plan_chk_session
-    ON camdecmps.monitor_plan USING btree
-    (chk_session_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_plan_submission
-
--- DROP INDEX camdecmps.idx_monitor_plan_submission;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_plan_submission
-    ON camdecmps.monitor_plan USING btree
-    (submission_id ASC NULLS LAST);

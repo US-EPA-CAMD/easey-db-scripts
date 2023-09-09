@@ -1,7 +1,3 @@
--- Table: camdecmps.test_qualification
-
--- DROP TABLE camdecmps.test_qualification;
-
 CREATE TABLE IF NOT EXISTS camdecmps.test_qualification
 (
     test_qualification_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -17,12 +13,9 @@ CREATE TABLE IF NOT EXISTS camdecmps.test_qualification
     update_date timestamp without time zone,
     CONSTRAINT pk_test_qualification PRIMARY KEY (test_qualification_id),
     CONSTRAINT fk_test_qualification_test_claim_code FOREIGN KEY (test_claim_cd)
-        REFERENCES camdecmpsmd.test_claim_code (test_claim_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.test_claim_code (test_claim_cd) MATCH SIMPLE,
     CONSTRAINT fk_test_qualification_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -61,19 +54,3 @@ COMMENT ON COLUMN camdecmps.test_qualification.add_date
 
 COMMENT ON COLUMN camdecmps.test_qualification.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: idx_test_qualificat_test_claim
-
--- DROP INDEX camdecmps.idx_test_qualificat_test_claim;
-
-CREATE INDEX IF NOT EXISTS idx_test_qualificat_test_claim
-    ON camdecmps.test_qualification USING btree
-    (test_claim_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_test_qualification_001
-
--- DROP INDEX camdecmps.idx_test_qualification_001;
-
-CREATE INDEX IF NOT EXISTS idx_test_qualification_001
-    ON camdecmps.test_qualification USING btree
-    (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

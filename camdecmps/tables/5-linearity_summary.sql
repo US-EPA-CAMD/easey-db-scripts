@@ -1,7 +1,3 @@
--- Table: camdecmps.linearity_summary
-
--- DROP TABLE camdecmps.linearity_summary;
-
 CREATE TABLE IF NOT EXISTS camdecmps.linearity_summary
 (
     lin_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -20,12 +16,9 @@ CREATE TABLE IF NOT EXISTS camdecmps.linearity_summary
     update_date timestamp without time zone,
     CONSTRAINT pk_linearity_summary PRIMARY KEY (lin_sum_id),
     CONSTRAINT fk_linearity_summary_gas_level_code FOREIGN KEY (gas_level_cd)
-        REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE,
     CONSTRAINT fk_linearity_summary_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -73,19 +66,3 @@ COMMENT ON COLUMN camdecmps.linearity_summary.add_date
 
 COMMENT ON COLUMN camdecmps.linearity_summary.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: idx_linearity_summa_gas_level
-
--- DROP INDEX camdecmps.idx_linearity_summa_gas_level;
-
-CREATE INDEX IF NOT EXISTS idx_linearity_summa_gas_level
-    ON camdecmps.linearity_summary USING btree
-    (gas_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_linearity_summary_001
-
--- DROP INDEX camdecmps.idx_linearity_summary_001;
-
-CREATE INDEX IF NOT EXISTS idx_linearity_summary_001
-    ON camdecmps.linearity_summary USING btree
-    (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

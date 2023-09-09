@@ -1,7 +1,3 @@
--- Table: camdecmps.rect_duct_waf
-
--- DROP TABLE camdecmps.rect_duct_waf;
-
 CREATE TABLE IF NOT EXISTS camdecmps.rect_duct_waf
 (
     rect_duct_waf_data_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -25,12 +21,9 @@ CREATE TABLE IF NOT EXISTS camdecmps.rect_duct_waf
     CONSTRAINT pk_rect_duct_waf PRIMARY KEY (rect_duct_waf_data_id),
     CONSTRAINT fk_rect_duct_waf_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_rect_duct_waf_waf_method_code FOREIGN KEY (waf_method_cd)
         REFERENCES camdecmpsmd.waf_method_code (waf_method_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.rect_duct_waf
@@ -89,27 +82,3 @@ COMMENT ON COLUMN camdecmps.rect_duct_waf.update_date
 
 COMMENT ON COLUMN camdecmps.rect_duct_waf.userid
     IS 'User account or source of data that added or updated record. ';
-
--- Index: idx_rect_duct_waf_mon_loc_id
-
--- DROP INDEX camdecmps.idx_rect_duct_waf_mon_loc_id;
-
-CREATE INDEX IF NOT EXISTS idx_rect_duct_waf_mon_loc_id
-    ON camdecmps.rect_duct_waf USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_rect_duct_waf_waf_method
-
--- DROP INDEX camdecmps.idx_rect_duct_waf_waf_method;
-
-CREATE INDEX IF NOT EXISTS idx_rect_duct_waf_waf_method
-    ON camdecmps.rect_duct_waf USING btree
-    (waf_method_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: rect_duct_waf_idx$$_15f60009
-
--- DROP INDEX camdecmps."rect_duct_waf_idx$$_15f60009";
-
-CREATE INDEX IF NOT EXISTS "rect_duct_waf_idx$$_15f60009"
-    ON camdecmps.rect_duct_waf USING btree
-    (waf_effective_date ASC NULLS LAST, waf_effective_hour ASC NULLS LAST);

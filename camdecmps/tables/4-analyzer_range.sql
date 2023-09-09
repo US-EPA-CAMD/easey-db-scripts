@@ -1,7 +1,3 @@
--- Table: camdecmps.analyzer_range
-
--- DROP TABLE camdecmps.analyzer_range;
-
 CREATE TABLE IF NOT EXISTS camdecmps.analyzer_range
 (
     analyzer_range_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -17,12 +13,9 @@ CREATE TABLE IF NOT EXISTS camdecmps.analyzer_range
     update_date timestamp without time zone,
     CONSTRAINT pk_analyzer_range PRIMARY KEY (analyzer_range_id),
     CONSTRAINT fk_analyzer_range_analyzer_range_code FOREIGN KEY (analyzer_range_cd)
-        REFERENCES camdecmpsmd.analyzer_range_code (analyzer_range_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.analyzer_range_code (analyzer_range_cd) MATCH SIMPLE,
     CONSTRAINT fk_analyzer_range_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT ck_analyzer_range_begin_date_end_date CHECK (begin_date <= end_date)
 );
@@ -62,19 +55,3 @@ COMMENT ON COLUMN camdecmps.analyzer_range.add_date
 
 COMMENT ON COLUMN camdecmps.analyzer_range.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: idx_analyzer_range_analyzer_r
-
--- DROP INDEX camdecmps.idx_analyzer_range_analyzer_r;
-
-CREATE INDEX IF NOT EXISTS idx_analyzer_range_analyzer_r
-    ON camdecmps.analyzer_range USING btree
-    (analyzer_range_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_analyzer_range_component
-
--- DROP INDEX camdecmps.idx_analyzer_range_component;
-
-CREATE INDEX IF NOT EXISTS idx_analyzer_range_component
-    ON camdecmps.analyzer_range USING btree
-    (component_id COLLATE pg_catalog."default" ASC NULLS LAST);

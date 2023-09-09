@@ -1,7 +1,3 @@
--- Table: camdecmps.unit_stack_configuration
-
--- DROP TABLE camdecmps.unit_stack_configuration;
-
 CREATE TABLE IF NOT EXISTS camdecmps.unit_stack_configuration
 (
     config_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -14,13 +10,9 @@ CREATE TABLE IF NOT EXISTS camdecmps.unit_stack_configuration
     update_date timestamp without time zone,
     CONSTRAINT pk_unit_stack_configuration PRIMARY KEY (config_id),
     CONSTRAINT fk_unit_stack_configuration_stack_pipe FOREIGN KEY (stack_pipe_id)
-        REFERENCES camdecmps.stack_pipe (stack_pipe_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.stack_pipe (stack_pipe_id) MATCH SIMPLE,
     CONSTRAINT fk_unit_stack_configuration_unit FOREIGN KEY (unit_id)
         REFERENCES camd.unit (unit_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.unit_stack_configuration
@@ -49,27 +41,3 @@ COMMENT ON COLUMN camdecmps.unit_stack_configuration.add_date
 
 COMMENT ON COLUMN camdecmps.unit_stack_configuration.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: idx_unit_stack_configuration_b
-
--- DROP INDEX camdecmps.idx_unit_stack_configuration_b;
-
-CREATE INDEX IF NOT EXISTS idx_unit_stack_configuration_b
-    ON camdecmps.unit_stack_configuration USING btree
-    (stack_pipe_id COLLATE pg_catalog."default" ASC NULLS LAST, unit_id ASC NULLS LAST);
-
--- Index: idx_unit_stack_configuration_s
-
--- DROP INDEX camdecmps.idx_unit_stack_configuration_s;
-
-CREATE INDEX IF NOT EXISTS idx_unit_stack_configuration_s
-    ON camdecmps.unit_stack_configuration USING btree
-    (stack_pipe_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_unit_stack_configuration_u
-
--- DROP INDEX camdecmps.idx_unit_stack_configuration_u;
-
-CREATE INDEX IF NOT EXISTS idx_unit_stack_configuration_u
-    ON camdecmps.unit_stack_configuration USING btree
-    (unit_id ASC NULLS LAST);

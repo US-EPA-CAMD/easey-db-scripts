@@ -1,7 +1,3 @@
--- Table: camdecmps.flow_to_load_reference
-
--- DROP TABLE camdecmps.flow_to_load_reference;
-
 CREATE TABLE IF NOT EXISTS camdecmps.flow_to_load_reference
 (
     flow_load_ref_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -23,12 +19,9 @@ CREATE TABLE IF NOT EXISTS camdecmps.flow_to_load_reference
     calc_sep_ref_ind numeric(38,0),
     CONSTRAINT pk_flow_to_load_reference PRIMARY KEY (flow_load_ref_id),
     CONSTRAINT fk_flow_to_load_reference_operating_level_code FOREIGN KEY (op_level_cd)
-        REFERENCES camdecmpsmd.operating_level_code (op_level_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.operating_level_code (op_level_cd) MATCH SIMPLE,
     CONSTRAINT fk_flow_to_load_reference_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -85,19 +78,3 @@ COMMENT ON COLUMN camdecmps.flow_to_load_reference.update_date
 
 COMMENT ON COLUMN camdecmps.flow_to_load_reference.calc_sep_ref_ind
     IS 'Used to indicate if separate reference ratio was calculated for each multiple stack. ';
-
--- Index: idx_flow_to_load_re_op_level_c
-
--- DROP INDEX camdecmps.idx_flow_to_load_re_op_level_c;
-
-CREATE INDEX IF NOT EXISTS idx_flow_to_load_re_op_level_c
-    ON camdecmps.flow_to_load_reference USING btree
-    (op_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_flow_to_load_reference_001
-
--- DROP INDEX camdecmps.idx_flow_to_load_reference_001;
-
-CREATE INDEX IF NOT EXISTS idx_flow_to_load_reference_001
-    ON camdecmps.flow_to_load_reference USING btree
-    (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

@@ -1,7 +1,3 @@
--- Table: camdecmps.monitor_qualification_lee
-
--- DROP TABLE camdecmps.monitor_qualification_lee;
-
 CREATE TABLE IF NOT EXISTS camdecmps.monitor_qualification_lee
 (
     mon_qual_lee_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -19,20 +15,13 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_qualification_lee
     CONSTRAINT pk_monitor_qualification_lee PRIMARY KEY (mon_qual_lee_id),
     CONSTRAINT fk_monitor_qualification_lee_monitor_qualification FOREIGN KEY (mon_qual_id)
         REFERENCES camdecmps.monitor_qualification (mon_qual_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_monitor_qualification_lee_parameter_code FOREIGN KEY (parameter_cd)
-        REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE,
     CONSTRAINT fk_monitor_qualification_lee_qual_test_type_code FOREIGN KEY (qual_lee_test_type_cd)
-        REFERENCES camdecmpsmd.qual_lee_test_type_code (qual_lee_test_type_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.qual_lee_test_type_code (qual_lee_test_type_cd) MATCH SIMPLE,
     CONSTRAINT fk_monitor_qualification_lee_units_of_measure_code FOREIGN KEY (emission_standard_uom)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.monitor_qualification_lee
@@ -73,35 +62,3 @@ COMMENT ON COLUMN camdecmps.monitor_qualification_lee.add_date
 
 COMMENT ON COLUMN camdecmps.monitor_qualification_lee.update_date
     IS 'Date and time in which record was last updated.';
-
--- Index: idx_monitor_qualification_lee_emission_standard_uom
-
--- DROP INDEX camdecmps.idx_monitor_qualification_lee_emission_standard_uom;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_qualification_lee_emission_standard_uom
-    ON camdecmps.monitor_qualification_lee USING btree
-    (emission_standard_uom COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_qualification_lee_mon_qual_id
-
--- DROP INDEX camdecmps.idx_monitor_qualification_lee_mon_qual_id;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_qualification_lee_mon_qual_id
-    ON camdecmps.monitor_qualification_lee USING btree
-    (mon_qual_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_qualification_lee_parameter_cd
-
--- DROP INDEX camdecmps.idx_monitor_qualification_lee_parameter_cd;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_qualification_lee_parameter_cd
-    ON camdecmps.monitor_qualification_lee USING btree
-    (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_qualification_lee_qaul_lee_test_type_cd
-
--- DROP INDEX camdecmps.idx_monitor_qualification_lee_qaul_lee_test_type_cd;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_qualification_lee_qaul_lee_test_type_cd
-    ON camdecmps.monitor_qualification_lee USING btree
-    (qual_lee_test_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);

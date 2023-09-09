@@ -1,7 +1,3 @@
--- Table: camdecmps.dm_emissions_user
-
--- DROP TABLE camdecmps.dm_emissions_user;
-
 CREATE TABLE IF NOT EXISTS camdecmps.dm_emissions_user
 (
     dm_emissions_user_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -11,16 +7,12 @@ CREATE TABLE IF NOT EXISTS camdecmps.dm_emissions_user
     complete_date timestamp without time zone,
     note character varying(1000) COLLATE pg_catalog."default",
     note_date timestamp without time zone,
-    CONSTRAINT dm_emissions_user_pk PRIMARY KEY (dm_emissions_user_id),
-    CONSTRAINT dm_emissions_user_em__cd_uq UNIQUE (dm_emissions_id, dm_emissions_user_cd),
-    CONSTRAINT dm_emissions_user_cd_fk FOREIGN KEY (dm_emissions_user_cd)
+    CONSTRAINT pk_dm_emissions_user PRIMARY KEY (dm_emissions_user_id),
+    CONSTRAINT uq_dm_emissions_user UNIQUE (dm_emissions_id, dm_emissions_user_cd),
+    CONSTRAINT fk_dm_emissions_user_dm_emissions FOREIGN KEY (dm_emissions_id)
+        REFERENCES camdecmps.dm_emissions (dm_emissions_id) MATCH SIMPLE,
+    CONSTRAINT fk_dm_emissions_user_dm_emissions_user_code FOREIGN KEY (dm_emissions_user_cd)
         REFERENCES camdecmpsmd.dm_emissions_user_code (dm_emissions_user_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT dm_emissions_user_em_fk FOREIGN KEY (dm_emissions_id)
-        REFERENCES camdecmps.dm_emissions (dm_emissions_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.dm_emissions_user

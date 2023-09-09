@@ -1,7 +1,3 @@
--- Table: camdecmps.qa_supp_attribute
-
--- DROP TABLE camdecmps.qa_supp_attribute;
-
 CREATE TABLE IF NOT EXISTS camdecmps.qa_supp_attribute
 (
     qa_supp_attribute_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -14,7 +10,6 @@ CREATE TABLE IF NOT EXISTS camdecmps.qa_supp_attribute
     CONSTRAINT pk_qa_supp_attribute PRIMARY KEY (qa_supp_attribute_id),
     CONSTRAINT fk_qa_supp_attribute_qa_supp_data FOREIGN KEY (qa_supp_data_id)
         REFERENCES camdecmps.qa_supp_data (qa_supp_data_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -41,11 +36,3 @@ COMMENT ON COLUMN camdecmps.qa_supp_attribute.add_date
 
 COMMENT ON COLUMN camdecmps.qa_supp_attribute.update_date
     IS 'Date and time in which record was last updated.';
-
--- Index: qa_supp_attribute_idx001
-
--- DROP INDEX camdecmps.qa_supp_attribute_idx001;
-
-CREATE INDEX IF NOT EXISTS qa_supp_attribute_idx001
-    ON camdecmps.qa_supp_attribute USING btree
-    (qa_supp_data_id COLLATE pg_catalog."default" ASC NULLS LAST);

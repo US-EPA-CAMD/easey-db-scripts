@@ -1,7 +1,3 @@
--- Table: camdecmps.linearity_injection
-
--- DROP TABLE camdecmps.linearity_injection;
-
 CREATE TABLE IF NOT EXISTS camdecmps.linearity_injection
 (
     lin_inj_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -17,7 +13,6 @@ CREATE TABLE IF NOT EXISTS camdecmps.linearity_injection
     CONSTRAINT pk_linearity_injection PRIMARY KEY (lin_inj_id),
     CONSTRAINT fk_linearity_injection_linearity_summary FOREIGN KEY (lin_sum_id)
         REFERENCES camdecmps.linearity_summary (lin_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -53,11 +48,3 @@ COMMENT ON COLUMN camdecmps.linearity_injection.add_date
 
 COMMENT ON COLUMN camdecmps.linearity_injection.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: linearity_injection_idx001
-
--- DROP INDEX camdecmps.linearity_injection_idx001;
-
-CREATE INDEX IF NOT EXISTS linearity_injection_idx001
-    ON camdecmps.linearity_injection USING btree
-    (lin_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

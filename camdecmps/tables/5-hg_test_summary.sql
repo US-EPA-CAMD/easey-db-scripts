@@ -1,7 +1,3 @@
--- Table: camdecmps.hg_test_summary
-
--- DROP TABLE camdecmps.hg_test_summary;
-
 CREATE TABLE IF NOT EXISTS camdecmps.hg_test_summary
 (
     hg_test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -20,12 +16,9 @@ CREATE TABLE IF NOT EXISTS camdecmps.hg_test_summary
     update_date timestamp without time zone,
     CONSTRAINT pk_hg_test_summary PRIMARY KEY (hg_test_sum_id),
     CONSTRAINT fk_hg_test_summary_gas_level_code FOREIGN KEY (gas_level_cd)
-        REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE,
     CONSTRAINT fk_hg_test_summary_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -73,19 +66,3 @@ COMMENT ON COLUMN camdecmps.hg_test_summary.add_date
 
 COMMENT ON COLUMN camdecmps.hg_test_summary.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: idx_hg_test_summary_001
-
--- DROP INDEX camdecmps.idx_hg_test_summary_001;
-
-CREATE INDEX IF NOT EXISTS idx_hg_test_summary_001
-    ON camdecmps.hg_test_summary USING btree
-    (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_hg_test_summary_gas_level
-
--- DROP INDEX camdecmps.idx_hg_test_summary_gas_level;
-
-CREATE INDEX IF NOT EXISTS idx_hg_test_summary_gas_level
-    ON camdecmps.hg_test_summary USING btree
-    (gas_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);

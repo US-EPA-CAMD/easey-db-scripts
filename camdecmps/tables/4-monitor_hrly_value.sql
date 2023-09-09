@@ -1,7 +1,3 @@
--- Table: camdecmps.monitor_hrly_value
-
--- DROP TABLE IF EXISTS camdecmps.monitor_hrly_value;
-
 CREATE TABLE IF NOT EXISTS camdecmps.monitor_hrly_value
 (
     monitor_hrly_val_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -29,38 +25,25 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_hrly_value
     calc_f2l_status character varying(75) COLLATE pg_catalog."default",
     CONSTRAINT pk_monitor_hrly_value PRIMARY KEY (monitor_hrly_val_id),
     CONSTRAINT fk_monitor_hrly_value_component FOREIGN KEY (component_id)
-        REFERENCES camdecmps.component (component_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.component (component_id) MATCH SIMPLE,
     CONSTRAINT fk_monitor_hrly_value_hrly_op_data FOREIGN KEY (hour_id)
         REFERENCES camdecmps.hrly_op_data (hour_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_monitor_hrly_value_modc_code FOREIGN KEY (modc_cd)
-        REFERENCES camdecmpsmd.modc_code (modc_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.modc_code (modc_cd) MATCH SIMPLE,
     CONSTRAINT fk_monitor_hrly_value_monitor_location FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE,
     CONSTRAINT fk_monitor_hrly_value_monitor_system FOREIGN KEY (mon_sys_id)
-        REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE,
     CONSTRAINT fk_monitor_hrly_value_parameter_code FOREIGN KEY (parameter_cd)
-        REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE,
     CONSTRAINT fk_monitor_hrly_value_reporting_period FOREIGN KEY (rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT monitor_hrly_value_hour_id_check CHECK (hour_id IS NOT NULL),
-    CONSTRAINT monitor_hrly_value_mon_loc_id_check CHECK (mon_loc_id IS NOT NULL),
-    CONSTRAINT monitor_hrly_value_monitor_hrly_val_id_check CHECK (monitor_hrly_val_id IS NOT NULL),
-    CONSTRAINT monitor_hrly_value_parameter_cd_check CHECK (parameter_cd IS NOT NULL),
-    CONSTRAINT monitor_hrly_value_rpt_period_id_check CHECK (rpt_period_id IS NOT NULL)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
+    CONSTRAINT chk_monitor_hrly_value_hour_id CHECK (hour_id IS NOT NULL),
+    CONSTRAINT chk_monitor_hrly_value_mon_loc_id CHECK (mon_loc_id IS NOT NULL),
+    CONSTRAINT chk_monitor_hrly_value_monitor_hrly_val_id CHECK (monitor_hrly_val_id IS NOT NULL),
+    CONSTRAINT chk_monitor_hrly_value_parameter_cd CHECK (parameter_cd IS NOT NULL),
+    CONSTRAINT chk_monitor_hrly_value_rpt_period_id CHECK (rpt_period_id IS NOT NULL)
 );
 
 COMMENT ON TABLE camdecmps.monitor_hrly_value
@@ -134,59 +117,3 @@ COMMENT ON COLUMN camdecmps.monitor_hrly_value.calc_dayint_status
 
 COMMENT ON COLUMN camdecmps.monitor_hrly_value.calc_f2l_status
     IS 'QA Status for Flow-to-Load Check determined by EPA.';
--- Index: idx_mhv_add_date
-
--- DROP INDEX IF EXISTS camdecmps.idx_mhv_add_date;
-
-CREATE INDEX IF NOT EXISTS idx_mhv_add_date
-    ON camdecmps.monitor_hrly_value USING btree
-    (add_date ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_mon_hrly_param1
-
--- DROP INDEX IF EXISTS camdecmps.idx_mon_hrly_param1;
-
-CREATE INDEX IF NOT EXISTS idx_mon_hrly_param1
-    ON camdecmps.monitor_hrly_value USING btree
-    (hour_id COLLATE pg_catalog."default" ASC NULLS LAST, parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_mon_hrly_param2
-
--- DROP INDEX IF EXISTS camdecmps.idx_mon_hrly_param2;
-
-CREATE INDEX IF NOT EXISTS idx_mon_hrly_param2
-    ON camdecmps.monitor_hrly_value USING btree
-    (modc_cd COLLATE pg_catalog."default" ASC NULLS LAST, unadjusted_hrly_value ASC NULLS LAST, hour_id COLLATE pg_catalog."default" ASC NULLS LAST, parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_monitor_hrly_va_component
-
--- DROP INDEX IF EXISTS camdecmps.idx_monitor_hrly_va_component;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_hrly_va_component
-    ON camdecmps.monitor_hrly_value USING btree
-    (component_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_monitor_hrly_va_mon_sys_id
-
--- DROP INDEX IF EXISTS camdecmps.idx_monitor_hrly_va_mon_sys_id;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_hrly_va_mon_sys_id
-    ON camdecmps.monitor_hrly_value USING btree
-    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_monitor_hrly_va_parameter_
-
--- DROP INDEX IF EXISTS camdecmps.idx_monitor_hrly_va_parameter_;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_hrly_va_parameter_
-    ON camdecmps.monitor_hrly_value USING btree
-    (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: monitor_hrly_value_idx003
-
--- DROP INDEX IF EXISTS camdecmps.monitor_hrly_value_idx003;
-
-CREATE INDEX IF NOT EXISTS monitor_hrly_value_idx003
-    ON camdecmps.monitor_hrly_value USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;

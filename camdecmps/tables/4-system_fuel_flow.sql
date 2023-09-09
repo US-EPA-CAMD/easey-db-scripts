@@ -1,7 +1,3 @@
--- Table: camdecmps.system_fuel_flow
-
--- DROP TABLE camdecmps.system_fuel_flow;
-
 CREATE TABLE IF NOT EXISTS camdecmps.system_fuel_flow
 (
     sys_fuel_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -18,17 +14,12 @@ CREATE TABLE IF NOT EXISTS camdecmps.system_fuel_flow
     sys_fuel_uom_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT pk_system_fuel_flow PRIMARY KEY (sys_fuel_id),
     CONSTRAINT fk_system_fuel_flow_max_rate_source_code FOREIGN KEY (max_rate_source_cd)
-        REFERENCES camdecmpsmd.max_rate_source_code (max_rate_source_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.max_rate_source_code (max_rate_source_cd) MATCH SIMPLE,
     CONSTRAINT fk_system_fuel_flow_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_system_fuel_flow_units_of_measure_code FOREIGN KEY (sys_fuel_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.system_fuel_flow
@@ -69,27 +60,3 @@ COMMENT ON COLUMN camdecmps.system_fuel_flow.update_date
 
 COMMENT ON COLUMN camdecmps.system_fuel_flow.sys_fuel_uom_cd
     IS 'Code used to identify the fuel flow units of measure. ';
-
--- Index: idx_system_fuel_flo_max_rate_s
-
--- DROP INDEX camdecmps.idx_system_fuel_flo_max_rate_s;
-
-CREATE INDEX IF NOT EXISTS idx_system_fuel_flo_max_rate_s
-    ON camdecmps.system_fuel_flow USING btree
-    (max_rate_source_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_system_fuel_flo_mon_sys_id
-
--- DROP INDEX camdecmps.idx_system_fuel_flo_mon_sys_id;
-
-CREATE INDEX IF NOT EXISTS idx_system_fuel_flo_mon_sys_id
-    ON camdecmps.system_fuel_flow USING btree
-    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_system_fuel_flo_sys_fuel_u
-
--- DROP INDEX camdecmps.idx_system_fuel_flo_sys_fuel_u;
-
-CREATE INDEX IF NOT EXISTS idx_system_fuel_flo_sys_fuel_u
-    ON camdecmps.system_fuel_flow USING btree
-    (sys_fuel_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);

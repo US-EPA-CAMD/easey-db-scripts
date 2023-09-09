@@ -1,7 +1,3 @@
--- Table: camdecmps.ae_correlation_test_run
-
--- DROP TABLE camdecmps.ae_correlation_test_run;
-
 CREATE TABLE IF NOT EXISTS camdecmps.ae_correlation_test_run
 (
     ae_corr_test_run_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -25,7 +21,6 @@ CREATE TABLE IF NOT EXISTS camdecmps.ae_correlation_test_run
     CONSTRAINT pk_ae_correlation_test_run PRIMARY KEY (ae_corr_test_run_id),
     CONSTRAINT fk_ae_correlation_test_run_ae_correlation_test_sum FOREIGN KEY (ae_corr_test_sum_id)
         REFERENCES camdecmps.ae_correlation_test_sum (ae_corr_test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -85,11 +80,3 @@ COMMENT ON COLUMN camdecmps.ae_correlation_test_run.add_date
 
 COMMENT ON COLUMN camdecmps.ae_correlation_test_run.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: idx_ae_correlation_ae_corr_te
-
--- DROP INDEX camdecmps.idx_ae_correlation_ae_corr_te;
-
-CREATE INDEX IF NOT EXISTS idx_ae_correlation_ae_corr_te
-    ON camdecmps.ae_correlation_test_run USING btree
-    (ae_corr_test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);

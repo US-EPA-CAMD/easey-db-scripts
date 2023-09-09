@@ -1,7 +1,3 @@
--- Table: camdecmps.monitor_system_component
-
--- DROP TABLE camdecmps.monitor_system_component;
-
 CREATE TABLE IF NOT EXISTS camdecmps.monitor_system_component
 (
     mon_sys_comp_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -17,11 +13,9 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_system_component
     CONSTRAINT pk_monitor_system_component PRIMARY KEY (mon_sys_comp_id),
     CONSTRAINT fk_monitor_system_component_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_monitor_system_component_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -57,19 +51,3 @@ COMMENT ON COLUMN camdecmps.monitor_system_component.add_date
 
 COMMENT ON COLUMN camdecmps.monitor_system_component.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: idx_mon_sys_comp_01
-
--- DROP INDEX camdecmps.idx_mon_sys_comp_01;
-
-CREATE INDEX IF NOT EXISTS idx_mon_sys_comp_01
-    ON camdecmps.monitor_system_component USING btree
-    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_system_component_
-
--- DROP INDEX camdecmps.idx_monitor_system_component_;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_system_component_
-    ON camdecmps.monitor_system_component USING btree
-    (component_id COLLATE pg_catalog."default" ASC NULLS LAST);

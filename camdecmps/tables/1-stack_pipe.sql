@@ -1,7 +1,3 @@
--- Table: camdecmps.stack_pipe
-
--- DROP TABLE camdecmps.stack_pipe;
-
 CREATE TABLE IF NOT EXISTS camdecmps.stack_pipe
 (
     stack_pipe_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -15,8 +11,6 @@ CREATE TABLE IF NOT EXISTS camdecmps.stack_pipe
     CONSTRAINT pk_stack_pipe PRIMARY KEY (stack_pipe_id),
     CONSTRAINT fk_stack_pipe_plant FOREIGN KEY (fac_id)
         REFERENCES camd.plant (fac_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.stack_pipe
@@ -45,19 +39,3 @@ COMMENT ON COLUMN camdecmps.stack_pipe.add_date
 
 COMMENT ON COLUMN camdecmps.stack_pipe.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: idx_stack_pipe_fac
-
--- DROP INDEX camdecmps.idx_stack_pipe_fac;
-
-CREATE INDEX IF NOT EXISTS idx_stack_pipe_fac
-    ON camdecmps.stack_pipe USING btree
-    (fac_id ASC NULLS LAST);
-
--- Index: idx_stack_pipe_fac_name
-
--- DROP INDEX camdecmps.idx_stack_pipe_fac_name;
-
-CREATE INDEX IF NOT EXISTS idx_stack_pipe_fac_name
-    ON camdecmps.stack_pipe USING btree
-    (fac_id ASC NULLS LAST, stack_name COLLATE pg_catalog."default" ASC NULLS LAST);

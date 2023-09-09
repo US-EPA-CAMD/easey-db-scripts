@@ -1,7 +1,3 @@
--- Table: camdecmpsaux.evaluation_queue
-
--- DROP TABLE IF EXISTS camdecmpsaux.evaluation_queue;
-
 CREATE TABLE IF NOT EXISTS camdecmpsaux.evaluation_queue
 (
     evaluation_id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999999999999 CACHE 1 ),
@@ -17,29 +13,9 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.evaluation_queue
     CONSTRAINT pk_evaluation_queue PRIMARY KEY (evaluation_id),
     CONSTRAINT fk_evaluation_queue_evaluation_set FOREIGN KEY (evaluation_set_id)
         REFERENCES camdecmpsaux.evaluation_set (evaluation_set_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE CASCADE,
-    CONSTRAINT fk_evaluation_queue_qa_cert_event FOREIGN KEY (qa_cert_event_id)
-        REFERENCES camdecmpswks.qa_cert_event (qa_cert_event_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_evaluation_queue_reporting_period FOREIGN KEY (rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_evaluation_queue_test_extension_exemption FOREIGN KEY (test_extension_exemption_id)
-        REFERENCES camdecmpswks.test_extension_exemption (test_extension_exemption_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE CASCADE,
-    CONSTRAINT fk_evaluation_queue_test_summary FOREIGN KEY (test_sum_id)
-        REFERENCES camdecmpswks.test_summary (test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE CASCADE
-)
-
-CREATE INDEX IF NOT EXISTS idx_evaluation_queue_evaluation_set_id
-    ON camdecmpsaux.evaluation_queue USING btree
-    (evaluation_set_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
-
-TABLESPACE pg_default;
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
+    CONSTRAINT fk_evaluation_queue_severity_code FOREIGN KEY (severity_cd)
+        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE
+);

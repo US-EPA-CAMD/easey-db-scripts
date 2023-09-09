@@ -1,7 +1,3 @@
--- Table: camdecmps.monitor_default
-
--- DROP TABLE camdecmps.monitor_default;
-
 CREATE TABLE IF NOT EXISTS camdecmps.monitor_default
 (
     mondef_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -23,33 +19,20 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_default
     default_uom_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_monitor_default PRIMARY KEY (mondef_id),
     CONSTRAINT fk_monitor_default_default_purpose_code FOREIGN KEY (default_purpose_cd)
-        REFERENCES camdecmpsmd.default_purpose_code (default_purpose_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.default_purpose_code (default_purpose_cd) MATCH SIMPLE,
     CONSTRAINT fk_monitor_default_default_source_code FOREIGN KEY (default_source_cd)
-        REFERENCES camdecmpsmd.default_source_code (default_source_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.default_source_code (default_source_cd) MATCH SIMPLE,
     CONSTRAINT fk_monitor_default_fuel_code FOREIGN KEY (fuel_cd)
-        REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE,
     CONSTRAINT fk_monitor_default_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_monitor_default_operating_condition_code FOREIGN KEY (operating_condition_cd)
-        REFERENCES camdecmpsmd.operating_condition_code (operating_condition_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.operating_condition_code (operating_condition_cd) MATCH SIMPLE,
     CONSTRAINT fk_monitor_default_parameter_code FOREIGN KEY (parameter_cd)
-        REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE,
     CONSTRAINT fk_monitor_default_units_of_measure_code FOREIGN KEY (default_uom_cd)
         REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.monitor_default
@@ -105,67 +88,3 @@ COMMENT ON COLUMN camdecmps.monitor_default.update_date
 
 COMMENT ON COLUMN camdecmps.monitor_default.default_uom_cd
     IS 'Code used to identify the hourly parameter units of measure. ';
-
--- Index: idx_monitor_default_default_pu
-
--- DROP INDEX camdecmps.idx_monitor_default_default_pu;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_default_default_pu
-    ON camdecmps.monitor_default USING btree
-    (default_purpose_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_default_default_so
-
--- DROP INDEX camdecmps.idx_monitor_default_default_so;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_default_default_so
-    ON camdecmps.monitor_default USING btree
-    (default_source_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_default_default_uo
-
--- DROP INDEX camdecmps.idx_monitor_default_default_uo;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_default_default_uo
-    ON camdecmps.monitor_default USING btree
-    (default_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_default_fuel_cd
-
--- DROP INDEX camdecmps.idx_monitor_default_fuel_cd;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_default_fuel_cd
-    ON camdecmps.monitor_default USING btree
-    (fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_default_loc_prp
-
--- DROP INDEX camdecmps.idx_monitor_default_loc_prp;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_default_loc_prp
-    ON camdecmps.monitor_default USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST, default_purpose_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_default_operating
-
--- DROP INDEX camdecmps.idx_monitor_default_operating;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_default_operating
-    ON camdecmps.monitor_default USING btree
-    (operating_condition_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: monitor_default_idx$$_15b00006
-
--- DROP INDEX camdecmps."monitor_default_idx$$_15b00006";
-
-CREATE INDEX IF NOT EXISTS "monitor_default_idx$$_15b00006"
-    ON camdecmps.monitor_default USING btree
-    (begin_date ASC NULLS LAST, begin_hour ASC NULLS LAST, parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: monitor_default_idx001
-
--- DROP INDEX camdecmps.monitor_default_idx001;
-
-CREATE INDEX IF NOT EXISTS monitor_default_idx001
-    ON camdecmps.monitor_default USING btree
-    (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);

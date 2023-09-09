@@ -1,7 +1,3 @@
--- Table: camdecmps.nsps4t_annual
-
--- DROP TABLE IF EXISTS camdecmps.nsps4t_annual;
-
 CREATE TABLE IF NOT EXISTS camdecmps.nsps4t_annual
 (
     nsps4t_ann_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -16,21 +12,14 @@ CREATE TABLE IF NOT EXISTS camdecmps.nsps4t_annual
     update_date timestamp without time zone,
     CONSTRAINT pk_nsps4t_annual PRIMARY KEY (nsps4t_ann_id),
     CONSTRAINT fk_nsps4t_annual_monitor_location FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE,
     CONSTRAINT fk_nsps4t_annual_nsps4t_electrical_load_code FOREIGN KEY (annual_energy_sold_type_cd)
-        REFERENCES camdecmpsmd.nsps4t_electrical_load_code (electrical_load_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.nsps4t_electrical_load_code (electrical_load_cd) MATCH SIMPLE,
     CONSTRAINT fk_nsps4t_annual_nsps4t_summary FOREIGN KEY (nsps4t_sum_id)
         REFERENCES camdecmps.nsps4t_summary (nsps4t_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_nsps4t_annual_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.nsps4t_annual
@@ -65,43 +54,3 @@ COMMENT ON COLUMN camdecmps.nsps4t_annual.add_date
 
 COMMENT ON COLUMN camdecmps.nsps4t_annual.update_date
     IS 'Date and time in which record was last updated. ';
--- Index: idx_nsps4t_annual_loc
-
--- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_annual_loc;
-
-CREATE INDEX IF NOT EXISTS idx_nsps4t_annual_loc
-    ON camdecmps.nsps4t_annual USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_nsps4t_annual_prd
-
--- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_annual_prd;
-
-CREATE INDEX IF NOT EXISTS idx_nsps4t_annual_prd
-    ON camdecmps.nsps4t_annual USING btree
-    (rpt_period_id ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_nsps4t_annual_rpt
-
--- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_annual_rpt;
-
-CREATE INDEX IF NOT EXISTS idx_nsps4t_annual_rpt
-    ON camdecmps.nsps4t_annual USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_nsps4t_annual_sum
-
--- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_annual_sum;
-
-CREATE INDEX IF NOT EXISTS idx_nsps4t_annual_sum
-    ON camdecmps.nsps4t_annual USING btree
-    (nsps4t_sum_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_nsps4t_annual_uom
-
--- DROP INDEX IF EXISTS camdecmps.idx_nsps4t_annual_uom;
-
-CREATE INDEX IF NOT EXISTS idx_nsps4t_annual_uom
-    ON camdecmps.nsps4t_annual USING btree
-    (annual_energy_sold_type_cd COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;

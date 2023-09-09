@@ -1,7 +1,3 @@
--- Table: camdecmps.emission_evaluation
-
--- DROP TABLE camdecmps.emission_evaluation;
-
 CREATE TABLE IF NOT EXISTS camdecmps.emission_evaluation
 (
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -13,18 +9,13 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_evaluation
     submission_id numeric(38,0),
     submission_availability_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_emission_evaluation PRIMARY KEY (mon_plan_id, rpt_period_id),
+    CONSTRAINT uq_emission_evaluation UNIQUE (mon_plan_id, rpt_period_id),
     CONSTRAINT fk_emission_evaluation_monitor_plan FOREIGN KEY (mon_plan_id)
-        REFERENCES camdecmps.monitor_plan (mon_plan_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.monitor_plan (mon_plan_id) MATCH SIMPLE,
     CONSTRAINT fk_emission_evaluation_reporting_period FOREIGN KEY (rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
     CONSTRAINT fk_emission_evaluation_submission_availability_code FOREIGN KEY (submission_availability_cd)
         REFERENCES camdecmpsmd.submission_availability_code (submission_availability_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.emission_evaluation
@@ -53,35 +44,3 @@ COMMENT ON COLUMN camdecmps.emission_evaluation.submission_id
 
 COMMENT ON COLUMN camdecmps.emission_evaluation.submission_availability_cd
     IS 'Unique code value for a lookup table.';
-
--- Index: emission_evaluation_idx001
-
--- DROP INDEX camdecmps.emission_evaluation_idx001;
-
-CREATE INDEX IF NOT EXISTS emission_evaluation_idx001
-    ON camdecmps.emission_evaluation USING btree
-    (rpt_period_id ASC NULLS LAST);
-
--- Index: idx_emission_evalua1
-
--- DROP INDEX camdecmps.idx_emission_evalua1;
-
-CREATE INDEX IF NOT EXISTS idx_emission_evalua1
-    ON camdecmps.emission_evaluation USING btree
-    (submission_id ASC NULLS LAST);
-
--- Index: idx_emission_evalua_chk_sessio
-
--- DROP INDEX camdecmps.idx_emission_evalua_chk_sessio;
-
-CREATE INDEX IF NOT EXISTS idx_emission_evalua_chk_sessio
-    ON camdecmps.emission_evaluation USING btree
-    (chk_session_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_emission_evalua_submission
-
--- DROP INDEX camdecmps.idx_emission_evalua_submission;
-
-CREATE INDEX IF NOT EXISTS idx_emission_evalua_submission
-    ON camdecmps.emission_evaluation USING btree
-    (submission_availability_cd COLLATE pg_catalog."default" ASC NULLS LAST);

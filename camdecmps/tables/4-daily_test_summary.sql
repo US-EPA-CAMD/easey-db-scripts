@@ -1,7 +1,3 @@
--- Table: camdecmps.daily_test_summary
-
--- DROP TABLE IF EXISTS camdecmps.daily_test_summary;
-
 CREATE TABLE IF NOT EXISTS camdecmps.daily_test_summary
 (
     daily_test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -21,37 +17,21 @@ CREATE TABLE IF NOT EXISTS camdecmps.daily_test_summary
     mon_sys_id character varying(45) COLLATE pg_catalog."default",
     CONSTRAINT pk_daily_test_summary PRIMARY KEY (daily_test_sum_id),
     CONSTRAINT fk_daily_test_summary_component FOREIGN KEY (component_id)
-        REFERENCES camdecmps.component (component_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.component (component_id) MATCH SIMPLE,
     CONSTRAINT fk_daily_test_summary_monitor_location FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE,
     CONSTRAINT fk_daily_test_summary_monitor_system FOREIGN KEY (mon_sys_id)
-        REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE,
     CONSTRAINT fk_daily_test_summary_reporting_period FOREIGN KEY (rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
     CONSTRAINT fk_daily_test_summary_span_scale_code FOREIGN KEY (span_scale_cd)
-        REFERENCES camdecmpsmd.span_scale_code (span_scale_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.span_scale_code (span_scale_cd) MATCH SIMPLE,
     CONSTRAINT fk_daily_test_summary_test_result_code FOREIGN KEY (test_result_cd)
-        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE,
     CONSTRAINT fk_daily_test_summary_test_result_code_calc FOREIGN KEY (calc_test_result_cd)
-        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE,
     CONSTRAINT fk_daily_test_summary_test_type_code FOREIGN KEY (test_type_cd)
         REFERENCES camdecmpsmd.test_type_code (test_type_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.daily_test_summary
@@ -101,75 +81,3 @@ COMMENT ON COLUMN camdecmps.daily_test_summary.span_scale_cd
 
 COMMENT ON COLUMN camdecmps.daily_test_summary.mon_sys_id
     IS 'Unique identifier of a monitoring system record. ';
--- Index: daily_test_summary_idx002
-
--- DROP INDEX IF EXISTS camdecmps.daily_test_summary_idx002;
-
-CREATE INDEX IF NOT EXISTS daily_test_summary_idx002
-    ON camdecmps.daily_test_summary USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_daily_test_summ_calc_test
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_test_summ_calc_test;
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_summ_calc_test
-    ON camdecmps.daily_test_summary USING btree
-    (calc_test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_daily_test_summ_component
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_test_summ_component;
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_summ_component
-    ON camdecmps.daily_test_summary USING btree
-    (component_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_daily_test_summ_mon_loc_id
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_test_summ_mon_loc_id;
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_summ_mon_loc_id
-    ON camdecmps.daily_test_summary USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_daily_test_summ_span_scale
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_test_summ_span_scale;
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_summ_span_scale
-    ON camdecmps.daily_test_summary USING btree
-    (span_scale_cd COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_daily_test_summ_test_resul
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_test_summ_test_resul;
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_summ_test_resul
-    ON camdecmps.daily_test_summary USING btree
-    (test_result_cd COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_daily_test_summ_test_type
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_test_summ_test_type;
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_summ_test_type
-    ON camdecmps.daily_test_summary USING btree
-    (test_type_cd COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_daily_test_summary_01
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_test_summary_01;
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_summary_01
-    ON camdecmps.daily_test_summary USING btree
-    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_dts_add_date
-
--- DROP INDEX IF EXISTS camdecmps.idx_dts_add_date;
-
-CREATE INDEX IF NOT EXISTS idx_dts_add_date
-    ON camdecmps.daily_test_summary USING btree
-    (add_date ASC NULLS LAST)
-    TABLESPACE pg_default;

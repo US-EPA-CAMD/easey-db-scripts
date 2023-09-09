@@ -1,7 +1,3 @@
--- Table: camdecmps.monitor_qualification_lme
-
--- DROP TABLE camdecmps.monitor_qualification_lme;
-
 CREATE TABLE IF NOT EXISTS camdecmps.monitor_qualification_lme
 (
     mon_lme_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -16,7 +12,6 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_qualification_lme
     CONSTRAINT pk_monitor_qualification_lme PRIMARY KEY (mon_lme_id),
     CONSTRAINT fk_monitor_qualification_lme_monitor_qualification FOREIGN KEY (mon_qual_id)
         REFERENCES camdecmps.monitor_qualification (mon_qual_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -49,11 +44,3 @@ COMMENT ON COLUMN camdecmps.monitor_qualification_lme.add_date
 
 COMMENT ON COLUMN camdecmps.monitor_qualification_lme.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: idx_monitor_qualification_lme_mon_qual_id
-
--- DROP INDEX camdecmps.idx_monitor_qualification_lme_mon_qual_id;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_qualification_lme_mon_qual_id
-    ON camdecmps.monitor_qualification_lme USING btree
-    (mon_qual_id COLLATE pg_catalog."default" ASC NULLS LAST);

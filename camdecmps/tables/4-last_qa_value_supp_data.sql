@@ -1,7 +1,3 @@
--- Table: camdecmps.last_qa_value_supp_data
-
--- DROP TABLE IF EXISTS camdecmps.last_qa_value_supp_data;
-
 CREATE TABLE IF NOT EXISTS camdecmps.last_qa_value_supp_data
 (
     last_qa_value_supp_data_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -21,29 +17,17 @@ CREATE TABLE IF NOT EXISTS camdecmps.last_qa_value_supp_data
     update_date timestamp without time zone,
     CONSTRAINT pk_last_qa_value_supp_data PRIMARY KEY (last_qa_value_supp_data_id),
     CONSTRAINT fk_last_qa_value_supp_data_component FOREIGN KEY (component_id)
-        REFERENCES camdecmps.component (component_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_last_qa_value_supp_data_ht FOREIGN KEY (hourly_type_cd)
-        REFERENCES camdecmpsmd.hourly_type_code (hourly_type_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.component (component_id) MATCH SIMPLE,
+    CONSTRAINT fk_last_qa_value_supp_data_hourly_type_code FOREIGN KEY (hourly_type_cd)
+        REFERENCES camdecmpsmd.hourly_type_code (hourly_type_cd) MATCH SIMPLE,
     CONSTRAINT fk_last_qa_value_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE,
     CONSTRAINT fk_last_qa_value_supp_data_monitor_system FOREIGN KEY (mon_sys_id)
-        REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_last_qa_value_supp_data_pc FOREIGN KEY (parameter_cd)
-        REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_last_qa_value_supp_data_pr FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE,
+    CONSTRAINT fk_last_qa_value_supp_data_parameter_code FOREIGN KEY (parameter_cd)
+        REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE,
+    CONSTRAINT fk_last_qa_value_supp_data_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.last_qa_value_supp_data
@@ -93,51 +77,3 @@ COMMENT ON COLUMN camdecmps.last_qa_value_supp_data.add_date
 
 COMMENT ON COLUMN camdecmps.last_qa_value_supp_data.update_date
     IS 'Date and time in which record was last updated.';
-
--- Index: idx_last_qa_value_supp_data_cp
-
--- DROP INDEX IF EXISTS camdecmps.idx_last_qa_value_supp_data_cp;
-
-CREATE INDEX IF NOT EXISTS idx_last_qa_value_supp_data_cp
-    ON camdecmps.last_qa_value_supp_data USING btree
-    (component_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_last_qa_value_supp_data_er
-
--- DROP INDEX IF EXISTS camdecmps.idx_last_qa_value_supp_data_er;
-
-CREATE INDEX IF NOT EXISTS idx_last_qa_value_supp_data_er
-    ON camdecmps.last_qa_value_supp_data USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_last_qa_value_supp_data_ml
-
--- DROP INDEX IF EXISTS camdecmps.idx_last_qa_value_supp_data_ml;
-
-CREATE INDEX IF NOT EXISTS idx_last_qa_value_supp_data_ml
-    ON camdecmps.last_qa_value_supp_data USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_last_qa_value_supp_data_ms
-
--- DROP INDEX IF EXISTS camdecmps.idx_last_qa_value_supp_data_ms;
-
-CREATE INDEX IF NOT EXISTS idx_last_qa_value_supp_data_ms
-    ON camdecmps.last_qa_value_supp_data USING btree
-    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_last_qa_value_supp_data_pc
-
--- DROP INDEX IF EXISTS camdecmps.idx_last_qa_value_supp_data_pc;
-
-CREATE INDEX IF NOT EXISTS idx_last_qa_value_supp_data_pc
-    ON camdecmps.last_qa_value_supp_data USING btree
-    (parameter_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_last_qa_value_supp_data_pr
-
--- DROP INDEX IF EXISTS camdecmps.idx_last_qa_value_supp_data_pr;
-
-CREATE INDEX IF NOT EXISTS idx_last_qa_value_supp_data_pr
-    ON camdecmps.last_qa_value_supp_data USING btree
-    (rpt_period_id ASC NULLS LAST);

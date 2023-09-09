@@ -1,7 +1,3 @@
--- Table: camdecmpsaux.em_submission_access
-
--- DROP TABLE camdecmpsaux.em_submission_access;
-
 CREATE TABLE IF NOT EXISTS camdecmpsaux.em_submission_access
 (
     em_sub_access_id numeric(38,0) NOT NULL,
@@ -18,24 +14,18 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.em_submission_access
     data_loaded_flg character varying(1) COLLATE pg_catalog."default",
     sub_availability_cd character varying(7) COLLATE pg_catalog."default",
     CONSTRAINT pk_em_submission_access PRIMARY KEY (em_sub_access_id),
-    CONSTRAINT em_submission_access_u01 UNIQUE (mon_plan_id, rpt_period_id, access_begin_date, access_end_date),
-    CONSTRAINT em_submission_access_r04 FOREIGN KEY (mon_plan_id)
-        REFERENCES camdecmps.monitor_plan (mon_plan_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT em_submission_access_r05 FOREIGN KEY (rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_em_status_cod_em_submission FOREIGN KEY (em_status_cd)
-        REFERENCES camdecmpsmd.em_status_code (em_status_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_em_sub_type_c_em_submission FOREIGN KEY (em_sub_type_cd)
-        REFERENCES camdecmpsmd.em_sub_type_code (em_sub_type_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT em_submission_access_c01 CHECK (access_begin_date <= access_end_date)
+    CONSTRAINT uq_em_submission_access UNIQUE (mon_plan_id, rpt_period_id, access_begin_date, access_end_date),
+    CONSTRAINT fk_em_submission_access_monitor_plan FOREIGN KEY (mon_plan_id)
+        REFERENCES camdecmps.monitor_plan (mon_plan_id) MATCH SIMPLE,
+    CONSTRAINT fk_em_submission_access_reporting_period FOREIGN KEY (rpt_period_id)
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
+    CONSTRAINT fk_em_submission_access_em_status_code FOREIGN KEY (em_status_cd)
+        REFERENCES camdecmpsmd.em_status_code (em_status_cd) MATCH SIMPLE,
+    CONSTRAINT fk_em_submission_access_em_sub_type_code FOREIGN KEY (em_sub_type_cd)
+        REFERENCES camdecmpsmd.em_sub_type_code (em_sub_type_cd) MATCH SIMPLE,
+    CONSTRAINT fk_em_submission_access_submission_availability_code FOREIGN KEY (sub_availability_cd)
+        REFERENCES camdecmpsmd.submission_availability_code (sub_availability_cd) MATCH SIMPLE,
+    CONSTRAINT chk_em_submission_access_begin_date_lte_end_date CHECK (access_begin_date <= access_end_date)0
 );
 
 COMMENT ON TABLE camdecmpsaux.em_submission_access
@@ -79,35 +69,3 @@ COMMENT ON COLUMN camdecmpsaux.em_submission_access.data_loaded_flg
 
 COMMENT ON COLUMN camdecmpsaux.em_submission_access.sub_availability_cd
     IS 'Identity key for SUBMISSION_AVAILABILITY_CODE table';
-
--- Index: em_submission_a_idx$$_15a60001
-
--- DROP INDEX camdecmpsaux."em_submission_a_idx$$_15a60001";
-
-CREATE INDEX IF NOT EXISTS "em_submission_a_idx$$_15a60001"
-    ON camdecmpsaux.em_submission_access USING btree
-    (mon_plan_id COLLATE pg_catalog."default" ASC NULLS LAST, rpt_period_id ASC NULLS LAST);
-
--- Index: idx_em_submission_a_em_status_
-
--- DROP INDEX camdecmpsaux.idx_em_submission_a_em_status_;
-
-CREATE INDEX IF NOT EXISTS idx_em_submission_a_em_status_
-    ON camdecmpsaux.em_submission_access USING btree
-    (em_status_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_em_submission_a_em_sub_typ
-
--- DROP INDEX camdecmpsaux.idx_em_submission_a_em_sub_typ;
-
-CREATE INDEX IF NOT EXISTS idx_em_submission_a_em_sub_typ
-    ON camdecmpsaux.em_submission_access USING btree
-    (em_sub_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_em_submission_access_0729
-
--- DROP INDEX camdecmpsaux.idx_em_submission_access_0729;
-
-CREATE INDEX IF NOT EXISTS idx_em_submission_access_0729
-    ON camdecmpsaux.em_submission_access USING btree
-    (rpt_period_id ASC NULLS LAST);

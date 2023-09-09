@@ -1,7 +1,3 @@
--- Table: camdecmps.ae_hi_gas
-
--- DROP TABLE camdecmps.ae_hi_gas;
-
 CREATE TABLE IF NOT EXISTS camdecmps.ae_hi_gas
 (
     ae_hi_gas_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -17,11 +13,9 @@ CREATE TABLE IF NOT EXISTS camdecmps.ae_hi_gas
     CONSTRAINT pk_ae_hi_gas PRIMARY KEY (ae_hi_gas_id),
     CONSTRAINT fk_ae_hi_gas_ae_correlation_test_run FOREIGN KEY (ae_corr_test_run_id)
         REFERENCES camdecmps.ae_correlation_test_run (ae_corr_test_run_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_ae_hi_gas_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmps.monitor_system (mon_sys_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -57,19 +51,3 @@ COMMENT ON COLUMN camdecmps.ae_hi_gas.update_date
 
 COMMENT ON COLUMN camdecmps.ae_hi_gas.mon_sys_id
     IS 'Unique identifier of a monitoring system record. ';
-
--- Index: idx_ae_hi_gas_ae_corr_te
-
--- DROP INDEX camdecmps.idx_ae_hi_gas_ae_corr_te;
-
-CREATE INDEX IF NOT EXISTS idx_ae_hi_gas_ae_corr_te
-    ON camdecmps.ae_hi_gas USING btree
-    (ae_corr_test_run_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_ae_hi_gas_mon_sys_id
-
--- DROP INDEX camdecmps.idx_ae_hi_gas_mon_sys_id;
-
-CREATE INDEX IF NOT EXISTS idx_ae_hi_gas_mon_sys_id
-    ON camdecmps.ae_hi_gas USING btree
-    (mon_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);

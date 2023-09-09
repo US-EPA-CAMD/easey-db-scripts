@@ -1,7 +1,3 @@
--- Table: camdecmps.daily_calibration
-
--- DROP TABLE IF EXISTS camdecmps.daily_calibration;
-
 CREATE TABLE IF NOT EXISTS camdecmps.daily_calibration
 (
     cal_inj_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -39,24 +35,15 @@ CREATE TABLE IF NOT EXISTS camdecmps.daily_calibration
     CONSTRAINT pk_daily_calibration PRIMARY KEY (cal_inj_id),
     CONSTRAINT fk_daily_calibration_daily_test_summary FOREIGN KEY (daily_test_sum_id)
         REFERENCES camdecmps.daily_test_summary (daily_test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_daily_calibration_gas_level_code FOREIGN KEY (upscale_gas_level_cd)
-        REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE,
     CONSTRAINT fk_daily_calibration_injection_protocol_code FOREIGN KEY (injection_protocol_cd)
-        REFERENCES camdecmpsmd.injection_protocol_code (injection_protocol_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.injection_protocol_code (injection_protocol_cd) MATCH SIMPLE,
     CONSTRAINT fk_daily_calibration_protocol_gas_vendor FOREIGN KEY (vendor_id)
-        REFERENCES camdecmps.protocol_gas_vendor (vendor_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.protocol_gas_vendor (vendor_id) MATCH SIMPLE,
     CONSTRAINT fk_daily_calibration_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.daily_calibration
@@ -157,35 +144,3 @@ COMMENT ON COLUMN camdecmps.daily_calibration.expiration_date
 
 COMMENT ON COLUMN camdecmps.daily_calibration.injection_protocol_cd
     IS 'Injection Protocol code. ';
--- Index: daily_calibration_indx001
-
--- DROP INDEX IF EXISTS camdecmps.daily_calibration_indx001;
-
-CREATE INDEX IF NOT EXISTS daily_calibration_indx001
-    ON camdecmps.daily_calibration USING btree
-    (rpt_period_id ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_daily_calibrati_daily_test
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_calibrati_daily_test;
-
-CREATE INDEX IF NOT EXISTS idx_daily_calibrati_daily_test
-    ON camdecmps.daily_calibration USING btree
-    (daily_test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_daily_calibration_0002
-
--- DROP INDEX IF EXISTS camdecmps.idx_daily_calibration_0002;
-
-CREATE INDEX IF NOT EXISTS idx_daily_calibration_0002
-    ON camdecmps.daily_calibration USING btree
-    (vendor_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_dcal_add_date
-
--- DROP INDEX IF EXISTS camdecmps.idx_dcal_add_date;
-
-CREATE INDEX IF NOT EXISTS idx_dcal_add_date
-    ON camdecmps.daily_calibration USING btree
-    (add_date ASC NULLS LAST)
-    TABLESPACE pg_default;

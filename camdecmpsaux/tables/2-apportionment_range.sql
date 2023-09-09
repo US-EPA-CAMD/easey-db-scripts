@@ -1,7 +1,3 @@
--- Table: camdecmpsaux.apportionment_range
-
--- DROP TABLE camdecmpsaux.apportionment_range;
-
 CREATE TABLE IF NOT EXISTS camdecmpsaux.apportionment_range
 (
     apport_range_id numeric(38,0) NOT NULL,
@@ -10,11 +6,9 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.apportionment_range
     begin_hour numeric(2,0) NOT NULL,
     end_date timestamp(0) without time zone,
     end_hour numeric(2,0),
-    CONSTRAINT apportionment_range_pk PRIMARY KEY (apport_range_id),
-    CONSTRAINT apportionment_range_app_fk FOREIGN KEY (apport_id)
+    CONSTRAINT pk_apportionment_range PRIMARY KEY (apport_range_id),
+    CONSTRAINT fk_apportionment_range_apportionment FOREIGN KEY (apport_id)
         REFERENCES camdecmpsaux.apportionment (apport_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmpsaux.apportionment_range
@@ -37,11 +31,3 @@ COMMENT ON COLUMN camdecmpsaux.apportionment_range.end_date
 
 COMMENT ON COLUMN camdecmpsaux.apportionment_range.end_hour
     IS 'Hour of the end hour of the applicable hour range for the apportionment data.';
-
--- Index: apportionment_range_app_ix
-
--- DROP INDEX camdecmpsaux.apportionment_range_app_ix;
-
-CREATE INDEX IF NOT EXISTS apportionment_range_app_ix
-    ON camdecmpsaux.apportionment_range USING btree
-    (apport_id ASC NULLS LAST);

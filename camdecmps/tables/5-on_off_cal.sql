@@ -1,7 +1,3 @@
--- Table: camdecmps.on_off_cal
-
--- DROP TABLE camdecmps.on_off_cal;
-
 CREATE TABLE IF NOT EXISTS camdecmps.on_off_cal
 (
     on_off_cal_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -44,12 +40,9 @@ CREATE TABLE IF NOT EXISTS camdecmps.on_off_cal
     update_date timestamp without time zone,
     CONSTRAINT pk_on_off_cal PRIMARY KEY (on_off_cal_id),
     CONSTRAINT fk_on_off_cal_gas_level_code FOREIGN KEY (upscale_gas_level_cd)
-        REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE,
     CONSTRAINT fk_on_off_cal_test_summary FOREIGN KEY (test_sum_id)
         REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -169,19 +162,3 @@ COMMENT ON COLUMN camdecmps.on_off_cal.add_date
 
 COMMENT ON COLUMN camdecmps.on_off_cal.update_date
     IS 'Date and time in which record was last updated. ';
-
--- Index: idx_on_off_cal_001
-
--- DROP INDEX camdecmps.idx_on_off_cal_001;
-
-CREATE INDEX IF NOT EXISTS idx_on_off_cal_001
-    ON camdecmps.on_off_cal USING btree
-    (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_on_off_cal_upscale_ga
-
--- DROP INDEX camdecmps.idx_on_off_cal_upscale_ga;
-
-CREATE INDEX IF NOT EXISTS idx_on_off_cal_upscale_ga
-    ON camdecmps.on_off_cal USING btree
-    (upscale_gas_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);

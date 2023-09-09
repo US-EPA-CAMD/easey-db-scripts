@@ -1,7 +1,3 @@
--- Table: camdecmps.monitor_location_attribute
-
--- DROP TABLE camdecmps.monitor_location_attribute;
-
 CREATE TABLE IF NOT EXISTS camdecmps.monitor_location_attribute
 (
     mon_loc_attrib_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -21,17 +17,12 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_location_attribute
     userid character varying(25) COLLATE pg_catalog."default",
     CONSTRAINT pk_monitor_location_attribute PRIMARY KEY (mon_loc_attrib_id),
     CONSTRAINT fk_monitor_location_attribute_material_code FOREIGN KEY (material_cd)
-        REFERENCES camdecmpsmd.material_code (material_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.material_code (material_cd) MATCH SIMPLE,
     CONSTRAINT fk_monitor_location_attribute_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_monitor_location_attribute_shape_code FOREIGN KEY (shape_cd)
         REFERENCES camdecmpsmd.shape_code (shape_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.monitor_location_attribute
@@ -81,35 +72,3 @@ COMMENT ON COLUMN camdecmps.monitor_location_attribute.update_date
 
 COMMENT ON COLUMN camdecmps.monitor_location_attribute.userid
     IS 'User account or source of data that added or updated record. ';
-
--- Index: idx_monitor_locatio_material_c
-
--- DROP INDEX camdecmps.idx_monitor_locatio_material_c;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_locatio_material_c
-    ON camdecmps.monitor_location_attribute USING btree
-    (material_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_locatio_mon_loc_id
-
--- DROP INDEX camdecmps.idx_monitor_locatio_mon_loc_id;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_locatio_mon_loc_id
-    ON camdecmps.monitor_location_attribute USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_monitor_locatio_shape_cd
-
--- DROP INDEX camdecmps.idx_monitor_locatio_shape_cd;
-
-CREATE INDEX IF NOT EXISTS idx_monitor_locatio_shape_cd
-    ON camdecmps.monitor_location_attribute USING btree
-    (shape_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: monitor_locatio_idx$$_15b0000b
-
--- DROP INDEX camdecmps."monitor_locatio_idx$$_15b0000b";
-
-CREATE INDEX IF NOT EXISTS "monitor_locatio_idx$$_15b0000b"
-    ON camdecmps.monitor_location_attribute USING btree
-    (begin_date ASC NULLS LAST);

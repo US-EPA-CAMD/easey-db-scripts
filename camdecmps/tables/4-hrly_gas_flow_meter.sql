@@ -1,7 +1,3 @@
--- Table: camdecmps.hrly_gas_flow_meter
-
--- DROP TABLE IF EXISTS camdecmps.hrly_gas_flow_meter;
-
 CREATE TABLE IF NOT EXISTS camdecmps.hrly_gas_flow_meter
 (
     hrly_gas_flow_meter_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -21,21 +17,18 @@ CREATE TABLE IF NOT EXISTS camdecmps.hrly_gas_flow_meter
     update_date timestamp without time zone,
     CONSTRAINT pk_hrly_gas_flow_meter PRIMARY KEY (hrly_gas_flow_meter_id),
     CONSTRAINT fk_hrly_gas_flow_meter_component FOREIGN KEY (component_id)
-        REFERENCES camdecmps.component (component_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.component (component_id) MATCH SIMPLE,
     CONSTRAINT fk_hrly_gas_flow_meter_hrly_op_data FOREIGN KEY (hour_id)
         REFERENCES camdecmps.hrly_op_data (hour_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_hrly_gas_flow_meter_monitor_location FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE,
     CONSTRAINT fk_hrly_gas_flow_meter_reporting_period FOREIGN KEY (rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
+	  CONSTRAINT fk_hrly_gas_flow_meter_begin_end_hour_flg FOREIGN KEY (begin_end_hour_flg)
+        REFERENCES camdecmpsmd.begin_end_hour_flag (begin_end_hour_flg) MATCH SIMPLE,
+	  CONSTRAINT fk_hrly_gas_flow_meter_sampling_rate_uom FOREIGN KEY (sampling_rate_uom)
+        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE
 );
 
 COMMENT ON TABLE camdecmps.hrly_gas_flow_meter
@@ -85,35 +78,3 @@ COMMENT ON COLUMN camdecmps.hrly_gas_flow_meter.add_date
 
 COMMENT ON COLUMN camdecmps.hrly_gas_flow_meter.update_date
     IS 'Date and time in which record was last updated. ';
--- Index: idx_component_id
-
--- DROP INDEX IF EXISTS camdecmps.idx_component_id;
-
-CREATE INDEX IF NOT EXISTS idx_component_id
-    ON camdecmps.hrly_gas_flow_meter USING btree
-    (component_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_hrlygfm_001
-
--- DROP INDEX IF EXISTS camdecmps.idx_hrlygfm_001;
-
-CREATE INDEX IF NOT EXISTS idx_hrlygfm_001
-    ON camdecmps.hrly_gas_flow_meter USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_hrlygfm_add_date
-
--- DROP INDEX IF EXISTS camdecmps.idx_hrlygfm_add_date;
-
-CREATE INDEX IF NOT EXISTS idx_hrlygfm_add_date
-    ON camdecmps.hrly_gas_flow_meter USING btree
-    (add_date ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: idx_hrlygfm_hour_id
-
--- DROP INDEX IF EXISTS camdecmps.idx_hrlygfm_hour_id;
-
-CREATE INDEX IF NOT EXISTS idx_hrlygfm_hour_id
-    ON camdecmps.hrly_gas_flow_meter USING btree
-    (hour_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;

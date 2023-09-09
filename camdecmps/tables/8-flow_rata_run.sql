@@ -1,7 +1,3 @@
--- Table: camdecmps.flow_rata_run
-
--- DROP TABLE camdecmps.flow_rata_run;
-
 CREATE TABLE IF NOT EXISTS camdecmps.flow_rata_run
 (
     flow_rata_run_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -29,7 +25,6 @@ CREATE TABLE IF NOT EXISTS camdecmps.flow_rata_run
     CONSTRAINT pk_flow_rata_run PRIMARY KEY (flow_rata_run_id),
     CONSTRAINT fk_flow_rata_run_rata_run FOREIGN KEY (rata_run_id)
         REFERENCES camdecmps.rata_run (rata_run_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
 
@@ -101,11 +96,3 @@ COMMENT ON COLUMN camdecmps.flow_rata_run.update_date
 
 COMMENT ON COLUMN camdecmps.flow_rata_run.add_date
     IS 'Date and time in which record was added. ';
-
--- Index: flow_rata_run_idx001
-
--- DROP INDEX camdecmps.flow_rata_run_idx001;
-
-CREATE INDEX IF NOT EXISTS flow_rata_run_idx001
-    ON camdecmps.flow_rata_run USING btree
-    (rata_run_id COLLATE pg_catalog."default" ASC NULLS LAST);

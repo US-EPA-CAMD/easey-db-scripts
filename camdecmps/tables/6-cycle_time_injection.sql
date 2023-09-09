@@ -1,7 +1,3 @@
--- Table: camdecmps.cycle_time_injection
-
--- DROP TABLE camdecmps.cycle_time_injection;
-
 CREATE TABLE IF NOT EXISTS camdecmps.cycle_time_injection
 (
     cycle_time_inj_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -24,12 +20,9 @@ CREATE TABLE IF NOT EXISTS camdecmps.cycle_time_injection
     CONSTRAINT pk_cycle_time_injection PRIMARY KEY (cycle_time_inj_id),
     CONSTRAINT fk_cycle_time_injection_cycle_time_summary FOREIGN KEY (cycle_time_sum_id)
         REFERENCES camdecmps.cycle_time_summary (cycle_time_sum_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_cycle_time_injection_gas_level_code FOREIGN KEY (gas_level_cd)
         REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.cycle_time_injection
@@ -85,19 +78,3 @@ COMMENT ON COLUMN camdecmps.cycle_time_injection.injection_cycle_time
 
 COMMENT ON COLUMN camdecmps.cycle_time_injection.calc_injection_cycle_time
     IS 'Component cycle time. ';
-
--- Index: cycle_time_injection_idx001
-
--- DROP INDEX camdecmps.cycle_time_injection_idx001;
-
-CREATE INDEX IF NOT EXISTS cycle_time_injection_idx001
-    ON camdecmps.cycle_time_injection USING btree
-    (cycle_time_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_cycle_time_inje_gas_level
-
--- DROP INDEX camdecmps.idx_cycle_time_inje_gas_level;
-
-CREATE INDEX IF NOT EXISTS idx_cycle_time_inje_gas_level
-    ON camdecmps.cycle_time_injection USING btree
-    (gas_level_cd COLLATE pg_catalog."default" ASC NULLS LAST);

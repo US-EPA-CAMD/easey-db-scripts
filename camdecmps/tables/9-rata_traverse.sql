@@ -1,7 +1,3 @@
--- Table: camdecmps.rata_traverse
-
--- DROP TABLE camdecmps.rata_traverse;
-
 CREATE TABLE IF NOT EXISTS camdecmps.rata_traverse
 (
     rata_traverse_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -28,16 +24,11 @@ CREATE TABLE IF NOT EXISTS camdecmps.rata_traverse
     CONSTRAINT pk_rata_traverse PRIMARY KEY (rata_traverse_id),
     CONSTRAINT fk_rata_traverse_flow_rata_run FOREIGN KEY (flow_rata_run_id)
         REFERENCES camdecmps.flow_rata_run (flow_rata_run_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT fk_rata_traverse_pressure_measure_code FOREIGN KEY (pressure_meas_cd)
-        REFERENCES camdecmpsmd.pressure_measure_code (pressure_meas_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdecmpsmd.pressure_measure_code (pressure_meas_cd) MATCH SIMPLE,
     CONSTRAINT fk_rata_traverse_probe_type_code FOREIGN KEY (probe_type_cd)
         REFERENCES camdecmpsmd.probe_type_code (probe_type_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camdecmps.rata_traverse
@@ -105,27 +96,3 @@ COMMENT ON COLUMN camdecmps.rata_traverse.update_date
 
 COMMENT ON COLUMN camdecmps.rata_traverse.point_used_ind
     IS 'Used to indicate that the traverse point is one of the four method 1 points closest to the stack wall and this test run was used to determine a WAF. ';
-
--- Index: idx_rata_traverse_flow_rata
-
--- DROP INDEX camdecmps.idx_rata_traverse_flow_rata;
-
-CREATE INDEX IF NOT EXISTS idx_rata_traverse_flow_rata
-    ON camdecmps.rata_traverse USING btree
-    (flow_rata_run_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_rata_traverse_pressure_m
-
--- DROP INDEX camdecmps.idx_rata_traverse_pressure_m;
-
-CREATE INDEX IF NOT EXISTS idx_rata_traverse_pressure_m
-    ON camdecmps.rata_traverse USING btree
-    (pressure_meas_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_rata_traverse_probe_type
-
--- DROP INDEX camdecmps.idx_rata_traverse_probe_type;
-
-CREATE INDEX IF NOT EXISTS idx_rata_traverse_probe_type
-    ON camdecmps.rata_traverse USING btree
-    (probe_type_cd COLLATE pg_catalog."default" ASC NULLS LAST);
