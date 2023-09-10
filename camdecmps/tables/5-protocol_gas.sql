@@ -16,9 +16,9 @@ CREATE TABLE IF NOT EXISTS camdecmps.protocol_gas
     CONSTRAINT fk_protocol_gas_gas_type_code FOREIGN KEY (gas_type_cd)
         REFERENCES camdecmpsmd.gas_type_code (gas_type_cd) MATCH SIMPLE,
     CONSTRAINT fk_protocol_gas_protocol_gas_vendor FOREIGN KEY (vendor_id)
-        REFERENCES camdecmpsmd.protocol_gas_vendor (vendor_id) MATCH SIMPLE,
+        REFERENCES camdecmps.protocol_gas_vendor (vendor_id) MATCH SIMPLE,
     CONSTRAINT fk_protocol_gas_test_summary FOREIGN KEY (test_sum_id)
-        REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE;
+        REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
         ON DELETE CASCADE
 );
 

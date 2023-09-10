@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.evaluation_queue
     severity_cd character varying(8) COLLATE pg_catalog."default",
     submitted_on timestamp without time zone NOT NULL,
     status_cd character varying(8) COLLATE pg_catalog."default" NOT NULL,
+    details text COLLATE pg_catalog."default",
     CONSTRAINT pk_evaluation_queue PRIMARY KEY (evaluation_id),
     CONSTRAINT fk_evaluation_queue_evaluation_set FOREIGN KEY (evaluation_set_id)
         REFERENCES camdecmpsaux.evaluation_set (evaluation_set_id) MATCH SIMPLE

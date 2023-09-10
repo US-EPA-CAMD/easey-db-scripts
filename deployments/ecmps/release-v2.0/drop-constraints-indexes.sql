@@ -1,39 +1,75 @@
+DROP VIEW IF EXISTS camdecmpsaux.vw_em_submission_access;
+----------------------------------------------------------------------------------------------------------------------------------
+/* CAMDMD */
+----------------------------------------------------------------------------------------------------------------------------------
+ALTER TABLE IF EXISTS camdmd.account_type_code
+    DROP CONSTRAINT IF EXISTS fk_account_type_account_type_group;
+
+ALTER TABLE IF EXISTS camdmd.unit_type_code
+    DROP CONSTRAINT IF EXISTS fk_unit_type_unit_type_group;
+----------------------------------------------------------------------------------------------------------------------------------
+/* CAMDECMPSMD */
+----------------------------------------------------------------------------------------------------------------------------------
+ALTER TABLE IF EXISTS camdecmpsmd.test_type_code
+    DROP CONSTRAINT IF EXISTS fk_test_type_code_group_code;
+----------------------------------------------------------------------------------------------------------------------------------
+/* CAMD */
+----------------------------------------------------------------------------------------------------------------------------------
+ALTER TABLE IF EXISTS camd.plant_person
+    DROP CONSTRAINT IF EXISTS pk_plant_person,
+    DROP CONSTRAINT IF EXISTS fk_plant_person_plant,
+    DROP CONSTRAINT IF EXISTS fk_plant_person_program,
+    DROP CONSTRAINT IF EXISTS fk_plant_person_responsib,
+    DROP CONSTRAINT IF EXISTS fk_plant_person_program_code,
+    DROP CONSTRAINT IF EXISTS fk_plant_person_responsibility;
+----------------------------------------------------------------------------------------------------------------------------------
+/* CAMDAUX */
+----------------------------------------------------------------------------------------------------------------------------------
+ALTER TABLE IF EXISTS camdaux.datatable
+    DROP CONSTRAINT IF EXISTS uq_datatable,
+    DROP CONSTRAINT IF EXISTS fk_datatable_template_code;
+----------------------------------------------------------------------------------------------------------------------------------
+/* CAMDECMPSWKS */
+----------------------------------------------------------------------------------------------------------------------------------
+DROP INDEX IF EXISTS camdecmpswks.idx_component_analytical_principle_cd;
+DROP INDEX IF EXISTS camdecmpswks.idx_component_analytical_principle_code;
+
+ALTER TABLE IF EXISTS camdecmpswks.component
+	  DROP CONSTRAINT IF EXISTS fk_component_analytical_principle_code;
+
+ALTER TABLE IF EXISTS camdecmpswks.daily_calibration
+	  DROP CONSTRAINT IF EXISTS fk_daily_calibration_protocol_gas_vendor;
+
+ALTER TABLE IF EXISTS camdecmpswks.monitor_plan
+    DROP CONSTRAINT IF EXISTS fk_monitor_plan_eval_status_code;
+	
+ALTER TABLE IF EXISTS camdecmpswks.qa_cert_event
+    DROP CONSTRAINT IF EXISTS fk_qa_cert_event_eval_status_code;
+	
+ALTER TABLE IF EXISTS camdecmpswks.test_extension_exemption
+    DROP CONSTRAINT IF EXISTS fk_test_extension_exemption_eval_status_code;
+	
+ALTER TABLE IF EXISTS camdecmpswks.test_summary
+    DROP CONSTRAINT IF EXISTS fk_test_summary_eval_status_code;
+	
+ALTER TABLE IF EXISTS camdecmpswks.emission_evaluation
+    DROP CONSTRAINT IF EXISTS fk_emission_evaluation_eval_status_code;
+
+ALTER TABLE IF EXISTS camdecmpswks.user_check_out
+	  DROP CONSTRAINT IF EXISTS pk_user_check_out,
+	  DROP CONSTRAINT IF EXISTS uq_user_checkout_out;
 ----------------------------------------------------------------------------------------------------------------------------------
 /* EMISSION VIEW TABLES */
 ----------------------------------------------------------------------------------------------------------------------------------
-DO $$
-DECLARE
-	dataset record;
-	sqlStatement text;
-BEGIN
-	FOR dataset IN SELECT * FROM camdaux.dataset WHERE group_cd = 'EMVIEW' AND dataset_cd NOT IN ('LTFF', 'NSPS4T', 'DAILYBACKSTOP', 'COUNTS')
-	LOOP
-		sqlStatement := format('
-			DROP INDEX IF EXISTS camdecmps.idx_emission_view_%s_mon_plan_id;
-			DROP INDEX IF EXISTS camdecmps.idx_emission_view_%s_mon_loc_id;
-			DROP INDEX IF EXISTS camdecmps.idx_emission_view_%s_rpt_period_id;
-			DROP INDEX IF EXISTS camdecmps.idx_emission_view_%s_rpt_period_id_mon_loc_id;
-			DROP INDEX IF EXISTS camdecmpswks.idx_emission_view_%s_mon_plan_id;
-			DROP INDEX IF EXISTS camdecmpswks.idx_emission_view_%s_mon_loc_id;
-			DROP INDEX IF EXISTS camdecmpswks.idx_emission_view_%s_rpt_period_id;
-			DROP INDEX IF EXISTS camdecmpswks.idx_emission_view_%s_rpt_period_id_mon_loc_id;
-	    ', lower(dataset.dataset_cd), lower(dataset.dataset_cd), lower(dataset.dataset_cd), lower(dataset.dataset_cd),
-		   lower(dataset.dataset_cd), lower(dataset.dataset_cd), lower(dataset.dataset_cd), lower(dataset.dataset_cd)
-		);
-		RAISE NOTICE 'Executing...%', sqlStatement;
-		EXECUTE sqlStatement;
-		DROP INDEX IF EXISTS camdecmps.idx_emission_view_count_mon_plan_id;
-		DROP INDEX IF EXISTS camdecmps.idx_emission_view_count_mon_loc_id;
-		DROP INDEX IF EXISTS camdecmps.idx_emission_view_count_dataset_cd;
-		DROP INDEX IF EXISTS camdecmps.idx_emission_view_count_rpt_period_id;
-		DROP INDEX IF EXISTS camdecmps.idx_emission_view_count_rpt_period_id_mon_loc_id;
-		DROP INDEX IF EXISTS camdecmpswks.idx_emission_view_count_mon_plan_id;
-		DROP INDEX IF EXISTS camdecmpswks.idx_emission_view_count_mon_loc_id;
-		DROP INDEX IF EXISTS camdecmpswks.idx_emission_view_count_dataset_cd;
-		DROP INDEX IF EXISTS camdecmpswks.idx_emission_view_count_rpt_period_id;
-		DROP INDEX IF EXISTS camdecmpswks.idx_emission_view_count_rpt_period_id_mon_loc_id;
-	END LOOP;
-END $$;
+ALTER TABLE IF EXISTS camdecmps.emission_view_count
+    DROP CONSTRAINT IF EXISTS fk_emission_view_count_monitor_location,
+    DROP CONSTRAINT IF EXISTS fk_emission_view_count_monitor_plan,
+	  DROP CONSTRAINT IF EXISTS fk_emission_view_count_reporting_period;
+
+ALTER TABLE IF EXISTS camdecmpswks.emission_view_count
+	  DROP CONSTRAINT IF EXISTS fk_emission_view_count_monitor_location,
+	  DROP CONSTRAINT IF EXISTS fk_emission_view_count_monitor_plan,
+	  DROP CONSTRAINT IF EXISTS fk_emission_view_count_reporting_period;
 ----------------------------------------------------------------------------------------------------------------------------------
 /* CAMDECMPSAUX */
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -43,7 +79,7 @@ DROP INDEX IF EXISTS camdecmpsaux.idx_apportionment_data_apport_range_id;
 ALTER TABLE IF EXISTS camdecmpsaux.apportionment_data
     DROP CONSTRAINT IF EXISTS apportionment_data_pk,
     DROP CONSTRAINT IF EXISTS apportionment_data_rng_fk,
-	DROP CONSTRAINT IF EXISTS pk_apportionment_data,
+	  DROP CONSTRAINT IF EXISTS pk_apportionment_data,
     DROP CONSTRAINT IF EXISTS fk_apportionment_data_apportionment_range;
 ----------------------------------------------------------------------------------------------------------------------------------
 DROP INDEX IF EXISTS camdecmpsaux.idx_submission_queue_submission_set_id;
@@ -57,7 +93,7 @@ DROP INDEX IF EXISTS camdecmpsaux.idx_submission_queue_severity_cd;
 DROP INDEX IF EXISTS camdecmpsaux.idx_submission_queue_status_cd;
 
 ALTER TABLE IF EXISTS camdecmpsaux.submission_queue
-	DROP CONSTRAINT IF EXISTS pk_submission_queue,
+	  DROP CONSTRAINT IF EXISTS pk_submission_queue,
     DROP CONSTRAINT IF EXISTS fk_evaluation_queue_qa_cert_event,
     DROP CONSTRAINT IF EXISTS fk_evaluation_queue_reporting_period,
     DROP CONSTRAINT IF EXISTS fk_evaluation_queue_test_extension_exemption,
@@ -104,9 +140,11 @@ DROP INDEX IF EXISTS camdecmpsaux.idx_email_to_process_status_cd;
 ALTER TABLE IF EXISTS camdecmpsaux.email_to_process
     DROP CONSTRAINT IF EXISTS pk_email_to_process,
     DROP CONSTRAINT IF EXISTS fk_email_to_process_em_sub_access,
+    DROP CONSTRAINT IF EXISTS fk_email_to_process_em_submission_access,    
     DROP CONSTRAINT IF EXISTS fk_email_to_process_monitor_plan,
     DROP CONSTRAINT IF EXISTS fk_email_to_process_plant,
-    DROP CONSTRAINT IF EXISTS fk_email_to_process_rpt_period_id;
+    DROP CONSTRAINT IF EXISTS fk_email_to_process_rpt_period_id,
+    DROP CONSTRAINT IF EXISTS fk_email_to_process_reporting_period;
 ----------------------------------------------------------------------------------------------------------------------------------
 DROP INDEX IF EXISTS camdecmpsaux.idx_check_log_1471;
 DROP INDEX IF EXISTS camdecmpsaux.idx_check_log_6400;
@@ -133,8 +171,8 @@ ALTER TABLE IF EXISTS camdecmpsaux.check_log
     DROP CONSTRAINT IF EXISTS fk_check_log_check_session,
     DROP CONSTRAINT IF EXISTS fk_check_log_rule_check,
     DROP CONSTRAINT IF EXISTS fk_check_log_check_catalog_result,
-	DROP CONSTRAINT IF EXISTS fk_check_log_monitor_location,
-	DROP CONSTRAINT IF EXISTS fk_check_log_test_summary,
+	  DROP CONSTRAINT IF EXISTS fk_check_log_monitor_location,
+	  DROP CONSTRAINT IF EXISTS fk_check_log_test_summary,
     DROP CONSTRAINT IF EXISTS fk_check_log_severity_code,
     DROP CONSTRAINT IF EXISTS fk_check_log_severity_code_suppressed,
     DROP CONSTRAINT IF EXISTS fk_check_log_es_spec;
@@ -145,7 +183,7 @@ DROP INDEX IF EXISTS camdecmpsaux.idx_apportionment_range_apport_id;
 ALTER TABLE IF EXISTS camdecmpsaux.apportionment_range
     DROP CONSTRAINT IF EXISTS apportionment_range_pk,
     DROP CONSTRAINT IF EXISTS apportionment_range_app_fk,
-	DROP CONSTRAINT IF EXISTS pk_apportionment_range,
+	  DROP CONSTRAINT IF EXISTS pk_apportionment_range,
     DROP CONSTRAINT IF EXISTS fk_apportionment_range_apportionment;
 ----------------------------------------------------------------------------------------------------------------------------------
 DROP INDEX IF EXISTS camdecmpsaux.idx_submission_set_mon_plan_id;
@@ -154,8 +192,9 @@ DROP INDEX IF EXISTS camdecmpsaux.idx_submission_set_fac_id;
 
 ALTER TABLE IF EXISTS camdecmpsaux.submission_set
     DROP CONSTRAINT IF EXISTS pk_submission_set,
-    DROP CONSTRAINT IF EXISTS pk_submission_set_plant,	
-	DROP CONSTRAINT IF EXISTS fk_submission_set_monitor_plan;
+    DROP CONSTRAINT IF EXISTS pk_submission_set_plant,
+    DROP CONSTRAINT IF EXISTS fk_submission_set_plant,
+	  DROP CONSTRAINT IF EXISTS fk_submission_set_monitor_plan;
 ----------------------------------------------------------------------------------------------------------------------------------
 DROP INDEX IF EXISTS camdecmpsaux.idx_prg_param_begin_rpt_period;
 DROP INDEX IF EXISTS camdecmpsaux.idx_prg_param_end_rpt_period;
@@ -167,6 +206,11 @@ DROP INDEX IF EXISTS camdecmpsaux.idx_program_parameter_parameter_cd;
 DROP INDEX IF EXISTS camdecmpsaux.idx_program_parameter_prg_id;
 
 ALTER TABLE IF EXISTS camdecmpsaux.program_parameter
+    DROP CONSTRAINT IF EXISTS uq_prg_param_begin,
+    DROP CONSTRAINT IF EXISTS fk_prg_param_prg_id,
+    DROP CONSTRAINT IF EXISTS fk_prg_param_param_cd,
+    DROP CONSTRAINT IF EXISTS fk_prg_param_begin_rpt_period,
+    DROP CONSTRAINT IF EXISTS fk_prg_param_end_rpt_period,
     DROP CONSTRAINT IF EXISTS pk_program_parameter,
     DROP CONSTRAINT IF EXISTS uq_program_parameter,
     DROP CONSTRAINT IF EXISTS fk_program_parameter_begin_rpt_period,
@@ -179,7 +223,7 @@ DROP INDEX IF EXISTS camdecmpsaux.idx_evaluation_set_fac_id;
 
 ALTER TABLE IF EXISTS camdecmpsaux.evaluation_set
     DROP CONSTRAINT IF EXISTS pk_evaluation_set,
-	DROP CONSTRAINT IF EXISTS fk_evaluation_set_plant,
+	  DROP CONSTRAINT IF EXISTS fk_evaluation_set_plant,
     DROP CONSTRAINT IF EXISTS fk_evaluation_set_monitor_plan;
 ----------------------------------------------------------------------------------------------------------------------------------
 DROP INDEX IF EXISTS camdecmpsaux.es_spec_ccr_ix;
@@ -193,8 +237,8 @@ DROP INDEX IF EXISTS camdecmpsaux.idx_es_spec_es_reason_cd;
 
 ALTER TABLE IF EXISTS camdecmpsaux.es_spec
     DROP CONSTRAINT IF EXISTS es_spec_pk,
-	DROP CONSTRAINT IF EXISTS pk_es_spec,
-	DROP CONSTRAINT IF EXISTS es_spec_ccr_fk,
+	  DROP CONSTRAINT IF EXISTS pk_es_spec,
+	  DROP CONSTRAINT IF EXISTS es_spec_ccr_fk,
     DROP CONSTRAINT IF EXISTS es_spec_dat_fk,
     DROP CONSTRAINT IF EXISTS es_spec_fac_fk,
     DROP CONSTRAINT IF EXISTS es_spec_rea_fk,
@@ -271,8 +315,8 @@ DROP INDEX IF EXISTS camdecmpsaux.idx_apportionment_end_rpt_period_id;
 
 ALTER TABLE IF EXISTS camdecmpsaux.apportionment
     DROP CONSTRAINT IF EXISTS apportionment_pk,
-	DROP CONSTRAINT IF EXISTS pk_apportionment,
-	DROP CONSTRAINT IF EXISTS apportionment_bprd_fk,
+	  DROP CONSTRAINT IF EXISTS pk_apportionment,
+	  DROP CONSTRAINT IF EXISTS apportionment_bprd_fk,
     DROP CONSTRAINT IF EXISTS apportionment_eprd_fk,
     DROP CONSTRAINT IF EXISTS apportionment_pln_fk,
     DROP CONSTRAINT IF EXISTS apportionment_mon_plan_id_check,
@@ -402,9 +446,9 @@ DROP INDEX IF EXISTS camdecmps.idx_daily_test_system_supp_data_rpt_period_id;
 DROP INDEX IF EXISTS camdecmps.idx_daily_test_system_supp_data_rpt_period_id_mon_loc_id;
 
 ALTER TABLE IF EXISTS camdecmps.daily_test_system_supp_data
-	DROP CONSTRAINT IF EXISTS pk_daily_test_sys_sup_data,
-	DROP CONSTRAINT IF EXISTS fk_daily_test_sys_sup_data_rpp,
-	DROP CONSTRAINT IF EXISTS pk_daily_test_system_supp_data,
+	  DROP CONSTRAINT IF EXISTS pk_daily_test_sys_sup_data,
+	  DROP CONSTRAINT IF EXISTS fk_daily_test_sys_sup_data_rpp,
+	  DROP CONSTRAINT IF EXISTS pk_daily_test_system_supp_data,
     DROP CONSTRAINT IF EXISTS fk_daily_test_system_sup_data_reporting_period,
     DROP CONSTRAINT IF EXISTS fk_daily_test_system_supp_data_daily_test_supp_data,
     DROP CONSTRAINT IF EXISTS fk_daily_test_system_supp_data_monitor_location,
@@ -522,8 +566,8 @@ DROP INDEX IF EXISTS camdecmps.idx_sampling_train_supp_data_rpt_period_id_mon_lo
 
 ALTER TABLE IF EXISTS camdecmps.sampling_train_supp_data
     DROP CONSTRAINT IF EXISTS pk_sampling_train_sd,
-	DROP CONSTRAINT IF EXISTS pk_sampling_train_supp_data,
-	DROP CONSTRAINT IF EXISTS fk_sampling_train_sd_prd,
+	  DROP CONSTRAINT IF EXISTS pk_sampling_train_supp_data,
+	  DROP CONSTRAINT IF EXISTS fk_sampling_train_sd_prd,
     DROP CONSTRAINT IF EXISTS fk_sampling_train_sd_rrc,
     DROP CONSTRAINT IF EXISTS fk_sampling_train_sd_tqs,
     DROP CONSTRAINT IF EXISTS fk_sampling_train_supp_data_component,
@@ -543,9 +587,9 @@ DROP INDEX IF EXISTS camdecmps.idx_rata_test_sum_id;
 DROP INDEX IF EXISTS camdecmps.idx_rata_rata_frequency_cd;
 
 ALTER TABLE IF EXISTS camdecmps.rata
-	DROP CONSTRAINT IF EXISTS pk_rata,
+	  DROP CONSTRAINT IF EXISTS pk_rata,
     DROP CONSTRAINT IF EXISTS fk_rata_rata_frequency_code,
-	DROP CONSTRAINT IF EXISTS fk_rata_rata_frequency_code_calc,
+	  DROP CONSTRAINT IF EXISTS fk_rata_rata_frequency_code_calc,
     DROP CONSTRAINT IF EXISTS fk_rata_test_summary;
 ----------------------------------------------------------------------------------------------------------------------------------
 DROP INDEX IF EXISTS camdecmps.idx_qa_supp_data_001;
@@ -758,14 +802,14 @@ DROP INDEX IF EXISTS camdecmps.idx_daily_test_supp_data_mon_loc_id;
 DROP INDEX IF EXISTS camdecmps.idx_daily_test_supp_data_rpt_period_id_mon_loc_id;
 
 ALTER TABLE IF EXISTS camdecmps.daily_test_supp_data
-	DROP CONSTRAINT IF EXISTS fk_daily_test_supp_data_ctr,
-	DROP CONSTRAINT IF EXISTS fk_daily_test_supp_data_rpp,
-	DROP CONSTRAINT IF EXISTS fk_daily_test_supp_data_trs,
-	DROP CONSTRAINT IF EXISTS fk_daily_test_supp_data_tty,
+	  DROP CONSTRAINT IF EXISTS fk_daily_test_supp_data_ctr,
+	  DROP CONSTRAINT IF EXISTS fk_daily_test_supp_data_rpp,
+	  DROP CONSTRAINT IF EXISTS fk_daily_test_supp_data_trs,
+	  DROP CONSTRAINT IF EXISTS fk_daily_test_supp_data_tty,
     DROP CONSTRAINT IF EXISTS fk_daily_test_supp_data_test_result_code,
-	DROP CONSTRAINT IF EXISTS fk_daily_test_supp_data_test_result_code_calc,
+	  DROP CONSTRAINT IF EXISTS fk_daily_test_supp_data_test_result_code_calc,
     DROP CONSTRAINT IF EXISTS fk_daily_test_supp_data_reporting_period,
-	DROP CONSTRAINT IF EXISTS fk_daily_test_supp_data_test_type_code,
+	  DROP CONSTRAINT IF EXISTS fk_daily_test_supp_data_test_type_code,
     DROP CONSTRAINT IF EXISTS pk_daily_test_supp_data,
     DROP CONSTRAINT IF EXISTS fk_daily_test_supp_data_component,
     DROP CONSTRAINT IF EXISTS fk_daily_test_supp_data_monitor_location,
@@ -773,12 +817,12 @@ ALTER TABLE IF EXISTS camdecmps.daily_test_supp_data
     DROP CONSTRAINT IF EXISTS fk_daily_test_supp_data_test_result_code,
     DROP CONSTRAINT IF EXISTS fk_daily_test_supp_data_test_type_code,
     DROP CONSTRAINT IF EXISTS ck_daily_test_supp_data_cmp,
-	DROP CONSTRAINT IF EXISTS ck_daily_test_supp_data_dti,
-	DROP CONSTRAINT IF EXISTS ck_daily_test_supp_data_dtt,
-	DROP CONSTRAINT IF EXISTS ck_daily_test_supp_data_ohc,
-	DROP CONSTRAINT IF EXISTS ck_daily_test_supp_data_ssc,
-	DROP CONSTRAINT IF EXISTS ck_daily_test_supp_data_stt,
-	DROP CONSTRAINT IF EXISTS ck_daily_test_supp_data_trs;
+	  DROP CONSTRAINT IF EXISTS ck_daily_test_supp_data_dti,
+	  DROP CONSTRAINT IF EXISTS ck_daily_test_supp_data_dtt,
+	  DROP CONSTRAINT IF EXISTS ck_daily_test_supp_data_ohc,
+	  DROP CONSTRAINT IF EXISTS ck_daily_test_supp_data_ssc,
+	  DROP CONSTRAINT IF EXISTS ck_daily_test_supp_data_stt,
+	  DROP CONSTRAINT IF EXISTS ck_daily_test_supp_data_trs;
 ----------------------------------------------------------------------------------------------------------------------------------
 DROP INDEX IF EXISTS camdecmps.idx_dcal_add_date;
 DROP INDEX IF EXISTS camdecmps.daily_calibration_indx001;
@@ -882,9 +926,9 @@ DROP INDEX IF EXISTS camdecmps.idx_test_summary_injection_protocol_cd;
 DROP INDEX IF EXISTS camdecmps.idx_test_summary_rpt_period_id_mon_loc_id;
 
 ALTER TABLE IF EXISTS camdecmps.test_summary
-	DROP CONSTRAINT IF EXISTS pk_test_summary,
-	DROP CONSTRAINT IF EXISTS uq_test_summary,
-	DROP CONSTRAINT IF EXISTS fk_test_summary_test_result_code_calc,
+	  DROP CONSTRAINT IF EXISTS pk_test_summary,
+	  DROP CONSTRAINT IF EXISTS uq_test_summary,
+	  DROP CONSTRAINT IF EXISTS fk_test_summary_test_result_code_calc,
     DROP CONSTRAINT IF EXISTS fk_test_summary_component,
     DROP CONSTRAINT IF EXISTS fk_test_summary_injection_protocol_code,
     DROP CONSTRAINT IF EXISTS fk_test_summary_monitor_location,
@@ -940,9 +984,9 @@ DROP INDEX IF EXISTS camdecmps.idx_system_op_supp_data_mon_sys_id;
 DROP INDEX IF EXISTS camdecmps.idx_system_op_supp_data_rpt_period_id_mon_loc_id;
  
 ALTER TABLE IF EXISTS camdecmps.system_op_supp_data
-	DROP CONSTRAINT IF EXISTS pk_system_op_supp_data,
-	DROP CONSTRAINT IF EXISTS fk_system_op_supp_data_cod,
-	DROP CONSTRAINT IF EXISTS fk_system_op_supp_data_op_supp_data_type_code,
+	  DROP CONSTRAINT IF EXISTS pk_system_op_supp_data,
+	  DROP CONSTRAINT IF EXISTS fk_system_op_supp_data_cod,
+	  DROP CONSTRAINT IF EXISTS fk_system_op_supp_data_op_supp_data_type_code,
     DROP CONSTRAINT IF EXISTS fk_system_op_supp_data_prd,
     DROP CONSTRAINT IF EXISTS fk_system_op_supp_data_reporting_period,
     DROP CONSTRAINT IF EXISTS fk_system_op_supp_data_monitor_location,
@@ -1018,7 +1062,7 @@ DROP INDEX IF EXISTS camdecmps.idx_qa_cert_event_submission_availability_cd;
 DROP INDEX IF EXISTS camdecmps.idx_qa_cert_event_submission_id;
 
 ALTER TABLE IF EXISTS camdecmps.qa_cert_event
-	DROP CONSTRAINT IF EXISTS pk_qa_cert_event,
+	  DROP CONSTRAINT IF EXISTS pk_qa_cert_event,
     DROP CONSTRAINT IF EXISTS fk_qa_cert_event_component,
     DROP CONSTRAINT IF EXISTS fk_qa_cert_event_monitor_location,
     DROP CONSTRAINT IF EXISTS fk_qa_cert_event_monitor_system,
@@ -1109,7 +1153,7 @@ ALTER TABLE IF EXISTS camdecmps.monitor_qualification_lee
 DROP INDEX IF EXISTS camdecmps.idx_monitor_qualification_cpms_mon_qual_id;
 
 ALTER TABLE IF EXISTS camdecmps.monitor_qualification_cpms
-	DROP CONSTRAINT IF EXISTS pk_monitor_qualification_cpms,
+	  DROP CONSTRAINT IF EXISTS pk_monitor_qualification_cpms,
   	DROP CONSTRAINT IF EXISTS fk_monitor_qualification_cpms_monitor_qualification;
 ----------------------------------------------------------------------------------------------------------------------------------
 DROP INDEX IF EXISTS camdecmps.idx_mhv_add_date;
@@ -1237,8 +1281,8 @@ DROP INDEX IF EXISTS camdecmps.idx_last_qa_value_supp_data_rpt_period_id;
 DROP INDEX IF EXISTS camdecmps.idx_last_qa_value_supp_data_rpt_period_id_mon_loc_id;
 
 ALTER TABLE IF EXISTS camdecmps.last_qa_value_supp_data
-	DROP CONSTRAINT IF EXISTS pk_last_qa_value_supp_data,
-	DROP CONSTRAINT IF EXISTS fk_last_qa_value_supp_data_ht,
+	  DROP CONSTRAINT IF EXISTS pk_last_qa_value_supp_data,
+	  DROP CONSTRAINT IF EXISTS fk_last_qa_value_supp_data_ht,
     DROP CONSTRAINT IF EXISTS fk_last_qa_value_supp_data_pc,
     DROP CONSTRAINT IF EXISTS fk_last_qa_value_supp_data_pr,
     DROP CONSTRAINT IF EXISTS fk_last_qa_value_supp_data_component,
@@ -1266,8 +1310,8 @@ ALTER TABLE IF EXISTS camdecmps.hrly_gas_flow_meter
     DROP CONSTRAINT IF EXISTS fk_hrly_gas_flow_meter_hrly_op_data,
     DROP CONSTRAINT IF EXISTS fk_hrly_gas_flow_meter_monitor_location,
     DROP CONSTRAINT IF EXISTS fk_hrly_gas_flow_meter_reporting_period,
-	DROP CONSTRAINT IF EXISTS fk_hrly_gas_flow_meter_begin_end_hour_flg,
-	DROP CONSTRAINT IF EXISTS fk_hrly_gas_flow_meter_sampling_rate_uom;
+	  DROP CONSTRAINT IF EXISTS fk_hrly_gas_flow_meter_begin_end_hour_flg,
+	  DROP CONSTRAINT IF EXISTS fk_hrly_gas_flow_meter_sampling_rate_uom;
 ----------------------------------------------------------------------------------------------------------------------------------
 DROP INDEX IF EXISTS camdecmps.hrly_fuel_flow_idx001;
 DROP INDEX IF EXISTS camdecmps.idx_hff_add_date;
@@ -1385,9 +1429,9 @@ DROP INDEX IF EXISTS camdecmps.idx_component_op_supp_data_mon_loc_id;
 DROP INDEX IF EXISTS camdecmps.idx_component_op_supp_data_rpt_period_id_mon_loc_id;
 
 ALTER TABLE IF EXISTS camdecmps.component_op_supp_data
-	DROP CONSTRAINT IF EXISTS pk_component_op_supp_data,
-	DROP CONSTRAINT IF EXISTS fk_component_op_supp_data_cod,
-	DROP CONSTRAINT IF EXISTS fk_component_op_supp_data_prd,
+	  DROP CONSTRAINT IF EXISTS pk_component_op_supp_data,
+	  DROP CONSTRAINT IF EXISTS fk_component_op_supp_data_cod,
+	  DROP CONSTRAINT IF EXISTS fk_component_op_supp_data_prd,
     DROP CONSTRAINT IF EXISTS fk_component_op_supp_data_component,
     DROP CONSTRAINT IF EXISTS fk_component_op_supp_data_monitor_location,
     DROP CONSTRAINT IF EXISTS fk_component_op_supp_data_op_supp_data_type_code,
@@ -1455,12 +1499,12 @@ DROP INDEX IF EXISTS camdecmps.idx_operating_supp_data_rpt_period_id_mon_loc_id;
 ALTER TABLE IF EXISTS camdecmps.operating_supp_data
     DROP CONSTRAINT IF EXISTS pk_operating_supp_data,
     DROP CONSTRAINT IF EXISTS fk_fuel_code_operating_sup,
-	DROP CONSTRAINT IF EXISTS fk_operating_supp_data_fuel_code,
+	  DROP CONSTRAINT IF EXISTS fk_operating_supp_data_fuel_code,
     DROP CONSTRAINT IF EXISTS fk_operating_supp_data_monitor_location,
     DROP CONSTRAINT IF EXISTS fk_operating_typ_operating_sup,
-	DROP CONSTRAINT IF EXISTS fk_operating_supp_data_operating_type_code,
+	  DROP CONSTRAINT IF EXISTS fk_operating_supp_data_operating_type_code,
     DROP CONSTRAINT IF EXISTS fk_reporting_per_operating_sup,
-	DROP CONSTRAINT IF EXISTS fk_operating_supp_data_reporting_period;
+	  DROP CONSTRAINT IF EXISTS fk_operating_supp_data_reporting_period;
 ----------------------------------------------------------------------------------------------------------------------------------
 DROP INDEX IF EXISTS camdecmps.idx_nsps4t_summary_loc;
 DROP INDEX IF EXISTS camdecmps.idx_nsps4t_summary_lod;
@@ -1663,10 +1707,10 @@ ALTER TABLE IF EXISTS camdecmps.dm_emissions_user
     DROP CONSTRAINT IF EXISTS dm_emissions_user_pk,
     DROP CONSTRAINT IF EXISTS dm_emissions_user_em__cd_uq,
     DROP CONSTRAINT IF EXISTS dm_emissions_user_cd_fk,
-	DROP CONSTRAINT IF EXISTS pk_dm_emissions_user,
+	  DROP CONSTRAINT IF EXISTS pk_dm_emissions_user,
     DROP CONSTRAINT IF EXISTS uq_dm_emissions_user,
     DROP CONSTRAINT IF EXISTS fk_dm_emissions_user_dm_emissions,
-	DROP CONSTRAINT IF EXISTS fk_dm_emissions_user_dm_emissions_user_code;
+	  DROP CONSTRAINT IF EXISTS fk_dm_emissions_user_dm_emissions_user_code;
 ----------------------------------------------------------------------------------------------------------------------------------
 DROP INDEX IF EXISTS camdecmps.idx_de_add_date;
 DROP INDEX IF EXISTS camdecmps.daily_emission_idx001;
@@ -1696,6 +1740,7 @@ ALTER TABLE IF EXISTS camdecmps.daily_backstop
 DROP INDEX IF EXISTS camdecmps.idx_component_mon_loc_id;
 DROP INDEX IF EXISTS camdecmps."component_idx$$_15b00009";
 DROP INDEX IF EXISTS camdecmps.idx_component_acq_cd;
+DROP INDEX IF EXISTS camdecmps.idx_component_analytical_principle_cd;
 DROP INDEX IF EXISTS camdecmps.idx_component_analytical_principle_code;
 DROP INDEX IF EXISTS camdecmps.idx_component_basis_cd;
 DROP INDEX IF EXISTS camdecmps.idx_component_component;
@@ -1708,7 +1753,7 @@ ALTER TABLE IF EXISTS camdecmps.component
     DROP CONSTRAINT IF EXISTS fk_component_analytical_principle_code,
     DROP CONSTRAINT IF EXISTS fk_component_basis_code,
     DROP CONSTRAINT IF EXISTS fk_component_component_type_code,
-	DROP CONSTRAINT IF EXISTS fk_component_monitor_location;
+	  DROP CONSTRAINT IF EXISTS fk_component_monitor_location;
 ----------------------------------------------------------------------------------------------------------------------------------
 DROP INDEX IF EXISTS camdecmps.idx_unit_stack_configuration_b;
 DROP INDEX IF EXISTS camdecmps.idx_unit_stack_configuration_s;
@@ -1817,7 +1862,7 @@ DROP INDEX IF EXISTS camdecmps.idx_unit_control_indicator_cd;
 ALTER TABLE IF EXISTS camdecmps.unit_control
     DROP CONSTRAINT IF EXISTS pk_unit_control,
     DROP CONSTRAINT IF EXISTS fk_unit_control_control_code,
-	DROP CONSTRAINT IF EXISTS fk_unit_control_control_equip_param_code,
+	  DROP CONSTRAINT IF EXISTS fk_unit_control_control_equip_param_code,
     DROP CONSTRAINT IF EXISTS fk_unit_control_fuel_indicator_code,
     DROP CONSTRAINT IF EXISTS fk_unit_control_unit;
 ----------------------------------------------------------------------------------------------------------------------------------

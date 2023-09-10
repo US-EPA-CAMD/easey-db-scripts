@@ -1,7 +1,3 @@
--- Table: camd.unit_boiler_type
-
--- DROP TABLE IF EXISTS camd.unit_boiler_type;
-
 CREATE TABLE IF NOT EXISTS camd.unit_boiler_type
 (
     unit_boiler_type_id numeric(38,0) NOT NULL,
@@ -15,13 +11,9 @@ CREATE TABLE IF NOT EXISTS camd.unit_boiler_type
     CONSTRAINT pk_unit_boiler_type PRIMARY KEY (unit_boiler_type_id),
     CONSTRAINT uq_unit_boiler_type UNIQUE (unit_id, unit_type_cd, begin_date),
     CONSTRAINT fk_unit_boiler_type_unit FOREIGN KEY (unit_id)
-        REFERENCES camd.unit (unit_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camd.unit (unit_id) MATCH SIMPLE,
     CONSTRAINT fk_unit_boiler_type_unit_type FOREIGN KEY (unit_type_cd)
         REFERENCES camdmd.unit_type_code (unit_type_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camd.unit_boiler_type
@@ -50,10 +42,6 @@ COMMENT ON COLUMN camd.unit_boiler_type.add_date
 
 COMMENT ON COLUMN camd.unit_boiler_type.update_date
     IS 'Date of the last record update.';
-
--- Index: idx_unit_boiler_type_unit
-
--- DROP INDEX camd.idx_unit_boiler_type_unit;
 
 CREATE INDEX IF NOT EXISTS idx_unit_boiler_type_unit
     ON camd.unit_boiler_type USING btree

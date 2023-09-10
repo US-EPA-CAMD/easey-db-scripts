@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_formula
     update_date timestamp without time zone,
     CONSTRAINT pk_monitor_formula PRIMARY KEY (mon_form_id),
     CONSTRAINT fk_monitor_formula_equation_code FOREIGN KEY (equation_cd)
-        REFERENCES camdecmpsmd.equation_code (equation_cd) MATCH SIMPLE=,
+        REFERENCES camdecmpsmd.equation_code (equation_cd) MATCH SIMPLE,
     CONSTRAINT fk_monitor_formula_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON DELETE CASCADE,

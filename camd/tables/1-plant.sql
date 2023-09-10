@@ -1,7 +1,3 @@
--- Table: camd.plant
-
--- DROP TABLE IF EXISTS camd.plant;
-
 CREATE TABLE IF NOT EXISTS camd.plant
 (
     fac_id numeric(38,0) NOT NULL,
@@ -31,29 +27,17 @@ CREATE TABLE IF NOT EXISTS camd.plant
     CONSTRAINT uq_plant_name_state UNIQUE (facility_name, state),
     CONSTRAINT uq_plant_oris_code UNIQUE (oris_code),
     CONSTRAINT fk_plant_county FOREIGN KEY (county_cd)
-        REFERENCES camdmd.county_code (county_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdmd.county_code (county_cd) MATCH SIMPLE,
     CONSTRAINT fk_plant_epa_region FOREIGN KEY (epa_region)
-        REFERENCES camdmd.epa_region_code (epa_region_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdmd.epa_region_code (epa_region_cd) MATCH SIMPLE,
     CONSTRAINT fk_plant_nerc FOREIGN KEY (nerc_region)
-        REFERENCES camdmd.nerc_region_code (nerc_region_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdmd.nerc_region_code (nerc_region_cd) MATCH SIMPLE,
     CONSTRAINT fk_plant_sic FOREIGN KEY (sic_code)
-        REFERENCES camdmd.sic_code (sic_code) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdmd.sic_code (sic_code) MATCH SIMPLE,
     CONSTRAINT fk_plant_state FOREIGN KEY (state)
-        REFERENCES camdmd.state_code (state_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdmd.state_code (state_cd) MATCH SIMPLE,
     CONSTRAINT fk_plant_tribal_land FOREIGN KEY (tribal_land_cd)
         REFERENCES camdmd.tribal_land_code (tribal_land_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camd.plant
@@ -127,57 +111,36 @@ COMMENT ON COLUMN camd.plant.add_date
 
 COMMENT ON COLUMN camd.plant.update_date
     IS 'Date of the last record update.';
--- Index: idx_plant_country
-
--- DROP INDEX camd.idx_plant_country;
 
 CREATE INDEX IF NOT EXISTS idx_plant_country
     ON camd.plant USING btree
     (county_cd COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
--- Index: idx_plant_epa_id_oris_name
-
--- DROP INDEX camd.idx_plant_epa_id_oris_name;
 
 CREATE INDEX IF NOT EXISTS idx_plant_epa_id_oris_name
     ON camd.plant USING btree
     (epa_region ASC NULLS LAST, fac_id ASC NULLS LAST, oris_code ASC NULLS LAST, facility_name COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
--- Index: idx_plant_epa_region
-
--- DROP INDEX camd.idx_plant_epa_region;
 
 CREATE INDEX IF NOT EXISTS idx_plant_epa_region
     ON camd.plant USING btree
     (epa_region ASC NULLS LAST)
     TABLESPACE pg_default;
--- Index: idx_plant_nerc
-
--- DROP INDEX camd.idx_plant_nerc;
 
 CREATE INDEX IF NOT EXISTS idx_plant_nerc
     ON camd.plant USING btree
     (nerc_region COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
--- Index: idx_plant_sic
-
--- DROP INDEX camd.idx_plant_sic;
 
 CREATE INDEX IF NOT EXISTS idx_plant_sic
     ON camd.plant USING btree
     (sic_code ASC NULLS LAST)
     TABLESPACE pg_default;
--- Index: idx_plant_state
-
--- DROP INDEX camd.idx_plant_state;
 
 CREATE INDEX IF NOT EXISTS idx_plant_state
     ON camd.plant USING btree
     (state COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
--- Index: idx_plant_tribal_land
-
--- DROP INDEX camd.idx_plant_tribal_land;
 
 CREATE INDEX IF NOT EXISTS idx_plant_tribal_land
     ON camd.plant USING btree

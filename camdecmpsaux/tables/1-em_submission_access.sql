@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.em_submission_access
         REFERENCES camdecmpsmd.em_sub_type_code (em_sub_type_cd) MATCH SIMPLE,
     CONSTRAINT fk_em_submission_access_submission_availability_code FOREIGN KEY (sub_availability_cd)
         REFERENCES camdecmpsmd.submission_availability_code (sub_availability_cd) MATCH SIMPLE,
-    CONSTRAINT chk_em_submission_access_begin_date_lte_end_date CHECK (access_begin_date <= access_end_date)0
+    CONSTRAINT chk_em_submission_access_begin_date_lte_end_date CHECK (access_begin_date <= access_end_date)
 );
 
 COMMENT ON TABLE camdecmpsaux.em_submission_access

@@ -1,7 +1,3 @@
--- Table: camd.unit
-
--- DROP TABLE IF EXISTS camd.unit;
-
 CREATE TABLE IF NOT EXISTS camd.unit
 (
     unit_id numeric(38,0) NOT NULL,
@@ -27,17 +23,11 @@ CREATE TABLE IF NOT EXISTS camd.unit
     CONSTRAINT pk_unit PRIMARY KEY (unit_id),
     CONSTRAINT uq_unit UNIQUE (fac_id, unitid),
     CONSTRAINT fk_unit_naics FOREIGN KEY (naics_cd)
-        REFERENCES camdmd.naics_code (naics_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdmd.naics_code (naics_cd) MATCH SIMPLE,
     CONSTRAINT fk_unit_plant FOREIGN KEY (fac_id)
-        REFERENCES camd.plant (fac_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camd.plant (fac_id) MATCH SIMPLE,
     CONSTRAINT fk_unit_source_category FOREIGN KEY (source_category_cd)
         REFERENCES camdmd.source_category_code (source_category_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camd.unit
@@ -103,25 +93,13 @@ COMMENT ON COLUMN camd.unit.add_date
 COMMENT ON COLUMN camd.unit.update_date
     IS 'Date of the last record update.';
 
--- Index: idx_unit_naics
-
--- DROP INDEX camd.idx_unit_naics;
-
 CREATE INDEX IF NOT EXISTS idx_unit_naics
     ON camd.unit USING btree
     (naics_cd ASC NULLS LAST);
 
--- Index: idx_unit_plant
-
--- DROP INDEX camd.idx_unit_plant;
-
 CREATE INDEX IF NOT EXISTS idx_unit_plant
     ON camd.unit USING btree
     (fac_id ASC NULLS LAST);
-
--- Index: idx_unit_source_category
-
--- DROP INDEX camd.idx_unit_source_category;
 
 CREATE INDEX IF NOT EXISTS idx_unit_source_category
     ON camd.unit USING btree

@@ -1,7 +1,3 @@
--- Table: camd.unit_generator
-
--- DROP TABLE IF EXISTS camd.unit_generator;
-
 CREATE TABLE IF NOT EXISTS camd.unit_generator
 (
     unit_gen_id numeric(38,0) NOT NULL,
@@ -15,13 +11,9 @@ CREATE TABLE IF NOT EXISTS camd.unit_generator
     CONSTRAINT pk_unit_generator PRIMARY KEY (unit_gen_id),
     CONSTRAINT uq_unit_generator UNIQUE (unit_id, gen_id, begin_date),
     CONSTRAINT fk_unit_generator_gen_id FOREIGN KEY (gen_id)
-        REFERENCES camd.generator (gen_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camd.generator (gen_id) MATCH SIMPLE,
     CONSTRAINT fk_unit_generator_unit_id FOREIGN KEY (unit_id)
         REFERENCES camd.unit (unit_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camd.unit_generator

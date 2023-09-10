@@ -92,10 +92,6 @@ where fuel_type_cd in ('C', 'CRF', 'PTC');
 update camdmd.account_type_code
 set account_type_description = 'Facility Account'
 where account_type_cd = 'FACLTY';
-
-ALTER TABLE IF EXISTS camdmd.account_type_code
-    ADD CONSTRAINT fk_account_type_account_type_group FOREIGN KEY (account_type_group_cd)
-    REFERENCES camdmd.account_type_group_code (account_type_group_cd) MATCH SIMPLE;
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdmd.unit_type_code
     ADD COLUMN IF NOT EXISTS unit_type_group_cd character varying;
@@ -117,10 +113,6 @@ where unit_type_cd in ('PRH','KLN');
 
 ALTER TABLE IF EXISTS camdmd.unit_type_code
     ALTER COLUMN unit_type_group_cd SET NOT NULL;
-
-ALTER TABLE IF EXISTS camdmd.unit_type_code
-    ADD CONSTRAINT fk_unit_type_unit_type_group FOREIGN KEY (unit_type_group_cd)
-    REFERENCES camdmd.unit_type_group_code (unit_type_group_cd) MATCH SIMPLE;
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmpsmd.process_code
     ADD COLUMN IF NOT EXISTS process_cd_name character varying(100);
@@ -201,10 +193,6 @@ WHERE qual_type_cd IN ('LMEA', 'LMES');
 ALTER TABLE IF EXISTS camdecmpsmd.severity_code
     ADD COLUMN IF NOT EXISTS eval_status_cd character varying(7);
 
-ALTER TABLE IF EXISTS camdecmpsmd.severity_code
-    ADD CONSTRAINT fk_severity_code_eval_status_code FOREIGN KEY (eval_status_cd)
-    REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
-
 UPDATE camdecmpsmd.severity_code
 SET eval_status_cd = 'PASS'
 WHERE severity_cd IN ('NONE');
@@ -219,10 +207,6 @@ WHERE severity_cd IN ('CRIT1', 'CRIT2', 'CRIT3', 'FATAL');
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmpsmd.test_type_code
     ADD COLUMN IF NOT EXISTS group_cd character varying(7) DEFAULT 'MISC';
-
-ALTER TABLE IF EXISTS camdecmpsmd.test_type_code
-    ADD CONSTRAINT fk_test_type_code_group_code FOREIGN KEY (group_cd)
-    REFERENCES camdecmpsmd.test_type_group_code (test_type_group_cd) MATCH SIMPLE;
 
 UPDATE camdecmpsmd.test_type_code SET group_cd = 'CALINJ' WHERE test_type_cd = '7DAY';
 UPDATE camdecmpsmd.test_type_code SET group_cd = 'CYCSUM' WHERE test_type_cd = 'CYCLE';
@@ -263,18 +247,6 @@ UPDATE camdecmpsmd.test_type_code SET group_cd = null WHERE test_type_cd IN (
     'INTCHK',
     'PEMSCAL'
 );
-
---------------------------------------------------------------------------------------------------------------------
---ALTER TABLE IF EXISTS camdecmps.dm_emissions
---    ADD COLUMN IF NOT EXISTS fac_id numeric(38,0) NOT NULL;
-
---UPDATE camdecmps.dm_emissions dme
---SET fac_id = mp.fac_id
---FROM camdecmps.monitor_plan mp
---WHERE dme.mon_plan_id = mp.mon_plan_id;
-
---ALTER TABLE IF EXISTS camdecmps.dm_emissions
---    ALTER COLUMN fac_id SET NOT NULL;
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmpswks.monitor_plan
     ADD COLUMN IF NOT EXISTS eval_status_cd character varying(7) NOT NULL DEFAULT 'EVAL';
@@ -290,26 +262,6 @@ ALTER TABLE IF EXISTS camdecmpswks.test_summary
 
 ALTER TABLE IF EXISTS camdecmpswks.emission_evaluation
     ADD COLUMN IF NOT EXISTS eval_status_cd character varying(7) NOT NULL DEFAULT 'EVAL';
-
-ALTER TABLE IF EXISTS camdecmpswks.monitor_plan
-    ADD CONSTRAINT fk_monitor_plan_eval_status_code FOREIGN KEY (eval_status_cd)
-    REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
-
-ALTER TABLE IF EXISTS camdecmpswks.qa_cert_event
-    ADD CONSTRAINT fk_qa_cert_event_eval_status_code FOREIGN KEY (eval_status_cd)
-    REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
-
-ALTER TABLE IF EXISTS camdecmpswks.test_extension_exemption
-    ADD CONSTRAINT fk_test_extension_exemption_eval_status_code FOREIGN KEY (eval_status_cd)
-    REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
-
-ALTER TABLE IF EXISTS camdecmpswks.test_summary
-    ADD CONSTRAINT fk_test_summary_eval_status_code FOREIGN KEY (eval_status_cd)
-    REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
-
-ALTER TABLE IF EXISTS camdecmpswks.emission_evaluation
-    ADD CONSTRAINT fk_emission_evaluation_eval_status_code FOREIGN KEY (eval_status_cd)
-    REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
 --------------------------------------------------------------------------------------------------------------------
 DO $$
 DECLARE
@@ -330,21 +282,6 @@ BEGIN
 	RAISE NOTICE 'Executing...%', sqlStatement;
 	EXECUTE sqlStatement;
 END $$;
-
-ALTER TABLE IF EXISTS camdecmpsaux.em_submission_access
-    ADD CONSTRAINT em_submission_access_r04 FOREIGN KEY (mon_plan_id)
-        REFERENCES camdecmps.monitor_plan (mon_plan_id) MATCH SIMPLE,
-    ADD CONSTRAINT fk_em_status_cod_em_submission FOREIGN KEY (em_status_cd)
-        REFERENCES camdecmpsmd.em_status_code (em_status_cd) MATCH SIMPLE,
-    ADD CONSTRAINT fk_em_sub_type_c_em_submission FOREIGN KEY (em_sub_type_cd)
-        REFERENCES camdecmpsmd.em_sub_type_code (em_sub_type_cd) MATCH SIMPLE;
---------------------------------------------------------------------------------------------------------------------
-ALTER TABLE IF EXISTS camdecmpswks.user_check_out
-	DROP CONSTRAINT IF EXISTS pk_user_check_out,
-	DROP CONSTRAINT IF EXISTS uq_user_checkout_out;
-
-ALTER TABLE IF EXISTS camdecmpswks.user_check_out
-	ADD CONSTRAINT pk_user_check_out PRIMARY KEY (mon_plan_id);
 --------------------------------------------------------------------------------------------------------------------
 DO $$
 DECLARE
@@ -365,7 +302,7 @@ BEGIN
 END $$;
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmpsmd.es_match_data_type_code
-ADD COLUMN es_match_data_type_url character varying(100);
+  ADD COLUMN es_match_data_type_url character varying(100);
 
 update camdecmpsmd.es_match_data_type_code
 set es_match_data_type_url = '/master-data-mgmt/control-equip-param-codes'
@@ -412,34 +349,7 @@ set es_match_data_type_url = '/master-data-mgmt/mats-method-parameter-codes'
 where es_match_data_type_cd = 'MATSPAR';
 
 ALTER TABLE IF EXISTS camdecmpsmd.es_match_data_type_code
-ALTER COLUMN es_match_data_type_url SET NOT NULL;
---------------------------------------------------------------------------------------------------------------------
-/* NEW MATS REQ
-ALTER TABLE IF EXISTS camdecmps.test_summary
-    ADD COLUMN aps_formula_used_cd character varying(7),
-    ADD COLUMN instrument_span;
-
-ALTER TABLE IF EXISTS camdecmpswks.test_summary
-    ADD COLUMN aps_formula_used_cd character varying(7),
-    ADD COLUMN instrument_span;
-
---------------------------------------------------------------------------------------------------------------------
--- NEED PARAMETER CODES
-INSERT INTO camdecmpsmd.ref_method_code(ref_method_cd, parameter_cd, ref_method_cd_description)
-VALUES
-    ('321', '', 'EPA Method 321 in Append A to 40 CFR Part 63 (extractive method for Portland Cement Kiln industry)'),
-    ('D634812', '', 'ASTM D6348-12 “Standard Test Method for Determination of Gaseous Compounds by Extractive Direct Interface Fourier Transform Infrared (FTIR) Spectroscopy”')
-;
---------------------------------------------------------------------------------------------------------------------
--- NEED DESCRIPTIONS AND RESTRICT FOR SVA TEST TYPE
-INSERT INTO camdecmpsmd.units_of_measure_code(uom_cd, uom_cd_description)
-VALUES
-    ('DSCF', ''),
-    ('DSCM', ''),
-    ('SCF', ''),
-    ('SCM', '')
-;
-NEW MATS REQ */
+  ALTER COLUMN es_match_data_type_url SET NOT NULL;
 --------------------------------------------------------------------------------------------------------------------
 INSERT INTO camdecmpsmd.hourly_type_code ( hourly_type_cd, hourly_type_description )
 VALUES ( 'COMBINE', 'Both Monitored and Derived Hourly' );
@@ -464,28 +374,11 @@ ALTER TABLE IF EXISTS camdaux.dataset
 
 ALTER TABLE IF EXISTS camdaux.datatable
 	ALTER COLUMN display_name DROP NOT NULL,
-	DROP CONSTRAINT uq_datatable,
-	ADD CONSTRAINT uq_datatable UNIQUE (dataset_cd, group_cd, table_order),
-	ADD COLUMN IF NOT EXISTS template_cd character varying(25),
-	DROP CONSTRAINT fk_datatable_template_code,
-	ADD CONSTRAINT fk_datatable_template_code FOREIGN KEY (template_cd)
-		REFERENCES camdaux.template_code (template_cd) MATCH SIMPLE;
+	ADD COLUMN IF NOT EXISTS template_cd character varying(25);
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmps.component
-	ADD COLUMN IF NOT EXISTS analytical_principle_cd character varying(7),
-	ADD CONSTRAINT fk_component_analytical_principle_code FOREIGN KEY (analytical_principle_cd)
-		REFERENCES camdecmpsmd.analytical_principle_code (analytical_principle_cd) MATCH SIMPLE;
-
-CREATE INDEX IF NOT EXISTS idx_component_analytical_principle_cd
-  ON camdecmps.component USING btree
-    (analytical_principle_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+	ADD COLUMN IF NOT EXISTS analytical_principle_cd character varying(7);
 
 ALTER TABLE IF EXISTS camdecmpswks.component
-	ADD COLUMN IF NOT EXISTS analytical_principle_cd character varying(7),
-	ADD CONSTRAINT fk_component_analytical_principle_code FOREIGN KEY (analytical_principle_cd)
-		REFERENCES camdecmpsmd.analytical_principle_code (analytical_principle_cd) MATCH SIMPLE;
-
-CREATE INDEX IF NOT EXISTS idx_component_analytical_principle_cd
-  ON camdecmpswks.component USING btree
-    (analytical_principle_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+	ADD COLUMN IF NOT EXISTS analytical_principle_cd character varying(7);
 --------------------------------------------------------------------------------------------------------------------

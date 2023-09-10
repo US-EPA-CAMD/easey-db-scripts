@@ -88,14 +88,16 @@ if [ $BEFORE_DATA_LOAD == true ]; then
 
   FILES="$FILES
   \i ./drop-constraints-indexes.sql
-  \i ./before-data-load.sql
+  \i ./drop-customizations.sql
   "
 fi
 
 if [ $AFTER_DATA_LOAD == true ]; then
-  FILES="\i ./check-tables/PopulateCheckTables.sql
+  FILES="$FILES
+  \i ./check-tables/PopulateCheckTables.sql
   \i ./client-tables/PopulateClientOnlyTables.sql
-  \i ./after-data-load.sql
+  \i ./add-customizations.sql
+  \i ./load-customizations.sql
   \i ./load-master-data-definitions.sql
   \i ./load-mdm-relationships-definitions.sql
   "
@@ -117,7 +119,10 @@ if [ $AFTER_DATA_LOAD == true ]; then
 fi
 
 if [ $POST_DEPLOYMENT_CLEANUP == true ]; then
-  echo "nothing here to do yet"
+  FILES="$FILES
+  \i ./add-constraints-indexes.sql
+  \i ./emissions-view-definitions/index-emission-views.sql
+  "
 fi
 
 ../../execute-psql.sh "$FILES"
@@ -127,6 +132,8 @@ echo "IMPORTANT: NEED TO GENERATE TOKENS AND LOAD CAMDAUX.CLIENT_CONFIG DATA...
 INSERT INTO camdaux.client_config(client_id, client_name, client_secret, client_passcode, encryption_key, support_email)
 VALUES
   (?, 'ecmps-ui', ?, ?, ?, '????');
+
+NOTE: RUN THE POST_DEPLOYMENT_CLEANUP OVER NIGHT TO ADD BACK CONSTRAINTS & INDEXES...
 
 ***** DEPLOYMENT COMPLETE *****
 "

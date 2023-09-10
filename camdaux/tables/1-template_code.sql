@@ -28,7 +28,6 @@ VALUES
 	('MATSMONHRLY',	 'EM',		'DEFAULT',	'MATS Monitor Hourly Values'),
 	('MONITORHRLY',	 'EM',		'DEFAULT',	'Monitor Hourly Values'),
 	('HRLYOP',	    'EM',		'DEFAULT',	'Hourly Operating'),
-	('HRLYOP',	    'EM',		'DEFAULT',	'Hourly Operating'),
 	('DLYFUEL',	    'EM',		'DEFAULT',	'Daily Fuels'),
 	('DLYEM',	    'EM',		'DEFAULT',	'Daily Emissions'),
 	('WKLYSYSINT',	'EM',		'DEFAULT',	'Weekly System Integrities'),

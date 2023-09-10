@@ -82,21 +82,7 @@ INSERT INTO camdecmpsmd.test_type_group_code(
     ('TTACC', 'Transmitter Transducer Accuracy', 2),
     ('PEI', 'Primary Element Inspection', 1),
     ('LME', 'Unit Default', 3),
-    ('MISC', 'Miscellaneous', 1)
-/*
-    ('PS11CT', 'PS11 Correlation Test', 3),
-    ('RCA', 'Response Correlation Audit', 3),
-    ('RRA', 'Relative Response Audit', 3),
-    ('SVA', 'Sample Volume Audit', 3),
-    ('ACA', 'Absolute Correlation Audit', 3),
-    ('3ME', 'Three-Level Measurement Error', 3),
-    ('IBI', 'Beam Intensity Test', 2),
-    ('RAA', 'Relative Accuracy Audit', 3),
-    ('CGA', 'Cylinder Gas Audit', 3),
-    ('QGA', 'Quarterly Gas Audit', 2),
-    ('DSA', 'Dynamic Spiking Audit', 3)
-*/
-;
+    ('MISC', 'Miscellaneous', 1);
 -----------------------------------------------------------------------
 INSERT INTO camdecmpsaux.email_template(
   template_id, template_location, template_subject

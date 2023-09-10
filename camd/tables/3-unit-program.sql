@@ -1,7 +1,3 @@
--- Table: camd.unit_program
-
--- DROP TABLE IF EXISTS camd.unit_program;
-
 CREATE TABLE IF NOT EXISTS camd.unit_program
 (
     up_id numeric(38,0) NOT NULL,
@@ -30,25 +26,15 @@ CREATE TABLE IF NOT EXISTS camd.unit_program
     CONSTRAINT pk_unit_program PRIMARY KEY (up_id),
     CONSTRAINT uq_unit_program UNIQUE (unit_id, prg_id),
     CONSTRAINT fk_unit_program_applic FOREIGN KEY (app_status_cd)
-        REFERENCES camdmd.applicability_status_code (app_status_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdmd.applicability_status_code (app_status_cd) MATCH SIMPLE,
     CONSTRAINT fk_unit_program_class FOREIGN KEY (class_cd, prg_cd)
-        REFERENCES camdmd.program_class (class_cd, prg_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdmd.program_class (class_cd, prg_cd) MATCH SIMPLE,
     CONSTRAINT fk_unit_program_id FOREIGN KEY (prg_id)
-        REFERENCES camd.program (prg_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camd.program (prg_id) MATCH SIMPLE,
     CONSTRAINT fk_unit_program_nonstandard_cd FOREIGN KEY (nonstandard_cd)
-        REFERENCES camdmd.nonstandard_code (nonstandard_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdmd.nonstandard_code (nonstandard_cd) MATCH SIMPLE,
     CONSTRAINT fk_unit_program_unit FOREIGN KEY (unit_id)
         REFERENCES camd.unit (unit_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camd.unit_program
@@ -123,57 +109,29 @@ COMMENT ON COLUMN camd.unit_program.add_date
 COMMENT ON COLUMN camd.unit_program.update_date
     IS 'Date of the last record update.';
 
--- Index: idx_unit_program_applic
-
--- DROP INDEX camd.idx_unit_program_applic;
-
 CREATE INDEX IF NOT EXISTS idx_unit_program_applic
     ON camd.unit_program USING btree
     (app_status_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_unit_program_class
-
--- DROP INDEX camd.idx_unit_program_class;
 
 CREATE INDEX IF NOT EXISTS idx_unit_program_class
     ON camd.unit_program USING btree
     (prg_cd COLLATE pg_catalog."default" ASC NULLS LAST, class_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
--- Index: idx_unit_program_id
-
--- DROP INDEX camd.idx_unit_program_id;
-
 CREATE INDEX IF NOT EXISTS idx_unit_program_id
     ON camd.unit_program USING btree
     (prg_id ASC NULLS LAST);
-
--- Index: idx_unit_program_nonstandard
-
--- DROP INDEX camd.idx_unit_program_nonstandard;
 
 CREATE INDEX IF NOT EXISTS idx_unit_program_nonstandard
     ON camd.unit_program USING btree
     (nonstandard_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
--- Index: idx_unit_program_unit
-
--- DROP INDEX camd.idx_unit_program_unit;
-
 CREATE INDEX IF NOT EXISTS idx_unit_program_unit
     ON camd.unit_program USING btree
     (unit_id ASC NULLS LAST);
 
--- Index: idx_unit_program_unit_class
-
--- DROP INDEX camd.idx_unit_program_unit_class;
-
 CREATE INDEX IF NOT EXISTS idx_unit_program_unit_class
     ON camd.unit_program USING btree
     (unit_id ASC NULLS LAST, class_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_unit_program_unit_program
-
--- DROP INDEX camd.idx_unit_program_unit_program;
 
 CREATE INDEX IF NOT EXISTS idx_unit_program_unit_program
     ON camd.unit_program USING btree

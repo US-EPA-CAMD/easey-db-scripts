@@ -1,7 +1,3 @@
--- Table: camd.program
-
--- DROP TABLE IF EXISTS camd.program;
-
 CREATE TABLE IF NOT EXISTS camd.program
 (
     prg_id numeric(38,0) NOT NULL,
@@ -20,17 +16,11 @@ CREATE TABLE IF NOT EXISTS camd.program
     CONSTRAINT pk_program PRIMARY KEY (prg_id),
     CONSTRAINT uq_program_code_state UNIQUE (prg_cd, state_cd),
     CONSTRAINT fk_program_code FOREIGN KEY (prg_cd)
-        REFERENCES camdmd.program_code (prg_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdmd.program_code (prg_cd) MATCH SIMPLE,
     CONSTRAINT fk_program_state FOREIGN KEY (state_cd)
-        REFERENCES camdmd.state_code (state_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdmd.state_code (state_cd) MATCH SIMPLE,
     CONSTRAINT fk_program_tribal_land FOREIGN KEY (tribal_land_cd)
         REFERENCES camdmd.tribal_land_code (tribal_land_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camd.program
@@ -75,17 +65,9 @@ COMMENT ON COLUMN camd.program.add_date
 COMMENT ON COLUMN camd.program.update_date
     IS 'Date of the last record update.';
 
--- Index: idx_program_code
-
--- DROP INDEX camd.idx_program_code;
-
 CREATE INDEX IF NOT EXISTS idx_program_code
     ON camd.program USING btree
     (prg_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_program_state
-
--- DROP INDEX camd.idx_program_state;
 
 CREATE INDEX IF NOT EXISTS idx_program_state
     ON camd.program USING btree

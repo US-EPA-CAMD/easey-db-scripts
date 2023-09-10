@@ -1,3 +1,44 @@
+----------------------------------------------------------------------------------------------------------------------------------
+/* CAMDMD */
+----------------------------------------------------------------------------------------------------------------------------------
+ALTER TABLE IF EXISTS camdmd.account_type_code
+    ADD CONSTRAINT fk_account_type_account_type_group FOREIGN KEY (account_type_group_cd)
+        REFERENCES camdmd.account_type_group_code (account_type_group_cd) MATCH SIMPLE;
+
+ALTER TABLE IF EXISTS camdmd.unit_type_code
+    ADD CONSTRAINT fk_unit_type_unit_type_group FOREIGN KEY (unit_type_group_cd)
+        REFERENCES camdmd.unit_type_group_code (unit_type_group_cd) MATCH SIMPLE;
+----------------------------------------------------------------------------------------------------------------------------------
+/* CAMDECMPSMD */
+----------------------------------------------------------------------------------------------------------------------------------
+ALTER TABLE IF EXISTS camdecmpsmd.severity_code
+    ADD CONSTRAINT fk_severity_code_eval_status_code FOREIGN KEY (eval_status_cd)
+        REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
+
+ALTER TABLE IF EXISTS camdecmpsmd.test_type_code
+    ADD CONSTRAINT fk_test_type_code_group_code FOREIGN KEY (group_cd)
+        REFERENCES camdecmpsmd.test_type_group_code (test_type_group_cd) MATCH SIMPLE;
+----------------------------------------------------------------------------------------------------------------------------------
+/* CAMD */
+----------------------------------------------------------------------------------------------------------------------------------
+ALTER TABLE IF EXISTS camd.plant_person
+    ADD CONSTRAINT pk_plant_person PRIMARY KEY (fac_ppl_id),
+    ADD CONSTRAINT fk_plant_person_plant FOREIGN KEY (fac_id)
+        REFERENCES camd.plant (fac_id) MATCH SIMPLE,
+    ADD CONSTRAINT fk_plant_person_program_code FOREIGN KEY (prg_cd)
+        REFERENCES camdmd.program_code (prg_cd) MATCH SIMPLE,
+    ADD CONSTRAINT fk_plant_person_responsibility FOREIGN KEY (responsibility_id)
+        REFERENCES camdmd.responsibility (responsibility_id) MATCH SIMPLE;
+----------------------------------------------------------------------------------------------------------------------------------
+/* CAMDAUX */
+----------------------------------------------------------------------------------------------------------------------------------
+ALTER TABLE IF EXISTS camdaux.datatable
+    ADD CONSTRAINT uq_datatable UNIQUE (dataset_cd, group_cd, table_order),
+	  ADD CONSTRAINT fk_datatable_template_code FOREIGN KEY (template_cd)
+		    REFERENCES camdaux.template_code (template_cd) MATCH SIMPLE;
+----------------------------------------------------------------------------------------------------------------------------------
+/* CAMDECMPS */
+----------------------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmps.monitor_plan
     ADD CONSTRAINT pk_monitor_plan PRIMARY KEY (mon_plan_id),
     ADD CONSTRAINT fk_monitor_plan_plant FOREIGN KEY (fac_id)
@@ -274,9 +315,9 @@ ALTER TABLE IF EXISTS camdecmps.component
         REFERENCES camdecmpsmd.basis_code (basis_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_component_component_type_code FOREIGN KEY (component_type_cd)
         REFERENCES camdecmpsmd.component_type_code (component_type_cd) MATCH SIMPLE,
-	ADD CONSTRAINT fk_component_monitor_location FOREIGN KEY (mon_loc_id)
+	  ADD CONSTRAINT fk_component_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
-		ON DELETE CASCADE;
+		    ON DELETE CASCADE;
 
 CREATE INDEX IF NOT EXISTS idx_component_acq_cd
     ON camdecmps.component USING btree
@@ -3127,14 +3168,14 @@ CREATE INDEX IF NOT EXISTS idx_check_log_error_suppress_id
     (error_suppress_id ASC NULLS LAST);
 ----------------------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmpsaux.email_to_process
-	ADD CONSTRAINT pk_email_to_process PRIMARY KEY (to_process_id),
-    ADD CONSTRAINT fk_email_to_process_em_sub_access FOREIGN KEY (em_sub_access_id)
+	  ADD CONSTRAINT pk_email_to_process PRIMARY KEY (to_process_id),
+    ADD CONSTRAINT fk_email_to_process_em_submission_access FOREIGN KEY (em_sub_access_id)
         REFERENCES camdecmpsaux.em_submission_access (em_sub_access_id) MATCH SIMPLE,
     ADD CONSTRAINT fk_email_to_process_monitor_plan FOREIGN KEY (mon_plan_id)
         REFERENCES camdecmps.monitor_plan (mon_plan_id) MATCH SIMPLE,
     ADD CONSTRAINT fk_email_to_process_plant FOREIGN KEY (fac_id)
         REFERENCES camd.plant (fac_id) MATCH SIMPLE,
-    ADD CONSTRAINT fk_email_to_process_rpt_period_id FOREIGN KEY (rpt_period_id)
+    ADD CONSTRAINT fk_email_to_process_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE;
 
 CREATE INDEX IF NOT EXISTS idx_email_to_process_fac_id
@@ -3278,4 +3319,28 @@ ALTER TABLE IF EXISTS camdecmpsaux.apportionment_data
 CREATE INDEX IF NOT EXISTS idx_apportionment_data_apport_range_id
     ON camdecmpsaux.apportionment_data USING btree
     (apport_range_id ASC NULLS LAST);
----------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------
+/* CAMDECMPSWKS */
+----------------------------------------------------------------------------------------------------------------------------------
+ALTER TABLE IF EXISTS camdecmpswks.monitor_plan
+    ADD CONSTRAINT fk_monitor_plan_eval_status_code FOREIGN KEY (eval_status_cd)
+      REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
+
+ALTER TABLE IF EXISTS camdecmpswks.qa_cert_event
+    ADD CONSTRAINT fk_qa_cert_event_eval_status_code FOREIGN KEY (eval_status_cd)
+      REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
+
+ALTER TABLE IF EXISTS camdecmpswks.test_extension_exemption
+    ADD CONSTRAINT fk_test_extension_exemption_eval_status_code FOREIGN KEY (eval_status_cd)
+      REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
+
+ALTER TABLE IF EXISTS camdecmpswks.test_summary
+    ADD CONSTRAINT fk_test_summary_eval_status_code FOREIGN KEY (eval_status_cd)
+      REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
+
+ALTER TABLE IF EXISTS camdecmpswks.emission_evaluation
+    ADD CONSTRAINT fk_emission_evaluation_eval_status_code FOREIGN KEY (eval_status_cd)
+      REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
+
+ALTER TABLE IF EXISTS camdecmpswks.user_check_out
+	  ADD CONSTRAINT pk_user_check_out PRIMARY KEY (mon_plan_id);

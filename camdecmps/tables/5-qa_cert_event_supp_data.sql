@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.qa_cert_event_supp_data
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON DELETE CASCADE,
     CONSTRAINT fk_qa_cert_event_supp_data_reporting_period FOREIGN KEY (rpt_period_id)
-        REFERENCES camdecmps.reporting_period (rpt_period_id) MATCH SIMPLE,
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
     CONSTRAINT fk_qa_cert_event_supp_data_qa_cert_event FOREIGN KEY (qa_cert_event_id)
         REFERENCES camdecmps.qa_cert_event (qa_cert_event_id) MATCH SIMPLE
         ON DELETE CASCADE
@@ -69,43 +69,3 @@ COMMENT ON COLUMN camdecmps.qa_cert_event_supp_data.add_date
 
 COMMENT ON COLUMN camdecmps.qa_cert_event_supp_data.update_date
     IS 'Date and time in which record was last updated.';
-
--- Index: idx_qa_cert_event_supp_data_ce
-
--- DROP INDEX camdecmps.idx_qa_cert_event_supp_data_ce;
-
-CREATE INDEX IF NOT EXISTS idx_qa_cert_event_supp_data_ce
-    ON camdecmps.qa_cert_event_supp_data USING btree
-    (qa_cert_event_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_qa_cert_event_supp_data_da
-
--- DROP INDEX camdecmps.idx_qa_cert_event_supp_data_da;
-
-CREATE INDEX IF NOT EXISTS idx_qa_cert_event_supp_data_da
-    ON camdecmps.qa_cert_event_supp_data USING btree
-    (qa_cert_event_supp_data_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_qa_cert_event_supp_data_de
-
--- DROP INDEX camdecmps.idx_qa_cert_event_supp_data_de;
-
-CREATE INDEX IF NOT EXISTS idx_qa_cert_event_supp_data_de
-    ON camdecmps.qa_cert_event_supp_data USING btree
-    (qa_cert_event_supp_date_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_qa_cert_event_supp_data_er
-
--- DROP INDEX camdecmps.idx_qa_cert_event_supp_data_er;
-
-CREATE INDEX IF NOT EXISTS idx_qa_cert_event_supp_data_er
-    ON camdecmps.qa_cert_event_supp_data USING btree
-    (rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: idx_qa_cert_event_supp_data_ml
-
--- DROP INDEX camdecmps.idx_qa_cert_event_supp_data_ml;
-
-CREATE INDEX IF NOT EXISTS idx_qa_cert_event_supp_data_ml
-    ON camdecmps.qa_cert_event_supp_data USING btree
-    (mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);

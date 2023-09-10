@@ -1,7 +1,3 @@
--- Table: camd.generator
-
--- DROP TABLE IF EXISTS camd.generator;
-
 CREATE TABLE IF NOT EXISTS camd.generator
 (
     gen_id numeric(38,0) NOT NULL,
@@ -21,17 +17,11 @@ CREATE TABLE IF NOT EXISTS camd.generator
     CONSTRAINT pk_generator PRIMARY KEY (gen_id),
     CONSTRAINT uq_generator UNIQUE (fac_id, genid),
     CONSTRAINT fk_generator_gen_source_cd FOREIGN KEY (gen_source_cd)
-        REFERENCES camdmd.generator_source_code (gen_source_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camdmd.generator_source_code (gen_source_cd) MATCH SIMPLE,
     CONSTRAINT fk_generator_plant FOREIGN KEY (fac_id)
-        REFERENCES camd.plant (fac_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES camd.plant (fac_id) MATCH SIMPLE,
     CONSTRAINT fk_generator_prime_mover_cd FOREIGN KEY (prime_mover_type_cd)
         REFERENCES camdmd.prime_mover_type_code (prime_mover_type_cd) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 COMMENT ON TABLE camd.generator
