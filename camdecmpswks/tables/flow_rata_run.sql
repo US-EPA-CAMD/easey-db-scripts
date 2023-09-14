@@ -1,0 +1,25 @@
+CREATE TABLE IF NOT EXISTS camdecmpswks.flow_rata_run
+(
+    flow_rata_run_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    rata_run_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    num_traverse_point numeric(2,0),
+    barometric_pressure numeric(5,2),
+    static_stack_pressure numeric(5,2),
+    percent_co2 numeric(5,1),
+    percent_o2 numeric(5,1),
+    percent_moisture numeric(5,1),
+    dry_molecular_weight numeric(5,2),
+    calc_dry_molecular_weight numeric(5,2),
+    wet_molecular_weight numeric(5,2),
+    calc_wet_molecular_weight numeric(5,2),
+    avg_vel_wo_wall numeric(6,2),
+    calc_avg_vel_wo_wall numeric(6,2),
+    avg_vel_w_wall numeric(6,2),
+    calc_avg_vel_w_wall numeric(6,2),
+    calc_waf numeric(6,4),
+    calc_calc_waf numeric(6,4),
+    avg_stack_flow_rate numeric(10,0),
+    userid character varying(25) COLLATE pg_catalog."default",
+    update_date timestamp without time zone,
+    add_date timestamp without time zone
+);

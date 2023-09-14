@@ -351,9 +351,6 @@ where es_match_data_type_cd = 'MATSPAR';
 ALTER TABLE IF EXISTS camdecmpsmd.es_match_data_type_code
   ALTER COLUMN es_match_data_type_url SET NOT NULL;
 --------------------------------------------------------------------------------------------------------------------
-INSERT INTO camdecmpsmd.hourly_type_code ( hourly_type_cd, hourly_type_description )
-VALUES ( 'COMBINE', 'Both Monitored and Derived Hourly' );
---------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmpswks.check_session
     ADD COLUMN IF NOT EXISTS batch_id character varying(45);
 --------------------------------------------------------------------------------------------------------------------
@@ -381,4 +378,3 @@ ALTER TABLE IF EXISTS camdecmps.component
 
 ALTER TABLE IF EXISTS camdecmpswks.component
 	ADD COLUMN IF NOT EXISTS analytical_principle_cd character varying(7);
---------------------------------------------------------------------------------------------------------------------

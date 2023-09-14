@@ -2,11 +2,11 @@
 source ../../environments.sh $1
 
 FILES=""
-TABLES=true
+TABLES=false
 VIEWS=false
 FUNCTIONS=false
 PROCEDURES=false
-BEFORE_DATA_LOAD=false
+BEFORE_DATA_LOAD=true
 AFTER_DATA_LOAD=false
 POST_DEPLOYMENT_CLEANUP=false
 
@@ -27,9 +27,7 @@ function createTables() {
   getFiles "../../../camd/tables"
   getFiles "../../../camdaux/tables"
   getFiles "../../../camdecmps/tables"
-  getFiles "../../../camdecmps/tables/emission-views"
   getFiles "../../../camdecmpswks/tables"
-  getFiles "../../../camdecmpswks/tables/emission-views"
   getFiles "../../../camdecmpsaux/tables"
   getFiles "../../../camdecmpscalc/tables"
 }
@@ -87,17 +85,36 @@ if [ $BEFORE_DATA_LOAD == true ]; then
   createTables
 
   FILES="$FILES
-  \i ./drop-constraints-indexes.sql
   \i ./drop-customizations.sql
   "
+
+  schemas=(
+    camdecmpsaux
+    camdecmpswks
+    camdecmps
+    camdaux
+    camd
+    camdecmpsmd
+    camdmd
+  )
+
+  for i in "${schemas[@]}"; do
+    FILENAME=$i-drop-constraints-indexes.sql
+    cp ../../drop-constraints-indexes.sql $FILENAME
+    sed -i "s/SCHEMA/$i/g" $FILENAME
+
+    FILES="$FILES
+    \i ./$FILENAME
+    "
+  done
 fi
 
 if [ $AFTER_DATA_LOAD == true ]; then
   FILES="$FILES
   \i ./check-tables/PopulateCheckTables.sql
   \i ./client-tables/PopulateClientOnlyTables.sql
+  \i ./load-additional-mdm-data.sql
   \i ./add-customizations.sql
-  \i ./load-customizations.sql
   \i ./load-master-data-definitions.sql
   \i ./load-mdm-relationships-definitions.sql
   "
@@ -111,21 +128,30 @@ if [ $AFTER_DATA_LOAD == true ]; then
   \i ./check-tables/mp-check-catalog-process-load.sql
   \i ./check-tables/qa-check-catalog-process-load.sql
   \i ./check-tables/import-check-catalog-process-load.sql
+  \i ../../../camdecmps/partitions/create-emission_view-partitions.sql
   "
-
   createOrReplaceFunctions
   createOrReplaceProcedures
   createOrReplaceViews
-fi
 
-if [ $POST_DEPLOYMENT_CLEANUP == true ]; then
   FILES="$FILES
-  \i ./add-constraints-indexes.sql
-  \i ./emissions-view-definitions/index-emission-views.sql
+  CALL camdecmps.refresh_emissions_views();
+  CALL camdecmpswks.camdecmpswks.load_workspace();
   "
 fi
 
+if [ $POST_DEPLOYMENT_CLEANUP == true ]; then
+  getFiles "../../../camdmd/constraints-indexes"
+  getFiles "../../../camdecmpsmd/constraints-indexes"
+  getFiles "../../../camd/constraints-indexes"
+  getFiles "../../../camdaux/constraints-indexes"
+  getFiles "../../../camdecmps/constraints-indexes"
+  getFiles "../../../camdecmpsaux/constraints-indexes"  
+  getFiles "../../../camdecmpswks/constraints-indexes"
+fi
+
 ../../execute-psql.sh "$FILES"
+rm *drop-constraints-indexes.sql
 
 echo "IMPORTANT: NEED TO GENERATE TOKENS AND LOAD CAMDAUX.CLIENT_CONFIG DATA...
 
