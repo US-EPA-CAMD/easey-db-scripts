@@ -67,7 +67,7 @@ where prg_cd = 'SIPNOX';
 
 update camdmd.program_code
 set rue_ind = 1
-where prg_cd in ('ARP', 'CAIRNOX', 'CAIROS', 'CAIRSO2', 'CSNOX', 'CSNOXOS', 'CSOSG1', 'CSOSG2', 'CSOSG3', 'CSSO2G1', 'CSSO2G2', 'TRNOX', 'TRNOXOS', 'TRSO2G1', 'TRSO2G2', 'TXSO2');
+where prg_cd in ('ARP', 'CAIRNOX', 'CAIROS', 'CAIRSO2', 'CSNOX', 'CSNOXOS', 'CSOSG1', 'CSOSG2', 'CSOSG2E', 'CSOSG3', 'CSSO2G1', 'CSSO2G2', 'TRNOX', 'TRNOXOS', 'TRSO2G1', 'TRSO2G2', 'TXSO2');
 
 update camdmd.program_code
 set so2_cert_ind = 1
@@ -75,15 +75,15 @@ where prg_cd in ('ARP', 'CAIRSO2', 'CSSO2G1', 'CSSO2G2', 'TRSO2G1', 'TRSO2G2', '
 
 update camdmd.program_code
 set nox_cert_ind = 1
-where prg_cd in ('ARP', 'CAIRNOX', 'CAIROS', 'CSNOX', 'CSNOXOS', 'CSOSG1', 'CSOSG2', 'CSOSG3', 'NBP', 'NHNOX', 'SIPNOX', 'TRNOX', 'TRNOXOS');
+where prg_cd in ('ARP', 'CAIRNOX', 'CAIROS', 'CSNOX', 'CSNOXOS', 'CSOSG1', 'CSOSG2', 'CSOSG2E', 'CSOSG3', 'NBP', 'NHNOX', 'SIPNOX', 'TRNOX', 'TRNOXOS');
 
 update camdmd.program_code
 set noxc_cert_ind = 1
-where prg_cd in ('CAIRNOX', 'CAIROS', 'CSNOX', 'CSNOXOS', 'CSOSG1', 'CSOSG2', 'CSOSG3', 'NBP', 'NHNOX', 'SIPNOX', 'TRNOX', 'TRNOXOS');
+where prg_cd in ('CAIRNOX', 'CAIROS', 'CSNOX', 'CSNOXOS', 'CSOSG1', 'CSOSG2', 'CSOSG2E', 'CSOSG3', 'NBP', 'NHNOX', 'SIPNOX', 'TRNOX', 'TRNOXOS');
 
 UPDATE camdmd.program_code
 SET bulk_file_active = 1
-WHERE prg_cd IN ('ARP', 'CSNOX', 'CSNOXOS', 'CSOSG1', 'CSOSG2', 'CSOSG3', 'CSSO2G1', 'CSSO2G2', 'TXSO2');
+WHERE prg_cd IN ('ARP', 'CSNOX', 'CSNOXOS', 'CSOSG1', 'CSOSG2', 'CSOSG2E', 'CSOSG3', 'CSSO2G1', 'CSSO2G2', 'TXSO2');
 --------------------------------------------------------------------------------------------------------------------
 update camdecmpsmd.fuel_type_code
 set fuel_group_cd = 'COAL'
@@ -355,10 +355,7 @@ ALTER TABLE IF EXISTS camdecmpswks.check_session
     ADD COLUMN IF NOT EXISTS batch_id character varying(45);
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdaux.dataset
-	ADD COLUMN IF NOT EXISTS group_cd character varying(7),
-	ADD CONSTRAINT ck_group_cd CHECK(
-		group_cd = ANY(ARRAY['MDM', 'MDMREL', 'REPORT', 'EMVIEW'])
-	);
+	ADD COLUMN IF NOT EXISTS group_cd character varying(25);
 
 UPDATE camdaux.dataset SET group_cd =
 	CASE
@@ -367,7 +364,8 @@ UPDATE camdaux.dataset SET group_cd =
 	END;
 
 ALTER TABLE IF EXISTS camdaux.dataset
-	ALTER COLUMN group_cd SET NOT NULL;
+	ALTER COLUMN group_cd SET NOT NULL,
+ 	DROP COLUMN IF EXISTS template_cd;
 
 ALTER TABLE IF EXISTS camdaux.datatable
 	ALTER COLUMN display_name DROP NOT NULL,

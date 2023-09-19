@@ -1,7 +1,3 @@
--- Table: camdecmps.emission_view_lme
-
--- DROP TABLE camdecmps.emission_view_lme;
-
 CREATE TABLE IF NOT EXISTS camdecmps.emission_view_lme
 (
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -28,6 +24,5 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_lme
     co2_emiss_rate numeric(15,4),
     rpt_co2_mass numeric(14,4),
     calc_co2_mass numeric(14,4),
-    error_codes character varying(1000) COLLATE pg_catalog."default",
-    CONSTRAINT pk_emission_view_lme PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, date_hour)
+    error_codes character varying(1000) COLLATE pg_catalog."default"
 ) PARTITION BY RANGE (rpt_period_id);

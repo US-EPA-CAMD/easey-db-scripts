@@ -1,7 +1,3 @@
--- Table: camdecmps.emission_view_dailycal
-
--- DROP TABLE camdecmps.emission_view_dailycal;
-
 CREATE TABLE IF NOT EXISTS camdecmps.emission_view_dailycal
 (
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -38,6 +34,5 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_dailycal
     upscale_gas_type_cd character varying(255) COLLATE pg_catalog."default",
     cylinder_id character varying(25) COLLATE pg_catalog."default",
     expiration_date date,
-    vendor_id character varying(8) COLLATE pg_catalog."default",
-    CONSTRAINT pk_emission_view_dailycal PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, test_sum_id)
+    vendor_id character varying(8) COLLATE pg_catalog."default"
 ) PARTITION BY RANGE (rpt_period_id);

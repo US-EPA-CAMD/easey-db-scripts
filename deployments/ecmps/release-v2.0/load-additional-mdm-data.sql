@@ -1,6 +1,8 @@
+DELETE FROM camdecmpsmd.hourly_type_code WHERE hourly_type_cd = 'COMBINE';
 INSERT INTO camdecmpsmd.hourly_type_code ( hourly_type_cd, hourly_type_description )
 VALUES ( 'COMBINE', 'Both Monitored and Derived Hourly' );
 -----------------------------------------------------------------------
+TRUNCATE camdmd.account_type_group_code;
 INSERT INTO camdmd.account_type_group_code(account_type_group_cd, account_type_group_description)
 VALUES
     ('FACLTY', 'Facility'),
@@ -11,12 +13,14 @@ VALUES
     ('SHOLD', 'State Holding'),
     ('UNIT', 'Unit');
 -----------------------------------------------------------------------
+TRUNCATE camdmd.unit_type_group_code;
 INSERT INTO camdmd.unit_type_group_code(unit_type_group_cd, unit_type_group_description)
 VALUES
     ('B', 'Boilers'),
     ('F', 'Furnaces'),
     ('T', 'Turbines');
 -----------------------------------------------------------------------
+TRUNCATE camdecmpsmd.analytical_principle_code;
 INSERT INTO camdecmpsmd.analytical_principle_code(
   analytical_principle_cd, analytical_principle_cd_description
 ) VALUES
@@ -26,6 +30,7 @@ INSERT INTO camdecmpsmd.analytical_principle_code(
   ('LS', 'Light Scintillation'), 
   ('MAD', 'Mass Accumulation Detection');
 -----------------------------------------------------------------------
+DELETE FROM camdecmpsmd.control_equip_param_code WHERE control_equip_param_cd = 'PM';
 INSERT INTO camdecmpsmd.control_equip_param_code(
 	control_equip_param_cd, control_equip_param_desc
 ) VALUES ('PM', 'Particulate Matter');
@@ -34,6 +39,9 @@ UPDATE camdecmpsmd.control_code
 SET control_equip_param_cd = null
 WHERE control_cd IN ('B', 'ESP', 'HESP', 'WESP');
 -----------------------------------------------------------------------
+DELETE FROM camdecmpsmd.equation_code WHERE equation_cd IN (
+  '11-3','11-16','11-34','11-37','11-46','F-18C','F-27B','C-3','C-4'
+);
 INSERT INTO camdecmpsmd.equation_code(
 	equation_cd, equation_cd_description, moisture_ind
 )	VALUES
@@ -51,6 +59,7 @@ UPDATE camdecmpsmd.equation_code
 SET equation_cd_description = 'Apportioned NOx Mass'
 WHERE equation_cd = 'F-28';
 -----------------------------------------------------------------------
+TRUNCATE camdecmpsmd.eval_status_code;
 INSERT INTO camdecmpsmd.eval_status_code(eval_status_cd, eval_status_cd_description)
 VALUES
     ('EVAL', 'Needs Evaluation'),
@@ -60,6 +69,9 @@ VALUES
     ('ERR', 'Critical Errors'),
     ('INFO', 'Informational Message');
 -----------------------------------------------------------------------
+DELETE FROM camdecmpsmd.parameter_code WHERE parameter_cd IN (
+  'PMC','PMCO','PMRE','PMRH','PMPMA','PMPMC'
+);
 INSERT INTO camdecmpsmd.parameter_code(
 	parameter_cd, parameter_cd_description
 ) VALUES
@@ -70,6 +82,7 @@ INSERT INTO camdecmpsmd.parameter_code(
   ('PMPMA', 'PM Parametric Emissions (mA)'),
   ('PMPMC', 'PM Parametric Emissions (mg/acm)');
 -----------------------------------------------------------------------
+DELETE FROM camdecmpsmd.component_type_code WHERE component_type_cd = 'CPM';
 INSERT INTO camdecmpsmd.component_type_code(
 	component_type_cd, component_type_cd_description, span_indicator, parameter_cd
 )	VALUES ('CPM', 'PM Continuous Parametric Monitor', null, 'PMCO');
@@ -80,18 +93,22 @@ SET component_type_cd_description = 'Particulate Matter',
   parameter_cd = 'PMC'
 WHERE component_type_cd = 'PM';
 -----------------------------------------------------------------------
+DELETE FROM camdecmpsmd.method_code WHERE method_cd = 'CPMS';
 INSERT INTO camdecmpsmd.method_code(
 	method_cd, method_cd_description
 ) VALUES ('CPMS', 'PM Continuous Parametric Monitoring System');
 -----------------------------------------------------------------------
+DELETE FROM camdecmpsmd.qual_type_code WHERE qual_type_cd = 'CPMS';
 INSERT INTO camdecmpsmd.qual_type_code(
 	qual_type_cd, qual_type_cd_description, qual_type_group_cd
 )	VALUES ('CPMS', 'PM CPMS System operating limit', 'CPMS');
 -----------------------------------------------------------------------
+DELETE FROM camdecmpsmd.system_type_code WHERE sys_type_cd = 'CPMS';
 INSERT INTO camdecmpsmd.system_type_code(
 	sys_type_cd, sys_type_description, parameter_cd
 ) VALUES ('CPMS', 'Particulate Matter Parametric Monitoring System', 'PMCO');
 -----------------------------------------------------------------------
+TRUNCATE camdecmpsmd.test_type_group_code;
 INSERT INTO camdecmpsmd.test_type_group_code(
   test_type_group_cd, test_type_group_cd_description, child_depth
 ) VALUES
@@ -112,21 +129,24 @@ INSERT INTO camdecmpsmd.test_type_group_code(
     ('LME', 'Unit Default', 3),
     ('MISC', 'Miscellaneous', 1);
 -----------------------------------------------------------------------
+TRUNCATE camdecmpsaux.email_template;
 INSERT INTO camdecmpsaux.email_template(
   template_id, template_location, template_subject
 ) VALUES
-  (150,	'templates/submission-confirmation.html', 'Submission Completion Notification')
+  (150,	'templates/submission-confirmation.html', 'Submission Completion Notification'),
   (151,	'templates/submission-151.html', 'Emissions Submission Reminder'),
   (152,	'templates/submission-152.html', 'Emissions Submission Reminder'),
   (155,	'templates/submission-155.html', 'Submission Window Open for Quarterly Emission File'),
   (156,	'templates/submission-156.html', 'Outstanding Emissions Submission Reminder'),
   (157,	'templates/submission-157.html', 'Emissions Resubmission Window Closed');
 -----------------------------------------------------------------------
+TRUNCATE camdecmpswks.certification_statement;
 INSERT INTO camdecmpswks.certification_statement(statement_text, prg_cd)
 VALUES
 	('I am authorized to make this submission on behalf of the owners and operators of the source or units for which the submission is made. I certify under penalty of law that I have personally examined, and am familiar with, the statements and information submitted in this document and all its attachments. Based on my inquiry of those individuals with primary responsibility for obtaining the information, I certify that the statements and information are to the best of my knowledge and belief true, accurate, and complete. I am aware that there are significant penalties for submitting false statements and information or omitting required statements and information, including the possibility of fine or imprisonment. If I am an agent authorized to make this electronic submission, I am signing the above certification on behalf of the authorizing designated representative or alternate designated representative, and this action is deemed to be a certification by that designated representative or alternate designated representative. The designated representative or alternate designated representative must sign (i.e., agree to) this certification statement. If you are an agent and you click on "Agree", you are not agreeing to the certification statement, but are submitting the certification statement on behalf of the designated representative or alternate designated representative who is agreeing to the certification statement. An agent is only authorized to make the electronic submission on behalf of the designated representative, not to sign (i.e., agree to) the certification statement.', null),
 	('I am authorized to make this submission on behalf of the owners and operators of the source or units for which the submission is made. I certify under penalty of law that I have personally examined, and am familiar with, the statements and information submitted in this document and all its attachments. Based on my inquiry of those individuals with primary responsibility for obtaining the information, I certify that the statements and information are to the best of my knowledge and belief true, accurate, and complete. I am aware that there are significant penalties for submitting false statements and information or omitting required statements and information, including the possibility of fine or imprisonment. Except as provided in the paragraph below, If I am an agent authorized to make this electronic submission, I am signing the above certification on behalf of the authorizing designated representative or alternate designated representative, and this action is deemed to be a certification by that designated representative or alternate designated representative. If the facility for which this submission is being made has a responsible official (RO) that has registered in the CAMD Business System as an RO that attests to the truthfulness, accuracy, and completeness of the MATS-associated data submitted in each electronic quarterly report under section 7.2.5 of Appendix B to Subpart UUUUU of MATS, I certify that I am signing the above certification on behalf of the RO, and this action is deemed to be a certification by that RO covering the MATS-associated data only.', 'MATS');
 -----------------------------------------------------------------------
+TRUNCATE camdaux.template_code;
 INSERT INTO camdaux.template_code(template_cd, group_cd, template_type, display_name)
 VALUES
 	('LTFF',	 	 'EM',		'DEFAULT',	'Long Term Fuel Flow'),
@@ -229,3 +249,33 @@ VALUES
     ('header', 'x-client-id'),    
     ('header', 'x-secret-token'),
     ('header', 'Bearer');
+
+DELETE FROM camdecmpsaux.program_parameter WHERE prg_id = 12999 AND parameter_cd = 'PM';
+INSERT INTO camdecmpsaux.program_parameter(
+	prg_param_id, prg_id, parameter_cd, required_ind, begin_rpt_period_id, end_rpt_period_id, userid, add_date, update_date
+) VALUES ((select max(prg_param_id)+1 from camdecmpsaux.program_parameter), 12999, 'PM', 1, 125, null, 'ERGLOAD', current_timestamp, null);
+
+--System Type to Component Type
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='System Type to Component Type'), 'CPMS', 'CPM', 'Yes');
+
+--System Type to Fuel Group
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='System Type to Fuel Group'), 'CPMS', 'NFS', null);
+
+--Program Parameter to Method Parameter
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Program Parameter to Method Parameter'), 'PM', 'PMRE,PMRH,PMPMA,PMPMC,MATSSUP,PM', 'PMRE (or PMRH, PMPMA, PMPMC version for heat input based method or PM Supplemental Method)');
+
+update camdecmpsmd.system_parameter
+set param_name3 = 'Mats2.0Date', param_value3 = '01/01/2024'
+where sys_param_id = 12 and sys_param_name = 'MATS_RULE';
+
+UPDATE camdecmpsmd.cross_check_catalog_value
+SET value2 = 'HCLRE,HCLRH,SO2RE,SO2RH,MATSSUP,HCL'
+WHERE value1 = 'HCL' and cross_chk_catalog_id = (select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Program Parameter to Method Parameter');
+
+UPDATE camdecmpsmd.cross_check_catalog_value
+SET value2 = 'HGRE,HGRH,MATSSUP,HG'
+WHERE value1 = 'HG' and cross_chk_catalog_id = (select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Program Parameter to Method Parameter');
+
+UPDATE camdecmpsmd.cross_check_catalog_value
+SET value2 = 'NOX,NOXM,CALC'
+WHERE value1 = 'NOX' and cross_chk_catalog_id = (select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Program Parameter to Method Parameter');

@@ -26,6 +26,5 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_all
     error_codes character varying(1000) COLLATE pg_catalog."default",
     adj_flow_used numeric(13,3),
     rpt_adj_flow numeric(13,3),
-    unadj_flow numeric(13,3),
-    CONSTRAINT pk_emission_view_all PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, date_hour)
+    unadj_flow numeric(13,3)
 ) PARTITION BY RANGE (rpt_period_id);

@@ -1,7 +1,3 @@
--- Table: camdecmps.emission_view_massoilcalc
-
--- DROP TABLE camdecmps.emission_view_massoilcalc;
-
 CREATE TABLE IF NOT EXISTS camdecmps.emission_view_massoilcalc
 (
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -21,6 +17,5 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_massoilcalc
     oil_density_sampling_type character varying(7) COLLATE pg_catalog."default",
     rpt_mass_oil_flow numeric(10,1),
     calc_mass_oil_flow numeric(10,1),
-    error_codes character varying(1000) COLLATE pg_catalog."default",
-    CONSTRAINT pk_emission_view_massoilcalc PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, oil_type, fuel_sys_id, date_hour)
+    error_codes character varying(1000) COLLATE pg_catalog."default"
 ) PARTITION BY RANGE (rpt_period_id);

@@ -113,8 +113,7 @@ union all
 select  concat( 'insert into CHECK_TYPE_CODE ( CHECK_TYPE_CD, CHECK_TYPE_CD_DESCRIPTION ) values ( ', 
                 case when CHECK_TYPE_CD is not null then '''' + CHECK_TYPE_CD + '''' else 'NULL' end, ', ', 
                 case when CHECK_TYPE_CD_DESCRIPTION is not null then '''' + CHECK_TYPE_CD_DESCRIPTION + '''' else 'NULL' end,
-                ' ) on conflict (CHECK_TYPE_CD) do update set ', 
-                'CHECK_TYPE_CD_DESCRIPTION = EXCLUDED.CHECK_TYPE_CD_DESCRIPTION;' ) as SQL_STATEMENT
+                ' );' ) as SQL_STATEMENT
   from  ECMPS_AUX.dbo.CHECK_TYPE_CODE 
 
 union all 
@@ -303,20 +302,7 @@ select  concat( 'insert into CHECK_CATALOG ( CHECK_CATALOG_ID, CHECK_TYPE_CD, CH
                 case when TEST_STATUS_CD is not null then '''' + TEST_STATUS_CD + '''' else 'NULL' end, ', ', 
                 case when CODE_STATUS_CD is not null then '''' + CODE_STATUS_CD + '''' else 'NULL' end, ', ', 
                 case when RUN_CHECK_FLG is not null then '''' + RUN_CHECK_FLG + '''' else 'NULL' end,
-                ' ) on conflict (CHECK_CATALOG_ID) do update set ', 
-                'CHECK_TYPE_CD = EXCLUDED.CHECK_TYPE_CD, ',
-                'CHECK_NUMBER = EXCLUDED.CHECK_NUMBER, ',
-                'CHECK_NAME = EXCLUDED.CHECK_NAME, ',
-                'CHECK_DESCRIPTION = EXCLUDED.CHECK_DESCRIPTION, ',
-                'CHECK_PROCEDURE = EXCLUDED.CHECK_PROCEDURE, ',
-                'OLD_CHECK_NAME = EXCLUDED.OLD_CHECK_NAME, ',
-                'TECH_NOTE = EXCLUDED.TECH_NOTE, ',
-                'TODO_NOTE = EXCLUDED.TODO_NOTE, ',
-                'CHECK_APPLICABILITY_CD = EXCLUDED.CHECK_APPLICABILITY_CD, ',
-                'CHECK_STATUS_CD = EXCLUDED.CHECK_STATUS_CD, ',
-                'TEST_STATUS_CD = EXCLUDED.TEST_STATUS_CD, ',
-                'CODE_STATUS_CD = EXCLUDED.CODE_STATUS_CD, ',
-                'RUN_CHECK_FLG = EXCLUDED.RUN_CHECK_FLG;' ) as SQL_STATEMENT
+                ' );' ) as SQL_STATEMENT
   from  ECMPS_AUX.dbo.CHECK_CATALOG 
 
 union all 
@@ -389,12 +375,7 @@ select  concat( 'insert into CHECK_CATALOG_RESULT ( CHECK_CATALOG_RESULT_ID, CHE
                 case when SEVERITY_CD is not null then '''' + SEVERITY_CD + '''' else 'NULL' end, ', ', 
                 case when RESPONSE_CATALOG_ID is not null then cast(RESPONSE_CATALOG_ID as varchar) else 'NULL' end, ', ', 
                 case when ES_ALLOWED_IND is not null then '''' + cast(ES_ALLOWED_IND as varchar) + '''' else 'NULL' end,
-                ' ) on conflict (CHECK_CATALOG_RESULT_ID) do update set ', 
-                'CHECK_CATALOG_ID = EXCLUDED.CHECK_CATALOG_ID, ',
-                'CHECK_RESULT = EXCLUDED.CHECK_RESULT, ',
-                'SEVERITY_CD = EXCLUDED.SEVERITY_CD, ',
-                'RESPONSE_CATALOG_ID = EXCLUDED.RESPONSE_CATALOG_ID, ',
-                'ES_ALLOWED_IND = EXCLUDED.ES_ALLOWED_IND;' ) as SQL_STATEMENT
+                ' );' ) as SQL_STATEMENT
   from  ECMPS_AUX.dbo.CHECK_CATALOG_RESULT 
 
 union all 
@@ -413,12 +394,7 @@ select  concat( 'insert into CHECK_CATALOG_RESULT ( CHECK_CATALOG_RESULT_ID, CHE
                 case when SEVERITY_CD is not null then '''' + SEVERITY_CD + '''' else 'NULL' end, ', ', 
                 case when RESPONSE_CATALOG_ID is not null then cast(RESPONSE_CATALOG_ID as varchar) else 'NULL' end, ', ', 
                 case when ES_ALLOWED_IND is not null then '''' + cast(ES_ALLOWED_IND as varchar) + '''' else 'NULL' end,
-                ' ) on conflict (CHECK_CATALOG_RESULT_ID) do update set ', 
-                'CHECK_CATALOG_ID = EXCLUDED.CHECK_CATALOG_ID, ',
-                'CHECK_RESULT = EXCLUDED.CHECK_RESULT, ',
-                'SEVERITY_CD = EXCLUDED.SEVERITY_CD, ',
-                'RESPONSE_CATALOG_ID = EXCLUDED.RESPONSE_CATALOG_ID, ',
-                'ES_ALLOWED_IND = EXCLUDED.ES_ALLOWED_IND;' ) as SQL_STATEMENT
+                ' );' ) as SQL_STATEMENT
   from  ECMPS_AUX.dbo.CHECK_CATALOG_RESULT 
 
 union all 
@@ -434,9 +410,7 @@ select  concat( 'insert into RULE_CHECK ( RULE_CHECK_ID, CATEGORY_CD, CHECK_CATA
                 case when RULE_CHECK_ID is not null then cast(RULE_CHECK_ID as varchar) else 'NULL' end, ', ',
                 case when CATEGORY_CD is not null then '''' + CATEGORY_CD + '''' else 'NULL' end, ', ', 
                 case when CHECK_CATALOG_ID is not null then '''' + cast(CHECK_CATALOG_ID as varchar) + '''' else 'NULL' end,
-                ' ) on conflict (RULE_CHECK_ID) do update set ', 
-                'CATEGORY_CD = EXCLUDED.CATEGORY_CD, ',
-                'CHECK_CATALOG_ID = EXCLUDED.CHECK_CATALOG_ID;' ) as SQL_STATEMENT
+                ' );' ) as SQL_STATEMENT
   from  ECMPS_AUX.dbo.RULE_CHECK 
 
 union all 
