@@ -1,7 +1,3 @@
--- Table: camdecmps.emission_view_co2dailyfuel
-
--- DROP TABLE camdecmps.emission_view_co2dailyfuel;
-
 CREATE TABLE IF NOT EXISTS camdecmps.emission_view_co2dailyfuel
 (
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -19,6 +15,5 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_co2dailyfuel
     fuel_carbon_burned numeric(13,1),
     calc_fuel_carbon_burned numeric(13,1),
     total_carbon_burned numeric(13,1),
-    calc_total_daily_emission numeric(10,1),
-    CONSTRAINT pk_emission_view_co2dailyfuel PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, fuel_cd, date)
+    calc_total_daily_emission numeric(10,1)
 ) PARTITION BY RANGE (rpt_period_id);

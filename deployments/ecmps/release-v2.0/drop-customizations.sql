@@ -96,3 +96,11 @@ ALTER TABLE IF EXISTS camdecmps.component
 ALTER TABLE IF EXISTS camdecmpswks.component
  	DROP COLUMN IF EXISTS analytical_principle_cd;
 --------------------------------------------------------------------------------------------------------------------
+ALTER TABLE IF EXISTS camdaux.dataset
+  ADD COLUMN IF NOT EXISTS template_cd character varying(25);
+
+UPDATE camdaux.dataset SET template_cd = 
+	CASE
+    WHEN group_cd = 'REPORT' THEN 'DTLRPT'
+		ELSE group_cd
+	END;

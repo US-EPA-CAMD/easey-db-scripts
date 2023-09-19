@@ -1,7 +1,3 @@
--- Table: camdecmps.emission_view_so2appd
-
--- DROP TABLE camdecmps.emission_view_so2appd;
-
 CREATE TABLE IF NOT EXISTS camdecmps.emission_view_so2appd
 (
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -28,6 +24,5 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_so2appd
     summation_formula_cd character varying(7) COLLATE pg_catalog."default",
     rpt_so2_mass_rate_all_fuels numeric(14,4),
     calc_so2_mass_rate_all_fuels numeric(14,4),
-    error_codes character varying(1000) COLLATE pg_catalog."default",
-    CONSTRAINT pk_emission_view_so2appd PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, fuel_type, fuel_sys_id, date_hour)
+    error_codes character varying(1000) COLLATE pg_catalog."default"
 ) PARTITION BY RANGE (rpt_period_id);

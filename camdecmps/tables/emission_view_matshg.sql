@@ -1,7 +1,3 @@
--- Table: camdecmps.emission_view_matshg
-
--- DROP TABLE camdecmps.emission_view_matshg;
-
 CREATE TABLE IF NOT EXISTS camdecmps.emission_view_matshg
 (
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
@@ -37,6 +33,5 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_matshg
     hg_uom character varying(10) COLLATE pg_catalog."default",
     hg_modc_cd character varying(7) COLLATE pg_catalog."default",
     error_codes character varying(1000) COLLATE pg_catalog."default",
-    calc_hg_rate character varying(30) COLLATE pg_catalog."default",
-    CONSTRAINT pk_emission_view_matshg PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, date_hour)
+    calc_hg_rate character varying(30) COLLATE pg_catalog."default"
 ) PARTITION BY RANGE (rpt_period_id);
