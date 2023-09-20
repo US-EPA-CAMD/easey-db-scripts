@@ -1,4 +1,4 @@
-CREATE TABLE IF EXISTS camdaux.inventory_status_log
+CREATE TABLE IF NOT EXISTS camdaux.inventory_status_log
 (
     inventory_status_log_id numeric(38,0) NOT NULL,
     fac_id numeric(38,0) NOT NULL,

@@ -1,3 +1,5 @@
+SELECT '4-monitor_hrly_value.sql';
+
 ALTER TABLE IF EXISTS camdecmps.monitor_hrly_value
     ADD CONSTRAINT pk_monitor_hrly_value PRIMARY KEY (monitor_hrly_val_id),
     ADD CONSTRAINT fk_monitor_hrly_value_component FOREIGN KEY (component_id)

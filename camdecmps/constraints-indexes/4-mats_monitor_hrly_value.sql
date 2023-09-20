@@ -1,3 +1,5 @@
+SELECT '4-mats_monitor_hrly_value.sql';
+
 ALTER TABLE IF EXISTS camdecmps.mats_monitor_hrly_value
     ADD CONSTRAINT pk_mats_monitor_hrly_value PRIMARY KEY (mats_mhv_id),
     ADD CONSTRAINT fk_mats_monitor_hrly_value_component FOREIGN KEY (component_id)
@@ -17,7 +19,7 @@ ALTER TABLE IF EXISTS camdecmps.mats_monitor_hrly_value
     ADD CONSTRAINT fk_mats_monitor_hrly_value_parameter_code FOREIGN KEY (parameter_cd)
         REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_mats_monitor_hrly_value_reporting_period FOREIGN KEY (rpt_period_id)
-        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE;
 
 CREATE INDEX IF NOT EXISTS idx_mats_monitor_hrly_value_component_id
     ON camdecmps.mats_monitor_hrly_value USING btree

@@ -1,3 +1,5 @@
+SELECT '5-hrly_param_fuel_flow.sql';
+
 ALTER TABLE IF EXISTS camdecmps.hrly_param_fuel_flow
     ADD CONSTRAINT pk_hrly_param_fuel_flow PRIMARY KEY (hrly_param_ff_id),
     ADD CONSTRAINT fk_hrly_param_fuel_flow_hrly_fuel_flow FOREIGN KEY (hrly_fuel_flow_id)

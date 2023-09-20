@@ -13,10 +13,10 @@ CREATE OR REPLACE FUNCTION camdecmpswks.location_program_parameter(
     
 AS $BODY$
 select fac.ORIS_CODE, COALESCE(stp.STACK_NAME, unt.UNITID) LOCATION_NAME,     unt.UNITID UNIT_NAME,
-         unp.PRG_CD,   unp.CLASS_CD AS CLASS, ppr.OS_IND,  ppr.PARAMETER_CD,   ppr.REQUIRED_IND,     ppb.BEGIN_DATE PARAM_BEGIN_DATE,     ppe.END_DATE PARAM_END_DATE,     unp.UNIT_MONITOR_CERT_BEGIN_DATE UMCB_DATE,
+         unp.PRG_CD,   unp.CLASS_CD AS CLASS, pc.OS_IND,  pp.PARAMETER_CD,   pp.REQUIRED_IND,     ppb.BEGIN_DATE PARAM_BEGIN_DATE,     ppe.END_DATE PARAM_END_DATE,     unp.UNIT_MONITOR_CERT_BEGIN_DATE UMCB_DATE,
          unp.EMISSIONS_RECORDING_BEGIN_DATE ERB_DATE,   unp.END_DATE PRG_END_DATE,   pln.FAC_ID,
-         pln.MON_PLAN_ID,  mpl.MON_LOC_ID,    loc.UNIT_ID,    unp.UP_ID,    unp.PRG_ID,   ppr.PRG_PARAM_ID,
-         ppr.BEGIN_RPT_PERIOD_ID,    ppr.END_RPT_PERIOD_ID
+         pln.MON_PLAN_ID,  mpl.MON_LOC_ID,    loc.UNIT_ID,    unp.UP_ID,    unp.PRG_ID,   pp.PRG_PARAM_ID,
+         pp.BEGIN_RPT_PERIOD_ID,    pp.END_RPT_PERIOD_ID
     from camdecmpswks.MONITOR_PLAN pln
          join camdecmpsmd.REPORTING_PERIOD mpb             on mpb.RPT_PERIOD_ID = pln.BEGIN_RPT_PERIOD_ID
          left join camdecmpsmd.REPORTING_PERIOD mpe          on mpe.RPT_PERIOD_ID = pln.END_RPT_PERIOD_ID
@@ -27,8 +27,10 @@ select fac.ORIS_CODE, COALESCE(stp.STACK_NAME, unt.UNITID) LOCATION_NAME,     un
          join camd.UNIT unt                   on unt.UNIT_ID in (loc.UNIT_ID, usc.UNIT_ID)
          join camd.plant fac                    on fac.FAC_ID = unt.FAC_ID
          join camd.UNIT_PROGRAM unp                 on unp.UNIT_ID = unt.UNIT_ID
-         join camdecmpswks.vw_program_parameter ppr     on ppr.PRG_ID = unp.PRG_ID
-         join camdecmpsmd.REPORTING_PERIOD ppb    on ppb.RPT_PERIOD_ID = ppr.BEGIN_RPT_PERIOD_ID
-         left join camdecmpsmd.REPORTING_PERIOD ppe      on ppe.RPT_PERIOD_ID = ppr.END_RPT_PERIOD_ID
- 	WHERE (monplanid is null or mpl.MON_PLAN_ID = monplanid)
+         join camdecmpsaux.program_parameter pp on pp.PRG_ID = unp.PRG_ID
+         JOIN camd.program p ON p.prg_id = pp.prg_id
+         JOIN camdmd.program_code pc ON pc.prg_cd::text = p.prg_cd::text
+         join camdecmpsmd.REPORTING_PERIOD ppb    on ppb.RPT_PERIOD_ID = pp.BEGIN_RPT_PERIOD_ID
+         left join camdecmpsmd.REPORTING_PERIOD ppe      on ppe.RPT_PERIOD_ID = pp.END_RPT_PERIOD_ID
+    WHERE (monplanid is null or mpl.MON_PLAN_ID = monplanid)
 $BODY$;

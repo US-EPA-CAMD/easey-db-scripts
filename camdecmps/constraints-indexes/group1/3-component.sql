@@ -1,3 +1,5 @@
+SELECT '3-component.sql';
+
 ALTER TABLE IF EXISTS camdecmps.component
     ADD CONSTRAINT pk_component PRIMARY KEY (component_id),
     ADD CONSTRAINT fk_component_acquisition_method_code FOREIGN KEY (acq_cd)

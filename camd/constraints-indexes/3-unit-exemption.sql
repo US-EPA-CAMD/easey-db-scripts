@@ -1,7 +1,4 @@
 ALTER TABLE IF EXISTS camd.unit_exemption
-    unit_exempt_id numeric(38,0) NOT NULL,
-    unit_id numeric(38,0) NOT NULL,
-    exemption_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     ADD CONSTRAINT pk_unit_exemption PRIMARY KEY (unit_exempt_id),
     ADD CONSTRAINT uq_unit_exemption UNIQUE (unit_id, begin_date),
     ADD CONSTRAINT fk_unit_exemption_exemption_type_code FOREIGN KEY (exemption_type_cd)

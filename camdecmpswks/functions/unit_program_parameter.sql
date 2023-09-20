@@ -16,9 +16,9 @@ select fac.ORIS_CODE,
          unt.UNITID UNIT_NAME,
          unp.PRG_CD,
          unp.CLASS_cd as class,
-         ppr.OS_IND,
-         ppr.PARAMETER_CD,
-         ppr.REQUIRED_IND,
+         pc.OS_IND,
+         pp.PARAMETER_CD,
+         pp.REQUIRED_IND,
          ppb.BEGIN_DATE PARAM_BEGIN_DATE,
          ppe.END_DATE PARAM_END_DATE,
          unp.UNIT_MONITOR_CERT_BEGIN_DATE UMCB_DATE,
@@ -30,9 +30,9 @@ select fac.ORIS_CODE,
          loc.UNIT_ID,
          unp.UP_ID,
          unp.PRG_ID,
-         ppr.PRG_PARAM_ID,
-         ppr.BEGIN_RPT_PERIOD_ID,
-         ppr.END_RPT_PERIOD_ID
+         pp.PRG_PARAM_ID,
+         pp.BEGIN_RPT_PERIOD_ID,
+         pp.END_RPT_PERIOD_ID
     from camdecmpswks.MONITOR_PLAN pln
          join camdecmpsmd.REPORTING_PERIOD mpb
            on mpb.RPT_PERIOD_ID = pln.BEGIN_RPT_PERIOD_ID
@@ -49,13 +49,14 @@ select fac.ORIS_CODE,
            on fac.FAC_ID = unt.FAC_ID
          join camd.UNIT_PROGRAM unp
            on unp.UNIT_ID = loc.UNIT_ID
-         join camdecmpswks.vw_program_parameter ppr
-           on ppr.PRG_ID = unp.PRG_ID
+         join camdecmpsaux.program_parameter pp on pp.PRG_ID = unp.PRG_ID
+         JOIN camd.program p ON p.prg_id = pp.prg_id
+         JOIN camdmd.program_code pc ON pc.prg_cd::text = p.prg_cd::text
          join camdecmpsmd.REPORTING_PERIOD ppb
-           on ppb.RPT_PERIOD_ID = ppr.BEGIN_RPT_PERIOD_ID
+           on ppb.RPT_PERIOD_ID = pp.BEGIN_RPT_PERIOD_ID
               and (mpe.END_DATE is null or ppb.BEGIN_DATE <= mpe.END_DATE)
          left join camdecmpsmd.REPORTING_PERIOD ppe
-           on ppe.RPT_PERIOD_ID = ppr.END_RPT_PERIOD_ID
+           on ppe.RPT_PERIOD_ID = pp.END_RPT_PERIOD_ID
               and (ppe.END_DATE is null or ppe.END_DATE >= mpb.BEGIN_DATE)
-		WHERE (monplanid /*Replace Parameter*/ is null or pln.MON_PLAN_ID = monplanid /*Replace Parameter*/);
+        WHERE (monplanid is null or pln.MON_PLAN_ID = monplanid);
 $BODY$;

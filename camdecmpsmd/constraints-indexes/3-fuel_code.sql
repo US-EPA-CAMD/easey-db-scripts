@@ -9,6 +9,6 @@ CREATE INDEX IF NOT EXISTS idx_fuel_code_fuel_group_cd
     ON camdecmpsmd.fuel_code USING btree
     (fuel_group_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
-CREATE INDEX IF NOT EXISTS idx_fuel_code_fuel_type_code
+CREATE INDEX IF NOT EXISTS idx_fuel_code_unit_fuel_cd
     ON camdecmpsmd.fuel_code USING btree
-    (fuel_type_code COLLATE pg_catalog."default" ASC NULLS LAST);
+    (unit_fuel_cd COLLATE pg_catalog."default" ASC NULLS LAST);
