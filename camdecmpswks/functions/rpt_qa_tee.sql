@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_tee(
-	teeid text)
+	teeid text[])
     RETURNS TABLE("unitStack" text, "extensionExemptionType" text, "rptPeriodAbr" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "spanScaleCd" text, "fuelCd" text, "hoursUsed" numeric, "submissionStatus" text) 
     LANGUAGE 'sql'
     COST 100
@@ -30,5 +30,5 @@ SELECT
 	LEFT JOIN camdecmpswks.component c USING(component_id)
 	LEFT JOIN camdecmpswks.stack_pipe sp USING(stack_pipe_id)
 	LEFT JOIN camd.unit u USING(unit_id)
-	WHERE tee.test_extension_exemption_id = teeid;
+	WHERE tee.test_extension_exemption_id = ANY(teeid);
 $BODY$;

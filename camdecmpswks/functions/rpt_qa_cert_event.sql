@@ -3,14 +3,13 @@
 DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_cert_event(text);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_cert_event(
-	qacerteventid text)
+	qacerteventid text[])
     RETURNS TABLE("unitStack" text, "eventCode" text, "eventCodeGroup" text, "eventCodeDescription" text, "eventDateHour" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "requiredTestCode" text, "requiredTestCodeGroup" text, "requiredTestCodeDescription" text, "conditionalBeginDateHour" text, "lastTestCompletedDateHour" text, "submissionStatus" text) 
     LANGUAGE 'sql'
-
     COST 100
-    VOLATILE 
+    VOLATILE PARALLEL UNSAFE
     ROWS 1000
-    
+
 AS $BODY$
 SELECT
 		CASE
@@ -40,5 +39,5 @@ SELECT
 	LEFT JOIN camdecmpsmd.required_test_code rtc USING(required_test_cd)
 	LEFT JOIN camdecmpswks.stack_pipe sp USING(stack_pipe_id)
 	LEFT JOIN camd.unit u USING(unit_id)
-	WHERE qce.qa_cert_event_id = qaCertEventId;
+	WHERE qce.qa_cert_event_id = ANY(qacerteventid);
 $BODY$;

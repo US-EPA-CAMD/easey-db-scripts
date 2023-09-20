@@ -17,7 +17,7 @@ BEGIN
 RETURN QUERY
 	SELECT 
 			m.MON_METHOD_ID, 
-			l.MON_LOC_ID, 
+			ml.MON_LOC_ID, 
 			m.PARAMETER_CD, 
 			m.SUB_DATA_CD, 
 			m.BYPASS_APPROACH_CD, 
@@ -26,17 +26,20 @@ RETURN QUERY
 			m.BEGIN_HOUR, 
 			m.END_DATE, 
 			m.END_HOUR, 
-			l.STACK_PIPE_ID, 
-			l.UNIT_ID,
-			CASE WHEN l.STACK_PIPE_ID IS NULL THEN NULL ELSE l.LOCATION_IDENTIFIER END AS STACK_NAME,
-			CASE WHEN l.UNIT_ID IS NULL THEN NULL ELSE l.LOCATION_IDENTIFIER END AS UNITID,
+			ml.STACK_PIPE_ID, 
+			ml.UNIT_ID,
+			sp.STACK_NAME,
+			u.UNITID,
 			m.BEGIN_HOUR * INTERVAL '1 HOUR' + m.BEGIN_DATE BEGIN_DATEHOUR,
 			m.END_HOUR * INTERVAL '1 HOUR' + m.END_DATE END_DATEHOUR,
 			m.PARAMETER_CD CROSSCHECK_PARAMETER
 	FROM camdecmpswks.MONITOR_METHOD m
-	INNER JOIN camdecmpswks.VW_MONITOR_LOCATION l ON m.MON_LOC_ID = l.MON_LOC_ID
-	INNER JOIN camdecmpswks.MONITOR_PLAN_LOCATION mpl ON mpl.MON_LOC_ID = l.MON_LOC_ID
-	WHERE (p_facilityid IS NULL OR FAC_ID=p_facilityid)
+	JOIN camdecmpswks.monitor_location ml ON m.mon_loc_id = ml.mon_loc_id
+    LEFT JOIN camd.unit u ON ml.unit_id = u.unit_id
+    LEFT JOIN camdecmpswks.stack_pipe sp ON ml.stack_pipe_id::text = sp.stack_pipe_id::text
+    LEFT JOIN camd.plant p1 ON u.fac_id = p1.fac_id
+    LEFT JOIN camd.plant p2 ON sp.fac_id = p2.fac_id
+	WHERE (p_facilityid IS NULL OR p_facilityid=COALESCE(p1.fac_id, p2.fac_id))
 UNION
 	SELECT	
 		mth.MATS_METHOD_DATA_ID, 
@@ -49,16 +52,19 @@ UNION
 		mth.BEGIN_HOUR, 
 		mth.END_DATE, 
 		mth.END_HOUR, 
-		l.STACK_PIPE_ID, 
-		l.UNIT_ID,
-		CASE WHEN l.STACK_PIPE_ID IS NULL THEN NULL ELSE l.LOCATION_IDENTIFIER END AS STACK_NAME,
-		CASE WHEN l.UNIT_ID IS NULL THEN NULL ELSE l.LOCATION_IDENTIFIER END AS UNITID,
+		ml.STACK_PIPE_ID, 
+		ml.UNIT_ID,
+		sp.STACK_NAME,
+		u.UNITID,
 		mth.BEGIN_HOUR * INTERVAL '1 HOUR' + mth.BEGIN_DATE BEGIN_DATEHOUR,
 		mth.END_HOUR * INTERVAL '1 HOUR' + mth.END_DATE END_DATEHOUR,
 		'MATSSUP' CROSSCHECK_PARAMETER
 	FROM camdecmpswks.MATS_METHOD_DATA mth 
-	INNER JOIN	camdecmpswks.MONITOR_PLAN_LOCATION mpl	ON	mth.MON_LOC_ID = mpl.MON_LOC_ID
-	INNER JOIN camdecmpswks.VW_MONITOR_LOCATION l ON mpl.MON_LOC_ID = l.MON_LOC_ID
-	WHERE (p_facilityid IS NULL OR FAC_ID=p_facilityid);
+	JOIN camdecmpswks.monitor_location ml ON mth.mon_loc_id = ml.mon_loc_id
+    LEFT JOIN camd.unit u ON ml.unit_id = u.unit_id
+    LEFT JOIN camdecmpswks.stack_pipe sp ON ml.stack_pipe_id::text = sp.stack_pipe_id::text
+    LEFT JOIN camd.plant p1 ON u.fac_id = p1.fac_id
+    LEFT JOIN camd.plant p2 ON sp.fac_id = p2.fac_id
+	WHERE (p_facilityid IS NULL OR p_facilityid=COALESCE(p1.fac_id, p2.fac_id));
 end;
 $BODY$;

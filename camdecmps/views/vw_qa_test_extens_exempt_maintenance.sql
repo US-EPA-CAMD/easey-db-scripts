@@ -5,6 +5,7 @@ DROP VIEW IF EXISTS camdecmps.vw_qa_test_extens_exempt_maintenance;
 CREATE OR REPLACE VIEW camdecmps.vw_qa_test_extens_exempt_maintenance
 AS SELECT tee.test_extension_exemption_id,
     tee.mon_loc_id AS location_id,
+    tee.resub_explanation,
     COALESCE(up.oris_code, spp.oris_code) AS oris_code,
     COALESCE(u.unitid, sp.stack_name) AS unit_stack,
     ms.system_identifier,

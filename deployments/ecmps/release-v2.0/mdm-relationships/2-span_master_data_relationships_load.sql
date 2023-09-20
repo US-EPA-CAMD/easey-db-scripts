@@ -1,9 +1,3 @@
-/* MATS/GNP REQ
---REPORTING INTRUCTIONS DID NOT HAVE SPAN METHOD FOR PM & CPMS
-INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type and Span Scale to Span Method'), 'PM', 'H', ???);
-INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type and Span Scale to Span Method'), 'CPMS, 'H', ???);
-*/
-
 --Component type Code for SPAN
 INSERT INTO camdecmpsmd.cross_check_catalog(cross_chk_catalog_name
 											, cross_chk_catalog_description
@@ -33,7 +27,7 @@ INSERT INTO camdecmpsmd.cross_check_catalog(cross_chk_catalog_name
 			, null
 			, null
 			, null);
-	
+
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type to Category'), 'CO2', 'SPAN', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type to Category'), 'FLOW', 'SPAN', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type to Category'), 'HCL', 'SPAN', null);
@@ -41,10 +35,6 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, 
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type to Category'), 'NOX', 'SPAN', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type to Category'), 'O2', 'SPAN', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type to Category'), 'SO2', 'SPAN', null);
-/* MATS/GNP REQ
-INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type to Category'), 'PM', 'SPAN', null);
-INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type to Category'), 'CPMS', 'SPAN', null);
-*/
 
 --Component type Code to Units of Measure
 INSERT INTO camdecmpsmd.cross_check_catalog(cross_chk_catalog_name

@@ -3958,7 +3958,7 @@ BEGIN
     )
     ON COMMIT PRESERVE ROWS;
   
-    CREATE UNIQUE INDEX ix_unique_aws_oracle_ext$arrays__arr_name_proc_name
+    CREATE UNIQUE INDEX IF NOT EXISTS ix_unique_aws_oracle_ext$arrays__arr_name_proc_name
         ON aws_oracle_ext$arrays(array_name, procedure_name, parent_id);
     
     CREATE INDEX IF NOT EXISTS ix_aws_oracle_ext$arrays__proc_name
@@ -3991,7 +3991,7 @@ BEGIN
     )
     ON COMMIT PRESERVE ROWS;
 
-    CREATE UNIQUE INDEX ix_unique_aws_oracle_ext$array_fields__arr_id_field_name
+    CREATE UNIQUE INDEX IF NOT EXISTS ix_unique_aws_oracle_ext$array_fields__arr_id_field_name
         ON aws_oracle_ext$array_fields (array_id, field_name);
 
     CREATE INDEX IF NOT EXISTS ix_aws_oracle_ext$array_fields__arr_id
@@ -4028,7 +4028,7 @@ BEGIN
     )
     ON COMMIT PRESERVE ROWS;
   
-    CREATE UNIQUE INDEX ix_aws_oracle_ext$array_field_values_unique_arr_field_id_arr_ke
+    CREATE UNIQUE INDEX IF NOT EXISTS ix_aws_oracle_ext$array_field_values_unique_arr_field_id_arr_ke
         ON aws_oracle_ext$array_field_values(array_field_id, array_key,parent_field_id);
 
     CREATE INDEX IF NOT EXISTS ix_aws_oracle_ext$array_field_values__arr_field_id
