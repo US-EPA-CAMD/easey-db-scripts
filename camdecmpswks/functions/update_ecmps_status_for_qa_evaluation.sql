@@ -40,21 +40,30 @@ begin
 			WHERE TEST_SUM_ID = vTestSumId;
  	
 		
-	   UPDATE camdecmpswks.QA_SUPP_DATA
+		UPDATE camdecmpswks.QA_SUPP_DATA
 			SET UPDATED_STATUS_FLG	= 'Y'
-			 FROM camdecmpswks.QA_SUPP_DATA QA, camdecmpswks.VW_QA_SUPP_DATA VW
-			  WHERE QA.QA_SUPP_DATA_ID = VW.QA_SUPP_DATA_ID AND
-						QA.TEST_SUM_ID =vTestSumId AND CAN_SUBMIT = 'Y';
+		FROM camdecmpswks.QA_SUPP_DATA
+			WHERE TEST_SUM_ID = vTestSumId AND (
+				submission_availability_cd IS NULL OR
+				submission_availability_cd = 'GRANTED' OR
+				submission_availability_cd = 'REQUIRE'
+			);
 		
 		--common part for QA Test-------
 		vContinue:='Y';
+		
 			   --Check no test_sum_id or can't submit
-				SELECT count(*) into vCount 	
-					FROM camdecmpswks.VW_QA_SUPP_DATA
-					 WHERE TEST_SUM_ID !=vTestSumId or 
-					      (TEST_SUM_ID = vTestSumId AND CAN_SUBMIT = 'Y');  	 
+				SELECT count(*) into vCount
+					FROM camdecmpswks.QA_SUPP_DATA
+					 WHERE TEST_SUM_ID != vTestSumId OR (
+						TEST_SUM_ID = vTestSumId AND (
+							submission_availability_cd IS NULL OR
+							submission_availability_cd = 'GRANTED' OR
+							submission_availability_cd = 'REQUIRE'
+						));
+
 				  if vCount=0 then 
-				      vContinue:='N';				  
+				      vContinue:='N';
                    end if;
 				   
 		 If vContinue='Y' then

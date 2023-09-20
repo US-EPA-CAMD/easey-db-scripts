@@ -8,7 +8,7 @@ ALTER TABLE IF EXISTS camdecmps.qa_cert_event_supp_data
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_qa_cert_event_supp_data_reporting_period FOREIGN KEY (rpt_period_id)
-        REFERENCES camdecmps.reporting_period (rpt_period_id) MATCH SIMPLE,
+        REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
     ADD CONSTRAINT fk_qa_cert_event_supp_data_qa_cert_event FOREIGN KEY (qa_cert_event_id)
         REFERENCES camdecmps.qa_cert_event (qa_cert_event_id) MATCH SIMPLE
         ON DELETE CASCADE;

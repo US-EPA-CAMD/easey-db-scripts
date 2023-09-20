@@ -1,5 +1,5 @@
 ALTER TABLE IF EXISTS camdecmps.operating_supp_data
-	  ADD CONSTRAINT pk_operating_supp_data PRIMARY KEY (op_supp_data_id),
+	ADD CONSTRAINT pk_operating_supp_data PRIMARY KEY (op_supp_data_id),
     ADD CONSTRAINT fk_operating_supp_data_fuel_code FOREIGN KEY (fuel_cd)
         REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_operating_supp_data_monitor_location FOREIGN KEY (mon_loc_id)

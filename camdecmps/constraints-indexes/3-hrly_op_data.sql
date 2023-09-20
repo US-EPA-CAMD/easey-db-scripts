@@ -1,3 +1,5 @@
+SELECT '3-hrly_op_data.sql';
+
 ALTER TABLE IF EXISTS camdecmps.hrly_op_data
     ADD CONSTRAINT pk_hrly_op_data PRIMARY KEY (hour_id),
     ADD CONSTRAINT fk_hrly_op_data_fuel_code FOREIGN KEY (fuel_cd)

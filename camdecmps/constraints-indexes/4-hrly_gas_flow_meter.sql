@@ -1,3 +1,5 @@
+SELECT '4-hrly_gas_flow_meter.sql';
+
 ALTER TABLE IF EXISTS camdecmps.hrly_gas_flow_meter
     ADD CONSTRAINT pk_hrly_gas_flow_meter PRIMARY KEY (hrly_gas_flow_meter_id),
     ADD CONSTRAINT fk_hrly_gas_flow_meter_component FOREIGN KEY (component_id)

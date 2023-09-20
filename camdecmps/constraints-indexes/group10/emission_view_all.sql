@@ -1,3 +1,5 @@
+SELECT 'emission_view_all.sql';
+
 ALTER TABLE IF EXISTS camdecmps.emission_view_all
     ADD CONSTRAINT pk_emission_view_all PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, date_hour),
     ADD CONSTRAINT fk_emission_view_all_emission_evaluation FOREIGN KEY (rpt_period_id, mon_plan_id)

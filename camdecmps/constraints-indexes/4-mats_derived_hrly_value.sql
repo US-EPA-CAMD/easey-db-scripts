@@ -1,3 +1,5 @@
+SELECT '4-mats_derived_hrly_value.sql';
+
 ALTER TABLE IF EXISTS camdecmps.mats_derived_hrly_value
     ADD CONSTRAINT pk_mats_derived_hrly_value PRIMARY KEY (mats_dhv_id),
     ADD CONSTRAINT fk_mats_derived_hrly_value_hrly_op_data FOREIGN KEY (hour_id)

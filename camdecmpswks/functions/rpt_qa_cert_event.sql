@@ -41,6 +41,3 @@ SELECT
 	LEFT JOIN camd.unit u USING(unit_id)
 	WHERE qce.qa_cert_event_id = ANY(qacerteventid);
 $BODY$;
-
-ALTER FUNCTION camdecmpswks.rpt_qa_cert_event(text)
-    OWNER TO "uImcwuf4K9dyaxeL";

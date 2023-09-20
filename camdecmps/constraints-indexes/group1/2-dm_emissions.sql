@@ -1,3 +1,5 @@
+SELECT '2-dm_emissions.sql';
+
 ALTER TABLE IF EXISTS camdecmps.dm_emissions
     ADD CONSTRAINT pk_dm_emissions PRIMARY KEY (dm_emissions_id),
     ADD CONSTRAINT uq_dm_emissions UNIQUE (mon_plan_id, rpt_period_id),

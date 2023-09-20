@@ -13,20 +13,29 @@ CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_cycle_time_summary(
     
 AS $BODY$
 SELECT
-		"unitStack",
-		"testTypeCode",
-		"testNumber",
-		"testReasonCode",
-		"testResultCode",
-		"calcTestResultCode",	
-		"spanScaleCode",
-		"calcSpanValue",
-		"endDateTime",
-		"componentIdentifier",
-		"componentTypeCode",
+		CASE
+			WHEN ml.stack_pipe_id IS NOT NULL THEN sp.stack_name
+			WHEN ml.unit_id IS NOT NULL THEN u.unitid
+			ELSE '*'
+		END AS "unitStack",
+		ts.test_type_cd AS "testTypeCode",
+		ts.test_num AS "testNumber",
+		ts.test_reason_cd AS "testReasonCode",
+		ts.test_result_cd AS "testResultCode",
+		ts.calc_test_result_cd AS "calcTestResultCode",	
+		ts.span_scale_cd AS "spanScaleCode",
+		ts.calc_span_value AS "calcSpanValue",
+		camdecmps.format_date_hour(ts.end_date, ts.end_hour, ts.end_min) AS "endDateTime",
+		c.component_identifier AS "componentIdentifier",
+		c.component_type_cd AS "componentTypeCode",
 		cts.total_time AS "totalCycleTime",
 		cts.calc_total_time AS "calcTotalCycleTime"
-	FROM camdecmps.cycle_time_summary cts,
-		 camdecmps.rpt_qa_test_summary(testSumId)
+	FROM camdecmps.cycle_time_summary cts
+	JOIN camdecmps.test_summary ts USING(test_sum_id)
+	JOIN camdecmps.monitor_location ml USING(mon_loc_id)
+	LEFT JOIN camdecmps.monitor_system ms USING(mon_sys_id)
+	LEFT JOIN camdecmps.component c USING(component_id)
+	LEFT JOIN camdecmps.stack_pipe sp USING(stack_pipe_id)
+	LEFT JOIN camd.unit u USING(unit_id)
 	WHERE cts.test_sum_id = testSumId
 $BODY$;
