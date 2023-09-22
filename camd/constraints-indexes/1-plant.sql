@@ -1,6 +1,6 @@
 ALTER TABLE IF EXISTS camd.plant
     ADD CONSTRAINT pk_plant PRIMARY KEY (fac_id),
-    ADD CONSTRAINT uq_plant UNIQUE (oris_code),
+    ADD CONSTRAINT uq_plant_oris_code UNIQUE (oris_code),
     ADD CONSTRAINT uq_plant_name_by_state UNIQUE (facility_name, state),
     ADD CONSTRAINT fk_plant_county_code FOREIGN KEY (county_cd)
         REFERENCES camdmd.county_code (county_cd) MATCH SIMPLE,

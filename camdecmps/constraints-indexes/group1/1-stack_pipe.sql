@@ -9,4 +9,4 @@ CREATE INDEX IF NOT EXISTS idx_stack_pipe_fac_id
 
 CREATE INDEX IF NOT EXISTS idx_stack_pipe_stack_name
     ON camdecmps.stack_pipe USING btree
-    (stack_name COLLATE pg_catalog."default" ASC NULLS LAST);
+    (fac_id ASC NULLS LAST, stack_name COLLATE pg_catalog."default" ASC NULLS LAST);

@@ -1,4 +1,4 @@
-ALTER TABLE IF EXISTS camdecmpswks.daily_backstop(
+ALTER TABLE IF EXISTS camdecmpswks.daily_backstop
     ADD CONSTRAINT pk_daily_backstop PRIMARY KEY (daily_backstop_id),
     ADD CONSTRAINT fk_daily_backstop_unit FOREIGN KEY (unit_id)
         REFERENCES camd.unit (unit_id) MATCH SIMPLE,

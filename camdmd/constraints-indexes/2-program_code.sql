@@ -7,3 +7,9 @@ ALTER TABLE IF EXISTS camdmd.program_code
 CREATE INDEX IF NOT EXISTS idx_program_code_prg_group_cd
     ON camdmd.program_code USING btree
     (prg_group_cd ASC NULLS LAST);
+
+/*
+CREATE INDEX idx_program_code_allow_comp
+    ON camdmd.program_code USING btree
+    (allow_comp_ind ASC NULLS LAST);
+*/

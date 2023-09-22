@@ -3,8 +3,8 @@ ALTER TABLE IF EXISTS camd.unit_program
     ADD CONSTRAINT uq_unit_program UNIQUE (unit_id, prg_id),
     ADD CONSTRAINT fk_unit_program_applicability_status_code FOREIGN KEY (app_status_cd)
         REFERENCES camdmd.applicability_status_code (app_status_cd) MATCH SIMPLE,
-    ADD CONSTRAINT fk_unit_program_program_class FOREIGN KEY (class_cd, prg_cd)
-        REFERENCES camdmd.program_class (class_cd, prg_cd) MATCH SIMPLE,
+    ADD CONSTRAINT fk_unit_program_program_class FOREIGN KEY (prg_cd, class_cd)
+        REFERENCES camdmd.program_class (prg_cd, class_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_unit_program_program FOREIGN KEY (prg_id)
         REFERENCES camd.program (prg_id) MATCH SIMPLE,
     ADD CONSTRAINT fk_unit_program_nonstandard_code FOREIGN KEY (nonstandard_cd)

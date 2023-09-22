@@ -28,18 +28,6 @@ CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_daily_test_sum_id
     ON camdecmps.daily_test_supp_data USING btree
     (daily_test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
-CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_key_online_ind
-    ON camdecmps.daily_test_supp_data USING btree
-    (key_online_ind ASC NULLS LAST);
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_key_valid_ind
-    ON camdecmps.daily_test_supp_data USING btree
-    (key_valid_ind ASC NULLS LAST);
-
-CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_online_offline_ind
-    ON camdecmps.daily_test_supp_data USING btree
-    (online_offline_ind ASC NULLS LAST);
-
 CREATE INDEX IF NOT EXISTS idx_daily_test_supp_data_rpt_period_id
     ON camdecmps.daily_test_supp_data USING btree
     (rpt_period_id ASC NULLS LAST);

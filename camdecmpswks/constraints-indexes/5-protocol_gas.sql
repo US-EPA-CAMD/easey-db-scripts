@@ -2,8 +2,6 @@ ALTER TABLE IF EXISTS camdecmpswks.protocol_gas
     ADD CONSTRAINT pk_protocol_gas PRIMARY KEY (protocol_gas_id),
     ADD CONSTRAINT fk_protocol_gas_gas_level_code FOREIGN KEY (gas_level_cd)
         REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE,
-    ADD CONSTRAINT fk_protocol_gas_gas_type_code FOREIGN KEY (gas_type_cd)
-        REFERENCES camdecmpsmd.gas_type_code (gas_type_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_protocol_gas_protocol_gas_vendor FOREIGN KEY (vendor_id)
         REFERENCES camdecmps.protocol_gas_vendor (vendor_id) MATCH SIMPLE,
     ADD CONSTRAINT fk_protocol_gas_test_summary FOREIGN KEY (test_sum_id)

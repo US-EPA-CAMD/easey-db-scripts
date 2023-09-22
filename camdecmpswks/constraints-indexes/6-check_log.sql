@@ -3,22 +3,22 @@ ALTER TABLE IF EXISTS camdecmpswks.check_log
     ADD CONSTRAINT fk_check_log_check_session FOREIGN KEY (chk_session_id)
         REFERENCES camdecmpswks.check_session (chk_session_id) MATCH SIMPLE
 		    ON DELETE CASCADE,
-    ADD CONSTRAINT fk_check_log_rule_check FOREIGN KEY (rule_check_id)
-        REFERENCES camdecmpsmd.rule_check (rule_check_id) MATCH SIMPLE,
-    ADD CONSTRAINT fk_check_log_check_catalog_result FOREIGN KEY (check_catalog_result_id)
-        REFERENCES camdecmpsmd.check_catalog_result (check_catalog_result_id) MATCH SIMPLE,
+    -- ADD CONSTRAINT fk_check_log_rule_check FOREIGN KEY (rule_check_id)
+    --     REFERENCES camdecmpsmd.rule_check (rule_check_id) MATCH SIMPLE,
+    -- ADD CONSTRAINT fk_check_log_check_catalog_result FOREIGN KEY (check_catalog_result_id)
+    --     REFERENCES camdecmpsmd.check_catalog_result (check_catalog_result_id) MATCH SIMPLE,
 	  ADD CONSTRAINT fk_check_log_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
 		    ON DELETE CASCADE,
-	  ADD CONSTRAINT fk_check_log_test_summary FOREIGN KEY (test_sum_id)
-        REFERENCES camdecmpswks.test_summary (test_sum_id) MATCH SIMPLE
-		    ON DELETE CASCADE,
+	  -- ADD CONSTRAINT fk_check_log_test_summary FOREIGN KEY (test_sum_id)
+    --     REFERENCES camdecmpswks.test_summary (test_sum_id) MATCH SIMPLE
+		--     ON DELETE CASCADE,
     ADD CONSTRAINT fk_check_log_severity_code FOREIGN KEY (severity_cd)
         REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_check_log_severity_code_suppressed FOREIGN KEY (suppressed_severity_cd)
-        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE,
-    ADD CONSTRAINT fk_check_log_es_spec FOREIGN KEY (error_suppress_id)
-        REFERENCES camdecmpsaux.es_spec (es_spec_id) MATCH SIMPLE;
+        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE;
+    -- ADD CONSTRAINT fk_check_log_es_spec FOREIGN KEY (error_suppress_id)
+    --     REFERENCES camdecmpsaux.es_spec (es_spec_id) MATCH SIMPLE;
 
 CREATE INDEX IF NOT EXISTS idx_check_log_chk_session_id
     ON camdecmpswks.check_log USING btree

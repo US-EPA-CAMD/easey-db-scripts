@@ -20,7 +20,7 @@ CREATE INDEX IF NOT EXISTS idx_email_to_process_email_type
 
 CREATE INDEX IF NOT EXISTS idx_email_to_process_event_code
     ON camdecmpsaux.email_to_process USING btree
-    (event_code COLLATE pg_catalog."default" ASC NULLS LAST);
+    (event_code ASC NULLS LAST);
 
 CREATE INDEX IF NOT EXISTS idx_email_to_process_mon_plan_id
     ON camdecmpsaux.email_to_process USING btree

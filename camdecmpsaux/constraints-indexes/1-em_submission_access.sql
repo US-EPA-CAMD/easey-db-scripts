@@ -11,7 +11,7 @@ ALTER TABLE IF EXISTS camdecmpsaux.em_submission_access
     ADD CONSTRAINT fk_em_submission_access_em_sub_type_code FOREIGN KEY (em_sub_type_cd)
         REFERENCES camdecmpsmd.em_sub_type_code (em_sub_type_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_em_submission_access_submission_availability_code FOREIGN KEY (sub_availability_cd)
-        REFERENCES camdecmpsmd.submission_availability_code (sub_availability_cd) MATCH SIMPLE,
+        REFERENCES camdecmpsmd.submission_availability_code (submission_availability_cd) MATCH SIMPLE,
     ADD CONSTRAINT chk_em_submission_access_begin_date_lte_end_date CHECK (access_begin_date <= access_end_date);
 
 CREATE INDEX IF NOT EXISTS idx_em_submission_access_mon_plan_id

@@ -20,6 +20,14 @@ CREATE INDEX IF NOT EXISTS idx_plant_person_responsibility_id
     (responsibility_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
 /* WHY ???
+CREATE INDEX idx_plant_person_lk
+    ON camd.plant_person USING btree
+    (fac_id ASC NULLS LAST, ppl_id ASC NULLS LAST, responsibility_id COLLATE pg_catalog."default" ASC NULLS LAST, prg_cd COLLATE pg_catalog."default" ASC NULLS LAST, begin_date ASC NULLS LAST, end_date ASC NULLS LAST);
+
+CREATE INDEX idx_plant_person_person
+    ON camd.plant_person USING btree
+    (ppl_id ASC NULLS LAST);
+
 CREATE INDEX IF NOT EXISTS idx_plant_person_pp_end_date
     ON camd.plant_person USING btree
     (fac_id ASC NULLS LAST, ppl_id ASC NULLS LAST, end_date ASC NULLS LAST);

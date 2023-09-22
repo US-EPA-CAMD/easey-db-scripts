@@ -14,8 +14,8 @@ CREATE INDEX IF NOT EXISTS idx_apportionment_mon_plan_id
 
 CREATE INDEX IF NOT EXISTS idx_apportionment_begin_rpt_period_id
     ON camdecmpsaux.apportionment USING btree
-    (begin_rpt_period_id COLLATE pg_catalog."default" ASC NULLS LAST);
+    (begin_rpt_period_id ASC NULLS LAST);
 
 CREATE INDEX IF NOT EXISTS idx_apportionment_end_rpt_period_id
     ON camdecmpsaux.apportionment USING btree
-    (end_rpt_period_id COLLATE pg_catalog."default" ASC NULLS LAST);
+    (end_rpt_period_id ASC NULLS LAST);

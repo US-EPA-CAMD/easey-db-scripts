@@ -32,10 +32,6 @@ CREATE INDEX IF NOT EXISTS idx_qa_supp_data_test_sum_id
     ON camdecmpswks.qa_supp_data USING btree
     (test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
-CREATE INDEX IF NOT EXISTS idx_qa_supp_data_chk_session_id
-    ON camdecmpswks.qa_supp_data USING btree
-    (chk_session_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
 CREATE INDEX IF NOT EXISTS idx_qa_supp_data_component_id
     ON camdecmpswks.qa_supp_data USING btree
     (component_id COLLATE pg_catalog."default" ASC NULLS LAST);

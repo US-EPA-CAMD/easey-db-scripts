@@ -1,7 +1,7 @@
 ALTER TABLE IF EXISTS camdecmpswks.rata_traverse
     ADD CONSTRAINT pk_rata_traverse PRIMARY KEY (rata_traverse_id),
     ADD CONSTRAINT fk_rata_traverse_flow_rata_run FOREIGN KEY (flow_rata_run_id)
-        REFERENCES v.flow_rata_run (flow_rata_run_id) MATCH SIMPLE
+        REFERENCES camdecmpswks.flow_rata_run (flow_rata_run_id) MATCH SIMPLE
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_rata_traverse_pressure_measure_code FOREIGN KEY (pressure_meas_cd)
         REFERENCES camdecmpsmd.pressure_measure_code (pressure_meas_cd) MATCH SIMPLE,

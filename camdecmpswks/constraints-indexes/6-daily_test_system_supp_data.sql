@@ -1,6 +1,6 @@
 ALTER TABLE IF EXISTS camdecmpswks.daily_test_system_supp_data
     ADD CONSTRAINT pk_daily_test_sys_sup_data PRIMARY KEY (daily_test_system_supp_data_id),
-    ADD CONSTRAINT fk_daily_test_sys_sup_data_rpp FOREIGN KEY (rpt_period_id)
+    ADD CONSTRAINT fk_daily_test_sys_sup_data_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
     ADD CONSTRAINT fk_daily_test_system_supp_data_daily_test_supp_data FOREIGN KEY (daily_test_supp_data_id)
         REFERENCES camdecmpswks.daily_test_supp_data (daily_test_supp_data_id) MATCH SIMPLE

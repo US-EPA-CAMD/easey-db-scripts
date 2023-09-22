@@ -113,6 +113,11 @@ if [ $PRE_DATA_LOAD == true ]; then
     "
   done
 
+  #FILES="$FILES
+  #\i ../../../camdecmps/partitions/create-emission-view-partitions.sql
+  #\i ../../../camdecmps/partitions/create-emission-data-partitions.sql
+  #"
+
   ../../execute-psql.sh "$FILES"
 fi
 
@@ -153,54 +158,48 @@ if [ $POST_DATA_LOAD == true ]; then
 fi
 
 if [ $CONSTRAINTS_INDEXES == true ]; then
-  #getFiles "../../../camdmd/constraints-indexes"
-  #getFiles "../../../camdecmpsmd/constraints-indexes"
-  #getFiles "../../../camd/constraints-indexes"
-  #getFiles "../../../camdaux/constraints-indexes"
-  #../../execute-psql.sh "$FILES"
-
-  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group1"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/3-hrly_op_data.sql"
-  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group2"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/3-operating_supp_data.sql"
-  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group3"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-daily_test_summary.sql"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-derived_hrly_value.sql"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-hrly_fuel_flow.sql"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-hrly_gas_flow_meter.sql"
-  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group4"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-mats_derived_hrly_value.sql"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-mats_monitor_hrly_value.sql"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-monitor_hrly_value.sql"
-  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group5"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-test_summary.sql"
-  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group6"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/5-daily_calibration.sql"
-  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group7"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/5-hrly_param_fuel_flow.sql"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/5-linearity_summary.sql"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/5-on_off_cal.sql"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/5-protocol_gas.sql"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/5-qa_cert_event_supp_data.sql"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/5-qa_supp_data.sql"
-  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group8"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/6-linearity_injection.sql"
-  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group9"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/7-rata_run.sql"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/8-flow_rata_run.sql"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/9-rata_traverse.sql"
+  getFilesAndCommit "../../../camdmd/constraints-indexes"
+  getFilesAndCommit "../../../camdecmpsmd/constraints-indexes"
+  getFilesAndCommit "../../../camd/constraints-indexes"
+  getFilesAndCommit "../../../camdaux/constraints-indexes"
+  getFilesAndCommit "../../../camdecmps/constraints-indexes/group1"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/3-hrly_op_data.sql"
+  getFilesAndCommit "../../../camdecmps/constraints-indexes/group2"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/3-operating_supp_data.sql"
+  getFilesAndCommit "../../../camdecmps/constraints-indexes/group3"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/4-daily_test_summary.sql"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/4-derived_hrly_value.sql"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/4-hrly_fuel_flow.sql"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/4-hrly_gas_flow_meter.sql"
+  getFilesAndCommit "../../../camdecmps/constraints-indexes/group4"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/4-mats_derived_hrly_value.sql"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/4-mats_monitor_hrly_value.sql"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/4-monitor_hrly_value.sql"
+  getFilesAndCommit "../../../camdecmps/constraints-indexes/group5"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/4-test_summary.sql"
+  getFilesAndCommit "../../../camdecmps/constraints-indexes/group6"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/5-daily_calibration.sql"
+  getFilesAndCommit "../../../camdecmps/constraints-indexes/group7"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/5-hrly_param_fuel_flow.sql"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/5-linearity_summary.sql"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/5-on_off_cal.sql"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/5-protocol_gas.sql"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/5-qa_cert_event_supp_data.sql"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/5-qa_supp_data.sql"
+  getFilesAndCommit "../../../camdecmps/constraints-indexes/group8"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/6-linearity_injection.sql"
+  getFilesAndCommit "../../../camdecmps/constraints-indexes/group9"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/7-rata_run.sql"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/8-flow_rata_run.sql"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/9-rata_traverse.sql"
   getFilesAndCommit "../../../camdecmps/constraints-indexes/group10"
-
-  FILES=""
-  getFiles "../../../camdecmpsaux/constraints-indexes"
-  getFiles "../../../camdecmpswks/constraints-indexes"
-  ../../execute-psql.sh "$FILES"
+  getFilesAndCommit "../../../camdecmpsaux/constraints-indexes"
+  getFilesAndCommit "../../../camdecmpswks/constraints-indexes"
 fi
 
 if [ $POST_DEPLOYMENT_CLEANUP == true ]; then
   FILES="
   CALL camdecmpswks.camdecmpswks.load_workspace();
-  \i ../../../camdecmps/partitions/create-emission_view-partitions.sql
   CALL camdecmps.refresh_emissions_views();
   "
   ../../execute-psql.sh "$FILES"

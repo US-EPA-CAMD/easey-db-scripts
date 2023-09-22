@@ -10,12 +10,7 @@ ALTER TABLE IF EXISTS camdecmpswks.hrly_op_data
     ADD CONSTRAINT fk_hrly_op_data_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
     ADD CONSTRAINT fk_hrly_op_data_units_of_measure_code FOREIGN KEY (load_uom_cd)
-        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE,
-    ADD CONSTRAINT hrly_op_data_begin_date_check CHECK (begin_date IS NOT NULL),
-    ADD CONSTRAINT hrly_op_data_begin_hour_check CHECK (begin_hour IS NOT NULL),
-    ADD CONSTRAINT hrly_op_data_hour_id_check CHECK (hour_id IS NOT NULL),
-    ADD CONSTRAINT hrly_op_data_mon_loc_id_check CHECK (mon_loc_id IS NOT NULL),
-    ADD CONSTRAINT hrly_op_data_rpt_period_id_check CHECK (rpt_period_id IS NOT NULL);
+        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE;
 
 CREATE INDEX IF NOT EXISTS idx_hrly_op_data_mon_loc_id
     ON camdecmpswks.hrly_op_data USING btree

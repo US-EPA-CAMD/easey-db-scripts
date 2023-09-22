@@ -5,8 +5,6 @@ ALTER TABLE IF EXISTS camdecmpswks.daily_calibration
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_daily_calibration_gas_level_code FOREIGN KEY (upscale_gas_level_cd)
         REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE,
-    ADD CONSTRAINT fk_daily_calibration_gas_type_code FOREIGN KEY (upscale_gas_type_cd)
-        REFERENCES camdecmpsmd.gas_type_code (gas_type_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_daily_calibration_injection_protocol_code FOREIGN KEY (injection_protocol_cd)
         REFERENCES camdecmpsmd.injection_protocol_code (injection_protocol_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_daily_calibration_protocol_gas_vendor FOREIGN KEY (vendor_id)

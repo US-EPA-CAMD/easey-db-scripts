@@ -1,5 +1,5 @@
 ALTER TABLE IF EXISTS camdecmps.emission_view_co2calc
-    ADD CONSTRAINT pk_emission_view_co2calc PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, fuel_type, fuel_sys_id, date_hour),
+    ADD CONSTRAINT pk_emission_view_co2calc PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, date_hour),
     ADD CONSTRAINT fk_emission_view_co2calc_emission_evaluation FOREIGN KEY (rpt_period_id, mon_plan_id)
         REFERENCES camdecmps.emission_evaluation (rpt_period_id, mon_plan_id) MATCH SIMPLE
         ON DELETE CASCADE,

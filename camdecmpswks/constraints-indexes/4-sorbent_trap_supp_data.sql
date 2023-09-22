@@ -1,14 +1,14 @@
 ALTER TABLE IF EXISTS camdecmpswks.sorbent_trap_supp_data
-    ADD CONSTRAINT pk_st_supp_data PRIMARY KEY (trap_id),
-    ADD CONSTRAINT fk_st_supp_data_aps_cd FOREIGN KEY (sorbent_trap_aps_cd)
-        REFERENCES camdecmpsmd.sorbent_trap_aps_code (sorbent_trap_aps_cd) MATCH SIMPLE,
-    ADD CONSTRAINT fk_st_supp_data_modc_cd FOREIGN KEY (modc_cd)
-        REFERENCES camdecmpsmd.modc_code (modc_cd) MATCH SIMPLE,
-    ADD CONSTRAINT fk_st_supp_data_mon_loc_id FOREIGN KEY (mon_loc_id)
+    ADD CONSTRAINT pk_sorbent_trap_supp_data PRIMARY KEY (trap_id),
+    ADD CONSTRAINT fk_sorbent_trap_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE,
-    ADD CONSTRAINT fk_st_supp_data_mon_sys_id FOREIGN KEY (mon_sys_id)
+    ADD CONSTRAINT fk_sorbent_trap_supp_data_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmpswks.monitor_system (mon_sys_id) MATCH SIMPLE,
-    ADD CONSTRAINT fk_st_supp_data_rpt_period_id FOREIGN KEY (rpt_period_id)
+    ADD CONSTRAINT fk_sorbent_trap_supp_data_sorbent_trap_aps_code FOREIGN KEY (sorbent_trap_aps_cd)
+        REFERENCES camdecmpsmd.sorbent_trap_aps_code (sorbent_trap_aps_cd) MATCH SIMPLE,
+    ADD CONSTRAINT fk_sorbent_trap_supp_data_modc_code FOREIGN KEY (modc_cd)
+        REFERENCES camdecmpsmd.modc_code (modc_cd) MATCH SIMPLE,
+    ADD CONSTRAINT fk_sorbent_trap_supp_data_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE;
 
 CREATE INDEX IF NOT EXISTS idx_sorbent_trap_supp_data_modc_cd

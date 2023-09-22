@@ -13,3 +13,9 @@ CREATE INDEX IF NOT EXISTS idx_unit_exemption_exemption_type_cd
 CREATE INDEX IF NOT EXISTS idx_unit_exemption_unit_id
     ON camd.unit_exemption USING btree
     (unit_id ASC NULLS LAST);
+
+/*
+CREATE INDEX idx_unit_exemption_submit
+    ON camd.unit_exemption USING btree
+    (submitter_ppl_id ASC NULLS LAST);
+*/

@@ -1,5 +1,5 @@
 ALTER TABLE IF EXISTS camdecmps.sampling_train_supp_data
-	ADD CONSTRAINT pk_sampling_train_supp_data PRIMARY KEY (trap_train_id),
+	  ADD CONSTRAINT pk_sampling_train_supp_data PRIMARY KEY (trap_train_id),
     ADD CONSTRAINT fk_sampling_train_supp_data_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
     ADD CONSTRAINT fk_sampling_train_supp_data_test_result_code FOREIGN KEY (sampling_ratio_test_result_cd)

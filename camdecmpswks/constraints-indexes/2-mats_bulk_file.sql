@@ -5,7 +5,7 @@ ALTER TABLE IF EXISTS camdecmpswks.mats_bulk_file
     ADD CONSTRAINT fk_mats_bulk_file_test_type_code FOREIGN KEY (test_type_code)
         REFERENCES camdecmpsmd.test_type_code (test_type_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_mats_bulk_file_submission_availability_code FOREIGN KEY (submission_availability_cd)
-        REFERENCES camdecmpsmd.submission_availability_code (submission_availability_cd) MATCH SIMPLE
+        REFERENCES camdecmpsmd.submission_availability_code (submission_availability_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_mats_bulk_file_eval_status_code FOREIGN KEY (eval_status_cd)
         REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
 

@@ -30,7 +30,7 @@ CREATE INDEX IF NOT EXISTS idx_evaluation_queue_test_extension_exemption_id
 
 CREATE INDEX IF NOT EXISTS idx_evaluation_queue_rpt_period_id
     ON camdecmpsaux.evaluation_queue USING btree
-    (rpt_period_id COLLATE pg_catalog."default" ASC NULLS LAST);
+    (rpt_period_id ASC NULLS LAST);
 
 CREATE INDEX IF NOT EXISTS idx_evaluation_queue_severity_cd
     ON camdecmpsaux.evaluation_queue USING btree

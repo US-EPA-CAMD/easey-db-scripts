@@ -1086,4 +1086,22 @@ BEGIN
 	VALUES
 		(datatableId, 1, 'extens_exempt_cd', 'extensionExemptionCode', 'Extension & Exemption Code'),
 		(datatableId, 2, 'extens_exemp_cd_description', 'extensionExemptionDescription', 'Extension & Exemption Description');
+----------------------------------------------------------------------------------------------------------------------------
+	datasetCode := 'gas-component-codes';
+	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
+	VALUES(datasetCode, 'MDM', 'Gas Component Codes & Descriptions');
+
+	/***** DATATABLE 1 *****/
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement)
+	VALUES(datasetCode, 1, 'Gas Component Codes & Descriptions', 'SELECT * FROM camdecmpsmd.vw_gas_component_code')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
+	VALUES
+		(datatableId, 1, 'code', 'gasComponentCode', 'Gas Component Code'),
+		(datatableId, 2, 'description', 'gasComponentDescription', 'Gas Component Description'),
+		(datatableId, 3, 'can_combine_ind', 'canCombineIndicator', 'Can Combine Indicator'),
+		(datatableId, 4, 'balance_component_ind', 'balanceComponentIndicator', 'Balance Component Indicator'),
+		(datatableId, 5, 'group_cd', 'groupCode', 'Group Code');
 END $$;
