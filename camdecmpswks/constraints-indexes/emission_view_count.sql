@@ -10,6 +10,10 @@ ALTER TABLE IF EXISTS camdecmpswks.emission_view_count
     ADD CONSTRAINT fk_emission_view_count_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE;
 
+CREATE INDEX IF NOT EXISTS idx_emission_view_count_dataset_cd
+    ON camdecmpswks.emission_view_count
+    (dataset_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+
 CREATE INDEX IF NOT EXISTS idx_emission_view_count_mon_plan_id
     ON camdecmpswks.emission_view_count USING btree
 		(mon_plan_id COLLATE pg_catalog."default" ASC NULLS LAST);
