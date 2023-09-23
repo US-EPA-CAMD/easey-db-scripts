@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.raa_injection
     measured_value_uom_cd character varying(7) NOT NULL,
     ref_value numeric(13,3),
     ref_value_uom_cd character varying(7) NOT NULL,
-    userid character varying(25),
+    userid character varying(160),
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_raa_injection PRIMARY KEY (raa_injection_id),

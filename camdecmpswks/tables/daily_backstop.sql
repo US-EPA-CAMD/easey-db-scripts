@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.daily_backstop
     cumulative_os_noxm_exceed numeric(13,1),
     mon_loc_id character varying(45) NOT NULL,
     rpt_period_id numeric(38,0) NOT NULL,
-    userid character varying(25) NOT NULL,
+    userid character varying(160) NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone
 );

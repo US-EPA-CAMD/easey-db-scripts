@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_qualification_lme
     so2_tons numeric(4,1),
     nox_tons numeric(4,1),
     op_hours numeric(38,0),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
 );

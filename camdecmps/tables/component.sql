@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.component
     component_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     acq_cd character varying(7) COLLATE pg_catalog."default",
     basis_cd character varying(7) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     hg_converter_ind numeric(1,0),

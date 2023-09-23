@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS camddmw.unit_type_year_dim
     unit_type_description character varying(50) COLLATE pg_catalog."default",
     op_year numeric(4,0) NOT NULL,
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     last_update_date timestamp without time zone,
     CONSTRAINT pk_unit_type_year_dim PRIMARY KEY (unit_id, unit_type, op_year)

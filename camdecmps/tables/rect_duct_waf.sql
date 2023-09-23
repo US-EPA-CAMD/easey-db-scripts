@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.rect_duct_waf
     end_hour numeric(2,0),
     add_date timestamp without time zone,
     update_date timestamp without time zone,
-    userid character varying(25) COLLATE pg_catalog."default"
+    userid character varying(160) COLLATE pg_catalog."default"
 );
 
 COMMENT ON TABLE camdecmps.rect_duct_waf

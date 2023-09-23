@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.flow_to_load_check
     nhe_test numeric(4,0),
     nhe_main_bypass numeric(4,0),
     bias_adjusted_ind numeric(38,0),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     op_level_cd character varying(7) COLLATE pg_catalog."default"

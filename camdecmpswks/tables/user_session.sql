@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS camdecmpswks.user_session
 (
-    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     session_id character varying(45) COLLATE pg_catalog."default",
     security_token text COLLATE pg_catalog."default",
     facilities text COLLATE pg_catalog."default",

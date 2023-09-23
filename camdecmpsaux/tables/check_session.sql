@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.check_session
     session_begin_date timestamp without time zone,
     session_end_date timestamp without time zone,
     session_comment character varying(1000) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     mon_plan_id character varying(45) COLLATE pg_catalog."default",
     severity_cd character varying(7) COLLATE pg_catalog."default",
     qa_cert_event_id character varying(45) COLLATE pg_catalog."default",

@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS camd.unit_boiler_type
     unit_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     begin_date date NOT NULL,
     end_date date,
-    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone
 );

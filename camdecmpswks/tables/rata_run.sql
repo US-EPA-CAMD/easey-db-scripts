@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.rata_run
     end_date date,
     end_hour numeric(2,0),
     end_min numeric(2,0),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
 );

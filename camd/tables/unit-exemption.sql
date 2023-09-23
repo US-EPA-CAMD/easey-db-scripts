@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS camd.unit_exemption
     end_date date,
     ex_rec_date date,
     submitter_ppl_id numeric(38,0),
-    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone
 );

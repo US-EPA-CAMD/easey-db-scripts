@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.ae_hi_gas
     gas_gcv numeric(10,1),
     gas_hi numeric(7,1),
     calc_gas_hi numeric(7,1),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     mon_sys_id character varying(45) COLLATE pg_catalog."default" NOT NULL

@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.cga_injection
     stack_cell_pressure numeric(5,2),
     instrument_line_strength_factor numeric(8,3),
     equivalent_concentration numeric(8,3),
-    userid character varying(25),
+    userid character varying(160),
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_cga_injection PRIMARY KEY (cga_injection_id),

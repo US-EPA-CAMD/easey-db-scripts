@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS camd.program
     indian_country_ind numeric(1,0) NOT NULL DEFAULT 0,
     overdraft_ind numeric(1,0) NOT NULL DEFAULT 0,
     first_sip_year numeric(4,0),
-    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone
 );

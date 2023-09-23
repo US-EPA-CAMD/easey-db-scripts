@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.hrly_op_data
     fw_factor numeric(8,1),
     fuel_cd character varying(7) COLLATE pg_catalog."default",
     multi_fuel_flg character varying(1) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     load_uom_cd character varying(7) COLLATE pg_catalog."default",

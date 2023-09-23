@@ -14,5 +14,5 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_location_attribute
     material_cd character varying(7) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
-    userid character varying(25) COLLATE pg_catalog."default"
+    userid character varying(160) COLLATE pg_catalog."default"
 );

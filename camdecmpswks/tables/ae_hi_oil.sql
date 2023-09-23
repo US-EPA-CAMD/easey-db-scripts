@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.ae_hi_oil
     oil_gcv numeric(10,1),
     oil_volume numeric(10,1),
     oil_density numeric(11,6),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     oil_gcv_uom_cd character varying(7) COLLATE pg_catalog."default",

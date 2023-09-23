@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.fuel_flow_to_load_baseline
     nhe_cofiring numeric(4,0),
     nhe_ramping numeric(4,0),
     nhe_low_range numeric(4,0),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     fuel_flow_load_uom_cd character varying(7) COLLATE pg_catalog."default",

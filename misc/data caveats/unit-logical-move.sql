@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS camd.unit_logical_move
     old_fac_id numeric(38,0) NOT NULL,
     old_unitid character varying(6) COLLATE pg_catalog."default" NOT NULL,
     effective_date timestamp without time zone NOT NULL,
-    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone,
     CONSTRAINT pk_unit_logical_move PRIMARY KEY (unit_id, effective_date),

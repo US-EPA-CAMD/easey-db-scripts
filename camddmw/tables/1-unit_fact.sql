@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS camddmw.unit_fact
     unit_type_info character varying(1000) COLLATE pg_catalog."default",
     data_source character varying(35) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     so2_control_info character varying(1000) COLLATE pg_catalog."default",
     nox_control_info character varying(1000) COLLATE pg_catalog."default",
     part_control_info character varying(1000) COLLATE pg_catalog."default",

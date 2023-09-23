@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.mats_monitor_hrly_value
     calc_hg_line_status character varying(75) COLLATE pg_catalog."default",
     calc_hgi1_status character varying(75) COLLATE pg_catalog."default",
     calc_rata_status character varying(75) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
 );

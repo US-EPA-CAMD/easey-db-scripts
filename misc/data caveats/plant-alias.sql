@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS camd.plant_alias
     alias_date timestamp without time zone,
     old_value character varying(40) COLLATE pg_catalog."default" NOT NULL,
     ampd_ind numeric(1,0) NOT NULL DEFAULT 0,
-    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone,
     CONSTRAINT pk_plant_alias PRIMARY KEY (plant_alias_id),

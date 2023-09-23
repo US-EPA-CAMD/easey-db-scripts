@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.long_term_fuel_flow
     gcv_uom_cd character varying(7) COLLATE pg_catalog."default",
     total_heat_input numeric(10,0),
     calc_total_heat_input numeric(10,0),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
 );

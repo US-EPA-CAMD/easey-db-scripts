@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS camd.unit
     non_load_based_ind numeric(1,0) NOT NULL DEFAULT 0,
     actual_90th_op_date date,
     moved_ind numeric(1,0) NOT NULL DEFAULT 0,
-    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone
 );

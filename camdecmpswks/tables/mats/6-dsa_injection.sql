@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.dsa_injection
     dilution_factor numeric(8,3),
     nativeHCLBefore numeric(8,3),
     nativeHCLAfter numeric(8,3),
-    userid character varying(25),
+    userid character varying(160),
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_dsa_injection PRIMARY KEY (dsa_injection_id),

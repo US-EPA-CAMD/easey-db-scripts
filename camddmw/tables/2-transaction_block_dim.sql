@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS camddmw.transaction_block_dim
     total_block numeric(10,0) DEFAULT NULL::numeric,
     vintage_year numeric(4,0) DEFAULT NULL::numeric,
     data_source character varying(35) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
-    userid character varying(25) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    userid character varying(160) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
     add_date timestamp without time zone,
     prg_code character varying(8) COLLATE pg_catalog."default" NOT NULL,
     block_prg_code character varying(8) COLLATE pg_catalog."default" DEFAULT NULL::character varying,

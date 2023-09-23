@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.check_session
     updated_status_flg character varying(1) COLLATE pg_catalog."default" DEFAULT 'N'::character varying,
     di character varying(50) COLLATE pg_catalog."default",
     last_updated timestamp without time zone,
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     batch_id character varying(45) COLLATE pg_catalog."default"
 );
 

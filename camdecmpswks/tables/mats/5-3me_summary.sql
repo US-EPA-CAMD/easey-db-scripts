@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.3me_summary
     percent_error numeric(5,1),
     ref_gas_equivalent_concentration numeric(8,3),
     calc_mean_concentration numeric(8,3),
-    userid character varying(25),
+    userid character varying(160),
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_3me_summary PRIMARY KEY (3me_sum_id),

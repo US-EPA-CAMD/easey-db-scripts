@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.air_emission_testing
     provider_email character varying(70) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
-    userid character varying(25) COLLATE pg_catalog."default"
+    userid character varying(160) COLLATE pg_catalog."default"
 );
 
 COMMENT ON TABLE camdecmps.air_emission_testing

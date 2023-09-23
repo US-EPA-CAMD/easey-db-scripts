@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.qa_supp_data
     reinstallation_hour numeric(2,0),
     test_expire_date date,
     test_expire_hour numeric(2,0),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     op_level_cd character varying(7) COLLATE pg_catalog."default",

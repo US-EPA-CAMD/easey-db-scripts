@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.hg_test_summary
     calc_mean_ref_value numeric(13,3),
     calc_percent_error numeric(5,1),
     calc_aps_ind numeric(38,0),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
 );

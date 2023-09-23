@@ -6,7 +6,7 @@ CREATE TABLE camdecmps.operating_supp_data
     op_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id numeric(38,0) NOT NULL,
     op_value numeric(13,3),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
 );

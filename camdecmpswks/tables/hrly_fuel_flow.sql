@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.hrly_fuel_flow
     mass_flow_rate numeric(10,1),
     calc_mass_flow_rate numeric(10,1),
     sod_mass_cd character varying(7) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     volumetric_uom_cd character varying(7) COLLATE pg_catalog."default",

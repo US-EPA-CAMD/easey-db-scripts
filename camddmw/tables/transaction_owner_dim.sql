@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS camddmw.transaction_owner_dim
     own_type character varying(3) COLLATE pg_catalog."default",
     own_display character varying(100) COLLATE pg_catalog."default",
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     ppl_id double precision,
     own_id double precision,

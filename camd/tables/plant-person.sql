@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS camd.plant_person
     begin_date date NOT NULL,
     end_date date,
     cert_date date,
-    userid character varying(8) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone
 );

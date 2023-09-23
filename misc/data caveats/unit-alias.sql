@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS camd.unit_alias
     unit_id numeric(38,0) NOT NULL,
     old_unitid character varying(6) COLLATE pg_catalog."default" NOT NULL,
     alias_date timestamp without time zone NOT NULL,
-    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     CONSTRAINT pk_unit_alias PRIMARY KEY (unit_alias_id),
     CONSTRAINT uq_unit_date UNIQUE (unit_id, alias_date),

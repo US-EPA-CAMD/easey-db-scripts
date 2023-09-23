@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.aca_attenuation
     attenuation_min numeric(2,0),
     measured_value numeric(13,3),
     ref_value numeric(13,3),
-    userid character varying(25),
+    userid character varying(160),
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_aca_attenuation PRIMARY KEY (aca_attenuation_id),

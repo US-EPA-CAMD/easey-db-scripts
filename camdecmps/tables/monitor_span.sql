@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_span
     component_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     span_scale_cd character varying(7) COLLATE pg_catalog."default",
     span_method_cd character varying(7) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     span_uom_cd character varying(7) COLLATE pg_catalog."default"

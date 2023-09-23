@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS camddmw.allowance_holding_dim
     originating_acct_number character varying(12) COLLATE pg_catalog."default",
     originating_party character varying(60) COLLATE pg_catalog."default",
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     account_name character varying(100) COLLATE pg_catalog."default",
     allowance_type_code character varying(3) COLLATE pg_catalog."default",

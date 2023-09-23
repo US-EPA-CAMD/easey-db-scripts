@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.daily_emission
     total_daily_emission numeric(10,1),
     adjusted_daily_emission numeric(10,1),
     sorbent_mass_emission numeric(10,1),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     unadjusted_daily_emission numeric(10,1),

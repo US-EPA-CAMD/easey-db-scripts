@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.hrly_param_fuel_flow
     sample_type_cd character varying(7) COLLATE pg_catalog."default",
     operating_condition_cd character varying(7) COLLATE pg_catalog."default",
     segment_num numeric(38,0),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     parameter_uom_cd character varying(7) COLLATE pg_catalog."default",

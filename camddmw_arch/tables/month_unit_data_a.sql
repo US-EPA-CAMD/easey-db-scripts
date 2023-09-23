@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS camddmw_arch.month_unit_data_a
     rpt_period_id numeric(38,0),
     op_quarter numeric(1,0),
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     CONSTRAINT pk_month_unit_data PRIMARY KEY (unit_id, op_year, op_month)
 ) PARTITION BY RANGE (op_year, op_month);

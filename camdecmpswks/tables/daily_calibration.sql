@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.daily_calibration
     calc_upscale_cal_error numeric(6,2),
     zero_ref_value numeric(13,3),
     upscale_ref_value numeric(13,3),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     rpt_period_id numeric(38,0),

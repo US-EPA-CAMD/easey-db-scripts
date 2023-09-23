@@ -1,6 +1,6 @@
 -- View: camdecmpsmd.vw_cross_check_catalog_value
 
-DROP VIEW IF EXISTS camdecmpsmd.vw_cross_check_catalog_value;
+DROP VIEW IF EXISTS camdecmpsmd.vw_cross_check_catalog_value CASCADE;
 
 CREATE OR REPLACE VIEW camdecmpsmd.vw_cross_check_catalog_value
  AS

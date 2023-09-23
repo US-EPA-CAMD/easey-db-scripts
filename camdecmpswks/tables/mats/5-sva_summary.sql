@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.sva_summary
     mean_cems_sample_volume numeric(15,5),
     mean_ref_sample_volume numeric(15,5),
     percent_error numeric(5,1),
-    userid character varying(25),
+    userid character varying(160),
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_sva_summary PRIMARY KEY (sva_sum_id),

@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS camddmw.transaction_fact
     sell_display_block character varying(2000) COLLATE pg_catalog."default",
     sell_own_display_name character varying(2000) COLLATE pg_catalog."default",
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     buy_fac_id double precision,
     sell_fac_id double precision,

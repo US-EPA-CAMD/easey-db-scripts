@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_default
     default_source_cd character varying(7) COLLATE pg_catalog."default",
     fuel_cd character varying(7) COLLATE pg_catalog."default",
     group_id character varying(10) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     default_uom_cd character varying(7) COLLATE pg_catalog."default"

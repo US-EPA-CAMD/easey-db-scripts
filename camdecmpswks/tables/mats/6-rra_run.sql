@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.rra_run
     ref_value numeric(15,1),
     gross_unit_load numeric(6,0),    
     run_status_cd character varying(7),
-    userid character varying(25),
+    userid character varying(160),
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_rra_run PRIMARY KEY (rra_run_id),

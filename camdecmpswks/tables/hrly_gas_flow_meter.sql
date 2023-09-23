@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.hrly_gas_flow_meter
     flow_to_sampling_ratio numeric(4,1),
     calc_flow_to_sampling_ratio numeric(4,1),
     calc_flow_to_sampling_mult numeric(10,0),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
 );

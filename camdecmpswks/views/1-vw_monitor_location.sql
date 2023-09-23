@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_monitor_location
 
-DROP VIEW IF EXISTS camdecmpswks.vw_monitor_location;
+DROP VIEW IF EXISTS camdecmpswks.vw_monitor_location CASCADE;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_monitor_location
  AS

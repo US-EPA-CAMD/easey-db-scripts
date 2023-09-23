@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.protocol_gas_vendor
     deactivation_date date,
     add_date timestamp without time zone,
     update_date timestamp without time zone,
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     active_ind numeric(1,0) NOT NULL DEFAULT 1,
     activation_date date
 );

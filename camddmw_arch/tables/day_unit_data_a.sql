@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS camddmw_arch.day_unit_data_a
     op_year numeric(4,0) NOT NULL,
     op_month numeric(2,0),
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     CONSTRAINT pk_day_unit_data PRIMARY KEY (unit_id, op_date)
 ) PARTITION BY RANGE (op_date);

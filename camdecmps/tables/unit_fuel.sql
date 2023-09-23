@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.unit_fuel
     dem_so2 character varying(7) COLLATE pg_catalog."default",
     dem_gcv character varying(7) COLLATE pg_catalog."default",
     sulfur_content numeric(5,4),
-    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone
 );

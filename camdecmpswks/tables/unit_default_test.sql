@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.unit_default_test
     group_id character varying(10) COLLATE pg_catalog."default",
     num_units_in_group numeric(2,0),
     num_tests_for_group numeric(2,0),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
 );

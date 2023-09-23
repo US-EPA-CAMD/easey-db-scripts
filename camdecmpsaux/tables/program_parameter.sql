@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.program_parameter
     required_ind numeric(1,0) NOT NULL DEFAULT 0,
     begin_rpt_period_id numeric(38,0) NOT NULL,
     end_rpt_period_id numeric(38,0),
-    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone
 );

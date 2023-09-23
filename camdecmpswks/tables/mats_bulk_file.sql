@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.mats_bulk_file
     updated_status_flg character varying(1) COLLATE pg_catalog."default",
     submission_id numeric(38,0),
     submission_availability_cd character varying(7) COLLATE pg_catalog."default" DEFAULT 'REQUIRE'::character varying,
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     bucket_location character varying COLLATE pg_catalog."default",
     eval_status_cd character varying(7) COLLATE pg_catalog."default" DEFAULT 'PASS'::character varying

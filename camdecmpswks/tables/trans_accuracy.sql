@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.trans_accuracy
     low_level_accuracy numeric(5,1),
     mid_level_accuracy numeric(5,1),
     high_level_accuracy numeric(5,1),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     low_level_accuracy_spec_cd character varying(7) COLLATE pg_catalog."default",

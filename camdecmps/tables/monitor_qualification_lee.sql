@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_qualification_lee
     applicable_emission_standard numeric(9,4),
     emission_standard_uom character varying(7) COLLATE pg_catalog."default",
     emission_standard_pct numeric(5,1),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
 );

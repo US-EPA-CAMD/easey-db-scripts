@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.raa_summary
     mean_cem_value numeric(13,3),
     mean_ref_value numeric(13,3),
     relative_accuracy numeric(5,1),
-    userid character varying(25),
+    userid character varying(160),
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_raa_summary PRIMARY KEY (raa_sum_id),

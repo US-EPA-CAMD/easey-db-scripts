@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.daily_fuel
     carbon_content_used numeric(5,1),
     fuel_carbon_burned numeric(13,1),
     calc_fuel_carbon_burned numeric(13,1),
-    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone,
     rpt_period_id numeric(38,0) NOT NULL,

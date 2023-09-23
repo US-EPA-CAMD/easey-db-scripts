@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.weekly_system_integrity
     aps_ind numeric(38,0),
     calc_system_integrity_error numeric(5,1),
     calc_aps_ind numeric(38,0),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     rpt_period_id numeric(38,0) NOT NULL,

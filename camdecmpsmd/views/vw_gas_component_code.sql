@@ -1,8 +1,8 @@
--- View: camdecmpsmd.vw_gas_component_codes
+-- View: camdecmpsmd.vw_gas_component_code
 
--- DROP VIEW camdecmpsmd.vw_gas_component_codes;
+-- DROP VIEW camdecmpsmd.vw_gas_component_code;
 
-CREATE OR REPLACE VIEW camdecmpsmd.vw_gas_component_codes AS
+CREATE OR REPLACE VIEW camdecmpsmd.vw_gas_component_code AS
 SELECT
 	COALESCE(gas_component_cd, gas_type_cd) as code,
 	COALESCE(gas_component_description, gas_type_description) as description,

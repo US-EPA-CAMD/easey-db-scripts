@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.on_off_cal
     offline_upscale_measured_value numeric(13,3),
     offline_upscale_ref_value numeric(13,3),
     upscale_gas_level_cd character varying(7) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
 );

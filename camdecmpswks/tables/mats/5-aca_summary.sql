@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.aca_summary
     mean_ref_value numeric(13,3),
     percent_error numeric(5,1),
     aps_ind numeric(1,0),
-    userid character varying(25),
+    userid character varying(160),
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_aca_summary PRIMARY KEY (aca_sum_id),

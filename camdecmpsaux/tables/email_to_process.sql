@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.email_to_process
     fac_id numeric(38,0) NOT NULL,
     email_type character varying(100) COLLATE pg_catalog."default" NOT NULL,
     event_code integer,
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     mon_plan_id character varying(45) COLLATE pg_catalog."default",
     rpt_period_id numeric,
     em_sub_access_id bigint,

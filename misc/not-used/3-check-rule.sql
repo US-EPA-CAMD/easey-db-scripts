@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.check_rule
     check_rule_json character varying,
     is_error_supressable boolean,
     is_active boolean,
---    userid character varying(25) COLLATE pg_catalog."default",
+--    userid character varying(160) COLLATE pg_catalog."default",
 --    add_date date,
 --    update_date date,
     CONSTRAINT pk_check_rule PRIMARY KEY (check_rule_id),

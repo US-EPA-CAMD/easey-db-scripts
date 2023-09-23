@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS camddmw.program_year_dim
     op_year numeric(4,0) NOT NULL,
     report_freq character varying(2) COLLATE pg_catalog."default",
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     non_egu_flg character varying(8) COLLATE pg_catalog."default",
     compliance_ind double precision,

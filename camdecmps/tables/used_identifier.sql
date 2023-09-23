@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.used_identifier
     identifier character varying(6) COLLATE pg_catalog."default" NOT NULL,
     type_or_parameter_cd character varying(7) COLLATE pg_catalog."default",
     formula_or_basis_cd character varying(7) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     idkey character varying(45) COLLATE pg_catalog."default"

@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.summary_value
     calc_os_total numeric(13,3),
     year_total numeric(13,3),
     calc_year_total numeric(13,3),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
 );

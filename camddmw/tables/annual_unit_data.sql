@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS camddmw.annual_unit_data
     nox_rate_count numeric(4,0),
     num_months_reported double precision,
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     CONSTRAINT pk_annual_unit_data PRIMARY KEY (unit_id, op_year)
 ) PARTITION BY RANGE (op_year);

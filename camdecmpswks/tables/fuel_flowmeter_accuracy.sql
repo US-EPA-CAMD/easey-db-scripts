@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.fuel_flowmeter_accuracy
     low_fuel_accuracy numeric(5,1),
     mid_fuel_accuracy numeric(5,1),
     high_fuel_accuracy numeric(5,1),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
 );

@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS camddmw.rep_year_dim
     prg_code character varying(8) COLLATE pg_catalog."default",
     rep_code character varying(6) COLLATE pg_catalog."default",
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(8) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp(0) without time zone,
     begin_date timestamp(0) without time zone,
     end_date timestamp(0) without time zone,

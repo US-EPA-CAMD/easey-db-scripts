@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.unit_default_test_run
     end_min numeric(2,0),
     response_time numeric(3,0),
     ref_value numeric(8,3),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     run_used_ind numeric(38,0)

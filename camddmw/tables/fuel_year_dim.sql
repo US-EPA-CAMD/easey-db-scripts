@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS camddmw.fuel_year_dim
     fuel_type_description character varying(35) COLLATE pg_catalog."default",
     indicator character varying(2) COLLATE pg_catalog."default" NOT NULL,
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     last_update_date timestamp without time zone,
     CONSTRAINT pk_fuel_year_dim PRIMARY KEY (unit_id, fuel_code, op_year, indicator)

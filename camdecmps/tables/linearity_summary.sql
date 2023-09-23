@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.linearity_summary
     aps_ind numeric(38,0),
     calc_aps_ind numeric(38,0),
     gas_level_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
 );

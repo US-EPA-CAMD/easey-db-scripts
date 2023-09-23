@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS camd.unit_physical_move
     unit_id numeric(38,0) NOT NULL,
     new_unit_id numeric(38,0) NOT NULL,
     effective_date timestamp without time zone NOT NULL,
-    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone,
     CONSTRAINT pk_unit_physical_move PRIMARY KEY (unit_id, effective_date),

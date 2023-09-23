@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.qga_run
     bias numeric(8,3),
     correction_factor numeric(8,3),
     spiked_indicator numeric(1,0),
-    userid character varying(25),
+    userid character varying(160),
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_qga_run PRIMARY KEY (qga_sum_id),

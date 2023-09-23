@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.cycle_time_summary
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     total_time numeric(2,0),
     calc_total_time numeric(2,0),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
 );

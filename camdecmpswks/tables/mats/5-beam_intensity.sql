@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.beam_intensity
     hcl_concentration_full numeric(8,3),
     hcl_concentration_attenuated numeric(8,3),
     percent_difference numeric(5,1),
-    userid character varying(25),
+    userid character varying(160),
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_beam_intensity PRIMARY KEY (beam_intensity_id),

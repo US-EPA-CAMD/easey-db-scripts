@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_plan_comment
     mon_plan_comment character varying(4000) COLLATE pg_catalog."default" NOT NULL,
     begin_date date NOT NULL,
     end_date date,
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     submission_availability_cd character varying(7) COLLATE pg_catalog."default",
     update_date timestamp without time zone

@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS camd.program_phase
     prog_phase_end_date date,
     phase_monitor_cert_deadline date NOT NULL,
     description character varying(4000) COLLATE pg_catalog."default",
-    userid character varying(8) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone
 );

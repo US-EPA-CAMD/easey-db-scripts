@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_system_component
     begin_date date NOT NULL,
     end_date date,
     end_hour numeric(2,0),
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
 );

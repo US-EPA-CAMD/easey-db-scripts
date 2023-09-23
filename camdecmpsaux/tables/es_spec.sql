@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.es_spec
     es_reason_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     note character varying(1000) COLLATE pg_catalog."default" NOT NULL,
     active_ind numeric(1,0) NOT NULL DEFAULT 1,
-    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone
 );

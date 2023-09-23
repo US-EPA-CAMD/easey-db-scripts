@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.daily_test_summary
     test_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     test_result_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     calc_test_result_cd character varying(7) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     span_scale_cd character varying(7) COLLATE pg_catalog."default",

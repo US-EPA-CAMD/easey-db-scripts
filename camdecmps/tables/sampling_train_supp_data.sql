@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.sampling_train_supp_data
     gfm_not_available_count numeric(38,0),
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id numeric(38,0) NOT NULL,
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     sampling_ratio_test_result_cd character varying(7) COLLATE pg_catalog."default"

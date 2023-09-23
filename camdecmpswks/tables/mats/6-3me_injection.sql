@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.3me_injection
     calibration_cell_pressure numeric(5,2),
     stack_pressure numeric(5,2),
     measurement_error numeric(8,3),
-    userid character varying(25),
+    userid character varying(160),
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_3me_injection PRIMARY KEY (3me_injection_id),

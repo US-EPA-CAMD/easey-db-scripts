@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.rra_summary
     max_correlation_response numeric(8,3),
     min_correlation_response numeric(8,3),
     runs_within_regression_criteria numeric(2,0),
-    userid character varying(25),
+    userid character varying(160),
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_rra_summary PRIMARY KEY (rra_sum_id),

@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.em_submission_access
     access_end_date date NOT NULL,
     em_sub_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     resub_explanation character varying(4000) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     em_status_cd character varying(7) COLLATE pg_catalog."default",

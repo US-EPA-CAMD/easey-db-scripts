@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.derived_hrly_value
     diluent_cap_ind numeric(38,0),
     segment_num numeric(38,0),
     fuel_cd character varying(7) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     calc_pct_diluent numeric(5,1),

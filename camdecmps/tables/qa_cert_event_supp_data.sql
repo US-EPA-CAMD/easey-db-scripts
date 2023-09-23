@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.qa_cert_event_supp_data
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id numeric(38,0) NOT NULL,
     delete_ind numeric(1,0) NOT NULL DEFAULT 0,
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
 );

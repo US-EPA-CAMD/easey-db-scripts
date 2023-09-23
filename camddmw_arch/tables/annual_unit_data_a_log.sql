@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS camddmw_arch.annual_unit_data_a_log
     nox_rate_count numeric(4,0),
     num_months_reported double precision,
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     skey numeric NOT NULL,
     logged_time timestamp without time zone,

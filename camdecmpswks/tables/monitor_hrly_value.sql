@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.monitor_hrly_value
     modc_cd character varying(7) COLLATE pg_catalog."default",
     pct_available numeric(4,1),
     moisture_basis character varying(10) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     calc_line_status character varying(75) COLLATE pg_catalog."default",

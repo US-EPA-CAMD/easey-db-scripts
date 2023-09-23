@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS camddmw.owner_display_fact
     op_year numeric(4,0) NOT NULL,
     own_display character varying(1200) COLLATE pg_catalog."default",
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     opr_display character varying(1200) COLLATE pg_catalog."default",
     last_update_date timestamp without time zone,

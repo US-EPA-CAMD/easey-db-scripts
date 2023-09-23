@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.unit_control
     seas_cd character varying(1) COLLATE pg_catalog."default",
     retire_date date,
     indicator_cd character varying(7) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone
 );

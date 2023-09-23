@@ -8,7 +8,7 @@ FUNCTIONS=false
 PROCEDURES=false
 PRE_DATA_LOAD=false
 POST_DATA_LOAD=false
-CONSTRAINTS_INDEXES=true
+CONSTRAINTS_INDEXES=false
 POST_DEPLOYMENT_CLEANUP=false
 
 function getFileAndCommit() {
@@ -48,7 +48,7 @@ function createOrReplaceViews() {
   getFiles "../../../camdecmpsmd/views"
   getFiles "../../../camdaux/views"
   getFiles "../../../camdecmps/views"
-  #getFiles "../../../camdecmpsaux/views" having an issue with vw_em_submission_access.sql
+  getFiles "../../../camdecmpsaux/views"
   getFiles "../../../camdecmpswks/views"
 }
 
@@ -91,6 +91,7 @@ if [ $PRE_DATA_LOAD == true ]; then
 
   FILES="$FILES
   \i ./drop-customizations.sql
+  \i ./update-userid-length.sql
   "
 
   schemas=(
@@ -199,6 +200,11 @@ fi
 
 if [ $POST_DEPLOYMENT_CLEANUP == true ]; then
   FILES="
+  DROP TABLE IF EXISTS camdaux.bulk_file_log;
+  DROP TABLE IF EXISTS camdaux.dataset_template;
+  DROP TABLE IF EXISTS camdaux.missing_oris;
+  DROP TABLE IF EXISTS camdaux.sftp_failures;
+  DROP TABLE IF EXISTS camdaux.sftp_log;
   CALL camdecmpswks.camdecmpswks.load_workspace();
   CALL camdecmps.refresh_emissions_views();
   "

@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS camddmw.account_compliance_dim
     penalty_deduct_info character varying(4000) COLLATE pg_catalog."default",
     total_req_deduct numeric(15,3),
     add_date timestamp(0) without time zone,
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     data_source character varying(35) COLLATE pg_catalog."default",
     last_update_date timestamp without time zone,
     CONSTRAINT pk_account_compliance_dim PRIMARY KEY (account_number, prg_code, op_year),

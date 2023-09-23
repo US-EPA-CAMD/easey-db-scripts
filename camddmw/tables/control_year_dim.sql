@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS camddmw.control_year_dim
     parameter character varying(5) COLLATE pg_catalog."default" NOT NULL,
     indicator character varying(2) COLLATE pg_catalog."default",
     data_source character varying(35) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     last_update_date timestamp without time zone,
     CONSTRAINT unq_control_year_dim UNIQUE (unit_id, op_year, control_code, parameter)

@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.ps11_run
     pm_ref_value numeric(15,1),
     gross_unit_load numeric(6,0),
     run_status_cd character varying(7),
-    userid character varying(25),
+    userid character varying(160),
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     CONSTRAINT pk_ps11_run PRIMARY KEY (ps11_run_id),

@@ -1,6 +1,6 @@
 -- View: camdecmps.vw_hourly_errors
 
-DROP VIEW IF EXISTS camdecmps.vw_hourly_errors;
+DROP VIEW IF EXISTS camdecmps.vw_hourly_errors CASCADE;
 
 CREATE OR REPLACE VIEW camdecmps.vw_hourly_errors
 AS

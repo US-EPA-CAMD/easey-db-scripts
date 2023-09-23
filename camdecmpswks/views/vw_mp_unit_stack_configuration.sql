@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_mp_unit_stack_configuration
 
-DROP VIEW IF EXISTS camdecmpswks.vw_mp_unit_stack_configuration;
+DROP VIEW IF EXISTS camdecmpswks.vw_mp_unit_stack_configuration CASCADE;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_mp_unit_stack_configuration
  AS

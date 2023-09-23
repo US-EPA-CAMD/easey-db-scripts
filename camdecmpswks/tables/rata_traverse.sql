@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.rata_traverse
     calc_calc_vel numeric(6,2),
     rep_vel numeric(6,2),
     pressure_meas_cd character varying(7) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     point_used_ind numeric(38,0)

@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_monitor_location_merged
 
-DROP VIEW IF EXISTS camdecmpswks.vw_monitor_location_merged;
+DROP VIEW IF EXISTS camdecmpswks.vw_monitor_location_merged CASCADE;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_monitor_location_merged
  AS

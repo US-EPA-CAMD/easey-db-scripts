@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.sorbent_trap
     calc_paired_trap_agreement numeric(5,2),
     calc_modc_cd character varying(7) COLLATE pg_catalog."default",
     calc_hg_concentration character varying(30) COLLATE pg_catalog."default",
-    userid character varying(25) COLLATE pg_catalog."default",
+    userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     sorbent_trap_aps_cd character varying(7) COLLATE pg_catalog."default",
