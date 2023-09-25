@@ -7,8 +7,8 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.evaluation_queue
     qa_cert_event_id character varying(45) COLLATE pg_catalog."default",
     test_extension_exemption_id character varying(45) COLLATE pg_catalog."default",
     rpt_period_id numeric(38,0),
-    severity_cd character varying(8) COLLATE pg_catalog."default",
+    eval_status_cd character varying(8) COLLATE pg_catalog."default",
     submitted_on timestamp without time zone NOT NULL,
     status_cd character varying(8) COLLATE pg_catalog."default" NOT NULL,
     details text COLLATE pg_catalog."default"
-);
+)
