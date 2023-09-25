@@ -7,8 +7,6 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.delete_qa_workspace(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-	TRUNCATE TABLE camdecmpswks.check_session CASCADE;
-	TRUNCATE TABLE camdecmpsaux.evaluation_set CASCADE;
 	TRUNCATE TABLE camdecmpswks.qa_supp_data CASCADE;
 	TRUNCATE TABLE camdecmpswks.test_summary CASCADE;
 	TRUNCATE TABLE camdecmpswks.qa_cert_event CASCADE;

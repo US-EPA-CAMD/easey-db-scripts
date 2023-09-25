@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.hrly_gas_flow_meter
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.hrly_gas_flow_meter
     IS 'Hourly fuel flow data for Appendix D.  Record Type 302 and 303.';

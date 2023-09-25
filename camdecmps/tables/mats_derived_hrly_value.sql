@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.mats_derived_hrly_value
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.mats_derived_hrly_value
     IS 'The derived hourly value for a parameter as calculated from measured values and reported by the source. ';

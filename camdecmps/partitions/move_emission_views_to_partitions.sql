@@ -48,7 +48,7 @@ BEGIN
 				ADD CONSTRAINT pk_%s PRIMARY KEY (%s);
 		', t.table_name, pkColumnToDrop, t.table_name, t.table_name, t.table_name, t.table_name, t.table_name, t.table_name, pkColumns);
 
-		FOR year IN 1993..2023 LOOP
+		FOR year IN 1993..2024 LOOP
 			FOR qtr IN 1..4 LOOP
 				rptPeriodId = ((year - 1993) * 4) + qtr;
 				EXECUTE format('

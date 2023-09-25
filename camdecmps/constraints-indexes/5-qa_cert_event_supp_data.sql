@@ -1,8 +1,8 @@
 ALTER TABLE IF EXISTS camdecmps.qa_cert_event_supp_data
     ADD CONSTRAINT pk_qa_cert_event_supp_data PRIMARY KEY (qa_cert_event_supp_data_id),
-    ADD CONSTRAINT fk_qa_cert_event_supp_data_data_cd FOREIGN KEY (qa_cert_event_supp_data_cd)
+    ADD CONSTRAINT fk_qa_cert_event_supp_data_qa_cert_event_supp_data_code FOREIGN KEY (qa_cert_event_supp_data_cd)
         REFERENCES camdecmpsmd.qa_cert_event_supp_data_code (qa_cert_event_supp_data_cd) MATCH SIMPLE,
-    ADD CONSTRAINT fk_qa_cert_event_supp_data_date_cd FOREIGN KEY (qa_cert_event_supp_date_cd)
+    ADD CONSTRAINT fk_qa_cert_event_supp_data_qa_cert_event_supp_date_code FOREIGN KEY (qa_cert_event_supp_date_cd)
         REFERENCES camdecmpsmd.qa_cert_event_supp_date_code (qa_cert_event_supp_date_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_qa_cert_event_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE

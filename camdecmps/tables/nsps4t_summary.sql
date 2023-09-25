@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.nsps4t_summary
     userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.nsps4t_summary
     IS 'NSPS4T (quarterly) Summary Information. ';

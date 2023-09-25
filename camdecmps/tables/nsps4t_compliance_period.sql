@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.nsps4t_compliance_period
     userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.nsps4t_compliance_period
     IS 'NSPS4T (monthly) Compliance Period Information. ';

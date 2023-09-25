@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.long_term_fuel_flow
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.long_term_fuel_flow
     IS 'Long term fuel flow data for LME reporting.';

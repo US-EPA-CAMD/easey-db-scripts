@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.weekly_test_summary
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.weekly_test_summary
     IS 'Summary of weekly calibration test results and weekly interference check results.';

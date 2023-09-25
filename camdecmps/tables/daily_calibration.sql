@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.daily_calibration
     cylinder_identifier character varying(25) COLLATE pg_catalog."default",
     expiration_date date,
     injection_protocol_cd character varying(7) COLLATE pg_catalog."default"
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.daily_calibration
     IS 'Daily calibration test data and results. Each record in this table contains a single day''s test for both low and high injection test results.  Record Type 230.';

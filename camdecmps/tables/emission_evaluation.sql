@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_evaluation
     chk_session_id character varying(45) COLLATE pg_catalog."default",
     submission_id numeric(38,0),
     submission_availability_cd character varying(7) COLLATE pg_catalog."default"
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.emission_evaluation
     IS 'Tracks the status of emissions data evaluations.';

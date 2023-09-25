@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.derived_hrly_value
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     calc_fuel_flow_total numeric(15,4),
     calc_hour_measure_cd character varying(7) COLLATE pg_catalog."default"
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.derived_hrly_value
     IS 'The derived hourly value for a parameter (e.g., SO2 lbs/hr) as calculated from measured values and reported by the source.  Record Types 300, 310, 320, 328, 330.';
