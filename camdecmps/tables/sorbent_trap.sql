@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.sorbent_trap
     update_date timestamp without time zone,
     sorbent_trap_aps_cd character varying(7) COLLATE pg_catalog."default",
     rata_ind numeric(38,0)
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.sorbent_trap
     IS 'Sorbent trap data. ';

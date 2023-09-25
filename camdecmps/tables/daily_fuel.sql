@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.daily_fuel
     update_date timestamp without time zone,
     rpt_period_id numeric(38,0) NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.daily_fuel
     IS 'The daily fuel data for Appendix G CO2 reporting.';

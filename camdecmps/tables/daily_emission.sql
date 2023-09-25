@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.daily_emission
     total_carbon_burned numeric(13,1),
     calc_total_daily_emission numeric(10,1),
     calc_total_op_time numeric(4,2)
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.daily_emission
     IS 'Daily total massEmissions.  Currently CO2 only from Record Type 331.';

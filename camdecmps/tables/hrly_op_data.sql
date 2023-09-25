@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.hrly_op_data
     mhhi_indicator numeric(38,0),
     mats_load numeric(6,0),
     mats_startup_shutdown_flg character varying(1) COLLATE pg_catalog."default"
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.hrly_op_data
     IS 'A collection of data that contains one record for each hour in which a monitor location may or may not have operated. RT 300.';

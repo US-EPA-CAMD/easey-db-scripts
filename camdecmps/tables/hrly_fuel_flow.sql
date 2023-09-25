@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.hrly_fuel_flow
     calc_appd_status character varying(75) COLLATE pg_catalog."default",
     rpt_period_id numeric(38,0) NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.hrly_fuel_flow
     IS 'Hourly fuel flow data for Appendix D.  Record Type 302 and 303.';

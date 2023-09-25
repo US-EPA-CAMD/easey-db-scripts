@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.sampling_train
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.sampling_train
     IS 'Sampling train data. ';

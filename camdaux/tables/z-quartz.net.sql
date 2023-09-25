@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS camdaux.qrtz_job_details
-  (
+(
     sched_name TEXT NOT NULL,
 	  job_name  TEXT NOT NULL,
     job_group TEXT NOT NULL,
@@ -9,12 +9,11 @@ CREATE TABLE IF NOT EXISTS camdaux.qrtz_job_details
     is_nonconcurrent BOOL NOT NULL,
     is_update_data BOOL NOT NULL,
 	  requests_recovery BOOL NOT NULL,
-    job_data BYTEA NULL,
-    PRIMARY KEY (sched_name,job_name,job_group)
+    job_data BYTEA NULL
 );
 
 CREATE TABLE IF NOT EXISTS camdaux.qrtz_triggers
-  (
+(
     sched_name TEXT NOT NULL,
 	  trigger_name TEXT NOT NULL,
     trigger_group TEXT NOT NULL,
@@ -30,30 +29,24 @@ CREATE TABLE IF NOT EXISTS camdaux.qrtz_triggers
     end_time BIGINT NULL,
     calendar_name TEXT NULL,
     misfire_instr SMALLINT NULL,
-    job_data BYTEA NULL,
-    PRIMARY KEY (sched_name,trigger_name,trigger_group),
-    FOREIGN KEY (sched_name,job_name,job_group) 
-		REFERENCES camdaux.qrtz_job_details(sched_name,job_name,job_group) 
+    job_data BYTEA NULL
 );
 
 CREATE TABLE IF NOT EXISTS camdaux.qrtz_simple_triggers
-  (
+(
     sched_name TEXT NOT NULL,
 	  trigger_name TEXT NOT NULL,
     trigger_group TEXT NOT NULL,
     repeat_count BIGINT NOT NULL,
     repeat_interval BIGINT NOT NULL,
-    times_triggered BIGINT NOT NULL,
-    PRIMARY KEY (sched_name,trigger_name,trigger_group),
-    FOREIGN KEY (sched_name,trigger_name,trigger_group) 
-		REFERENCES camdaux.qrtz_triggers(sched_name,trigger_name,trigger_group) ON DELETE CASCADE
+    times_triggered BIGINT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS camdaux.qrtz_simprop_triggers 
-  (
+(
     sched_name TEXT NOT NULL,
-    trigger_name TEXT NOT NULL ,
-    trigger_group TEXT NOT NULL ,
+    trigger_name TEXT NOT NULL,
+    trigger_group TEXT NOT NULL,
     str_prop_1 TEXT NULL,
     str_prop_2 TEXT NULL,
     str_prop_3 TEXT NULL,
@@ -65,52 +58,41 @@ CREATE TABLE IF NOT EXISTS camdaux.qrtz_simprop_triggers
     dec_prop_2 NUMERIC NULL,
     bool_prop_1 BOOL NULL,
     bool_prop_2 BOOL NULL,
-  	time_zone_id TEXT NULL,
-	  PRIMARY KEY (sched_name,trigger_name,trigger_group),
-    FOREIGN KEY (sched_name,trigger_name,trigger_group) 
-		REFERENCES camdaux.qrtz_triggers(sched_name,trigger_name,trigger_group) ON DELETE CASCADE
+  	time_zone_id TEXT NULL
 );
 
 CREATE TABLE IF NOT EXISTS camdaux.qrtz_cron_triggers
-  (
+(
     sched_name TEXT NOT NULL,
     trigger_name TEXT NOT NULL,
     trigger_group TEXT NOT NULL,
     cron_expression TEXT NOT NULL,
-    time_zone_id TEXT,
-    PRIMARY KEY (sched_name,trigger_name,trigger_group),
-    FOREIGN KEY (sched_name,trigger_name,trigger_group) 
-		REFERENCES camdaux.qrtz_triggers(sched_name,trigger_name,trigger_group) ON DELETE CASCADE
+    time_zone_id TEXT
 );
 
 CREATE TABLE IF NOT EXISTS camdaux.qrtz_blob_triggers
-  (
+(
     sched_name TEXT NOT NULL,
     trigger_name TEXT NOT NULL,
     trigger_group TEXT NOT NULL,
-    blob_data BYTEA NULL,
-    PRIMARY KEY (sched_name,trigger_name,trigger_group),
-    FOREIGN KEY (sched_name,trigger_name,trigger_group) 
-		REFERENCES camdaux.qrtz_triggers(sched_name,trigger_name,trigger_group) ON DELETE CASCADE
+    blob_data BYTEA NULL
 );
 
 CREATE TABLE IF NOT EXISTS camdaux.qrtz_calendars
-  (
+(
     sched_name TEXT NOT NULL,
     calendar_name  TEXT NOT NULL, 
-    calendar BYTEA NOT NULL,
-    PRIMARY KEY (sched_name,calendar_name)
+    calendar BYTEA NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS camdaux.qrtz_paused_trigger_grps
-  (
+(
     sched_name TEXT NOT NULL,
-    trigger_group TEXT NOT NULL, 
-    PRIMARY KEY (sched_name,trigger_group)
+    trigger_group TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS camdaux.qrtz_fired_triggers 
-  (
+(
     sched_name TEXT NOT NULL,
     entry_id TEXT NOT NULL,
     trigger_name TEXT NOT NULL,
@@ -123,34 +105,19 @@ CREATE TABLE IF NOT EXISTS camdaux.qrtz_fired_triggers
     job_name TEXT NULL,
     job_group TEXT NULL,
     is_nonconcurrent BOOL NOT NULL,
-    requests_recovery BOOL NULL,
-    PRIMARY KEY (sched_name,entry_id)
+    requests_recovery BOOL NULL
 );
 
 CREATE TABLE IF NOT EXISTS camdaux.qrtz_scheduler_state 
-  (
+(
     sched_name TEXT NOT NULL,
     instance_name TEXT NOT NULL,
     last_checkin_time BIGINT NOT NULL,
-    checkin_interval BIGINT NOT NULL,
-    PRIMARY KEY (sched_name,instance_name)
+    checkin_interval BIGINT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS camdaux.qrtz_locks
-  (
+(
     sched_name TEXT NOT NULL,
-    lock_name  TEXT NOT NULL, 
-    PRIMARY KEY (sched_name,lock_name)
+    lock_name  TEXT NOT NULL
 );
-
-create index if not exists idx_qrtz_j_req_recovery on camdaux.qrtz_job_details(requests_recovery);
-create index if not exists idx_qrtz_t_next_fire_time on camdaux.qrtz_triggers(next_fire_time);
-create index if not exists idx_qrtz_t_state on camdaux.qrtz_triggers(trigger_state);
-create index if not exists idx_qrtz_t_nft_st on camdaux.qrtz_triggers(next_fire_time,trigger_state);
-create index if not exists idx_qrtz_ft_trig_name on camdaux.qrtz_fired_triggers(trigger_name);
-create index if not exists idx_qrtz_ft_trig_group on camdaux.qrtz_fired_triggers(trigger_group);
-create index if not exists idx_qrtz_ft_trig_nm_gp on camdaux.qrtz_fired_triggers(sched_name,trigger_name,trigger_group);
-create index if not exists idx_qrtz_ft_trig_inst_name on camdaux.qrtz_fired_triggers(instance_name);
-create index if not exists idx_qrtz_ft_job_name on camdaux.qrtz_fired_triggers(job_name);
-create index if not exists idx_qrtz_ft_job_group on camdaux.qrtz_fired_triggers(job_group);
-create index if not exists idx_qrtz_ft_job_req_recovery on camdaux.qrtz_fired_triggers(requests_recovery);

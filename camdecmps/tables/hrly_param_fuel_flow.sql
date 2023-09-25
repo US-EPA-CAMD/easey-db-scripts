@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.hrly_param_fuel_flow
     calc_appe_status character varying(75) COLLATE pg_catalog."default",
     rpt_period_id numeric(38,0) NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.hrly_param_fuel_flow
     IS 'Calculated SO2, CO2 or heat input determined from fuel flow information.  Record Types 302, 303, 313 and 314.';

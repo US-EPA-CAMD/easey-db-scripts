@@ -6,10 +6,10 @@ TABLES=false
 VIEWS=false
 FUNCTIONS=false
 PROCEDURES=false
-PRE_DATA_LOAD=false
+PRE_DATA_LOAD=true
 POST_DATA_LOAD=false
+POST_DEPLOYMENT=false
 CONSTRAINTS_INDEXES=false
-POST_DEPLOYMENT_CLEANUP=false
 
 function getFileAndCommit() {
   FILES="\i $1"
@@ -42,6 +42,10 @@ function createTables() {
   getFiles "../../../camdecmpswks/tables"
   getFiles "../../../camdecmpsaux/tables"
   getFiles "../../../camdecmpscalc/tables"
+
+  FILES="$FILES
+  \i ../../../camdecmps/partitions/create-partitions.sql
+  "
 }
 
 function createOrReplaceViews() {
@@ -87,14 +91,16 @@ if [ $VIEWS == true ]; then
 fi
 
 if [ $PRE_DATA_LOAD == true ]; then
-  createTables
-
   FILES="$FILES
+  DROP TABLE IF EXISTS camdaux.missing_oris;
+  DROP TABLE IF EXISTS camdaux.sftp_failures;
+  DROP TABLE IF EXISTS camdaux.sftp_log;
   \i ./drop-customizations.sql
   \i ./update-userid-length.sql
   "
 
   schemas=(
+    camdecmpscalc
     camdecmpsaux
     camdecmpswks
     camdecmps
@@ -113,11 +119,6 @@ if [ $PRE_DATA_LOAD == true ]; then
     \i ./$FILENAME
     "
   done
-
-  #FILES="$FILES
-  #\i ../../../camdecmps/partitions/create-emission-view-partitions.sql
-  #\i ../../../camdecmps/partitions/create-emission-data-partitions.sql
-  #"
 
   ../../execute-psql.sh "$FILES"
 fi
@@ -196,16 +197,14 @@ if [ $CONSTRAINTS_INDEXES == true ]; then
   getFilesAndCommit "../../../camdecmps/constraints-indexes/group10"
   getFilesAndCommit "../../../camdecmpsaux/constraints-indexes"
   getFilesAndCommit "../../../camdecmpswks/constraints-indexes"
+  getFilesAndCommit "../../../camdecmpscalc/constraints-indexes"
 fi
 
-if [ $POST_DEPLOYMENT_CLEANUP == true ]; then
+if [ $POST_DEPLOYMENT == true ]; then
   FILES="
   DROP TABLE IF EXISTS camdaux.bulk_file_log;
   DROP TABLE IF EXISTS camdaux.dataset_template;
-  DROP TABLE IF EXISTS camdaux.missing_oris;
-  DROP TABLE IF EXISTS camdaux.sftp_failures;
-  DROP TABLE IF EXISTS camdaux.sftp_log;
-  CALL camdecmpswks.camdecmpswks.load_workspace();
+  CALL camdecmpswks.load_workspace();
   CALL camdecmps.refresh_emissions_views();
   "
   ../../execute-psql.sh "$FILES"

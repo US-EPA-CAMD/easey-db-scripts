@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.weekly_system_integrity
     update_date timestamp without time zone,
     rpt_period_id numeric(38,0) NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.weekly_system_integrity
     IS 'Weekly error test data and results. ';

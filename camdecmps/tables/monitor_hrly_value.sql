@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_hrly_value
     calc_leak_status character varying(75) COLLATE pg_catalog."default",
     calc_dayint_status character varying(75) COLLATE pg_catalog."default",
     calc_f2l_status character varying(75) COLLATE pg_catalog."default"
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.monitor_hrly_value
     IS 'The hourly value monitored and reported for each parameter.  Record types 200 - 220.';

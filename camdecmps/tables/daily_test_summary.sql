@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.daily_test_summary
     update_date timestamp without time zone,
     span_scale_cd character varying(7) COLLATE pg_catalog."default",
     mon_sys_id character varying(45) COLLATE pg_catalog."default"
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.daily_test_summary
     IS 'Summary of daily calibration test results and daily interference check results.';

@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.mats_monitor_hrly_value
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.mats_monitor_hrly_value
     IS 'The MATS hourly value monitored and reported for each parameter. ';

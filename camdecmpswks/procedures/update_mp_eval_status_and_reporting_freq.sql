@@ -7,6 +7,7 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.update_mp_eval_status_and_reporting_fre
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+/*
 	--UNIT: 91310
 	--FAC_ID: 7554
 	--MP: HWLTJDVZQN-7EB726799BA74A8B801B9D515177E184
@@ -41,7 +42,7 @@ BEGIN
 	INSERT INTO camdaux.inventory_status_log(
 		inventory_status_log_id, fac_id, unit_id, data_type_cd, userid, last_updated)
 	VALUES (3, 1, 1, 'INVENTORY', 'jwhitehead', current_timestamp);
-
+*/
 -----------------------------------------------------------------------------------------------------------------------------
 
 	--DELETE INVALID OS MPRF RECORD
@@ -58,14 +59,14 @@ BEGIN
 		JOIN camdecmps.monitor_plan mp USING(mon_plan_id)
 		JOIN camd.unit_program up USING(unit_id)
 		JOIN camdmd.program_code newPrg USING(prg_cd)
-		JOIN camdecmpsmd.reporting_period mprfBeginPrd ON mprf.begin_rpt_period_id = mprfBeginPrd.rpt_period_id
-		LEFT JOIN camdecmpsmd.reporting_period mprfEndPrd ON mprf.end_rpt_period_id = mprfEndPrd.rpt_period_id
+		JOIN camdecmpsmd.reporting_period brp ON mprf.begin_rpt_period_id = brp.rpt_period_id
+		LEFT JOIN camdecmpsmd.reporting_period erp ON mprf.end_rpt_period_id = erp.rpt_period_id
 		WHERE newPrg.os_ind = 0
 		AND mprf.report_freq_cd = 'OS'
 		AND mp.end_rpt_period_id IS null
-		AND mprfBeginPrd.begin_date <= up.unit_monitor_cert_begin_date AND (
+		AND brp.begin_date > up.unit_monitor_cert_begin_date AND (
 			mprf.end_rpt_period_id IS null OR
-			mprfEndPrd.end_date > (
+			erp.end_date > (
 				SELECT end_date FROM camdecmpsmd.reporting_period
 				WHERE up.unit_monitor_cert_begin_date BETWEEN begin_date AND end_date
 			)

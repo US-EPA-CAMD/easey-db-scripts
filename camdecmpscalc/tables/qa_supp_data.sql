@@ -1,0 +1,27 @@
+CREATE TABLE IF NOT EXISTS camdecmpscalc.qa_supp_data
+(
+	  pk integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 ),
+    chk_session_id character varying(45) NOT NULL,
+    test_sum_id character varying(45) NOT NULL,
+    test_type_cd character varying(7) NOT NULL,
+	  mon_loc_id character varying(45) NOT NULL,
+    mon_sys_id character varying(45),
+    component_id character varying(45),
+    test_num character varying(18),
+	  test_reason_cd character varying(7),
+    test_result_cd character varying(7),
+    span_scale character varying(10),
+    begin_date date,
+	  begin_hour numeric(2,0),
+    begin_min numeric(2,0),
+    end_date date,
+    end_hour numeric(2,0),
+    end_min numeric(2,0),
+    rpt_period_id numeric(38,0),
+    gp_ind numeric(38,0),
+    reinstallation_date date,
+    reinstallation_hour numeric(2,0),
+    op_level_cd character varying(7),
+    operating_condition_cd character varying(7),
+    fuel_cd character varying(7)
+);

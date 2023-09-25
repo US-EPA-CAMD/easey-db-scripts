@@ -7,8 +7,6 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.delete_monitor_plan_workspace(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-	TRUNCATE TABLE camdecmpswks.check_session CASCADE;
-	TRUNCATE TABLE camdecmpsaux.evaluation_set CASCADE;
 	TRUNCATE TABLE camdecmpswks.monitor_location CASCADE;
 	TRUNCATE TABLE camdecmpswks.monitor_plan CASCADE;
 	TRUNCATE TABLE camdecmpswks.unit_capacity CASCADE;

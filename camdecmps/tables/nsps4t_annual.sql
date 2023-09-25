@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.nsps4t_annual
     userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone
-);
+) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.nsps4t_annual
     IS 'NSPS4T Annual (4th quarter) Information. ';

@@ -13,4 +13,4 @@ CREATE TABLE IF NOT EXISTS camdecmps.daily_backstop
     userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone
-);
+) PARTITION BY RANGE (rpt_period_id);
