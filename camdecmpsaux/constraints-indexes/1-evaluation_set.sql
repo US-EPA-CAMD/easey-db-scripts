@@ -10,3 +10,7 @@ CREATE INDEX IF NOT EXISTS idx_evaluation_set_mon_plan_id
 CREATE INDEX IF NOT EXISTS idx_evaluation_set_fac_id
     ON camdecmpsaux.evaluation_set USING btree
     (fac_id ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_evaluation_set_oris_code
+    ON camdecmpsaux.evaluation_set USING btree
+    (oris_code ASC NULLS LAST);
