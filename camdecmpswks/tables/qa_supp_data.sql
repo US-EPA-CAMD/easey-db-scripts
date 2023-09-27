@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.qa_supp_data
     op_level_cd character varying(7) COLLATE pg_catalog."default",
     updated_status_flg character varying(1) COLLATE pg_catalog."default",
     submission_id numeric(38,0),
-    submission_availability_cd character varying(7) COLLATE pg_catalog."default",
+    submission_availability_cd character varying(7) COLLATE pg_catalog."default" DEFAULT 'GRANTED'::character varying,
     pending_status_cd character varying(7) COLLATE pg_catalog."default",
     operating_condition_cd character varying(7) COLLATE pg_catalog."default",
     fuel_cd character varying(7) COLLATE pg_catalog."default",

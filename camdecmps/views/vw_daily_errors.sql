@@ -25,7 +25,7 @@ AS
 		END AS error_codes
 	FROM camdecmps.monitor_plan_location mpl
 	JOIN camdecmps.daily_test_summary dts ON dts.mon_loc_id::text = mpl.mon_loc_id::text
-	LEFT JOIN camdecmps.emission_evaluation evl ON evl.mon_plan_id::text = mpl.mon_plan_id::text AND evl.rpt_period_id = dts.rpt_period_id
+	JOIN camdecmps.emission_evaluation evl ON evl.mon_plan_id::text = mpl.mon_plan_id::text AND evl.rpt_period_id = dts.rpt_period_id
 	LEFT JOIN camdecmps.monitor_system ms ON ms.mon_sys_id::text = dts.mon_sys_id::text
 	LEFT JOIN camdecmps.component cmp ON cmp.component_id::text = dts.component_id::text
 	LEFT JOIN camdecmpsaux.check_log cl ON cl.chk_session_id::text = evl.chk_session_id::text AND cl.test_sum_id::text = dts.daily_test_sum_id::text

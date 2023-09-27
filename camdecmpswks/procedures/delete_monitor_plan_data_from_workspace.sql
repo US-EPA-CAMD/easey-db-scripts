@@ -38,12 +38,6 @@ BEGIN
 		WHERE unit_id = ANY(unitIds)
 		OR stack_pipe_id = ANY(stackPipeIds)
 	) INTO unitStackConfigIds;
-	
-	DELETE FROM camdecmpswks.check_session
-	WHERE mon_plan_id = monPlanId;
-
-	DELETE FROM camdecmpsaux.evaluation_set
-	WHERE mon_plan_id = monPlanId;
 
 	DELETE FROM camdecmpswks.monitor_location
 	WHERE mon_loc_id = ANY(monLocIds);

@@ -26,7 +26,7 @@ AS
 		END AS error_codes
 	FROM camdecmps.monitor_plan_location mpl
 	JOIN camdecmps.weekly_test_summary wts ON wts.mon_loc_id::text = mpl.mon_loc_id::text
-	LEFT JOIN camdecmps.emission_evaluation evl ON evl.mon_plan_id::text = mpl.mon_plan_id::text AND evl.rpt_period_id = wts.rpt_period_id
+	JOIN camdecmps.emission_evaluation evl ON evl.mon_plan_id::text = mpl.mon_plan_id::text AND evl.rpt_period_id = wts.rpt_period_id
 	LEFT JOIN camdecmps.monitor_system ms ON ms.mon_sys_id::text = wts.mon_sys_id::text
 	LEFT JOIN camdecmps.component cmp ON cmp.component_id::text = wts.component_id::text
 	LEFT JOIN camdecmpsaux.check_log log ON log.chk_session_id::text = evl.chk_session_id::text AND log.test_sum_id::text = wts.weekly_test_sum_id::text

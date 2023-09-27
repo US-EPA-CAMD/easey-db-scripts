@@ -3,6 +3,9 @@ ALTER TABLE IF EXISTS camdecmps.emission_view_otherdaily
     ADD CONSTRAINT fk_emission_view_otherdaily_emission_evaluation FOREIGN KEY (rpt_period_id, mon_plan_id)
         REFERENCES camdecmps.emission_evaluation (rpt_period_id, mon_plan_id) MATCH SIMPLE
         ON DELETE CASCADE,
+    ADD CONSTRAINT fk_emission_view_otherdaily_daily_test_summary FOREIGN KEY (test_sum_id)
+        REFERENCES camdecmps.daily_test_summary (daily_test_sum_id) MATCH SIMPLE
+        ON DELETE CASCADE,
     ADD CONSTRAINT fk_emission_view_otherdaily_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE,
     ADD CONSTRAINT fk_emission_view_otherdaily_monitor_plan FOREIGN KEY (mon_plan_id)
@@ -21,6 +24,10 @@ CREATE INDEX IF NOT EXISTS idx_emission_view_otherdaily_mon_loc_id
 CREATE INDEX IF NOT EXISTS idx_emission_view_otherdaily_rpt_period_id
     ON camdecmps.emission_view_otherdaily USING btree
 		(rpt_period_id ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_emission_view_otherdaily_test_sum_id
+		ON camdecmps.emission_view_otherdaily USING btree
+		(test_sum_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
 CREATE INDEX IF NOT EXISTS idx_emission_view_otherdaily_rpt_period_id_mon_loc_id
 		ON camdecmps.emission_view_otherdaily USING btree

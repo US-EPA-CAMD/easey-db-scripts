@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.test_summary
     test_comment character varying(1000) COLLATE pg_catalog."default",
     last_updated date,
     updated_status_flg character varying(1) COLLATE pg_catalog."default",
-    needs_eval_flg character varying(1) COLLATE pg_catalog."default",
+    needs_eval_flg character varying(1) COLLATE pg_catalog."default" DEFAULT 'Y'::character varying,
     chk_session_id character varying(45) COLLATE pg_catalog."default",
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,

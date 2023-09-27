@@ -22,6 +22,18 @@ CREATE INDEX IF NOT EXISTS idx_emission_view_matssorbent_rpt_period_id
     ON camdecmps.emission_view_matssorbent USING btree
 		(rpt_period_id ASC NULLS LAST);
 
+CREATE INDEX IF NOT EXISTS idx_emission_view_matssorbent_system_identifier
+		ON camdecmps.emission_view_matssorbent USING btree
+		(system_identifier COLLATE pg_catalog."default" ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_emission_view_matssorbent_date_hour
+		ON camdecmps.emission_view_matssorbent USING btree
+		(date_hour COLLATE pg_catalog."default" ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_emission_view_matssorbent_end_date_time
+		ON camdecmps.emission_view_matssorbent USING btree
+		(end_date_time COLLATE pg_catalog."default" ASC NULLS LAST);
+
 CREATE INDEX IF NOT EXISTS idx_emission_view_matssorbent_rpt_period_id_mon_loc_id
 		ON camdecmps.emission_view_matssorbent USING btree
 		(rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);

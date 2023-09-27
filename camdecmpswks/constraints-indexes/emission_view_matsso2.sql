@@ -22,6 +22,10 @@ CREATE INDEX IF NOT EXISTS idx_emission_view_matsso2_rpt_period_id
     ON camdecmpswks.emission_view_matsso2 USING btree
 		(rpt_period_id ASC NULLS LAST);
 
+CREATE INDEX IF NOT EXISTS idx_emission_view_matsso2_date_hour
+		ON camdecmpswks.emission_view_matsso2 USING btree
+		(date_hour COLLATE pg_catalog."default" ASC NULLS LAST);
+
 CREATE INDEX IF NOT EXISTS idx_emission_view_matsso2_rpt_period_id_mon_loc_id
 		ON camdecmpswks.emission_view_matsso2 USING btree
 		(rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);

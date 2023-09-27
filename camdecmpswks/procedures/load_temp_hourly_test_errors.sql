@@ -49,12 +49,12 @@ BEGIN
                 CASE WHEN hod.MATS_STARTUP_SHUTDOWN_FLG = 'U' THEN 'Startup' WHEN hod.MATS_STARTUP_SHUTDOWN_FLG = 'D' THEN 'Shutdown' ELSE hod.MATS_STARTUP_SHUTDOWN_FLG END, 
 				CASE WHEN MAX(Coalesce(sev.SEVERITY_LEVEL, 0)) > 0 THEN 'View Errors' ELSE NULL END AS ERROR_CODES
 			FROM (SELECT MON_PLAN_ID, MON_LOC_ID FROM camdecmpswks.MONITOR_PLAN_LOCATION WHERE MON_PLAN_ID = vmonplanid) mpl
-					LEFT OUTER JOIN camdecmpswks.EMISSION_EVALUATION evl ON	evl.MON_PLAN_ID = mpl.MON_PLAN_ID AND evl.RPT_PERIOD_ID = vrptperiodid
-					INNER JOIN camdecmpswks.HRLY_OP_DATA hod ON	hod.MON_LOC_ID = mpl.MON_LOC_ID AND hod.RPT_PERIOD_ID = vrptperiodid
-					LEFT OUTER JOIN camdecmpswks.CHECK_LOG log ON	log.CHK_SESSION_ID = evl.CHK_SESSION_ID AND log.MON_LOC_ID = mpl.MON_LOC_ID
+					JOIN camdecmpswks.EMISSION_EVALUATION evl ON	evl.MON_PLAN_ID = mpl.MON_PLAN_ID AND evl.RPT_PERIOD_ID = vrptperiodid
+					JOIN camdecmpswks.HRLY_OP_DATA hod ON	hod.MON_LOC_ID = mpl.MON_LOC_ID AND hod.RPT_PERIOD_ID = vrptperiodid
+					LEFT JOIN camdecmpswks.CHECK_LOG log ON	log.CHK_SESSION_ID = evl.CHK_SESSION_ID AND log.MON_LOC_ID = mpl.MON_LOC_ID
 													AND ((log.OP_BEGIN_DATE < hod.BEGIN_DATE) OR ((log.OP_BEGIN_DATE = hod.BEGIN_DATE) AND (log.OP_BEGIN_HOUR <= hod.BEGIN_HOUR)))
 													AND ((log.OP_END_DATE > hod.BEGIN_DATE) OR ((log.OP_END_DATE = hod.BEGIN_DATE) AND (log.OP_END_HOUR >= hod.BEGIN_HOUR)))
-					LEFT OUTER JOIN camdecmpsmd.SEVERITY_CODE sev ON sev.SEVERITY_CD = log.SEVERITY_CD
+					LEFT JOIN camdecmpsmd.SEVERITY_CODE sev ON sev.SEVERITY_CD = log.SEVERITY_CD
 			GROUP BY	hod.HOUR_ID, 
 						mpl.MON_PLAN_ID, 
 						mpl.MON_LOC_ID, 

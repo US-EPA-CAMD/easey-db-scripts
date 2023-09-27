@@ -92,10 +92,10 @@ BEGIN
 		mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, pending_status_cd, begin_rpt_period_id, end_rpt_period_id, last_evaluated_date, eval_status_cd
 	)
 	SELECT
-		mp.mon_plan_id, mp.fac_id, mp.config_type_cd, mp.last_updated, mp.updated_status_flg, mp.needs_eval_flg, mp.chk_session_id, mp.userid, mp.add_date, mp.update_date, mp.submission_id, mp.submission_availability_cd, 'NOTSUB', mp.begin_rpt_period_id, mp.end_rpt_period_id, mp.last_evaluated_date, coalesce(sc.eval_status_cd, 'EVAL')
+		mp.mon_plan_id, mp.fac_id, mp.config_type_cd, mp.last_updated, mp.updated_status_flg, mp.needs_eval_flg, mp.chk_session_id, mp.userid, mp.add_date, mp.update_date, mp.submission_id, mp.submission_availability_cd, mp.pending_status_cd, mp.begin_rpt_period_id, mp.end_rpt_period_id, mp.last_evaluated_date, coalesce(sc.eval_status_cd, 'PASS')
 	FROM camdecmps.monitor_plan mp
-	left join camdecmpsaux.check_session cs on cs.chk_session_id = mp.chk_session_id
-	left join camdecmpsmd.severity_code sc on sc.severity_cd = cs.severity_cd
+	LEFT JOIN camdecmpsaux.check_session cs on cs.chk_session_id = mp.chk_session_id
+	LEFT JOIN camdecmpsmd.severity_code sc on sc.severity_cd = cs.severity_cd
 	WHERE mp.mon_plan_id = monPlanId;
 
 	-- MONITOR_PLAN_COMMENT --
@@ -310,8 +310,7 @@ BEGIN
 		USING(mon_sys_id)
 	WHERE mon_loc_id = ANY(monLocIds);
 
-
-		-- Check Session
+	-- CHECK_SESSION
 	INSERT INTO camdecmpswks.check_session (
 		chk_session_id, mon_plan_id, test_sum_id, qa_cert_event_id, 
 		test_extension_exemption_id, rpt_period_id, session_begin_date, 
@@ -325,22 +324,9 @@ BEGIN
 		cs.process_cd, cs.userid
 	FROM camdecmps.monitor_plan mp
 	JOIN camdecmpsaux.check_session cs on mp.chk_session_id = cs.chk_session_id
-	WHERE mp.mon_plan_id = monPlanId
-	ON CONFLICT (chk_session_id) DO UPDATE SET
-		mon_plan_id = EXCLUDED.mon_plan_id,
-		test_sum_id = EXCLUDED.test_sum_id,
-		qa_cert_event_id = EXCLUDED.qa_cert_event_id,
-		test_extension_exemption_id = EXCLUDED.test_extension_exemption_id,
-		rpt_period_id = EXCLUDED.rpt_period_id,
-		session_begin_date = EXCLUDED.session_begin_date,
-		session_end_date = EXCLUDED.session_end_date,
-		session_comment = EXCLUDED.session_comment,
-		severity_cd = EXCLUDED.severity_cd,
-		category_cd = EXCLUDED.category_cd,
-		process_cd = EXCLUDED.process_cd,
-		userid = EXCLUDED.userid;
+	WHERE mp.mon_plan_id = monPlanId;
 
-	-- Check Log
+	-- CHECK_LOG
 	INSERT INTO camdecmpswks.check_log (
 		chk_log_id, chk_session_id, begin_date, rule_check_id, result_message, 
 		chk_log_comment, check_catalog_result_id, mon_loc_id, source_table, 
@@ -353,29 +339,7 @@ BEGIN
 	FROM camdecmps.monitor_plan mp
 	JOIN camdecmpsaux.check_session cs on mp.chk_session_id = cs.chk_session_id
 	JOIN camdecmpsaux.check_log cl on cs.chk_session_id = cl.chk_session_id
-	WHERE mp.mon_plan_id = monPlanId
-	ON CONFLICT (chk_log_id) DO UPDATE SET
-		chk_session_id = EXCLUDED.chk_session_id,
-		begin_date = EXCLUDED.begin_date,
-		rule_check_id = EXCLUDED.rule_check_id,
-		result_message = EXCLUDED.result_message,
-		chk_log_comment = EXCLUDED.chk_log_comment,
-		check_catalog_result_id = EXCLUDED.check_catalog_result_id,
-		mon_loc_id = EXCLUDED.mon_loc_id,
-		source_table = EXCLUDED.source_table,
-		row_id = EXCLUDED.row_id,
-		test_sum_id = EXCLUDED.test_sum_id,
-		op_begin_date = EXCLUDED.op_begin_date,
-		op_begin_hour = EXCLUDED.op_begin_hour,
-		op_end_date = EXCLUDED.op_end_date,
-		op_end_hour = EXCLUDED.op_end_hour,
-		check_date = EXCLUDED.check_date,
-		check_hour = EXCLUDED.check_hour,
-		check_result = EXCLUDED.check_result,
-		severity_cd = EXCLUDED.severity_cd,
-		suppressed_severity_cd = EXCLUDED.suppressed_severity_cd,
-		check_cd = EXCLUDED.check_cd,
-		error_suppress_id = EXCLUDED.error_suppress_id;
+	WHERE mp.mon_plan_id = monPlanId;
 
 END;
 $BODY$;

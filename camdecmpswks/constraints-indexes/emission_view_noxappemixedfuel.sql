@@ -1,5 +1,5 @@
 ALTER TABLE IF EXISTS camdecmpswks.emission_view_noxappemixedfuel
-    ADD CONSTRAINT pk_emission_view_noxappemixedfuel PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, system_id, date_hour),
+    ADD CONSTRAINT pk_emission_view_noxappemixedfuel PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, date_hour),
     ADD CONSTRAINT fk_emission_view_noxappemixedfuel_emission_evaluation FOREIGN KEY (rpt_period_id, mon_plan_id)
         REFERENCES camdecmpswks.emission_evaluation (rpt_period_id, mon_plan_id) MATCH SIMPLE
         ON DELETE CASCADE,
@@ -21,6 +21,10 @@ CREATE INDEX IF NOT EXISTS idx_emission_view_noxappemixedfuel_mon_loc_id
 CREATE INDEX IF NOT EXISTS idx_emission_view_noxappemixedfuel_rpt_period_id
     ON camdecmpswks.emission_view_noxappemixedfuel USING btree
 		(rpt_period_id ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_emission_view_noxappemixedfuel_date_hour
+		ON camdecmpswks.emission_view_noxappemixedfuel USING btree
+		(date_hour COLLATE pg_catalog."default" ASC NULLS LAST);
 
 CREATE INDEX IF NOT EXISTS idx_emission_view_noxappemixedfuel_rpt_period_id_mon_loc_id
 		ON camdecmpswks.emission_view_noxappemixedfuel USING btree

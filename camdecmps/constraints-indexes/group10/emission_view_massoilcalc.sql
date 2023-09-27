@@ -1,5 +1,5 @@
 ALTER TABLE IF EXISTS camdecmps.emission_view_massoilcalc
-    ADD CONSTRAINT pk_emission_view_massoilcalc PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, oil_type, fuel_sys_id, date_hour),
+    ADD CONSTRAINT pk_emission_view_massoilcalc PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, date_hour, fuel_sys_id, oil_type),
     ADD CONSTRAINT fk_emission_view_massoilcalc_emission_evaluation FOREIGN KEY (rpt_period_id, mon_plan_id)
         REFERENCES camdecmps.emission_evaluation (rpt_period_id, mon_plan_id) MATCH SIMPLE
         ON DELETE CASCADE,
@@ -21,6 +21,18 @@ CREATE INDEX IF NOT EXISTS idx_emission_view_massoilcalc_mon_loc_id
 CREATE INDEX IF NOT EXISTS idx_emission_view_massoilcalc_rpt_period_id
     ON camdecmps.emission_view_massoilcalc USING btree
 		(rpt_period_id ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_emission_view_massoilcalc_date_hour
+		ON camdecmps.emission_view_massoilcalc USING btree
+		(date_hour COLLATE pg_catalog."default" ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_emission_view_massoilcalc_fuel_sys_id
+		ON camdecmps.emission_view_massoilcalc USING btree
+		(fuel_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_emission_view_massoilcalc_oil_type
+		ON camdecmps.emission_view_massoilcalc USING btree
+		(oil_type COLLATE pg_catalog."default" ASC NULLS LAST);
 
 CREATE INDEX IF NOT EXISTS idx_emission_view_massoilcalc_rpt_period_id_mon_loc_id
 		ON camdecmps.emission_view_massoilcalc USING btree

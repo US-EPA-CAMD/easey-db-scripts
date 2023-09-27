@@ -51,20 +51,20 @@ BEGIN
 		FROM camdecmpswks.MONITOR_PLAN_LOCATION AS mpl
 		WHERE mpl.MON_PLAN_ID = vMonPlanId
 	) AS mpl
-	INNER JOIN camdecmpswks.DAILY_TEST_SUMMARY dts
+	JOIN camdecmpswks.DAILY_TEST_SUMMARY dts
 		ON dts.MON_LOC_ID = mpl.MON_LOC_ID
 		AND dts.RPT_PERIOD_ID = vRptPeriodId
-	LEFT OUTER JOIN camdecmpswks.EMISSION_EVALUATION evl
+  JOIN camdecmpswks.EMISSION_EVALUATION evl
 		ON evl.MON_PLAN_ID = mpl.MON_PLAN_ID
 		AND evl.RPT_PERIOD_ID = vRptPeriodId
-	LEFT OUTER JOIN camdecmpswks.MONITOR_SYSTEM AS ms
+	LEFT JOIN camdecmpswks.MONITOR_SYSTEM AS ms
 		ON ms.MON_SYS_ID = dts.MON_SYS_ID
-	LEFT OUTER JOIN camdecmpswks.COMPONENT AS cmp
+	LEFT JOIN camdecmpswks.COMPONENT AS cmp
 		ON cmp.COMPONENT_ID = dts.COMPONENT_ID
-	LEFT OUTER JOIN camdecmpswks.CHECK_LOG AS cl
+	LEFT JOIN camdecmpswks.CHECK_LOG AS cl
 		ON cl.CHK_SESSION_ID = evl.CHK_SESSION_ID
 		AND cl.TEST_SUM_ID = dts.DAILY_TEST_SUM_ID
-	LEFT OUTER JOIN camdecmpsmd.SEVERITY_CODE AS sev
+	LEFT JOIN camdecmpsmd.SEVERITY_CODE AS sev
 		ON sev.SEVERITY_CD = cl.SEVERITY_CD
 	GROUP BY	dts.DAILY_TEST_SUM_ID, 
 				mpl.MON_PLAN_ID, 

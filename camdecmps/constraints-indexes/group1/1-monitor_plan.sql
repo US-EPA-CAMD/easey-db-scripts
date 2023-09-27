@@ -1,5 +1,3 @@
-SELECT '1-monitor_plan.sql';
-
 ALTER TABLE IF EXISTS camdecmps.monitor_plan
     ADD CONSTRAINT pk_monitor_plan PRIMARY KEY (mon_plan_id),
     ADD CONSTRAINT fk_monitor_plan_plant FOREIGN KEY (fac_id)
