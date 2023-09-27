@@ -1,8 +1,8 @@
--- FUNCTION: camdecmpswks.rpt_em_emission_view_all(text, numeric, numeric)
+-- FUNCTION: camdecmps.rpt_em_emission_view_all(text, numeric, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_emission_view_all(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmps.rpt_em_emission_view_all(text, numeric, numeric);
 
-CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_emission_view_all(
+CREATE OR REPLACE FUNCTION camdecmps.rpt_em_emission_view_all(
 	monplanid text,
 	vyear numeric,
 	vquarter numeric)
@@ -26,13 +26,13 @@ BEGIN
 
     SELECT ARRAY(
         SELECT mon_loc_id
-        FROM camdecmpswks.monitor_plan_location
+        FROM camdecmps.monitor_plan_location
         WHERE mon_plan_id = monplanid 
     ) INTO monLocIds;
 
     RETURN QUERY
     SELECT
-        camdecmpswks.get_config_by_loc_id(eva.mon_loc_id) as "location",
+        camdecmps.get_config_by_loc_id(eva.mon_loc_id) as "location",
         eva.date_hour as "dateHour",
         eva.op_time as "opTime",
         eva.unit_load as "unitLoad",
@@ -80,7 +80,7 @@ BEGIN
         eva.rpt_adj_flow as "rptAdjFlow",
         eva.unadj_flow as "unadjFlow"
 		
-    FROM camdecmpswks.emission_view_all eva
+    FROM camdecmps.emission_view_all eva
     left join camdecmpsmd.units_of_measure_code uomc on uomc.uom_cd = eva.load_uom
     left join camdecmpsmd.equation_code echi on echi.equation_cd = eva.hi_formula_cd 
     left join camdecmpsmd.equation_code ecso2 on ecso2.equation_cd = eva.so2_formula_cd 
