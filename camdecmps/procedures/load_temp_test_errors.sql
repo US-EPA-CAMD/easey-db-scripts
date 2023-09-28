@@ -1,25 +1,14 @@
--- PROCEDURE: camdecmpswks.refresh_emissions_views(character varying, numeric, numeric)
+-- PROCEDURE: camdecmps.load_temp_test_errors()
 
-DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emissions_views(character varying, numeric, numeric);
+DROP PROCEDURE IF EXISTS camdecmps.load_temp_test_errors();
 
-CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emissions_views(
-	vmonplanid character varying,
-	vyear numeric,
-	vquarter numeric)
+CREATE OR REPLACE PROCEDURE camdecmps.load_temp_test_errors()
 LANGUAGE 'plpgsql'
 AS $BODY$
 DECLARE
-	vRptPeriodId numeric(38,0);
-	sqlStatement text;
 	dataset record;
+	sqlStatement text;
 BEGIN
-	SELECT rpt_period_id
-	FROM camdecmpsmd.reporting_period
-	WHERE calendar_year = vYear AND quarter = vQuarter
-	INTO vRptPeriodId;
-
-	RAISE NOTICE 'Refreshing Emissions data views for Monitor Plan [%] and Reporting Period [Id: %, Yr: %, Qrt: %],', vMonPlanId, vRptPeriodId, vYear, vQuarter;
-
 	-- DROP TEMP TABLES
 	DROP TABLE IF EXISTS temp_hour_rules;
 	DROP TABLE IF EXISTS temp_hourly_test_errors;
@@ -145,23 +134,10 @@ BEGIN
     ON temp_weekly_test_errors USING btree
     (RPT_PERIOD_ID ASC NULLS LAST);
 
+
 	-- LOAD TEMP TABLES WITH EVALUATION ERROR DATA
-	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
-	CALL camdecmpswks.load_temp_daily_test_errors(vMonPlanId, vRptPeriodId);
-	CALL camdecmpswks.load_temp_weekly_test_errors(vMonPlanId, vRptPeriodId);
-
-	-- REFRESH EMISSION DATA VIEWS
-	FOR dataset IN (
-    SELECT * FROM camdaux.dataset WHERE group_cd = 'EMVIEW'
-    AND dataset_cd NOT IN ('LTFF', 'NSPS4T', 'DAILYBACKSTOP', 'COUNTS')
-  ) LOOP
-		sqlStatement := format('CALL camdecmpswks.refresh_emission_view_%s(%L, %s);', dataset.dataset_cd, vMonPlanId, vRptPeriodId);
-		RAISE NOTICE 'Refreshing %...', dataset.display_name;
-		RAISE NOTICE '%', sqlStatement;
-		EXECUTE sqlStatement;
-	END LOOP;
-
-	-- REFRESH EMISSION VIEW COUNTS
-	CALL camdecmpswks.refresh_emission_view_count(vMonPlanId, vRptPeriodId);
+	CALL camdecmps.load_temp_hourly_test_errors();
+	CALL camdecmps.load_temp_daily_test_errors();
+	CALL camdecmps.load_temp_weekly_test_errors();
 END;
 $BODY$;

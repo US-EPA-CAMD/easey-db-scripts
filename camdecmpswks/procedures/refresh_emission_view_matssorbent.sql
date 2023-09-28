@@ -12,25 +12,6 @@ BEGIN
 	DELETE FROM camdecmpswks.EMISSION_VIEW_MATSSORBENT
 	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
-	--	EC-2393 M.Jones 2015-10-16
-	CREATE TEMP TABLE IF NOT EXISTS temp_hour_rules (HOUR_ID varchar(45) NOT NULL);
-	INSERT INTO temp_hour_rules ( HOUR_ID ) 
-	SELECT DISTINCT ge.HOUR_ID
-	FROM temp_hourly_errors ge
-	INNER JOIN camdecmpswks.EMISSION_EVALUATION evl 
-		ON evl.MON_PLAN_ID = ge.MON_PLAN_ID 
-		AND evl.RPT_PERIOD_ID = ge.RPT_PERIOD_ID		
-	INNER JOIN camdecmpswks.HRLY_OP_DATA hod 
-		ON hod.HOUR_ID = ge.HOUR_ID 
-	INNER JOIN camdecmpswks.CHECK_LOG log
-		ON log.CHK_SESSION_ID = evl.CHK_SESSION_ID 
-		AND log.MON_LOC_ID = ge.MON_LOC_ID
-		AND ((log.OP_BEGIN_DATE < hod.BEGIN_DATE) OR ((log.OP_BEGIN_DATE = hod.BEGIN_DATE) AND (log.OP_BEGIN_HOUR <= hod.BEGIN_HOUR)))
-		AND ((log.OP_END_DATE > hod.BEGIN_DATE) OR ((log.OP_END_DATE = hod.BEGIN_DATE) AND (log.OP_END_HOUR >= hod.BEGIN_HOUR)))
-	INNER JOIN camdecmpsmd.RULE_CHECK rc
-		ON rc.RULE_CHECK_ID = log.RULE_CHECK_ID	
-		AND SUBSTRING(Coalesce(rc.CATEGORY_CD, ''), 1, 2) = 'ST';
-
 	-- Use a common table expression for clarity to get the max and min component identifiers
 	WITH train (
 		TRAP_ID,
@@ -167,7 +148,7 @@ BEGIN
 			WHEN hr.HOUR_ID IS NULL THEN NULL
 			ELSE ts.ERROR_CODES
 		END AS ERROR_CODES
-	FROM temp_hourly_errors ts
+	FROM temp_hourly_test_errors ts
 	INNER JOIN camdecmpswks.SORBENT_TRAP trp 
 		ON ts.MON_LOC_ID=trp.MON_LOC_ID AND trp.RPT_PERIOD_ID=ts.RPT_PERIOD_ID 
 		AND trp.BEGIN_DATE=ts.BEGIN_DATE AND trp.BEGIN_HOUR=ts.BEGIN_HOUR

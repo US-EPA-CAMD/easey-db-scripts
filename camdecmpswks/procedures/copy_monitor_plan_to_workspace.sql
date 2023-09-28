@@ -89,10 +89,10 @@ BEGIN
 	---------------------------------- MONITOR PLAN DATA --------------------------------------------
 	-- MONITOR_PLAN --
 	INSERT INTO camdecmpswks.monitor_plan(
-		mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, pending_status_cd, begin_rpt_period_id, end_rpt_period_id, last_evaluated_date, eval_status_cd
+		mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, begin_rpt_period_id, end_rpt_period_id, last_evaluated_date, eval_status_cd
 	)
 	SELECT
-		mp.mon_plan_id, mp.fac_id, mp.config_type_cd, mp.last_updated, mp.updated_status_flg, mp.needs_eval_flg, mp.chk_session_id, mp.userid, mp.add_date, mp.update_date, mp.submission_id, mp.submission_availability_cd, mp.pending_status_cd, mp.begin_rpt_period_id, mp.end_rpt_period_id, mp.last_evaluated_date, coalesce(sc.eval_status_cd, 'PASS')
+		mp.mon_plan_id, mp.fac_id, mp.config_type_cd, mp.last_updated, mp.updated_status_flg, mp.needs_eval_flg, mp.chk_session_id, mp.userid, mp.add_date, mp.update_date, mp.submission_id, mp.submission_availability_cd, mp.begin_rpt_period_id, mp.end_rpt_period_id, mp.last_evaluated_date, coalesce(sc.eval_status_cd, 'PASS')
 	FROM camdecmps.monitor_plan mp
 	LEFT JOIN camdecmpsaux.check_session cs on cs.chk_session_id = mp.chk_session_id
 	LEFT JOIN camdecmpsmd.severity_code sc on sc.severity_cd = cs.severity_cd

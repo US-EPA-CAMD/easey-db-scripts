@@ -41,7 +41,7 @@ BEGIN
 		wsi.MEASURED_VALUE,
 		wsi.SYSTEM_INTEGRITY_ERROR,
 		ts.ERROR_CODES
-	FROM camdecmps.vw_weekly_errors AS ts
+	FROM temp_weekly_test_errors AS ts
 	LEFT OUTER JOIN	camdecmps.WEEKLY_TEST_SUMMARY wts 
 		ON wts.WEEKLY_TEST_SUM_ID = ts.WEEKLY_TEST_SUM_ID
 	LEFT OUTER JOIN camdecmps.WEEKLY_SYSTEM_INTEGRITY wsi 
