@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.check_session_completed(text, text)
 
-DROP FUNCTION IF EXISTS camdecmpswks.check_session_completed(text, text);
+DROP FUNCTION IF EXISTS camdecmpswks.check_session_completed(text, text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.check_session_completed(
 	v_chk_session_id text,

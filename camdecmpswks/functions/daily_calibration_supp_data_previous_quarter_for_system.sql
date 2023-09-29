@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.daily_calibration_supp_data_previous_quarter_for_system(character varying, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.daily_calibration_supp_data_previous_quarter_for_system(character varying, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.daily_calibration_supp_data_previous_quarter_for_system(character varying, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.daily_calibration_supp_data_previous_quarter_for_system(
 	monplanid character varying,

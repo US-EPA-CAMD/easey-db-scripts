@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.emissions_get_default_so2_rate(character varying, timestamp without time zone, integer)
 
-DROP FUNCTION IF EXISTS camdecmps.emissions_get_default_so2_rate(character varying, timestamp without time zone, integer);
+DROP FUNCTION IF EXISTS camdecmps.emissions_get_default_so2_rate(character varying, timestamp without time zone, integer) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.emissions_get_default_so2_rate(
 	p_mon_loc_id character varying,
@@ -33,7 +33,7 @@ $BODY$;
 
 -- FUNCTION: camdecmps.emissions_get_default_so2_rate(character varying, timestamp without time zone, numeric)
 
-DROP FUNCTION IF EXISTS camdecmps.emissions_get_default_so2_rate(character varying, timestamp without time zone, numeric);
+DROP FUNCTION IF EXISTS camdecmps.emissions_get_default_so2_rate(character varying, timestamp without time zone, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.emissions_get_default_so2_rate(
 	p_mon_loc_id character varying,

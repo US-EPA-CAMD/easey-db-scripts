@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.rpt_facility_information(numeric)
 
-DROP FUNCTION IF EXISTS camdecmps.rpt_facility_information(numeric);
+DROP FUNCTION IF EXISTS camdecmps.rpt_facility_information(numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_facility_information(
 	vfacilityid numeric)
@@ -26,7 +26,7 @@ $BODY$;
 
 -- FUNCTION: camdecmps.rpt_facility_information(numeric, text, numeric, numeric)
 
-DROP FUNCTION IF EXISTS camdecmps.rpt_facility_information(numeric, text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmps.rpt_facility_information(numeric, text, numeric, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_facility_information(
 	vfacilityid numeric,

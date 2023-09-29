@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.get_monitor_plan_reporting_freq(numeric, numeric)
 
-DROP FUNCTION IF EXISTS camdecmps.get_monitor_plan_reporting_freq(numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmps.get_monitor_plan_reporting_freq(numeric, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.get_monitor_plan_reporting_freq(
 	vcalendaryear numeric,

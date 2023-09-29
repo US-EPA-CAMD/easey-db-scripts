@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.get_operating_unit_retire_date(date, date)
 
-DROP FUNCTION IF EXISTS camdecmps.get_operating_unit_retire_date(date, date);
+DROP FUNCTION IF EXISTS camdecmps.get_operating_unit_retire_date(date, date) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.get_operating_unit_retire_date(
 	vbegindate date,

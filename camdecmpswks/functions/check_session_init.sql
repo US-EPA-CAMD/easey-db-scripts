@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.check_session_init(text, text, text, integer, text, text, text, date, date, text)
 
-DROP FUNCTION IF EXISTS camdecmpswks.check_session_init(text, text, text, integer, text, text, text, date, date, text);
+DROP FUNCTION IF EXISTS camdecmpswks.check_session_init(text, text, text, integer, text, text, text, date, date, text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.check_session_init(
 	v_process_cd text,
@@ -64,7 +64,7 @@ $BODY$;
 
 -- FUNCTION: camdecmpswks.check_session_init(text, text, text, integer, text, text, text, date, date, text, text)
 
-DROP FUNCTION IF EXISTS camdecmpswks.check_session_init(text, text, text, integer, text, text, text, date, date, text, text);
+DROP FUNCTION IF EXISTS camdecmpswks.check_session_init(text, text, text, integer, text, text, text, date, date, text, text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.check_session_init(
 	v_process_cd text,

@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.get_report_period_info(integer, integer, integer, character varying, character varying, date, date, character, text)
 
-DROP FUNCTION IF EXISTS camdecmpswks.get_report_period_info(integer, integer, integer, character varying, character varying, date, date, character, text);
+DROP FUNCTION IF EXISTS camdecmpswks.get_report_period_info(integer, integer, integer, character varying, character varying, date, date, character, text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.get_report_period_info(
 	p_rptperiodid_in integer,

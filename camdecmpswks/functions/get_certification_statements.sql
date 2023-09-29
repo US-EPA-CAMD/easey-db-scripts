@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.get_certification_statements(text[])
 
-DROP FUNCTION IF EXISTS camdecmpswks.get_certification_statements(text[]);
+DROP FUNCTION IF EXISTS camdecmpswks.get_certification_statements(text[]) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.get_certification_statements(
 	vmonplanids text[])

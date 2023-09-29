@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.rpt_qa_linearity_injection(text)
 
-DROP FUNCTION IF EXISTS camdecmps.rpt_qa_linearity_injection(text);
+DROP FUNCTION IF EXISTS camdecmps.rpt_qa_linearity_injection(text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_linearity_injection(
 	testsumid text)

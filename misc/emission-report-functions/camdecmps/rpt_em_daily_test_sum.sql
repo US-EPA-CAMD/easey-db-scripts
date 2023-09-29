@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.rpt_em_daily_test_sum(text, numeric, numeric)
 
-DROP FUNCTION IF EXISTS camdecmps.rpt_em_daily_test_sum(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmps.rpt_em_daily_test_sum(text, numeric, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_em_daily_test_sum(
 	monplanid text,

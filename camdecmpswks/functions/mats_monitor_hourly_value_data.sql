@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.mats_monitor_hourly_value_data(character varying, numeric, character varying)
 
-DROP FUNCTION IF EXISTS camdecmpswks.mats_monitor_hourly_value_data(character varying, numeric, character varying);
+DROP FUNCTION IF EXISTS camdecmpswks.mats_monitor_hourly_value_data(character varying, numeric, character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.mats_monitor_hourly_value_data(
 	monplanid character varying,

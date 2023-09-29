@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.location_program_parameter(character varying)
 
-DROP FUNCTION IF EXISTS camdecmpswks.location_program_parameter(character varying);
+DROP FUNCTION IF EXISTS camdecmpswks.location_program_parameter(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.location_program_parameter(
 	monplanid character varying)

@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.format_time(numeric, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.format_time(numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.format_time(numeric, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.format_time(
 	hour numeric,

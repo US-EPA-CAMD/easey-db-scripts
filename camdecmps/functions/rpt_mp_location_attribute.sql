@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.rpt_mp_location_attribute(character varying)
 
-DROP FUNCTION IF EXISTS camdecmps.rpt_mp_location_attribute(character varying);
+DROP FUNCTION IF EXISTS camdecmps.rpt_mp_location_attribute(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_mp_location_attribute(
 	monplanid character varying)

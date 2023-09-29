@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.get_last_em_submission(character varying, numeric, date, date)
 
-DROP FUNCTION IF EXISTS camdecmps.get_last_em_submission(character varying, numeric, date, date);
+DROP FUNCTION IF EXISTS camdecmps.get_last_em_submission(character varying, numeric, date, date) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.get_last_em_submission(
 	inmonplanid character varying,

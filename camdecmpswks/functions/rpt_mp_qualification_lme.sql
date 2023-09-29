@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_mp_qualification_lme(character varying)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_qualification_lme(character varying);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_qualification_lme(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_qualification_lme(
 	monplanid character varying)

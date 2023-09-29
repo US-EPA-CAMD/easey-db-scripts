@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.emissions_monitor_span_active(date, numeric, date, numeric, date, text)
 
-DROP FUNCTION IF EXISTS camdecmps.emissions_monitor_span_active(date, numeric, date, numeric, date, text);
+DROP FUNCTION IF EXISTS camdecmps.emissions_monitor_span_active(date, numeric, date, numeric, date, text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.emissions_monitor_span_active(
 	p_ms_begin_date date,
@@ -44,7 +44,7 @@ $BODY$;
 
 -- FUNCTION: camdecmps.emissions_monitor_span_active(timestamp without time zone, integer, timestamp without time zone, integer, timestamp without time zone, integer)
 
-DROP FUNCTION IF EXISTS camdecmps.emissions_monitor_span_active(timestamp without time zone, integer, timestamp without time zone, integer, timestamp without time zone, integer);
+DROP FUNCTION IF EXISTS camdecmps.emissions_monitor_span_active(timestamp without time zone, integer, timestamp without time zone, integer, timestamp without time zone, integer) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.emissions_monitor_span_active(
 	p_ms_begin_date timestamp without time zone,
@@ -88,7 +88,7 @@ $BODY$;
 
 -- FUNCTION: camdecmps.emissions_monitor_span_active(date, numeric, date, numeric, date, numeric)
 
-DROP FUNCTION IF EXISTS camdecmps.emissions_monitor_span_active(date, numeric, date, numeric, date, numeric);
+DROP FUNCTION IF EXISTS camdecmps.emissions_monitor_span_active(date, numeric, date, numeric, date, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.emissions_monitor_span_active(
 	vbegindate date,

@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_mp_evaluation_results(text)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_evaluation_results(text);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_evaluation_results(text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_evaluation_results(
 	monplanid text)

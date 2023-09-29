@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.get_locations_by_unit_and_stack(numeric, text[], text[])
 
-DROP FUNCTION IF EXISTS camdecmpswks.get_locations_by_unit_and_stack(numeric, text[], text[]);
+DROP FUNCTION IF EXISTS camdecmpswks.get_locations_by_unit_and_stack(numeric, text[], text[]) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.get_locations_by_unit_and_stack(
 	poriscode numeric,

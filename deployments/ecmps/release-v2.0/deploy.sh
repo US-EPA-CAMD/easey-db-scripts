@@ -3,10 +3,10 @@ source ../../environments.sh $1
 
 FILES=""
 TABLES=false
-VIEWS=false
+VIEWS=true
 FUNCTIONS=false
 PROCEDURES=false
-PRE_DATA_LOAD=true
+PRE_DATA_LOAD=false
 POST_DATA_LOAD=false
 POST_DEPLOYMENT=false
 CONSTRAINTS_INDEXES=false
@@ -204,6 +204,7 @@ if [ $POST_DEPLOYMENT == true ]; then
   FILES="
   DROP TABLE IF EXISTS camdaux.bulk_file_log;
   DROP TABLE IF EXISTS camdaux.dataset_template;
+  \i ./update-mp-qa-em-check-session-ids.sql
   CALL camdecmpswks.load_workspace();
   CALL camdecmps.refresh_emissions_views();
   "

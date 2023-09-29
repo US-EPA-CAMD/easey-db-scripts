@@ -9,4 +9,4 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.evaluation_set
     fac_id numeric(38,0) NOT NULL,
     fac_name character varying(200) COLLATE pg_catalog."default" NOT NULL,
     configuration character varying(100) COLLATE pg_catalog."default" NOT NULL
-)
+);

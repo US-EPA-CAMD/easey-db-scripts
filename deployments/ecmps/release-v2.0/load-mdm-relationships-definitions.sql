@@ -149,7 +149,7 @@ BEGIN
 	/***** COLUMNS *****/
 	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
 	VALUES
-		(datatableId, 1, 'unit_of_measure_code', 'systemFuelFlowUOMCode', 'System Fuel Flow UOM Code'),
+		(datatableId, 1, 'unit_of_measure_code', 'systemFuelFlowUnitsOfMeasureCode', 'System Fuel Flow Units of Measure Code'),
 		(datatableId, 2, 'max_rate_source_code', 'maximumFuelFlowRateSourceCode', 'Max Fuel Flow Rate Source Code');
 ----------------------------------------------------------------------------------------------------------------------------
 	datasetCode := 'test-summaries';

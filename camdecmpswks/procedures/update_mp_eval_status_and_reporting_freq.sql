@@ -1,11 +1,15 @@
 -- PROCEDURE: camdecmpswks.update_mp_eval_status_and_reporting_freq()
 
--- DROP PROCEDURE camdecmpswks.update_mp_eval_status_and_reporting_freq();
+DROP PROCEDURE IF EXISTS camdecmpswks.update_mp_eval_status_and_reporting_freq();
 
-CREATE OR REPLACE PROCEDURE camdecmpswks.update_mp_eval_status_and_reporting_freq(
-)
+CREATE OR REPLACE PROCEDURE camdecmpswks.update_mp_eval_status_and_reporting_freq()
 LANGUAGE 'plpgsql'
 AS $BODY$
+DECLARE
+	I record;
+	V_USERID text := 'SYSTEM';
+	V_RPT_PERIOD_ID numeric := 0;
+	V_CURRENT_DATETIME timestamp without time zone := CURRENT_TIMESTAMP;
 BEGIN
 /*
 	--UNIT: 91310
@@ -44,153 +48,110 @@ BEGIN
 	VALUES (3, 1, 1, 'INVENTORY', 'jwhitehead', current_timestamp);
 */
 -----------------------------------------------------------------------------------------------------------------------------
-
-	--DELETE INVALID OS MPRF RECORD
-	DELETE FROM camdecmpswks.monitor_plan_reporting_freq
-	WHERE mon_plan_rf_id IN (
-		SELECT mon_plan_rf_id FROM (
-			SELECT DISTINCT unit_id
-			FROM camdaux.inventory_status_log
-			WHERE data_type_cd = 'UNIT_PROGRAM'
-		) d
-		JOIN camdecmps.monitor_location ml USING(unit_id)
-		JOIN camdecmps.monitor_plan_location mpl USING(mon_loc_id)
-		JOIN camdecmps.monitor_plan_reporting_freq mprf USING(mon_plan_id)
-		JOIN camdecmps.monitor_plan mp USING(mon_plan_id)
-		JOIN camd.unit_program up USING(unit_id)
-		JOIN camdmd.program_code newPrg USING(prg_cd)
-		JOIN camdecmpsmd.reporting_period brp ON mprf.begin_rpt_period_id = brp.rpt_period_id
-		LEFT JOIN camdecmpsmd.reporting_period erp ON mprf.end_rpt_period_id = erp.rpt_period_id
-		WHERE newPrg.os_ind = 0
-		AND mprf.report_freq_cd = 'OS'
-		AND mp.end_rpt_period_id IS null
-		AND brp.begin_date > up.unit_monitor_cert_begin_date AND (
-			mprf.end_rpt_period_id IS null OR
-			erp.end_date > (
-				SELECT end_date FROM camdecmpsmd.reporting_period
-				WHERE up.unit_monitor_cert_begin_date BETWEEN begin_date AND end_date
-			)
+	--Update this unit's MP to have "Q" as the report freq...
+	FOR I IN (
+		SELECT
+			MPRF.MON_PLAN_ID,
+			MPRF.MON_PLAN_RF_ID,
+			(RPB.CALENDAR_YEAR::text || RPB.QUARTER::text)::numeric AS MPRF_BEGIN_YEAR_QTR,
+			UMCBD.YEAR_QTR AS UMCBD_YEAR_QTR
+		FROM camdecmps.MONITOR_PLAN_REPORTING_FREQ AS MPRF
+		JOIN (
+			SELECT DISTINCT
+				ISL.UNIT_ID,
+				MP.MON_PLAN_ID, (
+					SELECT (CALENDAR_YEAR::text || QUARTER::text)::numeric
+					FROM camdecmpsmd.REPORTING_PERIOD
+					WHERE UP.UNIT_MONITOR_CERT_BEGIN_DATE BETWEEN BEGIN_DATE AND END_DATE
+				) AS YEAR_QTR
+			FROM camdecmps.MONITOR_PLAN AS MP
+			JOIN camdecmps.MONITOR_PLAN_LOCATION AS MPL USING(MON_PLAN_ID)
+			JOIN camdecmps.MONITOR_LOCATION AS ML USING(MON_LOC_ID)
+			JOIN camdaux.INVENTORY_STATUS_LOG AS ISL USING(UNIT_ID)
+			JOIN camd.UNIT_PROGRAM AS UP USING(UNIT_ID)
+			JOIN camdmd.PROGRAM_CODE AS PC USING(PRG_CD)
+			WHERE ISL.DATA_TYPE_CD = 'UNIT_PROGRAM' AND PC.OS_IND <> 1
+			AND MP.END_RPT_PERIOD_ID IS NULL
+		) AS UMCBD ON MPRF.MON_PLAN_ID = UMCBD.MON_PLAN_ID
+		JOIN camdecmpsmd.REPORTING_PERIOD AS RPB
+			ON MPRF.BEGIN_RPT_PERIOD_ID = RPB.RPT_PERIOD_ID
+		LEFT JOIN camdecmpsmd.REPORTING_PERIOD AS RPE
+			ON MPRF.END_RPT_PERIOD_ID = RPE.RPT_PERIOD_ID
+		WHERE MPRF.REPORT_FREQ_CD = 'OS' AND (
+			(RPE.CALENDAR_YEAR::text || RPE.QUARTER::text)::numeric > UMCBD.YEAR_QTR OR
+			RPE.CALENDAR_YEAR IS NULL
 		)
-	);
+	) LOOP
+		IF (I.UMCBD_YEAR_QTR) < I.MPRF_BEGIN_YEAR_QTR THEN
+			--OS record exists entirely after the UMCBD; delete this record
+			DELETE FROM camdecmpswks.MONITOR_PLAN_REPORTING_FREQ
+			WHERE MON_PLAN_RF_ID = I.MON_PLAN_RF_ID;
+		ELSE
+			SELECT RPT_PERIOD_ID INTO V_RPT_PERIOD_ID
+			FROM camdecmpsmd.REPORTING_PERIOD
+			WHERE CALENDAR_YEAR = LEFT(I.UMCBD_YEAR_QTR::text, 4)::numeric - 1
+			AND QUARTER = 4;
 
-	--UPDATE MPRF RECORD TO END Q4 OF YEAR PRIOR TO UMCBD
-	UPDATE camdecmpswks.monitor_plan_reporting_freq
-	SET end_rpt_period_id = (
-			SELECT rpt_period_id FROM camdecmpsmd.reporting_period
-			WHERE calendar_year = left((up.unit_monitor_cert_begin_date::date - interval '1 year')::text, 4)::numeric
-			AND quarter = 4
-		),
-		userid = 'SYSTEM',
-		update_date = current_timestamp
-	WHERE mon_plan_rf_id IN (
-		SELECT mon_plan_rf_id FROM (
-			SELECT DISTINCT unit_id
-			FROM camdaux.inventory_status_log
-			WHERE data_type_cd = 'UNIT_PROGRAM'
-		) d
-		JOIN camdecmps.monitor_location ml USING(unit_id)
-		JOIN camdecmps.monitor_plan_location mpl USING(mon_loc_id)
-		JOIN camdecmps.monitor_plan_reporting_freq mprf USING(mon_plan_id)
-		JOIN camdecmps.monitor_plan mp USING(mon_plan_id)
-		JOIN camd.unit_program up USING(unit_id)
-		JOIN camdmd.program_code newPrg USING(prg_cd)
-		JOIN camdecmpsmd.reporting_period mprfBeginPrd ON mprf.begin_rpt_period_id = mprfBeginPrd.rpt_period_id
-		LEFT JOIN camdecmpsmd.reporting_period mprfEndPrd ON mprf.end_rpt_period_id = mprfEndPrd.rpt_period_id
-		WHERE newPrg.os_ind = 0
-		AND mprf.report_freq_cd = 'OS'
-		AND mp.end_rpt_period_id IS null
-		AND mprfBeginPrd.begin_date > up.unit_monitor_cert_begin_date AND (
-			mprf.end_rpt_period_id IS null OR
-			mprfEndPrd.end_date > (
-				SELECT end_date FROM camdecmpsmd.reporting_period
-				WHERE up.unit_monitor_cert_begin_date BETWEEN begin_date AND end_date
-			)
+			-- record overlaps the UMCBD; end this record
+			UPDATE camdecmpswks.MONITOR_PLAN_REPORTING_FREQ
+			SET END_RPT_PERIOD_ID = V_RPT_PERIOD_ID,
+				USERID = V_USERID,
+				UPDATE_DATE = V_CURRENT_DATETIME
+			WHERE MON_PLAN_RF_ID = I.MON_PLAN_RF_ID;
+		END IF;
+
+		--add a new Q record starting with the quarter of the UMCBD
+		SELECT RPT_PERIOD_ID INTO V_RPT_PERIOD_ID
+		FROM camdecmpsmd.REPORTING_PERIOD
+		WHERE CALENDAR_YEAR = LEFT(I.UMCBD_YEAR_QTR::text, 4)::numeric
+		AND QUARTER = RIGHT(I.UMCBD_YEAR_QTR::text, 1)::numeric;
+
+		INSERT INTO camdecmpswks.MONITOR_PLAN_REPORTING_FREQ(
+			MON_PLAN_RF_ID,
+			MON_PLAN_ID,
+			REPORT_FREQ_CD,
+			END_RPT_PERIOD_ID,
+			BEGIN_RPT_PERIOD_ID,
+			USERID,
+			ADD_DATE,
+			UPDATE_DATE
 		)
-	);
+		VALUES(
+			uuid_generate_v4(),
+			I.MON_PLAN_ID,
+			'Q',
+			NULL,
+			V_RPT_PERIOD_ID,
+			V_USERID,
+			V_CURRENT_DATETIME,
+			NULL
+		);
 
-	--ADD NEW MPRF Q RECORD
-	INSERT INTO camdecmpswks.monitor_plan_reporting_freq(
-		mon_plan_rf_id, mon_plan_id, report_freq_cd, end_rpt_period_id, begin_rpt_period_id, userid, add_date, update_date
-	)
-	SELECT
-		uuid_generate_v4(),
-		mp.mon_plan_id,
-		'Q',
-		null,
-		(SELECT rpt_period_id FROM camdecmpsmd.reporting_period WHERE up.unit_monitor_cert_begin_date BETWEEN begin_date AND end_date),
-		'SYSTEM',
-		current_timestamp,
-		current_timestamp
-	FROM (
-		SELECT DISTINCT unit_id
-		FROM camdaux.inventory_status_log
-		WHERE data_type_cd = 'UNIT_PROGRAM'
-	) d
-	JOIN camdecmps.monitor_location ml USING(unit_id)
-	JOIN camdecmps.monitor_plan_location mpl USING(mon_loc_id)
-	JOIN camdecmps.monitor_plan_reporting_freq mprf USING(mon_plan_id)
-	JOIN camdecmps.monitor_plan mp USING(mon_plan_id)
-	JOIN camd.unit_program up USING(unit_id)
-	JOIN camdmd.program_code newPrg USING(prg_cd)
-	JOIN camdecmpsmd.reporting_period mprfBeginPrd ON mprf.begin_rpt_period_id = mprfBeginPrd.rpt_period_id
-	LEFT JOIN camdecmpsmd.reporting_period mprfEndPrd ON mprf.end_rpt_period_id = mprfEndPrd.rpt_period_id
-	WHERE newPrg.os_ind = 0
-	AND mprf.report_freq_cd = 'OS'
-	AND mp.end_rpt_period_id IS null
-	AND mprfBeginPrd.begin_date > up.unit_monitor_cert_begin_date AND (
-		mprf.end_rpt_period_id IS null OR
-		mprfEndPrd.end_date > (
-			SELECT end_date FROM camdecmpsmd.reporting_period
-			WHERE up.unit_monitor_cert_begin_date BETWEEN begin_date AND end_date
-		)
-	);
+		UPDATE camdecmpswks.MONITOR_PLAN
+		SET needs_eval_flg = 'Y',
+			eval_status_cd = 'EVAL',
+			submission_availability_cd = 'GRANTED',
+			userid = V_USERID,
+			update_date = V_CURRENT_DATETIME
+		WHERE MON_PLAN_ID = I.MON_PLAN_ID;
+	END LOOP;
 
-	UPDATE camdecmpswks.monitor_plan
+	UPDATE camdecmpswks.MONITOR_PLAN
 	SET needs_eval_flg = 'Y',
 		eval_status_cd = 'EVAL',
-		userid = 'SYSTEM',
-		update_date = current_timestamp
+		submission_availability_cd = 'GRANTED',
+		userid = V_USERID,
+		update_date = V_CURRENT_DATETIME
 	WHERE mon_plan_id IN (
 		SELECT mon_plan_id FROM (
 			SELECT DISTINCT unit_id
 			FROM camdaux.inventory_status_log
 			WHERE data_type_cd IN ('INVENTORY')
-		) d
-		JOIN camdecmps.monitor_location ml USING(unit_id)
-		JOIN camdecmps.monitor_plan_location mpl USING(mon_loc_id)
-		JOIN camdecmps.monitor_plan mp USING(mon_plan_id)
+		) AS d
+		JOIN camdecmps.monitor_location AS ml USING(unit_id)
+		JOIN camdecmps.monitor_plan_location AS mpl USING(mon_loc_id)
+		JOIN camdecmps.monitor_plan AS mp USING(mon_plan_id)
 		WHERE mp.end_rpt_period_id IS null
 	);
-
-	UPDATE camdecmpswks.monitor_plan
-	SET needs_eval_flg = 'Y',
-		eval_status_cd = 'EVAL',
-		userid = 'SYSTEM',
-		update_date = current_timestamp
-	WHERE mon_plan_id IN (
-		SELECT mon_plan_id FROM (
-			SELECT DISTINCT unit_id
-			FROM camdaux.inventory_status_log
-			WHERE data_type_cd = 'UNIT_PROGRAM'
-		) d
-		JOIN camdecmps.monitor_location ml USING(unit_id)
-		JOIN camdecmps.monitor_plan_location mpl USING(mon_loc_id)
-		JOIN camdecmps.monitor_plan_reporting_freq mprf USING(mon_plan_id)
-		JOIN camdecmps.monitor_plan mp USING(mon_plan_id)
-		JOIN camd.unit_program up USING(unit_id)
-		JOIN camdmd.program_code newPrg USING(prg_cd)
-		JOIN camdecmpsmd.reporting_period mprfBeginPrd ON mprf.begin_rpt_period_id = mprfBeginPrd.rpt_period_id
-		LEFT JOIN camdecmpsmd.reporting_period mprfEndPrd ON mprf.end_rpt_period_id = mprfEndPrd.rpt_period_id
-		WHERE newPrg.os_ind = 0
-		AND mprf.report_freq_cd = 'OS'
-		AND mp.end_rpt_period_id IS null
-		AND (
-			mprf.end_rpt_period_id IS null OR
-			mprfEndPrd.end_date > (
-				SELECT end_date FROM camdecmpsmd.reporting_period
-				WHERE up.unit_monitor_cert_begin_date BETWEEN begin_date AND end_date
-			)
-		)
-	);
-END;
+END
 $BODY$;

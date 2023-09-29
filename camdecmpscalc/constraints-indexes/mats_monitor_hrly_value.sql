@@ -10,4 +10,4 @@ CREATE INDEX IF NOT EXISTS idx_mats_monitor_hrly_value_chk_session_id
 
 CREATE INDEX IF NOT EXISTS idx_mats_monitor_hrly_value_mats_mhv_id
     ON camdecmpscalc.mats_monitor_hrly_value USING btree
-    (mats_dhv_id COLLATE pg_catalog."default" ASC NULLS LAST);
+    (mats_mhv_id COLLATE pg_catalog."default" ASC NULLS LAST);

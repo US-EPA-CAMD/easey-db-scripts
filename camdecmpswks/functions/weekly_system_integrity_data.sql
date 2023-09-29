@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.weekly_system_integrity_data(character varying, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.weekly_system_integrity_data(character varying, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.weekly_system_integrity_data(character varying, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.weekly_system_integrity_data(
 	monplanid character varying,

@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.get_initial_values(character varying, date)
 
-DROP FUNCTION IF EXISTS camdecmpswks.get_initial_values(character varying, date);
+DROP FUNCTION IF EXISTS camdecmpswks.get_initial_values(character varying, date) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.get_initial_values(
 	monplanid character varying,

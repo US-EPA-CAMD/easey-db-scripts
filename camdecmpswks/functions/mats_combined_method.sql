@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.mats_combined_method(character varying)
 
-DROP FUNCTION IF EXISTS camdecmpswks.mats_combined_method(character varying);
+DROP FUNCTION IF EXISTS camdecmpswks.mats_combined_method(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.mats_combined_method(
 	monplanid character varying)

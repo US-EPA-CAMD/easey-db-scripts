@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.mats_sorbent_trap_record(character varying, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.mats_sorbent_trap_record(character varying, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.mats_sorbent_trap_record(character varying, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.mats_sorbent_trap_record(
 	monplanid character varying,

@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.mats_hourly_gas_flow_meter_record(character varying, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.mats_hourly_gas_flow_meter_record(character varying, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.mats_hourly_gas_flow_meter_record(character varying, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.mats_hourly_gas_flow_meter_record(
 	monplanid character varying,

@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_em_hourly_parameter_fuel_flow(text, numeric, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_hourly_parameter_fuel_flow(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_hourly_parameter_fuel_flow(text, numeric, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_hourly_parameter_fuel_flow(
 	monplanid text,

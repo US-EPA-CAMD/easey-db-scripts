@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.format_date_hour(date, numeric, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.format_date_hour(date, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.format_date_hour(date, numeric, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.format_date_hour(
 	_datelabel date,

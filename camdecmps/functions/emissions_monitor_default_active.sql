@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.emissions_monitor_default_active(timestamp without time zone, numeric, timestamp without time zone, numeric, timestamp without time zone, numeric)
 
-DROP FUNCTION IF EXISTS camdecmps.emissions_monitor_default_active(timestamp without time zone, numeric, timestamp without time zone, numeric, timestamp without time zone, numeric);
+DROP FUNCTION IF EXISTS camdecmps.emissions_monitor_default_active(timestamp without time zone, numeric, timestamp without time zone, numeric, timestamp without time zone, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.emissions_monitor_default_active(
 	p_md_begin_date timestamp without time zone,

@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpsaux.get_mp_location_list(character varying)
 
-DROP FUNCTION IF EXISTS camdecmpsaux.get_mp_location_list(character varying);
+DROP FUNCTION IF EXISTS camdecmpsaux.get_mp_location_list(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpsaux.get_mp_location_list(
 	inmonplandid character varying)

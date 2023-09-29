@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.get_config_by_loc_id(character varying)
 
-DROP FUNCTION IF EXISTS camdecmps.get_config_by_loc_id(character varying);
+DROP FUNCTION IF EXISTS camdecmps.get_config_by_loc_id(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.get_config_by_loc_id(
 	locationid character varying)

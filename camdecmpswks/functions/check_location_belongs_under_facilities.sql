@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.check_location_belongs_under_facilities(text, integer[])
 
-DROP FUNCTION IF EXISTS camdecmpswks.check_location_belongs_under_facilities(text, integer[]);
+DROP FUNCTION IF EXISTS camdecmpswks.check_location_belongs_under_facilities(text, integer[]) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.check_location_belongs_under_facilities(
 	loc text,

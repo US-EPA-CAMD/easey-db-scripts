@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpsaux.get_em_submission_status(character varying, numeric, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpsaux.get_em_submission_status(character varying, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpsaux.get_em_submission_status(character varying, numeric, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpsaux.get_em_submission_status(
 	inmonplanid character varying,

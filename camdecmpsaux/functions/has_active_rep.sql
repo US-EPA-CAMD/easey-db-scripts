@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpsaux.has_active_rep(numeric)
 
-DROP FUNCTION IF EXISTS camdecmpsaux.has_active_rep(numeric);
+DROP FUNCTION IF EXISTS camdecmpsaux.has_active_rep(numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpsaux.has_active_rep(
 	inupid numeric)

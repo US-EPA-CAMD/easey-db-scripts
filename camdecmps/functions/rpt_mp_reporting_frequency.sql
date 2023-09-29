@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.rpt_mp_reporting_frequency(character varying)
 
-DROP FUNCTION IF EXISTS camdecmps.rpt_mp_reporting_frequency(character varying);
+DROP FUNCTION IF EXISTS camdecmps.rpt_mp_reporting_frequency(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_mp_reporting_frequency(
 	monplanid character varying)

@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_em_hourly_gas_flow_meter(text, numeric, numeric)
 
--- DROP FUNCTION camdecmpswks.rpt_em_hourly_gas_flow_meter(text, numeric, numeric);
+-- DROP FUNCTION camdecmpswks.rpt_em_hourly_gas_flow_meter(text, numeric, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_hourly_gas_flow_meter(
 	monplanid text,

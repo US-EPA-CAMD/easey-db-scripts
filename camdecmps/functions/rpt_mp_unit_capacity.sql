@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.rpt_mp_unit_capacity(character varying)
 
-DROP FUNCTION IF EXISTS camdecmps.rpt_mp_unit_capacity(character varying);
+DROP FUNCTION IF EXISTS camdecmps.rpt_mp_unit_capacity(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_mp_unit_capacity(
 	monplanid character varying)

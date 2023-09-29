@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_mp_system_component(character varying)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_system_component(character varying);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_system_component(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_system_component(
 	monplanid character varying)

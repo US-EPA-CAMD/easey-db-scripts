@@ -1,8 +1,8 @@
 ALTER TABLE IF EXISTS camdecmpscalc.qa_supp_data
-    ADD CONSTRAINT pk_qa_supp_data PRIMARY KEY (qa_supp_data_id),
+    ADD CONSTRAINT pk_qa_supp_data PRIMARY KEY (pk),
   	ADD CONSTRAINT fk_qa_supp_data_check_session FOREIGN KEY (chk_session_id)
         REFERENCES camdecmpswks.check_session (chk_session_id) MATCH SIMPLE
-        ON DELETE CASCADE
+        ON DELETE CASCADE,
     ADD CONSTRAINT fk_qa_supp_data_component FOREIGN KEY (component_id)
         REFERENCES camdecmpswks.component (component_id) MATCH SIMPLE
         ON DELETE CASCADE,

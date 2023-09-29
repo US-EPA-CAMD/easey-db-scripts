@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.rpt_mp_span(character varying)
 
-DROP FUNCTION IF EXISTS camdecmps.rpt_mp_span(character varying);
+DROP FUNCTION IF EXISTS camdecmps.rpt_mp_span(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_mp_span(
 	monplanid character varying)

@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.format_date_time(date, numeric, numeric)
 
-DROP FUNCTION IF EXISTS camdecmps.format_date_time(date, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmps.format_date_time(date, numeric, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.format_date_time(
 	_datelabel date,

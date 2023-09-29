@@ -1,5 +1,5 @@
 -- FUNCTION: camdecmpswks.error_suppression_spec_gather()
--- DROP FUNCTION IF EXISTS camdecmpswks.error_suppression_spec_gather();
+-- DROP FUNCTION IF EXISTS camdecmpswks.error_suppression_spec_gather() CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.error_suppression_spec_gather(
 	)

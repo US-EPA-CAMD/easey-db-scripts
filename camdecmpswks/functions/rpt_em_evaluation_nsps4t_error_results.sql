@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_em_evaluation_nsps4t_error_results(text, numeric, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_evaluation_nsps4t_error_results(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_evaluation_nsps4t_error_results(text, numeric, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_evaluation_nsps4t_error_results(
 	vmonplanid text,

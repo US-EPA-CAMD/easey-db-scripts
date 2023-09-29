@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.noxr_summary_required_for_lme_annual(character varying, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.noxr_summary_required_for_lme_annual(character varying, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.noxr_summary_required_for_lme_annual(character varying, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.noxr_summary_required_for_lme_annual(
 	monplanid character varying,

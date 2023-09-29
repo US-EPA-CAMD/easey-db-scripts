@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.rpt_qa_test_summary(text)
 
-DROP FUNCTION IF EXISTS camdecmps.rpt_qa_test_summary(text);
+DROP FUNCTION IF EXISTS camdecmps.rpt_qa_test_summary(text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_test_summary(
 	testsumid text)

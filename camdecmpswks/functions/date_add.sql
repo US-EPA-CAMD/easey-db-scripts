@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.date_add(text, integer, timestamp without time zone)
 
-DROP FUNCTION IF EXISTS camdecmpswks.date_add(text, integer, timestamp without time zone);
+DROP FUNCTION IF EXISTS camdecmpswks.date_add(text, integer, timestamp without time zone) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.date_add(
 	_interval text,
@@ -35,7 +35,7 @@ $BODY$;
 
 -- FUNCTION: camdecmpswks.date_add(text, numeric, timestamp without time zone)
 
-DROP FUNCTION IF EXISTS camdecmpswks.date_add(text, numeric, timestamp without time zone);
+DROP FUNCTION IF EXISTS camdecmpswks.date_add(text, numeric, timestamp without time zone) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.date_add(
 	_interval text,

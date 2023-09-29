@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_mp_system_fuel_flow(character varying)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_system_fuel_flow(character varying);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_system_fuel_flow(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_system_fuel_flow(
 	monplanid character varying)

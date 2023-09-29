@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.format_indicator(numeric, boolean)
 
-DROP FUNCTION IF EXISTS camdecmpswks.format_indicator(numeric, boolean);
+DROP FUNCTION IF EXISTS camdecmpswks.format_indicator(numeric, boolean) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.format_indicator(
 	value numeric,
@@ -24,7 +24,7 @@ $BODY$;
 
 -- FUNCTION: camdecmpswks.format_indicator(numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.format_indicator(numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.format_indicator(numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.format_indicator(
 	value numeric)

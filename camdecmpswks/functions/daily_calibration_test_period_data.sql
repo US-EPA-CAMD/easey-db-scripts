@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.daily_calibration_test_period_data(character varying, date, date)
 
-DROP FUNCTION IF EXISTS camdecmpswks.daily_calibration_test_period_data(character varying, date, date);
+DROP FUNCTION IF EXISTS camdecmpswks.daily_calibration_test_period_data(character varying, date, date) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.daily_calibration_test_period_data(
 	monplanid character varying,

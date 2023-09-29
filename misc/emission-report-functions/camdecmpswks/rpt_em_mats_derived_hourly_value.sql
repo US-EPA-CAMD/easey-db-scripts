@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_em_mats_derived_hourly_value(text, numeric, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_mats_derived_hourly_value(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_mats_derived_hourly_value(text, numeric, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_mats_derived_hourly_value(
 	monplanid text,

@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpsaux.get_last_submission_in_window(character varying, numeric, date, date)
 
-DROP FUNCTION IF EXISTS camdecmpsaux.get_last_submission_in_window(character varying, numeric, date, date);
+DROP FUNCTION IF EXISTS camdecmpsaux.get_last_submission_in_window(character varying, numeric, date, date) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpsaux.get_last_submission_in_window(
 	v_mon_plan_id character varying,

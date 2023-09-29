@@ -1,4 +1,4 @@
-CREATE TABLE camdecmpswks.emission_view_noxratecems
+CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_noxratecems
 (
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

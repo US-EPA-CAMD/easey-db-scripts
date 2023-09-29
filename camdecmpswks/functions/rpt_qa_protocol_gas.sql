@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_qa_protocol_gas(text)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_protocol_gas(text);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_protocol_gas(text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_protocol_gas(
 	testsumid text)

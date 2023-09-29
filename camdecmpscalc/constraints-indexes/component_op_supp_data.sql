@@ -18,10 +18,6 @@ CREATE INDEX IF NOT EXISTS idx_component_op_supp_data_chk_session_id
     ON camdecmpscalc.component_op_supp_data USING btree
     (chk_session_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
-CREATE INDEX IF NOT EXISTS idx_component_op_supp_data_cal_inj_id
-    ON camdecmpscalc.component_op_supp_data USING btree
-    (cal_inj_id COLLATE pg_catalog."default" ASC NULLS LAST);
-
 CREATE INDEX IF NOT EXISTS idx_component_op_supp_data_component_id
     ON camdecmpscalc.component_op_supp_data USING btree
     (component_id COLLATE pg_catalog."default" ASC NULLS LAST);

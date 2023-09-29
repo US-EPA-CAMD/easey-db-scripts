@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.rpt_qa_linearity_statistics(text)
 
-DROP FUNCTION IF EXISTS camdecmps.rpt_qa_linearity_statistics(text);
+DROP FUNCTION IF EXISTS camdecmps.rpt_qa_linearity_statistics(text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_linearity_statistics(
 	testsumid text)

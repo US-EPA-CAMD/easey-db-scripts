@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.linearity_injection_by_component(text)
 
-DROP FUNCTION IF EXISTS camdecmpswks.linearity_injection_by_component(text);
+DROP FUNCTION IF EXISTS camdecmpswks.linearity_injection_by_component(text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.linearity_injection_by_component(
 	v_test_sum_id text)

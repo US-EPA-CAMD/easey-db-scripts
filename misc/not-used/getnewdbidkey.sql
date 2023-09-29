@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.getnewdbidkey(uuid)
 
--- DROP FUNCTION camdecmpswks.getnewdbidkey(uuid);
+-- DROP FUNCTION camdecmpswks.getnewdbidkey(uuid) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.getnewdbidkey(
 	p_guid uuid)

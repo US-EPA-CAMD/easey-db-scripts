@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_em_weekly_system_integrity(text, numeric, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_weekly_system_integrity(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_weekly_system_integrity(text, numeric, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_weekly_system_integrity(
 	monplanid text,
