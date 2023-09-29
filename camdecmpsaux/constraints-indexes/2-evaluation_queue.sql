@@ -5,8 +5,8 @@ ALTER TABLE IF EXISTS camdecmpsaux.evaluation_queue
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_evaluation_queue_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
-    ADD CONSTRAINT fk_evaluation_queue_severity_code FOREIGN KEY (severity_cd)
-        REFERENCES camdecmpsmd.severity_code (severity_cd) MATCH SIMPLE;
+    ADD CONSTRAINT fk_evaluation_queue_eval_status_code FOREIGN KEY (eval_status_cd)
+        REFERENCES camdecmpsmd.eval_status_code (eval_status_cd) MATCH SIMPLE;
 
 CREATE INDEX IF NOT EXISTS idx_evaluation_queue_evaluation_set_id
     ON camdecmpsaux.evaluation_queue USING btree
@@ -32,9 +32,9 @@ CREATE INDEX IF NOT EXISTS idx_evaluation_queue_rpt_period_id
     ON camdecmpsaux.evaluation_queue USING btree
     (rpt_period_id ASC NULLS LAST);
 
-CREATE INDEX IF NOT EXISTS idx_evaluation_queue_severity_cd
+CREATE INDEX IF NOT EXISTS idx_evaluation_queue_eval_status_cd
     ON camdecmpsaux.evaluation_queue USING btree
-    (severity_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+    (eval_status_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
 CREATE INDEX IF NOT EXISTS idx_evaluation_queue_status_cd
     ON camdecmpsaux.evaluation_queue USING btree

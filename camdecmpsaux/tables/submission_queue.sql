@@ -12,4 +12,4 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.submission_queue
     submitted_on timestamp without time zone NOT NULL,
     status_cd character varying(8) COLLATE pg_catalog."default" NOT NULL,
     details text COLLATE pg_catalog."default"
-)
+);

@@ -1,6 +1,6 @@
 -- FUNCTION: camdaux.get_current_submission_quarter()
 
-DROP FUNCTION IF EXISTS camdaux.get_current_submission_quarter();
+DROP FUNCTION IF EXISTS camdaux.get_current_submission_quarter() CASCADE;
 
 CREATE OR REPLACE FUNCTION camdaux.get_current_submission_quarter(
 	)

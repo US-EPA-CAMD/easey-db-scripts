@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.reporting_frequency_by_location_quarter(character varying)
 
-DROP FUNCTION IF EXISTS camdecmpswks.reporting_frequency_by_location_quarter(character varying);
+DROP FUNCTION IF EXISTS camdecmpswks.reporting_frequency_by_location_quarter(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.reporting_frequency_by_location_quarter(
 	monplanid character varying)

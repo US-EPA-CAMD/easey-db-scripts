@@ -1,6 +1,6 @@
 -- FUNCTION: camdaux.can_generate_compliance(integer, character varying)
 
-DROP FUNCTION IF EXISTS camdaux.can_generate_compliance(integer, character varying);
+DROP FUNCTION IF EXISTS camdaux.can_generate_compliance(integer, character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdaux.can_generate_compliance(
 	pyear integer,

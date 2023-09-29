@@ -1,5 +1,3 @@
-SELECT '4-mats_monitor_hrly_value.sql';
-
 ALTER TABLE IF EXISTS camdecmps.mats_monitor_hrly_value
     ADD CONSTRAINT pk_mats_monitor_hrly_value PRIMARY KEY (mats_mhv_id),
     ADD CONSTRAINT fk_mats_monitor_hrly_value_component FOREIGN KEY (component_id)

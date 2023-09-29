@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.check_date_hour(date, numeric, integer)
 
-DROP FUNCTION IF EXISTS camdecmpswks.check_date_hour(date, numeric, integer);
+DROP FUNCTION IF EXISTS camdecmpswks.check_date_hour(date, numeric, integer) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.check_date_hour(
 	indate date,

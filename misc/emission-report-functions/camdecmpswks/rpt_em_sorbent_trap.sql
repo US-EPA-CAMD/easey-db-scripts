@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_em_sorbent_trap(text, numeric, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_sorbent_trap(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_sorbent_trap(text, numeric, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_sorbent_trap(
 	monplanid text,

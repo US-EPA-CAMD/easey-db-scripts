@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.linearity_summary(text)
 
-DROP FUNCTION IF EXISTS camdecmpswks.linearity_summary(text);
+DROP FUNCTION IF EXISTS camdecmpswks.linearity_summary(text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.linearity_summary(
 	v_test_sum_id text)

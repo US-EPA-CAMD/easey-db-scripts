@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.on_off_calibration_test_all_data(character varying)
 
-DROP FUNCTION IF EXISTS camdecmpswks.on_off_calibration_test_all_data(character varying);
+DROP FUNCTION IF EXISTS camdecmpswks.on_off_calibration_test_all_data(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.on_off_calibration_test_all_data(
 	monplanid character varying)

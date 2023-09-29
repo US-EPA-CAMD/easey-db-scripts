@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.monitor_qualification_lee_parameter(character varying)
 
-DROP FUNCTION IF EXISTS camdecmpswks.monitor_qualification_lee_parameter(character varying);
+DROP FUNCTION IF EXISTS camdecmpswks.monitor_qualification_lee_parameter(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.monitor_qualification_lee_parameter(
 	monplanid character varying)

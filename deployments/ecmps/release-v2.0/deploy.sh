@@ -6,7 +6,7 @@ TABLES=false
 VIEWS=false
 FUNCTIONS=false
 PROCEDURES=false
-PRE_DATA_LOAD=true
+PRE_DATA_LOAD=false
 POST_DATA_LOAD=false
 POST_DEPLOYMENT=false
 CONSTRAINTS_INDEXES=false
@@ -52,7 +52,6 @@ function createOrReplaceViews() {
   getFiles "../../../camdecmpsmd/views"
   getFiles "../../../camdaux/views"
   getFiles "../../../camdecmps/views"
-  getFiles "../../../camdecmpsaux/views"
   getFiles "../../../camdecmpswks/views"
 }
 
@@ -92,9 +91,9 @@ fi
 
 if [ $PRE_DATA_LOAD == true ]; then
   FILES="$FILES
-  DROP TABLE IF EXISTS camdaux.missing_oris;
-  DROP TABLE IF EXISTS camdaux.sftp_failures;
-  DROP TABLE IF EXISTS camdaux.sftp_log;
+  TRUNCATE TABLE camdecmps.dm_emissions;
+  TRUNCATE TABLE camdecmps.emission_evaluation;
+  TRUNCATE TABLE camdecmpsaux.em_submission_access;  
   \i ./drop-customizations.sql
   \i ./update-userid-length.sql
   "
@@ -130,6 +129,10 @@ if [ $POST_DATA_LOAD == true ]; then
   TRUNCATE camdecmpsmd.CHECK_CATALOG_PROCESS;
   TRUNCATE camdecmpsmd.CHECK_PARAMETER_CODE;
   TRUNCATE camdecmpsmd.RESPONSE_CATALOG;
+  TRUNCATE camdecmpsaux.DATASET;
+  TRUNCATE camdecmpsaux.DATATABLE;
+  TRUNCATE camdecmpsaux.DATACOLUMN;
+  TRUNCATE camdecmpsaux.DATAPARAMETER;
   \copy camdecmpsmd.check_catalog_parameter from './check-tables/data/check_catalog_parameter.csv' with delimiter '|' CSV HEADER QUOTE '\"' ESCAPE '\"';
   \copy camdecmpsmd.check_catalog_plugin from './check-tables/data/check_catalog_plugin.csv' with delimiter '|' CSV HEADER QUOTE '\"' ESCAPE '\"';
   \copy camdecmpsmd.check_parameter_code from './check-tables/data/check_parameter_code.csv' with delimiter '|' CSV HEADER QUOTE '\"' ESCAPE '\"';
@@ -201,9 +204,15 @@ if [ $CONSTRAINTS_INDEXES == true ]; then
 fi
 
 if [ $POST_DEPLOYMENT == true ]; then
+  getFiles "../../../camdecmpsaux/views"
+
   FILES="
   DROP TABLE IF EXISTS camdaux.bulk_file_log;
   DROP TABLE IF EXISTS camdaux.dataset_template;
+  DROP TABLE IF EXISTS camdaux.missing_oris;
+  DROP TABLE IF EXISTS camdaux.sftp_failures;
+  DROP TABLE IF EXISTS camdaux.sftp_log;  
+  \i ./update-mp-qa-em-check-session-ids.sql
   CALL camdecmpswks.load_workspace();
   CALL camdecmps.refresh_emissions_views();
   "

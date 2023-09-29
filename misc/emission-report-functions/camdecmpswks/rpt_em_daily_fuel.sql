@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_em_daily_fuel(text, numeric, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_daily_fuel(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_daily_fuel(text, numeric, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_daily_fuel(
 	monplanid text,

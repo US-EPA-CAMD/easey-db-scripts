@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_em_emission_view_all(text, numeric, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_emission_view_all(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_emission_view_all(text, numeric, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_emission_view_all(
 	monplanid text,
@@ -43,35 +43,35 @@ BEGIN
 
         eva.hi_formula_cd as "hiFormulaCode",
         'Hi Formula Codes' as "hiFormulaCodeGroup",
-        ec.equation_cd_description as "hiFormulaCodeDescription", 
+        echi.equation_cd_description as "hiFormulaCodeDescription", 
 
         eva.rpt_hi_rate as "rptHiRate",
         eva.calc_hi_rate as "calcHiRate",
 
         eva.so2_formula_cd as "so2FormulaCode",
         'So2 Formula Codes' as "so2FormulaCodeGroup",
-        ec.equation_cd_description as "so2FormulaCodeDescription",
+        ecso2.equation_cd_description as "so2FormulaCodeDescription",
 
         eva.rpt_so2_mass_rate as "rptSo2MassRate",
         eva.calc_so2_mass_rate as "calcSo2MassRate",
 
         eva.nox_rate_formula_cd as "noxRateFormulaCode",
         'Nox Rate Formula Codes' as "noxRateFormulaCodeGroup",
-        ec.equation_cd_description as "noxRateFormulaCodeDescription",  
+        ecnr.equation_cd_description as "noxRateFormulaCodeDescription",  
 
         eva.rpt_adj_nox_rate as "rptAdjNoxRate",
         eva.calc_adj_nox_rate as "calcAdjNoxRate",
 
         eva.nox_mass_formula_cd as "noxMassFormulaCode",
         'Nox Mass Formula Codes' as "noxMassFormulaCodeGroup",
-        ec.equation_cd_description as "noxMassFormulaCodeDescription",
+        ecnm.equation_cd_description as "noxMassFormulaCodeDescription",
 
         eva.rpt_nox_mass as "rptNoxMass",
         eva.calc_nox_mass as "calcNoxMass",
 
         eva.co2_formula_cd as "co2FormulaCode",
         'Co2 Formula Codes' as "co2FormulaCodeGroup",
-        ec.equation_cd_description as "co2FormulaCodeDescription",
+        ecco2.equation_cd_description as "co2FormulaCodeDescription",
 
         eva.rpt_co2_mass_rate as "rptCo2MassRate",
         eva.calc_co2_mass_rate as "calcCo2MassRate",
@@ -82,8 +82,12 @@ BEGIN
 		
     FROM camdecmpswks.emission_view_all eva
     left join camdecmpsmd.units_of_measure_code uomc on uomc.uom_cd = eva.load_uom
-    left join camdecmpsmd.equation_code ec 
-    on ec.equation_cd = eva.hi_formula_cd 
+    left join camdecmpsmd.equation_code echi on echi.equation_cd = eva.hi_formula_cd 
+    left join camdecmpsmd.equation_code ecso2 on ecso2.equation_cd = eva.so2_formula_cd 
+    left join camdecmpsmd.equation_code ecnr on ecnr.equation_cd = eva.nox_rate_formula_cd 
+    left join camdecmpsmd.equation_code ecnm on ecnm.equation_cd = eva.nox_mass_formula_cd 
+    left join camdecmpsmd.equation_code ecco2 on ecco2.equation_cd = eva.co2_formula_cd 
+
     WHERE eva.mon_loc_id = ANY (monLocIds) and eva.rpt_period_id = rptperiodid; 
 END;
 $BODY$;

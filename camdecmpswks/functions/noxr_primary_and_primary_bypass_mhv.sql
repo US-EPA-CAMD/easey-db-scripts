@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.noxr_primary_and_primary_bypass_mhv(character varying, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.noxr_primary_and_primary_bypass_mhv(character varying, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.noxr_primary_and_primary_bypass_mhv(character varying, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.noxr_primary_and_primary_bypass_mhv(
 	monplanid character varying,

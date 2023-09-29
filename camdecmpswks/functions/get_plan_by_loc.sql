@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.get_plan_by_loc(text)
 
-DROP FUNCTION IF EXISTS camdecmpswks.get_plan_by_loc(text);
+DROP FUNCTION IF EXISTS camdecmpswks.get_plan_by_loc(text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.get_plan_by_loc(
 	locid text)

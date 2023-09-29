@@ -143,13 +143,13 @@ BEGIN
 			WHEN hr.HOUR_ID IS NULL THEN NULL
 			ELSE ts.ERROR_CODES
 		END AS ERROR_CODES
-	FROM camdecmps.vw_hourly_errors AS ts
+	FROM temp_hourly_test_errors AS ts
 	INNER JOIN camdecmps.SORBENT_TRAP trp 
 		ON ts.MON_LOC_ID=trp.MON_LOC_ID AND trp.RPT_PERIOD_ID=ts.RPT_PERIOD_ID 
 		AND trp.BEGIN_DATE=ts.BEGIN_DATE AND trp.BEGIN_HOUR=ts.BEGIN_HOUR
 	INNER JOIN camdecmps.MONITOR_SYSTEM s 
 		ON trp.MON_SYS_ID=s.MON_SYS_ID
-	LEFT OUTER JOIN camdecmps.vw_hour_rules hr 
+	LEFT OUTER JOIN temp_hour_rules hr
 		ON hr.HOUR_ID = ts.HOUR_ID
 	LEFT OUTER JOIN (
 		SELECT DISTINCT 

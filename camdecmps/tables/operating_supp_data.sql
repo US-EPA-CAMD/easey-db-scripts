@@ -1,4 +1,4 @@
-CREATE TABLE camdecmps.operating_supp_data
+CREATE TABLE IF NOT EXISTS camdecmps.operating_supp_data
 (
     op_supp_data_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,

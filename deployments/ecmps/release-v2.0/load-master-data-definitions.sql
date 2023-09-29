@@ -467,7 +467,7 @@ BEGIN
 	/***** COLUMNS *****/
 	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
 	VALUES
-		(datatableId, 1, 'max_rate_source_cd', 'mMaxRateSourceCode', 'Max Rate Source Code'),
+		(datatableId, 1, 'max_rate_source_cd', 'maxRateSourceCode', 'Max Rate Source Code'),
 		(datatableId, 2, 'max_rate_source_cd_description', 'maxRateSourceDescription', 'Max Rate Source Description');
 ----------------------------------------------------------------------------------------------------------------------------
 	datasetCode := 'method-codes';
@@ -527,10 +527,10 @@ BEGIN
 	/***** COLUMNS *****/
 	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
 	VALUES
-		(datatableId, 1, 'emission_standard_cd', 'emissionStandardCode', 'Electrical Load Code'),
-		(datatableId, 2, 'emission_standard_description', 'emissionStandardDescription', 'Electrical Load Description'),
-		(datatableId, 3, 'emission_standard_uom_cd', 'emissionStandardUOMCode', 'Electrical Load Description'),
-		(datatableId, 4, 'emission_standard_load_cd', 'emissionStandardLoadCode', 'Electrical Load Description');
+		(datatableId, 1, 'emission_standard_cd', 'emissionStandardCode', 'Emission Standard Code'),
+		(datatableId, 2, 'emission_standard_description', 'emissionStandardDescription', 'Emission Standard Description'),
+		(datatableId, 3, 'emission_standard_uom_cd', 'emissionStandardUnitsOfMeasureCode', 'Emission Standard Units Of Measure Code'),
+		(datatableId, 4, 'emission_standard_load_cd', 'emissionStandardLoadCode', 'Emission Standard Load Code');
 ----------------------------------------------------------------------------------------------------------------------------
 	datasetCode := 'operating-condition-codes';
 	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
@@ -604,9 +604,9 @@ BEGIN
 	/***** COLUMNS *****/
 	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
 	VALUES
-		(datatableId, 1, 'qa_cert_event_cd', 'qaCertEventCode', 'QA Certification Event Code'),
-		(datatableId, 2, 'qa_cert_event_cd_description', 'qaCertEventDescription', 'QA Certification Event Description'),
-		(datatableId, 3, 'qa_cert_category', 'qaCertEventCategory', 'QA Certification Event Category');
+		(datatableId, 1, 'qa_cert_event_cd', 'certificationEventCode', 'QA Certification Event Code'),
+		(datatableId, 2, 'qa_cert_event_cd_description', 'certificationEventDescription', 'QA Certification Event Description'),
+		(datatableId, 3, 'qa_cert_category', 'certificationEventCategory', 'QA Certification Event Category');
 ----------------------------------------------------------------------------------------------------------------------------
 	datasetCode := 'qualification-data-type-codes';
 	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)

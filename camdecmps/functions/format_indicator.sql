@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.format_indicator(numeric, bool)
 
-DROP FUNCTION IF EXISTS camdecmps.format_indicator(numeric, bool);
+DROP FUNCTION IF EXISTS camdecmps.format_indicator(numeric, bool) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.format_indicator(
 	value numeric,
@@ -24,7 +24,7 @@ $BODY$;
 
 -- FUNCTION: camdecmps.format_indicator(numeric)
 
-DROP FUNCTION IF EXISTS camdecmps.format_indicator(numeric);
+DROP FUNCTION IF EXISTS camdecmps.format_indicator(numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.format_indicator(
 	value numeric)

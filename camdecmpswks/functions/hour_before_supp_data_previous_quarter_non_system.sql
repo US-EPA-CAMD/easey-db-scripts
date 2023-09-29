@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.hour_before_supp_data_previous_quarter_non_system(character varying, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.hour_before_supp_data_previous_quarter_non_system(character varying, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.hour_before_supp_data_previous_quarter_non_system(character varying, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.hour_before_supp_data_previous_quarter_non_system(
 	monplanid character varying,

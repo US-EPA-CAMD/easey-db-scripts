@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.rpt_mp_analyzer_range(character varying)
 
-DROP FUNCTION IF EXISTS camdecmps.rpt_mp_analyzer_range(character varying);
+DROP FUNCTION IF EXISTS camdecmps.rpt_mp_analyzer_range(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_mp_analyzer_range(
 	monplanid character varying)

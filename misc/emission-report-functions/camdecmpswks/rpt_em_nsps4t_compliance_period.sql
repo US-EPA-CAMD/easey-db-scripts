@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_em_nsps4t_compliance_period(text, numeric, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_nsps4t_compliance_period(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_nsps4t_compliance_period(text, numeric, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_nsps4t_compliance_period(
 	monplanid text,

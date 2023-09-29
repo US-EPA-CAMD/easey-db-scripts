@@ -17,12 +17,6 @@ BEGIN
 		WHERE mon_plan_id = monPlanId
 	) INTO monLocIds;
 
-	DELETE FROM camdecmpswks.check_session
-	WHERE mon_plan_id = monPlanId;
-
-	DELETE FROM camdecmpsaux.evaluation_set
-	WHERE mon_plan_id = monPlanId;
-	
 	DELETE FROM camdecmpswks.emission_evaluation
 	WHERE mon_plan_id = monPlanId;
 
@@ -89,12 +83,6 @@ BEGIN
 		WHERE mon_plan_id = monPlanId
 	) INTO monLocIds;
 
-	DELETE FROM camdecmpswks.check_session
-	WHERE mon_plan_id = monPlanId and rpt_period_id = rptperiodid;
-
-	DELETE FROM camdecmpsaux.evaluation_set
-	WHERE mon_plan_id = monPlanId;
-	
 	DELETE FROM camdecmpswks.emission_evaluation
 	WHERE mon_plan_id = monPlanId and rpt_period_id = rptperiodid;
 

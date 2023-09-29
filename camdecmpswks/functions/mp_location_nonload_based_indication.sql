@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.mp_location_nonload_based_indication(character varying)
 
-DROP FUNCTION IF EXISTS camdecmpswks.mp_location_nonload_based_indication(character varying);
+DROP FUNCTION IF EXISTS camdecmpswks.mp_location_nonload_based_indication(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.mp_location_nonload_based_indication(
 	monplanid character varying)

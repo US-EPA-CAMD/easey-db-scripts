@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.get_facility_plans(integer[])
 
-DROP FUNCTION IF EXISTS camdecmpswks.get_facility_plans(integer[]);
+DROP FUNCTION IF EXISTS camdecmpswks.get_facility_plans(integer[]) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.get_facility_plans(
 	oriscodes integer[])

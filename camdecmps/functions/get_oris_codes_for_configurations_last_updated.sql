@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.get_oris_codes_for_configurations_last_updated(timestamp without time zone)
 
-DROP FUNCTION IF EXISTS camdecmps.get_oris_codes_for_configurations_last_updated(timestamp without time zone);
+DROP FUNCTION IF EXISTS camdecmps.get_oris_codes_for_configurations_last_updated(timestamp without time zone) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.get_oris_codes_for_configurations_last_updated(
 	p_date timestamp without time zone)

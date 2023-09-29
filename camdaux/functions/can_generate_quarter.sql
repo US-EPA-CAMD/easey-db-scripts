@@ -1,6 +1,6 @@
 -- FUNCTION: camdaux.can_generate_quarter(integer, integer)
 
-DROP FUNCTION IF EXISTS camdaux.can_generate_quarter(integer, integer);
+DROP FUNCTION IF EXISTS camdaux.can_generate_quarter(integer, integer) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdaux.can_generate_quarter(
 	pquarter integer,

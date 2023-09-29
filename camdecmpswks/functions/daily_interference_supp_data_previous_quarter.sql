@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.daily_interference_supp_data_previous_quarter(character varying, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.daily_interference_supp_data_previous_quarter(character varying, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.daily_interference_supp_data_previous_quarter(character varying, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.daily_interference_supp_data_previous_quarter(
 	monplanid character varying,

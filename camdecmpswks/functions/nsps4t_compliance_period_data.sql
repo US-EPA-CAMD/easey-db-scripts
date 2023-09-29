@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.nsps4t_compliance_period_data(character varying, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.nsps4t_compliance_period_data(character varying, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.nsps4t_compliance_period_data(character varying, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.nsps4t_compliance_period_data(
 	monplanid character varying,

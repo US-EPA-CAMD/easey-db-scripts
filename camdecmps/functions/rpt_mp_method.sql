@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.rpt_mp_method(character varying)
 
-DROP FUNCTION IF EXISTS camdecmps.rpt_mp_method(character varying);
+DROP FUNCTION IF EXISTS camdecmps.rpt_mp_method(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_mp_method(
 	monplanid character varying)

@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_em_hourly_op(text, numeric, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_hourly_op(text, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_hourly_op(text, numeric, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_hourly_op(
 	monplanid text,

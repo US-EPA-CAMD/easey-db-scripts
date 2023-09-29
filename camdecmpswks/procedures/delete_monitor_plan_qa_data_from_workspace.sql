@@ -14,12 +14,6 @@ BEGIN
 		FROM camdecmpswks.monitor_plan_location
 		WHERE mon_plan_id = monPlanId
 	) INTO monLocIds;
-	
-	DELETE FROM camdecmpswks.check_session
-	WHERE mon_plan_id = monPlanId;
-
-	DELETE FROM camdecmpsaux.evaluation_set
-	WHERE mon_plan_id = monPlanId;	
 
 	DELETE FROM camdecmpswks.qa_supp_data
 	WHERE mon_loc_id = ANY(monLocIds);

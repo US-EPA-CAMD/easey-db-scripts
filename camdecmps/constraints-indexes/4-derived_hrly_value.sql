@@ -1,5 +1,3 @@
-SELECT '4-derived_hrly_value.sql';
-
 ALTER TABLE IF EXISTS camdecmps.derived_hrly_value
     ADD CONSTRAINT pk_derived_hrly_value PRIMARY KEY (derv_id),
     ADD CONSTRAINT fk_derived_hrly_value_fuel_code FOREIGN KEY (fuel_cd)

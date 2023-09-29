@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.system_op_supp_data(character varying)
 
-DROP FUNCTION IF EXISTS camdecmpswks.system_op_supp_data(character varying);
+DROP FUNCTION IF EXISTS camdecmpswks.system_op_supp_data(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.system_op_supp_data(
 	monplanid character varying)

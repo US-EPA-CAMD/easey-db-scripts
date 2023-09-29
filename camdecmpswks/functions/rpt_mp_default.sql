@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_mp_default(character varying)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_default(character varying);
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_mp_default(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_mp_default(
 	monplanid character varying)

@@ -1,5 +1,3 @@
-SELECT '4-analyzer_range.sql';
-
 ALTER TABLE IF EXISTS camdecmps.analyzer_range
     ADD CONSTRAINT pk_analyzer_range PRIMARY KEY (analyzer_range_id),
     ADD CONSTRAINT fk_analyzer_range_analyzer_range_code FOREIGN KEY (analyzer_range_cd)

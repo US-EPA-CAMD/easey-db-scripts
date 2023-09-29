@@ -1,7 +1,8 @@
 -- PROCEDURE: camdecmps.copy_emissions_from_workspace_to_global(character varying, numeric)
--- DROP PROCEDURE IF EXISTS camdecmps.copy_emissions_from_workspace_to_global(character varying, numeric);
-CREATE 
-OR REPLACE PROCEDURE camdecmps.copy_emissions_from_workspace_to_global(
+
+DROP PROCEDURE IF EXISTS camdecmps.copy_emissions_from_workspace_to_global(character varying, numeric);
+
+CREATE OR REPLACE PROCEDURE camdecmps.copy_emissions_from_workspace_to_global(
   monPlanId character varying(45), rptPeriodId numeric
 ) LANGUAGE 'plpgsql' AS $BODY$ DECLARE monLocIds text[];
 BEGIN 
@@ -1598,6 +1599,7 @@ SET
   add_date = EXCLUDED.add_date, 
   update_date = EXCLUDED.update_date;
 
+<<<<<<< HEAD
   -- EMISSIONS VIEWS 
   INSERT INTO camdecmps.emission_view_all (
       mon_plan_id, mon_loc_id, rpt_period_id, hour_id, date_hour, op_time, unit_load, load_uom,
@@ -2470,60 +2472,46 @@ ON CONFLICT (mon_plan_id, rpt_period_id) DO UPDATE
 
 
 
+=======
+-- EMISSIONS VIEWS
+CALL camdecmps.copy_emissions_from_workspace_to_global(monPlanId, rptPeriodId);
+>>>>>>> 19c8360f9af15332837574bbb422999149deafee
 
 -- DELETE WORKSPACE DATA
-DELETE FROM 
-  camdecmpswks.emission_evaluation 
-WHERE 
-  mon_plan_id = monPlanId 
-  AND rpt_period_id = rptPeriodId;
+DELETE FROM camdecmpswks.check_session
+WHERE chk_session_id = (
+  SELECT chk_session_id FROM camdecmpswks.emission_evaluation
+  WHERE mon_plan_id = monPlanId and rpt_period_id = rptPeriodId
+);
 
-DELETE FROM 
-  camdecmpswks.summary_value a 
-WHERE 
-  a.rpt_period_id = rptPeriodId 
-  and a.mon_loc_id = ANY(monLocIds);
+DELETE FROM camdecmpswks.emission_evaluation
+WHERE mon_plan_id = monPlanId and rpt_period_id = rptPeriodId;
 
-DELETE FROM 
-  camdecmpswks.daily_test_summary a 
-WHERE 
-  a.rpt_period_id = rptPeriodId 
-  and a.mon_loc_id = ANY(monLocIds);
+DELETE FROM camdecmpswks.summary_value a 
+WHERE a.rpt_period_id = rptPeriodId and a.mon_loc_id = ANY(monLocIds);
 
-DELETE FROM 
-  camdecmpswks.weekly_test_summary a 
-WHERE 
-  a.rpt_period_id = rptPeriodId 
-  and a.mon_loc_id = ANY(monLocIds);
+DELETE FROM camdecmpswks.daily_test_summary a 
+WHERE a.rpt_period_id = rptPeriodId and a.mon_loc_id = ANY(monLocIds);
 
-DELETE FROM 
-  camdecmpswks.daily_emission a 
-WHERE 
-  a.rpt_period_id = rptPeriodId 
-  and a.mon_loc_id = ANY(monLocIds);
+DELETE FROM camdecmpswks.weekly_test_summary a 
+WHERE a.rpt_period_id = rptPeriodId and a.mon_loc_id = ANY(monLocIds);
 
-DELETE FROM 
-  camdecmpswks.hrly_op_data a 
-WHERE 
-  a.rpt_period_id = rptPeriodId 
-  and a.mon_loc_id = ANY(monLocIds);
+DELETE FROM camdecmpswks.daily_backstop a
+WHERE a.rpt_period_id = rptPeriodId and a.mon_loc_id = ANY(monLocIds);
 
-DELETE FROM 
-  camdecmpswks.long_term_fuel_flow a 
-WHERE 
-  a.rpt_period_id = rptPeriodId 
-  and a.mon_loc_id = ANY(monLocIds); 
+DELETE FROM camdecmpswks.daily_emission a 
+WHERE a.rpt_period_id = rptPeriodId and a.mon_loc_id = ANY(monLocIds);
+
+DELETE FROM camdecmpswks.hrly_op_data a 
+WHERE a.rpt_period_id = rptPeriodId and a.mon_loc_id = ANY(monLocIds);
+
+DELETE FROM camdecmpswks.long_term_fuel_flow a 
+WHERE a.rpt_period_id = rptPeriodId and a.mon_loc_id = ANY(monLocIds);
   
-DELETE FROM 
-  camdecmpswks.sorbent_trap a 
-WHERE 
-  a.rpt_period_id = rptPeriodId 
-  and a.mon_loc_id = ANY(monLocIds);
+DELETE FROM camdecmpswks.sorbent_trap a 
+WHERE a.rpt_period_id = rptPeriodId and a.mon_loc_id = ANY(monLocIds);
 
-DELETE FROM 
-  camdecmpswks.nsps4t_summary a 
-WHERE 
-  a.rpt_period_id = rptPeriodId 
-  and a.mon_loc_id = ANY(monLocIds);
+DELETE FROM camdecmpswks.nsps4t_summary a 
+WHERE a.rpt_period_id = rptPeriodId and a.mon_loc_id = ANY(monLocIds);
 
 END $BODY$;

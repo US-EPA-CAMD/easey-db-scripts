@@ -1,5 +1,3 @@
-SELECT '6-ae_correlation_test_run.sql';
-
 ALTER TABLE IF EXISTS camdecmps.ae_correlation_test_run
     ADD CONSTRAINT pk_ae_correlation_test_run PRIMARY KEY (ae_corr_test_run_id),
     ADD CONSTRAINT fk_ae_correlation_test_run_ae_correlation_test_sum FOREIGN KEY (ae_corr_test_sum_id)

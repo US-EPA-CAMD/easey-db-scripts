@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmps.get_linearity_statistic(text, text, text, text)
 
-DROP FUNCTION IF EXISTS camdecmps.get_linearity_statistic(text, text, text, text);
+DROP FUNCTION IF EXISTS camdecmps.get_linearity_statistic(text, text, text, text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.get_linearity_statistic(
 	testsumid text,

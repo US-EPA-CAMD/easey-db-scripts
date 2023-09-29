@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.monitor_qualification_percent_data(character varying)
 
-DROP FUNCTION IF EXISTS camdecmpswks.monitor_qualification_percent_data(character varying);
+DROP FUNCTION IF EXISTS camdecmpswks.monitor_qualification_percent_data(character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.monitor_qualification_percent_data(
 	monplanid character varying)

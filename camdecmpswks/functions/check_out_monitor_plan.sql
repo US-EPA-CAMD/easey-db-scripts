@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.check_out_monitor_plan(text, text)
 
-DROP FUNCTION IF EXISTS camdecmpswks.check_out_monitor_plan(text, text);
+DROP FUNCTION IF EXISTS camdecmpswks.check_out_monitor_plan(text, text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.check_out_monitor_plan(
 	monplanid text,

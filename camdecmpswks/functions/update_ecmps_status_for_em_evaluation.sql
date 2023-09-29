@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.update_ecmps_status_for_em_evaluation(character varying, character varying, integer)
 
-DROP FUNCTION IF EXISTS camdecmpswks.update_ecmps_status_for_em_evaluation(character varying, character varying, integer);
+DROP FUNCTION IF EXISTS camdecmpswks.update_ecmps_status_for_em_evaluation(character varying, character varying, integer) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.update_ecmps_status_for_em_evaluation(
 	vmon_plan_id character varying,

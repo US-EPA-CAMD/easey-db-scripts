@@ -35,7 +35,7 @@ BEGIN
 				DTS.CALC_TEST_RESULT_CD,
 				DTS.DAILY_TEST_SUM_ID,
 				DTS.ERROR_CODES
-		FROM camdecmps.vw_daily_errors AS DTS
+		FROM temp_daily_test_errors AS DTS
 		WHERE DTS.TEST_TYPE_CD <> 'DAYCAL';
 END
 $BODY$;

@@ -160,7 +160,7 @@ BEGIN
 		END AS F_FACTOR, 
 		HOD.ERROR_CODES,
 		hod.FUEL_CD
-	FROM temp_hourly_errors AS HOD 
+	FROM temp_hourly_test_errors AS HOD 
 	INNER JOIN camdecmpswks.DERIVED_HRLY_VALUE AS DHV 
 		ON DHV.HOUR_ID = HOD.HOUR_ID 
 	INNER JOIN camdecmpswks.MONITOR_HRLY_VALUE AS MHV 

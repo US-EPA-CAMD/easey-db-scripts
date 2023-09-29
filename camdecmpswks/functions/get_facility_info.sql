@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.get_facility_info(character varying, character varying)
 
-DROP FUNCTION IF EXISTS camdecmpswks.get_facility_info(character varying, character varying);
+DROP FUNCTION IF EXISTS camdecmpswks.get_facility_info(character varying, character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.get_facility_info(
 	lookuptype character varying,

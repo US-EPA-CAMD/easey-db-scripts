@@ -1,5 +1,5 @@
 ALTER TABLE IF EXISTS camdecmpswks.emission_view_so2appd
-    ADD CONSTRAINT pk_emission_view_so2appd PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, fuel_type, fuel_sys_id, date_hour),
+    ADD CONSTRAINT pk_emission_view_so2appd PRIMARY KEY (mon_plan_id, mon_loc_id, rpt_period_id, date_hour, fuel_sys_id, fuel_type),
     ADD CONSTRAINT fk_emission_view_so2appd_emission_evaluation FOREIGN KEY (rpt_period_id, mon_plan_id)
         REFERENCES camdecmpswks.emission_evaluation (rpt_period_id, mon_plan_id) MATCH SIMPLE
         ON DELETE CASCADE,
@@ -21,6 +21,18 @@ CREATE INDEX IF NOT EXISTS idx_emission_view_so2appd_mon_loc_id
 CREATE INDEX IF NOT EXISTS idx_emission_view_so2appd_rpt_period_id
     ON camdecmpswks.emission_view_so2appd USING btree
 		(rpt_period_id ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_emission_view_so2appd_date_hour
+		ON camdecmpswks.emission_view_so2appd USING btree
+		(date_hour COLLATE pg_catalog."default" ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_emission_view_so2appd_fuel_sys_id
+		ON camdecmpswks.emission_view_so2appd USING btree
+		(fuel_sys_id COLLATE pg_catalog."default" ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_emission_view_so2appd_fuel_type
+		ON camdecmpswks.emission_view_so2appd USING btree
+		(fuel_type COLLATE pg_catalog."default" ASC NULLS LAST);
 
 CREATE INDEX IF NOT EXISTS idx_emission_view_so2appd_rpt_period_id_mon_loc_id
 		ON camdecmpswks.emission_view_so2appd USING btree

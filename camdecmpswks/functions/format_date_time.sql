@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.format_date_time(date, numeric, numeric)
 
-DROP FUNCTION IF EXISTS camdecmpswks.format_date_time(date, numeric, numeric);
+DROP FUNCTION IF EXISTS camdecmpswks.format_date_time(date, numeric, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.format_date_time(
 	_datelabel date,
@@ -30,7 +30,7 @@ return returnVal;
 END;
 $BODY$;
 
-DROP FUNCTION IF EXISTS camdecmpswks.format_date_time(date, numeric, numeric, date);
+DROP FUNCTION IF EXISTS camdecmpswks.format_date_time(date, numeric, numeric, date) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.format_date_time(
 	_datelabel date,
