@@ -3,7 +3,7 @@ source ../../environments.sh $1
 
 FILES=""
 TABLES=false
-VIEWS=true
+VIEWS=false
 FUNCTIONS=false
 PROCEDURES=false
 PRE_DATA_LOAD=false
