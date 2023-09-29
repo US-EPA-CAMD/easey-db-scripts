@@ -10,6 +10,7 @@ DECLARE
 	curSchema text := 'camdecmpsmd';
 BEGIN
 	FOR curTable IN select * from information_schema.tables where table_schema = curSchema
+  and table_name not like '%_q1' and table_name not like '%_q2' and table_name not like '%_q3' and table_name not like '%_q4'
 	LOOP
 		index := 1;
 		SELECT count(*) FROM pg_constraint con
