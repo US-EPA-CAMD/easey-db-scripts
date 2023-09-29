@@ -1,6 +1,6 @@
-CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_test_summary(
+CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_trans_summary(
 	testsumid text)
-    RETURNS TABLE("unitStack" text, "gpIndicator" numeric , "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "endDateTime" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text) 
+    RETURNS TABLE("unitStack" text, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "endDateTime" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text) 
     LANGUAGE 'sql'
     COST 100
     VOLATILE PARALLEL UNSAFE
@@ -13,14 +13,11 @@ SELECT
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid
 			ELSE '*'
 		END AS "unitStack",
-		ts.gp_ind as "gpIndicator",
 		ts.test_type_cd AS "testTypeCode",
 		ts.test_num AS "testNumber",
 		ts.test_reason_cd AS "testReasonCode",
 		ts.test_result_cd AS "testResultCode",
 		ts.calc_test_result_cd AS "calcTestResultCode",	
-		ts.span_scale_cd AS "spanScaleCode",
-		ts.calc_span_value AS "calcSpanValue",
 		camdecmpswks.format_date_hour(ts.end_date, ts.end_hour, ts.end_min) AS "endDateTime",
 		ms.system_identifier AS "systemIdentifier",
 		ms.sys_type_cd AS "systemTypeCode",

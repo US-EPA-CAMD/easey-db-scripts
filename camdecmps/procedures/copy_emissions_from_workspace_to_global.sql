@@ -1614,10 +1614,8 @@ SET
       rpt_adj_flow, unadj_flow
   FROM camdecmpswks.emission_view_all
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId
-  ON CONFLICT (mon_plan_id, rpt_period_id) DO UPDATE SET
-      mon_loc_id = EXCLUDED.mon_loc_id,
+  ON CONFLICT (mon_plan_id, mon_loc_id, rpt_period_id, date_hour) DO UPDATE SET
       hour_id = EXCLUDED.hour_id,
-      date_hour = EXCLUDED.date_hour,
       op_time = EXCLUDED.op_time,
       unit_load = EXCLUDED.unit_load,
       load_uom = EXCLUDED.load_uom,
@@ -1653,8 +1651,7 @@ SET
       summation_formula_cd, rpt_co2_mass_rate_all_fuels, calc_co2_mass_rate_all_fuels, error_codes
   FROM camdecmpswks.emission_view_co2appd
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId
-  ON CONFLICT (mon_plan_id, mon_loc_id, rpt_period_id, date_hour, fuel_sys_id) DO UPDATE SET
-      date_hour = EXCLUDED.date_hour,
+  ON CONFLICT (mon_plan_id, mon_loc_id, rpt_period_id, fuel_type, fuel_sys_id, date_hour) DO UPDATE SET
       op_time = EXCLUDED.op_time,
       unit_load = EXCLUDED.unit_load,
       load_uom = EXCLUDED.load_uom,
@@ -1679,8 +1676,7 @@ SELECT
     error_codes
 FROM camdecmpswks.emission_view_co2calc
 WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId
-ON CONFLICT (mon_plan_id, rpt_period_id) DO UPDATE SET
-    date_hour = EXCLUDED.date_hour,
+ON CONFLICT (mon_plan_id, mon_loc_id, rpt_period_id, date_hour) DO UPDATE SET
     op_time = EXCLUDED.op_time,
     co2c_modc = EXCLUDED.co2c_modc,
     co2c_pma = EXCLUDED.co2c_pma,
@@ -1708,8 +1704,7 @@ SELECT
     pct_h2o_used, source_h2o_value, co2_formula_cd, rpt_co2_mass_rate, calc_co2_mass_rate, error_codes
 FROM camdecmpswks.emission_view_co2cems
 WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId
-ON CONFLICT (mon_plan_id, mon_loc_id, rpt_period_id) DO UPDATE SET
-    date_hour = EXCLUDED.date_hour,
+ON CONFLICT (mon_plan_id, mon_loc_id, rpt_period_id, date_hour) DO UPDATE SET
     op_time = EXCLUDED.op_time,
     unit_load = EXCLUDED.unit_load,
     load_uom = EXCLUDED.load_uom,
@@ -1745,9 +1740,7 @@ SELECT
     calc_total_daily_emission
 FROM camdecmpswks.emission_view_co2dailyfuel
 WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId
-ON CONFLICT (mon_plan_id, rpt_period_id) DO UPDATE SET
-    mon_loc_id = EXCLUDED.mon_loc_id,
-    date = EXCLUDED.date,
+ON CONFLICT (mon_plan_id, mon_loc_id, rpt_period_id, fuel_cd, date) DO UPDATE SET
     rpt_total_daily_co2_mass = EXCLUDED.rpt_total_daily_co2_mass,
     rpt_unadjusted_co2_mass = EXCLUDED.rpt_unadjusted_co2_mass,
     rpt_adjusted_daily_co2_mass = EXCLUDED.rpt_adjusted_daily_co2_mass,
@@ -1769,9 +1762,7 @@ SELECT
     mon_plan_id, mon_loc_id, dataset_cd, rpt_period_id, count
 FROM camdecmpswks.emission_view_count
 WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId
-ON CONFLICT (mon_plan_id, rpt_period_id) DO UPDATE SET
-    mon_loc_id = EXCLUDED.mon_loc_id,
-    dataset_cd = EXCLUDED.dataset_cd,
+ON CONFLICT (mon_plan_id, mon_loc_id, rpt_period_id, dataset_cd) DO UPDATE SET
     count = EXCLUDED.count;
 
 
@@ -1796,8 +1787,7 @@ SELECT
     expiration_date, vendor_id
 FROM camdecmpswks.emission_view_dailycal
 WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId
-ON CONFLICT (mon_plan_id, rpt_period_id) DO UPDATE SET
-    test_sum_id = EXCLUDED.test_sum_id,
+ON CONFLICT (mon_plan_id, mon_loc_id, rpt_period_id, test_sum_id) DO UPDATE SET
     component_identifier = EXCLUDED.component_identifier,
     component_type_cd = EXCLUDED.component_type_cd,
     span_scale_cd = EXCLUDED.span_scale_cd,
@@ -1842,10 +1832,8 @@ SELECT
     gcv_uom, gcv_sampling_type, formula_cd, rpt_hi_rate, calc_hi_rate, error_codes
 FROM camdecmpswks.emission_view_hiappd
 WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId
-ON CONFLICT (mon_plan_id, rpt_period_id) DO UPDATE SET
-    date_hour = EXCLUDED.date_hour,
+ON CONFLICT (mon_plan_id, mon_loc_id, rpt_period_id, fuel_type, fuel_sys_id, date_hour) DO UPDATE SET
     op_time = EXCLUDED.op_time,
-    fuel_type = EXCLUDED.fuel_type,
     fuel_use_time = EXCLUDED.fuel_use_time,
     unit_load = EXCLUDED.unit_load,
     load_uom = EXCLUDED.load_uom,
@@ -1874,8 +1862,7 @@ SELECT
     flow_modc, flow_pma, pct_h2o_used, source_h2o_value, f_factor, error_codes, fuel_cd
 FROM camdecmpswks.emission_view_hicems
 WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId
-ON CONFLICT (mon_plan_id, rpt_period_id) DO UPDATE SET
-    date_hour = EXCLUDED.date_hour,
+ON CONFLICT (mon_plan_id, mon_loc_id, rpt_period_id, date_hour) DO UPDATE SET
     hour_id = EXCLUDED.hour_id,
     op_time = EXCLUDED.op_time,
     unit_load = EXCLUDED.unit_load,
@@ -1911,8 +1898,7 @@ SELECT
     common_stack_load_range, hi_formula_cd, rpt_hi_rate, calc_hi_rate, error_codes
 FROM camdecmpswks.emission_view_hiunitstack
 WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId
-ON CONFLICT (mon_plan_id, rpt_period_id) DO UPDATE SET
-    date_hour = EXCLUDED.date_hour,
+ON CONFLICT (mon_plan_id, mon_loc_id, rpt_period_id, date_hour) DO UPDATE SET
     op_time = EXCLUDED.op_time,
     unit_load = EXCLUDED.unit_load,
     load_uom = EXCLUDED.load_uom,
@@ -1935,8 +1921,7 @@ SELECT
     co2_emiss_rate, rpt_co2_mass, calc_co2_mass, error_codes
 FROM camdecmpswks.emission_view_lme
 WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId
-ON CONFLICT (mon_plan_id, rpt_period_id) DO UPDATE SET
-    date_hour = EXCLUDED.date_hour,
+ON CONFLICT (mon_plan_id, mon_loc_id, rpt_period_id, date_hour) DO UPDATE SET
     op_time = EXCLUDED.op_time,
     unit_load = EXCLUDED.unit_load,
     rpt_heat_input = EXCLUDED.rpt_heat_input,
@@ -1965,8 +1950,7 @@ ON CONFLICT (mon_plan_id, rpt_period_id) DO UPDATE SET
       oil_density, oil_density_uom, oil_density_sampling_type, rpt_mass_oil_flow, calc_mass_oil_flow, error_codes
   FROM camdecmpswks.emission_view_massoilcalc
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId
-  ON CONFLICT (mon_plan_id, rpt_period_id) DO UPDATE SET
-      date_hour = EXCLUDED.date_hour,
+  ON CONFLICT (mon_plan_id, mon_loc_id, rpt_period_id, oil_type, fuel_sys_id, date_hour) DO UPDATE SET
       op_time = EXCLUDED.op_time,
       fuel_use_time = EXCLUDED.fuel_use_time,
       rpt_volumetric_oil_flow = EXCLUDED.rpt_volumetric_oil_flow,

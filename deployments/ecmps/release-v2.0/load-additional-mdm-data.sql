@@ -206,7 +206,13 @@ VALUES
 	('LINSTAT',		'LINE',		'DEFAULT',	'Summary Statistics'),
 	('LININJ',		'LINE', 	'DEFAULT',	'Injection Statistics'),
 	('CYCSUM',		'CYCLE',	'3COLTBL',	'Cycle Time Test'),
-	('CYCINJ',		'CYCLE', 	'DEFAULT',	'Injections');
+	('CYCINJ',		'CYCLE', 	'DEFAULT',	'Injections')
+  ('HGLINSUM',	'HGLINE',	'3COLTBL',	'HG Linearity Check'),
+  ('HGLINSTAT',	'HGLINE',	'DEFAULT',	'Summary Statistics'),
+  ('HGLININJ',	'HGLINE', 'DEFAULT',  'Injection Statistics')
+  ('FFACCTTSUM',	'FFACCTT', '3COLTBL',  'Transmitter Transducer Test'),
+  ('FFACCTTSTAT',	'FFACCTT', 'DEFAULT',  'Transmitter Transducer Statistics'),
+  ('PEISUM',	'PEI', '3COLTBL',  'PEI');
 -----------------------------------------------------------------------
 TRUNCATE TABLE camdaux.cors_config Restart identity;
 
