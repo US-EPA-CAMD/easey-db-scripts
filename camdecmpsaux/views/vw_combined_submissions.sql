@@ -9,6 +9,7 @@ CREATE OR REPLACE VIEW camdecmpsaux.vw_combined_submissions
     ss.submission_set_id,
     sq.submitted_on,
     ss.user_id,
-    ss.submission_end_stage_time
+    ss.submission_end_stage_time,
+	  sq.status_cd
    FROM camdecmpsaux.submission_set ss
      JOIN camdecmpsaux.submission_queue sq USING (submission_set_id);
