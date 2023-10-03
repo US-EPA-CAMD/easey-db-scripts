@@ -1,7 +1,3 @@
--- Table: camddmw.owner_display_fact
-
--- DROP TABLE camddmw.owner_display_fact;
-
 CREATE TABLE IF NOT EXISTS camddmw.owner_display_fact
 (
     unit_id numeric(12,0) NOT NULL,
@@ -11,8 +7,7 @@ CREATE TABLE IF NOT EXISTS camddmw.owner_display_fact
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     opr_display character varying(1200) COLLATE pg_catalog."default",
-    last_update_date timestamp without time zone,
-    CONSTRAINT pk_owner_display_fact PRIMARY KEY (unit_id, op_year)
+    last_update_date timestamp without time zone
 );
 
 COMMENT ON TABLE camddmw.owner_display_fact

@@ -1,10 +1,10 @@
 ALTER TABLE IF EXISTS camdecmps.hrly_gas_flow_meter
-    ADD CONSTRAINT pk_hrly_gas_flow_meter PRIMARY KEY (hrly_gas_flow_meter_id),
+    ADD CONSTRAINT pk_hrly_gas_flow_meter PRIMARY KEY (hrly_gas_flow_meter_id, rpt_period_id),
     ADD CONSTRAINT fk_hrly_gas_flow_meter_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
         ON DELETE CASCADE,
-    ADD CONSTRAINT fk_hrly_gas_flow_meter_hrly_op_data FOREIGN KEY (hour_id)
-        REFERENCES camdecmps.hrly_op_data (hour_id) MATCH SIMPLE
+    ADD CONSTRAINT fk_hrly_gas_flow_meter_hrly_op_data FOREIGN KEY (hour_id, rpt_period_id)
+        REFERENCES camdecmps.hrly_op_data (hour_id, rpt_period_id) MATCH SIMPLE
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_hrly_gas_flow_meter_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE

@@ -1,7 +1,3 @@
--- Table: camddmw.rep_year_dim
-
--- DROP TABLE camddmw.rep_year_dim;
-
 CREATE TABLE IF NOT EXISTS camddmw.rep_year_dim
 (
     rep_yr_id double precision NOT NULL,
@@ -14,8 +10,7 @@ CREATE TABLE IF NOT EXISTS camddmw.rep_year_dim
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp(0) without time zone,
     begin_date timestamp(0) without time zone,
-    end_date timestamp(0) without time zone,
-    CONSTRAINT rep_year_dim_u01 UNIQUE (unit_id, op_year, ppl_id, prg_code, rep_code, begin_date)
+    end_date timestamp(0) without time zone
 ) PARTITION BY RANGE (op_year);
 
 COMMENT ON TABLE camddmw.rep_year_dim

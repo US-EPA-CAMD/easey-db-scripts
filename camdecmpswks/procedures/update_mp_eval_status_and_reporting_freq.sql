@@ -9,6 +9,7 @@ DECLARE
 	I record;
 	V_USERID text := 'SYSTEM';
 	V_RPT_PERIOD_ID numeric := 0;
+ 	V_MPRF_ID text := uuid_generate_v4();
 	V_CURRENT_DATETIME timestamp without time zone := CURRENT_TIMESTAMP;
 BEGIN
 /*
@@ -82,8 +83,12 @@ BEGIN
 			RPE.CALENDAR_YEAR IS NULL
 		)
 	) LOOP
+
 		IF (I.UMCBD_YEAR_QTR) < I.MPRF_BEGIN_YEAR_QTR THEN
 			--OS record exists entirely after the UMCBD; delete this record
+			DELETE FROM camdecmps.MONITOR_PLAN_REPORTING_FREQ
+			WHERE MON_PLAN_RF_ID = I.MON_PLAN_RF_ID;
+
 			DELETE FROM camdecmpswks.MONITOR_PLAN_REPORTING_FREQ
 			WHERE MON_PLAN_RF_ID = I.MON_PLAN_RF_ID;
 		ELSE
@@ -93,6 +98,12 @@ BEGIN
 			AND QUARTER = 4;
 
 			-- record overlaps the UMCBD; end this record
+			UPDATE camdecmps.MONITOR_PLAN_REPORTING_FREQ
+			SET END_RPT_PERIOD_ID = V_RPT_PERIOD_ID,
+				USERID = V_USERID,
+				UPDATE_DATE = V_CURRENT_DATETIME
+			WHERE MON_PLAN_RF_ID = I.MON_PLAN_RF_ID;
+
 			UPDATE camdecmpswks.MONITOR_PLAN_REPORTING_FREQ
 			SET END_RPT_PERIOD_ID = V_RPT_PERIOD_ID,
 				USERID = V_USERID,
@@ -106,6 +117,27 @@ BEGIN
 		WHERE CALENDAR_YEAR = LEFT(I.UMCBD_YEAR_QTR::text, 4)::numeric
 		AND QUARTER = RIGHT(I.UMCBD_YEAR_QTR::text, 1)::numeric;
 
+		INSERT INTO camdecmps.MONITOR_PLAN_REPORTING_FREQ(
+			MON_PLAN_RF_ID,
+			MON_PLAN_ID,
+			REPORT_FREQ_CD,
+			END_RPT_PERIOD_ID,
+			BEGIN_RPT_PERIOD_ID,
+			USERID,
+			ADD_DATE,
+			UPDATE_DATE
+		)
+		VALUES(
+			V_MPRF_ID,
+			I.MON_PLAN_ID,
+			'Q',
+			NULL,
+			V_RPT_PERIOD_ID,
+			V_USERID,
+			V_CURRENT_DATETIME,
+			NULL
+		);
+
 		INSERT INTO camdecmpswks.MONITOR_PLAN_REPORTING_FREQ(
 			MON_PLAN_RF_ID,
 			MON_PLAN_ID,
@@ -117,7 +149,7 @@ BEGIN
 			UPDATE_DATE
 		)
 		VALUES(
-			uuid_generate_v4(),
+			V_MPRF_ID,
 			I.MON_PLAN_ID,
 			'Q',
 			NULL,
@@ -134,6 +166,7 @@ BEGIN
 			userid = V_USERID,
 			update_date = V_CURRENT_DATETIME
 		WHERE MON_PLAN_ID = I.MON_PLAN_ID;
+
 	END LOOP;
 
 	UPDATE camdecmpswks.MONITOR_PLAN

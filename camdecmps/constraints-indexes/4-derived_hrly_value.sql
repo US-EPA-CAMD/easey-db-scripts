@@ -1,9 +1,9 @@
 ALTER TABLE IF EXISTS camdecmps.derived_hrly_value
-    ADD CONSTRAINT pk_derived_hrly_value PRIMARY KEY (derv_id),
+    ADD CONSTRAINT pk_derived_hrly_value PRIMARY KEY (derv_id, rpt_period_id),
     ADD CONSTRAINT fk_derived_hrly_value_fuel_code FOREIGN KEY (fuel_cd)
         REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE,
-    ADD CONSTRAINT fk_derived_hrly_value_hrly_op_data FOREIGN KEY (hour_id)
-        REFERENCES camdecmps.hrly_op_data (hour_id) MATCH SIMPLE
+    ADD CONSTRAINT fk_derived_hrly_value_hrly_op_data FOREIGN KEY (hour_id, rpt_period_id)
+        REFERENCES camdecmps.hrly_op_data (hour_id, rpt_period_id) MATCH SIMPLE
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_derived_hrly_value_modc_code FOREIGN KEY (modc_cd)
         REFERENCES camdecmpsmd.modc_code (modc_cd) MATCH SIMPLE,

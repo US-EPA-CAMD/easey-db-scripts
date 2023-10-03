@@ -1,7 +1,3 @@
--- Table: camddmw.control_year_dim
-
--- DROP TABLE camddmw.control_year_dim;
-
 CREATE TABLE IF NOT EXISTS camddmw.control_year_dim
 (
     control_year_id numeric(10,0) NOT NULL,
@@ -14,8 +10,7 @@ CREATE TABLE IF NOT EXISTS camddmw.control_year_dim
     data_source character varying(35) COLLATE pg_catalog."default",
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
-    last_update_date timestamp without time zone,
-    CONSTRAINT unq_control_year_dim UNIQUE (unit_id, op_year, control_code, parameter)
+    last_update_date timestamp without time zone
 ) PARTITION BY RANGE (op_year);
 
 

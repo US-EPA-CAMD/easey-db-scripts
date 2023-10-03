@@ -1,5 +1,5 @@
 ALTER TABLE IF EXISTS camdecmps.sorbent_trap
-    ADD CONSTRAINT pk_sorbent_trap PRIMARY KEY (trap_id),
+    ADD CONSTRAINT pk_sorbent_trap PRIMARY KEY (trap_id, rpt_period_id),
     ADD CONSTRAINT fk_sorbent_trap_modc_code FOREIGN KEY (modc_cd)
         REFERENCES camdecmpsmd.modc_code (modc_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_sorbent_trap_monitor_location FOREIGN KEY (mon_loc_id)

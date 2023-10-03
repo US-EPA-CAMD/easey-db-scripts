@@ -1,5 +1,5 @@
 ALTER TABLE IF EXISTS camdecmps.nsps4t_summary
-    ADD CONSTRAINT pk_nsps4t_summary PRIMARY KEY (nsps4t_sum_id),
+    ADD CONSTRAINT pk_nsps4t_summary PRIMARY KEY (nsps4t_sum_id, rpt_period_id),
     ADD CONSTRAINT fk_nsps4t_summary_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE,
     ADD CONSTRAINT fk_nsps4t_summary_nsps4t_electrical_load_code FOREIGN KEY (electrical_load_cd)

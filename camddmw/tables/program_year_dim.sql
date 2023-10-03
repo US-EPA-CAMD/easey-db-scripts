@@ -1,7 +1,3 @@
--- Table: camddmw.program_year_dim
-
--- DROP TABLE camddmw.program_year_dim;
-
 CREATE TABLE IF NOT EXISTS camddmw.program_year_dim
 (
     unit_id numeric(12,0) NOT NULL,
@@ -14,8 +10,7 @@ CREATE TABLE IF NOT EXISTS camddmw.program_year_dim
     add_date timestamp without time zone,
     non_egu_flg character varying(8) COLLATE pg_catalog."default",
     compliance_ind double precision,
-    last_update_date timestamp without time zone,
-    CONSTRAINT pk_prog_year_dim PRIMARY KEY (unit_id, prg_code, op_year)
+    last_update_date timestamp without time zone
 ) PARTITION BY RANGE (op_year);
 
 

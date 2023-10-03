@@ -1,5 +1,5 @@
 ALTER TABLE IF EXISTS camdecmps.weekly_test_summary
-    ADD CONSTRAINT pk_weekly_test_summary PRIMARY KEY (weekly_test_sum_id),
+    ADD CONSTRAINT pk_weekly_test_summary PRIMARY KEY (weekly_test_sum_id, rpt_period_id),
     ADD CONSTRAINT fk_weekly_test_summary_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
         ON DELETE CASCADE,

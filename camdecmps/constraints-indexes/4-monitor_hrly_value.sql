@@ -1,10 +1,10 @@
 ALTER TABLE IF EXISTS camdecmps.monitor_hrly_value
-    ADD CONSTRAINT pk_monitor_hrly_value PRIMARY KEY (monitor_hrly_val_id),
+    ADD CONSTRAINT pk_monitor_hrly_value PRIMARY KEY (monitor_hrly_val_id, rpt_period_id),
     ADD CONSTRAINT fk_monitor_hrly_value_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
         ON DELETE CASCADE,
-    ADD CONSTRAINT fk_monitor_hrly_value_hrly_op_data FOREIGN KEY (hour_id)
-        REFERENCES camdecmps.hrly_op_data (hour_id) MATCH SIMPLE
+    ADD CONSTRAINT fk_monitor_hrly_value_hrly_op_data FOREIGN KEY (hour_id, rpt_period_id)
+        REFERENCES camdecmps.hrly_op_data (hour_id, rpt_period_id) MATCH SIMPLE
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_monitor_hrly_value_modc_code FOREIGN KEY (modc_cd)
         REFERENCES camdecmpsmd.modc_code (modc_cd) MATCH SIMPLE,

@@ -1,5 +1,5 @@
 ALTER TABLE IF EXISTS camdecmps.hrly_op_data
-    ADD CONSTRAINT pk_hrly_op_data PRIMARY KEY (hour_id),
+    ADD CONSTRAINT pk_hrly_op_data PRIMARY KEY (hour_id, rpt_period_id),
     ADD CONSTRAINT fk_hrly_op_data_fuel_code FOREIGN KEY (fuel_cd)
         REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_hrly_op_data_monitor_location FOREIGN KEY (mon_loc_id)

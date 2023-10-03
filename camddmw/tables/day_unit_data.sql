@@ -1,7 +1,3 @@
--- Table: camddmw.day_unit_data
-
--- DROP TABLE camddmw.day_unit_data;
-
 CREATE TABLE IF NOT EXISTS camddmw.day_unit_data
 (
     unit_id numeric(12,0) NOT NULL,
@@ -31,8 +27,7 @@ CREATE TABLE IF NOT EXISTS camddmw.day_unit_data
     op_month numeric(2,0),
     data_source character varying(35) COLLATE pg_catalog."default",
     userid character varying(160) COLLATE pg_catalog."default",
-    add_date timestamp without time zone,
-    CONSTRAINT pk_day_unit_data PRIMARY KEY (unit_id, op_date)
+    add_date timestamp without time zone
 ) PARTITION BY RANGE (op_date);
 
 

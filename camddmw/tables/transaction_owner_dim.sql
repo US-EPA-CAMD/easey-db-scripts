@@ -1,7 +1,3 @@
--- Table: camddmw.transaction_owner_dim
-
--- DROP TABLE camddmw.transaction_owner_dim;
-
 CREATE TABLE IF NOT EXISTS camddmw.transaction_owner_dim
 (
     transaction_id double precision,
@@ -17,8 +13,7 @@ CREATE TABLE IF NOT EXISTS camddmw.transaction_owner_dim
     own_id double precision,
     buy_or_sell character varying(4) COLLATE pg_catalog."default",
     transaction_owner_unique_id numeric(38,0) NOT NULL,
-    last_update_date timestamp without time zone,
-    CONSTRAINT transaction_owner_dim_pk PRIMARY KEY (transaction_owner_unique_id)
+    last_update_date timestamp without time zone
 );
 
 COMMENT ON TABLE camddmw.transaction_owner_dim
@@ -65,27 +60,3 @@ COMMENT ON COLUMN camddmw.transaction_owner_dim.transaction_owner_unique_id
 
 COMMENT ON COLUMN camddmw.transaction_owner_dim.last_update_date
     IS 'Latest add or update date on source records that are used to populate this record';
-
--- Index: transaction_owner_dim_fk
-
--- DROP INDEX camddmw.transaction_owner_dim_fk;
-
-CREATE INDEX IF NOT EXISTS transaction_owner_dim_fk
-    ON camddmw.transaction_owner_dim USING btree
-    (transaction_id ASC NULLS LAST, prg_code COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: transaction_owner_dim_idx001
-
--- DROP INDEX camddmw.transaction_owner_dim_idx001;
-
-CREATE INDEX IF NOT EXISTS transaction_owner_dim_idx001
-    ON camddmw.transaction_owner_dim USING btree
-    (own_id ASC NULLS LAST, ppl_id ASC NULLS LAST);
-
--- Index: transaction_owner_dim_idx002
-
--- DROP INDEX camddmw.transaction_owner_dim_idx002;
-
-CREATE INDEX IF NOT EXISTS transaction_owner_dim_idx002
-    ON camddmw.transaction_owner_dim USING btree
-    (ppl_id ASC NULLS LAST, own_id ASC NULLS LAST);

@@ -1,10 +1,10 @@
 ALTER TABLE IF EXISTS camdecmps.nsps4t_compliance_period
-    ADD CONSTRAINT pk_nsps4t_compliance_period PRIMARY KEY (nsps4t_cmp_id),
+    ADD CONSTRAINT pk_nsps4t_compliance_period PRIMARY KEY (nsps4t_cmp_id, rpt_period_id),
     ADD CONSTRAINT fk_nsps4t_compliance_period_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON DELETE CASCADE,
-    ADD CONSTRAINT fk_nsps4t_compliance_period_nsps4t_summary FOREIGN KEY (nsps4t_sum_id)
-        REFERENCES camdecmps.nsps4t_summary (nsps4t_sum_id) MATCH SIMPLE
+    ADD CONSTRAINT fk_nsps4t_compliance_period_nsps4t_summary FOREIGN KEY (nsps4t_sum_id, rpt_period_id)
+        REFERENCES camdecmps.nsps4t_summary (nsps4t_sum_id, rpt_period_id) MATCH SIMPLE
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_nsps4t_compliance_period_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,

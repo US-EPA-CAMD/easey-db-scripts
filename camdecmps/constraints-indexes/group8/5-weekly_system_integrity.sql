@@ -1,5 +1,5 @@
 ALTER TABLE IF EXISTS camdecmps.weekly_system_integrity
-    ADD CONSTRAINT pk_weekly_system_integrity PRIMARY KEY (weekly_sys_integrity_id),
+    ADD CONSTRAINT pk_weekly_system_integrity PRIMARY KEY (weekly_sys_integrity_id, rpt_period_id),
     ADD CONSTRAINT fk_weekly_system_integrity_gas_level_code FOREIGN KEY (gas_level_cd)
         REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_weekly_system_integrity_monitor_location FOREIGN KEY (mon_loc_id)
@@ -7,8 +7,8 @@ ALTER TABLE IF EXISTS camdecmps.weekly_system_integrity
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_weekly_system_integrity_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
-    ADD CONSTRAINT fk_weekly_system_integrity_weekly_test_summary FOREIGN KEY (weekly_test_sum_id)
-        REFERENCES camdecmps.weekly_test_summary (weekly_test_sum_id) MATCH SIMPLE
+    ADD CONSTRAINT fk_weekly_system_integrity_weekly_test_summary FOREIGN KEY (weekly_test_sum_id, rpt_period_id)
+        REFERENCES camdecmps.weekly_test_summary (weekly_test_sum_id, rpt_period_id) MATCH SIMPLE
         ON DELETE CASCADE;
 
 CREATE INDEX IF NOT EXISTS idx_weekly_system_integrity_gas_level_cd

@@ -1,7 +1,7 @@
 ALTER TABLE IF EXISTS camdecmps.daily_fuel
-    ADD CONSTRAINT pk_daily_fuel PRIMARY KEY (daily_fuel_id),
-    ADD CONSTRAINT fk_daily_fuel_daily_emission FOREIGN KEY (daily_emission_id)
-        REFERENCES camdecmps.daily_emission (daily_emission_id) MATCH SIMPLE
+    ADD CONSTRAINT pk_daily_fuel PRIMARY KEY (daily_fuel_id, rpt_period_id),
+    ADD CONSTRAINT fk_daily_fuel_daily_emission FOREIGN KEY (daily_emission_id, rpt_period_id)
+        REFERENCES camdecmps.daily_emission (daily_emission_id, rpt_period_id) MATCH SIMPLE
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_daily_fuel_fuel_code FOREIGN KEY (fuel_cd)
         REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE,

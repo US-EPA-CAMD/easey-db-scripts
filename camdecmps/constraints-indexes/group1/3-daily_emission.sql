@@ -1,5 +1,5 @@
 ALTER TABLE IF EXISTS camdecmps.daily_emission
-    ADD CONSTRAINT pk_daily_emission PRIMARY KEY (daily_emission_id),
+    ADD CONSTRAINT pk_daily_emission PRIMARY KEY (daily_emission_id, rpt_period_id),
     ADD CONSTRAINT fk_daily_emission_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON DELETE CASCADE,

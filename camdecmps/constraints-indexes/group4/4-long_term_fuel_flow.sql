@@ -1,5 +1,5 @@
 ALTER TABLE IF EXISTS camdecmps.long_term_fuel_flow
-    ADD CONSTRAINT pk_long_term_fuel_flow PRIMARY KEY (ltff_id),
+    ADD CONSTRAINT pk_long_term_fuel_flow PRIMARY KEY (ltff_id, rpt_period_id),
     ADD CONSTRAINT fk_long_term_fuel_flow_fuel_flow_period_code FOREIGN KEY (fuel_flow_period_cd)
         REFERENCES camdecmpsmd.fuel_flow_period_code (fuel_flow_period_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_long_term_fuel_flow_monitor_location FOREIGN KEY (mon_loc_id)

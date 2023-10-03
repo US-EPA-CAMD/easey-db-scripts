@@ -1,7 +1,3 @@
--- Table: camddmw.fuel_year_dim
-
--- DROP TABLE camddmw.fuel_year_dim;
-
 CREATE TABLE IF NOT EXISTS camddmw.fuel_year_dim
 (
     fuel_yr_dim numeric(10,0) NOT NULL,
@@ -13,8 +9,7 @@ CREATE TABLE IF NOT EXISTS camddmw.fuel_year_dim
     data_source character varying(35) COLLATE pg_catalog."default",
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
-    last_update_date timestamp without time zone,
-    CONSTRAINT pk_fuel_year_dim PRIMARY KEY (unit_id, fuel_code, op_year, indicator)
+    last_update_date timestamp without time zone
 ) PARTITION BY RANGE (op_year);
 
 

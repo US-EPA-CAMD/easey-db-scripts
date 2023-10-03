@@ -1,7 +1,3 @@
--- Table: camddmw.owner_year_dim
-
--- DROP TABLE camddmw.owner_year_dim;
-
 CREATE TABLE IF NOT EXISTS camddmw.owner_year_dim
 (
     own_yr_id numeric(10,0) NOT NULL,
@@ -13,9 +9,7 @@ CREATE TABLE IF NOT EXISTS camddmw.owner_year_dim
     data_source character varying(35) COLLATE pg_catalog."default",
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
-    last_update_date timestamp without time zone,
-    CONSTRAINT pk_owner_year_dim PRIMARY KEY (own_yr_id),
-    CONSTRAINT unq_owner_year_dim UNIQUE (unit_id, op_year, own_id, own_type)
+    last_update_date timestamp without time zone
 );
 
 COMMENT ON TABLE camddmw.owner_year_dim

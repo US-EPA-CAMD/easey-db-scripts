@@ -1,5 +1,5 @@
 ALTER TABLE IF EXISTS camdecmps.summary_value
-    ADD CONSTRAINT pk_summary_value PRIMARY KEY (sum_value_id),
+    ADD CONSTRAINT pk_summary_value PRIMARY KEY (sum_value_id, rpt_period_id),
     ADD CONSTRAINT uq_summary_value UNIQUE (mon_loc_id, rpt_period_id, parameter_cd),
     ADD CONSTRAINT fk_summary_value_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE

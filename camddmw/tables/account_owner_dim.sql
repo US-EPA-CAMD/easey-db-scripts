@@ -1,7 +1,3 @@
--- Table: camddmw.account_owner_dim
-
--- DROP TABLE camddmw.account_owner_dim;
-
 CREATE TABLE IF NOT EXISTS camddmw.account_owner_dim
 (
     prg_code character varying(8) COLLATE pg_catalog."default" NOT NULL,
@@ -16,8 +12,7 @@ CREATE TABLE IF NOT EXISTS camddmw.account_owner_dim
     ppl_id numeric(12,0),
     account_owner_id double precision,
     account_owner_unique_id numeric(38,0) NOT NULL,
-    last_update_date timestamp without time zone,
-    CONSTRAINT account_owner_dim_pk PRIMARY KEY (account_owner_unique_id)
+    last_update_date timestamp without time zone
 );
 
 COMMENT ON TABLE camddmw.account_owner_dim

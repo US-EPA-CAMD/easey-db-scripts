@@ -1,7 +1,3 @@
--- Table: camddmw.day_unit_data_log
-
--- DROP TABLE camddmw.day_unit_data_log;
-
 CREATE TABLE IF NOT EXISTS camddmw.day_unit_data_log
 (
     sql_function character varying(1) COLLATE pg_catalog."default" NOT NULL,
@@ -34,19 +30,5 @@ CREATE TABLE IF NOT EXISTS camddmw.day_unit_data_log
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     skey numeric NOT NULL,
-    logged_time timestamp without time zone,
-    CONSTRAINT pk_day_unit_data_log PRIMARY KEY (skey)
+    logged_time timestamp without time zone
 );
-
-CREATE INDEX IF NOT EXISTS idx_day_unit_data_log_sql_function
-    ON camddmw.day_unit_data_log USING btree
-    (sql_function ASC NULLS LAST);
-
-CREATE INDEX IF NOT EXISTS idx_day_unit_data_log_unit_id
-    ON camddmw.day_unit_data_log USING btree
-    (unit_id ASC NULLS LAST);
-
-CREATE INDEX IF NOT EXISTS idx_day_unit_data_log_op_date
-    ON camddmw.day_unit_data_log USING btree
-    (op_date ASC NULLS LAST);
-

@@ -1,5 +1,5 @@
 ALTER TABLE IF EXISTS camdecmps.sampling_train
-    ADD CONSTRAINT pk_sampling_train PRIMARY KEY (trap_train_id),
+    ADD CONSTRAINT pk_sampling_train PRIMARY KEY (trap_train_id, rpt_period_id),
     ADD CONSTRAINT fk_sampling_train_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
         ON DELETE CASCADE,
@@ -8,8 +8,8 @@ ALTER TABLE IF EXISTS camdecmps.sampling_train
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_sampling_train_reporting_period FOREIGN KEY (rpt_period_id)
         REFERENCES camdecmpsmd.reporting_period (rpt_period_id) MATCH SIMPLE,
-    ADD CONSTRAINT fk_sampling_train_sorbent_trap FOREIGN KEY (trap_id)
-        REFERENCES camdecmps.sorbent_trap (trap_id) MATCH SIMPLE
+    ADD CONSTRAINT fk_sampling_train_sorbent_trap FOREIGN KEY (trap_id, rpt_period_id)
+        REFERENCES camdecmps.sorbent_trap (trap_id, rpt_period_id) MATCH SIMPLE
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_sampling_train_test_result_code_post_leak FOREIGN KEY (post_leak_test_result_cd)
         REFERENCES camdecmpsmd.test_result_code (test_result_cd) MATCH SIMPLE,

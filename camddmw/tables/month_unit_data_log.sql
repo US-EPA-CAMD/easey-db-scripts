@@ -1,7 +1,3 @@
--- Table: camddmw.month_unit_data_log
-
--- DROP TABLE camddmw.month_unit_data_log;
-
 CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_log
 (
     sql_function character varying(1) COLLATE pg_catalog."default" NOT NULL,
@@ -35,8 +31,7 @@ CREATE TABLE IF NOT EXISTS camddmw.month_unit_data_log
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     skey numeric NOT NULL,
-    logged_time timestamp without time zone,
-    CONSTRAINT pk_month_unit_data_log PRIMARY KEY (skey)
+    logged_time timestamp without time zone
 );
 
 CREATE INDEX IF NOT EXISTS idx_month_unit_data_log_sql_function

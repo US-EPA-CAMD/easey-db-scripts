@@ -1,7 +1,3 @@
--- Table: camddmw.allowance_holding_dim
-
--- DROP TABLE camddmw.allowance_holding_dim;
-
 CREATE TABLE IF NOT EXISTS camddmw.allowance_holding_dim
 (
     account_number character varying(12) COLLATE pg_catalog."default" NOT NULL,
@@ -18,8 +14,7 @@ CREATE TABLE IF NOT EXISTS camddmw.allowance_holding_dim
     add_date timestamp without time zone,
     account_name character varying(100) COLLATE pg_catalog."default",
     allowance_type_code character varying(3) COLLATE pg_catalog."default",
-    last_update_date timestamp without time zone,
-    CONSTRAINT allowance_holding_dim_pk PRIMARY KEY (vintage_year, prg_code, start_block)
+    last_update_date timestamp without time zone
 ) PARTITION BY RANGE (vintage_year);
 
 

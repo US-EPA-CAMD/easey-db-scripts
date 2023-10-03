@@ -1,7 +1,3 @@
--- Table: camddmw.account_fact
-
--- DROP TABLE camddmw.account_fact;
-
 CREATE TABLE IF NOT EXISTS camddmw.account_fact
 (
     account_number character varying(12) COLLATE pg_catalog."default" NOT NULL,
@@ -41,8 +37,7 @@ CREATE TABLE IF NOT EXISTS camddmw.account_fact
     account_type_code character varying(7) COLLATE pg_catalog."default",
     op_status character varying(7) COLLATE pg_catalog."default",
     hg_control_info character varying(1000) COLLATE pg_catalog."default",
-    last_update_date timestamp without time zone,
-    CONSTRAINT pk_account_fact PRIMARY KEY (account_number, prg_code)
+    last_update_date timestamp without time zone
 );
 
 COMMENT ON TABLE camddmw.account_fact
@@ -161,51 +156,3 @@ COMMENT ON COLUMN camddmw.account_fact.hg_control_info
 
 COMMENT ON COLUMN camddmw.account_fact.last_update_date
     IS 'Latest add or update date on source records that are used to populate this record';
-
--- Index: account_fact_idx001
-
--- DROP INDEX camddmw.account_fact_idx001;
-
-CREATE UNIQUE INDEX IF NOT EXISTS account_fact_idx001
-    ON camddmw.account_fact USING btree
-    (state COLLATE pg_catalog."default" ASC NULLS LAST, account_number COLLATE pg_catalog."default" ASC NULLS LAST, prg_code COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: account_fact_idx002
-
--- DROP INDEX camddmw.account_fact_idx002;
-
-CREATE INDEX IF NOT EXISTS account_fact_idx002
-    ON camddmw.account_fact USING btree
-    (fac_id ASC NULLS LAST);
-
--- Index: account_fact_idx003
-
--- DROP INDEX camddmw.account_fact_idx003;
-
-CREATE INDEX IF NOT EXISTS account_fact_idx003
-    ON camddmw.account_fact USING btree
-    (epa_region ASC NULLS LAST, op_status_info COLLATE pg_catalog."default" ASC NULLS LAST, source_cat COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: account_fact_idx004
-
--- DROP INDEX camddmw.account_fact_idx004;
-
-CREATE INDEX IF NOT EXISTS account_fact_idx004
-    ON camddmw.account_fact USING btree
-    (nerc_region COLLATE pg_catalog."default" ASC NULLS LAST, op_status_info COLLATE pg_catalog."default" ASC NULLS LAST, source_cat COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: account_fact_idx005
-
--- DROP INDEX camddmw.account_fact_idx005;
-
-CREATE INDEX IF NOT EXISTS account_fact_idx005
-    ON camddmw.account_fact USING btree
-    (prg_code COLLATE pg_catalog."default" ASC NULLS LAST);
-
--- Index: account_fact_idx_unit
-
--- DROP INDEX camddmw.account_fact_idx_unit;
-
-CREATE INDEX IF NOT EXISTS account_fact_idx_unit
-    ON camddmw.account_fact USING btree
-    (unit_id ASC NULLS LAST);

@@ -1,7 +1,3 @@
--- Table: camddmw.unit_type_year_dim
-
--- DROP TABLE camddmw.unit_type_year_dim;
-
 CREATE TABLE IF NOT EXISTS camddmw.unit_type_year_dim
 (
     unit_id numeric(12,0) NOT NULL,
@@ -11,8 +7,7 @@ CREATE TABLE IF NOT EXISTS camddmw.unit_type_year_dim
     data_source character varying(35) COLLATE pg_catalog."default",
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
-    last_update_date timestamp without time zone,
-    CONSTRAINT pk_unit_type_year_dim PRIMARY KEY (unit_id, unit_type, op_year)
+    last_update_date timestamp without time zone
 ) PARTITION BY RANGE (op_year);
 
 

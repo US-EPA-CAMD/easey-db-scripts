@@ -1,7 +1,7 @@
 ALTER TABLE IF EXISTS camdecmps.daily_calibration
-    ADD CONSTRAINT pk_daily_calibration PRIMARY KEY (cal_inj_id),
-    ADD CONSTRAINT fk_daily_calibration_daily_test_summary FOREIGN KEY (daily_test_sum_id)
-        REFERENCES camdecmps.daily_test_summary (daily_test_sum_id) MATCH SIMPLE
+    ADD CONSTRAINT pk_daily_calibration PRIMARY KEY (cal_inj_id, rpt_period_id),
+    ADD CONSTRAINT fk_daily_calibration_daily_test_summary FOREIGN KEY (daily_test_sum_id, rpt_period_id)
+        REFERENCES camdecmps.daily_test_summary (daily_test_sum_id, rpt_period_id) MATCH SIMPLE
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_daily_calibration_gas_level_code FOREIGN KEY (upscale_gas_level_cd)
         REFERENCES camdecmpsmd.gas_level_code (gas_level_cd) MATCH SIMPLE,

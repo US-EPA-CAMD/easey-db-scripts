@@ -9,7 +9,7 @@ PROCEDURES=false
 PRE_DATA_LOAD=false
 POST_DATA_LOAD=false
 POST_DEPLOYMENT=false
-CONSTRAINTS_INDEXES=false
+CONSTRAINTS_INDEXES=true
 
 function getFileAndCommit() {
   FILES="\i $1"
@@ -124,20 +124,22 @@ fi
 
 if [ $POST_DATA_LOAD == true ]; then
   FILES="$FILES
+  TRUNCATE camdaux.DATASET;
+  TRUNCATE camdaux.DATATABLE;
+  TRUNCATE camdaux.DATACOLUMN;
+  TRUNCATE camdaux.DATAPARAMETER;
   TRUNCATE camdecmpsmd.CHECK_CATALOG_PARAMETER;
   TRUNCATE camdecmpsmd.CHECK_CATALOG_PLUGIN;
   TRUNCATE camdecmpsmd.CHECK_CATALOG_PROCESS;
   TRUNCATE camdecmpsmd.CHECK_PARAMETER_CODE;
   TRUNCATE camdecmpsmd.RESPONSE_CATALOG;
-  TRUNCATE camdecmpsaux.DATASET;
-  TRUNCATE camdecmpsaux.DATATABLE;
-  TRUNCATE camdecmpsaux.DATACOLUMN;
-  TRUNCATE camdecmpsaux.DATAPARAMETER;
   \copy camdecmpsmd.check_catalog_parameter from './check-tables/data/check_catalog_parameter.csv' with delimiter '|' CSV HEADER QUOTE '\"' ESCAPE '\"';
   \copy camdecmpsmd.check_catalog_plugin from './check-tables/data/check_catalog_plugin.csv' with delimiter '|' CSV HEADER QUOTE '\"' ESCAPE '\"';
   \copy camdecmpsmd.check_parameter_code from './check-tables/data/check_parameter_code.csv' with delimiter '|' CSV HEADER QUOTE '\"' ESCAPE '\"';
   \copy camdecmpsmd.response_catalog from './check-tables/data/response_catalog.csv' with delimiter '|' CSV HEADER QUOTE '\"' ESCAPE '\"';
   DELETE FROM camdecmpsmd.check_catalog_result WHERE check_catalog_result_id = 5849;
+  DELETE FROM camdecmps.dm_emissions_user WHERE dm_emissions_user_cd NOT IN ('S3QTRFILES','S3STATEFILES');
+  DELETE FROM camdecmps.dm_emissions_user WHERE dm_emissions_id NOT IN (SELECT dm_emissions_id FROM camdecmps.dm_emissions);
   \i ./check-tables/PopulateCheckTables.sql
   \i ./client-tables/PopulateClientOnlyTables.sql
   \i ./drop-customizations.sql
@@ -163,26 +165,26 @@ if [ $POST_DATA_LOAD == true ]; then
 fi
 
 if [ $CONSTRAINTS_INDEXES == true ]; then
-  getFilesAndCommit "../../../camdmd/constraints-indexes"
-  getFilesAndCommit "../../../camdecmpsmd/constraints-indexes"
-  getFilesAndCommit "../../../camd/constraints-indexes"
-  getFilesAndCommit "../../../camdaux/constraints-indexes"
-  getFilesAndCommit "../../../camdecmps/constraints-indexes/group1"
-  getFileAndCommit "../../../camdecmps/constraints-indexes/3-hrly_op_data.sql"
-  getFilesAndCommit "../../../camdecmps/constraints-indexes/group2"
-  getFileAndCommit "../../../camdecmps/constraints-indexes/3-operating_supp_data.sql"
-  getFilesAndCommit "../../../camdecmps/constraints-indexes/group3"
-  getFileAndCommit "../../../camdecmps/constraints-indexes/4-daily_test_summary.sql"
-  getFileAndCommit "../../../camdecmps/constraints-indexes/4-derived_hrly_value.sql"
-  getFileAndCommit "../../../camdecmps/constraints-indexes/4-hrly_fuel_flow.sql"
-  getFileAndCommit "../../../camdecmps/constraints-indexes/4-hrly_gas_flow_meter.sql"
-  getFilesAndCommit "../../../camdecmps/constraints-indexes/group4"
-  getFileAndCommit "../../../camdecmps/constraints-indexes/4-mats_derived_hrly_value.sql"
-  getFileAndCommit "../../../camdecmps/constraints-indexes/4-mats_monitor_hrly_value.sql"
-  getFileAndCommit "../../../camdecmps/constraints-indexes/4-monitor_hrly_value.sql"
-  getFilesAndCommit "../../../camdecmps/constraints-indexes/group5"
-  getFileAndCommit "../../../camdecmps/constraints-indexes/4-test_summary.sql"
-  getFilesAndCommit "../../../camdecmps/constraints-indexes/group6"
+  #getFilesAndCommit "../../../camdmd/constraints-indexes"
+  #getFilesAndCommit "../../../camdecmpsmd/constraints-indexes"
+  #getFilesAndCommit "../../../camd/constraints-indexes"
+  #getFilesAndCommit "../../../camdaux/constraints-indexes"
+  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group1"
+  #getFileAndCommit "../../../camdecmps/constraints-indexes/3-hrly_op_data.sql"
+  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group2"
+  #getFileAndCommit "../../../camdecmps/constraints-indexes/3-operating_supp_data.sql"
+  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group3"
+  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-daily_test_summary.sql"
+  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-derived_hrly_value.sql"
+  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-hrly_fuel_flow.sql"
+  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-hrly_gas_flow_meter.sql"
+  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group4"
+  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-mats_derived_hrly_value.sql"
+  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-mats_monitor_hrly_value.sql"
+  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-monitor_hrly_value.sql"
+  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group5"
+  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-test_summary.sql"
+  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group6"
   getFileAndCommit "../../../camdecmps/constraints-indexes/5-daily_calibration.sql"
   getFilesAndCommit "../../../camdecmps/constraints-indexes/group7"
   getFileAndCommit "../../../camdecmps/constraints-indexes/5-hrly_param_fuel_flow.sql"
