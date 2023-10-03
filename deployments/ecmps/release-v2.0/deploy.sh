@@ -8,8 +8,8 @@ FUNCTIONS=false
 PROCEDURES=false
 PRE_DATA_LOAD=false
 POST_DATA_LOAD=false
-POST_DEPLOYMENT=false
-CONSTRAINTS_INDEXES=true
+CONSTRAINTS_INDEXES=false
+POST_DEPLOYMENT=true
 
 function getFileAndCommit() {
   FILES="\i $1"
@@ -165,29 +165,54 @@ if [ $POST_DATA_LOAD == true ]; then
 fi
 
 if [ $CONSTRAINTS_INDEXES == true ]; then
-  #getFilesAndCommit "../../../camdmd/constraints-indexes"
-  #getFilesAndCommit "../../../camdecmpsmd/constraints-indexes"
-  #getFilesAndCommit "../../../camd/constraints-indexes"
-  #getFilesAndCommit "../../../camdaux/constraints-indexes"
-  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group1"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/3-hrly_op_data.sql"
-  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group2"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/3-operating_supp_data.sql"
-  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group3"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-daily_test_summary.sql"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-derived_hrly_value.sql"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-hrly_fuel_flow.sql"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-hrly_gas_flow_meter.sql"
-  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group4"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-mats_derived_hrly_value.sql"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-mats_monitor_hrly_value.sql"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-monitor_hrly_value.sql"
-  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group5"
-  #getFileAndCommit "../../../camdecmps/constraints-indexes/4-test_summary.sql"
-  #getFilesAndCommit "../../../camdecmps/constraints-indexes/group6"
+  # THESE ARE ALL PRETTY QUICK
+  getFilesAndCommit "../../../camdmd/constraints-indexes"
+  getFilesAndCommit "../../../camdecmpsmd/constraints-indexes"
+  getFilesAndCommit "../../../camd/constraints-indexes"
+  getFilesAndCommit "../../../camdaux/constraints-indexes"
+  getFilesAndCommit "../../../camdecmps/constraints-indexes/group1"
+
+  # CAN TAKE MANY HOURS
+  getFileAndCommit "../../../camdecmps/constraints-indexes/3-hrly_op_data.sql"
+
+  # THESE ARE ALL PRETTY QUICK
+  getFilesAndCommit "../../../camdecmps/constraints-indexes/group2"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/3-operating_supp_data.sql"
+  getFilesAndCommit "../../../camdecmps/constraints-indexes/group3"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/4-daily_test_summary.sql"
+
+  # CAN TAKE MANY HOURS
+  getFileAndCommit "../../../camdecmps/constraints-indexes/4-derived_hrly_value.sql"
+
+  # CAN TAKE MANY HOURS
+  getFileAndCommit "../../../camdecmps/constraints-indexes/4-hrly_fuel_flow.sql"
+
+  # CAN TAKE MANY HOURS
+  getFileAndCommit "../../../camdecmps/constraints-indexes/4-hrly_gas_flow_meter.sql"
+
+  # THIS ONE IS QUICK
+  getFilesAndCommit "../../../camdecmps/constraints-indexes/group4"
+
+  # CAN TAKE MANY HOURS
+  getFileAndCommit "../../../camdecmps/constraints-indexes/4-mats_derived_hrly_value.sql"
+
+  # CAN TAKE MANY HOURS
+  getFileAndCommit "../../../camdecmps/constraints-indexes/4-mats_monitor_hrly_value.sql"
+
+  # CAN TAKE MANY HOURS
+  getFileAndCommit "../../../camdecmps/constraints-indexes/4-monitor_hrly_value.sql"
+
+  # THESE ARE ALL PRETTY QUICK
+  getFilesAndCommit "../../../camdecmps/constraints-indexes/group5"
+  getFileAndCommit "../../../camdecmps/constraints-indexes/4-test_summary.sql"
+  getFilesAndCommit "../../../camdecmps/constraints-indexes/group6"
   getFileAndCommit "../../../camdecmps/constraints-indexes/5-daily_calibration.sql"
   getFilesAndCommit "../../../camdecmps/constraints-indexes/group7"
+
+  # CAN TAKE MANY HOURS
   getFileAndCommit "../../../camdecmps/constraints-indexes/5-hrly_param_fuel_flow.sql"
+
+  # THESE ARE ALL PRETTY QUICK
   getFileAndCommit "../../../camdecmps/constraints-indexes/5-linearity_summary.sql"
   getFileAndCommit "../../../camdecmps/constraints-indexes/5-on_off_cal.sql"
   getFileAndCommit "../../../camdecmps/constraints-indexes/5-protocol_gas.sql"
@@ -209,15 +234,16 @@ if [ $POST_DEPLOYMENT == true ]; then
   getFiles "../../../camdecmpsaux/views"
 
   FILES="
-  DROP TABLE IF EXISTS camdaux.bulk_file_log;
-  DROP TABLE IF EXISTS camdaux.dataset_template;
-  DROP TABLE IF EXISTS camdaux.missing_oris;
-  DROP TABLE IF EXISTS camdaux.sftp_failures;
-  DROP TABLE IF EXISTS camdaux.sftp_log;  
+  DROP TABLE IF EXISTS camdaux.bulk_file_log CASCADE;
+  DROP TABLE IF EXISTS camdaux.dataset_template CASCADE;
+  DROP TABLE IF EXISTS camdaux.missing_oris CASCADE;
+  DROP TABLE IF EXISTS camdaux.sftp_failures CASCADE;
+  DROP TABLE IF EXISTS camdaux.sftp_log CASCADE;
   \i ./update-mp-qa-em-check-session-ids.sql
   CALL camdecmpswks.load_workspace();
   CALL camdecmps.refresh_emissions_views();
   "
+
   ../../execute-psql.sh "$FILES"
 fi
 

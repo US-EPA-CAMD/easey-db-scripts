@@ -3,8 +3,8 @@ ALTER TABLE IF EXISTS camdecmps.emission_view_matsweekly
     ADD CONSTRAINT fk_emission_view_matsweekly_emission_evaluation FOREIGN KEY (rpt_period_id, mon_plan_id)
         REFERENCES camdecmps.emission_evaluation (rpt_period_id, mon_plan_id) MATCH SIMPLE
         ON DELETE CASCADE,
-    ADD CONSTRAINT fk_emission_view_matsweekly_weekly_test_summary FOREIGN KEY (weekly_test_sum_id)
-        REFERENCES camdecmps.weekly_test_summary (weekly_test_sum_id) MATCH SIMPLE
+    ADD CONSTRAINT fk_emission_view_matsweekly_weekly_test_summary FOREIGN KEY (weekly_test_sum_id, rpt_period_id)
+        REFERENCES camdecmps.weekly_test_summary (weekly_test_sum_id, rpt_period_id) MATCH SIMPLE
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_emission_view_matsweekly_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE,

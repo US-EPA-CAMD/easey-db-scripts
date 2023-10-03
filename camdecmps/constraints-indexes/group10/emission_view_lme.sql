@@ -3,8 +3,8 @@ ALTER TABLE IF EXISTS camdecmps.emission_view_lme
     ADD CONSTRAINT fk_emission_view_lme_emission_evaluation FOREIGN KEY (rpt_period_id, mon_plan_id)
         REFERENCES camdecmps.emission_evaluation (rpt_period_id, mon_plan_id) MATCH SIMPLE
         ON DELETE CASCADE,
-    ADD CONSTRAINT fk_emission_view_lme_hrly_op_data FOREIGN KEY (hour_id)
-        REFERENCES camdecmps.hrly_op_data (hour_id) MATCH SIMPLE,
+    ADD CONSTRAINT fk_emission_view_lme_hrly_op_data FOREIGN KEY (hour_id, rpt_period_id)
+        REFERENCES camdecmps.hrly_op_data (hour_id, rpt_period_id) MATCH SIMPLE,
     ADD CONSTRAINT fk_emission_view_lme_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE,
     ADD CONSTRAINT fk_emission_view_lme_monitor_plan FOREIGN KEY (mon_plan_id)
