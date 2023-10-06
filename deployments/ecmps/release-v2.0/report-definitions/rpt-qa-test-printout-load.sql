@@ -283,4 +283,108 @@ BEGIN
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
 	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+-- APPENDIX E NOX RATE
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'APPESUM', 'SELECT * FROM {SCHEMA}.rpt_qa_test_summary($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'systemIdentifier', 'System ID'),
+		(datatableId, 2, 'systemTypeCode', 'System Type'),
+		(datatableId, 3, 'endDateTime', 'Test Completion'),
+		(datatableId, 4, 'testNumber', 'Test Number'),
+		(datatableId, 5, 'testReasonCode', 'Reason for Test'),
+		(datatableId, 6, 'testResultCode', 'Reported Test Results');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+----------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'APPEGAS', 'SELECT * FROM {SCHEMA}.rpt_qa_protocol_gas($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'gasLevelCode', 'Gas Level Code'),
+		(datatableId, 2, 'gasTypeCode', 'Gas Type Code'),
+		(datatableId, 3, 'vendorIdentifier', 'Vendor Identifier'),
+		(datatableId, 4, 'cylinderIdentifier', 'Cylinder Identifier'),
+		(datatableId, 5, 'expirationDate', 'Expiration Date');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+----------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'APPESTAT', 'SELECT * FROM {SCHEMA}.rpt_qa_ae_statistics($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'operatingLevelNo', 'Operating Level No.'),
+		(datatableId, 2, 'fFactor', 'F-Factor'),
+		(datatableId, 3, 'reportedMeanNoxRate', 'Mean NOx Emission Rate'),
+		(datatableId, 4, 'reportedAvgHiRate', 'Average Hourly Heat Input Rate'),
+		(datatableId, 5, 'reportedCaclMeanNoxRate', 'Calculated Mean NOx Emission Rate'),
+		(datatableId, 6, 'reportedCalcAvgHiRate', 'Calculated Average Hourly Heat Input Rate');
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+----------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'APPERUN', 'SELECT * FROM {SCHEMA}.rpt_qa_ae_run($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'operatingLevelNo', 'Operating Level No.'),
+		(datatableId, 2, 'runNo', 'Run No.'),
+		(datatableId, 3, 'beginDate', 'Begin Date/Hour'),
+		(datatableId, 4, 'endDate', 'End Date/Hour'),
+		(datatableId, 5, 'noxEmissionsRate', 'NOx Emission Rate'),
+		(datatableId, 6, 'responseTime', 'Response Time (sec)'),
+		(datatableId, 7, 'hourlyHiRate', 'Hourly HI Rate'),
+		(datatableId, 8, 'totalHi', 'Total HI Rate'),
+		(datatableId, 9, 'calculatedHourlyHiRate', 'Calculated Hourly HI Rate'),
+		(datatableId, 10, 'calculatedTotalHi', 'Calculated Total HI Rate');
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+----------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'APPEOIL', 'SELECT * FROM {SCHEMA}.rpt_qa_ae_hi_oil($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'operatingLevelNo', 'Operating Level No.'),
+		(datatableId, 2, 'runNo', 'Run No.'),
+		(datatableId, 3, 'sysId', 'System ID'),
+		(datatableId, 4, 'oilMass', 'Oil Mass (lb)'),
+		(datatableId, 5, 'oilGCV', 'Oil GCV'),
+		(datatableId, 6, 'oilGCVUOM', 'Oil GCV UOM'),
+		(datatableId, 7, 'oilVolume', 'Oil Volume'),
+		(datatableId, 8, 'oilVolumeUOM', 'Oil Volume UOM'),
+		(datatableId, 9, 'oilDensity', 'Oil Density'),
+		(datatableId, 10, 'oilDensityUOM', 'Oil Density UOM'),
+		(datatableId, 11, 'oilHi', 'Oil HI'),
+		(datatableId, 12, 'calculatedOilHI', 'Calculated Oil HI');
+		
+			/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
 END $$;
