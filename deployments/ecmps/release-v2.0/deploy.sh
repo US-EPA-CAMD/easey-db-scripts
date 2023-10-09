@@ -9,7 +9,7 @@ PROCEDURES=false
 PRE_DATA_LOAD=false
 POST_DATA_LOAD=false
 CONSTRAINTS_INDEXES=false
-POST_DEPLOYMENT=true
+POST_DEPLOYMENT=false
 
 function getFileAndCommit() {
   FILES="\i $1"
