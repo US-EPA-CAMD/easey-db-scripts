@@ -1,12 +1,18 @@
--- PROCEDURE: camdecmps.refresh_emission_view_noxmasscems()
+-- PROCEDURE: camdecmps.refresh_emission_view_noxmasscems(character varying, numeric)
 
-DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_noxmasscems();
+DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_noxmasscems(character varying, numeric);
 
-CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_noxmasscems()
+CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_noxmasscems(
+	vmonplanid character varying,
+	vrptperiodid numeric
+)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-	TRUNCATE camdecmps.EMISSION_VIEW_NOXMASSCEMS RESTART IDENTITY;
+	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
+	DELETE FROM camdecmps.EMISSION_VIEW_NOXMASSCEMS 
+	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
 	INSERT INTO camdecmps.EMISSION_VIEW_NOXMASSCEMS(
 		MON_PLAN_ID,
@@ -69,7 +75,7 @@ BEGIN
 		DHV.ADJUSTED_HRLY_VALUE AS RPT_NOX_MASS,
 		DHV.CALC_ADJUSTED_HRLY_VALUE AS CALC_NOX_MASS,
 		HOD.ERROR_CODES
-	FROM temp_hourly_test_errors AS HOD 
+	FROM temp_hourly_test_errors HOD 
 	INNER JOIN camdecmps.DERIVED_HRLY_VALUE  DHV 
 		ON DHV.HOUR_ID = HOD.HOUR_ID AND DHV.PARAMETER_CD = 'NOX'
 	INNER JOIN camdecmps.MONITOR_HRLY_VALUE  FLOW_MHV 
@@ -87,5 +93,7 @@ BEGIN
 		AND camdecmps.emissions_monitor_default_active(H2O_MD.BEGIN_DATE, H2O_MD.BEGIN_HOUR, H2O_MD.END_DATE, H2O_MD.END_HOUR, HOD.BEGIN_DATE, HOD.BEGIN_HOUR) = 1
 	LEFT OUTER JOIN camdecmps.DERIVED_HRLY_VALUE  NOXR_DHV 
 		ON DHV.HOUR_ID = NOXR_DHV.HOUR_ID AND NOXR_DHV.PARAMETER_CD = 'NOXR';
+
+  CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'NOXMASSCEMS');
 END
 $BODY$;

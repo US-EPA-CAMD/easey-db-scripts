@@ -27,6 +27,6 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_noxratecems
     nox_mass_formula_cd character varying(7) COLLATE pg_catalog."default",
     rpt_nox_mass numeric(14,4),
     calc_nox_mass numeric(14,4),
-    error_codes character varying(1000) COLLATE pg_catalog."default",
+    ERROR_CODES character varying(1) COLLATE pg_catalog."default",
     rpt_diluent numeric(13,3)
 ) PARTITION BY RANGE (rpt_period_id);

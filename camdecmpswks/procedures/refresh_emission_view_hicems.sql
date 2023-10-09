@@ -9,6 +9,8 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_hicems(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
 	DELETE FROM camdecmpswks.EMISSION_VIEW_HICEMS 
 	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
@@ -196,5 +198,7 @@ BEGIN
 			MHV_O2C_WET_2.MOISTURE_BASIS IS NULL OR MHV_O2C_WET_2.MOISTURE_BASIS = 'W'
 		) AND MHV_O2C_WET_2.MODC_CD IN ('06', '07', '08', '09', '10', '11', '12', '55')  
 	WHERE DHV.PARAMETER_CD = 'HI' AND MHV.PARAMETER_CD = 'FLOW';
+
+  CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'HICEMS');
 END
 $BODY$;

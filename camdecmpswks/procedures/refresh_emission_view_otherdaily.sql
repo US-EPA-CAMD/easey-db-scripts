@@ -8,6 +8,8 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_otherdaily(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+	CALL camdecmpswks.load_temp_daily_test_errors(vMonPlanId, vRptPeriodId);
+
 	DELETE FROM camdecmpswks.EMISSION_VIEW_OTHERDAILY 
 		WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
@@ -40,5 +42,7 @@ BEGIN
 				DTS.ERROR_CODES
 		FROM temp_daily_test_errors DTS
 		WHERE DTS.TEST_TYPE_CD <> 'DAYCAL';
+
+  CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'OTHERDAILY');
 END
 $BODY$;

@@ -9,6 +9,8 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_matsweekly(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+	CALL camdecmpswks.load_temp_weekly_test_errors(vMonPlanId, vRptPeriodId);
+
 	DELETE FROM camdecmpswks.EMISSION_VIEW_MATSWEEKLY
 	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
@@ -55,5 +57,7 @@ BEGIN
 		AND ts.COMPONENT_TYPE_CD = MS.COMPONENT_TYPE_CD 
 		AND Coalesce(wts.SPAN_SCALE_CD,'') = Coalesce(MS.SPAN_SCALE_CD,'')
 		AND camdecmpswks.emissions_monitor_span_active(MS.BEGIN_DATE, MS.BEGIN_HOUR, MS.END_DATE, MS.END_HOUR, TS.TEST_DATE, LEFT(ts.TEST_TIME, 2)) = 1;
+
+  CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'MATSWEEKLY');
 END
 $BODY$;

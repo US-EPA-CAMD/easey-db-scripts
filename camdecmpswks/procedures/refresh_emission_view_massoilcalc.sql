@@ -9,6 +9,8 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_massoilcalc(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
 	DELETE FROM camdecmpswks.EMISSION_VIEW_MASSOILCALC 
 	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
@@ -61,5 +63,7 @@ BEGIN
 		AND HFF.MASS_FLOW_RATE > 0
 	LEFT OUTER JOIN camdecmpswks.MONITOR_SYSTEM MS 
 		ON HFF.MON_SYS_ID = MS.MON_SYS_ID;
+
+  CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'MASSOILCALC');
 END
 $BODY$;

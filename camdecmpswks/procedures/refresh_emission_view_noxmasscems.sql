@@ -9,6 +9,8 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_noxmasscems(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
 	DELETE FROM camdecmpswks.EMISSION_VIEW_NOXMASSCEMS 
 	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
@@ -91,5 +93,7 @@ BEGIN
 		AND camdecmpswks.emissions_monitor_default_active(H2O_MD.BEGIN_DATE, H2O_MD.BEGIN_HOUR, H2O_MD.END_DATE, H2O_MD.END_HOUR, HOD.BEGIN_DATE, HOD.BEGIN_HOUR) = 1
 	LEFT OUTER JOIN camdecmpswks.DERIVED_HRLY_VALUE  NOXR_DHV 
 		ON DHV.HOUR_ID = NOXR_DHV.HOUR_ID AND NOXR_DHV.PARAMETER_CD = 'NOXR';
+
+  CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'NOXMASSCEMS');
 END
 $BODY$;

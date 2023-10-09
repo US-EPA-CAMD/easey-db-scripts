@@ -9,6 +9,8 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_dailycal(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+	CALL camdecmpswks.load_temp_daily_test_errors(vMonPlanId, vRptPeriodId);
+
 	DELETE FROM camdecmpswks.EMISSION_VIEW_DAILYCAL
 	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
 
@@ -93,5 +95,7 @@ BEGIN
 		Coalesce(DTS.SPAN_SCALE_CD,'') = Coalesce(MS.SPAN_SCALE_CD,'') AND
 		camdecmpswks.EMISSIONS_MONITOR_SPAN_ACTIVE(MS.BEGIN_DATE, MS.BEGIN_HOUR, MS.END_DATE, MS.END_HOUR, DTS.END_DATE, CAST(LEFT(DTS.END_TIME, 2) AS numeric)) = 1
 	WHERE DTS.TEST_TYPE_CD = 'DAYCAL';
+
+  CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'DAILYCAL');
 END
 $BODY$;

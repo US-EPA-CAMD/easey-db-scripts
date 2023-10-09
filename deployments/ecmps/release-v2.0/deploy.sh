@@ -241,7 +241,6 @@ if [ $POST_DEPLOYMENT == true ]; then
   DROP TABLE IF EXISTS camdaux.sftp_log CASCADE;
   \i ./update-mp-qa-em-check-session-ids.sql
   CALL camdecmpswks.load_workspace();
-  CALL camdecmps.refresh_emissions_views();
   "
 
   ../../execute-psql.sh "$FILES"

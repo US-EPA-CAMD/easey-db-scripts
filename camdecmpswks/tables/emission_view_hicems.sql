@@ -28,6 +28,6 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_hicems
     pct_h2o_used numeric(5,1),
     source_h2o_value character varying(7) COLLATE pg_catalog."default",
     f_factor numeric(8,1),
-    error_codes character varying(1000) COLLATE pg_catalog."default",
+    ERROR_CODES character varying(1) COLLATE pg_catalog."default",
     fuel_cd character varying(7) COLLATE pg_catalog."default"
 );

@@ -55,7 +55,7 @@ BEGIN
 	--Anna edit 1/21/2022 */
 	  ELSEIF lookupType = 'TEST' then
 	   SELECT fac.FAC_ID, fac.FIRST_ECMPS_RPT_PERIOD_ID into facid, firstEcmpsRptPeriodId
-			FROM camdecmps.TEST_SUMMARY tst
+			FROM camdecmpswks.TEST_SUMMARY tst
 				JOIN camdecmpswks.MONITOR_LOCATION loc ON loc.MON_LOC_ID = tst.MON_LOC_ID
 				LEFT JOIN camd.UNIT unt ON unt.UNIT_ID = loc.UNIT_ID
 				LEFT JOIN camdecmpswks.STACK_PIPE stp ON stp.STACK_PIPE_ID = loc.STACK_PIPE_ID

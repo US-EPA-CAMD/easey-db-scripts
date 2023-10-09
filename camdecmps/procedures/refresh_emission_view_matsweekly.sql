@@ -1,12 +1,18 @@
--- PROCEDURE: camdecmps.refresh_emission_view_matsweekly()
+-- PROCEDURE: camdecmps.refresh_emission_view_matsweekly(character varying, numeric)
 
-DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_matsweekly();
+DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_matsweekly(character varying, numeric);
 
-CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_matsweekly()
+CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_matsweekly(
+	vmonplanid character varying,
+	vrptperiodid numeric
+)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-	TRUNCATE camdecmps.EMISSION_VIEW_MATSWEEKLY RESTART IDENTITY;
+	CALL camdecmps.load_temp_weekly_test_errors(vMonPlanId, vRptPeriodId);
+
+	DELETE FROM camdecmps.EMISSION_VIEW_MATSWEEKLY
+	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
 	INSERT INTO camdecmps.EMISSION_VIEW_MATSWEEKLY(
 		MON_PLAN_ID,
@@ -41,7 +47,7 @@ BEGIN
 		wsi.MEASURED_VALUE,
 		wsi.SYSTEM_INTEGRITY_ERROR,
 		ts.ERROR_CODES
-	FROM temp_weekly_test_errors AS ts
+	FROM temp_weekly_test_errors ts
 	LEFT OUTER JOIN	camdecmps.WEEKLY_TEST_SUMMARY wts 
 		ON wts.WEEKLY_TEST_SUM_ID = ts.WEEKLY_TEST_SUM_ID
 	LEFT OUTER JOIN camdecmps.WEEKLY_SYSTEM_INTEGRITY wsi 
@@ -51,5 +57,7 @@ BEGIN
 		AND ts.COMPONENT_TYPE_CD = MS.COMPONENT_TYPE_CD 
 		AND Coalesce(wts.SPAN_SCALE_CD,'') = Coalesce(MS.SPAN_SCALE_CD,'')
 		AND camdecmps.emissions_monitor_span_active(MS.BEGIN_DATE, MS.BEGIN_HOUR, MS.END_DATE, MS.END_HOUR, TS.TEST_DATE, LEFT(ts.TEST_TIME, 2)) = 1;
+
+  CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'MATSWEEKLY');
 END
 $BODY$;

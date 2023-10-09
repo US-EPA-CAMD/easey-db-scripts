@@ -1,14 +1,16 @@
--- PROCEDURE: camdecmpswks.refresh_emissiON_view_lme(character varying, numeric)
+-- PROCEDURE: camdecmpswks.refresh_emission_view_lme(character varying, numeric)
 
-DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emissiON_view_lme(character varying, numeric);
+DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_lme(character varying, numeric);
 
-CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emissiON_view_lme(
-	vmONplanid character varying,
+CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_lme(
+	vmonplanid character varying,
 	vrptperiodid numeric
 )
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
 	DELETE FROM camdecmpswks.EMISSION_VIEW_LME 
 	WHERE MON_PLAN_ID = vmONplanid AND RPT_PERIOD_ID = vrptperiodid;
 
@@ -114,5 +116,7 @@ BEGIN
 		FROM camdecmpswks.DERIVED_HRLY_VALUE
 		WHERE PARAMETER_CD IN ('SO2M', 'NOXM', 'CO2M','HIT')
 	);
+
+  CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'LME');
 END
 $BODY$;

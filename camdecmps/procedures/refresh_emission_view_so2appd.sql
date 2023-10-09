@@ -1,12 +1,18 @@
--- PROCEDURE: camdecmps.refresh_emission_view_so2appd()
+-- PROCEDURE: camdecmps.refresh_emission_view_so2appd(character varying, numeric)
 
-DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_so2appd();
+DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_so2appd(character varying, numeric);
 
-CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_so2appd()
+CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_so2appd(
+	vmonplanid character varying,
+	vrptperiodid numeric
+)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-	TRUNCATE camdecmps.EMISSION_VIEW_SO2APPD RESTART IDENTITY;
+	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
+	DELETE FROM camdecmps.EMISSION_VIEW_SO2APPD 
+	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
 	INSERT INTO camdecmps.EMISSION_VIEW_SO2APPD(
 		MON_PLAN_ID,
@@ -97,5 +103,7 @@ BEGIN
 		ON DHV_SO2.MON_FORM_ID = SUMMATION_MF.MON_FORM_ID
 	LEFT OUTER JOIN camdecmpsmd.FUEL_CODE FC 
 		ON FC.FUEL_CD = HFF.FUEL_CD;
+
+  CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'SO2APPD');
 END
 $BODY$;

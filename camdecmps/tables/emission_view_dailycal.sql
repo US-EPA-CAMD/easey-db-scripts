@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_dailycal
     calc_zero_aps_ind numeric(38,0),
     rpt_online_offline_ind numeric(38,0),
     calc_online_offline_ind numeric(38,0),
-    error_codes character varying(1000) COLLATE pg_catalog."default",
+    ERROR_CODES character varying(1) COLLATE pg_catalog."default",
     upscale_gas_type_cd character varying(255) COLLATE pg_catalog."default",
     cylinder_id character varying(25) COLLATE pg_catalog."default",
     expiration_date date,

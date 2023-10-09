@@ -6,7 +6,7 @@ CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_evaluation_test_error_results(
 	vmonplanid text,
 	vyear numeric,
 	vquarter numeric)
-    RETURNS TABLE("unitStack" text, "testTypeCode" text, "testDateTime" text, "sysCompId" text, "sysCompTypeScale" text, "severityCode" text, "checkCode" text, "resultMessage" text) 
+    RETURNS TABLE("unitStack" text, "testTypeCode" text, "testDateTime" text, "sysCompId" text, "sysCompTypeScale" text, "severityCode" text, "categoryDescription" text, "checkCode" text, "resultMessage" text) 
     LANGUAGE 'sql'
 
     COST 100
@@ -27,15 +27,16 @@ SELECT DISTINCT
 			WHEN c.component_type_cd IS NULL THEN ''
 			ELSE c.component_type_cd || '/' || dts.span_scale_cd
 		END AS "sysCompTypeScale",
-		cl.severity_cd AS "severityCode",
-		cc.check_type_cd || '-' || cc.check_number || '-' || ccr.check_result AS "checkCode",
-		cl.result_message AS "resultMessage"
+    cl.severity_cd AS "severityCode",
+  	LTRIM(TRIM(leading '-' from ccd.category_cd_description)) AS "categoryDescription",
+  	cc.check_type_cd || '-' || cc.check_number || '-' || ccr.check_result AS "checkCode",
+	  cl.result_message AS "resultMessage"
 	FROM camdecmpswks.check_log cl
 	JOIN camdecmpswks.check_session cs USING(chk_session_id)
 	JOIN camdecmpsmd.reporting_period rp USING(rpt_period_id)
 	JOIN camdecmpsmd.check_catalog_result ccr USING(check_catalog_result_id)
 	JOIN camdecmpsmd.check_catalog cc ON ccr.check_catalog_id = cc.check_catalog_id
-	JOIN camdecmpsmd.rule_check rc ON cc.check_catalog_id = rc.check_catalog_id
+	JOIN camdecmpsmd.rule_check rc ON cl.rule_check_id = rc.rule_check_id
 	JOIN camdecmpsmd.category_code ccd ON rc.category_cd = ccd.category_cd
 	JOIN camdecmpswks.monitor_location ml USING(mon_loc_id)
 	LEFT JOIN camdecmpswks.daily_test_summary dts ON cl.test_sum_id = dts.daily_test_sum_id

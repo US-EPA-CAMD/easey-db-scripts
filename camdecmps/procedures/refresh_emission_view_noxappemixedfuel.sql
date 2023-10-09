@@ -1,12 +1,18 @@
--- PROCEDURE: camdecmps.refresh_emission_view_noxappemixedfuel()
+-- PROCEDURE: camdecmps.refresh_emission_view_noxappemixedfuel(character varying, numeric)
 
-DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_noxappemixedfuel();
+DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_noxappemixedfuel(character varying, numeric);
 
-CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_noxappemixedfuel()
+CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_noxappemixedfuel(
+	vmonplanid character varying,
+	vrptperiodid numeric
+)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-	TRUNCATE camdecmps.EMISSION_VIEW_NOXAPPEMIXEDFUEL RESTART IDENTITY;
+	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
+	DELETE FROM camdecmps.EMISSION_VIEW_NOXAPPEMIXEDFUEL 
+	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
 	INSERT INTO camdecmps.EMISSION_VIEW_NOXAPPEMIXEDFUEL(
 		MON_PLAN_ID,
@@ -57,5 +63,7 @@ BEGIN
 		ON ((DHV_NOX.HOUR_ID = HOD.HOUR_ID) AND (DHV_NOX.PARAMETER_CD = 'NOX'))
 	LEFT OUTER JOIN camdecmps.MONITOR_FORMULA MF_NOX   
 		ON DHV_NOX.MON_FORM_ID = MF_NOX.MON_FORM_ID;
+
+  CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'NOXAPPEMIXEDFUEL');
 END
 $BODY$;

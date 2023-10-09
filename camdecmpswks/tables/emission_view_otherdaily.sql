@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_otherdaily
     span_scale_cd character varying(7) COLLATE pg_catalog."default",
     date_hour character varying(25) COLLATE pg_catalog."default" NOT NULL,
     rpt_test_result character varying(7) COLLATE pg_catalog."default" NOT NULL,
-    error_codes character varying(1000) COLLATE pg_catalog."default",
+    ERROR_CODES character varying(1) COLLATE pg_catalog."default",
     calc_test_result_cd character varying(7) COLLATE pg_catalog."default",
     test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL
 );

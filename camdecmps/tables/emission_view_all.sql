@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_all
     co2_formula_cd character varying(7) COLLATE pg_catalog."default",
     rpt_co2_mass_rate numeric(14,4),
     calc_co2_mass_rate numeric(14,4),
-    error_codes character varying(1000) COLLATE pg_catalog."default",
+    ERROR_CODES character varying(1) COLLATE pg_catalog."default",
     adj_flow_used numeric(13,3),
     rpt_adj_flow numeric(13,3),
     unadj_flow numeric(13,3)

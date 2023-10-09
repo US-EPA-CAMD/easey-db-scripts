@@ -1,12 +1,18 @@
--- PROCEDURE: camdecmps.refresh_emission_view_hiappd()
+-- PROCEDURE: camdecmps.refresh_emission_view_hiappd(character varying, numeric)
 
-DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_hiappd();
+DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_hiappd(character varying, numeric);
 
-CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_hiappd()
+CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_hiappd(
+	vmonplanid character varying,
+	vrptperiodid numeric
+)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-	TRUNCATE camdecmps.EMISSION_VIEW_HIAPPD RESTART IDENTITY;
+	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
+	DELETE FROM camdecmps.EMISSION_VIEW_HIAPPD 
+	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
 	INSERT INTO camdecmps.EMISSION_VIEW_HIAPPD(
 		MON_PLAN_ID,
@@ -65,7 +71,7 @@ BEGIN
 		HPFF_HI.PARAM_VAL_FUEL AS RPT_HI_RATE,
 		HPFF_HI.CALC_PARAM_VAL_FUEL AS CALC_HI_RATE,
 		HOD.ERROR_CODES
-	FROM temp_hourly_test_errors AS HOD
+	FROM temp_hourly_test_errors AS HOD 
 	INNER JOIN camdecmps.HRLY_FUEL_FLOW HFF 
 		ON HOD.HOUR_ID = HFF.HOUR_ID
 	INNER JOIN camdecmps.HRLY_PARAM_FUEL_FLOW HPFF_HI 
@@ -78,5 +84,7 @@ BEGIN
 		ON HPFF_HI.MON_FORM_ID = MF.MON_FORM_ID
 	LEFT OUTER JOIN camdecmpsmd.FUEL_CODE FC 
 		ON HFF.FUEL_CD = FC.FUEL_CD;
+
+  CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'HIAPPD');
 END
 $BODY$;

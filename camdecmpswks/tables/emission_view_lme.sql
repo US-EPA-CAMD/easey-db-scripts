@@ -24,5 +24,5 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_lme
     co2_emiss_rate numeric(15,4),
     rpt_co2_mass numeric(14,4),
     calc_co2_mass numeric(14,4),
-    error_codes character varying(1000) COLLATE pg_catalog."default"
+    ERROR_CODES character varying(1) COLLATE pg_catalog."default"
 );

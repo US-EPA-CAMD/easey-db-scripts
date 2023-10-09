@@ -112,23 +112,5 @@ BEGIN
 
 	DELETE FROM camdecmpswks.long_term_fuel_flow
 	WHERE mon_loc_id = ANY(monLocIds) and rpt_period_id = rptperiodid;
-
-	DELETE FROM camdecmpswks.component_op_supp_data
-	WHERE mon_loc_id = ANY(monLocIds) and rpt_period_id = rptperiodid;
-
-	DELETE FROM camdecmpswks.daily_test_supp_data
-	WHERE mon_loc_id = ANY(monLocIds) and rpt_period_id = rptperiodid;
-
-	DELETE FROM camdecmpswks.last_qa_value_supp_data
-	WHERE mon_loc_id = ANY(monLocIds) and rpt_period_id = rptperiodid;
-	
-	DELETE FROM camdecmpswks.operating_supp_data
-	WHERE mon_loc_id = ANY(monLocIds) and rpt_period_id = rptperiodid;
-	
-	DELETE FROM camdecmpswks.sorbent_trap_supp_data
-	WHERE mon_loc_id = ANY(monLocIds) and rpt_period_id = rptperiodid;
-	
-	DELETE FROM camdecmpswks.system_op_supp_data
-	WHERE mon_loc_id = ANY(monLocIds) and rpt_period_id = rptperiodid;
 END;
 $BODY$;

@@ -25,7 +25,7 @@ BEGIN
             sup.DAYS,
             sup.HOURS
       from  camdecmpswks.MONITOR_PLAN_LOCATION mpl
-            join camdecmps.SYSTEM_OP_SUPP_DATA sup on sup.MON_LOC_ID = mpl.MON_LOC_ID
+            join camdecmpswks.SYSTEM_OP_SUPP_DATA sup on sup.MON_LOC_ID = mpl.MON_LOC_ID
             join camdecmpsmd.REPORTING_PERIOD prd on prd.RPT_PERIOD_ID = sup.RPT_PERIOD_ID
      where  (MonPlanId is null or mpl.MON_PLAN_ID = MonPlanId)
          and  sup.OP_SUPP_DATA_TYPE_CD in ('OP', 'OPMJ');

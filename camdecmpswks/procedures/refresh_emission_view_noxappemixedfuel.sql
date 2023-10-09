@@ -9,6 +9,8 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_noxappemixedfuel(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
 	DELETE FROM camdecmpswks.EMISSION_VIEW_NOXAPPEMIXEDFUEL 
 	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
@@ -61,5 +63,7 @@ BEGIN
 		ON ((DHV_NOX.HOUR_ID = HOD.HOUR_ID) AND (DHV_NOX.PARAMETER_CD = 'NOX'))
 	LEFT OUTER JOIN camdecmpswks.MONITOR_FORMULA MF_NOX   
 		ON DHV_NOX.MON_FORM_ID = MF_NOX.MON_FORM_ID;
+
+  CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'NOXAPPEMIXEDFUEL');
 END
 $BODY$;

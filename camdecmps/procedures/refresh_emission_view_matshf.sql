@@ -1,12 +1,18 @@
--- PROCEDURE: camdecmps.refresh_emission_view_matshf()
+-- PROCEDURE: camdecmps.refresh_emission_view_matshf(character varying, numeric)
 
-DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_matshf();
+DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_matshf(character varying, numeric);
 
-CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_matshf()
+CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_matshf(
+	vmonplanid character varying,
+	vrptperiodid numeric
+)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-	TRUNCATE camdecmps.EMISSION_VIEW_MATSHF RESTART IDENTITY;
+	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
+	DELETE FROM camdecmps.EMISSION_VIEW_MATSHF 
+	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
 	INSERT INTO camdecmps.EMISSION_VIEW_MATSHF(
 		MON_PLAN_ID,
@@ -131,5 +137,7 @@ BEGIN
 		ON O2D.HOUR_ID = HOD.HOUR_ID AND O2D.PARAMETER_CD = 'O2' AND O2D.MOISTURE_BASIS = 'D'
 	LEFT OUTER JOIN camdecmps.MONITOR_HRLY_VALUE AS O2W 
 		ON O2W.HOUR_ID = HOD.HOUR_ID AND O2W.PARAMETER_CD = 'O2' AND O2W.MOISTURE_BASIS = 'W';
+
+  CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'MATSHF');
 END
 $BODY$;

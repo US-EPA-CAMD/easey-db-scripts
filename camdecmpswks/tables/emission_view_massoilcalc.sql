@@ -17,5 +17,5 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_massoilcalc
     oil_density_sampling_type character varying(7) COLLATE pg_catalog."default",
     rpt_mass_oil_flow numeric(10,1),
     calc_mass_oil_flow numeric(10,1),
-    error_codes character varying(1000) COLLATE pg_catalog."default"
+    ERROR_CODES character varying(1) COLLATE pg_catalog."default"
 );

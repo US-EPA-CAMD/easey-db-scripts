@@ -1,12 +1,18 @@
--- PROCEDURE: camdecmps.refresh_emission_view_dailycal()
+-- PROCEDURE: camdecmps.refresh_emission_view_dailycal(character varying, numeric)
 
-DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_dailycal();
+DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_dailycal(character varying, numeric);
 
-CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_dailycal()
+CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_dailycal(
+	vmonplanid character varying,
+	vrptperiodid numeric
+)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-	TRUNCATE camdecmps.EMISSION_VIEW_DAILYCAL RESTART IDENTITY;
+	CALL camdecmps.load_temp_daily_test_errors(vMonPlanId, vRptPeriodId);
+
+	DELETE FROM camdecmps.EMISSION_VIEW_DAILYCAL
+	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
 
 	INSERT INTO camdecmps.EMISSION_VIEW_DAILYCAL(
 		MON_PLAN_ID,
@@ -89,5 +95,7 @@ BEGIN
 		Coalesce(DTS.SPAN_SCALE_CD,'') = Coalesce(MS.SPAN_SCALE_CD,'') AND
 		camdecmps.EMISSIONS_MONITOR_SPAN_ACTIVE(MS.BEGIN_DATE, MS.BEGIN_HOUR, MS.END_DATE, MS.END_HOUR, DTS.END_DATE, CAST(LEFT(DTS.END_TIME, 2) AS numeric)) = 1
 	WHERE DTS.TEST_TYPE_CD = 'DAYCAL';
+
+  CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'DAILYCAL');
 END
 $BODY$;

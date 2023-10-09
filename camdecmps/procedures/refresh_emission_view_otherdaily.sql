@@ -1,12 +1,17 @@
--- PROCEDURE: camdecmps.refresh_emission_view_otherdaily()
+-- PROCEDURE: camdecmps.refresh_emission_view_otherdaily(character varying, numeric)
 
-DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_otherdaily();
+DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_otherdaily(character varying, numeric);
 
-CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_otherdaily()
+CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_otherdaily(
+	vmonplanid character varying,
+	vrptperiodid numeric)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-	TRUNCATE camdecmps.EMISSION_VIEW_OTHERDAILY RESTART IDENTITY;
+	CALL camdecmps.load_temp_daily_test_errors(vMonPlanId, vRptPeriodId);
+
+	DELETE FROM camdecmps.EMISSION_VIEW_OTHERDAILY 
+	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
 	INSERT INTO camdecmps.EMISSION_VIEW_OTHERDAILY
            (MON_PLAN_ID
@@ -35,7 +40,9 @@ BEGIN
 				DTS.CALC_TEST_RESULT_CD,
 				DTS.DAILY_TEST_SUM_ID,
 				DTS.ERROR_CODES
-		FROM temp_daily_test_errors AS DTS
+		FROM temp_daily_test_errors DTS
 		WHERE DTS.TEST_TYPE_CD <> 'DAYCAL';
+
+  CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'OTHERDAILY');
 END
 $BODY$;

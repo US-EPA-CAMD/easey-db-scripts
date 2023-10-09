@@ -9,6 +9,8 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_moisture(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
 	DELETE FROM camdecmpswks.EMISSION_VIEW_MOISTURE 
 	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
@@ -54,5 +56,7 @@ BEGIN
 		ON DHV.HOUR_ID = WET_MHV.HOUR_ID AND WET_MHV.PARAMETER_CD = 'O2C' AND WET_MHV.MOISTURE_BASIS = 'W'
 	LEFT OUTER JOIN camdecmpswks.MONITOR_HRLY_VALUE AS DRY_MHV 
 		ON DHV.HOUR_ID = DRY_MHV.HOUR_ID AND DRY_MHV.PARAMETER_CD = 'O2C' AND DRY_MHV.MOISTURE_BASIS = 'D';
+
+  CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'MOISTURE');
 END
 $BODY$;

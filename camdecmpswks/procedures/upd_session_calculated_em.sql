@@ -221,7 +221,7 @@ BEGIN
                 WHERE rpt_period_id = par_V_RPT_PERIOD_ID AND mon_loc_id = var_V_MON_LOC_ID;
             INSERT INTO camdecmpswks.sampling_train_supp_data (trap_train_id, trap_id, component_id, train_qa_status_cd, ref_flow_to_sampling_ratio, sampling_ratio_test_result_cd, hg_concentration, sfsr_total_count, sfsr_deviated_count, gfm_total_count, gfm_not_available_count, mon_loc_id, rpt_period_id, userid, add_date, update_date)
             SELECT
-                src.trap_train_id, src.trap_id, src.component_id, src.train_qa_status_cd, src.ref_flow_to_sampling_ratio, src.sampling_ratio_test_result_cd, src.hg_concentration, src.sfsr_total_count, src.sfsr_deviated_count, src.gfm_total_count, src.gfm_not_available_count, src.mon_loc_id, src.rpt_period_id, par_V_CURRENT_USERID, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+                src.trap_train_id, src.trap_id, src.component_id, src.train_qa_status_cd, src.ref_flow_to_sampling_ratio, src.sampling_ratio_test_result_cd, src.hg_concentration, sup.sfsr_total_count, sup.sfsr_deviated_count, sup.gfm_total_count, sup.gfm_not_available_count, src.mon_loc_id, src.rpt_period_id, par_V_CURRENT_USERID, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
                 FROM camdecmpswks.sampling_train src
                 JOIN camdecmpscalc.sampling_train_supp_data sup ON sup.chk_session_id = par_V_SESSION_ID AND sup.trap_train_id = src.trap_train_id
                 WHERE src.rpt_period_id = par_V_RPT_PERIOD_ID AND src.mon_loc_id = var_V_MON_LOC_ID; 

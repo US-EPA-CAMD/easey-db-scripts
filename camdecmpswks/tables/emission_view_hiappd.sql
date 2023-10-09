@@ -20,5 +20,5 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_hiappd
     formula_cd character varying(7) COLLATE pg_catalog."default",
     rpt_hi_rate numeric(13,5),
     calc_hi_rate numeric(13,5),
-    error_codes character varying(1000) COLLATE pg_catalog."default"
+    ERROR_CODES character varying(1) COLLATE pg_catalog."default"
 );

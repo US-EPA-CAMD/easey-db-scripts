@@ -1,12 +1,16 @@
--- PROCEDURE: camdecmps.refresh_emission_view_co2dailyfuel()
+-- PROCEDURE: camdecmps.refresh_emission_view_co2dailyfuel(character varying, numeric)
 
-DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_co2dailyfuel();
+DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_co2dailyfuel(character varying, numeric);
 
-CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_co2dailyfuel()
+CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_co2dailyfuel(
+	vmonplanid character varying,
+	vrptperiodid numeric
+)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-	TRUNCATE camdecmps.EMISSION_VIEW_CO2DAILYFUEL RESTART IDENTITY;
+	DELETE FROM camdecmps.EMISSION_VIEW_CO2DAILYFUEL 
+	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
 	INSERT INTO camdecmps.EMISSION_VIEW_CO2DAILYFUEL(
 		MON_PLAN_ID,
@@ -53,9 +57,13 @@ BEGIN
 			) THEN 'View Errors'
 			ELSE null
 		END AS ERROR_CODES
-	FROM camdecmps.MONITOR_PLAN_LOCATION AS mpl
+	FROM (
+		SELECT MON_PLAN_ID, MON_LOC_ID
+		FROM camdecmps.MONITOR_PLAN_LOCATION
+		WHERE MON_PLAN_ID = vmonplanid
+	) AS mpl
 	LEFT OUTER JOIN camdecmps.EMISSION_EVALUATION evl 
-		ON evl.MON_PLAN_ID = mpl.MON_PLAN_ID
+		ON evl.MON_PLAN_ID = mpl.MON_PLAN_ID AND evl.RPT_PERIOD_ID = vrptperiodid
 	INNER JOIN camdecmps.DAILY_EMISSION dem 
 		ON dem.MON_LOC_ID = mpl.MON_LOC_ID AND dem.RPT_PERIOD_ID = evl.RPT_PERIOD_ID AND dem.PARAMETER_CD = 'CO2M'
 	LEFT OUTER JOIN camdecmps.DAILY_FUEL df 
@@ -79,5 +87,7 @@ BEGIN
 				dem.SORBENT_MASS_EMISSION,
 				df.FUEL_CD, df.DAILY_FUEL_FEED, df.CARBON_CONTENT_USED, df.FUEL_CARBON_BURNED, df.CALC_FUEL_CARBON_BURNED,
 				dem.TOTAL_CARBON_BURNED, dem.CALC_TOTAL_DAILY_EMISSION;
+
+  CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'CO2DAILYFUEL');
 END
 $BODY$;

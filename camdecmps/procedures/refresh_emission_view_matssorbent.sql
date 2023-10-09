@@ -1,12 +1,19 @@
--- PROCEDURE: camdecmps.refresh_emission_view_matssorbent()
+-- PROCEDURE: camdecmps.refresh_emission_view_matssorbent(character varying, numeric)
 
-DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_matssorbent();
+DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_matssorbent(character varying, numeric);
 
-CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_matssorbent()
+CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_matssorbent(
+	vmonplanid character varying,
+	vrptperiodid numeric
+)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-	TRUNCATE camdecmps.EMISSION_VIEW_MATSSORBENT RESTART IDENTITY;
+	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+ 	CALL camdecmps.load_temp_hour_rules(vMonPlanId, vRptPeriodId);
+
+	DELETE FROM camdecmps.EMISSION_VIEW_MATSSORBENT
+	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
 	-- Use a common table expression for clarity to get the max and min component identifiers
 	WITH train (
@@ -50,6 +57,7 @@ BEGIN
 			ON st.mon_loc_id=mpl.MON_LOC_ID
 		JOIN camdecmps.COMPONENT C 
 			ON C.COMPONENT_ID = st.COMPONENT_ID
+		WHERE mpl.MON_PLAN_ID=vmonplanid AND st.RPT_PERIOD_ID=vrptperiodid
 	)
 	INSERT INTO camdecmps.EMISSION_VIEW_MATSSORBENT(
 		MON_PLAN_ID,
@@ -143,13 +151,13 @@ BEGIN
 			WHEN hr.HOUR_ID IS NULL THEN NULL
 			ELSE ts.ERROR_CODES
 		END AS ERROR_CODES
-	FROM temp_hourly_test_errors AS ts
+	FROM temp_hourly_test_errors ts
 	INNER JOIN camdecmps.SORBENT_TRAP trp 
 		ON ts.MON_LOC_ID=trp.MON_LOC_ID AND trp.RPT_PERIOD_ID=ts.RPT_PERIOD_ID 
 		AND trp.BEGIN_DATE=ts.BEGIN_DATE AND trp.BEGIN_HOUR=ts.BEGIN_HOUR
 	INNER JOIN camdecmps.MONITOR_SYSTEM s 
 		ON trp.MON_SYS_ID=s.MON_SYS_ID
-	LEFT OUTER JOIN temp_hour_rules hr
+	LEFT OUTER JOIN temp_hour_rules hr 
 		ON hr.HOUR_ID = ts.HOUR_ID
 	LEFT OUTER JOIN (
 		SELECT DISTINCT 
@@ -161,5 +169,7 @@ BEGIN
 		ON trnA.TRAP_ID=grouptrn.TRAP_ID AND trnA.COMPONENT_IDENTIFIER=grouptrn.ATrainID
 	LEFT OUTER JOIN train trnB 
 		ON trnB.TRAP_ID=grouptrn.TRAP_ID AND trnB.COMPONENT_IDENTIFIER=grouptrn.BTrainID;
+
+  CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'MATSSORBENT');
 END
 $BODY$;

@@ -9,6 +9,9 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_matssorbent(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+ 	CALL camdecmpswks.load_temp_hour_rules(vMonPlanId, vRptPeriodId);
+
 	DELETE FROM camdecmpswks.EMISSION_VIEW_MATSSORBENT
 	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
@@ -166,5 +169,7 @@ BEGIN
 		ON trnA.TRAP_ID=grouptrn.TRAP_ID AND trnA.COMPONENT_IDENTIFIER=grouptrn.ATrainID
 	LEFT OUTER JOIN train trnB 
 		ON trnB.TRAP_ID=grouptrn.TRAP_ID AND trnB.COMPONENT_IDENTIFIER=grouptrn.BTrainID;
+
+  CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'MATSSORBENT');
 END
 $BODY$;

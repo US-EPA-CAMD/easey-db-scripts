@@ -42,7 +42,6 @@ begin
 		
 		UPDATE camdecmpswks.QA_SUPP_DATA
 			SET UPDATED_STATUS_FLG	= 'Y'
-		FROM camdecmpswks.QA_SUPP_DATA
 			WHERE TEST_SUM_ID = vTestSumId AND (
 				submission_availability_cd IS NULL OR
 				submission_availability_cd = 'GRANTED' OR

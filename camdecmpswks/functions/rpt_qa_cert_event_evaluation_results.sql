@@ -4,7 +4,7 @@ DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_cert_event_evaluation_results(text) 
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_cert_event_evaluation_results(
 	qacerteventid text)
-    RETURNS TABLE("unitStack" text, "eventCode" text, "eventDateHour" text, "systemIdType" text, "componentIdType" text, "severityCode" text, "checkCode" text, "resultMessage" text) 
+    RETURNS TABLE("unitStack" text, "eventCode" text, "eventDateHour" text, "systemIdType" text, "componentIdType" text, "severityCode" text, "categoryDescription" text, "checkCode" text, "resultMessage" text) 
     LANGUAGE 'sql'
 
     COST 100
@@ -29,13 +29,15 @@ SELECT
 			ELSE null
 		END AS "componentIdType",		
 	    cl.severity_cd AS "severityCode",
+    	LTRIM(TRIM(leading '-' from ccd.category_cd_description)) AS "categoryDescription",
     	cc.check_type_cd || '-' || cc.check_number || '-' || ccr.check_result AS "checkCode",
 	    cl.result_message AS "resultMessage"
 	FROM camdecmpswks.check_log cl
 	JOIN camdecmpswks.check_session cs ON cl.chk_session_id = cs.chk_session_id
 	JOIN camdecmpsmd.check_catalog_result ccr ON cl.check_catalog_result_id = ccr.check_catalog_result_id
 	JOIN camdecmpsmd.check_catalog cc ON ccr.check_catalog_id = cc.check_catalog_id
-	JOIN camdecmpsmd.rule_check rc ON cc.check_catalog_id = rc.check_catalog_id
+	JOIN camdecmpsmd.rule_check rc ON cl.rule_check_id = rc.rule_check_id
+	JOIN camdecmpsmd.category_code ccd ON rc.category_cd = ccd.category_cd
 	JOIN camdecmpswks.qa_cert_event qce ON cs.qa_cert_event_id = qce.qa_cert_event_id
 	JOIN camdecmpswks.monitor_location ml ON cl.mon_loc_id = ml.mon_loc_id
 	LEFT JOIN camdecmpswks.component c ON c.component_id = qce.component_id

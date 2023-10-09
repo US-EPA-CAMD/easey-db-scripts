@@ -1,12 +1,18 @@
--- PROCEDURE: camdecmps.refresh_emission_view_hiunitstack()
+-- PROCEDURE: camdecmps.refresh_emission_view_hiunitstack(character varying, numeric)
 
-DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_hiunitstack();
+DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_hiunitstack(character varying, numeric);
 
-CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_hiunitstack()
+CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_hiunitstack(
+	vmonplanid character varying,
+	vrptperiodid numeric
+)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-	TRUNCATE camdecmps.EMISSION_VIEW_HIUNITSTACK RESTART IDENTITY;
+	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
+	DELETE FROM camdecmps.EMISSION_VIEW_HIUNITSTACK 
+	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
 	INSERT INTO camdecmps.EMISSION_VIEW_HIUNITSTACK(
 		MON_PLAN_ID,
@@ -37,7 +43,7 @@ BEGIN
 		DHV.ADJUSTED_HRLY_VALUE AS RPT_HI_RATE, 
 		DHV.CALC_ADJUSTED_HRLY_VALUE AS CALC_HI_RATE, 
 		HOD.ERROR_CODES
-	FROM temp_hourly_test_errors AS HOD
+	FROM temp_hourly_test_errors AS HOD 
 	INNER JOIN camdecmps.DERIVED_HRLY_VALUE AS DHV 
 		ON HOD.HOUR_ID = DHV.HOUR_ID AND DHV.PARAMETER_CD = 'HI'
 	LEFT OUTER JOIN camdecmps.MONITOR_HRLY_VALUE AS MHV 
@@ -45,5 +51,7 @@ BEGIN
 	LEFT OUTER JOIN camdecmps.MONITOR_FORMULA AS MF 
 		ON DHV.MON_FORM_ID = MF.MON_FORM_ID
 	WHERE MHV.PARAMETER_CD IS NULL;
+
+  CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'HIUNITSTACK');
 END
 $BODY$;

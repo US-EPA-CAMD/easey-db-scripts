@@ -9,6 +9,8 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_so2cems(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+  CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
 	DELETE FROM camdecmpswks.EMISSION_VIEW_SO2CEMS 
 	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
@@ -97,5 +99,7 @@ BEGIN
 		ON DHV.HOUR_ID = HI_DHV.HOUR_ID AND HI_DHV.PARAMETER_CD = 'HI' 
 	LEFT OUTER JOIN camdecmpswks.DERIVED_HRLY_VALUE  SO2R_DHV 
 		ON DHV.HOUR_ID = SO2R_DHV.HOUR_ID AND SO2R_DHV.PARAMETER_CD = 'SO2R';
+
+  CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'SO2CEMS');
 END
 $BODY$;

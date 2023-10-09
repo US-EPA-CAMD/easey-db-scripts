@@ -44,15 +44,17 @@ BEGIN
 		WHERE mon_loc_id = ANY(monLocIds)
 	) INTO qceIds;
 
-	FOREACH qceId IN ARRAY qceIds
-    LOOP
-		INSERT INTO camdecmpswks.qa_cert_event
+	--FOREACH qceId IN ARRAY qceIds
+  --  LOOP
+		INSERT INTO camdecmpswks.qa_cert_event(
+      mon_loc_id, mon_sys_id, component_id, qa_cert_event_cd, qa_cert_event_date, qa_cert_event_hour, required_test_cd, conditional_data_begin_date, conditional_data_begin_hour, last_test_completed_date, last_test_completed_hour, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, qa_cert_event_id, submission_id, submission_availability_cd, eval_status_cd
+    )
 		SELECT
-			mon_loc_id, mon_sys_id, component_id, qa_cert_event_cd, qa_cert_event_date, qa_cert_event_hour, required_test_cd, conditional_data_begin_date, conditional_data_begin_hour, last_test_completed_date, last_test_completed_hour, last_updated, updated_status_flg, needs_eval_flg, qce.chk_session_id, qce.userid, qce.add_date, qce.update_date, qce.qa_cert_event_id, qce.submission_id, qce.submission_availability_cd, 'UPDATED', coalesce(sc.eval_status_cd, 'EVAL')
+			mon_loc_id, mon_sys_id, component_id, qa_cert_event_cd, qa_cert_event_date, qa_cert_event_hour, required_test_cd, conditional_data_begin_date, conditional_data_begin_hour, last_test_completed_date, last_test_completed_hour, last_updated, updated_status_flg, needs_eval_flg, qce.chk_session_id, qce.userid, qce.add_date, qce.update_date, qce.qa_cert_event_id, qce.submission_id, qce.submission_availability_cd, coalesce(sc.eval_status_cd, 'PASS')
 		FROM camdecmps.qa_cert_event qce
-		left join camdecmpsaux.check_session cs on cs.chk_session_id = qce.chk_session_id 
-		left join camdecmpsmd.severity_code sc on sc.severity_cd = cs.severity_cd
-		WHERE qce.qa_cert_event_id = qceId;
+		LEFT JOIN camdecmpsaux.check_session cs ON cs.chk_session_id = qce.chk_session_id 
+		LEFT JOIN camdecmpsmd.severity_code sc ON sc.severity_cd = cs.severity_cd
+		WHERE qce.qa_cert_event_id = ANY(qceIds);
 
 		-- Check Session
 		INSERT INTO camdecmpswks.check_session (
@@ -67,8 +69,8 @@ BEGIN
 			cs.session_end_date, cs.session_comment, cs.severity_cd, cs.category_cd, 
 			cs.process_cd, cs.userid
 		FROM camdecmps.qa_cert_event qce
-		JOIN camdecmpsaux.check_session cs on qce.chk_session_id = cs.chk_session_id
-		WHERE qce.qa_cert_event_id = qceId
+		JOIN camdecmpsaux.check_session cs ON qce.chk_session_id = cs.chk_session_id
+		WHERE qce.qa_cert_event_id = ANY(qceIds)
 		ON CONFLICT (chk_session_id) DO UPDATE SET
 			mon_plan_id = EXCLUDED.mon_plan_id,
 			test_sum_id = EXCLUDED.test_sum_id,
@@ -94,9 +96,9 @@ BEGIN
 		SELECT
 			cl.chk_log_id, cl.chk_session_id, cl.begin_date, cl.rule_check_id, cl.result_message, cl.chk_log_comment, cl.check_catalog_result_id, cl.mon_loc_id, cl.source_table, cl.row_id, cl.test_sum_id, cl.op_begin_date, cl.op_begin_hour, cl.op_end_date, cl.op_end_hour, cl.check_date, cl.check_hour, cl.check_result, cl.severity_cd, cl.suppressed_severity_cd, cl.check_cd, cl.error_suppress_id
 		FROM camdecmps.qa_cert_event qce
-		JOIN camdecmpsaux.check_session cs on qce.chk_session_id = cs.chk_session_id
-		JOIN camdecmpsaux.check_log cl on cs.chk_session_id = cl.chk_session_id
-		WHERE qce.qa_cert_event_id = qceId
+		JOIN camdecmpsaux.check_session cs ON qce.chk_session_id = cs.chk_session_id
+		JOIN camdecmpsaux.check_log cl ON cs.chk_session_id = cl.chk_session_id
+		WHERE qce.qa_cert_event_id = ANY(qceIds)
 		ON CONFLICT (chk_log_id) DO UPDATE SET
 			chk_session_id = EXCLUDED.chk_session_id,
 			begin_date = EXCLUDED.begin_date,
@@ -119,9 +121,7 @@ BEGIN
 			suppressed_severity_cd = EXCLUDED.suppressed_severity_cd,
 			check_cd = EXCLUDED.check_cd,
 			error_suppress_id = EXCLUDED.error_suppress_id;
-
-
-    END LOOP;
+  -- END LOOP;
 
 	INSERT INTO camdecmpswks.qa_cert_event_supp_data(
 		qa_cert_event_supp_data_id, qa_cert_event_id, qa_cert_event_supp_data_cd, qa_cert_event_supp_date_cd, count_from_datehour, count, count_from_included_ind, mon_loc_id, rpt_period_id, delete_ind, userid, add_date, update_date
@@ -141,18 +141,18 @@ BEGIN
 		WHERE mon_loc_id = ANY(monLocIds)
 	) INTO teeIds;
 	
-	FOREACH teeId IN ARRAY teeIds
-    LOOP
+	--FOREACH teeId IN ARRAY teeIds
+  --  LOOP
 
 		INSERT INTO camdecmpswks.test_extension_exemption(
-		test_extension_exemption_id, mon_loc_id, rpt_period_id, mon_sys_id, component_id, fuel_cd, extens_exempt_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, hours_used, userid, add_date, update_date, span_scale_cd, submission_id, submission_availability_cd, pending_status_cd, eval_status_cd
+		  test_extension_exemption_id, mon_loc_id, rpt_period_id, mon_sys_id, component_id, fuel_cd, extens_exempt_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, hours_used, userid, add_date, update_date, span_scale_cd, submission_id, submission_availability_cd, eval_status_cd
 		)
 		SELECT
-			tee.test_extension_exemption_id, tee.mon_loc_id, tee.rpt_period_id, tee.mon_sys_id, tee.component_id, tee.fuel_cd, tee.extens_exempt_cd, tee.last_updated, tee.updated_status_flg, tee.needs_eval_flg, tee.chk_session_id, tee.hours_used, tee.userid, tee.add_date, tee.update_date, tee.span_scale_cd, tee.submission_id, tee.submission_availability_cd, 'UPDATED', coalesce(sc.eval_status_cd, 'EVAL')
+			tee.test_extension_exemption_id, tee.mon_loc_id, tee.rpt_period_id, tee.mon_sys_id, tee.component_id, tee.fuel_cd, tee.extens_exempt_cd, tee.last_updated, tee.updated_status_flg, tee.needs_eval_flg, tee.chk_session_id, tee.hours_used, tee.userid, tee.add_date, tee.update_date, tee.span_scale_cd, tee.submission_id, tee.submission_availability_cd, coalesce(sc.eval_status_cd, 'PASS')
 		FROM camdecmps.test_extension_exemption tee
-		left join camdecmpsaux.check_session cs on cs.chk_session_id = tee.chk_session_id
-		left join camdecmpsmd.severity_code sc on sc.severity_cd = cs.severity_cd
-		WHERE tee.test_extension_exemption_id = teeId;
+		LEFT JOIN camdecmpsaux.check_session cs ON cs.chk_session_id = tee.chk_session_id
+		LEFT JOIN camdecmpsmd.severity_code sc ON sc.severity_cd = cs.severity_cd
+		WHERE tee.test_extension_exemption_id = ANY(teeIds);
 
 		-- Check Session
 		INSERT INTO camdecmpswks.check_session (
@@ -167,8 +167,8 @@ BEGIN
 			cs.session_end_date, cs.session_comment, cs.severity_cd, cs.category_cd, 
 			cs.process_cd, cs.userid
 		FROM camdecmps.test_extension_exemption tee
-		JOIN camdecmpsaux.check_session cs on tee.chk_session_id = cs.chk_session_id
-		WHERE tee.test_extension_exemption_id = teeId
+		JOIN camdecmpsaux.check_session cs ON tee.chk_session_id = cs.chk_session_id
+		WHERE tee.test_extension_exemption_id = ANY(teeIds)
 		ON CONFLICT (chk_session_id) DO UPDATE SET
 			mon_plan_id = EXCLUDED.mon_plan_id,
 			test_sum_id = EXCLUDED.test_sum_id,
@@ -196,7 +196,7 @@ BEGIN
 		FROM camdecmps.test_extension_exemption tee
 		JOIN camdecmpsaux.check_session cs on tee.chk_session_id = cs.chk_session_id
 		JOIN camdecmpsaux.check_log cl on cs.chk_session_id = cl.chk_session_id
-		WHERE tee.test_extension_exemption_id = teeId
+		WHERE tee.test_extension_exemption_id = ANY(teeIds)
 		ON CONFLICT (chk_log_id) DO UPDATE SET
 			chk_session_id = EXCLUDED.chk_session_id,
 			begin_date = EXCLUDED.begin_date,
@@ -220,6 +220,6 @@ BEGIN
 			check_cd = EXCLUDED.check_cd,
 			error_suppress_id = EXCLUDED.error_suppress_id;
 
-    END LOOP;
+    --END LOOP;
 END;
 $BODY$;

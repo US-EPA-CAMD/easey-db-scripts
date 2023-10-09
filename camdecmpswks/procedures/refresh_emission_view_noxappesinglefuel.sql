@@ -9,6 +9,8 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_noxappesinglefuel
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
 	DELETE FROM camdecmpswks.EMISSION_VIEW_NOXAPPESINGLEFUEL 
 	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
@@ -86,5 +88,7 @@ BEGIN
 		ON DHV_NOXR.MON_FORM_ID = NOXR_MF.MON_FORM_ID
 	LEFT OUTER JOIN camdecmpswks.MONITOR_FORMULA NOX_MF 
 		ON DHV_NOX.MON_FORM_ID = NOX_MF.MON_FORM_ID;
+
+  CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'NOXAPPESINGLEFUEL');
 END
 $BODY$;

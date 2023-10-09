@@ -1,12 +1,18 @@
--- PROCEDURE: camdecmps.refresh_emission_view_noxratecems()
+-- PROCEDURE: camdecmps.refresh_emission_view_noxratecems(character varying, numeric)
 
-DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_noxratecems();
+DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_noxratecems(character varying, numeric);
 
-CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_noxratecems()
+CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_noxratecems(
+	vmonplanid character varying,
+	vrptperiodid numeric
+)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-	TRUNCATE camdecmps.EMISSION_VIEW_NOXRATECEMS RESTART IDENTITY;
+	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
+	DELETE FROM camdecmps.EMISSION_VIEW_NOXRATECEMS 
+	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
 	INSERT INTO camdecmps.EMISSION_VIEW_NOXRATECEMS(
 		MON_PLAN_ID,
@@ -134,5 +140,7 @@ BEGIN
 	LEFT OUTER JOIN camdecmps.MONITOR_DEFAULT AS DEF_O2X 
 		ON HOD.MON_LOC_ID = DEF_O2X.MON_LOC_ID AND DEF_O2X.DEFAULT_PURPOSE_CD = 'DC' AND DEF_O2X.PARAMETER_CD = 'O2X' 
 		AND (camdecmps.emissions_monitor_default_active(DEF_O2X.BEGIN_DATE, DEF_O2X.BEGIN_HOUR, DEF_O2X.END_DATE, DEF_O2X.END_HOUR, HOD.BEGIN_DATE, HOD.BEGIN_HOUR) = 1);
+
+  CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'NOXRATECEMS');
 END
 $BODY$;

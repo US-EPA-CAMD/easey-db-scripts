@@ -87,5 +87,7 @@ BEGIN
 				dem.SORBENT_MASS_EMISSION,
 				df.FUEL_CD, df.DAILY_FUEL_FEED, df.CARBON_CONTENT_USED, df.FUEL_CARBON_BURNED, df.CALC_FUEL_CARBON_BURNED,
 				dem.TOTAL_CARBON_BURNED, dem.CALC_TOTAL_DAILY_EMISSION;
+
+  CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'CO2DAILYFUEL');
 END
 $BODY$;

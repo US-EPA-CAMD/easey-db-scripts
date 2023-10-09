@@ -1,12 +1,18 @@
--- PROCEDURE: camdecmps.refresh_emission_view_so2cems()
+-- PROCEDURE: camdecmps.refresh_emission_view_so2cems(character varying, numeric)
 
-DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_so2cems();
+DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_so2cems(character varying, numeric);
 
-CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_so2cems()
+CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_so2cems(
+	vmonplanid character varying,
+	vrptperiodid numeric
+)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-	TRUNCATE camdecmps.EMISSION_VIEW_SO2CEMS RESTART IDENTITY;
+  CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
+	DELETE FROM camdecmps.EMISSION_VIEW_SO2CEMS 
+	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
 	INSERT INTO camdecmps.EMISSION_VIEW_SO2CEMS(
 		MON_PLAN_ID,
@@ -73,7 +79,7 @@ BEGIN
 		CASE (MF.EQUATION_CD) WHEN 'F-23' THEN HI_DHV.CALC_ADJUSTED_HRLY_VALUE END AS CALC_HI_RATE, 
 		CASE (MF.EQUATION_CD) WHEN 'F-23' THEN Coalesce(SO2R_DHV.ADJUSTED_HRLY_VALUE, camdecmps.emissions_get_default_so2_rate(HOD.MON_LOC_ID, HOD.BEGIN_DATE, HOD.BEGIN_HOUR)) END AS DEFAULT_SO2_EMISSION_RATE,
 		HOD.ERROR_CODES
-	FROM temp_hourly_test_errors AS HOD 
+	FROM temp_hourly_test_errors HOD 
 	INNER JOIN camdecmps.DERIVED_HRLY_VALUE  DHV 
 		ON DHV.HOUR_ID = HOD.HOUR_ID AND DHV.PARAMETER_CD = 'SO2' 
 	INNER JOIN camdecmps.MONITOR_HRLY_VALUE  FLOW_MHV 
@@ -93,5 +99,7 @@ BEGIN
 		ON DHV.HOUR_ID = HI_DHV.HOUR_ID AND HI_DHV.PARAMETER_CD = 'HI' 
 	LEFT OUTER JOIN camdecmps.DERIVED_HRLY_VALUE  SO2R_DHV 
 		ON DHV.HOUR_ID = SO2R_DHV.HOUR_ID AND SO2R_DHV.PARAMETER_CD = 'SO2R';
+
+  CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'SO2CEMS');
 END
 $BODY$;

@@ -9,6 +9,8 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_hiappd(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
 	DELETE FROM camdecmpswks.EMISSION_VIEW_HIAPPD 
 	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
@@ -82,5 +84,7 @@ BEGIN
 		ON HPFF_HI.MON_FORM_ID = MF.MON_FORM_ID
 	LEFT OUTER JOIN camdecmpsmd.FUEL_CODE FC 
 		ON HFF.FUEL_CD = FC.FUEL_CD;
+
+  CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'HIAPPD');
 END
 $BODY$;

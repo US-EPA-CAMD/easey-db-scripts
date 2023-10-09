@@ -9,6 +9,8 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_noxratecems(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
 	DELETE FROM camdecmpswks.EMISSION_VIEW_NOXRATECEMS 
 	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
@@ -138,5 +140,7 @@ BEGIN
 	LEFT OUTER JOIN camdecmpswks.MONITOR_DEFAULT AS DEF_O2X 
 		ON HOD.MON_LOC_ID = DEF_O2X.MON_LOC_ID AND DEF_O2X.DEFAULT_PURPOSE_CD = 'DC' AND DEF_O2X.PARAMETER_CD = 'O2X' 
 		AND (camdecmpswks.emissions_monitor_default_active(DEF_O2X.BEGIN_DATE, DEF_O2X.BEGIN_HOUR, DEF_O2X.END_DATE, DEF_O2X.END_HOUR, HOD.BEGIN_DATE, HOD.BEGIN_HOUR) = 1);
+
+  CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'NOXRATECEMS');
 END
 $BODY$;

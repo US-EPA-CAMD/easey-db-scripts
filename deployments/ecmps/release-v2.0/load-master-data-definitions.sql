@@ -1104,4 +1104,22 @@ BEGIN
 		(datatableId, 3, 'can_combine_ind', 'canCombineIndicator', 'Can Combine Indicator'),
 		(datatableId, 4, 'balance_component_ind', 'balanceComponentIndicator', 'Balance Component Indicator'),
 		(datatableId, 5, 'group_cd', 'groupCode', 'Group Code');
+----------------------------------------------------------------------------------------------------------------------------
+	datasetCode := 'protocol-gas-vendors';
+	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
+	VALUES(datasetCode, 'MDM', 'Protocol Gas Vendors');
+
+	/***** DATATABLE 1 *****/
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement)
+	VALUES(datasetCode, 1, 'Protocol Gas Vendors', 'SELECT * FROM camdecmps.protocol_gas_vendor')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
+	VALUES
+		(datatableId, 1, 'vendor_id', 'vendorId', 'Vendor Id'),
+		(datatableId, 2, 'vendor_name', 'vendorName', 'Vendor Name'),
+		(datatableId, 3, 'activation_date', 'activationDate', 'Vendor Activation Date'),
+		(datatableId, 4, 'deactivation_date', 'deactivationDate', 'Vendor Deactivation Date'),
+		(datatableId, 5, 'active_ind', 'activeIndicator', 'Active');
 END $$;

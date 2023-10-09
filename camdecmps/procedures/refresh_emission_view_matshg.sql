@@ -1,12 +1,18 @@
--- PROCEDURE: camdecmps.refresh_emission_view_matshg()
+-- PROCEDURE: camdecmps.refresh_emission_view_matshg(character varying, numeric)
 
-DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_matshg();
+DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_matshg(character varying, numeric);
 
-CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_matshg()
+CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_matshg(
+	vmonplanid character varying,
+	vrptperiodid numeric
+)
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-	TRUNCATE camdecmps.EMISSION_VIEW_MATSHG RESTART IDENTITY;
+	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
+	DELETE FROM camdecmps.EMISSION_VIEW_MATSHG
+	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
 	INSERT INTO camdecmps.EMISSION_VIEW_MATSHG(
 		MON_PLAN_ID,
@@ -161,5 +167,7 @@ BEGIN
 		ON CMP1.COMPONENT_ID = GFM1.COMPONENT_ID
 	LEFT OUTER JOIN camdecmps.COMPONENT CMP2 
 		ON CMP2.COMPONENT_ID = GFM2.COMPONENT_ID;
+
+  CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'MATSHG');
 END
 $BODY$;

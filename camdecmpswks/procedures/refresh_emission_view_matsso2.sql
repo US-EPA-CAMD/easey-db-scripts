@@ -9,6 +9,8 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_matsso2(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
 	DELETE FROM camdecmpswks.EMISSION_VIEW_MATSSO2
 	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
@@ -135,5 +137,7 @@ BEGIN
 		ON O2D.HOUR_ID = HOD.HOUR_ID AND O2D.PARAMETER_CD = 'O2' AND O2D.MOISTURE_BASIS = 'D'
 	LEFT OUTER JOIN camdecmpswks.MONITOR_HRLY_VALUE AS O2W 
 		ON O2W.HOUR_ID = HOD.HOUR_ID AND O2W.PARAMETER_CD = 'O2' AND O2W.MOISTURE_BASIS = 'W';
+
+  CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'MATSSO2');
 END
 $BODY$;

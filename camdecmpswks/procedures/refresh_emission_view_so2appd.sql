@@ -9,6 +9,8 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_so2appd(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
 	DELETE FROM camdecmpswks.EMISSION_VIEW_SO2APPD 
 	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
@@ -101,5 +103,7 @@ BEGIN
 		ON DHV_SO2.MON_FORM_ID = SUMMATION_MF.MON_FORM_ID
 	LEFT OUTER JOIN camdecmpsmd.FUEL_CODE FC 
 		ON FC.FUEL_CD = HFF.FUEL_CD;
+
+  CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'SO2APPD');
 END
 $BODY$;

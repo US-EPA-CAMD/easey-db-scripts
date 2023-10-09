@@ -9,6 +9,8 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_matshg(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+
 	DELETE FROM camdecmpswks.EMISSION_VIEW_MATSHG
 	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
 
@@ -165,5 +167,7 @@ BEGIN
 		ON CMP1.COMPONENT_ID = GFM1.COMPONENT_ID
 	LEFT OUTER JOIN camdecmpswks.COMPONENT CMP2 
 		ON CMP2.COMPONENT_ID = GFM2.COMPONENT_ID;
+
+  CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'MATSHG');
 END
 $BODY$;

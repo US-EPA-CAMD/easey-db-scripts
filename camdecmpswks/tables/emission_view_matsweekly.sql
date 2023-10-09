@@ -14,5 +14,5 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_matsweekly
     ref_value numeric(13,2),
     measured_value numeric(13,3),
     system_integrity_error numeric(5,1),
-    error_codes character varying(1000) COLLATE pg_catalog."default"
+    ERROR_CODES character varying(1) COLLATE pg_catalog."default"
 );

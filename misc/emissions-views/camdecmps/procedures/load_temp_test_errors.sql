@@ -39,7 +39,7 @@ BEGIN
 		FW_FACTOR numeric(8,1), 
 		FUEL_CD character varying(7),
 		MATS_STARTUP_SHUTDOWN character varying(100), 
-		ERROR_CODES character varying(1000),
+		ERROR_CODES character varying(1),
 		CONSTRAINT pk_temp_hourly_test_errors PRIMARY KEY (HOUR_ID)
 	);
 
@@ -72,7 +72,7 @@ BEGIN
 		TEST_TYPE_CD character varying(7), 
 		TEST_RESULT_CD character varying(7), 
 		CALC_TEST_RESULT_CD character varying(7),
-		ERROR_CODES character varying(1000),
+		ERROR_CODES character varying(1),
 		CONSTRAINT pk_temp_daily_test_errors PRIMARY KEY (DAILY_TEST_SUM_ID)
 	);
 
@@ -110,7 +110,7 @@ BEGIN
 		TEST_TYPE_CD character varying(7), 
 		TEST_RESULT_CD character varying(7), 
 		CALC_TEST_RESULT_CD character varying(7),
-		ERROR_CODES character varying(1000),
+		ERROR_CODES character varying(1),
 		CONSTRAINT pk_temp_weekly_test_errors PRIMARY KEY (WEEKLY_TEST_SUM_ID)
 	);
 

@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_matssorbent
     b_post_leak_test_result_cd character varying(7) COLLATE pg_catalog."default",
     b_train_qa_status_cd character varying(10) COLLATE pg_catalog."default" NOT NULL,
     b_sample_damage_explanation character varying(1000) COLLATE pg_catalog."default",
-    error_codes character varying(1000) COLLATE pg_catalog."default",
+    ERROR_CODES character varying(1) COLLATE pg_catalog."default",
     sorbent_trap_aps_cd character varying(7) COLLATE pg_catalog."default",
     rata_ind integer
 );

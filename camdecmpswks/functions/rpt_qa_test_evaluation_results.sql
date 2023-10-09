@@ -35,7 +35,7 @@ SELECT
 	JOIN camdecmpswks.check_session cs ON cl.chk_session_id = cs.chk_session_id
 	JOIN camdecmpsmd.check_catalog_result ccr ON cl.check_catalog_result_id = ccr.check_catalog_result_id
 	JOIN camdecmpsmd.check_catalog cc ON ccr.check_catalog_id = cc.check_catalog_id
-	JOIN camdecmpsmd.rule_check rc ON cc.check_catalog_id = rc.check_catalog_id
+	JOIN camdecmpsmd.rule_check rc ON cl.rule_check_id = rc.rule_check_id
 	JOIN camdecmpsmd.category_code ccd ON rc.category_cd = ccd.category_cd
 	JOIN camdecmpswks.test_summary ts ON cs.test_sum_id = ts.test_sum_id
 	JOIN camdecmpswks.monitor_location ml ON cl.mon_loc_id = ml.mon_loc_id
