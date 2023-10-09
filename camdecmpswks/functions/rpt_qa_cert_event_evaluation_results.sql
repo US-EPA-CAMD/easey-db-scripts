@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_qa_cert_event_evaluation_results(text)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_cert_event_evaluation_results(text) CASCADE;
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_cert_event_evaluation_results(text[]) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_cert_event_evaluation_results(
 	qacerteventid text)

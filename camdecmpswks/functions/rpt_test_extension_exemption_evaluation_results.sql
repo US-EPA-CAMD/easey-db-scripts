@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpswks.rpt_test_extension_exemption_evaluation_results(text)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_test_extension_exemption_evaluation_results(text) CASCADE;
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_test_extension_exemption_evaluation_results(text[]) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_test_extension_exemption_evaluation_results(
 	testextensionexemptionid text)

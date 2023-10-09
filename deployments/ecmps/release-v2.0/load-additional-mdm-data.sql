@@ -194,7 +194,12 @@ VALUES
   ('HGLININJ',      'HGLINE',   'DEFAULT',  'Injection Statistics'),
   ('FFACCTTSUM',    'FFACCTT',  '3COLTBL',  'Transmitter Transducer Test'),
   ('FFACCTTSTAT',   'FFACCTT',  'DEFAULT',  'Transmitter Transducer Statistics'),
-  ('PEISUM',        'PEI',      '3COLTBL',  'PEI');
+  ('PEISUM',        'PEI',      '3COLTBL',  'PEI'),
+  ('APPESUM',       'APPE',     '3COLTBL',  'Appendix E NOx Rate'),
+  ('APPEGAS',       'APPE',     'DEFAULT',	'Protocol Gas'),
+  ('APPESTAT',      'APPE',     'DEFAULT',	'Summary Statistics'),
+  ('APPERUN',       'APPE',     'DEFAULT',	'Run Data'),
+  ('APPEOIL',       'APPE',     'DEFAULT',	'Heat Input From Oil');
 -----------------------------------------------------------------------
 TRUNCATE TABLE camdaux.cors_config Restart identity;
 
