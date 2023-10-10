@@ -387,4 +387,88 @@ BEGIN
 			/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
 	VALUES (datatableId, 1, 'testId', null);
+----------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'APPEGAS', 'SELECT * FROM {SCHEMA}.rpt_qa_ae_hi_gas($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'operatingLevelNo', 'Operating Level No.'),
+		(datatableId, 2, 'runNo', 'Run No.'),
+		(datatableId, 3, 'sysId', 'System ID'),
+		(datatableId, 4, 'gasGCV', 'Oil Mass (lb)'),
+		(datatableId, 5, 'gasVolume', 'Oil GCV'),
+		(datatableId, 6, 'gasHI', 'Oil GCV UOM'),
+		(datatableId, 7, 'calculatedGasHI', 'Oil Volume');		
+			/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+-- BAROMETER CALIBRATION
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'BCALSUM', 'SELECT * FROM {SCHEMA}.rpt_qa_test_summary($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'systemIdentifier', 'System ID'),
+		(datatableId, 2, 'systemTypeCode', 'System Type'),
+		(datatableId, 3, 'endDateTime', 'Test Completion'),
+		(datatableId, 4, 'componentIdentifier', 'Component ID'),
+		(datatableId, 5, 'componentTypeCode', 'Component Type'),
+		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
+		(datatableId, 7, 'testNumber', 'Test Number'),
+		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+-- FLOW TO LOAD REF
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'F2LREFSUM', 'SELECT * FROM {SCHEMA}.rpt_qa_test_summary($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'systemIdentifier', 'System ID'),
+		(datatableId, 2, 'systemTypeCode', 'System Type'),
+		(datatableId, 3, 'endDateTime', 'Test Completion'),
+		(datatableId, 4, 'testNumber', 'Test Number');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'F2LREFSTAT', 'SELECT * FROM {SCHEMA}.rpt_qa_fl2ref($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'rataTestNumRef', 'Reference RATA Test Number'),
+		(datatableId, 2, 'refRataEndDate', 'Reference RATA End Date'),
+		(datatableId, 3, 'averageGrossUnitLoad', 'Average Gross Load'),
+		(datatableId, 4, 'opLevelCode', 'Operating Level'),
+		(datatableId, 5, 'avgRefFlowRate', 'Average Reference Flow Rate (scfh)'),
+		(datatableId, 6, 'refFlowLoadRatio', 'Reference Flow/Load Ratio'),
+		(datatableId, 7, 'avgHrlyHiRate', 'Average Hourly HI Rate (mmBtu/hr)'),
+		(datatableId, 8, 'refGHR', 'Reference Gross Heat Rate'),
+		(datatableId, 9, 'sepRefInd', 'Separate Reference Ratio Indicator');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
 END $$;

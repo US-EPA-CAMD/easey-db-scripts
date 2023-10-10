@@ -199,7 +199,11 @@ VALUES
   ('APPEGAS',       'APPE',     'DEFAULT',	'Protocol Gas'),
   ('APPESTAT',      'APPE',     'DEFAULT',	'Summary Statistics'),
   ('APPERUN',       'APPE',     'DEFAULT',	'Run Data'),
-  ('APPEOIL',       'APPE',     'DEFAULT',	'Heat Input From Oil');
+  ('APPEOIL',       'APPE',     'DEFAULT',	'Heat Input From Oil'),
+  ('APPEGAS',       'APPE',     'DEFAULT',	'Heat Input From Gas'),
+  ('BCALSUM',       'BCAL',     '3COLTBL',	'Barometer Calibration'),
+  ('F2LREFSUM',     'F2LREF',   '3COLTBL',	'Flow-to-Load or GHR Reference Data'),
+  ('F2LREFSTAT',     'F2LREF',   'DEFAULT',	'Flow-to-Load or GHR Reference Data Statistics');
 -----------------------------------------------------------------------
 TRUNCATE TABLE camdaux.cors_config Restart identity;
 
