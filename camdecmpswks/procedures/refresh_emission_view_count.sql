@@ -1,11 +1,11 @@
--- PROCEDURE: camdecmpswks.refresh_emission_view_count(character varying, numeric, text)
+-- PROCEDURE: camdecmpswks.refresh_emission_view_count(character varying, numeric, character varying)
 
-DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_count(character varying, numeric, text);
+DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_count(character varying, numeric, character varying);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_count(
-	vmonplanid text,
+	vmonplanid character varying,
 	vrptperiodid numeric,
-  vdatasetcode text
+  vdatasetcode character varying
 )
 LANGUAGE 'plpgsql'
 AS $BODY$

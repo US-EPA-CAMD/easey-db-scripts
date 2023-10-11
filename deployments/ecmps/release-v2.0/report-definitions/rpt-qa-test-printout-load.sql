@@ -365,7 +365,7 @@ BEGIN
 ----------------------------------------------------------------------------------------------------------------------
 	tableOrder := tableOrder + 1;
 	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
-	VALUES(datasetCode, tableOrder, 'APPEOIL', 'SELECT * FROM {SCHEMA}.rpt_qa_ae_hi_oil($1)')
+	VALUES(datasetCode, tableOrder, 'APPEHIOIL', 'SELECT * FROM {SCHEMA}.rpt_qa_ae_hi_oil($1)')
 	RETURNING datatable_id INTO datatableId;
 
 	/***** COLUMNS *****/
@@ -390,7 +390,7 @@ BEGIN
 ----------------------------------------------------------------------------------------------------------------------
 	tableOrder := tableOrder + 1;
 	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
-	VALUES(datasetCode, tableOrder, 'APPEGAS', 'SELECT * FROM {SCHEMA}.rpt_qa_ae_hi_gas($1)')
+	VALUES(datasetCode, tableOrder, 'APPEHIGAS', 'SELECT * FROM {SCHEMA}.rpt_qa_ae_hi_gas($1)')
 	RETURNING datatable_id INTO datatableId;
 
 	/***** COLUMNS *****/

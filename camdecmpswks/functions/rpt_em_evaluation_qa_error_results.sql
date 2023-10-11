@@ -37,7 +37,7 @@ SELECT DISTINCT
 	JOIN camdecmpsmd.check_catalog cc ON ccr.check_catalog_id = cc.check_catalog_id
 	JOIN camdecmpsmd.rule_check rc ON cl.rule_check_id = rc.rule_check_id
 	JOIN camdecmpsmd.category_code ccd ON rc.category_cd = ccd.category_cd
-	JOIN camdecmpswks.monitor_location ml USING(mon_loc_id)
+	LEFT JOIN camdecmpswks.monitor_location ml USING(mon_loc_id)
 	LEFT JOIN camdecmpswks.stack_pipe sp USING(stack_pipe_id)
 	LEFT JOIN camd.unit u USING(unit_id)
 	WHERE cs.mon_plan_id = vMonPlanId AND rp.calendar_year = vYear AND rp.quarter = vQuarter AND

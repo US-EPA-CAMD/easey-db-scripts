@@ -28,7 +28,7 @@ SELECT
 	JOIN camdecmpsmd.check_catalog cc ON ccr.check_catalog_id = cc.check_catalog_id
 	JOIN camdecmpsmd.rule_check rc ON cl.rule_check_id = rc.rule_check_id
 	JOIN camdecmpsmd.category_code ccd ON rc.category_cd = ccd.category_cd
-	JOIN camdecmpswks.monitor_location ml ON cl.mon_loc_id = ml.mon_loc_id
+	LEFT JOIN camdecmpswks.monitor_location ml ON cl.mon_loc_id = ml.mon_loc_id
 	LEFT JOIN camdecmpswks.stack_pipe sp ON ml.stack_pipe_id = sp.stack_pipe_id
 	LEFT JOIN camd.unit u ON ml.unit_id = u.unit_id
 	WHERE ccd.process_cd = 'MP' AND cs.mon_plan_id = monPlanId;

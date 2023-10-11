@@ -40,7 +40,7 @@ SELECT
 	JOIN camdecmpsmd.category_code ccd ON rc.category_cd = ccd.category_cd
 	JOIN camdecmpswks.test_extension_exemption tee ON cs.test_extension_exemption_id = tee.test_extension_exemption_id
 	JOIN camdecmpsmd.reporting_period rp ON rp.rpt_period_id = tee.rpt_period_id
-	JOIN camdecmpswks.monitor_location ml ON cl.mon_loc_id = ml.mon_loc_id
+	LEFT JOIN camdecmpswks.monitor_location ml ON cl.mon_loc_id = ml.mon_loc_id
 	LEFT JOIN camdecmpswks.component c ON c.component_id = tee.component_id
 	LEFT JOIN camdecmpswks.monitor_system ms ON ms.mon_sys_id = tee.mon_sys_id
 	LEFT JOIN camdecmpswks.stack_pipe sp ON ml.stack_pipe_id = sp.stack_pipe_id

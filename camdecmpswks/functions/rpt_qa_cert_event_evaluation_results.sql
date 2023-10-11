@@ -39,7 +39,7 @@ SELECT
 	JOIN camdecmpsmd.rule_check rc ON cl.rule_check_id = rc.rule_check_id
 	JOIN camdecmpsmd.category_code ccd ON rc.category_cd = ccd.category_cd
 	JOIN camdecmpswks.qa_cert_event qce ON cs.qa_cert_event_id = qce.qa_cert_event_id
-	JOIN camdecmpswks.monitor_location ml ON cl.mon_loc_id = ml.mon_loc_id
+	LEFT JOIN camdecmpswks.monitor_location ml ON cl.mon_loc_id = ml.mon_loc_id
 	LEFT JOIN camdecmpswks.component c ON c.component_id = qce.component_id
 	LEFT JOIN camdecmpswks.monitor_system ms ON ms.mon_sys_id = qce.mon_sys_id
 	LEFT JOIN camdecmpswks.stack_pipe sp ON ml.stack_pipe_id = sp.stack_pipe_id

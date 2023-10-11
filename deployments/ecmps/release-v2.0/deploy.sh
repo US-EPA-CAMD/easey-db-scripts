@@ -53,6 +53,7 @@ function createOrReplaceViews() {
   getFiles "../../../camdaux/views"
   getFiles "../../../camdecmps/views"
   getFiles "../../../camdecmpswks/views"
+  #getFiles "../../../camdecmpsaux/views" #causing errors unless run in POST_DEPLOYMENT
 }
 
 function createOrReplaceFunctions() {
