@@ -1,10 +1,12 @@
 -- FUNCTION: camdecmpswks.rpt_qa_test_summary(text)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_test_summary(text) CASCADE;
+DROP FUNCTION IF EXISTS camdecmps.rpt_qa_ffl2bas_summary(text) CASCADE;
 
-CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_test_summary(
+CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_ffl2bas_summary(
 	testsumid text)
-    RETURNS TABLE("unitStack" text, "gpIndicator" numeric, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "beginDateTime" text ,"endDateTime" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "quarter" text) 
+    RETURNS TABLE("unitStack" text, "gpIndicator" numeric, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "beginDateTime" text ,"endDateTime" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "quarter" text, 
+	"accNum" text, "peiTestNum" text
+	) 
     LANGUAGE 'sql'
     COST 100
     VOLATILE PARALLEL UNSAFE
@@ -31,13 +33,16 @@ SELECT
 		ms.sys_type_cd AS "systemTypeCode",
 		c.component_identifier AS "componentIdentifier",
 		c.component_type_cd AS "componentTypeCode",
-		rp.period_abbreviation as "quarter"
-	FROM camdecmpswks.test_summary ts
-	JOIN camdecmpswks.monitor_location ml USING(mon_loc_id)
+		rp.period_abbreviation as "quarter",
+		ffl2b.accuracy_test_number as "accTestNum",
+		ffl2b.pei_test_number as "peiTestNum"
+	FROM camdecmps.test_summary ts
+	JOIN camdecmps.monitor_location ml USING(mon_loc_id)
+	JOIN camdecmps.fuel_flow_to_load_baseline ffl2b using(test_sum_id)
 	LEFT JOIN camdecmpsmd.reporting_period rp USING(rpt_period_id)
-	LEFT JOIN camdecmpswks.monitor_system ms USING(mon_sys_id)
-	LEFT JOIN camdecmpswks.component c USING(component_id)
-	LEFT JOIN camdecmpswks.stack_pipe sp USING(stack_pipe_id)
+	LEFT JOIN camdecmps.monitor_system ms USING(mon_sys_id)
+	LEFT JOIN camdecmps.component c USING(component_id)
+	LEFT JOIN camdecmps.stack_pipe sp USING(stack_pipe_id)
 	LEFT JOIN camd.unit u USING(unit_id)
 	WHERE ts.test_sum_id = testSumId;
 $BODY$;

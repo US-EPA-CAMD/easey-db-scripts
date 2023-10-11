@@ -203,7 +203,18 @@ VALUES
   ('APPEHIGAS',     'APPE',     'DEFAULT',	'Heat Input From Gas'),
   ('BCALSUM',       'BCAL',     '3COLTBL',	'Barometer Calibration'),
   ('F2LREFSUM',     'F2LREF',   '3COLTBL',	'Flow-to-Load or GHR Reference Data'),
-  ('F2LREFSTAT',    'F2LREF',   'DEFAULT',	'Flow-to-Load or GHR Reference Data Statistics');
+  ('F2LREFSTAT',    'F2LREF',   'DEFAULT',	'Flow-to-Load or GHR Reference Data Statistics'),
+  ('F2LCHKSUM',     'F2LCHK',   '3COLTBL',	'Flow-to-Load Ratio or GHR Test'),
+  ('F2LCHKSTAT',    'F2LCHK',   'DEFAULT',	'Flow-to-Load Ratio or GHR Test Statistics'),
+  ('FF2LBASSUM',     'FF2LBAS',   '3COLTBL',	'Fuel Flow-to-Load Baseline'),
+  ('FF2LBASSTAT',    'FF2LBAS',   'DEFAULT',	'Fuel Flow-to-Load Baseline Statistics'),
+  ('FF2LTSTSUM',     'FF2LTST',   '3COLTBL',	'Fuel Flow-to-Load Test'),
+  ('FF2LTSTSTAT',    'FF2LTST',   'DEFAULT',	'Fuel Flow-to-Load Test Statistics'),
+  ('FFACCSUM',       'FFACC',   '3COLTBL',	'Fuel Flowmeter Accuracy'),
+  ('FFACCSTAT',      'FFACC',   'DEFAULT',	'Fuel Flowmeter Accuracy Statistics'),
+  ('HGSI3SUM',      'HGSI3',   '3COLTBL',	'Three-Point Hg System Integrity Check'),
+  ('HGSI3STAT',     'HGSI3',   'DEFAULT',	'Summary Statistics'),
+  ('HGSI3INJ',      'HGSI3',   'DEFAULT',  'Injection Statistics');
 -----------------------------------------------------------------------
 TRUNCATE TABLE camdaux.cors_config Restart identity;
 INSERT INTO camdaux.cors_config(key, value)
