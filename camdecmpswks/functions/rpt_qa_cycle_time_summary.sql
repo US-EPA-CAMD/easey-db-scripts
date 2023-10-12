@@ -4,7 +4,7 @@ DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_cycle_time_summary(text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_cycle_time_summary(
 	testsumid text)
-    RETURNS TABLE("unitStack" text, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "endDateTime" text, "componentIdentifier" text, "componentTypeCode" text, "totalCycleTime" numeric, "calcTotalCycleTime" numeric) 
+    RETURNS TABLE("unitStack" text, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "endDateTime" text, "componentIdentifier" text, "componentTypeCode" text, "totalCycleTime" numeric, "calcTotalCycleTime" numeric, "evalStatus" text, "submissionStatus" text, "submittedOn" text) 
     LANGUAGE 'sql'
 
     COST 100
@@ -29,7 +29,10 @@ SELECT
 		c.component_identifier AS "componentIdentifier",
 		c.component_type_cd AS "componentTypeCode",
 		cts.total_time AS "totalCycleTime",
-		cts.calc_total_time AS "calcTotalCycleTime"
+		cts.calc_total_time AS "calcTotalCycleTime",
+		esc.eval_status_cd_description as "evalStatus",
+		sac.sub_avail_cd_description as "submisionStatus",
+		TO_CHAR(eq.submitted_on, 'MM/DD/YYYY HH24:MI') as "submittedOn"
 	FROM camdecmpswks.cycle_time_summary cts
 	JOIN camdecmpswks.test_summary ts USING(test_sum_id)
 	JOIN camdecmpswks.monitor_location ml USING(mon_loc_id)

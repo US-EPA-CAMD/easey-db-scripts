@@ -1,8 +1,4 @@
--- FUNCTION: camdecmps.get_linearity_statistic(text, text, text, text)
-
-DROP FUNCTION IF EXISTS camdecmps.get_linearity_statistic(text, text, text, text) CASCADE;
-
-CREATE OR REPLACE FUNCTION camdecmps.get_on_off_cal(
+CREATE OR REPLACE FUNCTION camdecmpswks.get_on_off_cal(
     testsumid text,
     gasgrp text,
     caltype text
@@ -40,7 +36,7 @@ BEGIN
             %1$s_%2$I_aps_ind as "reportedAPS",
             calc_%1$s_%2$I_cal_error as "calcReportedValue",
             calc_%1$s_%2$I_aps_ind as "calcReportedAPS"
-        FROM camdecmps.on_off_cal
+        FROM camdecmpswks.on_off_cal
         WHERE test_sum_id = %5$L;
     ', caltype, gasgrp, 'zero', 'ZERO', testsumid);
     RETURN QUERY EXECUTE sqlStatement;

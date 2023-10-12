@@ -47,7 +47,16 @@ BEGIN
 		(datatableId, 6, 'testResultCode', 'Reported Test Result'),
 		(datatableId, 7, 'spanScaleCode', 'Span Scale Level'),
 		(datatableId, 8, 'calcSpanValue', 'Span Value'),
-		(datatableId, 9, 'calcTestResultCode', 'EPA Calculated Result');
+		(datatableId, 9, 'calcTestResultCode', 'EPA Calculated Result'),
+		(datatableId, 10, 'hidden1', 'HIDDEN'),
+		(datatableId, 11, 'hidden2', 'HIDDEN'),
+		(datatableId, 12, 'hidden3', 'HIDDEN'),
+		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 14, 'hidden4', 'HIDDEN'),
+		(datatableId, 15, 'submissionStatus', 'Submission Status'),
+		(datatableId, 16, 'gpIndicator', 'Grace period Tested?'),
+		(datatableId, 17, 'hidden5', 'HIDDEN'),
+		(datatableId, 18, 'submittedOn', 'Submission Date/Time');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -127,7 +136,16 @@ BEGIN
 		(datatableId, 6, 'testResultCode', 'Reported Test Result'),
 		(datatableId, 7, 'spanScaleCode', 'Span Scale Level'),
 		(datatableId, 8, 'calcSpanValue', 'Span Value'),
-		(datatableId, 9, 'calcTestResultCode', 'EPA Calculated Result');
+		(datatableId, 9, 'calcTestResultCode', 'EPA Calculated Result'),
+		(datatableId, 10, 'hidden1', 'HIDDEN'),
+		(datatableId, 11, 'hidden2', 'HIDDEN'),
+		(datatableId, 12, 'hidden3', 'HIDDEN'),
+		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 14, 'hidden4', 'HIDDEN'),
+		(datatableId, 15, 'submissionStatus', 'Submission Status'),
+		(datatableId, 16, 'gpIndicator', 'Grace period Tested?'),
+		(datatableId, 17, 'hidden5', 'HIDDEN'),
+		(datatableId, 18, 'submittedOn', 'Submission Date/Time');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -278,7 +296,7 @@ BEGIN
 		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
 		(datatableId, 7, 'testNumber', 'Test Number'),
 		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
-		(datatableId, 8, 'gpIndicator', 'Grace Period Test?');
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -646,7 +664,7 @@ BEGIN
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
 	VALUES (datatableId, 1, 'testId', null);
 --------------------------------------------------------------------------------------------------------------------
--- HG LINEARITY CHECK
+-- HGSI3 LINEARITY CHECK
 --------------------------------------------------------------------------------------------------------------------
 	tableOrder := tableOrder + 1;
 	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
@@ -703,6 +721,322 @@ BEGIN
 		(datatableId, 3, 'measuredValue', 'Measured Value'),
 		(datatableId, 4, 'referenceValue', 'Reference Value'),
 		(datatableId, 5, 'refAsPercentOfSpan', 'Reference Value as % of Span');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+-- On-Line/Off-Line Calibration
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'ONOFFSUM', 'SELECT * FROM {SCHEMA}.rpt_qa_test_summary($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'componentIdentifier', 'Component ID'),
+		(datatableId, 2, 'componentTypeCode', 'Component Type'),
+		(datatableId, 3, 'endDateTime', 'Test Completion'),
+		(datatableId, 4, 'testNumber', 'Test Number'),
+		(datatableId, 5, 'testReasonCode', 'Reason for Test'),
+		(datatableId, 6, 'testResultCode', 'Reported Test Result'),
+		(datatableId, 7, 'spanScaleCode', 'Span Scale Level'),
+		(datatableId, 8, 'calcSpanValue', 'Span Value'),
+		(datatableId, 9, 'calcTestResultCode', 'EPA Calculated Result');
+
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+----------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'ONOFFSTAT', 'SELECT * FROM {SCHEMA}.get_on_off_cal_statistic($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'calType', 'Calibration Type'),
+		(datatableId, 2, 'injectionDateHour', 'Injection Date/Hour'),
+		(datatableId, 3, 'gasCd', 'Gas Level'),
+		(datatableId, 4, 'referenceValue', 'Reference Value'),
+		(datatableId, 5, 'measuredValue', 'Measured Value'),
+		(datatableId, 6, 'reportedValue', 'Reported Results'),
+		(datatableId, 7, 'reportedAPS', 'Reported APS'),
+		(datatableId, 8, 'calcReportedValue', 'Recalculated Results'),
+		(datatableId, 9, 'calcReportedAPS', 'Recalculated APS');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+-- Unit-Specific NOx Rate Test
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'UNITDEFSUM', 'SELECT * FROM {SCHEMA}.rpt_qa_test_summary($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'testNumber', 'Test Number'),
+		(datatableId, 2, 'testReasonCode', 'Reason for Test'),
+		(datatableId, 3, 'beginDateTime', 'Test Initiation'),
+		(datatableId, 4, 'endDateTime', 'Test Completion');
+
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+----------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'UNITDEFGAS', 'SELECT * FROM {SCHEMA}.rpt_qa_protocol_gas($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'gasLevelCode', 'Gas Level Code'),
+		(datatableId, 2, 'gasTypeCode', 'Gas Type Code'),
+		(datatableId, 3, 'vendorIdentifier', 'Vendor Identifier'),
+		(datatableId, 4, 'cylinderIdentifier', 'Cylinder Identifier'),
+		(datatableId, 5, 'expirationDate', 'Expiration Date');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+----------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'UNITDEFSTAT', 'SELECT * FROM {SCHEMA}.rpt_qa_unitdef_statistics($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'fuelType', 'Fuel Type'),
+		(datatableId, 2, 'defaultReported', 'Default NOx Emission Rate Reported'),
+		(datatableId, 3, 'defaultCalculated', 'Default NOx Emission Rate Recalculated'),
+		(datatableId, 4, 'opCondition', 'Operating Condition'),
+		(datatableId, 5, 'identicalId', 'Identical Unit Group ID'),
+		(datatableId, 3, 'noUnitsGroup', 'No. of Units in Group'),
+		(datatableId, 4, 'noTestGroup', 'No. of Tests for Group');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+----------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'UNITDEFRUN', 'SELECT * FROM {SCHEMA}.rpt_qa_unitdef_run($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'operatingLevelNo', 'Operating Level No.'),
+		(datatableId, 2, 'runNo', 'Run No.'),
+		(datatableId, 3, 'beginDate', 'Begin Date/Hour'),
+		(datatableId, 4, 'endDate', 'End Date/Hour'),
+		(datatableId, 5, 'noxEmissionsRate', 'NOx Emission Rate'),
+		(datatableId, 6, 'responseTime', 'Response Time (sec)'),
+		(datatableId, 7, 'runUsed', 'Run Used?');
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+-- DAHS Verification
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'DAHSSUM', 'SELECT * FROM {SCHEMA}.rpt_qa_test_summary($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'systemIdentifier', 'System ID'),
+		(datatableId, 2, 'systemTypeCode', 'System Type'),
+		(datatableId, 3, 'endDateTime', 'Test Completion'),
+		(datatableId, 4, 'componentIdentifier', 'Component ID'),
+		(datatableId, 5, 'componentTypeCode', 'Component Type'),
+		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
+		(datatableId, 7, 'testNumber', 'Test Number'),
+		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+-- Dry Gas Meter Calibration (Sorbent Trap Monitoring System)
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'DGFMCALSUM', 'SELECT * FROM {SCHEMA}.rpt_qa_test_summary($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'systemIdentifier', 'System ID'),
+		(datatableId, 2, 'systemTypeCode', 'System Type'),
+		(datatableId, 3, 'endDateTime', 'Test Completion'),
+		(datatableId, 4, 'componentIdentifier', 'Component ID'),
+		(datatableId, 5, 'componentTypeCode', 'Component Type'),
+		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
+		(datatableId, 7, 'testNumber', 'Test Number'),
+		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+-- Leak Check
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'LEAKSUM', 'SELECT * FROM {SCHEMA}.rpt_qa_test_summary($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'systemIdentifier', 'System ID'),
+		(datatableId, 2, 'systemTypeCode', 'System Type'),
+		(datatableId, 3, 'endDateTime', 'Test Completion'),
+		(datatableId, 4, 'componentIdentifier', 'Component ID'),
+		(datatableId, 5, 'componentTypeCode', 'Component Type'),
+		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
+		(datatableId, 7, 'testNumber', 'Test Number'),
+		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+-- Mass Flow Meter Calibration (Sorbent Trap Monitoring System)
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'MFMCALSUM', 'SELECT * FROM {SCHEMA}.rpt_qa_test_summary($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'systemIdentifier', 'System ID'),
+		(datatableId, 2, 'systemTypeCode', 'System Type'),
+		(datatableId, 3, 'endDateTime', 'Test Completion'),
+		(datatableId, 4, 'componentIdentifier', 'Component ID'),
+		(datatableId, 5, 'componentTypeCode', 'Component Type'),
+		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
+		(datatableId, 7, 'testNumber', 'Test Number'),
+		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+-- Other Test
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'OTHERSUM', 'SELECT * FROM {SCHEMA}.rpt_qa_test_summary($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'systemIdentifier', 'System ID'),
+		(datatableId, 2, 'systemTypeCode', 'System Type'),
+		(datatableId, 3, 'endDateTime', 'Test Completion'),
+		(datatableId, 4, 'componentIdentifier', 'Component ID'),
+		(datatableId, 5, 'componentTypeCode', 'Component Type'),
+		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
+		(datatableId, 7, 'testNumber', 'Test Number'),
+		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+-- PEMS Accuracy Check
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'PEMSACCSUM', 'SELECT * FROM {SCHEMA}.rpt_qa_test_summary($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'systemIdentifier', 'System ID'),
+		(datatableId, 2, 'systemTypeCode', 'System Type'),
+		(datatableId, 3, 'endDateTime', 'Test Completion'),
+		(datatableId, 4, 'componentIdentifier', 'Component ID'),
+		(datatableId, 5, 'componentTypeCode', 'Component Type'),
+		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
+		(datatableId, 7, 'testNumber', 'Test Number'),
+		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+-- Quarterly Gas Audit (HCl and HF monitoring systems)
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'QGASUM', 'SELECT * FROM {SCHEMA}.rpt_qa_test_summary($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'systemIdentifier', 'System ID'),
+		(datatableId, 2, 'systemTypeCode', 'System Type'),
+		(datatableId, 3, 'endDateTime', 'Test Completion'),
+		(datatableId, 4, 'componentIdentifier', 'Component ID'),
+		(datatableId, 5, 'componentTypeCode', 'Component Type'),
+		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
+		(datatableId, 7, 'testNumber', 'Test Number'),
+		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+-- Temperature sensor calibration (sorbent trap monitoring systems)
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'TSCALSUM', 'SELECT * FROM {SCHEMA}.rpt_qa_test_summary($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'systemIdentifier', 'System ID'),
+		(datatableId, 2, 'systemTypeCode', 'System Type'),
+		(datatableId, 3, 'endDateTime', 'Test Completion'),
+		(datatableId, 4, 'componentIdentifier', 'Component ID'),
+		(datatableId, 5, 'componentTypeCode', 'Component Type'),
+		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
+		(datatableId, 7, 'testNumber', 'Test Number'),
+		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
