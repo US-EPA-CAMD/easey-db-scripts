@@ -471,4 +471,240 @@ BEGIN
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
 	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+-- FLOW TO LOAD RATIO OR REF
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'F2LCHKSUM', 'SELECT * FROM {SCHEMA}.rpt_qa_test_summary($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'systemIdentifier', 'System ID'),
+		(datatableId, 2, 'systemTypeCode', 'System Type'),
+		(datatableId, 3, 'quarter', 'Calendar Year/Quarter'),
+		(datatableId, 4, 'testNumber', 'Test Number'),
+		(datatableId, 5, 'testReasonCode', 'Reason for Test'),		
+		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
+		(datatableId, 7, 'calcTestResultCode', 'EPA Calculated Result');
+
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'F2LCHKSTAT', 'SELECT * FROM {SCHEMA}.rpt_qa_fl2chk($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'opLevel', 'Operating Level'),
+		(datatableId, 2, 'testBasis', 'Test Basis'),
+		(datatableId, 3, 'pctDiff', '% Difference Between Reference Ratio and Hourly Ratio'),
+		(datatableId, 4, 'adjFlowInd', 'Bias Adjusted Flow Ind.'),
+		(datatableId, 5, 'hoursUsed', 'Hours Used in Quarterly Analysis'),
+		(datatableId, 6, 'diffFuel', 'Hours Excluded for Different Fuel'),
+		(datatableId, 7, 'loadRamping', 'Hours Excluded for Load Ramping'),
+		(datatableId, 8, 'scrubberBypass', 'Hours Excluded for Scrubber Bypass'),
+		(datatableId, 9, 'preFlowRata', 'Hours Excluded for Preceeding Flow RATA'),
+		(datatableId, 8, 'preDiagTest', 'Hours Excluded for Preceeding Diagnostic Test'),
+		(datatableId, 8, 'multiStackDischarge', 'Hours Excluded for Multiple Stack Discharge');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+-- FUEL FLOW TO LOAD BASELINE
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'FF2LBASSUM', 'SELECT * FROM {SCHEMA}.rpt_qa_ffl2bas_summary($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'systemIdentifier', 'System ID'),
+		(datatableId, 2, 'systemTypeCode', 'System Type'),
+		(datatableId, 3, 'beginDateTime', 'Test Initiation'),
+		(datatableId, 4, 'testNumber', 'Test Number'),
+		(datatableId, 5, 'accTestNum', 'Accuracy Test Number'),
+		(datatableId, 6, 'peiTestNum', 'PEI Test Number'),
+		(datatableId, 7, 'endDateTime', 'Test Completion');
+
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'FF2LBASSTAT', 'SELECT * FROM {SCHEMA}.rpt_qa_ffl2bas($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'avgFlowRate', 'Avg. Fuel Flow Rate'),
+		(datatableId, 2, 'avgGrossLoad', 'Avg. Gross Unit Load'),
+		(datatableId, 3, 'baseRatio', 'Baseline Fuel Flow-to-Load Ratio'),
+		(datatableId, 4, 'UOM', 'Fuel Flow-to-Load Units of Measure'),
+		(datatableId, 5, 'avgHHIP', 'Avg. Hourly Heat Input Rate'),
+		(datatableId, 6, 'baseGrossHeat', 'Baseline Gross Heat Rate'),
+		(datatableId, 7, 'ghrUOM', 'GHR Units of Measure'),
+		(datatableId, 8, 'hoursExcludedCo', 'Hours Excluded for Co-Firing'),
+		(datatableId, 9, 'hoursExcludedRamp', 'Hours Excluded for Ramping'),
+		(datatableId, 8, 'hoursExcludedRange', 'Hours Excluded for Low Range');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+-- FUEL FLOW TO LOAD TEST
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'FF2LTSTSUM', 'SELECT * FROM {SCHEMA}.rpt_qa_test_summary($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'systemIdentifier', 'System ID'),
+		(datatableId, 2, 'systemTypeCode', 'System Type'),
+		(datatableId, 3, 'quarter', 'Calendar Year/Quarter'),
+		(datatableId, 4, 'testNumber', 'Test Number'),
+		(datatableId, 5, 'testReasonCode', 'Reason for Test'),		
+		(datatableId, 6, 'testResultCode', 'Reported Test Results');
+
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'FF2LTSTSTAT', 'SELECT * FROM {SCHEMA}.rpt_qa_ff2ltst($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'testBasis', 'Test Basis'),
+		(datatableId, 2, 'avgPctDiff', 'Avg. Absolute Percent Difference'),
+		(datatableId, 3, 'hoursUsed', 'Hours Used in Analysis'),
+		(datatableId, 4, 'coFire', 'Hours Excluded for Co-Firing'),
+		(datatableId, 5, 'ramping', 'Hours Excluded for Ramping'),
+		(datatableId, 6, 'lowRange', 'Hours Excluded for Low Range');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+-- FUEL FLOWMETER ACCURACY
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'FFACCSUM', 'SELECT * FROM {SCHEMA}.rpt_qa_test_summary($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'componentIdentifier', 'Component ID'),
+		(datatableId, 2, 'componentTypeCode', 'Component Type'),
+		(datatableId, 3, 'endDateTime', 'Test Completion'),
+		(datatableId, 4, 'testNumber', 'Test Number'),
+		(datatableId, 5, 'testResultCode', 'Reported Test Results'),
+		(datatableId, 6, 'calcTestResultCode', 'EPA Calculated Result');
+
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'FFACCSTAT', 'SELECT * FROM {SCHEMA}.rpt_qa_ffacc($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'accMethod', 'Accuracy Test Method'),
+		(datatableId, 2, 'highAcc', 'High Level Accuracy'),
+		(datatableId, 3, 'midAcc', 'Mid Level Accuracy'),
+		(datatableId, 4, 'lowAcc', 'Low Level Accuracy'),
+		(datatableId, 5, 'reinstall', 'Reinstallation Date/Hour');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+-- HG LINEARITY CHECK
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'HGSI3SUM', 'SELECT * FROM {SCHEMA}.rpt_qa_test_summary($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'componentIdentifier', 'Component ID'),
+		(datatableId, 2, 'componentTypeCode', 'Component Type'),
+		(datatableId, 3, 'endDateTime', 'Test Completion'),
+		(datatableId, 4, 'testNumber', 'Test Number'),
+		(datatableId, 5, 'testReasonCode', 'Reason for Test'),
+		(datatableId, 6, 'testResultCode', 'Reported Test Result'),
+		(datatableId, 7, 'spanScaleCode', 'Span Scale Level'),
+		(datatableId, 8, 'calcSpanValue', 'Span Value'),
+		(datatableId, 9, 'calcTestResultCode', 'EPA Calculated Result');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+----------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'HGSI3STAT', 'SELECT * FROM {SCHEMA}.rpt_qa_hg_linearity_statistics($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'rowName', ''),
+		(datatableId, 2, 'highReportedValue', 'High Reported'),
+		(datatableId, 3, 'highCalculatedValue', 'High Calculated'),
+		(datatableId, 4, 'midReportedValue', 'Mid Reported'),
+		(datatableId, 5, 'midCalculatedValue', 'Mid Calculated'),
+		(datatableId, 6, 'lowReportedValue', 'Low Reported'),
+		(datatableId, 7, 'lowCalculatedValue', 'Low Calculated');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+----------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'HGSI3INJ', 'SELECT * FROM {SCHEMA}.rpt_qa_hg_linearity_injection($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'date', 'Date'),
+		(datatableId, 2, 'gasLevelCode', 'Gas Level'),
+		(datatableId, 3, 'measuredValue', 'Measured Value'),
+		(datatableId, 4, 'referenceValue', 'Reference Value'),
+		(datatableId, 5, 'refAsPercentOfSpan', 'Reference Value as % of Span');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
 END $$;
