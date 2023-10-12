@@ -180,7 +180,7 @@ SET process_cd_name = 'EM Generation'
 WHERE process_cd = 'EMGEN';
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmpsmd.qual_type_code
-    ADD COLUMN IF NOT EXISTS qual_type_group_cd character varying(7) NOT NULL DEFAULT 'PCT';
+    ADD COLUMN IF NOT EXISTS qual_type_group_cd character varying(7) NOT NULL DEFAULT 'OTHR';
 
 UPDATE camdecmpsmd.qual_type_code
 SET qual_type_group_cd = 'LEE'
@@ -189,6 +189,14 @@ WHERE qual_type_cd = 'LEE';
 UPDATE camdecmpsmd.qual_type_code
 SET qual_type_group_cd = 'LME'
 WHERE qual_type_cd IN ('LMEA', 'LMES');
+
+UPDATE camdecmpsmd.qual_type_code
+SET qual_type_group_cd = 'PCT'
+WHERE qual_type_cd IN ('PK', 'SK', 'GF');
+
+UPDATE camdecmpsmd.qual_type_code
+SET qual_type_group_cd = 'OTHR'
+WHERE qual_type_cd IN ('COMPLEX', 'HGAVG','LOWSULF','PRATA1','PRATA2');
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmpsmd.severity_code
     ADD COLUMN IF NOT EXISTS eval_status_cd character varying(7);
