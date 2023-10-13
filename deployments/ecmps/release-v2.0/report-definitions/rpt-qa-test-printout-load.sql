@@ -209,7 +209,17 @@ BEGIN
 		(datatableId, 8, 'calcSpanValue', 'Span Value'),
 		(datatableId, 9, 'calcTestResultCode', 'EPA Calculated Result'),
 		(datatableId, 10, 'totalCycleTime', 'Total Cycle Time'),
-		(datatableId, 11, 'calcTotalCycleTime', 'Calculated Total Cycle Time');
+		(datatableId, 11, 'calcTotalCycleTime', 'Calculated Total Cycle Time'),
+		(datatableId, 12, 'hidden1', 'HIDDEN'),
+		(datatableId, 13, 'hidden2', 'HIDDEN'),
+		(datatableId, 14, 'hidden3', 'HIDDEN'),
+		(datatableId, 15, 'hidden4', 'HIDDEN'),
+		(datatableId, 16, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 17, 'hidden5', 'HIDDEN'),
+		(datatableId, 18, 'submissionStatus', 'Submission Status'),
+		(datatableId, 19, 'hidden6', 'HIDDEN'),
+		(datatableId, 20, 'hidden7', 'HIDDEN'),
+		(datatableId, 21, 'submittedOn', 'Submission Date/Time');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -254,7 +264,19 @@ BEGIN
 		(datatableId, 4, 'testNumber', 'Test Number'),
 		(datatableId, 5, 'testReasonCode', 'Reason for Test'),
 		(datatableId, 6, 'testResultCode', 'Reported Test Result'),
-		(datatableId, 7, 'calcTestResultCode', 'EPA Calculated Result');
+		(datatableId, 7, 'hidden1', 'HIDDEN'),
+		(datatableId, 8, 'hidden2', 'HIDDEN'),
+		(datatableId, 9, 'calcTestResultCode', 'EPA Calculated Result'),
+		(datatableId, 10, 'hidden3', 'HIDDEN'),
+		(datatableId, 11, 'hidden4', 'HIDDEN'),
+		(datatableId, 12, 'hidden5', 'HIDDEN'),
+		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 14, 'hidden6', 'HIDDEN'),
+		(datatableId, 15, 'submissionStatus', 'Submission Status'),
+		(datatableId, 16, 'hidden7', 'HIDDEN'),
+		(datatableId, 17, 'hidden8', 'HIDDEN'),
+		(datatableId, 18, 'submittedOn', 'Submission Date/Time');
+
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -296,7 +318,14 @@ BEGIN
 		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
 		(datatableId, 7, 'testNumber', 'Test Number'),
 		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
-		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?'),
+		(datatableId, 10, 'hidden1', 'HIDDEN'),
+		(datatableId, 11, 'hidden2', 'HIDDEN'),
+		(datatableId, 12, 'hidden3', 'HIDDEN'),
+		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 14, 'hidden4', 'HIDDEN'),
+		(datatableId, 15, 'submissionStatus', 'Submission Status'),
+		(datatableId, 16, 'testDescription', 'Test Description');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -317,7 +346,43 @@ BEGIN
 		(datatableId, 3, 'endDateTime', 'Test Completion'),
 		(datatableId, 4, 'testNumber', 'Test Number'),
 		(datatableId, 5, 'testReasonCode', 'Reason for Test'),
-		(datatableId, 6, 'testResultCode', 'Reported Test Results');
+		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
+		(datatableId, 7, 'hidden1', 'HIDDEN'),
+		(datatableId, 8, 'hidden2', 'HIDDEN'),
+		(datatableId, 9, 'hidden3', 'HIDDEN'),
+		(datatableId, 10, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 11, 'hidden6', 'HIDDEN'),
+		(datatableId, 12, 'submissionStatus', 'Submission Status'),
+		(datatableId, 13, 'hidden7', 'HIDDEN'),
+		(datatableId, 14, 'hidden8', 'HIDDEN'),
+		(datatableId, 15, 'submittedOn', 'Submission Date/Time');
+
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'APPETEST', 'SELECT * FROM {SCHEMA}.rpt_qa_ae_testing($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'qIName', 'System ID'),
+		(datatableId, 13, 'hidden1', 'HIDDEN'),
+		(datatableId, 2, 'aetbName', 'System Type'),
+		(datatableId, 13, 'hidden2', 'HIDDEN'),
+		(datatableId, 3, 'examDate', 'Test Completion'),
+		(datatableId, 13, 'hidden3', 'HIDDEN'),
+		(datatableId, 4, 'aetbPhone', 'Test Number'),
+		(datatableId, 13, 'hidden4', 'HIDDEN'),
+		(datatableId, 5, 'providerName', 'Reason for Test'),
+		(datatableId, 13, 'hidden5', 'HIDDEN'),
+		(datatableId, 6, 'aetbEmail', 'Reported Test Results'),
+		(datatableId, 13, 'hidden6', 'HIDDEN'),
+		(datatableId, 7, 'providerEmail', 'HIDDEN');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -443,7 +508,14 @@ BEGIN
 		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
 		(datatableId, 7, 'testNumber', 'Test Number'),
 		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
-		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?'),
+		(datatableId, 10, 'hidden1', 'HIDDEN'),
+		(datatableId, 11, 'hidden2', 'HIDDEN'),
+		(datatableId, 12, 'hidden3', 'HIDDEN'),
+		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 14, 'hidden4', 'HIDDEN'),
+		(datatableId, 15, 'submissionStatus', 'Submission Status'),
+		(datatableId, 116, 'testDescription', 'Test Description');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -462,7 +534,19 @@ BEGIN
 		(datatableId, 1, 'systemIdentifier', 'System ID'),
 		(datatableId, 2, 'systemTypeCode', 'System Type'),
 		(datatableId, 3, 'endDateTime', 'Test Completion'),
-		(datatableId, 4, 'testNumber', 'Test Number');
+		(datatableId, 4, 'testNumber', 'Test Number'),
+		(datatableId, 5, 'hidden1', 'HIDDEN'),
+		(datatableId, 5, 'hidden2', 'HIDDEN'),
+		(datatableId, 6, 'hidden3', 'HIDDEN'),
+		(datatableId, 7, 'hidden4', 'HIDDEN'),
+		(datatableId, 8, 'hidden5', 'HIDDEN'),
+		(datatableId, 9, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 10, 'hidden6', 'HIDDEN'),
+		(datatableId, 11, 'submissionStatus', 'Submission Status'),
+		(datatableId, 12, 'hidden7', 'HIDDEN'),
+		(datatableId, 13, 'hidden8', 'HIDDEN'),
+		(datatableId, 14, 'submittedOn', 'Submission Date/Time');
+
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -506,7 +590,18 @@ BEGIN
 		(datatableId, 4, 'testNumber', 'Test Number'),
 		(datatableId, 5, 'testReasonCode', 'Reason for Test'),		
 		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
-		(datatableId, 7, 'calcTestResultCode', 'EPA Calculated Result');
+		(datatableId, 7, 'hidden1', 'HIDDEN'),
+		(datatableId, 8, 'hidden2', 'HIDDEN'),
+		(datatableId, 9, 'calcTestResultCode', 'EPA Calculated Result'),
+		(datatableId, 10, 'hidden3', 'HIDDEN'),
+		(datatableId, 11, 'hidden4', 'HIDDEN'),
+		(datatableId, 12, 'hidden5', 'HIDDEN'),
+		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 14, 'hidden6', 'HIDDEN'),
+		(datatableId, 15, 'submissionStatus', 'Submission Status'),
+		(datatableId, 16, 'hidden7', 'HIDDEN'),
+		(datatableId, 17, 'hidden8', 'HIDDEN'),
+		(datatableId, 18, 'submittedOn', 'Submission Date/Time');
 
 
 	/***** PARAMETERS *****/
@@ -551,10 +646,20 @@ BEGIN
 		(datatableId, 2, 'systemTypeCode', 'System Type'),
 		(datatableId, 3, 'beginDateTime', 'Test Initiation'),
 		(datatableId, 4, 'testNumber', 'Test Number'),
-		(datatableId, 5, 'accTestNum', 'Accuracy Test Number'),
-		(datatableId, 6, 'peiTestNum', 'PEI Test Number'),
-		(datatableId, 7, 'endDateTime', 'Test Completion');
-
+		(datatableId, 5, 'hidden1', 'HIDDEN'),
+		(datatableId, 6, 'endDateTime', 'Test Completion'),
+		(datatableId, 7, 'accTestNum', 'Accuracy Test Number'),
+		(datatableId, 8, 'peiTestNum', 'PEI Test Number'),
+		(datatableId, 9, 'hidden2', 'HIDDEN'),
+		(datatableId, 10, 'hidden3', 'HIDDEN'),
+		(datatableId, 11, 'hidden4', 'HIDDEN'),
+		(datatableId, 12, 'hidden5', 'HIDDEN'),
+		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 14, 'hidden6', 'HIDDEN'),
+		(datatableId, 15, 'submissionStatus', 'Submission Status'),
+		(datatableId, 16, 'hidden7', 'HIDDEN'),
+		(datatableId, 17, 'hidden8', 'HIDDEN'),
+		(datatableId, 18, 'submittedOn', 'Submission Date/Time');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -598,7 +703,16 @@ BEGIN
 		(datatableId, 3, 'quarter', 'Calendar Year/Quarter'),
 		(datatableId, 4, 'testNumber', 'Test Number'),
 		(datatableId, 5, 'testReasonCode', 'Reason for Test'),		
-		(datatableId, 6, 'testResultCode', 'Reported Test Results');
+		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
+		(datatableId, 7, 'hidden1', 'HIDDEN'),
+		(datatableId, 8, 'hidden2', 'HIDDEN'),
+		(datatableId, 9, 'hidden3', 'HIDDEN'),
+		(datatableId, 10, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 11, 'hidden4', 'HIDDEN'),
+		(datatableId, 12, 'submissionStatus', 'Submission Status'),
+		(datatableId, 13, 'hidden5', 'HIDDEN'),
+		(datatableId, 14, 'hidden6', 'HIDDEN'),
+		(datatableId, 15, 'submittedOn', 'Submission Date/Time');
 
 
 	/***** PARAMETERS *****/
@@ -638,8 +752,20 @@ BEGIN
 		(datatableId, 2, 'componentTypeCode', 'Component Type'),
 		(datatableId, 3, 'endDateTime', 'Test Completion'),
 		(datatableId, 4, 'testNumber', 'Test Number'),
-		(datatableId, 5, 'testResultCode', 'Reported Test Results'),
-		(datatableId, 6, 'calcTestResultCode', 'EPA Calculated Result');
+		(datatableId, 5, 'hidden1', 'HIDDEN'),
+		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
+		(datatableId, 7, 'hidden2', 'HIDDEN'),
+		(datatableId, 8, 'hidden3', 'HIDDEN'),
+		(datatableId, 9, 'calcTestResultCode', 'EPA Calculated Result'),
+		(datatableId, 10, 'hidden4', 'HIDDEN'),
+		(datatableId, 11, 'hidden5', 'HIDDEN'),
+		(datatableId, 12, 'hidden6', 'HIDDEN'),
+		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 14, 'hidden7', 'HIDDEN'),
+		(datatableId, 15, 'submissionStatus', 'Submission Status'),
+		(datatableId, 16, 'hidden8', 'HIDDEN'),
+		(datatableId, 17, 'hidden9', 'HIDDEN'),
+		(datatableId, 18, 'submittedOn', 'Submission Date/Time');
 
 
 	/***** PARAMETERS *****/
@@ -682,7 +808,16 @@ BEGIN
 		(datatableId, 6, 'testResultCode', 'Reported Test Result'),
 		(datatableId, 7, 'spanScaleCode', 'Span Scale Level'),
 		(datatableId, 8, 'calcSpanValue', 'Span Value'),
-		(datatableId, 9, 'calcTestResultCode', 'EPA Calculated Result');
+		(datatableId, 9, 'calcTestResultCode', 'EPA Calculated Result'),
+		(datatableId, 10, 'hidden1', 'HIDDEN'),
+		(datatableId, 11, 'hidden2', 'HIDDEN'),
+		(datatableId, 12, 'hidden3', 'HIDDEN'),
+		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 14, 'hidden4', 'HIDDEN'),
+		(datatableId, 15, 'submissionStatus', 'Submission Status'),
+		(datatableId, 16, 'gpIndicator', 'Grace period Tested?'),
+		(datatableId, 17, 'hidden5', 'HIDDEN'),
+		(datatableId, 18, 'submittedOn', 'Submission Date/Time');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -744,7 +879,17 @@ BEGIN
 		(datatableId, 6, 'testResultCode', 'Reported Test Result'),
 		(datatableId, 7, 'spanScaleCode', 'Span Scale Level'),
 		(datatableId, 8, 'calcSpanValue', 'Span Value'),
-		(datatableId, 9, 'calcTestResultCode', 'EPA Calculated Result');
+		(datatableId, 9, 'calcTestResultCode', 'EPA Calculated Result'),
+		(datatableId, 10, 'hidden1', 'HIDDEN'),
+		(datatableId, 11, 'hidden2', 'HIDDEN'),
+		(datatableId, 12, 'hidden3', 'HIDDEN'),
+		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 14, 'hidden4', 'HIDDEN'),
+		(datatableId, 15, 'submissionStatus', 'Submission Status'),
+		(datatableId, 16, 'hidden5', 'HIDDEN'),
+		(datatableId, 17, 'hidden6', 'HIDDEN'),
+		(datatableId, 18, 'submittedOn', 'Submission Date/Time');
+
 
 
 	/***** PARAMETERS *****/
@@ -764,10 +909,11 @@ BEGIN
 		(datatableId, 3, 'gasCd', 'Gas Level'),
 		(datatableId, 4, 'referenceValue', 'Reference Value'),
 		(datatableId, 5, 'measuredValue', 'Measured Value'),
-		(datatableId, 6, 'reportedValue', 'Reported Results'),
-		(datatableId, 7, 'reportedAPS', 'Reported APS'),
-		(datatableId, 8, 'calcReportedValue', 'Recalculated Results'),
-		(datatableId, 9, 'calcReportedAPS', 'Recalculated APS');
+		(datatableId, 6, 'pctDiff', 'Reference Value % of Span'),
+		(datatableId, 7, 'reportedValue', 'Reported Results'),
+		(datatableId, 8, 'reportedAPS', 'Reported APS'),
+		(datatableId, 9, 'calcReportedValue', 'Recalculated Results'),
+		(datatableId, 10, 'calcReportedAPS', 'Recalculated APS');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -786,8 +932,45 @@ BEGIN
 		(datatableId, 1, 'testNumber', 'Test Number'),
 		(datatableId, 2, 'testReasonCode', 'Reason for Test'),
 		(datatableId, 3, 'beginDateTime', 'Test Initiation'),
-		(datatableId, 4, 'endDateTime', 'Test Completion');
+		(datatableId, 4, 'hidden1', 'HIDDEN'),
+		(datatableId, 5, 'hidden2', 'HIDDEN'),
+		(datatableId, 6, 'endDateTime', 'Test Completion'),
+		(datatableId, 7, 'hidden1', 'HIDDEN'),
+		(datatableId, 8, 'hidden2', 'HIDDEN'),
+		(datatableId, 9, 'hidden3', 'HIDDEN'),
+		(datatableId, 10, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 11, 'hidden4', 'HIDDEN'),
+		(datatableId, 12, 'submissionStatus', 'Submission Status'),
+		(datatableId, 13, 'hidden5', 'HIDDEN'),
+		(datatableId, 14, 'hidden6', 'HIDDEN'),
+		(datatableId, 15, 'submittedOn', 'Submission Date/Time');
 
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'UNITDEFTEST', 'SELECT * FROM {SCHEMA}.rpt_qa_ae_testing($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'qIName', 'System ID'),
+		(datatableId, 13, 'hidden1', 'HIDDEN'),
+		(datatableId, 2, 'aetbName', 'System Type'),
+		(datatableId, 13, 'hidden2', 'HIDDEN'),
+		(datatableId, 3, 'examDate', 'Test Completion'),
+		(datatableId, 13, 'hidden3', 'HIDDEN'),
+		(datatableId, 4, 'aetbPhone', 'Test Number'),
+		(datatableId, 13, 'hidden4', 'HIDDEN'),
+		(datatableId, 5, 'providerName', 'Reason for Test'),
+		(datatableId, 13, 'hidden5', 'HIDDEN'),
+		(datatableId, 6, 'aetbEmail', 'Reported Test Results'),
+		(datatableId, 13, 'hidden6', 'HIDDEN'),
+		(datatableId, 7, 'providerEmail', 'HIDDEN');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -868,7 +1051,15 @@ BEGIN
 		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
 		(datatableId, 7, 'testNumber', 'Test Number'),
 		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
-		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?'),
+		(datatableId, 10, 'hidden1', 'HIDDEN'),
+		(datatableId, 11, 'hidden2', 'HIDDEN'),
+		(datatableId, 12, 'hidden3', 'HIDDEN'),
+		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 14, 'hidden4', 'HIDDEN'),
+		(datatableId, 15, 'submissionStatus', 'Submission Status'),
+		(datatableId, 116, 'testDescription', 'Test Description');
+
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -892,7 +1083,15 @@ BEGIN
 		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
 		(datatableId, 7, 'testNumber', 'Test Number'),
 		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
-		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?'),
+		(datatableId, 10, 'hidden1', 'HIDDEN'),
+		(datatableId, 11, 'hidden2', 'HIDDEN'),
+		(datatableId, 12, 'hidden3', 'HIDDEN'),
+		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 14, 'hidden4', 'HIDDEN'),
+		(datatableId, 15, 'submissionStatus', 'Submission Status'),
+		(datatableId, 116, 'testDescription', 'Test Description');
+
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -916,7 +1115,15 @@ BEGIN
 		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
 		(datatableId, 7, 'testNumber', 'Test Number'),
 		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
-		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?'),
+		(datatableId, 10, 'hidden1', 'HIDDEN'),
+		(datatableId, 11, 'hidden2', 'HIDDEN'),
+		(datatableId, 12, 'hidden3', 'HIDDEN'),
+		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 14, 'hidden4', 'HIDDEN'),
+		(datatableId, 15, 'submissionStatus', 'Submission Status'),
+		(datatableId, 116, 'testDescription', 'Test Description');
+
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -940,7 +1147,15 @@ BEGIN
 		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
 		(datatableId, 7, 'testNumber', 'Test Number'),
 		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
-		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?'),
+		(datatableId, 10, 'hidden1', 'HIDDEN'),
+		(datatableId, 11, 'hidden2', 'HIDDEN'),
+		(datatableId, 12, 'hidden3', 'HIDDEN'),
+		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 14, 'hidden4', 'HIDDEN'),
+		(datatableId, 15, 'submissionStatus', 'Submission Status'),
+		(datatableId, 116, 'testDescription', 'Test Description');
+
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -964,7 +1179,15 @@ BEGIN
 		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
 		(datatableId, 7, 'testNumber', 'Test Number'),
 		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
-		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?'),
+		(datatableId, 10, 'hidden1', 'HIDDEN'),
+		(datatableId, 11, 'hidden2', 'HIDDEN'),
+		(datatableId, 12, 'hidden3', 'HIDDEN'),
+		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 14, 'hidden4', 'HIDDEN'),
+		(datatableId, 15, 'submissionStatus', 'Submission Status'),
+		(datatableId, 116, 'testDescription', 'Test Description');
+
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -988,7 +1211,15 @@ BEGIN
 		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
 		(datatableId, 7, 'testNumber', 'Test Number'),
 		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
-		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?'),
+		(datatableId, 10, 'hidden1', 'HIDDEN'),
+		(datatableId, 11, 'hidden2', 'HIDDEN'),
+		(datatableId, 12, 'hidden3', 'HIDDEN'),
+		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 14, 'hidden4', 'HIDDEN'),
+		(datatableId, 15, 'submissionStatus', 'Submission Status'),
+		(datatableId, 116, 'testDescription', 'Test Description');
+
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -1012,7 +1243,15 @@ BEGIN
 		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
 		(datatableId, 7, 'testNumber', 'Test Number'),
 		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
-		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?'),
+		(datatableId, 10, 'hidden1', 'HIDDEN'),
+		(datatableId, 11, 'hidden2', 'HIDDEN'),
+		(datatableId, 12, 'hidden3', 'HIDDEN'),
+		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 14, 'hidden4', 'HIDDEN'),
+		(datatableId, 15, 'submissionStatus', 'Submission Status'),
+		(datatableId, 116, 'testDescription', 'Test Description');
+
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -1036,7 +1275,15 @@ BEGIN
 		(datatableId, 6, 'testResultCode', 'Reported Test Results'),
 		(datatableId, 7, 'testNumber', 'Test Number'),
 		(datatableId, 8, 'testReasonCode', 'Reason for Test'),
-		(datatableId, 9, 'gpIndicator', 'Grace Period Test?');
+		(datatableId, 9, 'gpIndicator', 'Grace Period Test?'),
+		(datatableId, 10, 'hidden1', 'HIDDEN'),
+		(datatableId, 11, 'hidden2', 'HIDDEN'),
+		(datatableId, 12, 'hidden3', 'HIDDEN'),
+		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 14, 'hidden4', 'HIDDEN'),
+		(datatableId, 15, 'submissionStatus', 'Submission Status'),
+		(datatableId, 116, 'testDescription', 'Test Description');
+
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)

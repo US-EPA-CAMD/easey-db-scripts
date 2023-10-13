@@ -2,15 +2,14 @@
 
 DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_cycle_time_summary(text) CASCADE;
 
-CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_cycle_time_summary(
+CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_test_summary(
 	testsumid text)
-    RETURNS TABLE("unitStack" text, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "endDateTime" text, "componentIdentifier" text, "componentTypeCode" text, "totalCycleTime" numeric, "calcTotalCycleTime" numeric, "evalStatus" text, "submissionStatus" text, "submittedOn" text) 
+    RETURNS TABLE("unitStack" text, "gpIndicator" numeric, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "beginDateTime" text ,"endDateTime" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "quarter" text, "evalStatus" text, "submissionStatus" text, "submittedOn" text, "totalCycleTime" numeric, "calcTotalCycleTime" numeric) 
     LANGUAGE 'sql'
-
     COST 100
-    VOLATILE 
+    VOLATILE PARALLEL UNSAFE
     ROWS 1000
-    
+
 AS $BODY$
 SELECT
 		CASE
@@ -18,6 +17,7 @@ SELECT
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid
 			ELSE '*'
 		END AS "unitStack",
+		ts.gp_ind as "gpIndicator",
 		ts.test_type_cd AS "testTypeCode",
 		ts.test_num AS "testNumber",
 		ts.test_reason_cd AS "testReasonCode",
@@ -25,20 +25,29 @@ SELECT
 		ts.calc_test_result_cd AS "calcTestResultCode",	
 		ts.span_scale_cd AS "spanScaleCode",
 		ts.calc_span_value AS "calcSpanValue",
+		camdecmpswks.format_date_hour(ts.begin_date, ts.begin_hour, ts.begin_min) AS "beginDateTime",
 		camdecmpswks.format_date_hour(ts.end_date, ts.end_hour, ts.end_min) AS "endDateTime",
+		ms.system_identifier AS "systemIdentifier",
+		ms.sys_type_cd AS "systemTypeCode",
 		c.component_identifier AS "componentIdentifier",
 		c.component_type_cd AS "componentTypeCode",
-		cts.total_time AS "totalCycleTime",
-		cts.calc_total_time AS "calcTotalCycleTime",
+		rp.period_abbreviation as "quarter",
 		esc.eval_status_cd_description as "evalStatus",
 		sac.sub_avail_cd_description as "submisionStatus",
-		TO_CHAR(eq.submitted_on, 'MM/DD/YYYY HH24:MI') as "submittedOn"
+		TO_CHAR(eq.submitted_on, 'MM/DD/YYYY HH24:MI') as "submittedOn",
+		cts.total_time AS "totalCycleTime",
+		cts.calc_total_time AS "calcTotalCycleTime"
 	FROM camdecmpswks.cycle_time_summary cts
-	JOIN camdecmpswks.test_summary ts USING(test_sum_id)
-	JOIN camdecmpswks.monitor_location ml USING(mon_loc_id)
-	LEFT JOIN camdecmpswks.monitor_system ms USING(mon_sys_id)
-	LEFT JOIN camdecmpswks.component c USING(component_id)
-	LEFT JOIN camdecmpswks.stack_pipe sp USING(stack_pipe_id)
-	LEFT JOIN camd.unit u USING(unit_id)
-	WHERE cts.test_sum_id = testSumId
+	JOIN camdecmpswks.test_summary ts on ts.test_sum_id = cts.test_sum_id
+	JOIN camdecmpswks.qa_supp_data supp on ts.test_sum_id = supp.test_sum_id
+	JOIN camdecmpswks.monitor_location ml ON ts.mon_loc_id = ml.mon_loc_id
+	JOIN camdecmpsmd.eval_status_code esc USING(eval_status_cd)
+	JOIN camdecmpsmd.submission_availability_code sac USING(submission_availability_cd)
+	LEFT JOIN camdecmpsaux.submission_queue eq using(submission_id)
+	LEFT JOIN camdecmpsmd.reporting_period rp on rp.rpt_period_id = ts.rpt_period_id
+	LEFT JOIN camdecmpswks.monitor_system ms on ms.mon_sys_id = ts.mon_sys_id
+	LEFT JOIN camdecmpswks.component c on c.component_id = ts.component_id
+	LEFT JOIN camdecmpswks.stack_pipe sp on sp.stack_pipe_id = ml.stack_pipe_id
+	LEFT JOIN camd.unit u on u.unit_id = ml.unit_id
+	WHERE ts.test_sum_id = testSumId;
 $BODY$;

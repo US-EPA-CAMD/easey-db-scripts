@@ -4,7 +4,7 @@ DROP FUNCTION IF EXISTS camdecmps.rpt_qa_test_summary(text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_test_summary(
 	testsumid text)
-    RETURNS TABLE("unitStack" text, "gpIndicator" numeric, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "beginDateTime" text ,"endDateTime" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "quarter" text, "evalStatus" text, "submissionStatus" text, "submittedOn" text) 
+    RETURNS TABLE("unitStack" text, "gpIndicator" numeric, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "beginDateTime" text ,"endDateTime" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "quarter" text, "evalStatus" text, "submissionStatus" text, "submittedOn" text, "testDescription" text) 
     LANGUAGE 'sql'
     COST 100
     VOLATILE PARALLEL UNSAFE
@@ -34,7 +34,8 @@ SELECT
 		rp.period_abbreviation as "quarter",
 		null as "evalStatus",
 		sac.sub_avail_cd_description as "submisionStatus",
-		TO_CHAR(eq.submitted_on, 'MM/DD/YYYY HH24:MI') as "submittedOn"
+		TO_CHAR(eq.submitted_on, 'MM/DD/YYYY HH24:MI') as "submittedOn",
+		ts.test_description as "testDescription"
 	FROM camdecmps.test_summary ts
 	JOIN camdecmps.qa_supp_data supp on ts.test_sum_id = supp.test_sum_id
 	JOIN camdecmps.monitor_location ml ON ts.mon_loc_id = ml.mon_loc_id

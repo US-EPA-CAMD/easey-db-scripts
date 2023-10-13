@@ -4,9 +4,7 @@ DROP FUNCTION IF EXISTS camdecmps.rpt_qa_ffl2bas_summary(text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_ffl2bas_summary(
 	testsumid text)
-    RETURNS TABLE("unitStack" text, "gpIndicator" numeric, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "beginDateTime" text ,"endDateTime" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "quarter" text, 
-	"accNum" text, "peiTestNum" text
-	) 
+    RETURNS TABLE("unitStack" text, "gpIndicator" numeric, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "beginDateTime" text ,"endDateTime" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "quarter" text, "evalStatus" text, "submissionStatus" text, "submittedOn" text, "testDescription" text, "accNum" text, "peiTestNum" text) 
     LANGUAGE 'sql'
     COST 100
     VOLATILE PARALLEL UNSAFE
@@ -34,15 +32,22 @@ SELECT
 		c.component_identifier AS "componentIdentifier",
 		c.component_type_cd AS "componentTypeCode",
 		rp.period_abbreviation as "quarter",
+		null as "evalStatus",
+		sac.sub_avail_cd_description as "submisionStatus",
+		TO_CHAR(eq.submitted_on, 'MM/DD/YYYY HH24:MI') as "submittedOn",
+		ts.test_description as "testDescription",
 		ffl2b.accuracy_test_number as "accTestNum",
 		ffl2b.pei_test_number as "peiTestNum"
 	FROM camdecmps.test_summary ts
-	JOIN camdecmps.monitor_location ml USING(mon_loc_id)
-	JOIN camdecmps.fuel_flow_to_load_baseline ffl2b using(test_sum_id)
-	LEFT JOIN camdecmpsmd.reporting_period rp USING(rpt_period_id)
-	LEFT JOIN camdecmps.monitor_system ms USING(mon_sys_id)
-	LEFT JOIN camdecmps.component c USING(component_id)
-	LEFT JOIN camdecmps.stack_pipe sp USING(stack_pipe_id)
-	LEFT JOIN camd.unit u USING(unit_id)
+	JOIN camdecmps.qa_supp_data supp on ts.test_sum_id = supp.test_sum_id
+	JOIN camdecmps.fuel_flow_to_load_baseline ffl2b on ts.test_sum_id =  ffl2b.test_sum_id
+	JOIN camdecmps.monitor_location ml ON ts.mon_loc_id = ml.mon_loc_id
+	JOIN camdecmpsmd.submission_availability_code sac USING(submission_availability_cd)
+	LEFT JOIN camdecmpsaux.submission_queue eq using(submission_id)
+	LEFT JOIN camdecmpsmd.reporting_period rp on rp.rpt_period_id = ts.rpt_period_id
+	LEFT JOIN camdecmps.monitor_system ms on ms.mon_sys_id = ts.mon_sys_id
+	LEFT JOIN camdecmps.component c on c.component_id = ts.component_id
+	LEFT JOIN camdecmps.stack_pipe sp on sp.stack_pipe_id = ml.stack_pipe_id
+	LEFT JOIN camd.unit u on u.unit_id = ml.unit_id
 	WHERE ts.test_sum_id = testSumId;
 $BODY$;

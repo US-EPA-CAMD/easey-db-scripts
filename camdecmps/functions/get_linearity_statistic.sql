@@ -1,48 +1,31 @@
--- FUNCTION: camdecmps.get_linearity_statistic(text, text, text, text)
-
 DROP FUNCTION IF EXISTS camdecmps.get_linearity_statistic(text, text, text, text) CASCADE;
 
-CREATE OR REPLACE FUNCTION camdecmps.get_on_off_cal(
-    testsumid text,
-    gasgrp text,
-    caltype text
-)
-RETURNS TABLE(
-    "calType" text,
-    "injectionDateHour" character varying,
-    "gasCd" character varying(7),
-    "referenceValue" numeric,
-    "measuredValue" numeric,
-    "reportedValue" numeric,
-    "reportedAPS" numeric,
-    "calcReportedValue" numeric,
-    "calcReportedAPS" numeric
-) 
-LANGUAGE 'plpgsql'
-COST 100
-VOLATILE 
-ROWS 1000
+CREATE OR REPLACE FUNCTION camdecmps.get_linearity_statistic(
+	testsumid text,
+	gaslevelcode text,
+	tablename text,
+	columnname text)
+    RETURNS TABLE(test_sum_id character varying, reported_value numeric, calculated_value numeric) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
 AS $BODY$
 DECLARE
-    sqlStatement text;
+	sqlStatement text;
 BEGIN
-    sqlStatement := format('
-        SELECT
-            %L AS "calType",
-            camdecmpswks.format_date_hour(%1$s_%2$I_injection_date, %1$s_%2$I_injection_hour, NULL) AS "injectionDateHour",
-            CASE
-                WHEN %2$L = %3$L THEN %4$L
-                ELSE upscale_gas_level_cd
-            END AS "gasCd",
-            %1$s_%2$I_ref_value as "referenceValue",
-            %1$s_%2$I_measured_value as "measuredValue",
-            %1$s_%2$I_cal_error as "reportedValue",
-            %1$s_%2$I_aps_ind as "reportedAPS",
-            calc_%1$s_%2$I_cal_error as "calcReportedValue",
-            calc_%1$s_%2$I_aps_ind as "calcReportedAPS"
-        FROM camdecmps.on_off_cal
-        WHERE test_sum_id = %5$L;
-    ', caltype, gasgrp, 'zero', 'ZERO', testsumid);
-    RETURN QUERY EXECUTE sqlStatement;
+	sqlStatement := format('
+		SELECT
+			test_sum_id,
+			%s AS reported_value,
+			calc_%s AS calculated_value
+		FROM camdecmps.%s
+		JOIN camdecmps.test_summary USING(test_sum_id)
+		WHERE test_sum_id = %L
+		AND gas_level_cd = %L
+	', columnName, columnName, tableName, testSumId, gasLevelCode);
+	RETURN QUERY EXECUTE sqlStatement;
 END;
 $BODY$;
