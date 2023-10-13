@@ -230,7 +230,24 @@ VALUES
   ('OTHERSUM',      'OTHER',    '3COLTBL',	'Other Test'),
   ('PEMSACCSUM',    'PEMSACC',  '3COLTBL',	'PEMS Accuracy Check'),
   ('QGASUM',        'QGA',      '3COLTBL',	'Quarterly Gas Audit (HCl and HF Monitoring Systems)'),
-  ('TSCALSUM',      'TSCAL',    '3COLTBL',	'Temperature Sensor Calibration (Sorbent Trap Monitoring Systems)');
+  ('TSCALSUM',      'TSCAL',    '3COLTBL',	'Temperature Sensor Calibration (Sorbent Trap Monitoring Systems)'),
+  ('RATASUM',       'RATA',     '3COLTBL',	'Relative Accuracy Test'),
+  ('RATATEST',      'RATA',     '3COLTBL',  'Air Emissions Testing Data'),
+  ('RATAMID',       'RATA',     'DEFAULT',  'Operating Level - Mid'),
+  ('RATAMIDRUN',    'RATA',     'DEFAULT',  'Run Data')
+  ('RATAMIDSUPP',   'RATA',     '3COLTBL',  'Supplemental Flow RATA Data'),
+  ('RATAMIDFLOW',   'RATA',     'DEFAULT',  'Flow Run Data'),
+  ('RATAMIDTRAV',   'RATA',     'DEFAULT',  'Traverse Point Data'),
+  ('RATAHIGH',       'RATA',     'DEFAULT',  'Operating Level - High'),
+  ('RATAHIGHRUN',    'RATA',     'DEFAULT',  'Run Data'),
+  ('RATAHIGHSUPP',   'RATA',     '3COLTBL',  'Supplemental Flow RATA Data'),
+  ('RATAHIGHFLOW',   'RATA',     'DEFAULT',  'Flow Run Data'),
+  ('RATAHIGHTRAV',   'RATA',     'DEFAULT',  'Traverse Point Data'),
+  ('RATALOW',       'RATA',     'DEFAULT',  'Operating Level - Low'),
+  ('RATALOWRUN',    'RATA',     'DEFAULT',  'Run Data'),
+  ('RATALOWSUPP',   'RATA',     '3COLTBL',  'Supplemental Flow RATA Data'),
+  ('RATALOWFLOW',   'RATA',     'DEFAULT',  'Flow Run Data'),
+  ('RATALOWTRAV',   'RATA',     'DEFAULT',  'Traverse Point Data');
 -----------------------------------------------------------------------
 TRUNCATE TABLE camdaux.cors_config Restart identity;
 INSERT INTO camdaux.cors_config(key, value)
