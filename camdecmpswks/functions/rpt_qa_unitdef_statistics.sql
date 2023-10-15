@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_unitdef_statistics(text) CASCADE;
+
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_unitdef_statistics(
 	testsumid text)
     RETURNS TABLE(
