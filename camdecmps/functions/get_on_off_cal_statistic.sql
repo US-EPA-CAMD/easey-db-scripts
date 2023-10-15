@@ -7,6 +7,7 @@ RETURNS TABLE(
     "calType" text,
     "injectionDateHour" character varying,
     "gasCd" character varying(7),
+    "pctDiff" numeric,
     "referenceValue" numeric,
     "measuredValue" numeric,
     "reportedValue" numeric,

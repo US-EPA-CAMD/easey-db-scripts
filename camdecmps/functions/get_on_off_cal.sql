@@ -9,6 +9,7 @@ RETURNS TABLE(
     "calType" text,
     "injectionDateHour" character varying,
     "gasCd" character varying(7),
+    "pctDiff" numeric,
     "referenceValue" numeric,
     "measuredValue" numeric,
     "reportedValue" numeric,
@@ -32,6 +33,10 @@ BEGIN
                 WHEN %2$L = %3$L THEN %4$L
                 ELSE upscale_gas_level_cd
             END AS "gasCd",
+            CASE 
+                WHEN %1$s_%2$I_ref_value = 0 OR ts.CALC_SPAN_VALUE = 0 OR %1$s_%2$I_ref_value is null OR ts.CALC_SPAN_VALUE is null THEN null
+                ELSE ROUND(%1$s_%2$I_ref_value*100/ts.CALC_SPAN_VALUE, 2)
+            END AS "pctDiff",
             %1$s_%2$I_ref_value as "referenceValue",
             %1$s_%2$I_measured_value as "measuredValue",
             %1$s_%2$I_cal_error as "reportedValue",
@@ -39,6 +44,7 @@ BEGIN
             calc_%1$s_%2$I_cal_error as "calcReportedValue",
             calc_%1$s_%2$I_aps_ind as "calcReportedAPS"
         FROM camdecmps.on_off_cal
+        JOIN camdecmps.test_summary ts USING(test_sum_id)
         WHERE test_sum_id = %5$L;
     ', caltype, gasgrp, 'zero', 'ZERO', testsumid);
     RETURN QUERY EXECUTE sqlStatement;

@@ -196,6 +196,7 @@ VALUES
   ('FFACCTTSTAT',   'FFACCTT',  'DEFAULT',  'Transmitter Transducer Statistics'),
   ('PEISUM',        'PEI',      '3COLTBL',  'PEI'),
   ('APPESUM',       'APPE',     '3COLTBL',  'Appendix E NOx Rate'),
+  ('APPETEST',      'APPE',     '3COLTBL',  'Air Emissions Testing Data'),
   ('APPEGAS',       'APPE',     'DEFAULT',	'Protocol Gas'),
   ('APPESTAT',      'APPE',     'DEFAULT',	'Summary Statistics'),
   ('APPERUN',       'APPE',     'DEFAULT',	'Run Data'),
@@ -218,6 +219,7 @@ VALUES
   ('ONOFFSUM',      'ONOFF',    '3COLTBL',	'On-Line/Off-Line Calibration'),
   ('ONOFFSTAT',     'ONOFF',    'DEFAULT',	'On-Line/Off-Line Calibration Statistics'),
   ('UNITDEFSUM',    'UNITDEF',  '3COLTBL',	'Unit-Specific Default NOx Rate Test'),
+  ('UNITDEFTEST',   'UNITDEF',  '3COLTBL',  'Air Emissions Testing Data'),
   ('UNITDEFGAS',    'UNITDEF',  'DEFAULT',	'Protocol Gas'),
   ('UNITDEFSTAT',   'UNITDEF',  'DEFAULT',	'Summary Statistics'),
   ('UNITDEFRUN',    'UNITDEF',  'DEFAULT',	'Run Data'),
@@ -228,7 +230,24 @@ VALUES
   ('OTHERSUM',      'OTHER',    '3COLTBL',	'Other Test'),
   ('PEMSACCSUM',    'PEMSACC',  '3COLTBL',	'PEMS Accuracy Check'),
   ('QGASUM',        'QGA',      '3COLTBL',	'Quarterly Gas Audit (HCl and HF Monitoring Systems)'),
-  ('TSCALSUM',      'TSCAL',    '3COLTBL',	'Temperature Sensor Calibration (Sorbent Trap Monitoring Systems)');
+  ('TSCALSUM',      'TSCAL',    '3COLTBL',	'Temperature Sensor Calibration (Sorbent Trap Monitoring Systems)'),
+  ('RATASUM',       'RATA',     '3COLTBL',	'Relative Accuracy Test'),
+  ('RATATEST',      'RATA',     '3COLTBL',  'Air Emissions Testing Data'),
+  ('RATAMID',       'RATA',     'DEFAULT',  'Operating Level - Mid'),
+  ('RATAMIDRUN',    'RATA',     'DEFAULT',  'Run Data')
+  ('RATAMIDSUPP',   'RATA',     '3COLTBL',  'Supplemental Flow RATA Data'),
+  ('RATAMIDFLOW',   'RATA',     'DEFAULT',  'Flow Run Data'),
+  ('RATAMIDTRAV',   'RATA',     'DEFAULT',  'Traverse Point Data'),
+  ('RATAHIGH',       'RATA',     'DEFAULT',  'Operating Level - High'),
+  ('RATAHIGHRUN',    'RATA',     'DEFAULT',  'Run Data'),
+  ('RATAHIGHSUPP',   'RATA',     '3COLTBL',  'Supplemental Flow RATA Data'),
+  ('RATAHIGHFLOW',   'RATA',     'DEFAULT',  'Flow Run Data'),
+  ('RATAHIGHTRAV',   'RATA',     'DEFAULT',  'Traverse Point Data'),
+  ('RATALOW',       'RATA',     'DEFAULT',  'Operating Level - Low'),
+  ('RATALOWRUN',    'RATA',     'DEFAULT',  'Run Data'),
+  ('RATALOWSUPP',   'RATA',     '3COLTBL',  'Supplemental Flow RATA Data'),
+  ('RATALOWFLOW',   'RATA',     'DEFAULT',  'Flow Run Data'),
+  ('RATALOWTRAV',   'RATA',     'DEFAULT',  'Traverse Point Data');
 -----------------------------------------------------------------------
 TRUNCATE TABLE camdaux.cors_config Restart identity;
 INSERT INTO camdaux.cors_config(key, value)
