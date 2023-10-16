@@ -31,5 +31,15 @@ SELECT
 	FROM camdecmps.rata_summary rs
 	JOIN camdecmps.rata r USING(rata_id)
 	WHERE r.test_sum_id = testSumId
-	AND rs.op_level_cd = oplevelcd;
+	AND rs.op_level_cd = oplevelcd
+	AND (
+		rs.co2_o2_ref_method_cd is not null OR 
+		rs.stack_diameter is not null OR 
+		rs.num_traverse_point is not null OR 
+		rs.default_waf is not null OR
+		rs.stack_area is not null OR 
+		rs.calc_stack_area is not null OR 
+		rs.calc_waf is not null OR  
+		rs.calc_calc_waf is not null
+	);
 $BODY$;
