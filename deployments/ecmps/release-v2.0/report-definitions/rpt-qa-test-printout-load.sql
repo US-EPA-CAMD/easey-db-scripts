@@ -1764,5 +1764,61 @@ BEGIN
 	VALUES 
 		(datatableId, 1, 'testId', null),
 		(datatableId, 2, 'opLevelCd', 'L');
+--------------------------------------------------------------------------------------------------------------------
+-- 7DAY Calibration
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, '7DAYSUM', 'SELECT * FROM {SCHEMA}.rpt_qa_test_summary($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'componentIdentifier', 'Component ID'),
+		(datatableId, 2, 'componentTypeCode', 'Component Type'),
+		(datatableId, 3, 'endDateTime', 'Test Completion'),
+		(datatableId, 4, 'testNumber', 'Test Number'),
+		(datatableId, 5, 'testReasonCode', 'Reason for Test'),
+		(datatableId, 6, 'testResultCode', 'Reported Test Result'),
+		(datatableId, 7, 'spanScaleCode', 'Span Scale Level'),
+		(datatableId, 8, 'calcSpanValue', 'Span Value'),
+		(datatableId, 9, 'calcTestResultCode', 'EPA Calculated Result'),
+		(datatableId, 10, 'hidden1', 'HIDDEN'),
+		(datatableId, 11, 'hidden2', 'HIDDEN'),
+		(datatableId, 12, 'hidden3', 'HIDDEN'),
+		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
+		(datatableId, 14, 'hidden4', 'HIDDEN'),
+		(datatableId, 15, 'submissionStatus', 'Submission Status'),
+		(datatableId, 16, 'hidden5', 'HIDDEN'),
+		(datatableId, 17, 'hidden6', 'HIDDEN'),
+		(datatableId, 18, 'submittedOn', 'Submission Date/Time');
+
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+----------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, '7DAYSTAT', 'SELECT * FROM {SCHEMA}.get_7day_statistics($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'injectionDateHour', 'Injection Date/Hour'),
+		(datatableId, 2, 'gasCd', 'Gas Level'),
+		(datatableId, 3, 'referenceValue', 'Reference Value'),
+		(datatableId, 4, 'measuredValue', 'Measured Value'),
+		(datatableId, 5, 'pctDiff', 'Reference Value % of Span'),
+		(datatableId, 6, 'reportedValue', 'Reported Results'),
+		(datatableId, 7, 'reportedAPS', 'Reported APS'),
+		(datatableId, 8, 'calcReportedValue', 'Recalculated Results'),
+		(datatableId, 9, 'calcReportedAPS', 'Recalculated APS');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
 
 END $$;

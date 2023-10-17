@@ -247,7 +247,9 @@ VALUES
   ('RATALOWRUN',    'RATA',     'DEFAULT',  'Run Data'),
   ('RATALOWSUPP',   'RATA',     '3COLTBL',  'Supplemental Flow RATA Data'),
   ('RATALOWFLOW',   'RATA',     'DEFAULT',  'Flow Run Data'),
-  ('RATALOWTRAV',   'RATA',     'DEFAULT',  'Traverse Point Data');
+  ('RATALOWTRAV',   'RATA',     'DEFAULT',  'Traverse Point Data'),
+  ('7DAYSUM',       '7DAY',     '3COLTBL',  '7-Day Calibration'),
+  ('7DAYSTAT',      '7DAY',     'DEFAULT',  '7-Day Calibration Statistics');
 -----------------------------------------------------------------------
 TRUNCATE TABLE camdaux.cors_config Restart identity;
 INSERT INTO camdaux.cors_config(key, value)
