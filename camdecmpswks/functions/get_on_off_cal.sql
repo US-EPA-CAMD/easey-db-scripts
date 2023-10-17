@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS camdecmpswks.get_on_off_cal(text,text,text) CASCADE;
+
 CREATE OR REPLACE FUNCTION camdecmpswks.get_on_off_cal(
     testsumid text,
     gasgrp text,

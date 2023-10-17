@@ -1,6 +1,6 @@
 ALTER TABLE IF EXISTS camdaux.template_code
     ADD CONSTRAINT pk_template_code PRIMARY KEY (template_cd),
-    ADD CONSTRAINT ck_template_type CHECK (template_type::text = ANY (ARRAY['1COLTBL'::text, '2COLTBL'::text, '3COLTBL'::text, 'DEFAULT'::text]));
+    ADD CONSTRAINT ck_template_type CHECK (template_type::text = ANY (ARRAY['1COLTBL'::text, '2COLTBL'::text, '3COLTBL'::text, 'DEFAULT'::text, 'DEFAULT2'::text]));
 
 CREATE INDEX IF NOT EXISTS idx_template_code_group_cd
     ON camdaux.template_code USING btree

@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_unitdef_run(text) CASCADE;
+
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_unitdef_run(
 	testsumid text)
     RETURNS TABLE("operatingLevelNo" numeric, "runNo" numeric, "beginDate" text, "endDate" text,  "noxEmissionsRate" numeric, "responseTime" numeric, "runUsed" numeric) 

@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS camdecmps.rpt_qa_ae_hi_gas(text) CASCADE;
+
 CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_ae_hi_gas(
 	testsumid text)
     RETURNS TABLE("operatingLevelNo" numeric, "runNo" numeric, "sysId" text, "gasGCV" numeric, "gasVolume" numeric, "gasHI" numeric, "calculatedGasHI" numeric) 

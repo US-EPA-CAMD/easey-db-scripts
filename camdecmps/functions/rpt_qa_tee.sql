@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS camdecmps.rpt_qa_tee(text[]) CASCADE;
+
 CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_tee(
 	teeid text[])
     RETURNS TABLE("unitStack" text, "extensionExemptionType" text, "rptPeriodAbr" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "spanScaleCd" text, "fuelCd" text, "hoursUsed" numeric, "submissionStatus" text) 

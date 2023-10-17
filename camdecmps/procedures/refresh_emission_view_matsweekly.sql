@@ -31,7 +31,7 @@ BEGIN
 		SYSTEM_INTEGRITY_ERROR,
 		ERROR_CODES
 	)
-	SELECT DISTINCT
+	SELECT
 		ts.MON_PLAN_ID,
 		ts.MON_LOC_ID,
 		ts.RPT_PERIOD_ID,
@@ -49,9 +49,13 @@ BEGIN
 		ts.ERROR_CODES
 	FROM temp_weekly_test_errors ts
 	LEFT OUTER JOIN	camdecmps.WEEKLY_TEST_SUMMARY wts 
-		ON wts.WEEKLY_TEST_SUM_ID = ts.WEEKLY_TEST_SUM_ID
+		ON ts.WEEKLY_TEST_SUM_ID = wts.WEEKLY_TEST_SUM_ID
+		AND ts.MON_LOC_ID = wts.MON_LOC_ID
+		AND ts.RPT_PERIOD_ID = wts.RPT_PERIOD_ID
 	LEFT OUTER JOIN camdecmps.WEEKLY_SYSTEM_INTEGRITY wsi 
-		ON wts.WEEKLY_TEST_SUM_ID=wsi.WEEKLY_TEST_SUM_ID
+		ON wts.WEEKLY_TEST_SUM_ID = wsi.WEEKLY_TEST_SUM_ID
+		AND wts.MON_LOC_ID = wsi.MON_LOC_ID
+		AND wts.RPT_PERIOD_ID = wsi.RPT_PERIOD_ID
 	LEFT OUTER JOIN camdecmps.MONITOR_SPAN MS  
 		ON wts.MON_LOC_ID = MS.MON_LOC_ID 
 		AND ts.COMPONENT_TYPE_CD = MS.COMPONENT_TYPE_CD 
@@ -61,3 +65,18 @@ BEGIN
   CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'MATSWEEKLY');
 END
 $BODY$;
+
+/*
+----------------------------------------------------------------------------------------
+FOR TESTING PURPOSES ONLY
+----------------------------------------------------------------------------------------
+DROP TABLE temp_weekly_test_errors;
+CALL camdecmps.load_temp_weekly_test_errors('MDC-94FE334B615548CDB3F22AED7D333EEF', 120);
+
+select a.mon_plan_id, *
+from camdecmps.monitor_plan_location a
+JOIN camdecmps.WEEKLY_TEST_SUMMARY wts 
+	ON a.MON_LOC_ID = wts.MON_LOC_ID
+	AND wts.RPT_PERIOD_ID = 120	
+order by a.mon_loc_id
+*/

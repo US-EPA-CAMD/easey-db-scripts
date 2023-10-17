@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS camdecmps.rpt_qa_ae_hi_oil(text) CASCADE;
+
 CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_ae_hi_oil(
 	testsumid text)
     RETURNS TABLE("operatingLevelNo" numeric, "runNo" numeric, "sysId" text, "oilMass" numeric,  "oilGCV" numeric, "oilGCVUOM" text, "oilVolume" numeric, "oilVolumeUOM" text, "oilDensity" numeric, "oilDensityUOM" text, "oilHI" numeric, "calculatedOilHI" numeric) 

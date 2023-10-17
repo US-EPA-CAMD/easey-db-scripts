@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_ae_statistics(text) CASCADE;
+
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_ae_statistics(
 	testsumid text)
     RETURNS TABLE("operatingLevelNo" numeric, "fFactor" numeric, "reportedMeanNoxRate" numeric, "reportedAvgHiRate" numeric,  "reportedCaclMeanNoxRate" numeric, "reportedCalcAvgHiRate" numeric) 

@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_hg_linearity_injection(text) CASCADE;
+
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_hg_linearity_injection(
 	testsumid text)
     RETURNS TABLE("unitStack" text, date text, "gasLevelCode" text, "measuredValue" numeric, "referenceValue" numeric, "refAsPercentOfSpan" text) 

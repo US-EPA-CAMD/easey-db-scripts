@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS camdecmps.get_on_off_cal_statistic(text) CASCADE;
+
 CREATE OR REPLACE FUNCTION camdecmps.get_on_off_cal_statistic(
     testsumid text
 )
@@ -26,7 +28,7 @@ BEGIN
         SELECT * FROM camdecmps.get_on_off_cal(testsumid, 'zero', 'offline')
         UNION
         SELECT * FROM camdecmps.get_on_off_cal(testsumid, 'upscale', 'offline')
-		ORDER BY "calType" DESC, "gasCd" DESC
+		    ORDER BY "calType" DESC, "gasCd" DESC
     );
 END;
 $BODY$;

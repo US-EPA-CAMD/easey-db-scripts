@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_ae_run(text) CASCADE;
+
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_ae_run(
 	testsumid text)
     RETURNS TABLE("operatingLevelNo" numeric, "runNo" numeric, "beginDate" text, "endDate" text,  "noxEmissionsRate" numeric, "responseTime" numeric, "hourlyHiRate" numeric, "totalHi" numeric, "calculatedHourlyHiRate" numeric, "calculatedTotalHi" numeric) 

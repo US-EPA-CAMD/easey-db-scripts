@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS camdecmpswks.get_on_off_cal_statistic(text) CASCADE;
+
 CREATE OR REPLACE FUNCTION camdecmpswks.get_on_off_cal_statistic(
     testsumid text
 )

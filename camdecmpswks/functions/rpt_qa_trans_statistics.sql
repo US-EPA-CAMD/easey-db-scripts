@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_trans_statistics(text) CASCADE;
+
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_trans_statistics(
 	testsumid text)
     RETURNS TABLE("highLevelAccuracy" numeric, "highLevelAccuracySpec" text, "midLevelAccuracy" numeric, "midLevelAccuracySpec" text, "lowLevelAccuracy" numeric, "lowLevelAccuracySpec" text) 

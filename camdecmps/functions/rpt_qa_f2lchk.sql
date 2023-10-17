@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS camdecmps.rpt_qa_fl2chk(text) CASCADE;
+
 CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_fl2chk(
 	testsumid text)
     RETURNS TABLE("opLevel" text,

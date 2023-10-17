@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS camdecmps.rpt_qa_fl2ref(text) CASCADE;
+
 CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_fl2ref(
 	testsumid text)
     RETURNS TABLE(
