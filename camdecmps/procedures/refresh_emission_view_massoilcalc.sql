@@ -1,5 +1,3 @@
--- PROCEDURE: camdecmps.refresh_emission_view_massoilcalc(character varying, numeric)
-
 DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_massoilcalc(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_massoilcalc(
@@ -8,12 +6,20 @@ CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_massoilcalc(
 )
 LANGUAGE 'plpgsql'
 AS $BODY$
+DECLARE
+  stopTime time without time zone;
+  startTime time without time zone := CURRENT_TIME;
 BEGIN
+  RAISE NOTICE 'Refresh started @ % %', CURRENT_DATE, startTime;
+
+  RAISE NOTICE 'Loading temp_hourly_test_errors...';
 	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
 
-	DELETE FROM camdecmps.EMISSION_VIEW_MASSOILCALC 
-	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
+  RAISE NOTICE 'Deleting existing records...';
+	DELETE FROM camdecmps.EMISSION_VIEW_MASSOILCALC
+	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
 
+  RAISE NOTICE 'Refreshing view data...';
 	INSERT INTO camdecmps.EMISSION_VIEW_MASSOILCALC(
 		MON_PLAN_ID,
 		MON_LOC_ID,
@@ -68,6 +74,10 @@ BEGIN
 	LEFT JOIN camdecmps.MONITOR_SYSTEM MS 
 		ON HFF.MON_SYS_ID = MS.MON_SYS_ID;
 
+  RAISE NOTICE 'Refreshing view counts...';
   CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'MASSOILCALC');
+
+  stopTime := CURRENT_TIME;
+  RAISE NOTICE 'Refresh complete @ % %, total time: %', CURRENT_DATE, stopTime, stopTime - startTime;
 END
 $BODY$;

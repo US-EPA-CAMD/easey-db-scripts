@@ -1,5 +1,3 @@
--- PROCEDURE: camdecmps.refresh_emission_view_count(character varying, numeric, character varying)
-
 DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_count(character varying, numeric, character varying);
 
 CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_count(

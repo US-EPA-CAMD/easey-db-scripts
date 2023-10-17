@@ -1,6 +1,4 @@
--- FUNCTION: camdecmpswks.rpt_qa_linearity_statistics(text)
-
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_linearity_statistics(text) CASCADE;
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_three_point_statistics(text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_three_point_statistics(
 	testsumid text)

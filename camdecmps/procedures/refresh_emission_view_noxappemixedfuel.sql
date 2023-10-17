@@ -1,5 +1,3 @@
--- PROCEDURE: camdecmps.refresh_emission_view_noxappemixedfuel(character varying, numeric)
-
 DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_noxappemixedfuel(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_noxappemixedfuel(
@@ -8,12 +6,20 @@ CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_noxappemixedfuel(
 )
 LANGUAGE 'plpgsql'
 AS $BODY$
+DECLARE
+  stopTime time without time zone;
+  startTime time without time zone := CURRENT_TIME;
 BEGIN
+  RAISE NOTICE 'Refresh started @ % %', CURRENT_DATE, startTime;
+
+  RAISE NOTICE 'Loading temp_hourly_test_errors...';
 	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
 
-	DELETE FROM camdecmps.EMISSION_VIEW_NOXAPPEMIXEDFUEL 
-	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
+  RAISE NOTICE 'Deleting existing records...';
+	DELETE FROM camdecmps.EMISSION_VIEW_NOXAPPEMIXEDFUEL
+	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
 
+  RAISE NOTICE 'Refreshing view data...';
 	INSERT INTO camdecmps.EMISSION_VIEW_NOXAPPEMIXEDFUEL(
 		MON_PLAN_ID,
 		MON_LOC_ID,
@@ -33,7 +39,7 @@ BEGIN
 		CALC_NOX_MASS_RATE,
 		ERROR_CODES
 	)
-	SELECT DISTINCT
+	SELECT
 		HOD.MON_PLAN_ID, 
 		HOD.MON_LOC_ID, 
 		HOD.RPT_PERIOD_ID,
@@ -52,18 +58,41 @@ BEGIN
 		DHV_NOX.CALC_ADJUSTED_HRLY_VALUE AS CALC_NOX_MASS_RATE,
 		HOD.ERROR_CODES
 	FROM temp_hourly_test_errors AS HOD 
-	INNER JOIN camdecmps.DERIVED_HRLY_VALUE DHV_NOXR 
-		ON DHV_NOXR.HOUR_ID = HOD.HOUR_ID AND DHV_NOXR.PARAMETER_CD = 'NOXR' 
+	JOIN camdecmps.DERIVED_HRLY_VALUE DHV_NOXR 
+		ON DHV_NOXR.HOUR_ID = HOD.HOUR_ID
+		AND DHV_NOXR.MON_LOC_ID = HOD.MON_LOC_ID
+		AND DHV_NOXR.RPT_PERIOD_ID = HOD.RPT_PERIOD_ID
+    AND DHV_NOXR.PARAMETER_CD = 'NOXR' 
 		AND DHV_NOXR.OPERATING_CONDITION_CD IS NOT NULL
-	INNER JOIN camdecmps.MONITOR_SYSTEM MS_NOXR  
+	JOIN camdecmps.MONITOR_SYSTEM MS_NOXR  
 		ON DHV_NOXR.MON_SYS_ID = MS_NOXR.MON_SYS_ID AND MS_NOXR.SYS_TYPE_CD='NOXE'
-	LEFT OUTER JOIN camdecmps.DERIVED_HRLY_VALUE DHV_HI   
-		ON ((DHV_HI.HOUR_ID = HOD.HOUR_ID) AND (DHV_HI.PARAMETER_CD = 'HI'))
-	LEFT OUTER JOIN camdecmps.DERIVED_HRLY_VALUE DHV_NOX  
-		ON ((DHV_NOX.HOUR_ID = HOD.HOUR_ID) AND (DHV_NOX.PARAMETER_CD = 'NOX'))
-	LEFT OUTER JOIN camdecmps.MONITOR_FORMULA MF_NOX   
+	LEFT JOIN (
+		SELECT
+			HOUR_ID, MON_LOC_ID, RPT_PERIOD_ID,
+			MON_FORM_ID, ADJUSTED_HRLY_VALUE, CALC_ADJUSTED_HRLY_VALUE
+		FROM camdecmps.DERIVED_HRLY_VALUE
+		WHERE RPT_PERIOD_ID = vrptperiodid AND PARAMETER_CD = 'HI'
+	) AS dhv_HI
+		ON dhv_HI.HOUR_ID = hod.HOUR_ID
+		AND dhv_HI.MON_LOC_ID = hod.MON_LOC_ID
+		AND dhv_HI.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
+	LEFT JOIN (
+		SELECT
+			HOUR_ID, MON_LOC_ID, RPT_PERIOD_ID,
+			MON_FORM_ID, ADJUSTED_HRLY_VALUE, CALC_ADJUSTED_HRLY_VALUE
+		FROM camdecmps.DERIVED_HRLY_VALUE
+		WHERE RPT_PERIOD_ID = vrptperiodid AND PARAMETER_CD = 'NOX'
+	) AS dhv_NOX
+		ON dhv_NOX.HOUR_ID = hod.HOUR_ID
+		AND dhv_NOX.MON_LOC_ID = hod.MON_LOC_ID
+		AND dhv_NOX.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
+	LEFT JOIN camdecmps.MONITOR_FORMULA MF_NOX   
 		ON DHV_NOX.MON_FORM_ID = MF_NOX.MON_FORM_ID;
 
+  RAISE NOTICE 'Refreshing view counts...';
   CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'NOXAPPEMIXEDFUEL');
+
+  stopTime := CURRENT_TIME;
+  RAISE NOTICE 'Refresh complete @ % %, total time: %', CURRENT_DATE, stopTime, stopTime - startTime;
 END
 $BODY$;

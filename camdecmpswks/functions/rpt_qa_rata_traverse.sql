@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_rata_traverse(text,text);
+
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_rata_traverse(
 	testsumid text,
 	oplevelcd text)

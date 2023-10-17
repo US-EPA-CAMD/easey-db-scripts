@@ -1,5 +1,3 @@
--- PROCEDURE: camdecmps.refresh_emission_view_dailycal(character varying, numeric)
-
 DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_dailycal(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_dailycal(
@@ -8,12 +6,20 @@ CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_dailycal(
 )
 LANGUAGE 'plpgsql'
 AS $BODY$
+DECLARE
+  stopTime time without time zone;
+  startTime time without time zone := CURRENT_TIME;
 BEGIN
+  RAISE NOTICE 'Refresh started @ % %', CURRENT_DATE, startTime;
+
+  RAISE NOTICE 'Loading temp_daily_test_errors...';
 	CALL camdecmps.load_temp_daily_test_errors(vMonPlanId, vRptPeriodId);
 
+  RAISE NOTICE 'Deleting existing records...';
 	DELETE FROM camdecmps.EMISSION_VIEW_DAILYCAL
 	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
 
+  RAISE NOTICE 'Refreshing view data...';
 	INSERT INTO camdecmps.EMISSION_VIEW_DAILYCAL(
 		MON_PLAN_ID,
 		MON_LOC_ID,
@@ -96,6 +102,10 @@ BEGIN
 		camdecmps.EMISSIONS_MONITOR_SPAN_ACTIVE(MS.BEGIN_DATE, MS.BEGIN_HOUR, MS.END_DATE, MS.END_HOUR, DTS.END_DATE, CAST(LEFT(DTS.END_TIME, 2) AS numeric)) = 1
 	WHERE DTS.TEST_TYPE_CD = 'DAYCAL';
 
+  RAISE NOTICE 'Refreshing view counts...';
   CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'DAILYCAL');
+
+  stopTime := CURRENT_TIME;
+  RAISE NOTICE 'Refresh complete @ % %, total time: %', CURRENT_DATE, stopTime, stopTime - startTime;
 END
 $BODY$;

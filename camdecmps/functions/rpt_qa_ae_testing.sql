@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS camdecmps.rpt_qa_ae_testing(text);
+
 CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_ae_testing(
 	testsumid text)
     RETURNS TABLE(		

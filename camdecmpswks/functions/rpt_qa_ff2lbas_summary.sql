@@ -1,7 +1,3 @@
--- FUNCTION: camdecmpswks.rpt_qa_test_summary(text)
-
--- FUNCTION: camdecmpswks.rpt_qa_test_summary(text)
-
 DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_ffl2bas_summary(text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_ffl2bas_summary(

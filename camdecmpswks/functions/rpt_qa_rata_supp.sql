@@ -1,4 +1,4 @@
--- FUNCTION: camdecmps.rpt_qa_test_summary(text)
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_rata_supp(text,text);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_rata_supp(
 	testsumid text,
