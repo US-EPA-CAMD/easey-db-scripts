@@ -811,7 +811,7 @@ ON CONFLICT (on_off_cal_id) DO UPDATE
 		nhe_bypass, nhe_pre_rata, nhe_test, nhe_main_bypass, bias_adjusted_ind, userid, add_date, update_date, op_level_cd
 	FROM camdecmpswks.flow_to_load_check
 	WHERE test_sum_id = testSumId
-	ON CONFLICT (test_sum_id) DO UPDATE SET
+	ON CONFLICT (flow_load_check_id) DO UPDATE SET
 		flow_load_check_id = EXCLUDED.flow_load_check_id,
 		test_basis_cd = EXCLUDED.test_basis_cd,
 		avg_abs_pct_diff = EXCLUDED.avg_abs_pct_diff,
@@ -843,7 +843,7 @@ ON CONFLICT (on_off_cal_id) DO UPDATE
 		update_date, calc_sep_ref_ind
 	FROM camdecmpswks.flow_to_load_reference
 	WHERE test_sum_id = testSumId
-	ON CONFLICT (test_sum_id) DO UPDATE SET
+	ON CONFLICT (flow_load_ref_id) DO UPDATE SET
 		flow_load_ref_id = EXCLUDED.flow_load_ref_id,
 		op_level_cd = EXCLUDED.op_level_cd,
 		avg_ref_method_flow = EXCLUDED.avg_ref_method_flow,

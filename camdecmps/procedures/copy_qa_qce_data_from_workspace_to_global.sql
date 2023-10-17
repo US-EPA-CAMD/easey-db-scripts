@@ -43,7 +43,7 @@ BEGIN
 			a.qa_cert_event_supp_data_id, qceId, a.qa_cert_event_supp_data_cd, a.qa_cert_event_supp_date_cd, a.count_from_datehour, a.count, a.count_from_included_ind, a.mon_loc_id, a.rpt_period_id, a.delete_ind, a.userid, a.add_date, a.update_date
 	FROM camdecmpswks.qa_cert_event_supp_data AS a
 	JOIN camdecmpswks.qa_cert_event USING (qa_cert_event_id)
-	WHERE qceId = qceId
+	WHERE a.qa_cert_event_id = qceId
 	ON CONFLICT (qa_cert_event_supp_data_id) DO UPDATE SET
 			qa_cert_event_id = EXCLUDED.qa_cert_event_id,
 			qa_cert_event_supp_data_cd = EXCLUDED.qa_cert_event_supp_data_cd,
