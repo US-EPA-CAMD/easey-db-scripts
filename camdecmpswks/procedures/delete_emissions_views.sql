@@ -12,7 +12,7 @@ DECLARE
 BEGIN
 	FOR dataset IN (
     	SELECT * FROM camdaux.dataset
-    	WHERE group_cd = 'EMVIEW' AND dataset_cd NOT IN ('LTFF', 'NSPS4T', 'DAILYBACKSTOP', 'COUNTS')
+    	WHERE group_cd = 'EMVIEW' AND dataset_cd NOT IN ('LTFF', 'NSPS4T', 'SUMVAL', 'DAILYBACKSTOP', 'COUNTS')
 	) LOOP
 		sqlStatement := format('
 			DELETE FROM camdecmpswks.emission_view_%s
