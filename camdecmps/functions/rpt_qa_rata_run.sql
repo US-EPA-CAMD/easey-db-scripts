@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS camdecmps.rpt_qa_rata_run(text,text);
+
 CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_rata_run(
 	testsumid text,
 	oplevelcd text)

@@ -1,5 +1,3 @@
--- PROCEDURE: camdecmps.refresh_emission_view_lme(character varying, numeric)
-
 DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_lme(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_lme(
@@ -8,12 +6,20 @@ CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_lme(
 )
 LANGUAGE 'plpgsql'
 AS $BODY$
+DECLARE
+  stopTime time without time zone;
+  startTime time without time zone := CURRENT_TIME;
 BEGIN
+  RAISE NOTICE 'Refresh started @ % %', CURRENT_DATE, startTime;
+
+  RAISE NOTICE 'Loading temp_hourly_test_errors...';
 	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
 
-	DELETE FROM camdecmps.EMISSION_VIEW_LME 
-	WHERE MON_PLAN_ID = vmONplanid AND RPT_PERIOD_ID = vrptperiodid;
+  RAISE NOTICE 'Deleting existing records...';
+	DELETE FROM camdecmps.EMISSION_VIEW_LME
+	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
 
+  RAISE NOTICE 'Refreshing view data...';
 	INSERT INTO camdecmps.EMISSION_VIEW_LME(
 		MON_PLAN_ID,
 		MON_LOC_ID,
@@ -129,6 +135,10 @@ BEGIN
 		WHERE HOUR_ID = HOD.HOUR_ID AND PARAMETER_CD IN ('SO2M', 'NOXM', 'CO2M','HIT')
 	);
 
+  RAISE NOTICE 'Refreshing view counts...';
   CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'LME');
+
+  stopTime := CURRENT_TIME;
+  RAISE NOTICE 'Refresh complete @ % %, total time: %', CURRENT_DATE, stopTime, stopTime - startTime;
 END
 $BODY$;

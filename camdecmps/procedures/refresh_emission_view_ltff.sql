@@ -1,5 +1,3 @@
--- PROCEDURE: camdecmps.refresh_emission_view_ltff(character varying, numeric)
-
 DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_ltff(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_ltff(

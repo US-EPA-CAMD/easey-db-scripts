@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_rata_flow_run(text,text);
+
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_rata_flow_run(
 	testsumid text,
 	oplevelcd text)
