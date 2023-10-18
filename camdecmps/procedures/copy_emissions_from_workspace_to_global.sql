@@ -219,7 +219,7 @@ FROM
   camdecmpswks.long_term_fuel_flow 
 WHERE 
   mon_loc_id = ANY(monLocIds) 
-  AND rpt_period_id = rptPeriodId ON CONFLICT (ltff_id) DO 
+  AND rpt_period_id = rptPeriodId ON CONFLICT (ltff_id, rpt_period_id) DO 
 UPDATE 
 SET 
   rpt_period_id = EXCLUDED.rpt_period_id, 
@@ -264,7 +264,7 @@ FROM
   camdecmpswks.daily_test_summary dts 
 WHERE 
   mon_loc_id = ANY(monLocIds) 
-  AND rpt_period_id = rptPeriodId ON CONFLICT (daily_test_sum_id) DO 
+  AND rpt_period_id = rptPeriodId ON CONFLICT (daily_test_sum_id, rpt_period_id) DO 
 UPDATE 
 SET 
   rpt_period_id = EXCLUDED.rpt_period_id, 
@@ -337,7 +337,7 @@ FROM
   JOIN camdecmpswks.daily_test_summary dts ON dc.daily_test_sum_id = dts.daily_test_sum_id 
 WHERE 
   dts.mon_loc_id = ANY(monLocIds) 
-  AND dc.rpt_period_id = rptPeriodId ON CONFLICT (cal_inj_id) DO 
+  AND dc.rpt_period_id = rptPeriodId ON CONFLICT (cal_inj_id, rpt_period_id) DO 
 UPDATE 
 SET 
   daily_test_sum_id = EXCLUDED.daily_test_sum_id, 
@@ -399,7 +399,7 @@ FROM
   camdecmpswks.weekly_test_summary 
 WHERE 
   mon_loc_id = ANY(monLocIds) 
-  AND rpt_period_id = rptPeriodId ON CONFLICT (weekly_test_sum_id) DO 
+  AND rpt_period_id = rptPeriodId ON CONFLICT (weekly_test_sum_id, rpt_period_id) DO 
 UPDATE 
 SET 
   rpt_period_id = EXCLUDED.rpt_period_id, 
@@ -444,7 +444,7 @@ FROM
   camdecmpswks.weekly_system_integrity wsi 
 WHERE 
   wsi.mon_loc_id = ANY(monLocIds) 
-  AND wsi.rpt_period_id = rptPeriodId ON CONFLICT (weekly_sys_integrity_id) DO 
+  AND wsi.rpt_period_id = rptPeriodId ON CONFLICT (weekly_sys_integrity_id, rpt_period_id) DO 
 UPDATE 
 SET 
   weekly_test_sum_id = EXCLUDED.weekly_test_sum_id, 
@@ -488,7 +488,7 @@ FROM
   camdecmpswks.weekly_test_summary 
 WHERE 
   mon_loc_id = ANY(monLocIds) 
-  AND rpt_period_id = rptPeriodId ON CONFLICT (weekly_test_sum_id) DO 
+  AND rpt_period_id = rptPeriodId ON CONFLICT (weekly_test_sum_id, rpt_period_id) DO 
 UPDATE 
 SET 
   rpt_period_id = EXCLUDED.rpt_period_id, 
@@ -533,7 +533,7 @@ FROM
   camdecmpswks.weekly_system_integrity wsi 
 WHERE 
   wsi.mon_loc_id = ANY(monLocIds) 
-  AND wsi.rpt_period_id = rptPeriodId ON CONFLICT (weekly_sys_integrity_id) DO 
+  AND wsi.rpt_period_id = rptPeriodId ON CONFLICT (weekly_sys_integrity_id, rpt_period_id) DO 
 UPDATE 
 SET 
   weekly_test_sum_id = EXCLUDED.weekly_test_sum_id, 
@@ -588,7 +588,7 @@ FROM
   camdecmpswks.hrly_op_data 
 WHERE 
   mon_loc_id = ANY(monLocIds) 
-  AND rpt_period_id = rptPeriodId ON CONFLICT (hour_id) DO 
+  AND rpt_period_id = rptPeriodId ON CONFLICT (hour_id, rpt_period_id) DO 
 UPDATE 
 SET 
   rpt_period_id = EXCLUDED.rpt_period_id, 
@@ -653,7 +653,7 @@ FROM
   camdecmpswks.monitor_hrly_value mhv 
 WHERE 
   mhv.mon_loc_id = ANY(monLocIds) 
-  AND mhv.rpt_period_id = rptPeriodId ON CONFLICT (monitor_hrly_val_id) DO 
+  AND mhv.rpt_period_id = rptPeriodId ON CONFLICT (monitor_hrly_val_id, rpt_period_id) DO 
 UPDATE 
 SET 
   hour_id = EXCLUDED.hour_id, 
@@ -711,7 +711,7 @@ FROM
   camdecmpswks.mats_monitor_hrly_value mmhv 
 WHERE 
   mmhv.mon_loc_id = ANY(monLocIds) 
-  AND mmhv.rpt_period_id = rptPeriodId ON CONFLICT (mats_mhv_id) DO 
+  AND mmhv.rpt_period_id = rptPeriodId ON CONFLICT (mats_mhv_id, rpt_period_id) DO 
 UPDATE 
 SET 
   hour_id = EXCLUDED.hour_id, 
@@ -777,7 +777,7 @@ FROM
   camdecmpswks.derived_hrly_value dhv 
 WHERE 
   dhv.mon_loc_id = ANY(monLocIds) 
-  AND dhv.rpt_period_id = rptPeriodId ON CONFLICT (derv_id) DO 
+  AND dhv.rpt_period_id = rptPeriodId ON CONFLICT (derv_id, rpt_period_id) DO 
 UPDATE 
 SET 
   hour_id = EXCLUDED.hour_id, 
@@ -834,7 +834,7 @@ FROM
   camdecmpswks.mats_derived_hrly_value mdhv 
 WHERE 
   mdhv.mon_loc_id = ANY(monLocIds) 
-  AND mdhv.rpt_period_id = rptPeriodId ON CONFLICT (mats_dhv_id) DO 
+  AND mdhv.rpt_period_id = rptPeriodId ON CONFLICT (mats_dhv_id, rpt_period_id) DO 
 UPDATE 
 SET 
   hour_id = EXCLUDED.hour_id, 
@@ -883,7 +883,7 @@ FROM
   camdecmpswks.hrly_fuel_flow hff 
 WHERE 
   hff.mon_loc_id = ANY(monLocIds) 
-  AND hff.rpt_period_id = rptPeriodId ON CONFLICT (hrly_fuel_flow_id) DO 
+  AND hff.rpt_period_id = rptPeriodId ON CONFLICT (hrly_fuel_flow_id, rpt_period_id) DO 
 UPDATE 
 SET 
   hour_id = EXCLUDED.hour_id, 
@@ -933,7 +933,7 @@ FROM
   camdecmpswks.hrly_gas_flow_meter hgfm 
 WHERE 
   hgfm.mon_loc_id = ANY(monLocIds) 
-  AND hgfm.rpt_period_id = rptPeriodId ON CONFLICT (hrly_gas_flow_meter_id) DO 
+  AND hgfm.rpt_period_id = rptPeriodId ON CONFLICT (hrly_gas_flow_meter_id, rpt_period_id) DO 
 UPDATE 
 SET 
   hour_id = EXCLUDED.hour_id, 
@@ -982,7 +982,7 @@ FROM
   camdecmpswks.hrly_param_fuel_flow hpff 
 WHERE 
   hpff.mon_loc_id = ANY(monLocIds) 
-  AND hpff.rpt_period_id = rptPeriodId ON CONFLICT (hrly_param_ff_id) DO 
+  AND hpff.rpt_period_id = rptPeriodId ON CONFLICT (hrly_param_ff_id, rpt_period_id) DO 
 UPDATE 
 SET 
   hrly_fuel_flow_id = EXCLUDED.hrly_fuel_flow_id, 
@@ -1037,7 +1037,7 @@ FROM
   camdecmpswks.sorbent_trap 
 WHERE 
   mon_loc_id = ANY(monLocIds) 
-  AND rpt_period_id = rptPeriodId ON CONFLICT (trap_id) DO 
+  AND rpt_period_id = rptPeriodId ON CONFLICT (trap_id, rpt_period_id) DO 
 UPDATE 
 SET 
   mon_loc_id = EXCLUDED.mon_loc_id, 
@@ -1102,7 +1102,7 @@ FROM
   camdecmpswks.sampling_train smpt 
 WHERE 
   smpt.mon_loc_id = ANY(monLocIds) 
-  AND smpt.rpt_period_id = rptPeriodId ON CONFLICT (trap_train_id) DO 
+  AND smpt.rpt_period_id = rptPeriodId ON CONFLICT (trap_train_id, rpt_period_id) DO 
 UPDATE 
 SET 
   trap_id = EXCLUDED.trap_id, 
@@ -1154,7 +1154,7 @@ FROM
   camdecmpswks.nsps4t_summary 
 WHERE 
   mon_loc_id = ANY(monLocIds) 
-  AND rpt_period_id = rptPeriodId ON CONFLICT (nsps4t_sum_id) DO 
+  AND rpt_period_id = rptPeriodId ON CONFLICT (nsps4t_sum_id, rpt_period_id) DO 
 UPDATE 
 SET 
   emission_standard_cd = EXCLUDED.emission_standard_cd, 
@@ -1190,7 +1190,7 @@ FROM
   camdecmpswks.nsps4t_annual q4ta 
 WHERE 
   q4ta.mon_loc_id = ANY(monLocIds) 
-  AND q4ta.rpt_period_id = rptPeriodId ON CONFLICT (nsps4t_ann_id) DO 
+  AND q4ta.rpt_period_id = rptPeriodId ON CONFLICT (nsps4t_ann_id, rpt_period_id) DO 
 UPDATE 
 SET 
   nsps4t_sum_id = EXCLUDED.nsps4t_sum_id, 
@@ -1233,7 +1233,7 @@ FROM
   camdecmpswks.nsps4t_compliance_period q4tcp 
 WHERE 
   q4tcp.mon_loc_id = ANY(monLocIds) 
-  AND q4tcp.rpt_period_id = rptPeriodId ON CONFLICT (nsps4t_cmp_id) DO 
+  AND q4tcp.rpt_period_id = rptPeriodId ON CONFLICT (nsps4t_cmp_id, rpt_period_id) DO 
 UPDATE 
 SET 
   nsps4t_sum_id = EXCLUDED.nsps4t_sum_id, 
@@ -1600,6 +1600,7 @@ SET
   update_date = EXCLUDED.update_date;
 
 -- EMISSIONS VIEWS
+
 CALL camdecmps.copy_emissions_from_workspace_to_global(monPlanId, rptPeriodId);
 
 -- DELETE WORKSPACE DATA
@@ -1638,5 +1639,6 @@ WHERE a.rpt_period_id = rptPeriodId and a.mon_loc_id = ANY(monLocIds);
 
 DELETE FROM camdecmpswks.nsps4t_summary a 
 WHERE a.rpt_period_id = rptPeriodId and a.mon_loc_id = ANY(monLocIds);
+
 
 END $BODY$;
