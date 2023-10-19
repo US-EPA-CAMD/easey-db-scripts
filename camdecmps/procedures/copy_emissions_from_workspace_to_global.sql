@@ -1601,7 +1601,7 @@ SET
 
 -- EMISSIONS VIEWS
 
-CALL camdecmps.copy_emissions_from_workspace_to_global(monPlanId, rptPeriodId);
+CALL camdecmps.copy_emissions_views_from_workspace_to_global(monPlanId, rptPeriodId);
 
 -- DELETE WORKSPACE DATA
 DELETE FROM camdecmpswks.check_session
