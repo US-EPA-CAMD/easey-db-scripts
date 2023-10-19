@@ -17,8 +17,6 @@ BEGIN
     WHERE mon_plan_id = monPlanId
   ) INTO monLocIds;
 
-  DELETE FROM camdecmps.emission_view_all
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_all (
       mon_plan_id, mon_loc_id, rpt_period_id, hour_id, date_hour, op_time, unit_load, load_uom,
@@ -36,9 +34,6 @@ BEGIN
   FROM camdecmpswks.emission_view_all
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_co2appd
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
-
   INSERT INTO camdecmps.emission_view_co2appd (
     mon_plan_id, mon_loc_id, rpt_period_id, date_hour, op_time, fuel_sys_id, fuel_type, fuel_use_time,
     unit_load, load_uom, calc_hi_rate, fc_factor, formula_cd, rpt_co2_mass_rate, calc_co2_mass_rate,
@@ -49,9 +44,6 @@ BEGIN
       unit_load, load_uom, calc_hi_rate, fc_factor, formula_cd, rpt_co2_mass_rate, calc_co2_mass_rate,
       summation_formula_cd, rpt_co2_mass_rate_all_fuels, calc_co2_mass_rate_all_fuels, error_codes
   FROM camdecmpswks.emission_view_co2appd
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
-
-  DELETE FROM camdecmps.emission_view_co2calc
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_co2calc (
@@ -66,9 +58,6 @@ BEGIN
   FROM camdecmpswks.emission_view_co2calc
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_co2cems
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
-
   INSERT INTO camdecmps.emission_view_co2cems (
       mon_plan_id, mon_loc_id, rpt_period_id, date_hour, op_time, unit_load, load_uom, component_type, rpt_pct_co2,
       pct_co2_used, co2_modc, co2_pma, unadj_flow, calc_flow_baf, rpt_adj_flow, adj_flow_used, flow_modc, flow_pma,
@@ -79,9 +68,6 @@ BEGIN
       pct_co2_used, co2_modc, co2_pma, unadj_flow, calc_flow_baf, rpt_adj_flow, adj_flow_used, flow_modc, flow_pma,
       pct_h2o_used, source_h2o_value, co2_formula_cd, rpt_co2_mass_rate, calc_co2_mass_rate, error_codes
   FROM camdecmpswks.emission_view_co2cems
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
-
-  DELETE FROM camdecmps.emission_view_co2dailyfuel
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
   
   INSERT INTO camdecmps.emission_view_co2dailyfuel (
@@ -98,18 +84,12 @@ BEGIN
   FROM camdecmpswks.emission_view_co2dailyfuel
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_count
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
-
   INSERT INTO camdecmps.emission_view_count (
       mon_plan_id, mon_loc_id, dataset_cd, rpt_period_id, count
   )
   SELECT 
       mon_plan_id, mon_loc_id, dataset_cd, rpt_period_id, count
   FROM camdecmpswks.emission_view_count
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
-
-  DELETE FROM camdecmps.emission_view_dailycal
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_dailycal (
@@ -134,8 +114,6 @@ BEGIN
   FROM camdecmpswks.emission_view_dailycal
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_hiappd
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_hiappd (
     mon_plan_id, mon_loc_id, rpt_period_id, date_hour, op_time, fuel_sys_id, fuel_type, fuel_use_time,
@@ -149,8 +127,6 @@ BEGIN
   FROM camdecmpswks.emission_view_hiappd
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_hicems
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_hicems (
       mon_plan_id, mon_loc_id, rpt_period_id, hour_id, date_hour, op_time, unit_load, load_uom, load_range,
@@ -166,8 +142,6 @@ BEGIN
   FROM camdecmpswks.emission_view_hicems
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_hiunitstack
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_hiunitstack (
       mon_plan_id, mon_loc_id, rpt_period_id, date_hour, op_time, unit_load, load_uom, load_range,
@@ -179,8 +153,6 @@ BEGIN
   FROM camdecmpswks.emission_view_hiunitstack
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_lme
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_lme (
     mon_plan_id, mon_loc_id, rpt_period_id, date_hour, op_time, unit_load, load_uom, hour_id, hi_modc,
@@ -196,8 +168,6 @@ BEGIN
   FROM camdecmpswks.emission_view_lme
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_massoilcalc
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_massoilcalc (
       mon_plan_id, mon_loc_id, rpt_period_id, date_hour, op_time, fuel_sys_id, oil_type, fuel_use_time,
@@ -211,8 +181,6 @@ BEGIN
   FROM camdecmpswks.emission_view_massoilcalc
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_matshcl
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_matshcl (
     mon_plan_id, mon_loc_id, rpt_period_id, date_hour, op_time, mats_load, mats_startup_shutdown, hcl_conc_value,
@@ -228,8 +196,6 @@ BEGIN
   FROM camdecmpswks.emission_view_matshcl
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_matshf
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_matshf (
       mon_plan_id, mon_loc_id, rpt_period_id, date_hour, op_time, mats_load, mats_startup_shutdown, hf_conc_value,
@@ -245,8 +211,6 @@ BEGIN
   FROM camdecmpswks.emission_view_matshf
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_matshg
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_matshg (
       mon_plan_id, mon_loc_id, rpt_period_id, date_hour, op_time, mats_load, mats_startup_shutdown, hg_conc_value,
@@ -266,8 +230,6 @@ BEGIN
   FROM camdecmpswks.emission_view_matshg
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_matsso2
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_matsso2 (
       mon_plan_id, mon_loc_id, rpt_period_id, date_hour, op_time, mats_load, mats_startup_shutdown, so2_conc_value,
@@ -283,8 +245,6 @@ BEGIN
   FROM camdecmpswks.emission_view_matsso2
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_matssorbent
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_matssorbent (
     mon_plan_id, mon_loc_id, rpt_period_id, system_identifier, date_hour, end_date_time, paired_trap_agreement,
@@ -310,8 +270,6 @@ BEGIN
   FROM camdecmpswks.emission_view_matssorbent
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_matsweekly
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_matsweekly (
       mon_plan_id, mon_loc_id, rpt_period_id, weekly_test_sum_id, system_component_identifier,
@@ -325,8 +283,6 @@ BEGIN
   FROM camdecmpswks.emission_view_matsweekly
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_moisture
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_moisture (
     mon_plan_id, mon_loc_id, rpt_period_id, date_hour, op_time, h2o_modc, h2o_pma, pct_o2_wet, o2_wet_modc,
@@ -338,8 +294,6 @@ BEGIN
   FROM camdecmpswks.emission_view_moisture
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_noxappemixedfuel
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_noxappemixedfuel (
       mon_plan_id, mon_loc_id, rpt_period_id, date_hour, op_time, system_id, unit_load, load_uom, calc_hi_rate,
@@ -353,8 +307,6 @@ BEGIN
   FROM camdecmpswks.emission_view_noxappemixedfuel
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_noxappesinglefuel
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_noxappesinglefuel (
     mon_plan_id, mon_loc_id, rpt_period_id, date_hour, op_time, fuel_sys_id, fuel_type, fuel_use_time, unit_load,
@@ -370,8 +322,6 @@ BEGIN
   FROM camdecmpswks.emission_view_noxappesinglefuel
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_noxmasscems
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_noxmasscems (
     mon_plan_id, mon_loc_id, rpt_period_id, date_hour, op_time, unit_load, load_uom, unadj_nox, calc_nox_baf, rpt_adj_nox, adj_nox_used, nox_modc, nox_pma, unadj_flow, calc_flow_baf, rpt_adj_flow, adj_flow_used, flow_modc, flow_pma, pct_h2o_used, source_h2o_value, nox_mass_formula_cd, rpt_nox_mass, calc_nox_mass, error_codes
@@ -379,9 +329,6 @@ BEGIN
   SELECT 
       mon_plan_id, mon_loc_id, rpt_period_id, date_hour, op_time, unit_load, load_uom, unadj_nox, calc_nox_baf, rpt_adj_nox, adj_nox_used, nox_modc, nox_pma, unadj_flow, calc_flow_baf, rpt_adj_flow, adj_flow_used, flow_modc, flow_pma, pct_h2o_used, source_h2o_value, nox_mass_formula_cd, rpt_nox_mass, calc_nox_mass, error_codes
   FROM camdecmpswks.emission_view_noxmasscems
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
-
-  DELETE FROM camdecmps.emission_view_noxratecems
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_noxratecems (
@@ -392,8 +339,6 @@ BEGIN
   FROM camdecmpswks.emission_view_noxratecems
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_otherdaily
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_otherdaily (
       mon_plan_id, mon_loc_id, rpt_period_id, test_type_cd, system_component_identifier, system_component_type, span_scale_cd, date_hour, rpt_test_result, error_codes, calc_test_result_cd, test_sum_id
@@ -403,8 +348,6 @@ BEGIN
   FROM camdecmpswks.emission_view_otherdaily
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_so2appd
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_so2appd (
     mon_plan_id, mon_loc_id, rpt_period_id, date_hour, op_time, fuel_sys_id, fuel_type, fuel_use_time, unit_load, load_uom, calc_fuel_flow, fuel_flow_uom, fuel_flow_sodc, sulfur_content, sulfur_uom, sulfur_sampling_type, default_so2_emission_rate, calc_hi_rate, formula_cd, rpt_so2_mass_rate, calc_so2_mass_rate, summation_formula_cd, rpt_so2_mass_rate_all_fuels, calc_so2_mass_rate_all_fuels, error_codes
@@ -414,8 +357,6 @@ BEGIN
   FROM camdecmpswks.emission_view_so2appd
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
-  DELETE FROM camdecmps.emission_view_so2cems
-  WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
 
   INSERT INTO camdecmps.emission_view_so2cems (
     mon_plan_id, mon_loc_id, rpt_period_id, date_hour, op_time, unit_load, load_uom, unadj_so2, so2_baf, rpt_adj_so2, calc_adj_so2, so2_modc, so2_pma, unadj_flow, flow_baf, rpt_adj_flow, adj_flow_used, flow_modc, flow_pma, pct_h2o_used, source_h2o_value, so2_formula_cd, rpt_so2_mass_rate, calc_so2_mass_rate, calc_hi_rate, default_so2_emission_rate, error_codes
@@ -424,9 +365,6 @@ BEGIN
       mon_plan_id, mon_loc_id, rpt_period_id, date_hour, op_time, unit_load, load_uom, unadj_so2, so2_baf, rpt_adj_so2, calc_adj_so2, so2_modc, so2_pma, unadj_flow, flow_baf, rpt_adj_flow, adj_flow_used, flow_modc, flow_pma, pct_h2o_used, source_h2o_value, so2_formula_cd, rpt_so2_mass_rate, calc_so2_mass_rate, calc_hi_rate, default_so2_emission_rate, error_codes
   FROM camdecmpswks.emission_view_so2cems
   WHERE mon_plan_id = monPlanId AND rpt_period_id = rptPeriodId;
-
-  -- DELETE WORKSPACE EMISSIONS VIEW DATA
-  -- THIS WILL BE TAKEN CARE OF BY THE CASCADE DELETE OF EMISSION EVALUATION RECORD
 
 END
 $BODY$;
