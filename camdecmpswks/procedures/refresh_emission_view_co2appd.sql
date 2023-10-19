@@ -1,3 +1,4 @@
+DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_co2appd(text, numeric);
 DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_co2appd(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_co2appd(
@@ -6,12 +7,23 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_co2appd(
 )
 LANGUAGE 'plpgsql'
 AS $BODY$
+DECLARE
+  stopTime time without time zone;
+  startTime time without time zone;
+  dhvParamCodes text[] := ARRAY['CO2'];
+  hpffParamCodes text[] :=   ARRAY['HI','CO2','FC'];
 BEGIN
+  startTime := CURRENT_TIME;
+  RAISE NOTICE 'Refresh started @ % %', CURRENT_DATE, startTime;
+
+  RAISE NOTICE 'Loading temp_hourly_test_errors...';
 	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
 
-	DELETE FROM camdecmpswks.EMISSION_VIEW_CO2APPD 
-	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
+  RAISE NOTICE 'Deleting existing records...';
+	DELETE FROM camdecmpswks.EMISSION_VIEW_CO2APPD
+	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
 
+  RAISE NOTICE 'Refreshing view data...';
 	INSERT INTO camdecmpswks.EMISSION_VIEW_CO2APPD(
 		MON_PLAN_ID,
 		MON_LOC_ID,
@@ -37,80 +49,113 @@ BEGIN
 		hod.MON_PLAN_ID, 
 		hod.MON_LOC_ID, 
 		hod.RPT_PERIOD_ID,
-		camdecmpswks.format_date_hour(hod.BEGIN_DATE, hod.BEGIN_HOUR, null), 
+		camdecmpswks.format_date_hour(hod.BEGIN_DATE, hod.BEGIN_HOUR, null) AS DATE_HOUR,
 		hod.OP_TIME,
 		COALESCE(ms.SYSTEM_IDENTIFIER, '') AS FUEL_SYS_ID,
 		hff.FUEL_CD AS FUEL_TYPE,
 		hff.FUEL_USAGE_TIME AS FUEL_USE_TIME,
 		hod.HR_LOAD AS UNIT_LOAD, 
 		hod.LOAD_UOM_CD AS LOAD_UOM, 
-		hpff_HI.CALC_PARAM_VAL_FUEL AS CALC_HI_RATE,
-		hpff_FC.PARAM_VAL_FUEL AS FC_FACTOR,
-		mf_hpff_CO2.EQUATION_CD AS FORMULA_CD,
-		hpff_CO2.PARAM_VAL_FUEL AS RPT_CO2_MASS_RATE,
-		hpff_CO2.CALC_PARAM_VAL_FUEL AS CALC_CO2_MASS_RATE,
-		mf_dhv_CO2.EQUATION_CD AS SUMMATION_FORMULA_CD,
-		dhv_CO2.ADJUSTED_HRLY_VALUE AS RPT_CO2_MASS_RATE_ALL_FUELS,
-		dhv_CO2.CALC_ADJUSTED_HRLY_VALUE AS CALC_CO2_MASS_RATE_ALL_FUELS,
+		hpff.HI_CALC_PARAM_VAL_FUEL AS CALC_HI_RATE,
+		hpff.FC_PARAM_VAL_FUEL AS FC_FACTOR,
+		mf_hpff.EQUATION_CD AS FORMULA_CD,
+		hpff.CO2_PARAM_VAL_FUEL AS RPT_CO2_MASS_RATE,
+		hpff.CO2_CALC_PARAM_VAL_FUEL AS CALC_CO2_MASS_RATE,
+		mf_dhv.EQUATION_CD AS SUMMATION_FORMULA_CD,
+		dhv.CO2_ADJUSTED_HRLY_VALUE AS RPT_CO2_MASS_RATE_ALL_FUELS,
+		dhv.CO2_CALC_ADJUSTED_HRLY_VALUE AS CALC_CO2_MASS_RATE_ALL_FUELS,
 		hod.ERROR_CODES
 	FROM temp_hourly_test_errors AS hod
 	JOIN camdecmpswks.HRLY_FUEL_FLOW hff
 		ON hff.HOUR_ID = hod.HOUR_ID
 		AND hff.MON_LOC_ID = hod.MON_LOC_ID
 		AND hff.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
+	JOIN camdecmpswks.get_derived_hourly_values_pivoted(
+	  vmonplanid, vrptperiodid, dhvParamCodes
+	) AS dhv (
+		hour_id character varying,
+		mon_loc_id character varying,
+		rpt_period_id numeric,
+		co2_hour_id character varying,
+		co2_mon_form_id character varying,
+		co2_adjusted_hrly_value numeric,
+		co2_calc_adjusted_hrly_value numeric,
+		co2_unadjusted_hrly_value numeric,
+		co2_calc_unadjusted_hrly_value numeric,
+		co2_applicable_bias_adj_factor numeric,
+		co2_calc_pct_moisture numeric,
+		co2_calc_pct_diluent numeric,
+		co2_pct_available numeric,
+		co2_segment_num numeric,
+		co2_operating_condition_cd character varying,
+		co2_fuel_cd character varying,
+		co2_modc_cd character varying
+	)	ON dhv.HOUR_ID = hod.HOUR_ID
+		AND dhv.MON_LOC_ID = hod.MON_LOC_ID
+		AND dhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
+	JOIN camdecmpswks.get_hourly_param_fuel_flow_pivoted(
+	  vmonplanid, vrptperiodid, hpffParamCodes
+	) AS hpff (
+		hrly_fuel_flow_id character varying,
+		hour_id character varying,
+		mon_loc_id character varying,
+		rpt_period_id numeric,
+		hi_hrly_fuel_flow_id character varying,
+		hi_mon_form_id character varying,
+		hi_param_val_fuel numeric,
+		hi_calc_param_val_fuel numeric,
+		hi_segment_num numeric,
+		hi_sample_type_cd character varying,
+		hi_parameter_uom_cd character varying,
+		hi_operating_condition_cd character varying,
+		co2_hrly_fuel_flow_id character varying,
+		co2_mon_form_id character varying,
+		co2_param_val_fuel numeric,
+		co2_calc_param_val_fuel numeric,
+		co2_segment_num numeric,
+		co2_sample_type_cd character varying,
+		co2_parameter_uom_cd character varying,
+		co2_operating_condition_cd character varying,
+		fc_hrly_fuel_flow_id character varying,
+		fc_mon_form_id character varying,
+		fc_param_val_fuel numeric,
+		fc_calc_param_val_fuel numeric,
+		fc_segment_num numeric,
+		fc_sample_type_cd character varying,
+		fc_parameter_uom_cd character varying,
+		fc_operating_condition_cd character varying
+	)	ON hpff.HRLY_FUEL_FLOW_ID = hff.HRLY_FUEL_FLOW_ID
+		AND hpff.HOUR_ID = hff.HOUR_ID
+		AND hpff.MON_LOC_ID = hff.MON_LOC_ID
+		AND hpff.RPT_PERIOD_ID = hff.RPT_PERIOD_ID
 	LEFT JOIN camdecmpswks.MONITOR_SYSTEM AS ms
 		ON ms.MON_SYS_ID = hff.MON_SYS_ID
-	LEFT JOIN (
-		SELECT
-			HOUR_ID, MON_LOC_ID, RPT_PERIOD_ID, PARAMETER_CD,
-			MON_FORM_ID, ADJUSTED_HRLY_VALUE, CALC_ADJUSTED_HRLY_VALUE
+	LEFT JOIN camdecmpswks.MONITOR_FORMULA mf_dhv
+		ON mf_dhv.MON_FORM_ID = dhv.CO2_MON_FORM_ID
+	LEFT JOIN camdecmpswks.MONITOR_FORMULA mf_hpff
+		ON mf_hpff.MON_FORM_ID = hpff.CO2_MON_FORM_ID
+	WHERE EXISTS (
+		SELECT 1
 		FROM camdecmpswks.DERIVED_HRLY_VALUE
-		WHERE RPT_PERIOD_ID = vrptperiodid AND PARAMETER_CD = 'CO2'
-	) AS dhv_CO2
-		ON dhv_CO2.HOUR_ID = hod.HOUR_ID
-		AND dhv_CO2.MON_LOC_ID = hod.MON_LOC_ID
-		AND dhv_CO2.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
-	LEFT JOIN camdecmpswks.MONITOR_FORMULA mf_dhv_CO2
-		ON mf_dhv_CO2.MON_FORM_ID = dhv_CO2.MON_FORM_ID
-	LEFT JOIN (
-		SELECT
-			HRLY_FUEL_FLOW_ID, MON_LOC_ID, RPT_PERIOD_ID,
-			MON_FORM_ID, PARAM_VAL_FUEL, CALC_PARAM_VAL_FUEL
+		WHERE HOUR_ID = dhv.HOUR_ID
+		AND MON_LOC_ID = dhv.MON_LOC_ID
+		AND RPT_PERIOD_ID = dhv.RPT_PERIOD_ID
+		AND PARAMETER_CD = ANY(dhvParamCodes)
+	) OR EXISTS (
+		SELECT 1
 		FROM camdecmpswks.HRLY_PARAM_FUEL_FLOW
-		WHERE RPT_PERIOD_ID = vrptperiodid AND PARAMETER_CD = 'CO2'
-	) AS hpff_CO2
-		ON hpff_CO2.HRLY_FUEL_FLOW_ID = hff.HRLY_FUEL_FLOW_ID
-		AND hpff_CO2.MON_LOC_ID = hff.MON_LOC_ID
-		AND hpff_CO2.RPT_PERIOD_ID = hff.RPT_PERIOD_ID
-	LEFT JOIN camdecmpswks.MONITOR_FORMULA mf_hpff_CO2
-		ON mf_hpff_CO2.MON_FORM_ID = hpff_CO2.MON_FORM_ID
-	LEFT JOIN (
-		SELECT
-			HRLY_FUEL_FLOW_ID, MON_LOC_ID, RPT_PERIOD_ID,
-			MON_FORM_ID, PARAM_VAL_FUEL, CALC_PARAM_VAL_FUEL
-		FROM camdecmpswks.HRLY_PARAM_FUEL_FLOW
-		WHERE RPT_PERIOD_ID = vrptperiodid AND PARAMETER_CD = 'HI'
-	) AS hpff_HI
-		ON hpff_HI.HRLY_FUEL_FLOW_ID = hff.HRLY_FUEL_FLOW_ID
-		AND hpff_HI.MON_LOC_ID = hff.MON_LOC_ID
-		AND hpff_HI.RPT_PERIOD_ID = hff.RPT_PERIOD_ID
-	LEFT JOIN (
-		SELECT
-			HRLY_FUEL_FLOW_ID, MON_LOC_ID, RPT_PERIOD_ID,
-			MON_FORM_ID, PARAM_VAL_FUEL, CALC_PARAM_VAL_FUEL
-		FROM camdecmpswks.HRLY_PARAM_FUEL_FLOW
-		WHERE RPT_PERIOD_ID = vrptperiodid AND PARAMETER_CD = 'FC'
-	) AS hpff_FC
-		ON hpff_FC.HRLY_FUEL_FLOW_ID = hff.HRLY_FUEL_FLOW_ID
-		AND hpff_FC.MON_LOC_ID = hff.MON_LOC_ID
-		AND hpff_FC.RPT_PERIOD_ID = hff.RPT_PERIOD_ID
-	WHERE hpff_CO2.HRLY_FUEL_FLOW_ID IS NOT NULL OR (
-		hpff_CO2.HRLY_FUEL_FLOW_ID IS NULL AND (
-			hpff_HI.HRLY_FUEL_FLOW_ID IS NOT NULL AND dhv_CO2.PARAMETER_CD IS NOT NULL
-		)
-	);
+		WHERE HRLY_FUEL_FLOW_ID = hff.HRLY_FUEL_FLOW_ID
+		AND MON_LOC_ID = hff.MON_LOC_ID
+		AND RPT_PERIOD_ID = hff.RPT_PERIOD_ID
+		AND PARAMETER_CD = ANY(hpffParamCodes)
+	)
+	ORDER BY hod.MON_LOC_ID, DATE_HOUR;
 
+  RAISE NOTICE 'Refreshing view counts...';
   CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'CO2APPD');
+
+  stopTime := CURRENT_TIME;
+  RAISE NOTICE 'Refresh complete @ % %, total time: %', CURRENT_DATE, stopTime, stopTime - startTime;
 END
 $BODY$;
 
@@ -120,7 +165,6 @@ FOR TESTING PURPOSES ONLY
 ----------------------------------------------------------------------------------------
 DROP TABLE temp_hourly_test_errors;
 CALL camdecmpswks.load_temp_hourly_test_errors('TWCORNEL5-C0E3879920A14159BAA98E03F1980A7A', 120);
-select * from temp_hourly_test_errors
 
 select a.mon_plan_id, *
 from camdecmpswks.monitor_plan_location a
