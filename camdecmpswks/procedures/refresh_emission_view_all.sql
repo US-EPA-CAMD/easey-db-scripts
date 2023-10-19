@@ -1,7 +1,8 @@
 DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_all(text, numeric);
+DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_all(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_all(
-	vmonplanid text,
+	vmonplanid character varying,
 	vrptperiodid numeric
 )
 LANGUAGE 'plpgsql'
@@ -87,6 +88,7 @@ BEGIN
 		hour_id character varying,
 		mon_loc_id character varying,
 		rpt_period_id numeric,
+		hi_hour_id character varying,
 		hi_mon_form_id character varying,
 		hi_adjusted_hrly_value numeric,
 		hi_calc_adjusted_hrly_value numeric,
@@ -94,11 +96,13 @@ BEGIN
 		hi_calc_unadjusted_hrly_value numeric,
 		hi_applicable_bias_adj_factor numeric,
 		hi_calc_pct_moisture numeric,
+		hi_calc_pct_diluent numeric,
 		hi_pct_available numeric,
 		hi_segment_num numeric,
 		hi_operating_condition_cd character varying,
 		hi_fuel_cd character varying,
 		hi_modc_cd character varying,
+		so2_hour_id character varying,
 		so2_mon_form_id character varying,
 		so2_adjusted_hrly_value numeric,
 		so2_calc_adjusted_hrly_value numeric,
@@ -106,11 +110,13 @@ BEGIN
 		so2_calc_unadjusted_hrly_value numeric,
 		so2_applicable_bias_adj_factor numeric,
 		so2_calc_pct_moisture numeric,
+		so2_calc_pct_diluent numeric,
 		so2_pct_available numeric,
 		so2_segment_num numeric,
 		so2_operating_condition_cd character varying,
 		so2_fuel_cd character varying,
 		so2_modc_cd character varying,
+		noxr_hour_id character varying,
 		noxr_mon_form_id character varying,
 		noxr_adjusted_hrly_value numeric,
 		noxr_calc_adjusted_hrly_value numeric,
@@ -118,11 +124,13 @@ BEGIN
 		noxr_calc_unadjusted_hrly_value numeric,
 		noxr_applicable_bias_adj_factor numeric,
 		noxr_calc_pct_moisture numeric,
+		noxr_calc_pct_diluent numeric,
 		noxr_pct_available numeric,
 		noxr_segment_num numeric,
 		noxr_operating_condition_cd character varying,
 		noxr_fuel_cd character varying,
 		noxr_modc_cd character varying,
+		nox_hour_id character varying,
 		nox_mon_form_id character varying,
 		nox_adjusted_hrly_value numeric,
 		nox_calc_adjusted_hrly_value numeric,
@@ -130,11 +138,13 @@ BEGIN
 		nox_calc_unadjusted_hrly_value numeric,
 		nox_applicable_bias_adj_factor numeric,
 		nox_calc_pct_moisture numeric,
+		nox_calc_pct_diluent numeric,
 		nox_pct_available numeric,
 		nox_segment_num numeric,
 		nox_operating_condition_cd character varying,
 		nox_fuel_cd character varying,
 		nox_modc_cd character varying,
+		co2_hour_id character varying,
 		co2_mon_form_id character varying,
 		co2_adjusted_hrly_value numeric,
 		co2_calc_adjusted_hrly_value numeric,
@@ -142,6 +152,7 @@ BEGIN
 		co2_calc_unadjusted_hrly_value numeric,
 		co2_applicable_bias_adj_factor numeric,
 		co2_calc_pct_moisture numeric,
+		co2_calc_pct_diluent numeric,
 		co2_pct_available numeric,
 		co2_segment_num numeric,
 		co2_operating_condition_cd character varying,
@@ -156,6 +167,7 @@ BEGIN
 		hour_id character varying,
 		mon_loc_id character varying,
 		rpt_period_id numeric,
+		flow_hour_id character varying,
 		flow_adjusted_hrly_value numeric,
 		flow_calc_adjusted_hrly_value numeric,
 		flow_unadjusted_hrly_value numeric,
@@ -179,16 +191,16 @@ BEGIN
 	WHERE EXISTS (
 		SELECT 1
 		FROM camdecmpswks.DERIVED_HRLY_VALUE
-		WHERE HOUR_ID = hod.HOUR_ID
-		AND MON_LOC_ID = hod.MON_LOC_ID
-		AND RPT_PERIOD_ID = hod.RPT_PERIOD_ID
+		WHERE HOUR_ID = dhv.HOUR_ID
+		AND MON_LOC_ID = dhv.MON_LOC_ID
+		AND RPT_PERIOD_ID = dhv.RPT_PERIOD_ID
 		AND PARAMETER_CD = ANY(dhvParamCodes)
 	) OR EXISTS (
 		SELECT 1
 		FROM camdecmpswks.MONITOR_HRLY_VALUE
-		WHERE HOUR_ID = hod.HOUR_ID
-		AND MON_LOC_ID = hod.MON_LOC_ID
-		AND RPT_PERIOD_ID = hod.RPT_PERIOD_ID
+		WHERE HOUR_ID = mhv.HOUR_ID
+		AND MON_LOC_ID = mhv.MON_LOC_ID
+		AND RPT_PERIOD_ID = mhv.RPT_PERIOD_ID
 		AND PARAMETER_CD = ANY(mhvParamCodes)
 	)
 	ORDER BY hod.MON_LOC_ID, DATE_HOUR;
