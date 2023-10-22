@@ -1,10 +1,6 @@
 #!/bin/bash
-source ../../environments.sh $1
-
 FILES=""
-PRE_DEPLOYMENT=false
-POST_DEPLOYMENT=true
-AFTER_BULK_FILE_LOAD=false
+source ../../environments.sh $1
 
 function getFiles() {
   for FILE in $1/*.sql
@@ -13,7 +9,7 @@ function getFiles() {
   done
 }
 
-if [ $PRE_DEPLOYMENT == true ]; then
+if [ $2 == "PRE_DEPLOYMENT" ]; then
   getFiles "../../../camddmw/views"
   getFiles "../../../camdecmps/views"
 
@@ -22,40 +18,39 @@ if [ $PRE_DEPLOYMENT == true ]; then
   getFiles "../../../camdaux/procedures"
   getFiles "../../../camdaux/views"
 
-  FILES="
-    $FILES
+  FILES="$FILES
     \i ./load-dataset-template-codes.sql
     \i ./load-master-data-definitions.sql
     \i ./update-bulk-file-active-active-prg.sql
   "
+
+  ../../execute-psql.sh "$FILES"
 fi
 
-if [ $POST_DEPLOYMENT == true ]; then
-  FILES="
-    $FILES
+if [ $2 == "POST_DEPLOYMENT" ]; then
+  FILES="$FILES
     \i ./drop-camddmw-objects.sql
     \i ./drop-camdaux-objects.sql
   "
+
+  ../../execute-psql.sh "$FILES"
 fi
 
-if [ $AFTER_BULK_FILE_LOAD == true ]; then
-  FILES="
-    $FILES
+if [ $2 == "AFTER_BULK_FILE_LOAD" ]; then
+  FILES="$FILES
     \i ./update-bulk-file-active-inactive-prg.sql
   "
+
+  ../../execute-psql.sh "$FILES"
 fi
 
-../../execute-psql.sh "$FILES"
+echo "IMPORTANT: NEED TO GENERATE TOKENS AND LOAD CAMDAUX.CLIENT_CONFIG DATA...
 
-if [ $PRE_DEPLOYMENT == true ]; then
-  echo "IMPORTANT: NEED TO GENERATE TOKENS AND LOAD CAMDAUX.CLIENT_CONFIG DATA..."
-  echo "
-    INSERT INTO camdaux.client_config(client_id, client_name, client_secret, client_passcode, encryption_key, support_email)
-	  VALUES
-      (?, 'campd-ui', ?, ?, ?, 'campd-support@camdsupport.com'),
-      (?, 'quartz', ?, ?, ?, null),
-      (?, 'xml-ppds', ?, ?, ?, null);
-    "
-fi
+INSERT INTO camdaux.client_config(client_id, client_name, client_secret, client_passcode, encryption_key, support_email)
+VALUES
+  (?, 'campd-ui', ?, ?, ?, 'campd-support@camdsupport.com'),
+  (?, 'quartz', ?, ?, ?, null),
+  (?, 'xml-ppds', ?, ?, ?, null);
 
-echo "DEPLOYMENT COMPLETE"
+***** DEPLOYMENT COMPLETE *****
+"

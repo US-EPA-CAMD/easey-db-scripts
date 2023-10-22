@@ -1,17 +1,6 @@
 #!/bin/bash
-source ../../environments.sh $1
-
 FILES=""
-TABLES=false
-VIEWS=false
-FUNCTIONS=false
-PROCEDURES=false
-PRE_DATA_LOAD=false
-POST_DATA_LOAD=false
-POST_DEPLOYMENT=false
-REFRESH_FUNCS_PROCS=false
-ADD_CONSTRAINTS_INDEXES=false
-DROP_CONSTRAINTS_INDEXES=false
+source ../../environments.sh $1
 
 function getFileAndCommit() {
   FILES="\i $1"
@@ -95,7 +84,7 @@ function dropConstraintsIndexes() {
   done
 }
 
-if [ $REFRESH_FUNCS_PROCS == true ]; then
+if [ $2 == "REFRESH_FUNCS_PROCS" ]; then
   FILES="$FILES
   \i ../../../camdecmps/functions/get_derived_hourly_values_pivoted.sql
   \i ../../../camdecmps/functions/get_hourly_param_fuel_flow_pivoted.sql
@@ -177,27 +166,27 @@ if [ $REFRESH_FUNCS_PROCS == true ]; then
   ../../execute-psql.sh "$FILES"
 fi
 
-if [ $TABLES == true ]; then
+if [ $2 == "TABLES" ]; then
   createTables
   ../../execute-psql.sh "$FILES"
 fi
 
-if [ $FUNCTIONS == true ]; then
+if [ $2 == "FUNCTIONS" ]; then
   createOrReplaceFunctions
   ../../execute-psql.sh "$FILES"
 fi
 
-if [ $PROCEDURES == true ]; then
+if [ $2 == "PROCEDURES" ]; then
   createOrReplaceProcedures
   ../../execute-psql.sh "$FILES"
 fi
 
-if [ $VIEWS == true ]; then
+if [ $2 == "VIEWS" ]; then
   createOrReplaceViews
   ../../execute-psql.sh "$FILES"
 fi
 
-if [ $PRE_DATA_LOAD == true ]; then
+if [ $2 == "PRE_DATA_LOAD" ]; then
   FILES="$FILES
   TRUNCATE TABLE camdecmps.dm_emissions;
   TRUNCATE TABLE camdecmps.emission_evaluation;
@@ -210,7 +199,7 @@ if [ $PRE_DATA_LOAD == true ]; then
   ../../execute-psql.sh "$FILES"
 fi
 
-if [ $POST_DATA_LOAD == true ]; then
+if [ $2 == "POST_DATA_LOAD" ]; then
   FILES="$FILES
   TRUNCATE camdaux.DATASET;
   TRUNCATE camdaux.DATATABLE;
@@ -252,12 +241,12 @@ if [ $POST_DATA_LOAD == true ]; then
   ../../execute-psql.sh "$FILES"
 fi
 
-if [ $DROP_CONSTRAINTS_INDEXES == true ]; then
+if [ $2 == "DROP_CONSTRAINTS_INDEXES" ]; then
   dropConstraintsIndexes
   ../../execute-psql.sh "$FILES"
 fi
 
-if [ $ADD_CONSTRAINTS_INDEXES == true ]; then
+if [ $2 == "ADD_CONSTRAINTS_INDEXES" ]; then
   # THESE ARE ALL PRETTY QUICK
   getFilesAndCommit "../../../camdmd/constraints-indexes"
   getFilesAndCommit "../../../camdecmpsmd/constraints-indexes"
@@ -323,7 +312,7 @@ if [ $ADD_CONSTRAINTS_INDEXES == true ]; then
   getFilesAndCommit "../../../camdecmpscalc/constraints-indexes"
 fi
 
-if [ $POST_DEPLOYMENT == true ]; then
+if [ $2 == "POST_DEPLOYMENT_CLEANUP" ]; then
   getFiles "../../../camdecmpsaux/views"
 
   FILES="
