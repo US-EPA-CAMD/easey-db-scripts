@@ -1,5 +1,3 @@
--- PROCEDURE: camdecmpswks.refresh_emission_view_moisture(character varying, numeric)
-
 DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_moisture(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_moisture(
@@ -9,11 +7,14 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_moisture(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+  RAISE NOTICE 'Loading temp_hourly_test_errors...';
 	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
 
-	DELETE FROM camdecmpswks.EMISSION_VIEW_MOISTURE 
-	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
+  RAISE NOTICE 'Deleting existing records...';
+	DELETE FROM camdecmpswks.EMISSION_VIEW_MOISTURE
+	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
 
+  RAISE NOTICE 'Refreshing view data...';
 	INSERT INTO camdecmpswks.EMISSION_VIEW_MOISTURE(
 		MON_PLAN_ID,
 		MON_LOC_ID,
@@ -32,43 +33,71 @@ BEGIN
 		ERROR_CODES
 	)
 	SELECT
-		HOD.MON_PLAN_ID, 
-		HOD.MON_LOC_ID, 
-		HOD.RPT_PERIOD_ID, 
+		hod.MON_PLAN_ID, 
+		hod.MON_LOC_ID, 
+		hod.RPT_PERIOD_ID, 
 		camdecmpswks.format_date_hour(hod.BEGIN_DATE, hod.BEGIN_HOUR, null),
-		HOD.OP_TIME, 
-		DHV.MODC_CD AS H2O_MODC,
-		DHV.PCT_AVAILABLE AS H2O_PMA,
-		WET_MHV.UNADJUSTED_HRLY_VALUE AS PCT_O2_WET,
-		WET_MHV.MODC_CD AS O2_WET_MODC,
-		DRY_MHV.UNADJUSTED_HRLY_VALUE AS PCT_O2_DRY,
-		DRY_MHV.MODC_CD AS O2_DRY_MODC,
-		MF.EQUATION_CD AS H2O_FORMULA_CD,
-		DHV.ADJUSTED_HRLY_VALUE AS RPT_PCT_H2O,
-		DHV.CALC_ADJUSTED_HRLY_VALUE AS CALC_PCT_H2O,
-		HOD.ERROR_CODES
-	FROM temp_hourly_test_errors AS HOD
-	JOIN camdecmpswks.DERIVED_HRLY_VALUE AS DHV 
-		ON HOD.HOUR_ID = DHV.HOUR_ID
-		AND HOD.MON_LOC_ID = DHV.MON_LOC_ID
-		AND HOD.RPT_PERIOD_ID = DHV.RPT_PERIOD_ID
-		AND DHV.PARAMETER_CD = 'H2O'
-		AND DHV.MODC_CD <> '40'
-	LEFT JOIN camdecmpswks.MONITOR_FORMULA AS MF 
-		ON DHV.MON_FORM_ID = MF.MON_FORM_ID 
-	LEFT JOIN camdecmpswks.MONITOR_HRLY_VALUE AS WET_MHV 
-		ON HOD.HOUR_ID = WET_MHV.HOUR_ID
-		AND HOD.MON_LOC_ID = WET_MHV.MON_LOC_ID
-		AND HOD.RPT_PERIOD_ID = WET_MHV.RPT_PERIOD_ID
-		AND WET_MHV.PARAMETER_CD = 'O2C'
-		AND WET_MHV.MOISTURE_BASIS = 'W'
-	LEFT JOIN camdecmpswks.MONITOR_HRLY_VALUE AS DRY_MHV 
-		ON HOD.HOUR_ID = DRY_MHV.HOUR_ID
-		AND HOD.MON_LOC_ID = DRY_MHV.MON_LOC_ID
-		AND HOD.RPT_PERIOD_ID = DRY_MHV.RPT_PERIOD_ID
-		AND DRY_MHV.PARAMETER_CD = 'O2C'
-		AND DRY_MHV.MOISTURE_BASIS = 'D';
+		hod.OP_TIME, 
+		dhv.MODC_CD AS H2O_MODC,
+		dhv.PCT_AVAILABLE AS H2O_PMA,
+		mhv_WET.UNADJUSTED_HRLY_VALUE AS PCT_O2_WET,
+		mhv_WET.MODC_CD AS O2_WET_MODC,
+		mhv_DRY.UNADJUSTED_HRLY_VALUE AS PCT_O2_DRY,
+		mhv_DRY.MODC_CD AS O2_DRY_MODC,
+		mf.EQUATION_CD AS H2O_FORMULA_CD,
+		dhv.ADJUSTED_HRLY_VALUE AS RPT_PCT_H2O,
+		dhv.CALC_ADJUSTED_HRLY_VALUE AS CALC_PCT_H2O,
+		hod.ERROR_CODES
+	FROM temp_hourly_test_errors AS hod
+	JOIN camdecmpswks.DERIVED_HRLY_VALUE AS dhv 
+		ON dhv.HOUR_ID = HOD.HOUR_ID
+		AND dhv.MON_LOC_ID = HOD.MON_LOC_ID
+		AND dhv.RPT_PERIOD_ID = HOD.RPT_PERIOD_ID
+		AND dhv.PARAMETER_CD = 'H2O'
+		AND dhv.MODC_CD <> '40'
+	LEFT JOIN camdecmpswks.MONITOR_FORMULA AS mf
+		ON mf.MON_FORM_ID = dhv.MON_FORM_ID 
+	LEFT JOIN (
+		SELECT
+			HOUR_ID, MON_LOC_ID, RPT_PERIOD_ID, MODC_CD,
+			ADJUSTED_HRLY_VALUE, UNADJUSTED_HRLY_VALUE, CALC_ADJUSTED_HRLY_VALUE
+		FROM camdecmpswks.MONITOR_HRLY_VALUE
+		WHERE RPT_PERIOD_ID = vrptperiodid AND PARAMETER_CD = 'O2C' AND MOISTURE_BASIS = 'W'
+	) AS mhv_WET 
+		ON mhv_WET.HOUR_ID = dhv.HOUR_ID
+		AND mhv_WET.MON_LOC_ID = dhv.MON_LOC_ID
+		AND mhv_WET.RPT_PERIOD_ID = dhv.RPT_PERIOD_ID
+	LEFT JOIN (
+		SELECT
+			HOUR_ID, MON_LOC_ID, RPT_PERIOD_ID, MODC_CD,
+			ADJUSTED_HRLY_VALUE, UNADJUSTED_HRLY_VALUE, CALC_ADJUSTED_HRLY_VALUE
+		FROM camdecmpswks.MONITOR_HRLY_VALUE
+		WHERE RPT_PERIOD_ID = vrptperiodid AND PARAMETER_CD = 'O2C' AND MOISTURE_BASIS = 'D'
+	) AS mhv_DRY 
+		ON mhv_DRY.HOUR_ID = dhv.HOUR_ID
+		AND mhv_DRY.MON_LOC_ID = dhv.MON_LOC_ID
+		AND mhv_DRY.RPT_PERIOD_ID = dhv.RPT_PERIOD_ID;
 
+  RAISE NOTICE 'Refreshing view counts...';
   CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'MOISTURE');
 END
 $BODY$;
+
+/*
+----------------------------------------------------------------------------------------
+FOR TESTING PURPOSES ONLY
+----------------------------------------------------------------------------------------
+DROP TABLE temp_hourly_test_errors;
+DROP TABLE temp_hourly_test_errors;
+CALL camdecmpswks.load_temp_hourly_test_errors('TWCORNEL5-C0E3879920A14159BAA98E03F1980A7A', 120);
+CALL camdecmpswks.load_temp_hourly_test_errors('MDC-C7BDBE7919DC439884869654E6F3B19B', 120);
+
+select a.mon_plan_id, *
+from camdecmpswks.monitor_plan_location a
+JOIN camdecmpswks.DERIVED_HRLY_VALUE AS DHV 
+	ON a.MON_LOC_ID = DHV.MON_LOC_ID
+	AND DHV.RPT_PERIOD_ID = 120	
+	AND DHV.PARAMETER_CD = 'H2O'
+	AND DHV.MODC_CD <> '40'
+order by a.mon_loc_id
+*/

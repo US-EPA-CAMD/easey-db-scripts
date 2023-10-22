@@ -1,4 +1,3 @@
--- PROCEDURE: camdecmps.copy_emissions_from_workspace_to_global(character varying, numeric)
 DROP PROCEDURE IF EXISTS camdecmps.copy_emissions_from_workspace_to_global(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmps.copy_emissions_from_workspace_to_global(

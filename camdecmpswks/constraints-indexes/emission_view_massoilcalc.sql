@@ -37,3 +37,7 @@ CREATE INDEX IF NOT EXISTS idx_emission_view_massoilcalc_oil_type
 CREATE INDEX IF NOT EXISTS idx_emission_view_massoilcalc_rpt_period_id_mon_loc_id
 		ON camdecmpswks.emission_view_massoilcalc USING btree
 		(rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_emission_view_massoilcalc_rpt_period_id_mon_plan_id
+    ON camdecmpswks.emission_view_massoilcalc USING btree
+    (rpt_period_id ASC NULLS LAST, mon_plan_id COLLATE pg_catalog."default" ASC NULLS LAST);

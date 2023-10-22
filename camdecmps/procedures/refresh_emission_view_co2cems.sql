@@ -1,4 +1,3 @@
-DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_co2cems(text, numeric);
 DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_co2cems(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_co2cems(
@@ -8,14 +7,9 @@ CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_co2cems(
 LANGUAGE 'plpgsql'
 AS $BODY$
 DECLARE
-  stopTime time without time zone;
-  startTime time without time zone;
   mhvParamCodes text[] := ARRAY['FLOW','CO2C','H2O'];
   dhvParamCodes text[] := ARRAY['CO2','CO2M','CO2C','H2O'];
 BEGIN
-  startTime := CURRENT_TIME;
-  RAISE NOTICE 'Refresh started @ % %', CURRENT_DATE, startTime;
-
   RAISE NOTICE 'Loading temp_hourly_test_errors...';
 	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
 
@@ -212,7 +206,7 @@ BEGIN
 		AND MON_LOC_ID = dhv.MON_LOC_ID
 		AND RPT_PERIOD_ID = dhv.RPT_PERIOD_ID
 		AND PARAMETER_CD = ANY(dhvParamCodes)
-	) OR EXISTS (
+	) AND EXISTS (--YES USE AND HERE VS OR
 		SELECT 1
 		FROM camdecmps.MONITOR_HRLY_VALUE
 		WHERE HOUR_ID = mhv.HOUR_ID
@@ -220,13 +214,10 @@ BEGIN
 		AND RPT_PERIOD_ID = mhv.RPT_PERIOD_ID
 		AND PARAMETER_CD = ANY(mhvParamCodes)
 	)
-	ORDER BY hod.MON_LOC_ID, DATE_HOUR;
+	ORDER BY MON_LOC_ID, DATE_HOUR;
 
   RAISE NOTICE 'Refreshing view counts...';
   CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'CO2CEMS');
-
-  stopTime := CURRENT_TIME;
-  RAISE NOTICE 'Refresh complete @ % %, total time: %', CURRENT_DATE, stopTime, stopTime - startTime;
 END
 $BODY$;
 

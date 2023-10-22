@@ -1,5 +1,3 @@
--- PROCEDURE: camdecmps.delete_monitor_plan_emissions_data_from_workspace(text)
-
 DROP PROCEDURE IF EXISTS camdecmps.delete_monitor_plan_emissions_data_from_global(text, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmps.delete_monitor_plan_emissions_data_from_global(

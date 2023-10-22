@@ -31,3 +31,7 @@ CREATE INDEX IF NOT EXISTS idx_emission_view_lme_hour_id
 CREATE INDEX IF NOT EXISTS idx_emission_view_lme_rpt_period_id_mon_loc_id
 		ON camdecmps.emission_view_lme USING btree
 		(rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_emission_view_lme_rpt_period_id_mon_plan_id
+    ON camdecmps.emission_view_lme USING btree
+    (rpt_period_id ASC NULLS LAST, mon_plan_id COLLATE pg_catalog."default" ASC NULLS LAST);

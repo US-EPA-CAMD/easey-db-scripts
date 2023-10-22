@@ -6,12 +6,7 @@ CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_hiunitstack(
 )
 LANGUAGE 'plpgsql'
 AS $BODY$
-DECLARE
-  stopTime time without time zone;
-  startTime time without time zone := CURRENT_TIME;
 BEGIN
-  RAISE NOTICE 'Refresh started @ % %', CURRENT_DATE, startTime;
-
   RAISE NOTICE 'Loading temp_hourly_test_errors...';
 	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
 
@@ -66,8 +61,5 @@ BEGIN
 
   RAISE NOTICE 'Refreshing view counts...';
   CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'HIUNITSTACK');
-
-  stopTime := CURRENT_TIME;
-  RAISE NOTICE 'Refresh complete @ % %, total time: %', CURRENT_DATE, stopTime, stopTime - startTime;
 END
 $BODY$;

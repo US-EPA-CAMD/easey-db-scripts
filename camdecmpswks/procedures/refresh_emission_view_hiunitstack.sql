@@ -1,5 +1,3 @@
--- PROCEDURE: camdecmpswks.refresh_emission_view_hiunitstack(character varying, numeric)
-
 DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_hiunitstack(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_hiunitstack(
@@ -9,11 +7,14 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_hiunitstack(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+  RAISE NOTICE 'Loading temp_hourly_test_errors...';
 	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
 
-	DELETE FROM camdecmpswks.EMISSION_VIEW_HIUNITSTACK 
-	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
+  RAISE NOTICE 'Deleting existing records...';
+	DELETE FROM camdecmpswks.EMISSION_VIEW_HIUNITSTACK
+	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
 
+  RAISE NOTICE 'Refreshing view data...';
 	INSERT INTO camdecmpswks.EMISSION_VIEW_HIUNITSTACK(
 		MON_PLAN_ID,
 		MON_LOC_ID,
@@ -58,6 +59,7 @@ BEGIN
 		AND MHV.PARAMETER_CD = 'FLOW'
   WHERE MHV.PARAMETER_CD IS NULL;
 
+  RAISE NOTICE 'Refreshing view counts...';
   CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'HIUNITSTACK');
 END
 $BODY$;

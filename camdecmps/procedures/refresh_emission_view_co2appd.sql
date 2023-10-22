@@ -1,4 +1,3 @@
-DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_co2appd(text, numeric);
 DROP PROCEDURE IF EXISTS camdecmps.refresh_emission_view_co2appd(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_co2appd(
@@ -8,14 +7,9 @@ CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_co2appd(
 LANGUAGE 'plpgsql'
 AS $BODY$
 DECLARE
-  stopTime time without time zone;
-  startTime time without time zone;
   dhvParamCodes text[] := ARRAY['CO2'];
   hpffParamCodes text[] :=   ARRAY['HI','CO2','FC'];
 BEGIN
-  startTime := CURRENT_TIME;
-  RAISE NOTICE 'Refresh started @ % %', CURRENT_DATE, startTime;
-
   RAISE NOTICE 'Loading temp_hourly_test_errors...';
 	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
 
@@ -149,15 +143,19 @@ BEGIN
 		AND RPT_PERIOD_ID = hff.RPT_PERIOD_ID
 		AND PARAMETER_CD = ANY(hpffParamCodes)
 	)
-	ORDER BY hod.MON_LOC_ID, DATE_HOUR;
+	ORDER BY MON_LOC_ID, DATE_HOUR;
 
   RAISE NOTICE 'Refreshing view counts...';
   CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'CO2APPD');
-
-  stopTime := CURRENT_TIME;
-  RAISE NOTICE 'Refresh complete @ % %, total time: %', CURRENT_DATE, stopTime, stopTime - startTime;
 END
 $BODY$;
+
+-- ORIGINAL WHERE BUT THE EXISTS WAY ABOVE IS A BETTER WAY
+-- 	WHERE hpff.CO2_HRLY_FUEL_FLOW_ID IS NOT NULL OR (
+-- 		hpff.CO2_HRLY_FUEL_FLOW_ID IS NULL AND (
+-- 			hpff.HI_HRLY_FUEL_FLOW_ID IS NOT NULL AND dhv.CO2_HOUR_ID IS NOT NULL
+-- 		)
+-- 	)
 
 /*
 ----------------------------------------------------------------------------------------

@@ -1,4 +1,3 @@
-DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_all(text, numeric);
 DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_all(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_all(
@@ -8,14 +7,9 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_all(
 LANGUAGE 'plpgsql'
 AS $BODY$
 DECLARE
-  stopTime time without time zone;
-  startTime time without time zone;
   mhvParamCodes text[] := ARRAY['FLOW'];
   dhvParamCodes text[] := ARRAY['HI','SO2','NOXR','NOX', 'CO2'];
 BEGIN
-  startTime := CURRENT_TIME;
-  RAISE NOTICE 'Refresh started @ % %', CURRENT_DATE, startTime;
-
   RAISE NOTICE 'Loading temp_hourly_test_errors...';
 	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
 
@@ -203,13 +197,10 @@ BEGIN
 		AND RPT_PERIOD_ID = mhv.RPT_PERIOD_ID
 		AND PARAMETER_CD = ANY(mhvParamCodes)
 	)
-	ORDER BY hod.MON_LOC_ID, DATE_HOUR;
+	ORDER BY MON_LOC_ID, DATE_HOUR;
 
   RAISE NOTICE 'Refreshing view counts...';
   CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'ALL');
-
-  stopTime := CURRENT_TIME;
-  RAISE NOTICE 'Refresh complete @ % %, total time: %', CURRENT_DATE, stopTime, stopTime - startTime;
 END
 $BODY$;
 
