@@ -9,6 +9,7 @@ PROCEDURES=false
 PRE_DATA_LOAD=false
 POST_DATA_LOAD=false
 POST_DEPLOYMENT=false
+REFRESH_FUNCS_PROCS=false
 ADD_CONSTRAINTS_INDEXES=false
 DROP_CONSTRAINTS_INDEXES=false
 
@@ -93,6 +94,88 @@ function dropConstraintsIndexes() {
     "
   done
 }
+
+if [ $REFRESH_FUNCS_PROCS == true ]; then
+  FILES="$FILES
+  \i ../../../camdecmps/functions/get_derived_hourly_values_pivoted.sql
+  \i ../../../camdecmps/functions/get_hourly_param_fuel_flow_pivoted.sql
+  \i ../../../camdecmps/functions/get_monitor_hourly_values_pivoted.sql
+  \i ../../../camdecmps/procedures/load_temp_daily_test_errors.sql
+  \i ../../../camdecmps/procedures/load_temp_hour_rules.sql
+  \i ../../../camdecmps/procedures/load_temp_hourly_test_errors.sql
+  \i ../../../camdecmps/procedures/load_temp_weekly_test_errors.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_all.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_co2appd.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_co2calc.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_co2cems.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_co2dailyfuel.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_count.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_dailybackstop.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_dailycal.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_hiappd.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_hicems.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_hiunitstack.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_lme.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_ltff.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_massoilcalc.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_matshcl.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_matshf.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_matshg.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_matsso2.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_matssorbent.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_matsweekly.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_moisture.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_noxappemixedfuel.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_noxappesinglefuel.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_noxmasscems.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_noxratecems.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_nsps4t.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_otherdaily.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_so2appd.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_so2cems.sql
+  \i ../../../camdecmps/procedures/refresh_emission_view_sumval.sql
+  \i ../../../camdecmps/procedures/refresh_emissions_views.sql
+  \i ../../../camdecmpswks/functions/get_derived_hourly_values_pivoted.sql
+  \i ../../../camdecmpswks/functions/get_hourly_param_fuel_flow_pivoted.sql
+  \i ../../../camdecmpswks/functions/get_monitor_hourly_values_pivoted.sql
+  \i ../../../camdecmpswks/procedures/load_temp_daily_test_errors.sql
+  \i ../../../camdecmpswks/procedures/load_temp_hour_rules.sql
+  \i ../../../camdecmpswks/procedures/load_temp_hourly_test_errors.sql
+  \i ../../../camdecmpswks/procedures/load_temp_weekly_test_errors.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_all.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_co2appd.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_co2calc.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_co2cems.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_co2dailyfuel.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_count.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_dailybackstop.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_dailycal.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_hiappd.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_hicems.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_hiunitstack.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_lme.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_ltff.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_massoilcalc.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_matshcl.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_matshf.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_matshg.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_matsso2.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_matssorbent.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_matsweekly.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_moisture.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_noxappemixedfuel.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_noxappesinglefuel.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_noxmasscems.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_noxratecems.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_nsps4t.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_otherdaily.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_so2appd.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_so2cems.sql
+  \i ../../../camdecmpswks/procedures/refresh_emission_view_sumval.sql
+  \i ../../../camdecmpswks/procedures/refresh_emissions_views.sql
+  "
+  ../../execute-psql.sh "$FILES"
+fi
 
 if [ $TABLES == true ]; then
   createTables
