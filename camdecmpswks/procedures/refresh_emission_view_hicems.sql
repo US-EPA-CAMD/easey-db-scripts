@@ -1,5 +1,3 @@
--- PROCEDURE: camdecmpswks.refresh_emission_view_hicems(character varying, numeric)
-
 DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_hicems(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_hicems(
@@ -9,11 +7,14 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_hicems(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+  RAISE NOTICE 'Loading temp_hourly_test_errors...';
 	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
 
-	DELETE FROM camdecmpswks.EMISSION_VIEW_HICEMS 
-	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
+  RAISE NOTICE 'Deleting existing records...';
+	DELETE FROM camdecmpswks.EMISSION_VIEW_HICEMS
+	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
 
+  RAISE NOTICE 'Refreshing view data...';
 	INSERT INTO camdecmpswks.EMISSION_VIEW_HICEMS(
 		MON_PLAN_ID,
 		MON_LOC_ID,
@@ -233,6 +234,7 @@ BEGIN
 		) AND MHV_O2C_WET_2.MODC_CD IN ('06', '07', '08', '09', '10', '11', '12', '55')
   WHERE DHV.PARAMETER_CD = 'HI' AND MHV.PARAMETER_CD = 'FLOW';
 
+  RAISE NOTICE 'Refreshing view counts...';
   CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'HICEMS');
 END
 $BODY$;

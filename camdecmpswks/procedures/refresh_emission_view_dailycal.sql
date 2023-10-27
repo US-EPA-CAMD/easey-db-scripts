@@ -1,5 +1,3 @@
--- PROCEDURE: camdecmpswks.refresh_emission_view_dailycal(character varying, numeric)
-
 DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_dailycal(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_dailycal(
@@ -9,23 +7,26 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_dailycal(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+  RAISE NOTICE 'Loading temp_daily_test_errors...';
 	CALL camdecmpswks.load_temp_daily_test_errors(vMonPlanId, vRptPeriodId);
 
+  RAISE NOTICE 'Deleting existing records...';
 	DELETE FROM camdecmpswks.EMISSION_VIEW_DAILYCAL
 	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
 
+  RAISE NOTICE 'Refreshing view data...';
 	INSERT INTO camdecmpswks.EMISSION_VIEW_DAILYCAL(
-		MON_PLAN_ID,
-		MON_LOC_ID,
+		    MON_PLAN_ID,
+		    MON_LOC_ID,
         RPT_PERIOD_ID,
         TEST_SUM_ID,
         COMPONENT_IDENTIFIER,
-		COMPONENT_TYPE_CD,
+		    COMPONENT_TYPE_CD,
         SPAN_SCALE_CD,
-		END_DATETIME,
+		    END_DATETIME,
         RPT_TEST_RESULT_CD,
         CALC_TEST_RESULT_CD,
-		APPLICABLE_SPAN_VALUE,
+		    APPLICABLE_SPAN_VALUE,
         UPSCALE_GAS_LEVEL_CD,
         UPSCALE_INJECTION_DATE,
         UPSCALE_INJECTION_TIME,
@@ -96,6 +97,7 @@ BEGIN
 		camdecmpswks.EMISSIONS_MONITOR_SPAN_ACTIVE(MS.BEGIN_DATE, MS.BEGIN_HOUR, MS.END_DATE, MS.END_HOUR, DTS.END_DATE, CAST(LEFT(DTS.END_TIME, 2) AS numeric)) = 1
 	WHERE DTS.TEST_TYPE_CD = 'DAYCAL';
 
+  RAISE NOTICE 'Refreshing view counts...';
   CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'DAILYCAL');
 END
 $BODY$;

@@ -1,5 +1,3 @@
--- PROCEDURE: camdecmpswks.refresh_emission_view_co2dailyfuel(character varying, numeric)
-
 DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_co2dailyfuel(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_co2dailyfuel(
@@ -9,9 +7,11 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_co2dailyfuel(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
-	DELETE FROM camdecmpswks.EMISSION_VIEW_CO2DAILYFUEL 
-	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
+  RAISE NOTICE 'Deleting existing records...';
+	DELETE FROM camdecmpswks.EMISSION_VIEW_CO2DAILYFUEL
+	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
 
+  RAISE NOTICE 'Refreshing view data...';
 	INSERT INTO camdecmpswks.EMISSION_VIEW_CO2DAILYFUEL(
 		MON_PLAN_ID,
 		MON_LOC_ID,
@@ -63,7 +63,7 @@ BEGIN
 		ON dem.DAILY_EMISSION_ID = df.DAILY_EMISSION_ID
 		AND dem.MON_LOC_ID = df.MON_LOC_ID
 		AND dem.RPT_PERIOD_ID = df.RPT_PERIOD_ID
-	LEFT JOIN camdecmpswks.CHECK_LOG log 
+	LEFT JOIN camdecmpsaux.CHECK_LOG log 
 		ON log.CHK_SESSION_ID = evl.CHK_SESSION_ID
 		AND log.MON_LOC_ID = mpl.MON_LOC_ID
 		AND log.OP_BEGIN_DATE <= dem.BEGIN_DATE AND log.OP_END_DATE >= dem.BEGIN_DATE
@@ -89,6 +89,7 @@ BEGIN
 				dem.TOTAL_CARBON_BURNED,
 				dem.CALC_TOTAL_DAILY_EMISSION;
 
+  RAISE NOTICE 'Refreshing view counts...';
   CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'CO2DAILYFUEL');
 END
 $BODY$;

@@ -32,3 +32,7 @@ CREATE INDEX IF NOT EXISTS idx_emission_view_otherdaily_test_sum_id
 CREATE INDEX IF NOT EXISTS idx_emission_view_otherdaily_rpt_period_id_mon_loc_id
 		ON camdecmps.emission_view_otherdaily USING btree
 		(rpt_period_id ASC NULLS LAST, mon_loc_id COLLATE pg_catalog."default" ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_emission_view_otherdaily_rpt_period_id_mon_plan_id
+    ON camdecmps.emission_view_otherdaily USING btree
+    (rpt_period_id ASC NULLS LAST, mon_plan_id COLLATE pg_catalog."default" ASC NULLS LAST);

@@ -1,5 +1,3 @@
--- PROCEDURE: camdecmpswks.refresh_emission_view_massoilcalc(character varying, numeric)
-
 DROP PROCEDURE IF EXISTS camdecmpswks.refresh_emission_view_massoilcalc(character varying, numeric);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_massoilcalc(
@@ -9,11 +7,14 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_massoilcalc(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+  RAISE NOTICE 'Loading temp_hourly_test_errors...';
 	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
 
-	DELETE FROM camdecmpswks.EMISSION_VIEW_MASSOILCALC 
-	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
+  RAISE NOTICE 'Deleting existing records...';
+	DELETE FROM camdecmpswks.EMISSION_VIEW_MASSOILCALC
+	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
 
+  RAISE NOTICE 'Refreshing view data...';
 	INSERT INTO camdecmpswks.EMISSION_VIEW_MASSOILCALC(
 		MON_PLAN_ID,
 		MON_LOC_ID,
@@ -68,6 +69,7 @@ BEGIN
 	LEFT JOIN camdecmpswks.MONITOR_SYSTEM MS 
 		ON HFF.MON_SYS_ID = MS.MON_SYS_ID;
 
+  RAISE NOTICE 'Refreshing view counts...';
   CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'MASSOILCALC');
 END
 $BODY$;
