@@ -195,6 +195,49 @@ BEGIN
 		add_date = EXCLUDED.add_date,
 		update_date = EXCLUDED.update_date;
 
+	---------------------------------- Protocol Gas --------------------------------------------
+
+	INSERT INTO camdecmps.protocol_gas (
+    protocol_gas_id, test_sum_id, gas_level_cd, gas_type_cd, vendor_id, cylinder_id, expiration_date, add_date, update_date, userid
+	)
+	SELECT
+		protocol_gas_id, test_sum_id, gas_level_cd, gas_type_cd, vendor_id, cylinder_id, expiration_date, add_date, update_date, userid
+	FROM camdecmpswks.protocol_gas
+	WHERE test_sum_id = testSumId
+	ON CONFLICT (protocol_gas_id) DO UPDATE
+	SET
+		gas_level_cd = EXCLUDED.gas_level_cd,
+		gas_type_cd = EXCLUDED.gas_type_cd,
+		vendor_id = EXCLUDED.vendor_id,
+		cylinder_id = EXCLUDED.cylinder_id,
+		expiration_date = EXCLUDED.expiration_date,
+		add_date = EXCLUDED.add_date,
+		update_date = EXCLUDED.update_date,
+		userid = EXCLUDED.userid;
+
+	---------------------------------- AET --------------------------------------------
+
+	INSERT INTO camdecmps.air_emission_testing (
+    air_emission_test_id, test_sum_id, qi_last_name, qi_first_name, qi_middle_initial, aetb_name, aetb_phone_number, aetb_email, exam_date, provider_name, provider_email, add_date, update_date, userid
+	)
+	SELECT
+		air_emission_test_id, test_sum_id, qi_last_name, qi_first_name, qi_middle_initial, aetb_name, aetb_phone_number, aetb_email, exam_date, provider_name, provider_email, add_date, update_date, userid
+	FROM camdecmpswks.air_emission_testing
+	WHERE test_sum_id = testSumId
+	ON CONFLICT (air_emission_test_id) DO UPDATE
+	SET
+		qi_last_name = EXCLUDED.qi_last_name,
+		qi_first_name = EXCLUDED.qi_first_name,
+		qi_middle_initial = EXCLUDED.qi_middle_initial,
+		aetb_name = EXCLUDED.aetb_name,
+		aetb_phone_number = EXCLUDED.aetb_phone_number,
+		aetb_email = EXCLUDED.aetb_email,
+		exam_date = EXCLUDED.exam_date,
+		provider_name = EXCLUDED.provider_name,
+		provider_email = EXCLUDED.provider_email,
+		add_date = EXCLUDED.add_date,
+		update_date = EXCLUDED.update_date,
+		userid = EXCLUDED.userid;
 
 	---------------------------------- Fuel Flowmeter Accuracy Data --------------------------------------------
 	INSERT INTO camdecmps.fuel_flowmeter_accuracy(
