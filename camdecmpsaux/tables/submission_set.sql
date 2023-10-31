@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.submission_set
     oris_code numeric(6,0) NOT NULL,
     fac_name character varying(200) COLLATE pg_catalog."default" NOT NULL,
     activity_id text COLLATE pg_catalog."default" NOT NULL,
-    configuration character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    configuration text COLLATE pg_catalog."default" NOT NULL,
     status_cd character varying(8) COLLATE pg_catalog."default",
     details text COLLATE pg_catalog."default",
     submission_end_stage_time timestamp without time zone
