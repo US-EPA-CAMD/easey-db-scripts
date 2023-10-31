@@ -17,7 +17,7 @@ CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_ae_testing(
 
 AS $BODY$
 SELECT
-	qi_first_name || ' ' || qi_middle_initial || '. ' || qi_last_name AS "qIName",
+	qi_first_name || ' ' || COALESCE(qi_middle_initial || '. ', '') || qi_last_name AS "qIName",
 	TO_CHAR(exam_date, 'YYYY-MM-DD') AS "examDate",
 	provider_name AS "providerName",
 	provider_email AS "providerEmail",
