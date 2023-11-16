@@ -65,9 +65,9 @@ BEGIN
 		mhv.FLOW_CALC_ADJUSTED_HRLY_VALUE AS ADJ_FLOW_USED,
 		mhv.FLOW_MODC_CD AS FLOW_MODC,
 		mhv.FLOW_PCT_AVAILABLE AS FLOW_PMA,
-		dhv.CALC_PCT_MOISTURE AS PCT_H2O_USED, 
+		dhv.NOX_CALC_PCT_MOISTURE AS PCT_H2O_USED, 
 		CASE 
-			WHEN (dhv.CALC_PCT_MOISTURE IS NOT NULL) THEN 
+			WHEN (dhv.NOX_CALC_PCT_MOISTURE IS NOT NULL) THEN 
 				CASE 
 					WHEN (mhv.H2O_MODC_CD IS NOT NULL) THEN mhv.H2O_MODC_CD 
 					WHEN (dhv.H2O_MODC_CD IS NOT NULL) THEN dhv.H2O_MODC_CD 
@@ -76,8 +76,8 @@ BEGIN
 			ELSE NULL
 		END AS SOURCE_H2O_VALUE, 
 		mf.EQUATION_CD AS NOX_MASS_FORMULA_CD,
-		dhv.ADJUSTED_HRLY_VALUE AS RPT_NOX_MASS,
-		dhv.CALC_ADJUSTED_HRLY_VALUE AS CALC_NOX_MASS,
+		dhv.NOX_ADJUSTED_HRLY_VALUE AS RPT_NOX_MASS,
+		dhv.NOX_CALC_ADJUSTED_HRLY_VALUE AS CALC_NOX_MASS,
 		hod.ERROR_CODES
 	FROM temp_hourly_test_errors AS hod
 	JOIN camdecmps.get_derived_hourly_values_pivoted(
@@ -145,12 +145,14 @@ BEGIN
 		flow_pct_available numeric,
 		flow_moisture_basis character varying,
 		flow_modc_cd character varying,
-		noxc_unadjusted_hrly_value numeric,
-		noxc_applicable_bias_adj_factor numeric,
+		noxc_hour_id character varying,
 		noxc_adjusted_hrly_value numeric,
 		noxc_calc_adjusted_hrly_value numeric,
-		noxc_modc_cd character varying,
+		noxc_unadjusted_hrly_value numeric,
+		noxc_applicable_bias_adj_factor numeric,
 		noxc_pct_available numeric,
+		noxc_moisture_basis character varying,
+		noxc_modc_cd character varying,
 		h2o_hour_id character varying,
 		h2o_adjusted_hrly_value numeric,
 		h2o_calc_adjusted_hrly_value numeric,
@@ -162,8 +164,8 @@ BEGIN
 	) ON mhv.HOUR_ID = hod.HOUR_ID
 	  AND mhv.MON_LOC_ID = hod.MON_LOC_ID
 	  AND mhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
-	INNER JOIN camdecmps.MONITOR_FORMULA  mf_HI 
-		ON mf_HI.MON_FORM_ID = dhv.MON_FORM_ID AND mf_HI.EQUATION_CD LIKE 'F-26%'
+	INNER JOIN camdecmps.MONITOR_FORMULA  MF 
+		ON DHV.NOX_MON_FORM_ID = MF.MON_FORM_ID AND MF.EQUATION_CD LIKE 'F-26%'
 	LEFT OUTER JOIN camdecmps.MONITOR_DEFAULT  H2O_MD 
 		ON HOD.MON_LOC_ID = H2O_MD.MON_LOC_ID AND H2O_MD.DEFAULT_PURPOSE_CD = 'PM' AND H2O_MD.PARAMETER_CD = 'H2O' 
 		AND camdecmps.emissions_monitor_default_active(H2O_MD.BEGIN_DATE, H2O_MD.BEGIN_HOUR, H2O_MD.END_DATE, H2O_MD.END_HOUR, HOD.BEGIN_DATE, HOD.BEGIN_HOUR) = 1
