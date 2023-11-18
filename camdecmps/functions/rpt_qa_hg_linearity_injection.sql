@@ -15,7 +15,7 @@ SELECT
 			WHEN ml.unit_id IS NOT NULL THEN u.unitid
 			ELSE '*'
 		END AS "unitStack",
-		camdecmpswks.format_date_hour(li.injection_date, li.injection_hour, li.injection_min) AS "date",
+		camdecmps.format_date_hour(li.injection_date, li.injection_hour, li.injection_min) AS "date",
 		ls.gas_level_cd AS "gasLevelCode",
 		li.measured_value AS "measuredValue",
 		li.ref_value AS "referenceValue",

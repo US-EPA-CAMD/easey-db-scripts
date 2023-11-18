@@ -44,5 +44,5 @@ SELECT DISTINCT
 	LEFT JOIN camdecmpswks.stack_pipe sp USING(stack_pipe_id)
 	LEFT JOIN camd.unit u USING(unit_id)
 	WHERE cs.mon_plan_id = vMonPlanId AND rp.calendar_year = vYear AND rp.quarter = vQuarter AND
-	ccd.process_cd = 'HOURLY' AND cc.check_type_cd IN ('DAYCAL', 'EMTEST', 'EMWTS', 'EMWSI');
+	cl.severity_cd <> 'NONE' AND ccd.process_cd = 'HOURLY' AND cc.check_type_cd IN ('DAYCAL', 'EMTEST', 'EMWTS', 'EMWSI');
 $BODY$;

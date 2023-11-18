@@ -20,7 +20,7 @@ SELECT
 		ts.test_reason_cd AS "testReasonCode",
 		ts.test_result_cd AS "testResultCode",
 		ts.calc_test_result_cd AS "calcTestResultCode",	
-		camdecmpswks.format_date_hour(ts.end_date, ts.end_hour, ts.end_min) AS "endDateTime",
+		camdecmps.format_date_hour(ts.end_date, ts.end_hour, ts.end_min) AS "endDateTime",
 		ms.system_identifier AS "systemIdentifier",
 		ms.sys_type_cd AS "systemTypeCode",
 		c.component_identifier AS "componentIdentifier",

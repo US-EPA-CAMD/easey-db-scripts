@@ -20,8 +20,8 @@ CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_rata_run(
 AS $BODY$
 SELECT
 	rr.run_num as "run",
-	camdecmpswks.format_date_hour(rr.begin_date, rr.begin_hour, rr.begin_min) as "startDate",
-	camdecmpswks.format_date_hour(rr.end_date, rr.end_hour, rr.end_min) as "endDate",
+	camdecmps.format_date_hour(rr.begin_date, rr.begin_hour, rr.begin_min) as "startDate",
+	camdecmps.format_date_hour(rr.end_date, rr.end_hour, rr.end_min) as "endDate",
 	rr.run_status_cd as "runStatus",
 	rr.cem_value as "monSysValue",
 	rr.rata_ref_value as "refMethodValue",

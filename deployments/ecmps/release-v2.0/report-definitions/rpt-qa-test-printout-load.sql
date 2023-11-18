@@ -20,10 +20,10 @@ BEGIN
 	VALUES
 		(datatableId, 1, 'facilityName', 'Facility Name'),
 		(datatableId, 2, 'orisCode', 'Facility ID (ORISPL)'),
-		(datatableId, 4, 'stateCode', 'State'),
-		(datatableId, 5, 'countyName', 'County'),
-		(datatableId, 6, 'latitude', 'Latitude'),
-		(datatableId, 7, 'longitude', 'Longitude');
+		(datatableId, 3, 'stateCode', 'State'),
+		(datatableId, 4, 'countyName', 'County'),
+		(datatableId, 5, 'latitude', 'Latitude'),
+		(datatableId, 6, 'longitude', 'Longitude');
 	
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -373,13 +373,13 @@ BEGIN
 		(datatableId, 1, 'qIName', 'QI Name'),
 		(datatableId, 2, 'hidden1', 'HIDDEN'),
 		(datatableId, 3, 'aetbName', 'AETB Name'),
-		(datatableId, 5, 'examDate', 'Exam Date'),
-		(datatableId, 6, 'hidden3', 'HIDDEN'),
-		(datatableId, 7, 'aetbPhone', 'AETB Phone Number'),
-		(datatableId, 9, 'providerName', 'Provider Name'),
-		(datatableId, 10, 'hidden5', 'HIDDEN'),
-		(datatableId, 11, 'aetbEmail', 'AETB Email'),
-		(datatableId, 13, 'providerEmail', 'Provider Email');
+		(datatableId, 4, 'examDate', 'Exam Date'),
+		(datatableId, 5, 'hidden3', 'HIDDEN'),
+		(datatableId, 6, 'aetbPhone', 'AETB Phone Number'),
+		(datatableId, 7, 'providerName', 'Provider Name'),
+		(datatableId, 8, 'hidden5', 'HIDDEN'),
+		(datatableId, 9, 'aetbEmail', 'AETB Email'),
+		(datatableId, 10, 'providerEmail', 'Provider Email');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -512,7 +512,7 @@ BEGIN
 		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
 		(datatableId, 14, 'hidden4', 'HIDDEN'),
 		(datatableId, 15, 'submissionStatus', 'Submission Status'),
-		(datatableId, 116, 'testDescription', 'Test Description');
+		(datatableId, 16, 'testDescription', 'Test Description');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -622,8 +622,8 @@ BEGIN
 		(datatableId, 7, 'loadRamping', 'Hours Excluded for Load Ramping'),
 		(datatableId, 8, 'scrubberBypass', 'Hours Excluded for Scrubber Bypass'),
 		(datatableId, 9, 'preFlowRata', 'Hours Excluded for Preceeding Flow RATA'),
-		(datatableId, 8, 'preDiagTest', 'Hours Excluded for Preceeding Diagnostic Test'),
-		(datatableId, 8, 'multiStackDischarge', 'Hours Excluded for Multiple Stack Discharge');
+		(datatableId, 10, 'preDiagTest', 'Hours Excluded for Preceeding Diagnostic Test'),
+		(datatableId, 11, 'multiStackDischarge', 'Hours Excluded for Multiple Stack Discharge');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -679,7 +679,7 @@ BEGIN
 		(datatableId, 7, 'ghrUOM', 'GHR Units of Measure'),
 		(datatableId, 8, 'hoursExcludedCo', 'Hours Excluded for Co-Firing'),
 		(datatableId, 9, 'hoursExcludedRamp', 'Hours Excluded for Ramping'),
-		(datatableId, 8, 'hoursExcludedRange', 'Hours Excluded for Low Range');
+		(datatableId, 10, 'hoursExcludedRange', 'Hours Excluded for Low Range');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -887,8 +887,6 @@ BEGIN
 		(datatableId, 17, 'hidden6', 'HIDDEN'),
 		(datatableId, 18, 'submittedOn', 'Submission Date/Time');
 
-
-
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
 	VALUES (datatableId, 1, 'testId', null);
@@ -958,13 +956,13 @@ BEGIN
 		(datatableId, 1, 'qIName', 'QI Name'),
 		(datatableId, 2, 'hidden1', 'HIDDEN'),
 		(datatableId, 3, 'aetbName', 'AETB Name'),
-		(datatableId, 5, 'examDate', 'Exam Date'),
-		(datatableId, 6, 'hidden3', 'HIDDEN'),
-		(datatableId, 7, 'aetbPhone', 'AETB Phone Number'),
-		(datatableId, 9, 'providerName', 'Provider Name'),
-		(datatableId, 10, 'hidden5', 'HIDDEN'),
-		(datatableId, 11, 'aetbEmail', 'AETB Email'),
-		(datatableId, 13, 'providerEmail', 'Provider Email');
+		(datatableId, 4, 'examDate', 'Exam Date'),
+		(datatableId, 5, 'hidden3', 'HIDDEN'),
+		(datatableId, 6, 'aetbPhone', 'AETB Phone Number'),
+		(datatableId, 7, 'providerName', 'Provider Name'),
+		(datatableId, 8, 'hidden5', 'HIDDEN'),
+		(datatableId, 9, 'aetbEmail', 'AETB Email'),
+		(datatableId, 10, 'providerEmail', 'Provider Email');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -1001,8 +999,8 @@ BEGIN
 		(datatableId, 3, 'defaultCalculated', 'Default NOx Emission Rate Recalculated'),
 		(datatableId, 4, 'opCondition', 'Operating Condition'),
 		(datatableId, 5, 'identicalId', 'Identical Unit Group ID'),
-		(datatableId, 3, 'noUnitsGroup', 'No. of Units in Group'),
-		(datatableId, 4, 'noTestGroup', 'No. of Tests for Group');
+		(datatableId, 6, 'noUnitsGroup', 'No. of Units in Group'),
+		(datatableId, 7, 'noTestGroup', 'No. of Tests for Group');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -1052,7 +1050,7 @@ BEGIN
 		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
 		(datatableId, 14, 'hidden4', 'HIDDEN'),
 		(datatableId, 15, 'submissionStatus', 'Submission Status'),
-		(datatableId, 116, 'testDescription', 'Test Description');
+		(datatableId, 16, 'testDescription', 'Test Description');
 
 
 	/***** PARAMETERS *****/
@@ -1084,7 +1082,7 @@ BEGIN
 		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
 		(datatableId, 14, 'hidden4', 'HIDDEN'),
 		(datatableId, 15, 'submissionStatus', 'Submission Status'),
-		(datatableId, 116, 'testDescription', 'Test Description');
+		(datatableId, 16, 'testDescription', 'Test Description');
 
 
 	/***** PARAMETERS *****/
@@ -1116,7 +1114,7 @@ BEGIN
 		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
 		(datatableId, 14, 'hidden4', 'HIDDEN'),
 		(datatableId, 15, 'submissionStatus', 'Submission Status'),
-		(datatableId, 116, 'testDescription', 'Test Description');
+		(datatableId, 16, 'testDescription', 'Test Description');
 
 
 	/***** PARAMETERS *****/
@@ -1148,7 +1146,7 @@ BEGIN
 		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
 		(datatableId, 14, 'hidden4', 'HIDDEN'),
 		(datatableId, 15, 'submissionStatus', 'Submission Status'),
-		(datatableId, 116, 'testDescription', 'Test Description');
+		(datatableId, 16, 'testDescription', 'Test Description');
 
 
 	/***** PARAMETERS *****/
@@ -1180,7 +1178,7 @@ BEGIN
 		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
 		(datatableId, 14, 'hidden4', 'HIDDEN'),
 		(datatableId, 15, 'submissionStatus', 'Submission Status'),
-		(datatableId, 116, 'testDescription', 'Test Description');
+		(datatableId, 16, 'testDescription', 'Test Description');
 
 
 	/***** PARAMETERS *****/
@@ -1212,7 +1210,7 @@ BEGIN
 		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
 		(datatableId, 14, 'hidden4', 'HIDDEN'),
 		(datatableId, 15, 'submissionStatus', 'Submission Status'),
-		(datatableId, 116, 'testDescription', 'Test Description');
+		(datatableId, 16, 'testDescription', 'Test Description');
 
 
 	/***** PARAMETERS *****/
@@ -1244,7 +1242,7 @@ BEGIN
 		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
 		(datatableId, 14, 'hidden4', 'HIDDEN'),
 		(datatableId, 15, 'submissionStatus', 'Submission Status'),
-		(datatableId, 116, 'testDescription', 'Test Description');
+		(datatableId, 16, 'testDescription', 'Test Description');
 
 
 	/***** PARAMETERS *****/
@@ -1276,7 +1274,7 @@ BEGIN
 		(datatableId, 13, 'evalStatus', 'Evaluation Status'),
 		(datatableId, 14, 'hidden4', 'HIDDEN'),
 		(datatableId, 15, 'submissionStatus', 'Submission Status'),
-		(datatableId, 116, 'testDescription', 'Test Description');
+		(datatableId, 16, 'testDescription', 'Test Description');
 
 
 	/***** PARAMETERS *****/
@@ -1330,13 +1328,31 @@ BEGIN
 		(datatableId, 1, 'qIName', 'QI Name'),
 		(datatableId, 2, 'hidden1', 'HIDDEN'),
 		(datatableId, 3, 'aetbName', 'AETB Name'),
-		(datatableId, 5, 'examDate', 'Exam Date'),
-		(datatableId, 6, 'hidden3', 'HIDDEN'),
-		(datatableId, 7, 'aetbPhone', 'AETB Phone Number'),
-		(datatableId, 9, 'providerName', 'Provider Name'),
-		(datatableId, 10, 'hidden5', 'HIDDEN'),
-		(datatableId, 11, 'aetbEmail', 'AETB Email'),
-		(datatableId, 13, 'providerEmail', 'Provider Email');
+		(datatableId, 4, 'examDate', 'Exam Date'),
+		(datatableId, 5, 'hidden3', 'HIDDEN'),
+		(datatableId, 6, 'aetbPhone', 'AETB Phone Number'),
+		(datatableId, 7, 'providerName', 'Provider Name'),
+		(datatableId, 8, 'hidden5', 'HIDDEN'),
+		(datatableId, 9, 'aetbEmail', 'AETB Email'),
+		(datatableId, 10, 'providerEmail', 'Provider Email');
+
+	/***** PARAMETERS *****/
+	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
+	VALUES (datatableId, 1, 'testId', null);
+--------------------------------------------------------------------------------------------------------------------
+	tableOrder := tableOrder + 1;
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
+	VALUES(datasetCode, tableOrder, 'RATAGAS', 'SELECT * FROM {SCHEMA}.rpt_qa_protocol_gas($1)')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, display_name)
+	VALUES
+		(datatableId, 1, 'gasLevelCode', 'Gas Level Code'),
+		(datatableId, 2, 'gasTypeCode', 'Gas Type Code'),
+		(datatableId, 3, 'vendorIdentifier', 'Vendor Identifier'),
+		(datatableId, 4, 'cylinderIdentifier', 'Cylinder Identifier'),
+		(datatableId, 5, 'expirationDate', 'Expiration Date');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -1355,9 +1371,9 @@ BEGIN
 		(datatableId, 1, 'rowName1', ''),
 		(datatableId, 2, 'reported', 'Reported'),
 		(datatableId, 3, 'calculated', 'Recalculated'),
-		(datatableId, 5, 'rowName2', ''),
-		(datatableId, 6, 'reported2', 'Reported'),
-		(datatableId, 7, 'calculated2', 'Recalculated');
+		(datatableId, 4, 'rowName2', ''),
+		(datatableId, 5, 'reported2', 'Reported'),
+		(datatableId, 6, 'calculated2', 'Recalculated');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -1496,9 +1512,9 @@ BEGIN
 		(datatableId, 1, 'rowName1', ''),
 		(datatableId, 2, 'reported', 'Reported'),
 		(datatableId, 3, 'calculated', 'Recalculated'),
-		(datatableId, 5, 'rowName2', ''),
-		(datatableId, 6, 'reported2', 'Reported'),
-		(datatableId, 7, 'calculated2', 'Recalculated');
+		(datatableId, 4, 'rowName2', ''),
+		(datatableId, 5, 'reported2', 'Reported'),
+		(datatableId, 6, 'calculated2', 'Recalculated');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
@@ -1637,9 +1653,9 @@ BEGIN
 		(datatableId, 1, 'rowName1', ''),
 		(datatableId, 2, 'reported', 'Reported'),
 		(datatableId, 3, 'calculated', 'Recalculated'),
-		(datatableId, 5, 'rowName2', ''),
-		(datatableId, 6, 'reported2', 'Reported'),
-		(datatableId, 7, 'calculated2', 'Recalculated');
+		(datatableId, 4, 'rowName2', ''),
+		(datatableId, 5, 'reported2', 'Reported'),
+		(datatableId, 6, 'calculated2', 'Recalculated');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)

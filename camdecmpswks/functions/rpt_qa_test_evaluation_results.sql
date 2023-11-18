@@ -43,7 +43,7 @@ SELECT
 	LEFT JOIN camdecmpswks.monitor_system ms ON ms.mon_sys_id = ts.mon_sys_id
 	LEFT JOIN camdecmpswks.stack_pipe sp ON ml.stack_pipe_id = sp.stack_pipe_id
 	LEFT JOIN camd.unit u ON ml.unit_id = u.unit_id
-	WHERE ccd.process_cd = 'TEST' AND ((
+	WHERE cl.severity_cd <> 'NONE' AND ccd.process_cd = 'TEST' AND ((
 		cs.batch_id IS NULL AND cs.test_sum_id = testSumId
 	)
 	OR (cs.batch_id IS NOT NULL AND cs.test_sum_id IN (

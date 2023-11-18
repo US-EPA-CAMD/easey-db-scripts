@@ -45,7 +45,7 @@ SELECT
 	LEFT JOIN camdecmpswks.monitor_system ms ON ms.mon_sys_id = tee.mon_sys_id
 	LEFT JOIN camdecmpswks.stack_pipe sp ON ml.stack_pipe_id = sp.stack_pipe_id
 	LEFT JOIN camd.unit u ON ml.unit_id = u.unit_id
-	WHERE rc.category_cd = 'TEE' AND ((
+	WHERE cl.severity_cd <> 'NONE' AND rc.category_cd = 'TEE' AND ((
 		cs.batch_id IS NULL AND cs.test_extension_exemption_id = testExtensionExemptionId
 	) OR (cs.batch_id IS NOT NULL AND cs.test_extension_exemption_id IN (
 		SELECT test_extension_exemption_id FROM camdecmpswks.check_session WHERE batch_id = (

@@ -31,6 +31,56 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, 
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type to Category'), 'PM', 'COMPONENT', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type to Category'), 'CPM', 'COMPONENT', null);
 
+--Component Type Code to Basis Code
+INSERT INTO camdecmpsmd.cross_check_catalog(cross_chk_catalog_name
+											, cross_chk_catalog_description
+											, table_name1
+											, column_name1
+											, description1
+											, field_type_cd1
+											, table_name2
+											, column_name2
+											, description2
+											, field_type_cd2
+											, table_name3
+											, column_name3
+											, description3
+											, field_type_cd3)
+	VALUES ('Component Type Code to Basis Code'
+			,'Links Component Type Codes to Basis Codes for which they are appropriate'
+			, 'COMPONENT_TYPE_CODE'
+			, 'COMPONENT_TYPE_CD'
+			, 'ComponentTypeCode'
+			, null
+			, 'BASIS_CODE'
+			, 'BASIS_CD'
+			, 'BasisCode'
+			, null
+			, null
+			, null
+			, null
+			, null);
+
+
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type Code to Basis Code'), 'NOX', 'D', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type Code to Basis Code'), 'NOX', 'W', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type Code to Basis Code'), 'SO2', 'D', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type Code to Basis Code'), 'SO2', 'W', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type Code to Basis Code'), 'CO2', 'D', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type Code to Basis Code'), 'CO2', 'W', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type Code to Basis Code'), 'O2', 'B', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type Code to Basis Code'), 'O2', 'D', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type Code to Basis Code'), 'O2', 'W', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type Code to Basis Code'), 'HG', 'D', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type Code to Basis Code'), 'HG', 'W', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type Code to Basis Code'), 'HCL', 'D', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type Code to Basis Code'), 'HCL', 'W', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type Code to Basis Code'), 'HF', 'D', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type Code to Basis Code'), 'HF', 'W', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type Code to Basis Code'), 'FLOW', 'W', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Component Type Code to Basis Code'), 'STRAIN', 'D', null);
+
+
 --Component Type and Basis to Sample Acquisition Method
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3)
 	select	cross_chk_catalog_id
@@ -125,7 +175,7 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, 
 	where cross_chk_catalog_name='Component Type and Basis to Sample Acquisition Method'
 		  and value1='CONC';
 		  
---COMPONENT AND Basis Code TO Sample AQUISITION METHOD CODE (for CONC)
+--COMPONENT AND Basis Code TO Sample AQUISITION METHOD CODE (for FUELFLOW)
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3)
 	select	cross_chk_catalog_id
 			, 'BGFF'

@@ -1,6 +1,6 @@
 -- FUNCTION: camdecmpsaux.check_queue_evaluations_to_process(uuid)
 
--- DROP FUNCTION camdecmpsaux.check_queue_evaluations_to_process(uuid) CASCADE;
+DROP FUNCTION IF EXISTS camdecmpsaux.check_queue_evaluations_to_process(uuid) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpsaux.check_queue_evaluations_to_process(
 	schedulerid uuid)
