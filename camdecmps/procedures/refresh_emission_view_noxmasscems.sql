@@ -127,7 +127,7 @@ BEGIN
 		noxr_segment_num numeric,
 		noxr_operating_condition_cd character varying,
 		noxr_fuel_cd character varying,
-		noxr_modc_cd character varying,
+		noxr_modc_cd character varying
 	) ON dhv.HOUR_ID = hod.HOUR_ID
 	  AND dhv.MON_LOC_ID = hod.MON_LOC_ID
 	  AND dhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
@@ -160,15 +160,15 @@ BEGIN
 		h2o_applicable_bias_adj_factor numeric,
 		h2o_pct_available numeric,
 		h2o_moisture_basis character varying,
-		h2o_modc_cd character varying,
+		h2o_modc_cd character varying
 	) ON mhv.HOUR_ID = hod.HOUR_ID
 	  AND mhv.MON_LOC_ID = hod.MON_LOC_ID
 	  AND mhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
 	INNER JOIN camdecmps.MONITOR_FORMULA  MF 
-		ON DHV.NOX_MON_FORM_ID = MF.MON_FORM_ID AND MF.EQUATION_CD LIKE 'F-26%'
-	LEFT OUTER JOIN camdecmps.MONITOR_DEFAULT  H2O_MD 
-		ON HOD.MON_LOC_ID = H2O_MD.MON_LOC_ID AND H2O_MD.DEFAULT_PURPOSE_CD = 'PM' AND H2O_MD.PARAMETER_CD = 'H2O' 
-		AND camdecmps.emissions_monitor_default_active(H2O_MD.BEGIN_DATE, H2O_MD.BEGIN_HOUR, H2O_MD.END_DATE, H2O_MD.END_HOUR, HOD.BEGIN_DATE, HOD.BEGIN_HOUR) = 1
+		ON dhv.NOX_MON_FORM_ID = MF.MON_FORM_ID AND MF.EQUATION_CD LIKE 'F-26%'
+	LEFT OUTER JOIN camdecmps.MONITOR_DEFAULT  md_H2O 
+		ON hod.MON_LOC_ID = md_H2O.MON_LOC_ID AND md_H2O.DEFAULT_PURPOSE_CD = 'PM' AND md_H2O.PARAMETER_CD = 'H2O' 
+		AND camdecmps.emissions_monitor_default_active(md_H2O.BEGIN_DATE, md_H2O.BEGIN_HOUR, md_H2O.END_DATE, md_H2O.END_HOUR, HOD.BEGIN_DATE, HOD.BEGIN_HOUR) = 1
 
   RAISE NOTICE 'Refreshing view counts...';
   CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'NOXMASSCEMS');
