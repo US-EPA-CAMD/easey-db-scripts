@@ -28,7 +28,7 @@ BEGIN
     sqlStatement := format('
         SELECT
             %L AS "calType",
-            camdecmpswks.format_date_hour(%1$s_%2$I_injection_date, %1$s_%2$I_injection_hour, NULL) AS "injectionDateHour",
+            camdecmps.format_date_hour(%1$s_%2$I_injection_date, %1$s_%2$I_injection_hour, NULL) AS "injectionDateHour",
             CASE
                 WHEN %2$L = %3$L THEN %4$L
                 ELSE upscale_gas_level_cd

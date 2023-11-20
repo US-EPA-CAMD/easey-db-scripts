@@ -167,6 +167,7 @@ if [ $2 == "REFRESH_FUNCS_PROCS" ]; then
 fi
 
 if [ $2 == "TABLES" ]; then
+  FILES="CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";"
   createTables
   ../../execute-psql.sh "$FILES"
 fi
@@ -315,7 +316,7 @@ fi
 if [ $2 == "POST_DEPLOYMENT_CLEANUP" ]; then
   getFiles "../../../camdecmpsaux/views"
 
-  FILES="
+  FILES="$FILES
   DROP TABLE IF EXISTS camdaux.bulk_file_log CASCADE;
   DROP TABLE IF EXISTS camdaux.dataset_template CASCADE;
   DROP TABLE IF EXISTS camdaux.missing_oris CASCADE;
@@ -325,6 +326,11 @@ if [ $2 == "POST_DEPLOYMENT_CLEANUP" ]; then
   CALL camdecmpswks.load_workspace();
   "
 
+  ../../execute-psql.sh "$FILES"
+fi
+
+if [ $2 == "ROLLBACK" ]; then
+  # FILES="# place rollback script(s) here"
   ../../execute-psql.sh "$FILES"
 fi
 

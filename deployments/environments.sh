@@ -5,6 +5,11 @@ case $1 in
     export PGUSER=$EASEY_PGUSER_CDC
     export PGDB=$EASEY_PGDB_CDC
     ;;
+  (DEV15)
+    export PGPORT=$EASEY_PGPORT_DEV15
+    export PGUSER=$EASEY_PGUSER_DEV15
+    export PGDB=$EASEY_PGDB_DEV15
+    ;;
   (DEV)
     export PGPORT=$EASEY_PGPORT_DEV
     export PGUSER=$EASEY_PGUSER_DEV

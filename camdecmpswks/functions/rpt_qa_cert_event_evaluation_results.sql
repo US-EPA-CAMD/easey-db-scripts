@@ -44,7 +44,7 @@ SELECT
 	LEFT JOIN camdecmpswks.monitor_system ms ON ms.mon_sys_id = qce.mon_sys_id
 	LEFT JOIN camdecmpswks.stack_pipe sp ON ml.stack_pipe_id = sp.stack_pipe_id
 	LEFT JOIN camd.unit u ON ml.unit_id = u.unit_id
-	WHERE rc.category_cd = 'EVENT' AND ((
+	WHERE cl.severity_cd <> 'NONE' AND rc.category_cd = 'EVENT' AND ((
 		cs.batch_id IS NULL AND cs.qa_cert_event_id = qaCertEventId
 	) OR (cs.batch_id IS NOT NULL AND cs.qa_cert_event_id IN (
 		SELECT qa_cert_event_id FROM camdecmpswks.check_session WHERE batch_id = (

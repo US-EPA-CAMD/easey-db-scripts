@@ -88,7 +88,7 @@ INSERT INTO camdecmpsmd.component_type_code(
 )	VALUES ('CPM', 'PM Continuous Parametric Monitor', null, 'PMCO');
 
 UPDATE camdecmpsmd.component_type_code
-SET component_type_cd_description = 'Particulate Matter',
+SET component_type_cd_description = 'Particulate Matter Analyzer',
   span_indicator = null,
   parameter_cd = 'PMC'
 WHERE component_type_cd = 'PM';
@@ -233,17 +233,18 @@ VALUES
   ('TSCALSUM',      'TSCAL',    '3COLTBL',	'Temperature Sensor Calibration (Sorbent Trap Monitoring Systems)'),
   ('RATASUM',       'RATA',     '3COLTBL',	'Relative Accuracy Test'),
   ('RATATEST',      'RATA',     '3COLTBL',  'Air Emissions Testing Data'),
-  ('RATAMID',       'RATA',     'DEFAULT2',  'Operating Level - Mid'),
+  ('RATAGAS',       'RATA',     'DEFAULT',  'Protocol Gas'),  
+  ('RATAMID',       'RATA',     'DEFAULT2', 'Operating Level - Mid'),
   ('RATAMIDRUN',    'RATA',     'DEFAULT',  'Run Data'),
   ('RATAMIDSUPP',   'RATA',     '3COLTBL',  'Supplemental Flow RATA Data'),
   ('RATAMIDFLOW',   'RATA',     'DEFAULT',  'Flow Run Data'),
   ('RATAMIDTRAV',   'RATA',     'DEFAULT',  'Traverse Point Data'),
-  ('RATAHIGH',      'RATA',     'DEFAULT2',  'Operating Level - High'),
+  ('RATAHIGH',      'RATA',     'DEFAULT2', 'Operating Level - High'),
   ('RATAHIGHRUN',   'RATA',     'DEFAULT',  'Run Data'),
   ('RATAHIGHSUPP',  'RATA',     '3COLTBL',  'Supplemental Flow RATA Data'),
   ('RATAHIGHFLOW',  'RATA',     'DEFAULT',  'Flow Run Data'),
   ('RATAHIGHTRAV',  'RATA',     'DEFAULT',  'Traverse Point Data'),
-  ('RATALOW',       'RATA',     'DEFAULT2',  'Operating Level - Low'),
+  ('RATALOW',       'RATA',     'DEFAULT2', 'Operating Level - Low'),
   ('RATALOWRUN',    'RATA',     'DEFAULT',  'Run Data'),
   ('RATALOWSUPP',   'RATA',     '3COLTBL',  'Supplemental Flow RATA Data'),
   ('RATALOWFLOW',   'RATA',     'DEFAULT',  'Flow Run Data'),
@@ -298,26 +299,41 @@ INSERT INTO camdecmpsaux.program_parameter(
 ) VALUES ((select max(prg_param_id)+1 from camdecmpsaux.program_parameter), 12999, 'PM', 1, 125, null, 'ERGLOAD', current_timestamp, null);
 
 --System Type to Component Type
-INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='System Type to Component Type'), 'CPMS', 'CPM', 'Yes');
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3)
+VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='System Type to Component Type'), 'CPMS', 'CPM', 'Yes');
+
+--System Type to Formula Parameter
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3)
+VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='System Type to Formula Parameter  '), 'PM', 'PMRE', 'PMRE/CEM');
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3)
+VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='System Type to Formula Parameter  '), 'PM', 'PMRH', 'PMRH/CEM');
 
 --System Type to Fuel Group
-INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='System Type to Fuel Group'), 'CPMS', 'NFS', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3)
+VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='System Type to Fuel Group'), 'CPMS', 'NFS', null);
 
 --Program Parameter to Method Parameter
-INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Program Parameter to Method Parameter'), 'PM', 'PMRE,PMRH,PMPMA,PMPMC,MATSSUP,PM', 'PMRE (or PMRH, PMPMA, PMPMC version for heat input based method or PM Supplemental Method)');
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3)
+VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Program Parameter to Method Parameter'), 'PM', 'PMRE,PMRH,PMPMA,PMPMC,PM', 'PMRE (or PMRH, PMPMA, PMPMC version for heat input based method or PM Supplemental Method)');
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3)
+VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Program Parameter to Method Parameter'), 'MATS', 'HGRE,HGRH,HCLRE,HCLRH,HFRE,HFRH,SO2RE,SO2RH,MATSSUP', 'HGRE, HCLRE or HFRE method (or HGRH, HCLRH or HFRH versions for heat input based method, or equivalent SO2RE or SO2RH method, or Supplemental Method)');
 
 update camdecmpsmd.system_parameter
 set param_name3 = 'Mats2.0Date', param_value3 = '01/01/2024'
 where sys_param_id = 12 and sys_param_name = 'MATS_RULE';
 
 UPDATE camdecmpsmd.cross_check_catalog_value
-SET value2 = 'HCLRE,HCLRH,SO2RE,SO2RH,MATSSUP,HCL'
+SET value2 = 'HCLRE,HCLRH,SO2RE,SO2RH,HCL'
 WHERE value1 = 'HCL' and cross_chk_catalog_id = (select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Program Parameter to Method Parameter');
 
 UPDATE camdecmpsmd.cross_check_catalog_value
-SET value2 = 'HGRE,HGRH,MATSSUP,HG'
+SET value2 = 'HFRE,HFRH,HF'
+WHERE value1 = 'HF' and cross_chk_catalog_id = (select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Program Parameter to Method Parameter');
+
+UPDATE camdecmpsmd.cross_check_catalog_value
+SET value2 = 'HGRE,HGRH,HG'
 WHERE value1 = 'HG' and cross_chk_catalog_id = (select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Program Parameter to Method Parameter');
 
 UPDATE camdecmpsmd.cross_check_catalog_value
-SET value2 = 'NOX,NOXM,CALC'
+SET value2 = 'NOX,NOXM'
 WHERE value1 = 'NOX' and cross_chk_catalog_id = (select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Program Parameter to Method Parameter');

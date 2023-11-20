@@ -12,8 +12,8 @@ AS $BODY$
 SELECT
 	op_level_num as "operatingLevelNo",
 	run_num as "runNo",
-	camdecmpswks.format_date_hour(begin_date, begin_hour, begin_min) as "beginDate",
-	camdecmpswks.format_date_hour(end_date, end_hour, end_min) as "endDate",
+	camdecmps.format_date_hour(begin_date, begin_hour, begin_min) as "beginDate",
+	camdecmps.format_date_hour(end_date, end_hour, end_min) as "endDate",
 	ref_value as "noxEmissionsRate",
 	response_time as "responseTime",
 	run_used_ind as "runUsed"

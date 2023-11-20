@@ -12,5 +12,6 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.submission_set
     configuration text COLLATE pg_catalog."default" NOT NULL,
     status_cd character varying(8) COLLATE pg_catalog."default",
     details text COLLATE pg_catalog."default",
-    submission_end_stage_time timestamp without time zone
-);
+    submission_end_stage_time timestamp without time zone,
+	has_crit_errors bool
+)

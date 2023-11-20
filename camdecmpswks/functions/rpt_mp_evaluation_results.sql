@@ -31,5 +31,5 @@ SELECT
 	LEFT JOIN camdecmpswks.monitor_location ml ON cl.mon_loc_id = ml.mon_loc_id
 	LEFT JOIN camdecmpswks.stack_pipe sp ON ml.stack_pipe_id = sp.stack_pipe_id
 	LEFT JOIN camd.unit u ON ml.unit_id = u.unit_id
-	WHERE ccd.process_cd = 'MP' AND cs.mon_plan_id = monPlanId;
+	WHERE cl.severity_cd <> 'NONE' AND ccd.process_cd = 'MP' AND cs.mon_plan_id = monPlanId;
 $BODY$;
