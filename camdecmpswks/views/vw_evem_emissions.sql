@@ -22,10 +22,12 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_evem_emissions
             ELSE 'N'::text
         END AS can_submit,
     esa.sub_availability_cd AS submission_availability_cd
-   FROM camdecmps.emission_evaluation ee
+   FROM camdecmpswks.emission_evaluation ee
      JOIN camdecmpsmd.reporting_period rp ON ee.rpt_period_id = rp.rpt_period_id
      LEFT JOIN camdecmpswks.check_session cs ON ee.chk_session_id::text = cs.chk_session_id::text
-     LEFT JOIN camdecmpsaux.em_submission_access esa ON ee.mon_plan_id::text = esa.mon_plan_id::text AND ee.rpt_period_id = esa.rpt_period_id
+     LEFT JOIN ( SELECT DISTINCT ON (esa_1.mon_plan_id, esa_1.rpt_period_id) *
+           FROM camdecmpsaux.em_submission_access esa_1
+          ORDER BY esa_1.mon_plan_id, esa_1.rpt_period_id, esa_1.access_begin_date DESC) esa ON ee.mon_plan_id::text = esa.mon_plan_id::text AND ee.rpt_period_id = esa.rpt_period_id
 UNION
  SELECT esa.mon_plan_id,
     esa.rpt_period_id,
@@ -39,7 +41,12 @@ UNION
             ELSE 'N'::text
         END AS can_submit,
     esa.sub_availability_cd AS submission_availability_cd
-   FROM camdecmpsaux.em_submission_access esa
+   FROM 
+   	 ( 
+	   SELECT DISTINCT ON (esa_1.mon_plan_id, esa_1.rpt_period_id) *
+       FROM camdecmpsaux.em_submission_access esa_1
+       ORDER BY esa_1.mon_plan_id, esa_1.rpt_period_id, esa_1.access_begin_date DESC
+	 ) esa
      JOIN camdecmpsmd.reporting_period rp ON esa.rpt_period_id = rp.rpt_period_id
-     LEFT JOIN camdecmps.emission_evaluation ee ON esa.mon_plan_id::text = ee.mon_plan_id::text AND esa.rpt_period_id = ee.rpt_period_id
+     LEFT JOIN camdecmpswks.emission_evaluation ee ON esa.mon_plan_id::text = ee.mon_plan_id::text AND esa.rpt_period_id = ee.rpt_period_id
   WHERE ee.mon_plan_id IS NULL;
