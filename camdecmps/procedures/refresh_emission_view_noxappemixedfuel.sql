@@ -102,7 +102,7 @@ BEGIN
 		nox_segment_num numeric,
 		nox_operating_condition_cd character varying,
 		nox_fuel_cd character varying,
-		nox_modc_cd character varying,
+		nox_modc_cd character varying
 	)ON dhv.HOUR_ID = hod.HOUR_ID
 	  AND dhv.MON_LOC_ID = hod.MON_LOC_ID
 	  AND dhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
