@@ -3,17 +3,14 @@ CREATE EXTENSION IF NOT EXISTS pg_cron;
 DO $$
 DECLARE
 	vJobId bigint;
+	vrptperiodid numeric := 123;
 	vDatabase text := 'REPLACE WITH DB NAME';
 BEGIN
 
 	SELECT cron.schedule(
-		'Open 2023 Q2 Emissions Window',
+		'Open 2023 Q3 Emissions Window',
 		'0 * * * *',--every hour on the hour
-'DELETE FROM camdecmpsaux.em_submission_access
-WHERE em_status_cd NOT IN (''PENDING'',''APPRVD'')
-AND sub_availability_cd NOT IN (''GRANTED'',''REQUIRE'');
-
-INSERT INTO camdecmpsaux.em_submission_access(
+'INSERT INTO camdecmpsaux.em_submission_access(
 	mon_plan_id,
 	rpt_period_id,
 	access_begin_date,
@@ -28,7 +25,7 @@ INSERT INTO camdecmpsaux.em_submission_access(
 )
 SELECT
 	mon_plan_id,
-	122,
+	' || vrptperiodid || ',
 	CURRENT_DATE,
 	CURRENT_DATE + interval ''30 days'',
 	''RQRESUB'',
@@ -43,7 +40,7 @@ WHERE end_rpt_period_id IS NULL
 AND mon_plan_id NOT IN (
 	SELECT DISTINCT mon_plan_id
 	FROM camdecmpsaux.em_submission_access
-	WHERE rpt_period_id = 122
+	WHERE rpt_period_id = ' || vrptperiodid || '
 	AND em_status_cd IN (''PENDING'',''APPRVD'')
 	AND sub_availability_cd IN (''GRANTED'',''REQUIRE'')
 );'
@@ -55,4 +52,4 @@ END $$;
 --SELECT * FROM cron.job;
 --SELECT * FROM cron.job_run_details order by end_time desc;
 --SELECT * FROM cron.job_run_details WHERE status = 'failed';
---SELECT cron.unschedule('Open 2023 Q2 Emissions Window');
+--SELECT cron.unschedule('Open 2023 Q3 Emissions Window');
