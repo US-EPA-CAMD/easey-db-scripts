@@ -189,11 +189,13 @@ fi
 
 if [ $2 == "PRE_DATA_LOAD" ]; then
   FILES="$FILES
-  TRUNCATE TABLE camdecmps.dm_emissions;
-  TRUNCATE TABLE camdecmps.emission_evaluation;
-  TRUNCATE TABLE camdecmpsaux.em_submission_access;  
   \i ./drop-customizations.sql
   \i ./update-userid-length.sql
+  TRUNCATE TABLE camdecmps.dm_emissions CASCADE;
+  TRUNCATE TABLE camdecmps.emission_evaluation CASCADE;
+  TRUNCATE TABLE camdecmpsaux.em_submission_access CASCADE;
+  ALTER TABLE IF EXISTS camdaux.sftp_log
+    DROP CONSTRAINT IF EXISTS \"sftp-log_pkey\";
   "
 
   dropConstraintsIndexes
