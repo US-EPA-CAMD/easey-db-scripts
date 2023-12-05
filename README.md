@@ -5,23 +5,25 @@ This repo contains all creation and alteration scripts for tables, view, functio
 
 The deployments folder should contain a folder for each release of each application. Each release should contain a deploy.sh bash script that provides a mechanism to run sql scripts required to apply changes to the database for the release. Each release is different and should contain scripts specific to the release and leverage the object cration and alteration scripts in the schema folders as neccessary. Each release should contain a README.md with steps/instrucitons for that release.
 
-**Rules and Conventions**
-  - CREATE `<OBJECT>` IF NOT EXISTS `<name>`;
-  - ALTER `<OBJECT>` IF EXISTS `<name>`;
-  - DROP `<OBJECT>` IF EXISTS `<name>` CASCADE;
-  - Table scripts should create tables without constraints and/or indexes
-  - Function scripts should drop functions with cascade at the top of file
-  - View scripts should drop views with cascade at the top of file
-  - Add table constraint/index scripts to constraints-indexes folder following the ordering convention of parent tables before child tables
+#### Rules and Conventions
+- CREATE `<OBJECT>` IF NOT EXISTS `<name>`;
+- ALTER `<OBJECT>` IF EXISTS `<name>`;
+- DROP `<OBJECT>` IF EXISTS `<name>` CASCADE;
+- Table scripts should create tables without constraints and/or indexes
+- Function scripts should drop functions with cascade at the top of file
+- View scripts should drop views with cascade at the top of file
+- Add table constraint/index scripts to constraints-indexes folder following the ordering convention of parent tables before child tables
 
-**The following environment variables must be setup on the system/machine from where the scripts will be run...**
-  - EASEY_PGPORT_`ENV` = the port used when establishing the ssh tunnel
-  - EASEY_PGUSER_`ENV` = database user for the environment
-  - EASEY_PGDB_`ENV` = database name for the environment
+#### Environment Variables
+The following environment variables must be setup on the system/machine from where the scripts will be run. They can be `user` or `system` level variables or you can create a `.env` file in the root of the project. The scripts will detect a `.env` file and source it to set the values.
+- EASEY_PGPORT_`ENV` = the port used when establishing the ssh tunnel
+- EASEY_PGUSER_`ENV` = database user for the environment
+- EASEY_PGDB_`ENV` = database name for the environment
 
-_**NOTE: You must setup a set of these variables for each environment where `ENV` above = CDC | DEV | TEST | PERF | BETA | STG | PROD**_
+> [!note]
+> You must setup a set of these variables for each environment where `ENV` above = CDC | DEV | TEST | PERF | BETA | STG | PROD
 
-**To run the deployment script...**
+#### Run Deployment Script
 1. Open cmd prompt and login to cloud.gov using the standard login process
    ```
    $ cf login -a api.fr.cloud.gov --sso
@@ -37,7 +39,7 @@ _**NOTE: You must setup a set of these variables for each environment where `ENV
    ```   
 5. From the release directory run the following...
    - ENV = CDC | DEV | TEST | PERF | BETA | STG | PROD
-   - STEP = TABLES | FUNCTIONS | VIEWS | PROCEDURES | ETC... (see release deployment for possibilities)
+   - STEP = TABLES | FUNCTIONS | VIEWS | PROCEDURES | ETC... (refer to the deployment release README for specifics)
    ```
    $ ./deploy.sh <ENV> <STEP>
    ```
