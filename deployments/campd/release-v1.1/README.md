@@ -15,4 +15,5 @@
     $ ./deploy.sh <ENV> POST_DEPLOYMENT
     ```
 
-_NOTE: `<ENV` can be CDC | DEV | STG | TEST | BETA | PERF | PROD_
+> [!note]
+> `ENV` above = CDC | DEV | TEST | PERF | BETA | STG | PROD
