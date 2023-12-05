@@ -1,4 +1,14 @@
 #!/bin/bash
+
+sourceDir=$(pwd)
+cd ../../../
+
+if [[ -f .env ]]; then
+  source .env
+fi
+
+cd $sourceDir
+
 case $1 in
   (CDC)
     export PGPORT=$EASEY_PGPORT_CDC
