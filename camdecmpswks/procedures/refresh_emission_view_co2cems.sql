@@ -9,6 +9,8 @@ AS $BODY$
 DECLARE
   mhvParamCodes text[] := ARRAY['FLOW','CO2C','H2O'];
   dhvParamCodes text[] := ARRAY['CO2','CO2M','CO2C','H2O'];
+  mhvRequiredParamCodes text[] :=ARRAY['FLOW'];
+  dhvRequiredParamCodes text[] :=ARRAY['CO2'];
 BEGIN
   RAISE NOTICE 'Loading temp_hourly_test_errors...';
 	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
@@ -205,14 +207,14 @@ BEGIN
 		WHERE HOUR_ID = dhv.HOUR_ID
 		AND MON_LOC_ID = dhv.MON_LOC_ID
 		AND RPT_PERIOD_ID = dhv.RPT_PERIOD_ID
-		AND PARAMETER_CD = ANY(dhvParamCodes)
+		AND PARAMETER_CD = ANY(dhvRequiredParamCodes)
 	) AND EXISTS (--YES USE AND HERE VS OR
 		SELECT 1
 		FROM camdecmpswks.MONITOR_HRLY_VALUE
 		WHERE HOUR_ID = mhv.HOUR_ID
 		AND MON_LOC_ID = mhv.MON_LOC_ID
 		AND RPT_PERIOD_ID = mhv.RPT_PERIOD_ID
-		AND PARAMETER_CD = ANY(mhvParamCodes)
+		AND PARAMETER_CD = ANY(mhvRequiredParamCodes)
 	)
 	ORDER BY MON_LOC_ID, DATE_HOUR;
 
