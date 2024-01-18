@@ -1,0 +1,35 @@
+--Creates the publication used to populate the DMAP database
+DROP PUBLICATION IF EXISTS easey_query_publication;
+--Listing the tables in camddmw so as not to replicate the _log tables
+CREATE PUBLICATION easey_publication FOR TABLES IN SCHEMA 
+					 	camd, 
+					 	camdmd, 
+					 	camddmw_arch, 
+					 	camdecmps, 
+					 	camdecmpsmd, 
+					 TABLE camdaux.bookmark, 
+					 	camdecmpsaux.check_log,
+					 	camddmw.account_compliance_dim,
+					 	camddmw.account_fact,
+					 	camddmw.account_owner_dim,
+					 	camddmw.allowance_holding_dim,
+					 	camddmw.annual_unit_data,
+					 	camddmw.control_year_dim,
+					 	camddmw.day_unit_data,
+					 	camddmw.fuel_year_dim,
+					 	camddmw.hour_unit_data,
+					 	camddmw.hour_unit_mats_data,
+					 	camddmw.month_unit_data,
+					 	camddmw.owner_display_fact,
+					 	camddmw.owner_year_dim,
+					 	camddmw.ozone_unit_data,
+					 	camddmw.program_year_dim,
+					 	camddmw.quarter_unit_data,
+					 	camddmw.rep_year_dim,
+					 	camddmw.transaction_block_dim,
+					 	camddmw.transaction_fact,
+					 	camddmw.transaction_owner_dim,
+					 	camddmw.unit_compliance_dim,
+					 	camddmw.unit_fact,
+					 	camddmw.unit_type_year_dim
+					 WITH ( publish_via_partition_root = TRUE );
