@@ -15,5 +15,5 @@ CREATE OR REPLACE VIEW camdaux.vw_allowance_based_compliance_bulk_files_to_gener
                  WHERE  job.JOB_SYSTEM = 'Quartz' AND job.JOB_CLASS = 'Bulk Data File' AND job.JOB_NAME = 'Allowance Compliance'
            ) cmp
           ON null is null
-  WHERE  (acd.last_update_date >= date(timezone('est'::text, cmp.Last_Start_Timestamp) - '1 day'::interval) OR af.last_update_date >= date(timezone('est'::text, cmp.Last_Start_Timestamp) - '1 day'::interval)) AND camdaux.can_generate_compliance(acd.op_year::integer, acd.prg_code)
+  WHERE  (acd.last_update_date >= date(timezone('est'::text, cmp.Last_Start_Timestamp) - '90 day'::interval) OR af.last_update_date >= date(timezone('est'::text, cmp.Last_Start_Timestamp) - '90 day'::interval)) AND camdaux.can_generate_compliance(acd.op_year::integer, acd.prg_code)
   GROUP BY  acd.prg_code, acd.op_year;
