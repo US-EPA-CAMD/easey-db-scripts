@@ -6,5 +6,6 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.user_session
     facilities text COLLATE pg_catalog."default",
     token_expiration timestamp without time zone NOT NULL DEFAULT (CURRENT_TIMESTAMP + '00:20:00'::interval),
     last_login_date timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    last_activity timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP
+    last_activity timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    oidc_policy character varying(160) COLLATE pg_catalog."default"
 );
