@@ -8,4 +8,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.user_session
     last_login_date timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     last_activity timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     oidc_policy character varying(160) COLLATE pg_catalog."default"
+    client_ip character varying(160) COLLATE pg_catalog."default",
+    refresh_token text COLLATE pg_catalog."default",
+    roles text COLLATE pg_catalog."default"
 );
