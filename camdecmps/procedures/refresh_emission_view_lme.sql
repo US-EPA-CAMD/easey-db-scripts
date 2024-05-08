@@ -6,6 +6,7 @@ CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_lme(
 )
 LANGUAGE 'plpgsql'
 AS $BODY$
+	dhvParamCodes text[] := ARRAY['HIT','SO2M','NOXM','CO2M'];
 BEGIN
   RAISE NOTICE 'Loading temp_hourly_test_errors...';
 	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
@@ -43,91 +44,136 @@ BEGIN
 		ERROR_CODES
 	)
 	SELECT
-		HOD.MON_PLAN_ID,
-		HOD.MON_LOC_ID,
-		HOD.RPT_PERIOD_ID,
+		hod.MON_PLAN_ID,
+		hod.MON_LOC_ID,
+		hod.RPT_PERIOD_ID,
 		camdecmps.format_date_hour(hod.BEGIN_DATE, hod.BEGIN_HOUR, null),
-		HOD.OP_TIME,
-		HOD.HR_LOAD as UNIT_LOAD,
-		HOD.LOAD_UOM_CD as LOAD_UOM,
-		HOD.HOUR_ID,
-		HIT_DHV.MODC_CD as HI_MODC,
-		HIT_DHV.ADJUSTED_HRLY_VALUE AS RPT_HEAT_INPUT,
-		HIT_DHV.CALC_ADJUSTED_HRLY_VALUE AS CALC_HEAT_INPUT,
-		SO2M_DHV.FUEL_CD as SO2M_FUEL_TYPE,
-		SO2R_MD.DEFAULT_VALUE as SO2_EMISS_RATE,
-		SO2M_DHV.ADJUSTED_HRLY_VALUE AS RPT_SO2_MASS,
-		SO2M_DHV.CALC_ADJUSTED_HRLY_VALUE AS CALC_SO2_MASS,
-		NOXM_DHV.FUEL_CD as NOXM_FUEL_TYPE,
-		NOXM_DHV.OPERATING_CONDITION_CD,
+		hod.OP_TIME,
+		hod.HR_LOAD as UNIT_LOAD,
+		hod.LOAD_UOM_CD as LOAD_UOM,
+		hod.HOUR_ID,
+		dhv_HIT.MODC_CD as HI_MODC,
+		dhv_HIT.ADJUSTED_HRLY_VALUE AS RPT_HEAT_INPUT,
+		dhv_HIT.CALC_ADJUSTED_HRLY_VALUE AS CALC_HEAT_INPUT,
+		dhv_SO2M.FUEL_CD as SO2M_FUEL_TYPE,
+		md_SO2R.DEFAULT_VALUE as SO2_EMISS_RATE,
+		dhv_SO2M.ADJUSTED_HRLY_VALUE AS RPT_SO2_MASS,
+		dhv_SO2M.CALC_ADJUSTED_HRLY_VALUE AS CALC_SO2_MASS,
+		dhv_NOXM.FUEL_CD as NOXM_FUEL_TYPE,
+		dhv_NOXM.OPERATING_CONDITION_CD,
 		CASE
-			WHEN NOXR_MD.MON_LOC_ID IS NOT NULL THEN NOXR_MD.DEFAULT_VALUE
-			WHEN NORX_MD.MON_LOC_ID IS NOT NULL THEN NORX_MD.DEFAULT_VALUE
+			WHEN md_NOXR.MON_LOC_ID IS NOT NULL THEN md_NOXR.DEFAULT_VALUE
+			WHEN md_NORX.MON_LOC_ID IS NOT NULL THEN md_NORX.DEFAULT_VALUE
 			ELSE NULL
 		END as NOX_EMISS_RATE,
-		NOXM_DHV.ADJUSTED_HRLY_VALUE as RPT_NOX_MASS,
-		NOXM_DHV.CALC_ADJUSTED_HRLY_VALUE as CALC_NOX_MASS,
-		CO2M_DHV.FUEL_CD as CO2M_FUEL_TYPE,
-		CO2R_MD.DEFAULT_VALUE as CO2_EMISS_RATE,
-		CO2M_DHV.ADJUSTED_HRLY_VALUE as RPT_CO2_MASS,
-		CO2M_DHV.CALC_ADJUSTED_HRLY_VALUE as CALC_CO2_MASS,
-		HOD.ERROR_CODES
-	FROM temp_hourly_test_errors AS HOD 
-	LEFT JOIN camdecmps.DERIVED_HRLY_VALUE AS HIT_DHV 
-		ON HOD.HOUR_ID = HIT_DHV.HOUR_ID
-		AND HOD.MON_LOC_ID = HIT_DHV.MON_LOC_ID
-		AND HOD.RPT_PERIOD_ID = HIT_DHV.RPT_PERIOD_ID
-		AND HIT_DHV.PARAMETER_CD = 'HIT'
-	LEFT JOIN camdecmps.DERIVED_HRLY_VALUE AS SO2M_DHV 
-		ON HOD.HOUR_ID = SO2M_DHV.HOUR_ID
-		AND HOD.MON_LOC_ID = SO2M_DHV.MON_LOC_ID
-		AND HOD.RPT_PERIOD_ID = SO2M_DHV.RPT_PERIOD_ID
-		AND SO2M_DHV.PARAMETER_CD = 'SO2M'
-	LEFT JOIN camdecmps.MONITOR_DEFAULT as SO2R_MD 
-		ON HOD.MON_LOC_ID = SO2R_MD.MON_LOC_ID
-		AND camdecmps.emissions_monitor_default_active(SO2R_MD.BEGIN_DATE, SO2R_MD.BEGIN_HOUR, SO2R_MD.END_DATE, SO2R_MD.END_HOUR, HOD.BEGIN_DATE, HOD.BEGIN_HOUR) = 1 
-		AND SO2R_MD.DEFAULT_PURPOSE_CD = 'LM'
-		AND SO2R_MD.DEFAULT_UOM_CD = 'LBMMBTU' 
-		AND SO2R_MD.FUEL_CD = SO2M_DHV.FUEL_CD 
-		AND SO2R_MD.PARAMETER_CD = 'SO2R' 
-	LEFT JOIN camdecmps.DERIVED_HRLY_VALUE AS NOXM_DHV 
-		ON HOD.HOUR_ID = NOXM_DHV.HOUR_ID
-		AND HOD.MON_LOC_ID = NOXM_DHV.MON_LOC_ID
-		AND HOD.RPT_PERIOD_ID = NOXM_DHV.RPT_PERIOD_ID
-		AND NOXM_DHV.PARAMETER_CD = 'NOXM'
-	LEFT JOIN camdecmps.MONITOR_DEFAULT AS NOXR_MD 
-		ON NOXR_MD.MON_LOC_ID = HOD.MON_LOC_ID 
-		AND camdecmps.emissions_monitor_default_active(NOXR_MD.BEGIN_DATE, NOXR_MD.BEGIN_HOUR, NOXR_MD.END_DATE, NOXR_MD.END_HOUR, HOD.BEGIN_DATE, HOD.BEGIN_HOUR) = 1 
-		AND NOXR_MD.PARAMETER_CD = 'NOXR' 
-		AND NOXR_MD.DEFAULT_PURPOSE_CD = 'LM' 
-		AND NOXR_MD.DEFAULT_UOM_CD = 'LBMMBTU' 
-		AND NOXR_MD.FUEL_CD = NOXM_DHV.FUEL_CD 
-		AND NOXR_MD.OPERATING_CONDITION_CD != 'U'
-		AND NOXR_MD.OPERATING_CONDITION_CD = Coalesce(NOXM_DHV.OPERATING_CONDITION_CD,'A')  
-	LEFT JOIN camdecmps.MONITOR_DEFAULT AS NORX_MD 
-		ON NORX_MD.MON_LOC_ID = HOD.MON_LOC_ID 
-		AND camdecmps.emissions_monitor_default_active(NORX_MD.BEGIN_DATE, NORX_MD.BEGIN_HOUR, NORX_MD.END_DATE, NORX_MD.END_HOUR, HOD.BEGIN_DATE, HOD.BEGIN_HOUR) = 1 
-		AND NORX_MD.PARAMETER_CD = 'NORX'
-		AND NORX_MD.DEFAULT_PURPOSE_CD = 'MD' 
-		AND NORX_MD.DEFAULT_UOM_CD = 'LBMMBTU' 
-		AND NORX_MD.FUEL_CD = NOXM_DHV.FUEL_CD 
-		AND NORX_MD.OPERATING_CONDITION_CD = 'U' 
-	LEFT JOIN camdecmps.DERIVED_HRLY_VALUE as CO2M_DHV 
-		ON HOD.HOUR_ID = CO2M_DHV.HOUR_ID
-		AND HOD.MON_LOC_ID = CO2M_DHV.MON_LOC_ID
-		AND HOD.RPT_PERIOD_ID = CO2M_DHV.RPT_PERIOD_ID
-		AND CO2M_DHV.PARAMETER_CD = 'CO2M'
-	LEFT JOIN camdecmps.MONITOR_DEFAULT AS CO2R_MD 
-		ON HOD.MON_LOC_ID = CO2R_MD.MON_LOC_ID
-		AND	camdecmps.emissions_monitor_default_active(CO2R_MD.BEGIN_DATE, CO2R_MD.BEGIN_HOUR, CO2R_MD.END_DATE, CO2R_MD.END_HOUR, HOD.BEGIN_DATE, HOD.BEGIN_HOUR) = 1 
-		AND CO2R_MD.DEFAULT_PURPOSE_CD = 'LM' 
-		AND CO2R_MD.DEFAULT_UOM_CD ='TNMMBTU' 
-		AND CO2R_MD.FUEL_CD = CO2M_DHV.FUEL_CD 
-		AND CO2R_MD.PARAMETER_CD = 'CO2R'
+		dhv_NOXM.ADJUSTED_HRLY_VALUE as RPT_NOX_MASS,
+		dhv_NOXM.CALC_ADJUSTED_HRLY_VALUE as CALC_NOX_MASS,
+		dhv_CO2M.FUEL_CD as CO2M_FUEL_TYPE,
+		md_CO2R.DEFAULT_VALUE as CO2_EMISS_RATE,
+		dhv_CO2M.ADJUSTED_HRLY_VALUE as RPT_CO2_MASS,
+		dhv_CO2M.CALC_ADJUSTED_HRLY_VALUE as CALC_CO2_MASS,
+		hod.ERROR_CODES
+	FROM temp_hourly_test_errors AS hod
+	JOIN camdecmps.get_derived_hourly_values_pivoted(
+	  vmonplanid, vrptperiodid, dhvParamCodes
+	) AS dhv (
+		hour_id character varying,
+		mon_loc_id character varying,
+		rpt_period_id numeric,
+		hit_hour_id character varying,
+		hit_mon_form_id character varying,
+		hit_adjusted_hrly_value numeric,
+		hit_calc_adjusted_hrly_value numeric,
+		hit_unadjusted_hrly_value numeric,
+		hit_calc_unadjusted_hrly_value numeric,
+		hit_applicable_bias_adj_factor numeric,
+		hit_calc_pct_moisture numeric,
+		hit_calc_pct_diluent numeric,
+		hit_pct_available numeric,
+		hit_segment_num numeric,
+		hit_operating_condition_cd character varying,
+		hit_fuel_cd character varying,
+		hit_modc_cd character varying,
+		so2m_hour_id character varying,
+		so2m_mon_form_id character varying,
+		so2m_adjusted_hrly_value numeric,
+		so2m_calc_adjusted_hrly_value numeric,
+		so2m_unadjusted_hrly_value numeric,
+		so2m_calc_unadjusted_hrly_value numeric,
+		so2m_applicable_bias_adj_factor numeric,
+		so2m_calc_pct_moisture numeric,
+		so2m_calc_pct_diluent numeric,
+		so2m_pct_available numeric,
+		so2m_segment_num numeric,
+		so2m_operating_condition_cd character varying,
+		so2m_fuel_cd character varying,
+		so2m_modc_cd character varying,
+		noxm_hour_id character varying,
+		noxm_mon_form_id character varying,
+		noxm_adjusted_hrly_value numeric,
+		noxm_calc_adjusted_hrly_value numeric,
+		noxm_unadjusted_hrly_value numeric,
+		noxm_calc_unadjusted_hrly_value numeric,
+		noxm_applicable_bias_adj_factor numeric,
+		noxm_calc_pct_moisture numeric,
+		noxm_calc_pct_diluent numeric,
+		noxm_pct_available numeric,
+		noxm_segment_num numeric,
+		noxm_operating_condition_cd character varying,
+		noxm_fuel_cd character varying,
+		noxm_modc_cd character varying,
+		co2m_hour_id character varying,
+		co2m_mon_form_id character varying,
+		co2m_adjusted_hrly_value numeric,
+		co2m_calc_adjusted_hrly_value numeric,
+		co2m_unadjusted_hrly_value numeric,
+		co2m_calc_unadjusted_hrly_value numeric,
+		co2m_applicable_bias_adj_factor numeric,
+		co2m_calc_pct_moisture numeric,
+		co2m_calc_pct_diluent numeric,
+		co2m_pct_available numeric,
+		co2m_segment_num numeric,
+		co2m_operating_condition_cd character varying,
+		co2m_fuel_cd character varying,
+		co2m_modc_cd character varying
+	)ON dhv.HOUR_ID = hod.HOUR_ID
+		AND dhv.MON_LOC_ID = hod.MON_LOC_ID
+		AND dhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
+	LEFT JOIN camdecmps.MONITOR_DEFAULT as md_SO2R 
+		ON hod.MON_LOC_ID = md_SO2R.MON_LOC_ID
+		AND camdecmps.emissions_monitor_default_active(md_SO2R.BEGIN_DATE, md_SO2R.BEGIN_HOUR, md_SO2R.END_DATE, md_SO2R.END_HOUR, hod.BEGIN_DATE, hod.BEGIN_HOUR) = 1 
+		AND md_SO2R.DEFAULT_PURPOSE_CD = 'LM'
+		AND md_SO2R.DEFAULT_UOM_CD = 'LBMMBTU' 
+		AND md_SO2R.FUEL_CD = dhv_SO2M.FUEL_CD 
+		AND md_SO2R.PARAMETER_CD = 'SO2R'
+	LEFT JOIN camdecmps.MONITOR_DEFAULT AS md_NOXR 
+		ON md_NOXR.MON_LOC_ID = hod.MON_LOC_ID 
+		AND camdecmps.emissions_monitor_default_active(md_NOXR.BEGIN_DATE, md_NOXR.BEGIN_HOUR, md_NOXR.END_DATE, md_NOXR.END_HOUR, hod.BEGIN_DATE, hod.BEGIN_HOUR) = 1 
+		AND md_NOXR.PARAMETER_CD = 'NOXR' 
+		AND md_NOXR.DEFAULT_PURPOSE_CD = 'LM' 
+		AND md_NOXR.DEFAULT_UOM_CD = 'LBMMBTU' 
+		AND md_NOXR.FUEL_CD = dhv_NOXM.FUEL_CD 
+		AND md_NOXR.OPERATING_CONDITION_CD != 'U'
+		AND md_NOXR.OPERATING_CONDITION_CD = Coalesce(dhv_NOXM.OPERATING_CONDITION_CD,'A')  
+	LEFT JOIN camdecmps.MONITOR_DEFAULT AS md_NORX 
+		ON md_NORX.MON_LOC_ID = hod.MON_LOC_ID 
+		AND camdecmps.emissions_monitor_default_active(md_NORX.BEGIN_DATE, md_NORX.BEGIN_HOUR, md_NORX.END_DATE, md_NORX.END_HOUR, hod.BEGIN_DATE, hod.BEGIN_HOUR) = 1 
+		AND md_NORX.PARAMETER_CD = 'NORX'
+		AND md_NORX.DEFAULT_PURPOSE_CD = 'MD' 
+		AND md_NORX.DEFAULT_UOM_CD = 'LBMMBTU' 
+		AND md_NORX.FUEL_CD = dhv_NOXM.FUEL_CD 
+		AND md_NORX.OPERATING_CONDITION_CD = 'U'
+	LEFT JOIN camdecmps.MONITOR_DEFAULT AS md_CO2R 
+		ON hod.MON_LOC_ID = md_CO2R.MON_LOC_ID
+		AND	camdecmps.emissions_monitor_default_active(md_CO2R.BEGIN_DATE, md_CO2R.BEGIN_HOUR, md_CO2R.END_DATE, md_CO2R.END_HOUR, hod.BEGIN_DATE, hod.BEGIN_HOUR) = 1 
+		AND md_CO2R.DEFAULT_PURPOSE_CD = 'LM' 
+		AND md_CO2R.DEFAULT_UOM_CD ='TNMMBTU' 
+		AND md_CO2R.FUEL_CD = dhv_CO2M.FUEL_CD 
+		AND md_CO2R.PARAMETER_CD = 'CO2R'
 	WHERE EXISTS (
 		SELECT 1
 		FROM camdecmps.DERIVED_HRLY_VALUE
-		WHERE HOUR_ID = HOD.HOUR_ID AND PARAMETER_CD IN ('SO2M', 'NOXM', 'CO2M','HIT')
+		WHERE HOUR_ID = hod.HOUR_ID AND PARAMETER_CD IN (dhvParamCodes)
 	);
 
   RAISE NOTICE 'Refreshing view counts...';
