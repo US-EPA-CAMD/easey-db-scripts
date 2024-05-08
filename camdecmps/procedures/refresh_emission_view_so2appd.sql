@@ -124,8 +124,8 @@ BEGIN
 		hi_sample_type_cd character varying,
 		hi_parameter_uom_cd character varying,
 		hi_operating_condition_cd character varying
-	) 
-		ON hpff.HOUR_ID = hod.HOUR_ID
+    )   ON hpff.HRLY_FUEL_FLOW_ID = hff.HRLY_FUEL_FLOW_ID
+		AND hpff.HOUR_ID = hod.HOUR_ID
 		AND hpff.MON_LOC_ID = hod.MON_LOC_ID
 		AND hpff.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
 	LEFT OUTER JOIN camdecmps.MONITOR_SYSTEM MS 
