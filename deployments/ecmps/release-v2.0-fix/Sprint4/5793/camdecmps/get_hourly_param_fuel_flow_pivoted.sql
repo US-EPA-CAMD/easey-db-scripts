@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION camdecmpswks.get_hourly_param_fuel_flow_pivoted(monplanid character varying, rptperiodid numeric, parametercodes text[])
+CREATE OR REPLACE FUNCTION camdecmps.get_hourly_param_fuel_flow_pivoted(monplanid character varying, rptperiodid numeric, parametercodes text[])
  RETURNS SETOF record
  LANGUAGE plpgsql
 AS $function$
@@ -11,7 +11,7 @@ DECLARE
 BEGIN
   SELECT ARRAY(
 		SELECT mon_loc_id
-		FROM camdecmpswks.monitor_plan_location
+		FROM camdecmps.monitor_plan_location
 		WHERE mon_plan_id = monPlanId
 	) INTO monLocIds;
 
@@ -22,7 +22,7 @@ BEGIN
 			HFF.mon_loc_id,
 			HFF.rpt_period_id';
 	
-	joinText := 'FROM camdecmpswks.hrly_fuel_flow AS HFF';
+	joinText := 'FROM camdecmps.hrly_fuel_flow AS HFF';
 
 	FOREACH param IN ARRAY parameterCodes
 	LOOP
@@ -54,7 +54,7 @@ BEGIN
 					sample_type_cd,
 					parameter_uom_cd,
 					operating_condition_cd
-				FROM camdecmpswks.hrly_param_fuel_flow
+				FROM camdecmps.hrly_param_fuel_flow
 				WHERE mon_loc_id = ANY(%2$L::text[]) AND rpt_period_id = %3$s AND parameter_cd = %4$L
 			) AS %4$s
 				ON %4$s.hrly_fuel_flow_id = HFF.hrly_fuel_flow_id

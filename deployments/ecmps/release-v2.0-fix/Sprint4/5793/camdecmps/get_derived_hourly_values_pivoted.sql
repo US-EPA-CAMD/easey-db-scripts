@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION camdecmpswks.get_derived_hourly_values_pivoted(monplanid character varying, rptperiodid numeric, parametercodes text[])
+CREATE OR REPLACE FUNCTION camdecmps.get_derived_hourly_values_pivoted(monplanid character varying, rptperiodid numeric, parametercodes text[])
  RETURNS SETOF record
  LANGUAGE plpgsql
 AS $function$
@@ -11,7 +11,7 @@ DECLARE
 BEGIN
 	SELECT ARRAY(
 		SELECT mon_loc_id
-		FROM camdecmpswks.monitor_plan_location
+		FROM camdecmps.monitor_plan_location
 		WHERE mon_plan_id = monPlanId
 	) INTO monLocIds;
 
@@ -21,7 +21,7 @@ BEGIN
 			HOD.mon_loc_id,
 			HOD.rpt_period_id';
 	
-	joinText := 'FROM camdecmpswks.hrly_op_data AS HOD';
+	joinText := 'FROM camdecmps.hrly_op_data AS HOD';
 
 	FOREACH param IN ARRAY parameterCodes
 	LOOP
@@ -65,7 +65,7 @@ BEGIN
 					operating_condition_cd,
 					fuel_cd,
 					modc_cd
-				FROM camdecmpswks.derived_hrly_value
+				FROM camdecmps.derived_hrly_value
 				WHERE mon_loc_id = ANY(%2$L::text[]) AND rpt_period_id = %3$s AND parameter_cd = %4$L
 			) AS %4$s
 				ON %4$s.hour_id = HOD.hour_id
