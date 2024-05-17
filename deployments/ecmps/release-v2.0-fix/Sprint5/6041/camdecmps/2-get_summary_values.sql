@@ -1,33 +1,3 @@
-DROP FUNCTION IF EXISTS camdecmps.get_summary_values(text, character varying, numeric) CASCADE;
-
-CREATE OR REPLACE FUNCTION camdecmps.get_summary_values(
-	vtypecode text,
-	vmonlocid character varying,
-	vrptperiodid numeric
-)
-RETURNS TABLE(mon_loc_id character varying, rpt_period_id numeric, type_code text, parameter_cd character varying, summary_value numeric)
-LANGUAGE 'sql'
-AS $BODY$
-	SELECT
-		mon_loc_id,
-		rpt_period_id,
-		vtypecode,
-		parameter_cd,
-		CASE
-			WHEN vtypecode = 'QTRRPT'	THEN current_rpt_period_total
-			WHEN vtypecode = 'QTRCALC'	THEN calc_current_rpt_period_total
-			WHEN vtypecode = 'YEARRPT'	THEN year_total
-			WHEN vtypecode = 'YEARCALC'	THEN calc_year_total
-			WHEN vtypecode = 'OSRPT'	THEN os_total
-			WHEN vtypecode = 'OSCALC'	THEN calc_os_total
-			ELSE null
-		END AS summary_value
-	FROM camdecmps.summary_value
-	WHERE mon_loc_id = vmonlocid AND rpt_period_id = vrptperiodid;
-$BODY$;
-
---------------------------------------------------------------------------------------------------
-
 DROP FUNCTION IF EXISTS camdecmps.get_summary_values_pivoted(text, character varying, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.get_summary_values_pivoted(
