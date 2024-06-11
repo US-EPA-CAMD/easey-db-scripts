@@ -6,7 +6,7 @@ CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_evaluation_daily_error_results(
 	vmonplanid text,
 	vyear numeric,
 	vquarter numeric)
-    RETURNS TABLE("unitStack" text, "severityCode" text, "categoryDescription" text, "checkCode" text, "resultMessage" text, "beginPeriod" text, "endPeriod" text, "consecutiveHours" numeric) 
+    RETURNS TABLE("unitStack" text, "severityCode" text, "categoryDescription" text, "checkCode" text, "resultMessage" text, "beginPeriod" text, "endPeriod" text, "consecutiveDays" numeric)
     LANGUAGE 'sql'
 
     COST 100
@@ -26,13 +26,7 @@ SELECT DISTINCT
 	  cl.result_message AS "resultMessage",
 		camdecmpswks.format_date_hour(cl.op_begin_date, cl.op_begin_hour, null) AS "beginPeriod",
 		camdecmpswks.format_date_hour(cl.op_end_date, cl.op_end_hour, null) AS "endPeriod",
-		(
-            EXTRACT(EPOCH FROM (cl.op_end_date + cl.op_end_hour * interval '1 hour') - (cl.op_begin_date + cl.op_begin_hour * interval '1 hour')) / 3600
-            + CASE
-                WHEN date_trunc('hour', cl.op_begin_date + cl.op_begin_hour * interval '1 hour') <> date_trunc('hour', cl.op_end_date + cl.op_end_hour * interval '1 hour') THEN 1
-                ELSE 0
-              END
-        )::numeric AS "consecutiveHours"
+        1 AS "consecutiveDays"
 	FROM camdecmpswks.check_log cl
 	JOIN camdecmpswks.check_session cs USING(chk_session_id)
 	JOIN camdecmpsmd.reporting_period rp USING(rpt_period_id)
