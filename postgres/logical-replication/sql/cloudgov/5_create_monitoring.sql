@@ -28,23 +28,23 @@ select current_catalog as database_for_job;
 \set job_name 'Logical replication historical data'
 DELETE FROM cron.job WHERE jobname = :'job_name';
 SELECT cron.schedule(:'job_name', '*/5 * * * *', 'INSERT INTO camdaux.pg_stat_replication_historical(id, date_time, application_name, client_addr, client_port, backend_start, state, current_lsn, sent_lsn, write_lsn, flush_lsn, replay_lsn, total_lag_bytes, sync_state)
-SELECT NEXTVAL(\'pg_stat_replication_historical_seq\'),
+SELECT NEXTVAL(''pg_stat_replication_historical_seq''),
 	now(),
 	APPLICATION_NAME,
 	CLIENT_ADDR,
 	CLIENT_PORT,
 	BACKEND_START,
 	STATE,
-	PG_CURRENT_WAL_LSN() - \'0/0\'  AS CURRENT_LSN,
-	SENT_LSN - \'0/0\' AS SENT_LSN,
-	WRITE_LSN - \'0/0\' AS WRITE_LSN,
-	FLUSH_LSN - \'0/0\' AS FLUSH_LSN,
-	REPLAY_LSN - \'0/0\' AS REPLAY_LSN,
+	PG_CURRENT_WAL_LSN() - ''0/0''  AS CURRENT_LSN,
+	SENT_LSN - ''0/0'' AS SENT_LSN,
+	WRITE_LSN - ''0/0'' AS WRITE_LSN,
+	FLUSH_LSN - ''0/0'' AS FLUSH_LSN,
+	REPLAY_LSN - ''0/0'' AS REPLAY_LSN,
 	PG_WAL_LSN_DIFF(PG_CURRENT_WAL_LSN(),
 	REPLAY_LSN)::numeric AS TOTAL_LAG_BYTES,
 	SYNC_STATE
 FROM PG_STAT_REPLICATION
-WHERE APPLICATION_NAME <> \'walreceiver\';') as job_id;
+WHERE APPLICATION_NAME <> ''walreceiver'';') as job_id;
 \gset
 UPDATE cron.job SET database = :'database_for_job' WHERE jobid = :'job_id';
 \connect :"database_for_job"
