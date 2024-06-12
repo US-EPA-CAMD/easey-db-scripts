@@ -18,7 +18,11 @@ The DMAP script creates the subscription to the data in the Cloud.gov database w
 ## Deployment
 The high level steps to set up logical replication between the two databases are as follows:
 
-- Logical replication is not enabled by default in the Cloud.gov AWS RDS databases.  To get the feature enabled, send an email to Cloud.gov support providing the information for the target database.
+- Logical replication is not enabled by default in the Cloud.gov AWS RDS databases.  To get the feature enabled, send an email to Cloud.gov support providing the information for the target database. 
+
+>[!note]
+>Note: A database restart is required to enable Logical Replication.  Coordinate with Cloud.gov support on the restart.  This will take the database offline for a period of time.
+
 - Run the Cloud.gov scripts in the publication database
 - Dump the schema objects from the Cloud.gov database (no data) 
 - Restore the dump to the subscriber database in DMAP.  All of the ojects need to exist in the subscriber database prior to setting up replication. 
