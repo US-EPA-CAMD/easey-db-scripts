@@ -8,7 +8,7 @@ The Cloud.gov scripts do the following:
 - Set up a role which grants access to the tables involved in the replication
 - Create a user for the DMAP database to use to subscribe to the EASEY publication
 - Creates a publication for the tables that are to be replicated to DMAP
-- Creates a heartbeat process that writes to a heartbeat table in the database where the replication is set up*
+- Creates a monitoring process that writes information about the replication status to a table for later process.  This process also acts as "heartbeat" to keep WAL files from piling up on the DB server *
 
 **See this link for more information on why the heartbeat process is needed [https://wolfman.dev/posts/pg-logical-heartbeats/](https://wolfman.dev/posts/pg-logical-heartbeats/)*
 
