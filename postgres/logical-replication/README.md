@@ -31,3 +31,10 @@ The high level steps to set up logical replication between the two databases are
 >[!note]
 >The DMAP environment connects to the Cloud.gov through an AWS Fargate process.  This process establishes and monitors the SSH tunnel between the two environments. 
 >If the SSH tunnel goes down the Fargate process automatically re-establishes it.  The Fargate process is managed by the DMAP group.
+
+## Miscellaneous
+There are a couple scripts in the **misc** folder that can be used to help with configuring logical replication.
+
+*pg_schema_dump.sql* can be used to dump the schema objects that are in the publication.  You can then restore the dump in the subscriber database to create the database objects. To execute the script, first connect to the database using the [cf-service-connect](https://github.com/cloud-gov/cf-service-connect) plugin to establish the tunnel.  Then in a separate window execute the script supplying the database information.
+
+*monitor_initial_table_sync.sql* can be run in the subscriber database to determine the status of the initial data sync.
