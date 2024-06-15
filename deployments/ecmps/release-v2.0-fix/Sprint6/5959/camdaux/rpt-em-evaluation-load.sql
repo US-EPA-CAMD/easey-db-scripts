@@ -162,7 +162,7 @@ BEGIN
 		(datatableId, 4, 'resultMessage', 'Result Message'),
 		(datatableId, 6, 'beginPeriod', 'Begin Date/Hr'),
 		(datatableId, 7, 'endPeriod', 'End Date/Hr'),
-		(datatableId, 8, 'consecutiveHours', 'Consecutive Hours');
+		(datatableId, 8, 'consecutiveDays', 'Consecutive Days');
 
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)

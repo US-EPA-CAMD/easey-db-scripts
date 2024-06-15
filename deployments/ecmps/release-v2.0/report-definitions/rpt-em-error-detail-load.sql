@@ -24,12 +24,10 @@ BEGIN
 		(datatableId, 4, 'stateCode', 'State'),
 		(datatableId, 5, 'countyName', 'County'),
 		(datatableId, 6, 'hidden1', 'HIDDEN'),
-		(datatableId, 7, 'latitude', 'Latitude'),
-		(datatableId, 8, 'longitude', 'Longitude'),
-		(datatableId, 9, 'hidden2', 'HIDDEN'),
-		(datatableId, 10, 'yearQuarter', 'Year/Quarter'),
-		(datatableId, 11, 'totalHours', 'Total Hours'),
-		(datatableId, 12, 'hidden3', 'HIDDEN');
+		(datatableId, 7, 'hidden2', 'HIDDEN'),
+		(datatableId, 8, 'yearQuarter', 'Year/Quarter'),
+		(datatableId, 9, 'totalHours', 'Total Hours'),
+		(datatableId, 10, 'hidden3', 'HIDDEN');
 	
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)

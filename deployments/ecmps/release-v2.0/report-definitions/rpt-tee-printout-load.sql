@@ -21,9 +21,7 @@ BEGIN
 		(datatableId, 1, 'facilityName', 'Facility Name'),
 		(datatableId, 2, 'orisCode', 'Facility ID (ORISPL)'),
 		(datatableId, 4, 'stateCode', 'State'),
-		(datatableId, 5, 'countyName', 'County'),
-		(datatableId, 6, 'latitude', 'Latitude'),
-		(datatableId, 7, 'longitude', 'Longitude');
+		(datatableId, 5, 'countyName', 'County');
 	
 	/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
