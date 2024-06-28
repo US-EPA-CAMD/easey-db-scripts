@@ -250,17 +250,6 @@ BEGIN
 		USING (mon_qual_id)
 	WHERE mon_loc_id = ANY(monLocIds);
 
-	-- MONITOR_QUALIFICATION_CPMS --		
-	INSERT INTO camdecmpswks.monitor_qualification_cpms(
-		mon_qual_cpms_id, mon_qual_id, qual_data_year, stack_test_number, operating_limit, userid, add_date, update_date
-	)
-	SELECT
-		mq.mon_qual_cpms_id, mq.mon_qual_id, mq.qual_data_year, mq.stack_test_number, mq.operating_limit, mq.userid, mq.add_date, mq.update_date
-	FROM camdecmps.monitor_qualification_cpms AS mq
-	JOIN camdecmps.monitor_qualification
-		USING (mon_qual_id)
-	WHERE mon_loc_id = ANY(monLocIds);
-
 	-- MONITOR_SPAN --
 	INSERT INTO camdecmpswks.monitor_span(
 		span_id, mon_loc_id, mpc_value, mec_value, mpf_value, max_low_range, span_value, full_scale_range, begin_date, begin_hour, end_date, end_hour, default_high_range, flow_span_value, flow_full_scale_range, component_type_cd, span_scale_cd, span_method_cd, userid, add_date, update_date, span_uom_cd
