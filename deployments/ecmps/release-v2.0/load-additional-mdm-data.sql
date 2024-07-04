@@ -20,16 +20,6 @@ VALUES
     ('F', 'Furnaces'),
     ('T', 'Turbines');
 -----------------------------------------------------------------------
-TRUNCATE camdecmpsmd.analytical_principle_code;
-INSERT INTO camdecmpsmd.analytical_principle_code(
-  analytical_principle_cd, analytical_principle_cd_description
-) VALUES
-  ('BA', 'Beta Attenuation'),
-  ('ELS', 'Extractive Light Scatter'), 
-  ('ILS', 'In-stack Light Scatter'), 
-  ('LS', 'Light Scintillation'), 
-  ('MAD', 'Mass Accumulation Detection');
------------------------------------------------------------------------
 DELETE FROM camdecmpsmd.control_equip_param_code WHERE control_equip_param_cd = 'PM';
 INSERT INTO camdecmpsmd.control_equip_param_code(
 	control_equip_param_cd, control_equip_param_desc
