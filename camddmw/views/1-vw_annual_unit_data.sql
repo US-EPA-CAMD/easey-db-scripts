@@ -29,7 +29,9 @@ CREATE OR REPLACE VIEW camddmw.vw_annual_unit_data
     uf.nox_control_info,
     uf.part_control_info,
     uf.hg_control_info,
-    uf.prg_code_info
+    uf.prg_code_info,
+    aud.userid,
+    aud.add_date
    FROM camddmw.annual_unit_data aud
      JOIN camddmw.unit_fact uf ON aud.unit_id = uf.unit_id AND aud.op_year = uf.op_year
 UNION
@@ -58,6 +60,8 @@ UNION
     uf.nox_control_info,
     uf.part_control_info,
     uf.hg_control_info,
-    uf.prg_code_info
+    uf.prg_code_info,
+    aud.userid,
+    aud.add_date
    FROM camddmw_arch.annual_unit_data_a aud
      JOIN camddmw.unit_fact uf ON aud.unit_id = uf.unit_id AND aud.op_year = uf.op_year;
