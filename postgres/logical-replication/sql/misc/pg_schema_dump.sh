@@ -5,7 +5,8 @@ if [ $# -eq 0 ]
 then
     echo "This script is used to dump the schema objects for the publication."
     echo "Before running this command, in a separate window connect to the Cloud.gov"
-    echo "database using the service-connect plugin"
+    echo "database using the service-connect plugin. This script requires pg_dump"
+    echo "version >= 16.0.  pg_dump is installed with the pg_admin database client."
     echo
     echo "usage: pg_schema_dump -u <username> -h <host> -p <port> -d <database>"
     exit
@@ -27,13 +28,6 @@ export PGDATABASE
 export PGPORT
 
 pg_dump -v -x -f 'camd-schema-dump.sql' -F p -c -s \
---table-and-children=camd.* \
---table-and-children=camdmd.* \
---table-and-children=camddmw_arch.* \
---table-and-children=camdecmps.* \
---table-and-children=camdecmpsmd.* \
---table-and-children=camdaux.bookmark \
---table-and-children=camdecmpsaux.check_log \
 --table-and-children=camddmw.account_compliance_dim \
 --table-and-children=camddmw.account_fact \
 --table-and-children=camddmw.account_owner_dim \
