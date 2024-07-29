@@ -101,7 +101,7 @@ BEGIN
 		(datatableId, 2, 'year', null),
 		(datatableId, 3, 'quarter', null);
 ------------------------------------------------------------------------------------------------
-tableOrder := tableOrder + 1;
+	tableOrder := tableOrder + 1;
 	INSERT INTO camdaux.datatable(dataset_cd, table_order, template_cd, sql_statement)
 	VALUES(datasetCode, tableOrder, 'QRTSUMDATA', 'SELECT * FROM {SCHEMA}.rpt_quartely_em_summary_data($1, $2)')
 	RETURNING datatable_id INTO datatableId;
@@ -149,5 +149,4 @@ tableOrder := tableOrder + 1;
 		(datatableId, 1, 'monitorPlanId', null),
 		(datatableId, 2, 'year', null);
 ------------------------------------------------------------------------------------------------
-
 END $$;
