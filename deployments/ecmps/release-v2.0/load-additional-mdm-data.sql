@@ -151,8 +151,8 @@ INSERT INTO camdaux.template_code(template_cd, group_cd, template_type, display_
 VALUES
   ('BACKSTOP',      'EM',		    'DEFAULT',	'Daily Backstop'),
   ('EMALL',         'EM',		    'DEFAULT',	'Hourly Combined Parameters View'),
-  ('QRTSUMDATA',    'EM',		    'DEFAULT',	'Quarterly Emissions Summary Data'),
-  ('FUELOPHRS',     'EM',		    'DEFAULT',	'Fuel Operating Hours'),
+  ('QRTSUMDATA',    'EMSR',		  'DEFAULT',	'Quarterly Emissions Summary Data'),
+  ('FUELOPHRS',     'EMSR',		  'DEFAULT',	'Fuel Operating Hours'),
   ('ERRDTL',        'ERRDTL',   'DEFAULT',	'Error Details'),
 	('EVAL',          'EVAL',		  'DEFAULT',	'Evaluation Results'),
 	('GENERR',        'EVAL',		  'DEFAULT',	'General Errors'),
