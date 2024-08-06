@@ -261,9 +261,6 @@ BEGIN
                             on prd.rpt_period_id = lst.rpt_period_id
                             join camdecmpswks.monitor_plan pln
                             on pln.Fac_Id = lst.Fac_Id
-                            join camdecmpswks.emission_evaluation ems
-                            on ems.mon_plan_id = pln.mon_plan_id
-                            and ems.rpt_period_id = prd.rpt_period_id
                             join camdecmpswks.monitor_plan_location mpl
                             on mpl.mon_plan_id = pln.mon_plan_id
                             and mpl.mon_loc_id = lst.mon_loc_id
