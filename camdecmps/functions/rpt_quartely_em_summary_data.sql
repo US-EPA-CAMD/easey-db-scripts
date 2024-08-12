@@ -68,9 +68,7 @@ BEGIN
                     from  (
                                 select  lst.mon_plan_id,
                                         lst.rpt_period_id,
-                                        lst.mon_loc_id,
-                                        -- Indicates whether fuel specific data was reported for the location in the emission report
-                                        max(case when osd.fuel_cd is null then 0 else 1 end) as Fuel_Exists_Ind
+                                        lst.mon_loc_id
                                 from  lst
                                         join camdecmps.operating_supp_data osd
                                         on osd.mon_loc_id = lst.mon_loc_id
