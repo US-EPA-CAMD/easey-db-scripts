@@ -115,4 +115,5 @@ FROM
   JOIN camdmd.county_code cc USING(county_cd) 
 WHERE 
   p.oris_code = vfacilityid
+
 $BODY$;
