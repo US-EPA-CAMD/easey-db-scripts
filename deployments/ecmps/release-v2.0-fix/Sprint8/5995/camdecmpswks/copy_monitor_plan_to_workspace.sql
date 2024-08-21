@@ -1,6 +1,6 @@
 -- PROCEDURE: camdecmpswks.copy_monitor_plan_to_workspace(text, text[])
 
--- DROP PROCEDURE IF EXISTS camdecmpswks.copy_monitor_plan_to_workspace(text, text[]);
+DROP PROCEDURE IF EXISTS camdecmpswks.copy_monitor_plan_to_workspace(text);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.copy_monitor_plan_to_workspace(
 	monplanid text,
