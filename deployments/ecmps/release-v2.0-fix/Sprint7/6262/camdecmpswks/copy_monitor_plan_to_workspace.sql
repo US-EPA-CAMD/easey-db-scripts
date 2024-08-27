@@ -1,17 +1,23 @@
--- PROCEDURE: camdecmpswks.copy_monitor_plan_to_workspace(text, text[])
+-- PROCEDURE: camdecmpswks.copy_monitor_plan_to_workspace(text)
 
--- DROP PROCEDURE IF EXISTS camdecmpswks.copy_monitor_plan_to_workspace(text, text[]);
+-- DROP PROCEDURE IF EXISTS camdecmpswks.copy_monitor_plan_to_workspace(text);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.copy_monitor_plan_to_workspace(
-	monplanid text,
-    monLocIds text[])
+	monplanid text)
 LANGUAGE 'plpgsql'
 AS $BODY$
 DECLARE
 	unitIds   			int[];
+	monLocIds 			text[];
 	stackPipeIds		text[];
 	unitStackConfigIds 	text[];
 BEGIN
+	SELECT ARRAY(
+		SELECT mon_loc_id
+		FROM camdecmps.monitor_plan_location
+		WHERE mon_plan_id = monPlanId
+	) INTO monLocIds;
+
 	SELECT ARRAY(
 		SELECT unit_id
 		FROM camdecmps.monitor_location
