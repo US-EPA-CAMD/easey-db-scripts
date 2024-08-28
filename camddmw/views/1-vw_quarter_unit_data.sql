@@ -1,7 +1,3 @@
--- View: camddmw.vw_quarter_unit_data
-
-DROP VIEW IF EXISTS camddmw.vw_quarter_unit_data;
-
 CREATE OR REPLACE VIEW camddmw.vw_quarter_unit_data
  AS
  SELECT uf.state,
@@ -33,7 +29,8 @@ CREATE OR REPLACE VIEW camddmw.vw_quarter_unit_data
     uf.prg_code_info
    FROM camddmw.quarter_unit_data qud
      JOIN camddmw.unit_fact uf ON qud.unit_id = uf.unit_id AND qud.op_year = uf.op_year
-UNION
+     JOIN camddmw.op_year oy ON qud.op_year = oy.op_year AND oy.archive_ind = 0::numeric
+UNION ALL
  SELECT uf.state,
     uf.facility_name,
     uf.orispl_code,
@@ -62,4 +59,5 @@ UNION
     uf.hg_control_info,
     uf.prg_code_info
    FROM camddmw_arch.quarter_unit_data_a qud
-     JOIN camddmw.unit_fact uf ON qud.unit_id = uf.unit_id AND qud.op_year = uf.op_year;
+     JOIN camddmw.unit_fact uf ON qud.unit_id = uf.unit_id AND qud.op_year = uf.op_year
+     JOIN camddmw.op_year oy ON qud.op_year = oy.op_year AND oy.archive_ind = 1::numeric;

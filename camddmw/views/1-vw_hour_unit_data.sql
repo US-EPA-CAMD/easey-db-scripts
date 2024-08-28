@@ -1,7 +1,3 @@
--- View: camddmw.vw_hour_unit_data
-
-DROP VIEW IF EXISTS camddmw.vw_hour_unit_data;
-
 CREATE OR REPLACE VIEW camddmw.vw_hour_unit_data
  AS
  SELECT uf.state,
@@ -40,7 +36,8 @@ CREATE OR REPLACE VIEW camddmw.vw_hour_unit_data
     uf.prg_code_info
    FROM camddmw.hour_unit_data hud
      JOIN camddmw.unit_fact uf ON hud.unit_id = uf.unit_id AND hud.op_year = uf.op_year
-UNION
+     JOIN camddmw.op_year oy ON hud.op_year = oy.op_year AND oy.archive_ind = 0::numeric
+UNION ALL
  SELECT uf.state,
     uf.facility_name,
     uf.orispl_code,
@@ -76,4 +73,5 @@ UNION
     uf.hg_control_info,
     uf.prg_code_info
    FROM camddmw_arch.hour_unit_data_a hud
-     JOIN camddmw.unit_fact uf ON hud.unit_id = uf.unit_id AND hud.op_year = uf.op_year;
+     JOIN camddmw.unit_fact uf ON hud.unit_id = uf.unit_id AND hud.op_year = uf.op_year
+     JOIN camddmw.op_year oy ON hud.op_year = oy.op_year AND oy.archive_ind = 1::numeric;
