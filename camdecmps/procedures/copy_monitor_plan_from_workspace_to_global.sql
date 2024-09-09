@@ -24,22 +24,22 @@ BEGIN
 		WHERE mon_loc_id = ANY(monLocIds)
 		AND unit_id IS NOT NULL
 	) INTO unitIds;
-	
+
 	SELECT ARRAY(
 		SELECT stack_pipe_id
 		FROM camdecmpswks.monitor_location
 		WHERE mon_loc_id = ANY(monLocIds)
 		AND stack_pipe_id IS NOT NULL
 	) INTO stackPipeIds;
-	
+
 	SELECT ARRAY(
 		SELECT config_id
 		FROM camdecmpswks.unit_stack_configuration
 		WHERE unit_id = ANY(unitIds)
 		OR stack_pipe_id = ANY(stackPipeIds)
 	) INTO unitStackConfigIds;
-	
-	---------------------------------- MONITOR PLAN TOP LEVEL --------------------------------------------	
+
+	---------------------------------- MONITOR PLAN TOP LEVEL --------------------------------------------
 		-- MONITOR_PLAN --
 	INSERT INTO camdecmps.monitor_plan (
 		mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, begin_rpt_period_id, end_rpt_period_id, last_evaluated_date
@@ -86,7 +86,7 @@ BEGIN
 			category_cd = EXCLUDED.category_cd,
 			process_cd = EXCLUDED.process_cd,
 			userid = EXCLUDED.userid;
-	
+
 	INSERT INTO camdecmpsaux.check_log (
 			chk_log_id, chk_session_id, begin_date, rule_check_id, result_message, chk_log_comment, check_catalog_result_id, mon_loc_id, source_table, row_id, test_sum_id, op_begin_date, op_begin_hour, op_end_date, op_end_hour, check_date, check_hour, check_result, severity_cd, suppressed_severity_cd, check_cd, error_suppress_id
 	)
@@ -196,6 +196,18 @@ BEGIN
 		userid = EXCLUDED.userid,
 		add_date = EXCLUDED.add_date,
 		update_date = EXCLUDED.update_date;
+
+    -- UNIT --
+    --We cannot insert a copy of the camdecmpswks.unit data because the two tables have different columns.
+    --Instead, we will only update the columns that are common between the two tables.
+    UPDATE camd.unit camdUnt
+    SET
+        non_load_based_ind = wks.non_load_based_ind,
+        userid = wks.userid,
+        update_date = wks.update_date
+        FROM camdecmpswks.unit wks
+    WHERE camdUnt.unit_id = wks.unit_id
+      AND camdUnt.unit_id = ANY (unitIds);
 
 	-- UNIT_CAPACITY --
 	INSERT INTO camdecmps.unit_capacity (unit_cap_id, unit_id, begin_date, end_date, max_hi_capacity, userid, add_date, update_date)

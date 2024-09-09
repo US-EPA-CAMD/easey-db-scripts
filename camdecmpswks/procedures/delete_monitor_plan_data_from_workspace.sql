@@ -44,7 +44,10 @@ BEGIN
 
 	DELETE FROM camdecmpswks.monitor_plan
 	WHERE mon_plan_id = monPlanId;
-	
+
+    DELETE FROM camdecmpswks.unit
+    WHERE unit_id = ANY(unitIds);
+
 	DELETE FROM camdecmpswks.unit_capacity
 	WHERE unit_id = ANY(unitIds);
 
