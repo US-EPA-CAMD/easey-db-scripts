@@ -1,3 +1,7 @@
+-- View camddmw.vw_quarter_unit_data
+
+DROP VIEW IF EXISTS camddmw.vw_quarter_unit_data;
+
 CREATE OR REPLACE VIEW camddmw.vw_quarter_unit_data
  AS
  SELECT uf.state,

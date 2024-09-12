@@ -1,6 +1,6 @@
 -- View: camddmw.vw_annual_unit_data
 
--- DROP VIEW camddmw.vw_annual_unit_data;
+DROP VIEW IF EXISTS camddmw.vw_annual_unit_data;
 
 CREATE OR REPLACE VIEW camddmw.vw_annual_unit_data
  AS
