@@ -90,12 +90,6 @@ ALTER TABLE IF EXISTS camdecmpsaux.es_spec
 ALTER TABLE IF EXISTS camdecmpsmd.es_match_data_type_code
     DROP COLUMN IF EXISTS es_match_data_type_url;
 --------------------------------------------------------------------------------------------------------------------
-ALTER TABLE IF EXISTS camdecmps.component
-	DROP COLUMN IF EXISTS analytical_principle_cd;
-
-ALTER TABLE IF EXISTS camdecmpswks.component
- 	DROP COLUMN IF EXISTS analytical_principle_cd;
---------------------------------------------------------------------------------------------------------------------
 DO $$
 BEGIN
   IF EXISTS(
