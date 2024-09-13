@@ -379,8 +379,3 @@ ALTER TABLE IF EXISTS camdaux.datatable
 	ALTER COLUMN display_name DROP NOT NULL,
 	ADD COLUMN IF NOT EXISTS template_cd character varying(25);
 --------------------------------------------------------------------------------------------------------------------
-ALTER TABLE IF EXISTS camdecmps.component
-	ADD COLUMN IF NOT EXISTS analytical_principle_cd character varying(7);
-
-ALTER TABLE IF EXISTS camdecmpswks.component
-	ADD COLUMN IF NOT EXISTS analytical_principle_cd character varying(7);
