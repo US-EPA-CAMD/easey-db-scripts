@@ -1,8 +1,4 @@
--- camdecmpswks.unit definition
-
--- Drop table
-
--- DROP TABLE camdecmpswks.unit;
+DROP TABLE camdecmpswks.unit;
 
 CREATE TABLE camdecmpswks.unit
 (
