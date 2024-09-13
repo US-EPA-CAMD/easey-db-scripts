@@ -12,7 +12,7 @@ LANGUAGE plpgsql
 AS $$
 BEGIN
 RETURN QUERY
-SELECT
+SELECT DISTINCT
     COALESCE(ml.stack_name, ml.unitid) AS unit_stack_pipe,
     tee.extens_exempt_cd,
     rp.period_abbreviation AS tee_year_quarter,

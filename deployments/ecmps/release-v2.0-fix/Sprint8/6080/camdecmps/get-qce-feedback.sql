@@ -11,7 +11,7 @@ LANGUAGE plpgsql
 AS $$
 BEGIN
 RETURN QUERY
-SELECT
+SELECT DISTINCT
     COALESCE(ml.stack_name, ml.unitid) AS unit_stack_pipe,
     qe.qa_cert_event_cd,
     ms.system_identifier || '/' || ms.sys_type_cd AS sys_id_type,
