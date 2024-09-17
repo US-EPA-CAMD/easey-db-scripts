@@ -17,7 +17,7 @@ AS SELECT  ml.mon_loc_id,
            u.comr_op_date,
            u.comm_op_date
    FROM   camdecmpswks.monitor_location ml
-              LEFT JOIN camd.unit u
+              LEFT JOIN camdecmpswks.unit u
                         ON u.unit_id = ml.unit_id
               LEFT JOIN camdecmpswks.stack_pipe sp
                         ON sp.stack_pipe_id::text = ml.stack_pipe_id::text
