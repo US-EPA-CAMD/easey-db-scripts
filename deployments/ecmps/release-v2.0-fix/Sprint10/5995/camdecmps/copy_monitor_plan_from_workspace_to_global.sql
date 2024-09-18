@@ -198,7 +198,7 @@ BEGIN
 		update_date = EXCLUDED.update_date;
 
     -- UNIT --
-    INSERT INTO camdecmps.unit (unit_id, fac_id, unitid, unit_description, indian_country_ind, stateid, boiler_sequence_number, comm_op_date, comm_op_date_cd, comr_op_date, comr_op_date_cd, source_category_cd, naics_cd, no_active_gen_ind, non_load_based_ind, actual_90th_op_date, moved_ind, userid, add_date, update_date)
+    INSERT INTO camd.unit (unit_id, fac_id, unitid, unit_description, indian_country_ind, stateid, boiler_sequence_number, comm_op_date, comm_op_date_cd, comr_op_date, comr_op_date_cd, source_category_cd, naics_cd, no_active_gen_ind, non_load_based_ind, actual_90th_op_date, moved_ind, userid, add_date, update_date)
     SELECT unit_id, fac_id, unitid, unit_description, indian_country_ind, stateid, boiler_sequence_number, comm_op_date, comm_op_date_cd, comr_op_date, comr_op_date_cd, source_category_cd, naics_cd, no_active_gen_ind, non_load_based_ind, actual_90th_op_date, moved_ind, userid, add_date, update_date
     FROM camdecmpswks.unit
     WHERE unit_id = ANY(unitIds)
