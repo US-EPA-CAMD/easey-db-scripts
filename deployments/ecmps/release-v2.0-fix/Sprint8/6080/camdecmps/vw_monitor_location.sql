@@ -1,4 +1,6 @@
--- camdecmps.vw_monitor_location source
+-- View: camdecmps.vw_monitor_location
+DROP VIEW IF EXISTS camdecmps.vw_monitor_location CASCADE;
+
 CREATE OR REPLACE VIEW camdecmps.vw_monitor_location
 AS SELECT  ml.mon_loc_id,
            p.oris_code,
