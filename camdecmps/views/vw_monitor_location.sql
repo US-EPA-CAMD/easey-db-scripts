@@ -1,7 +1,5 @@
--- View: camdecmpswks.vw_monitor_location
-DROP VIEW IF EXISTS camdecmpswks.vw_monitor_location CASCADE;
-
-CREATE OR REPLACE VIEW camdecmpswks.vw_monitor_location
+-- camdecmps.vw_monitor_location source
+CREATE OR REPLACE VIEW camdecmps.vw_monitor_location
 AS SELECT  ml.mon_loc_id,
            p.oris_code,
            p.facility_name,
@@ -18,10 +16,10 @@ AS SELECT  ml.mon_loc_id,
            sp.stack_name,
            u.comr_op_date,
            u.comm_op_date
-   FROM   camdecmpswks.monitor_location ml
-              LEFT JOIN camdecmpswks.unit u
+   FROM   camdecmps.monitor_location ml
+              LEFT JOIN camd.unit u
                         ON u.unit_id = ml.unit_id
-              LEFT JOIN camdecmpswks.stack_pipe sp
+              LEFT JOIN camdecmps.stack_pipe sp
                         ON sp.stack_pipe_id::text = ml.stack_pipe_id::text
         JOIN camd.plant p
    ON p.fac_id in ( u.fac_id, sp.fac_id );
