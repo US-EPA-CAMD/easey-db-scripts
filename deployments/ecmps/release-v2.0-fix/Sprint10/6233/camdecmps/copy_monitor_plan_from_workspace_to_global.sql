@@ -198,8 +198,8 @@ BEGIN
 		update_date = EXCLUDED.update_date;
 
     -- UNIT --
-    --We cannot insert a copy of the camdecmpswks.unit data because the two tables have different columns.
-    --Instead, we will only update the columns that are common between the two tables.
+    --The data columns other than NON_LOAD_BASED_IND are managed by the CBS application in the CAMD schema.
+    --Only the NON_LOAD_BASED_IND column and USERID and UPDATE_DATE should be updated when copying from CAMDECMPSWKS to CAMD, and only when a row already exists in the CAMD.UNIT table.
     UPDATE camd.unit camdUnt
     SET
         non_load_based_ind = wks.non_load_based_ind,

@@ -198,30 +198,16 @@ BEGIN
 		update_date = EXCLUDED.update_date;
 
     -- UNIT --
-    INSERT INTO camdecmps.unit (unit_id, fac_id, unitid, unit_description, indian_country_ind, stateid, boiler_sequence_number, comm_op_date, comm_op_date_cd, comr_op_date, comr_op_date_cd, source_category_cd, naics_cd, no_active_gen_ind, non_load_based_ind, actual_90th_op_date, moved_ind, userid, add_date, update_date)
-    SELECT unit_id, fac_id, unitid, unit_description, indian_country_ind, stateid, boiler_sequence_number, comm_op_date, comm_op_date_cd, comr_op_date, comr_op_date_cd, source_category_cd, naics_cd, no_active_gen_ind, non_load_based_ind, actual_90th_op_date, moved_ind, userid, add_date, update_date
-    FROM camdecmpswks.unit
-    WHERE unit_id = ANY(unitIds)
-    ON CONFLICT (unit_id) DO UPDATE
-    SET fac_id = EXCLUDED.fac_id,
-        unitid = EXCLUDED.unitid,
-        unit_description = EXCLUDED.unit_description,
-        indian_country_ind = EXCLUDED.indian_country_ind,
-        stateid = EXCLUDED.stateid,
-        boiler_sequence_number = EXCLUDED.boiler_sequence_number,
-        comm_op_date = EXCLUDED.comm_op_date,
-        comm_op_date_cd = EXCLUDED.comm_op_date_cd,
-        comr_op_date = EXCLUDED.comr_op_date,
-        comr_op_date_cd = EXCLUDED.comr_op_date_cd,
-        source_category_cd = EXCLUDED.source_category_cd,
-        naics_cd = EXCLUDED.naics_cd,
-        no_active_gen_ind = EXCLUDED.no_active_gen_ind,
-        non_load_based_ind = EXCLUDED.non_load_based_ind,
-        actual_90th_op_date = EXCLUDED.actual_90th_op_date,
-        moved_ind = EXCLUDED.moved_ind,
-        userid = EXCLUDED.userid,
-        add_date = EXCLUDED.add_date,
-        update_date = EXCLUDED.update_date;
+    --The data columns other than NON_LOAD_BASED_IND are managed by the CBS application in the CAMD schema.
+    --Only the NON_LOAD_BASED_IND column and USERID and UPDATE_DATE should be updated when copying from CAMDECMPSWKS to CAMD, and only when a row already exists in the CAMD.UNIT table.
+    UPDATE camd.unit camdUnt
+    SET
+        non_load_based_ind = wks.non_load_based_ind,
+        userid = wks.userid,
+        update_date = wks.update_date
+        FROM camdecmpswks.unit wks
+    WHERE camdUnt.unit_id = wks.unit_id
+      AND camdUnt.unit_id = ANY (unitIds);
             
 	-- UNIT_CAPACITY --
 	INSERT INTO camdecmps.unit_capacity (unit_cap_id, unit_id, begin_date, end_date, max_hi_capacity, userid, add_date, update_date)
