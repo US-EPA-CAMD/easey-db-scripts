@@ -1,167 +1,153 @@
-CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_matssorbent(IN vmonplanid character varying, IN vrptperiodid numeric)
+CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_matssorbent
+(
+    IN vmonplanid character varying, 
+    IN vrptperiodid numeric
+)
  LANGUAGE plpgsql
 AS $procedure$
 BEGIN
-	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
- 	CALL camdecmps.load_temp_hour_rules(vMonPlanId, vRptPeriodId);
-
-	DELETE FROM camdecmps.EMISSION_VIEW_MATSSORBENT
-	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
-
-	-- Use a common table expression for clarity to get the max and min component identifiers
-	WITH train (
-		TRAP_ID,
-		COMPONENT_ID,
-		COMPONENT_IDENTIFIER,
-		SORBENT_TRAP_SERIAL_NUMBER,
-		MAIN_TRAP_HG,
-		BREAKTHROUGH_TRAP_HG,
-		SPIKE_TRAP_HG,
-		SPIKE_REF_VALUE,
-		TOTAL_SAMPLE_VOLUME,
-		REF_FLOW_TO_SAMPLING_RATIO,
-		HG_CONCENTRATION,
-		PERCENT_BREAKTHROUGH,
-		PERCENT_SPIKE_RECOVERY,
-		SAMPLING_RATIO_TEST_RESULT_CD,
-		POST_LEAK_TEST_RESULT_CD,
-		TRAIN_QA_STATUS_CD,
-		SAMPLE_DAMAGE_EXPLANATION
-	) AS (
-		SELECT TRAP_ID,
-			st.COMPONENT_ID,
-			COMPONENT_IDENTIFIER, 
-			SORBENT_TRAP_SERIAL_NUMBER, 
-			MAIN_TRAP_HG, 
-			BREAKTHROUGH_TRAP_HG,
-			SPIKE_TRAP_HG,
-			SPIKE_REF_VALUE,
-			TOTAL_SAMPLE_VOLUME,
-			REF_FLOW_TO_SAMPLING_RATIO,
-			HG_CONCENTRATION,
-			PERCENT_BREAKTHROUGH,
-			PERCENT_SPIKE_RECOVERY,
-			SAMPLING_RATIO_TEST_RESULT_CD,
-			POST_LEAK_TEST_RESULT_CD,
-			TRAIN_QA_STATUS_CD,
-			SAMPLE_DAMAGE_EXPLANATION
-		FROM camdecmps.SAMPLING_TRAIN st
-		JOIN camdecmps.MONITOR_PLAN_LOCATION mpl 
-			ON st.mon_loc_id=mpl.MON_LOC_ID
-		JOIN camdecmps.COMPONENT C 
-			ON C.COMPONENT_ID = st.COMPONENT_ID
-		WHERE mpl.MON_PLAN_ID=vmonplanid AND st.RPT_PERIOD_ID=vrptperiodid
-	)
-	INSERT INTO camdecmps.EMISSION_VIEW_MATSSORBENT(
-		MON_PLAN_ID,
-		MON_LOC_ID,
-		RPT_PERIOD_ID,
-		SYSTEM_IDENTIFIER,
-		date_hour,
-		end_date_time,
-		PAIRED_TRAP_AGREEMENT,
-		ABSOLUTE_DIFFERENCE_IND,
-		MODC_CD,
-		HG_CONCENTRATION,
-		RATA_IND,
-		SORBENT_TRAP_APS_CD,
-		A_COMPONENT_ID,
-		A_SORBENT_TRAP_SERIAL_NUMBER,
-		A_MAIN_TRAP_HG,
-		A_BREAKTHROUGH_TRAP_HG,
-		A_SPIKE_TRAP_HG,
-		A_SPIKE_REF_VALUE,
-		A_TOTAL_SAMPLE_VOLUME,
-		A_REF_FLOW_TO_SAMPLING_RATIO,
-		A_HG_CONCENTRATION,
-		A_PERCENT_BREAKTHROUGH,
-		A_PERCENT_SPIKE_RECOVERY,
-		A_SAMPLING_RATIO_TEST_RESULT_CD,
-		A_POST_LEAK_TEST_RESULT_CD,
-		A_TRAIN_QA_STATUS_CD,
-		A_SAMPLE_DAMAGE_EXPLANATION,
-		B_COMPONENT_ID,
-		B_SORBENT_TRAP_SERIAL_NUMBER,
-		B_MAIN_TRAP_HG,
-		B_BREAKTHROUGH_TRAP_HG,
-		B_SPIKE_TRAP_HG,
-		B_SPIKE_REF_VALUE,
-		B_TOTAL_SAMPLE_VOLUME,
-		B_REF_FLOW_TO_SAMPLING_RATIO,
-		B_HG_CONCENTRATION,
-		B_PERCENT_BREAKTHROUGH,
-		B_PERCENT_SPIKE_RECOVERY,
-		B_SAMPLING_RATIO_TEST_RESULT_CD,
-		B_POST_LEAK_TEST_RESULT_CD,
-		B_TRAIN_QA_STATUS_CD,
-		B_SAMPLE_DAMAGE_EXPLANATION,
-		ERROR_CODES
-	)
-	SELECT DISTINCT
-		ts.MON_PLAN_ID,
-		ts.MON_LOC_ID,
-		ts.RPT_PERIOD_ID,
-		s.SYSTEM_IDENTIFIER,
-		camdecmps.format_date_hour(trp.BEGIN_DATE, trp.BEGIN_HOUR, null) AS DATE_HOUR,
-		camdecmps.format_date_hour(trp.END_DATE, trp.END_HOUR, null) AS end_date_time,
-		trp.PAIRED_TRAP_AGREEMENT,
-		trp.ABSOLUTE_DIFFERENCE_IND,
-		trp.MODC_CD,
-		trp.HG_CONCENTRATION,
-		trp.RATA_IND,
-		trp.SORBENT_TRAP_APS_CD,
-		trnA.COMPONENT_IDENTIFIER AS A_COMPONENT_ID,
-		trnA.SORBENT_TRAP_SERIAL_NUMBER	AS A_SORBENT_TRAP_SERIAL_NUMBER,
-		trnA.MAIN_TRAP_HG AS A_MAIN_TRAP_HG,
-		trnA.BREAKTHROUGH_TRAP_HG AS A_BREAKTHROUGH_TRAP_HG,
-		trnA.SPIKE_TRAP_HG AS A_SPIKE_TRAP_HG,
-		trnA.SPIKE_REF_VALUE AS A_SPIKE_REF_VALUE,
-		trnA.TOTAL_SAMPLE_VOLUME AS A_TOTAL_SAMPLE_VOLUME,
-		trnA.REF_FLOW_TO_SAMPLING_RATIO	AS A_REF_FLOW_TO_SAMPLING_RATIO,
-		trnA.HG_CONCENTRATION AS A_HG_CONCENTRATION,
-		trnA.PERCENT_BREAKTHROUGH AS A_PERCENT_BREAKTHROUGH,
-		trnA.PERCENT_SPIKE_RECOVERY	AS A_PERCENT_SPIKE_RECOVERY,
-		trnA.SAMPLING_RATIO_TEST_RESULT_CD AS A_SAMPLING_RATIO_TEST_RESULT_CD,
-		trnA.POST_LEAK_TEST_RESULT_CD AS A_POST_LEAK_TEST_RESULT_CD,
-		trnA.TRAIN_QA_STATUS_CD	AS A_TRAIN_QA_STATUS_CD,
-		trnA.SAMPLE_DAMAGE_EXPLANATION AS A_SAMPLE_DAMAGE_EXPLANATION,
-		trnB.COMPONENT_IDENTIFIER AS B_COMPONENT_ID,
-		trnB.SORBENT_TRAP_SERIAL_NUMBER	AS B_SORBENT_TRAP_SERIAL_NUMBER,
-		trnB.MAIN_TRAP_HG AS B_MAIN_TRAP_HG,
-		trnB.BREAKTHROUGH_TRAP_HG AS B_BREAKTHROUGH_TRAP_HG,
-		trnB.SPIKE_TRAP_HG AS B_SPIKE_TRAP_HG,
-		trnB.SPIKE_REF_VALUE AS B_SPIKE_REF_VALUE,
-		trnB.TOTAL_SAMPLE_VOLUME AS	B_TOTAL_SAMPLE_VOLUME,
-		trnB.REF_FLOW_TO_SAMPLING_RATIO	AS B_REF_FLOW_TO_SAMPLING_RATIO,
-		trnB.HG_CONCENTRATION AS B_HG_CONCENTRATION,
-		trnB.PERCENT_BREAKTHROUGH AS B_PERCENT_BREAKTHROUGH,
-		trnB.PERCENT_SPIKE_RECOVERY	AS B_PERCENT_SPIKE_RECOVERY,
-		trnB.SAMPLING_RATIO_TEST_RESULT_CD AS B_SAMPLING_RATIO_TEST_RESULT_CD,
-		trnB.POST_LEAK_TEST_RESULT_CD AS B_POST_LEAK_TEST_RESULT_CD,
-		trnB.TRAIN_QA_STATUS_CD	AS B_TRAIN_QA_STATUS_CD,
-		trnB.SAMPLE_DAMAGE_EXPLANATION AS B_SAMPLE_DAMAGE_EXPLANATION,
-		CASE 
-			WHEN hr.HOUR_ID IS NULL THEN NULL
-			ELSE ts.ERROR_CODES
-		END AS ERROR_CODES
-	FROM temp_hourly_test_errors ts
-	INNER JOIN camdecmps.SORBENT_TRAP trp 
-		ON ts.MON_LOC_ID=trp.MON_LOC_ID AND trp.RPT_PERIOD_ID=ts.RPT_PERIOD_ID 
-		AND trp.BEGIN_DATE=ts.BEGIN_DATE AND trp.BEGIN_HOUR=ts.BEGIN_HOUR
-	INNER JOIN camdecmps.MONITOR_SYSTEM s 
-		ON trp.MON_SYS_ID=s.MON_SYS_ID
-	LEFT OUTER JOIN temp_hour_rules hr 
-		ON hr.HOUR_ID = ts.HOUR_ID
-	LEFT OUTER JOIN (
-		SELECT DISTINCT 
-			TRAP_ID, MIN(COMPONENT_IDENTIFIER) AS ATrainID, MAX(COMPONENT_IDENTIFIER) AS BTrainID
-		FROM train
-		GROUP BY TRAP_ID
-	) AS grouptrn ON trp.TRAP_ID=grouptrn.TRAP_ID
-	LEFT OUTER JOIN train trnA 
-		ON trnA.TRAP_ID=grouptrn.TRAP_ID AND trnA.COMPONENT_IDENTIFIER=grouptrn.ATrainID
-	LEFT OUTER JOIN train trnB 
-		ON trnB.TRAP_ID=grouptrn.TRAP_ID AND trnB.COMPONENT_IDENTIFIER=grouptrn.BTrainID;
+    DELETE
+      FROM  camdecmps.EMISSION_VIEW_MATSSORBENT
+     WHERE  MON_PLAN_ID = vmonplanid
+       AND  RPT_PERIOD_ID = vrptperiodid;    
+    INSERT
+      INTO  camdecmps.EMISSION_VIEW_MATSSORBENT
+            (                MON_PLAN_ID,                MON_LOC_ID,                RPT_PERIOD_ID,                SYSTEM_IDENTIFIER,                date_hour,                end_date_time,                PAIRED_TRAP_AGREEMENT,                ABSOLUTE_DIFFERENCE_IND,                MODC_CD,                HG_CONCENTRATION,                RATA_IND,                SORBENT_TRAP_APS_CD,
+                -- Sampling Train A                A_COMPONENT_ID,                A_SORBENT_TRAP_SERIAL_NUMBER,                A_MAIN_TRAP_HG,                A_BREAKTHROUGH_TRAP_HG,                A_SPIKE_TRAP_HG,                A_SPIKE_REF_VALUE,                A_TOTAL_SAMPLE_VOLUME,                A_REF_FLOW_TO_SAMPLING_RATIO,                A_HG_CONCENTRATION,                A_PERCENT_BREAKTHROUGH,                A_PERCENT_SPIKE_RECOVERY,                A_SAMPLING_RATIO_TEST_RESULT_CD,                A_POST_LEAK_TEST_RESULT_CD,                A_TRAIN_QA_STATUS_CD,                A_SAMPLE_DAMAGE_EXPLANATION,
+                -- Sampling Train B                B_COMPONENT_ID,                B_SORBENT_TRAP_SERIAL_NUMBER,                B_MAIN_TRAP_HG,                B_BREAKTHROUGH_TRAP_HG,                B_SPIKE_TRAP_HG,                B_SPIKE_REF_VALUE,                B_TOTAL_SAMPLE_VOLUME,                B_REF_FLOW_TO_SAMPLING_RATIO,                B_HG_CONCENTRATION,                B_PERCENT_BREAKTHROUGH,                B_PERCENT_SPIKE_RECOVERY,                B_SAMPLING_RATIO_TEST_RESULT_CD,                B_POST_LEAK_TEST_RESULT_CD,                B_TRAIN_QA_STATUS_CD,                B_SAMPLE_DAMAGE_EXPLANATION,                ERROR_CODES            )    SELECT  lst.Mon_Plan_Id,
+            lst.Mon_Loc_Id,
+            lst.Rpt_Period_Id,
+            lst.System_Identifier,
+            lst.Date_Hour,
+            lst.End_Date_Hour,
+            lst.Paired_Trap_Agreement,
+            lst.Absolute_Difference_Ind,
+            lst.Modc_Cd,
+            lst.Hg_Concentration,
+            lst.Rata_Ind,
+            lst.Sorbent_Trap_Aps_Cd,
+            -- Sampling Train A
+            cpa.Component_Identifier AS A_Component_Id,
+            tra.Sorbent_Trap_Serial_Number AS A_Sorbent_Trap_Serial_Number,
+            tra.Main_Trap_Hg AS A_Main_Trap_Hg,
+            tra.Breakthrough_Trap_Hg AS A_Breakthrough_Trap_Hg,
+            tra.Spike_Trap_Hg AS A_Spike_Trap_Hg,
+            tra.Spike_Ref_Value AS A_Spike_Ref_Value,
+            tra.Total_Sample_Volume AS A_Total_Sample_Volume,
+            tra.Ref_Flow_To_Sampling_Ratio AS A_Ref_Flow_To_Sampling_Ratio,
+            tra.Hg_Concentration AS A_Hg_Concentration,
+            tra.Percent_Breakthrough AS A_Percent_Breakthrough,
+            tra.Percent_Spike_Recovery AS A_Percent_Spike_Recovery,
+            tra.Sampling_Ratio_Test_Result_Cd AS A_Sampling_Ratio_Test_Result_Cd,
+            tra.Post_Leak_Test_Result_Cd AS A_Post_Leak_Test_Result_Cd,
+            tra.Train_Qa_Status_Cd AS A_Train_Qa_Status_Cd,
+            tra.Sample_Damage_Explanation AS A_Sample_Damage_Explanation,
+            -- Sampling Train B
+            cpb.Component_Identifier AS B_Component_Id,
+            trb.Sorbent_Trap_Serial_Number AS B_Sorbent_Trap_Serial_Number,
+            trb.Main_Trap_Hg AS B_Main_Trap_Hg,
+            trb.Breakthrough_Trap_Hg AS B_Breakthrough_Trap_Hg,
+            trb.Spike_Trap_Hg AS B_Spike_Trap_Hg,
+            trb.Spike_Ref_Value AS B_Spike_Ref_Value,
+            trb.Total_Sample_Volume AS B_Total_Sample_Volume,
+            trb.Ref_Flow_To_Sampling_Ratio AS B_Ref_Flow_To_Sampling_Ratio,
+            trb.Hg_Concentration AS B_Hg_Concentration,
+            trb.Percent_Breakthrough AS B_Percent_Breakthrough,
+            trb.Percent_Spike_Recovery AS B_Percent_Spike_Recovery,
+            trb.Sampling_Ratio_Test_Result_Cd AS B_Sampling_Ratio_Test_Result_Cd,
+            trb.Post_Leak_Test_Result_Cd AS B_Post_Leak_Test_Result_Cd,
+            trb.Train_Qa_Status_Cd AS B_Train_Qa_Status_Cd,
+            trb.Sample_Damage_Explanation AS B_Sample_Damage_Explanation,
+            lst.Error_Codes
+      FROM  (
+                SELECT  sel.Mon_Plan_Id,
+                        sel.Rpt_Period_Id,
+                        sel.Mon_Loc_Id,
+                        sys.System_Identifier,
+                        camdecmps.FORMAT_DATE_HOUR( trp.Begin_Date, trp.Begin_Hour, null ) AS Date_Hour,
+                        camdecmps.FORMAT_DATE_HOUR( trp.End_Date, trp.End_Hour, null ) AS End_Date_Hour,
+                        trp.Paired_Trap_Agreement,
+                        trp.Absolute_Difference_Ind,
+                        trp.Modc_Cd,
+                        trp.Hg_Concentration,
+                        trp.Rata_Ind,
+                        trp.Sorbent_Trap_Aps_Cd,
+                        (
+                            SELECT  trn.Trap_Train_Id
+                              FROM  (
+                                        SELECT  sbt.Trap_Id,
+                                                min( sbc.Component_Identifier ) as Component_Identifier
+                                          FROM  camdecmps.SAMPLING_TRAIN sbt
+                                                JOIN CAMDECMPS.COMPONENT sbc
+                                                  ON sbc.Component_Id = sbt.Component_Id
+                                         WHERE  sbt.Trap_Id = trp.Trap_Id
+                                         GROUP
+                                            BY  sbt.Trap_Id
+                                    ) sub
+                                    JOIN camdecmps.SAMPLING_TRAIN trn
+                                      ON trn.Trap_Id = sub.Trap_Id
+                                    JOIN camdecmps.COMPONENT cmp
+                                      ON cmp.Component_Id = trn.Component_Id
+                                     AND cmp.Component_Identifier = sub.Component_Identifier
+                        ) as Min_Trap_Train_Id,
+                        (
+                            SELECT  trn.Trap_Train_Id
+                              FROM  (
+                                        SELECT  sbt.Trap_Id,
+                                                max( sbc.Component_Identifier ) as Component_Identifier
+                                          FROM  camdecmps.SAMPLING_TRAIN sbt
+                                                JOIN CAMDECMPS.COMPONENT sbc
+                                                  ON sbc.Component_Id = sbt.Component_Id
+                                         WHERE  sbt.Trap_Id = trp.Trap_Id
+                                         GROUP
+                                            BY  sbt.Trap_Id
+                                    ) sub
+                                    JOIN camdecmps.SAMPLING_TRAIN trn
+                                      ON trn.Trap_Id = sub.Trap_Id
+                                    JOIN camdecmps.COMPONENT cmp
+                                      ON cmp.Component_Id = trn.Component_Id
+                                     AND cmp.Component_Identifier = sub.Component_Identifier
+                        ) as Max_Trap_Train_Id,
+                        (
+                            SELECT  CASE WHEN max( coalesce( sev.Severity_Level, 0 ) ) > 0 THEN 'view errors' ELSE null END
+                              FROM  camdecmps.EMISSION_EVALUATION ems
+                                    JOIN camdecmpsaux.CHECK_LOG chl
+                                      ON chl.Chk_Session_Id = ems.Chk_Session_Id
+                                     AND chl.Mon_Loc_Id = sel.Mon_Loc_Id
+                                     -- Overlaps Trap
+                                     AND ( chl.Op_Begin_Date < trp.End_Date or chl.Op_Begin_Date = trp.End_Date AND chl.Op_Begin_Hour <= trp.End_Hour )
+                                     AND ( chl.Op_End_Date > trp.Begin_Date or chl.Op_End_Date = trp.Begin_Date AND chl.Op_End_Hour >= trp.Begin_Hour )
+                                    JOIN camdecmpsmd.RULE_CHECK rul
+                                      ON rul.Rule_Check_Id = chl.Rule_Check_Id
+                                     AND rul.Category_Cd like 'ST%'
+                                    LEFT JOIN camdecmpsmd.SEVERITY_CODE sev
+                                      ON sev.Severity_Cd = chl.Severity_Cd
+                             WHERE  ems.Mon_Plan_Id = sel.Mon_Plan_Id
+                               AND  ems.Rpt_Period_Id = sel.Rpt_Period_Id
+                        ) as Error_Codes
+                  FROM  (
+                            SELECT  mpl.Mon_Plan_Id,
+                                    prd.Rpt_Period_Id,
+                                    mpl.Mon_Loc_Id
+                              FROM  camdecmps.MONITOR_PLAN_LOCATION mpl,
+                                    camdecmpsmd.REPORTING_PERIOD prd
+                             WHERE  mpl.Mon_Plan_Id = vmonplanid        --PARAMETER
+                               AND  prd.Rpt_Period_Id = vrptperiodid    --PARAMETER
+                        ) sel
+                        JOIN camdecmps.SORBENT_TRAP trp
+                          ON trp.Mon_Loc_Id = sel.Mon_Loc_Id
+                         AND trp.Rpt_Period_Id = sel.Rpt_Period_Id
+                        JOIN camdecmps.MONITOR_SYSTEM sys
+                          ON sys.Mon_Sys_Id = trp.Mon_Sys_Id
+            ) lst
+            LEFT JOIN camdecmps.SAMPLING_TRAIN tra
+              ON tra.Trap_Train_Id = lst.Min_Trap_Train_Id
+            LEFT JOIN camdecmps.COMPONENT cpa
+              ON cpa.Component_Id = tra.Component_Id
+            LEFT JOIN camdecmps.SAMPLING_TRAIN trb
+              ON trb.Trap_Train_Id = lst.Max_Trap_Train_Id
+            LEFT JOIN camdecmps.COMPONENT cpb
+              ON cpb.Component_Id = trb.Component_Id;
 
   CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'MATSSORBENT');
 END
