@@ -109,7 +109,7 @@ BEGIN
                                      AND cmp.Component_Identifier = sub.Component_Identifier
                         ) as Max_Trap_Train_Id,
                         (
-                            SELECT  CASE WHEN max( coalesce( sev.Severity_Level, 0 ) ) > 0 THEN 'view errors' ELSE null END
+                            SELECT  CASE WHEN max( coalesce( sev.Severity_Level, 0 ) ) > 0 THEN 'Y' ELSE null END
                               FROM  camdecmps.EMISSION_EVALUATION ems
                                     JOIN camdecmpsaux.CHECK_LOG chl
                                       ON chl.Chk_Session_Id = ems.Chk_Session_Id
