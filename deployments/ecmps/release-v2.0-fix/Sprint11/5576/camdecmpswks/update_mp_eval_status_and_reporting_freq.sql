@@ -74,7 +74,7 @@ BEGIN
                         JOIN camd.UNIT_PROGRAM AS UP USING(UNIT_ID)
                         JOIN camdmd.PROGRAM_CODE AS PC USING(PRG_CD)
                     WHERE 
-                        AND PC.OS_IND <> 1
+                        PC.OS_IND <> 1
                         AND UP.UNIT_ID = par_V_UNIT_ID 
                         AND MP.END_RPT_PERIOD_ID IS NULL
                 ) AS UMCBD ON MPRF.MON_PLAN_ID = UMCBD.MON_PLAN_ID
