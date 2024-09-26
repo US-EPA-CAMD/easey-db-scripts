@@ -80,12 +80,14 @@ BEGIN
                                           FROM  camdecmps.SAMPLING_TRAIN sbt
                                                 JOIN CAMDECMPS.COMPONENT sbc
                                                   ON sbc.Component_Id = sbt.Component_Id
-                                         WHERE  sbt.Trap_Id = trp.Trap_Id
+                                         WHERE  sbt.Rpt_Period_Id = sel.Rpt_Period_Id
+                                           AND  sbt.Trap_Id = trp.Trap_Id
                                          GROUP
                                             BY  sbt.Trap_Id
                                     ) sub
                                     JOIN camdecmps.SAMPLING_TRAIN trn
-                                      ON trn.Trap_Id = sub.Trap_Id
+                                      ON trn.Rpt_Period_Id = sel.Rpt_Period_Id
+                                     AND trn.Trap_Id = sub.Trap_Id
                                     JOIN camdecmps.COMPONENT cmp
                                       ON cmp.Component_Id = trn.Component_Id
                                      AND cmp.Component_Identifier = sub.Component_Identifier
@@ -98,12 +100,14 @@ BEGIN
                                           FROM  camdecmps.SAMPLING_TRAIN sbt
                                                 JOIN CAMDECMPS.COMPONENT sbc
                                                   ON sbc.Component_Id = sbt.Component_Id
-                                         WHERE  sbt.Trap_Id = trp.Trap_Id
+                                         WHERE  sbt.Rpt_Period_Id = sel.Rpt_Period_Id
+                                           AND  sbt.Trap_Id = trp.Trap_Id
                                          GROUP
                                             BY  sbt.Trap_Id
                                     ) sub
                                     JOIN camdecmps.SAMPLING_TRAIN trn
-                                      ON trn.Trap_Id = sub.Trap_Id
+                                      ON trn.Rpt_Period_Id = sel.Rpt_Period_Id
+                                     AND trn.Trap_Id = sub.Trap_Id
                                     JOIN camdecmps.COMPONENT cmp
                                       ON cmp.Component_Id = trn.Component_Id
                                      AND cmp.Component_Identifier = sub.Component_Identifier
@@ -135,20 +139,21 @@ BEGIN
                                AND  prd.Rpt_Period_Id = vrptperiodid    --PARAMETER
                         ) sel
                         JOIN camdecmps.SORBENT_TRAP trp
-                          ON trp.Mon_Loc_Id = sel.Mon_Loc_Id
-                         AND trp.Rpt_Period_Id = sel.Rpt_Period_Id
+                          ON trp.Rpt_Period_Id = sel.Rpt_Period_Id
+                         AND trp.Mon_Loc_Id = sel.Mon_Loc_Id
                         JOIN camdecmps.MONITOR_SYSTEM sys
                           ON sys.Mon_Sys_Id = trp.Mon_Sys_Id
             ) lst
             LEFT JOIN camdecmps.SAMPLING_TRAIN tra
-              ON tra.Trap_Train_Id = lst.Min_Trap_Train_Id
+              ON tra.Rpt_Period_Id = lst.Rpt_Period_Id
+             AND tra.Trap_Train_Id = lst.Min_Trap_Train_Id
             LEFT JOIN camdecmps.COMPONENT cpa
               ON cpa.Component_Id = tra.Component_Id
             LEFT JOIN camdecmps.SAMPLING_TRAIN trb
-              ON trb.Trap_Train_Id = lst.Max_Trap_Train_Id
+              ON trb.Rpt_Period_Id = lst.Rpt_Period_Id
+             AND trb.Trap_Train_Id = lst.Max_Trap_Train_Id
             LEFT JOIN camdecmps.COMPONENT cpb
               ON cpb.Component_Id = trb.Component_Id;
-
   CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'MATSSORBENT');
 END
 $procedure$
