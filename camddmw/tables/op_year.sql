@@ -2,8 +2,7 @@ CREATE TABLE IF NOT EXISTS camddmw.op_year
 (
   op_year  numeric(4,0) NOT NULL,
   archive_ind  numeric(1,0) NOT NULL default 0,
-  hourly_data_ind numeric(1,0) NOT NULL default 1,
-CONSTRAINT pk_op_year PRIMARY KEY (op_year)
+  hourly_data_ind numeric(1,0) NOT NULL default 1
 );
 
 COMMENT ON TABLE camddmw.op_year
