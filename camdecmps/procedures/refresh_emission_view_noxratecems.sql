@@ -6,7 +6,17 @@ CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_noxratecems
  LANGUAGE plpgsql
 AS $procedure$
 DECLARE 
-BEGIN
+    monlocids text[];
+BEGIN    
+    select  array
+            (
+                select  MON_LOC_ID
+                  from  camdecmps.MONITOR_PLAN_LOCATION
+                 where  MON_PLAN_ID = vmonplanid
+            )
+      into  monLocIds;
+    
+    
     RAISE NOTICE 'Deleting existing records...';
 
 	DELETE FROM camdecmps.EMISSION_VIEW_NOXRATECEMS 	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
@@ -147,7 +157,7 @@ BEGIN
                                     segment_num,
                                     modc_cd
                               from  camdecmps.DERIVED_HRLY_VALUE
-                             where  mon_loc_id = any( ARRAY[ '1295', '1296', '5891' ] )
+                             where  mon_loc_id = any( monLocIds )
                                and  rpt_period_id = 123
                                and  parameter_cd = 'NOXR'
                         ) noxr
@@ -161,7 +171,7 @@ BEGIN
                                     rpt_period_id,
                                     calc_adjusted_hrly_value
                               from  camdecmps.DERIVED_HRLY_VALUE
-                             where  mon_loc_id = any( ARRAY[ '1295', '1296', '5891' ] )
+                             where  mon_loc_id = any( monLocIds )
                                and  rpt_period_id = 123
                                and  parameter_cd = 'HI'
                         ) hi
@@ -177,7 +187,7 @@ BEGIN
                                     adjusted_hrly_value,
                                     calc_adjusted_hrly_value
                               from  camdecmps.DERIVED_HRLY_VALUE
-                             where  mon_loc_id = any( ARRAY[ '1295', '1296', '5891' ] )
+                             where  mon_loc_id = any( monLocIds )
                                and  rpt_period_id = 123
                                and  parameter_cd = 'NOX'
                         ) nox
@@ -191,14 +201,14 @@ BEGIN
                                     rpt_period_id,
                                     modc_cd
                               from  camdecmps.DERIVED_HRLY_VALUE
-                             where  mon_loc_id = any( ARRAY[ '1295', '1296', '5891' ] )
+                             where  mon_loc_id = any( monLocIds )
                                and  rpt_period_id = 123
                                and  parameter_cd = 'H2O'
                         ) h2o
                           on h2o.hour_id = hod.hour_id
                          and h2o.mon_loc_id = hod.mon_loc_id
                          and h2o.rpt_period_id = hod.rpt_period_id
-                 where  hod.MON_LOC_ID = any( ARRAY[ '1295', '1296', '5891' ] )
+                 where  hod.MON_LOC_ID = any( monLocIds )
                    and  hod.RPT_PERIOD_ID = 123
             ) dhv
               ON dhv.HOUR_ID = hod.HOUR_ID
@@ -229,7 +239,7 @@ BEGIN
                                     unadjusted_hrly_value,
                                     modc_cd
                               from  camdecmps.MONITOR_HRLY_VALUE
-                             where  mon_loc_id = any( ARRAY[ '1295', '1296', '5891' ] )
+                             where  mon_loc_id = any( monLocIds )
                                and  rpt_period_id = 123
                                and  parameter_cd = 'NOXC'
                                and  modc_cd not in ( '47', '48' )
@@ -245,7 +255,7 @@ BEGIN
                                     unadjusted_hrly_value,
                                     modc_cd
                               from  camdecmps.MONITOR_HRLY_VALUE
-                             where  mon_loc_id = any( ARRAY[ '1295', '1296', '5891' ] )
+                             where  mon_loc_id = any( monLocIds )
                                and  rpt_period_id = 123
                                and  parameter_cd = 'CO2C'
                                and  modc_cd not in ( '47', '48' )
@@ -260,7 +270,7 @@ BEGIN
                                     rpt_period_id,
                                     modc_cd
                               from  camdecmps.MONITOR_HRLY_VALUE
-                             where  mon_loc_id = any( ARRAY[ '1295', '1296', '5891' ] )
+                             where  mon_loc_id = any( monLocIds )
                                and  rpt_period_id = 123
                                and  parameter_cd = 'H2O'
                         ) h2o
@@ -275,7 +285,7 @@ BEGIN
                                     unadjusted_hrly_value,
                                     modc_cd
                               from  camdecmps.MONITOR_HRLY_VALUE
-                             where  mon_loc_id = any( ARRAY[ '1295', '1296', '5891' ] )
+                             where  mon_loc_id = any( monLocIds )
                                and  rpt_period_id = 123
                                and  parameter_cd = 'O2C'
                                and  moisture_basis = 'D'
@@ -292,7 +302,7 @@ BEGIN
                                     unadjusted_hrly_value,
                                     modc_cd
                               from  camdecmps.MONITOR_HRLY_VALUE
-                             where  mon_loc_id = any( ARRAY[ '1295', '1296', '5891' ] )
+                             where  mon_loc_id = any( monLocIds )
                                and  rpt_period_id = 123
                                and  parameter_cd = 'O2C'
                                and  moisture_basis = 'W'
@@ -301,7 +311,7 @@ BEGIN
                           on o2c_w.hour_id = hod.hour_id
                          and o2c_w.mon_loc_id = hod.mon_loc_id
                          and o2c_w.rpt_period_id = hod.rpt_period_id
-                 where  hod.MON_LOC_ID = any( ARRAY[ '1295', '1296', '5891' ] )
+                 where  hod.MON_LOC_ID = any( monLocIds )
                    and  hod.RPT_PERIOD_ID = 123
             ) mhv
               ON mhv.HOUR_ID = hod.HOUR_ID

@@ -77,8 +77,8 @@ DECLAREBEGIN
                         flow.ADJUSTED_HRLY_VALUE AS FLOW_RPT_ADJ_VALUE, 
                         flow.UNADJUSTED_HRLY_VALUE AS FLOW_RPT_UNADJ_VALUE
                   from  (
-                            select  'MDC-4F0130B46ADB4B4F9C2EE0BA4A72D463' as MON_PLAN_ID,
-                                    123 as RPT_PERIOD_ID
+                            select  vmonplanid as MON_PLAN_ID,
+                                    vrptperiodid as RPT_PERIOD_ID
                         ) sel
                         join camdecmps.MONITOR_PLAN_LOCATION mpl
                           on mpl.MON_PLAN_ID = sel.MON_PLAN_ID
