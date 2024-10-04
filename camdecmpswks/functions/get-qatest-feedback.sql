@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS camdecmpswks.get_qatest_feedback(text) CASCADE;
+DROP FUNCTION IF EXISTS camdecmpswks.get_qatest_feedback(text[]) CASCADE;
 
-CREATE OR REPLACE FUNCTION camdecmpswks.get_qatest_feedback(testId text)
+CREATE OR REPLACE FUNCTION camdecmpswks.get_qatest_feedback(testId text[])
 RETURNS TABLE(
     unit_stack_pipe character varying,
     test_type_cd character varying,
@@ -31,6 +31,6 @@ FROM camdecmpswks.test_summary ts
          LEFT OUTER JOIN camdecmpsmd.reporting_period rp ON ts.rpt_period_id = rp.rpt_period_id
          LEFT OUTER JOIN camdecmpswks.component c ON ts.component_id = c.component_id
          LEFT OUTER JOIN camdecmpswks.monitor_system ms ON ts.mon_sys_id = ms.mon_sys_id
-WHERE ts.test_sum_id = ANY(STRING_TO_ARRAY(testId, ','));
+WHERE ts.test_sum_id = ANY(testId);
 END;
 $$;

@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS camdecmpswks.get_qacert_event_feedback(text) CASCADE;
+DROP FUNCTION IF EXISTS camdecmpswks.get_qacert_event_feedback(text[]) CASCADE;
 
-CREATE OR REPLACE FUNCTION camdecmpswks.get_qacert_event_feedback(qceId text)
+CREATE OR REPLACE FUNCTION camdecmpswks.get_qacert_event_feedback(qceId text[])
 RETURNS TABLE(
     unit_stack_pipe character varying,
     qa_cert_event_cd character varying,
@@ -26,6 +26,6 @@ FROM camdecmpswks.qa_cert_event qe
          INNER JOIN camdecmpswks.vw_monitor_location ml ON qe.mon_loc_id = ml.mon_loc_id
          LEFT OUTER JOIN camdecmpswks.component c ON qe.component_id = c.component_id
          LEFT OUTER JOIN camdecmpswks.monitor_system ms ON qe.mon_sys_id = ms.mon_sys_id
-WHERE qe.qa_cert_event_id = ANY(STRING_TO_ARRAY(qceId, ','));
+WHERE qe.qa_cert_event_id = ANY(qceId);
 END;
 $$;
