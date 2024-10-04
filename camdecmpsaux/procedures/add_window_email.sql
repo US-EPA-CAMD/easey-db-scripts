@@ -25,7 +25,7 @@ BEGIN
 	JOIN camdecmps.monitor_plan mp USING(fac_id)
 	WHERE mp.mon_plan_id = v_mon_plan_id;
 	
-	SELECT camdecmpsaux.get_mp_location_list(v_mon_plan_id) INTO LOCATION_LIST;
+	SELECT camdecmps.get_mp_location_list(v_mon_plan_id) INTO LOCATION_LIST;
 	
 	SELECT period_abbreviation INTO PERIOD_ABR FROM camdecmpsmd.reporting_period WHERE rpt_period_id = v_rpt_period_id;
 	
