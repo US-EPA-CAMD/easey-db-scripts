@@ -75,6 +75,6 @@ VALUES
 /***** PARAMETERS *****/
 INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
 VALUES
-    (datatableId, 1, 'teeid', null);
+    (datatableId, 1, 'teeId', null);
 ------------------------------------------------------------------------------------------------
 END $$;
