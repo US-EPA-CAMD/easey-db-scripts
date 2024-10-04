@@ -1,11 +1,8 @@
--- PROCEDURE: camdecmpswks.update_mp_eval_status_and_reporting_freq(numeric, character varying)
+-- PROCEDURE: camdecmpswks.update_mp_eval_status_and_reporting_freq()
 
-DROP PROCEDURE IF EXISTS camdecmpswks.update_mp_eval_status_and_reporting_freq(numeric, character varying);
+DROP PROCEDURE IF EXISTS camdecmpswks.update_mp_eval_status_and_reporting_freq();
 
-CREATE OR REPLACE PROCEDURE camdecmpswks.update_mp_eval_status_and_reporting_freq(
-    par_V_UNIT_ID numeric,
-    par_V_DATA_TYPE_CD character varying
-)
+CREATE OR REPLACE PROCEDURE camdecmpswks.update_mp_eval_status_and_reporting_freq()
 LANGUAGE 'plpgsql'
 AS $BODY$
 DECLARE
@@ -53,147 +50,141 @@ BEGIN
 */
 -----------------------------------------------------------------------------------------------------------------------------
 	--Update this unit's MP to have "Q" as the report freq...
-    IF par_V_DATA_TYPE_CD = 'UNIT_PROGRAM' THEN
-        FOR I IN (
-            SELECT
-                MPRF.MON_PLAN_ID,
-                MPRF.MON_PLAN_RF_ID,
-                (RPB.CALENDAR_YEAR::text || RPB.QUARTER::text)::numeric AS MPRF_BEGIN_YEAR_QTR,
-                UMCBD.YEAR_QTR AS UMCBD_YEAR_QTR
-            FROM camdecmps.MONITOR_PLAN_REPORTING_FREQ AS MPRF
-                JOIN (
-                    SELECT DISTINCT
-                        MP.MON_PLAN_ID, (
-                            SELECT (CALENDAR_YEAR::text || QUARTER::text)::numeric
-                            FROM camdecmpsmd.REPORTING_PERIOD
-                            WHERE UP.UNIT_MONITOR_CERT_BEGIN_DATE BETWEEN BEGIN_DATE AND END_DATE
-                        ) AS YEAR_QTR
-                    FROM camdecmps.MONITOR_PLAN AS MP
-                        JOIN camdecmps.MONITOR_PLAN_LOCATION AS MPL USING(MON_PLAN_ID)
-                        JOIN camdecmps.MONITOR_LOCATION AS ML USING(MON_LOC_ID)
-                        JOIN camd.UNIT_PROGRAM AS UP USING(UNIT_ID)
-                        JOIN camdmd.PROGRAM_CODE AS PC USING(PRG_CD)
-                    WHERE 
-                        PC.OS_IND <> 1
-                        AND UP.UNIT_ID = par_V_UNIT_ID 
-                        AND MP.END_RPT_PERIOD_ID IS NULL
-                ) AS UMCBD ON MPRF.MON_PLAN_ID = UMCBD.MON_PLAN_ID
-                JOIN camdecmpsmd.REPORTING_PERIOD AS RPB
-                    ON MPRF.BEGIN_RPT_PERIOD_ID = RPB.RPT_PERIOD_ID
-                LEFT JOIN camdecmpsmd.REPORTING_PERIOD AS RPE
-                    ON MPRF.END_RPT_PERIOD_ID = RPE.RPT_PERIOD_ID
-            WHERE MPRF.REPORT_FREQ_CD = 'OS' AND (
-                (RPE.CALENDAR_YEAR::text || RPE.QUARTER::text)::numeric > UMCBD.YEAR_QTR OR
-                RPE.CALENDAR_YEAR IS NULL
-            )
-        ) LOOP
+	FOR I IN (
+		SELECT
+			MPRF.MON_PLAN_ID,
+			MPRF.MON_PLAN_RF_ID,
+			(RPB.CALENDAR_YEAR::text || RPB.QUARTER::text)::numeric AS MPRF_BEGIN_YEAR_QTR,
+			UMCBD.YEAR_QTR AS UMCBD_YEAR_QTR
+		FROM camdecmps.MONITOR_PLAN_REPORTING_FREQ AS MPRF
+		JOIN (
+			SELECT DISTINCT
+				ISL.UNIT_ID,
+				MP.MON_PLAN_ID, (
+					SELECT (CALENDAR_YEAR::text || QUARTER::text)::numeric
+					FROM camdecmpsmd.REPORTING_PERIOD
+					WHERE UP.UNIT_MONITOR_CERT_BEGIN_DATE BETWEEN BEGIN_DATE AND END_DATE
+				) AS YEAR_QTR
+			FROM camdecmps.MONITOR_PLAN AS MP
+			JOIN camdecmps.MONITOR_PLAN_LOCATION AS MPL USING(MON_PLAN_ID)
+			JOIN camdecmps.MONITOR_LOCATION AS ML USING(MON_LOC_ID)
+			JOIN camdaux.INVENTORY_STATUS_LOG AS ISL USING(UNIT_ID)
+			JOIN camd.UNIT_PROGRAM AS UP USING(UNIT_ID)
+			JOIN camdmd.PROGRAM_CODE AS PC USING(PRG_CD)
+			WHERE ISL.DATA_TYPE_CD = 'UNIT_PROGRAM' AND PC.OS_IND <> 1
+			AND MP.END_RPT_PERIOD_ID IS NULL
+		) AS UMCBD ON MPRF.MON_PLAN_ID = UMCBD.MON_PLAN_ID
+		JOIN camdecmpsmd.REPORTING_PERIOD AS RPB
+			ON MPRF.BEGIN_RPT_PERIOD_ID = RPB.RPT_PERIOD_ID
+		LEFT JOIN camdecmpsmd.REPORTING_PERIOD AS RPE
+			ON MPRF.END_RPT_PERIOD_ID = RPE.RPT_PERIOD_ID
+		WHERE MPRF.REPORT_FREQ_CD = 'OS' AND (
+			(RPE.CALENDAR_YEAR::text || RPE.QUARTER::text)::numeric > UMCBD.YEAR_QTR OR
+			RPE.CALENDAR_YEAR IS NULL
+		)
+	) LOOP
 
-            IF (I.UMCBD_YEAR_QTR) < I.MPRF_BEGIN_YEAR_QTR THEN
-                --OS record exists entirely after the UMCBD; delete this record
-                DELETE FROM camdecmps.MONITOR_PLAN_REPORTING_FREQ
-                WHERE MON_PLAN_RF_ID = I.MON_PLAN_RF_ID;
+		IF (I.UMCBD_YEAR_QTR) < I.MPRF_BEGIN_YEAR_QTR THEN
+			--OS record exists entirely after the UMCBD; delete this record
+			DELETE FROM camdecmps.MONITOR_PLAN_REPORTING_FREQ
+			WHERE MON_PLAN_RF_ID = I.MON_PLAN_RF_ID;
 
-                DELETE FROM camdecmpswks.MONITOR_PLAN_REPORTING_FREQ
-                WHERE MON_PLAN_RF_ID = I.MON_PLAN_RF_ID;
-            ELSE
-                SELECT RPT_PERIOD_ID INTO V_RPT_PERIOD_ID
-                FROM camdecmpsmd.REPORTING_PERIOD
-                WHERE CALENDAR_YEAR = LEFT(I.UMCBD_YEAR_QTR::text, 4)::numeric - 1
-                AND QUARTER = 4;
+			DELETE FROM camdecmpswks.MONITOR_PLAN_REPORTING_FREQ
+			WHERE MON_PLAN_RF_ID = I.MON_PLAN_RF_ID;
+		ELSE
+			SELECT RPT_PERIOD_ID INTO V_RPT_PERIOD_ID
+			FROM camdecmpsmd.REPORTING_PERIOD
+			WHERE CALENDAR_YEAR = LEFT(I.UMCBD_YEAR_QTR::text, 4)::numeric - 1
+			AND QUARTER = 4;
 
-                -- record overlaps the UMCBD; end this record
-                UPDATE camdecmps.MONITOR_PLAN_REPORTING_FREQ
-                SET END_RPT_PERIOD_ID = V_RPT_PERIOD_ID,
-                    USERID = V_USERID,
-                    UPDATE_DATE = V_CURRENT_DATETIME
-                WHERE MON_PLAN_RF_ID = I.MON_PLAN_RF_ID;
+			-- record overlaps the UMCBD; end this record
+			UPDATE camdecmps.MONITOR_PLAN_REPORTING_FREQ
+			SET END_RPT_PERIOD_ID = V_RPT_PERIOD_ID,
+				USERID = V_USERID,
+				UPDATE_DATE = V_CURRENT_DATETIME
+			WHERE MON_PLAN_RF_ID = I.MON_PLAN_RF_ID;
 
-                UPDATE camdecmpswks.MONITOR_PLAN_REPORTING_FREQ
-                SET END_RPT_PERIOD_ID = V_RPT_PERIOD_ID,
-                    USERID = V_USERID,
-                    UPDATE_DATE = V_CURRENT_DATETIME
-                WHERE MON_PLAN_RF_ID = I.MON_PLAN_RF_ID;
-            END IF;
+			UPDATE camdecmpswks.MONITOR_PLAN_REPORTING_FREQ
+			SET END_RPT_PERIOD_ID = V_RPT_PERIOD_ID,
+				USERID = V_USERID,
+				UPDATE_DATE = V_CURRENT_DATETIME
+			WHERE MON_PLAN_RF_ID = I.MON_PLAN_RF_ID;
+		END IF;
 
-            --add a new Q record starting with the quarter of the UMCBD
-            SELECT RPT_PERIOD_ID INTO V_RPT_PERIOD_ID
-            FROM camdecmpsmd.REPORTING_PERIOD
-            WHERE CALENDAR_YEAR = LEFT(I.UMCBD_YEAR_QTR::text, 4)::numeric
-            AND QUARTER = RIGHT(I.UMCBD_YEAR_QTR::text, 1)::numeric;
+		--add a new Q record starting with the quarter of the UMCBD
+		SELECT RPT_PERIOD_ID INTO V_RPT_PERIOD_ID
+		FROM camdecmpsmd.REPORTING_PERIOD
+		WHERE CALENDAR_YEAR = LEFT(I.UMCBD_YEAR_QTR::text, 4)::numeric
+		AND QUARTER = RIGHT(I.UMCBD_YEAR_QTR::text, 1)::numeric;
 
-            INSERT INTO camdecmps.MONITOR_PLAN_REPORTING_FREQ(
-                MON_PLAN_RF_ID,
-                MON_PLAN_ID,
-                REPORT_FREQ_CD,
-                END_RPT_PERIOD_ID,
-                BEGIN_RPT_PERIOD_ID,
-                USERID,
-                ADD_DATE,
-                UPDATE_DATE
-            )
-            VALUES(
-                V_MPRF_ID,
-                I.MON_PLAN_ID,
-                'Q',
-                NULL,
-                V_RPT_PERIOD_ID,
-                V_USERID,
-                V_CURRENT_DATETIME,
-                NULL
-            );
+		INSERT INTO camdecmps.MONITOR_PLAN_REPORTING_FREQ(
+			MON_PLAN_RF_ID,
+			MON_PLAN_ID,
+			REPORT_FREQ_CD,
+			END_RPT_PERIOD_ID,
+			BEGIN_RPT_PERIOD_ID,
+			USERID,
+			ADD_DATE,
+			UPDATE_DATE
+		)
+		VALUES(
+			V_MPRF_ID,
+			I.MON_PLAN_ID,
+			'Q',
+			NULL,
+			V_RPT_PERIOD_ID,
+			V_USERID,
+			V_CURRENT_DATETIME,
+			NULL
+		);
 
-            INSERT INTO camdecmpswks.MONITOR_PLAN_REPORTING_FREQ(
-                MON_PLAN_RF_ID,
-                MON_PLAN_ID,
-                REPORT_FREQ_CD,
-                END_RPT_PERIOD_ID,
-                BEGIN_RPT_PERIOD_ID,
-                USERID,
-                ADD_DATE,
-                UPDATE_DATE
-            )
-            VALUES(
-                V_MPRF_ID,
-                I.MON_PLAN_ID,
-                'Q',
-                NULL,
-                V_RPT_PERIOD_ID,
-                V_USERID,
-                V_CURRENT_DATETIME,
-                NULL
-            );
+		INSERT INTO camdecmpswks.MONITOR_PLAN_REPORTING_FREQ(
+			MON_PLAN_RF_ID,
+			MON_PLAN_ID,
+			REPORT_FREQ_CD,
+			END_RPT_PERIOD_ID,
+			BEGIN_RPT_PERIOD_ID,
+			USERID,
+			ADD_DATE,
+			UPDATE_DATE
+		)
+		VALUES(
+			V_MPRF_ID,
+			I.MON_PLAN_ID,
+			'Q',
+			NULL,
+			V_RPT_PERIOD_ID,
+			V_USERID,
+			V_CURRENT_DATETIME,
+			NULL
+		);
 
-        END LOOP;
-    END IF;
+		UPDATE camdecmpswks.MONITOR_PLAN
+		SET needs_eval_flg = 'Y',
+			eval_status_cd = 'EVAL',
+			submission_availability_cd = 'GRANTED',
+			userid = V_USERID,
+			update_date = V_CURRENT_DATETIME
+		WHERE MON_PLAN_ID = I.MON_PLAN_ID;
 
-	UPDATE camdecmps.MONITOR_PLAN
-	SET needs_eval_flg = 'Y',
-		eval_status_cd = 'EVAL',
-		submission_availability_cd = 'REQUIRE',
-		userid = V_USERID,
-		update_date = V_CURRENT_DATETIME
-	WHERE mon_plan_id IN (
-		SELECT mon_plan_id FROM camdecmps.monitor_plan mp
-		JOIN camdecmps.monitor_plan_location AS mpl USING(mon_plan_id)
-		JOIN camdecmps.monitor_location AS ml USING(mon_loc_id)
-        WHERE 
-            ml.unit_id = par_V_UNIT_ID
-            AND mp.end_rpt_period_id IS null
-	);
+	END LOOP;
 
 	UPDATE camdecmpswks.MONITOR_PLAN
 	SET needs_eval_flg = 'Y',
 		eval_status_cd = 'EVAL',
-		submission_availability_cd = 'REQUIRE',
+		submission_availability_cd = 'GRANTED',
 		userid = V_USERID,
 		update_date = V_CURRENT_DATETIME
 	WHERE mon_plan_id IN (
-		SELECT mon_plan_id FROM camdecmpswks.monitor_plan mp
-		JOIN camdecmpswks.monitor_plan_location AS mpl USING(mon_plan_id)
-		JOIN camdecmpswks.monitor_location AS ml USING(mon_loc_id)
-        WHERE 
-            ml.unit_id = par_V_UNIT_ID
-            AND mp.end_rpt_period_id IS null
+		SELECT mon_plan_id FROM (
+			SELECT DISTINCT unit_id
+			FROM camdaux.inventory_status_log
+			WHERE data_type_cd IN ('INVENTORY')
+		) AS d
+		JOIN camdecmps.monitor_location AS ml USING(unit_id)
+		JOIN camdecmps.monitor_plan_location AS mpl USING(mon_loc_id)
+		JOIN camdecmps.monitor_plan AS mp USING(mon_plan_id)
+		WHERE mp.end_rpt_period_id IS null
 	);
 END
 $BODY$;
