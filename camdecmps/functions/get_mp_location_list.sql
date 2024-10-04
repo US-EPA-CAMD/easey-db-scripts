@@ -1,8 +1,8 @@
--- FUNCTION: camdecmpsaux.get_mp_location_list(character varying)
+-- FUNCTION: camdecmps.get_mp_location_list(character varying)
 
-DROP FUNCTION IF EXISTS camdecmpsaux.get_mp_location_list(character varying) CASCADE;
+DROP FUNCTION IF EXISTS camdecmps.get_mp_location_list(character varying) CASCADE;
 
-CREATE OR REPLACE FUNCTION camdecmpsaux.get_mp_location_list(
+CREATE OR REPLACE FUNCTION camdecmps.get_mp_location_list(
 	inmonplandid character varying)
     RETURNS text
     LANGUAGE 'plpgsql'
@@ -20,9 +20,9 @@ BEGIN
 	FROM
 	(
 	SELECT MPL.MON_PLAN_ID, COALESCE(U.UNITID, SP.STACK_NAME) as locations
-	FROM camdecmpswks.MONITOR_PLAN_LOCATION MPL
-	JOIN camdecmpswks.MONITOR_LOCATION ML ON MPL.MON_LOC_ID = ML.MON_LOC_ID
-	LEFT JOIN camdecmpswks.STACK_PIPE SP ON ML.STACK_PIPE_ID = SP.STACK_PIPE_ID
+	FROM camdecmps.MONITOR_PLAN_LOCATION MPL
+	JOIN camdecmps.MONITOR_LOCATION ML ON MPL.MON_LOC_ID = ML.MON_LOC_ID
+	LEFT JOIN camdecmps.STACK_PIPE SP ON ML.STACK_PIPE_ID = SP.STACK_PIPE_ID
 	LEFT JOIN camd.UNIT U ON ML.UNIT_ID = U.UNIT_ID
 	WHERE MPL.MON_PLAN_ID = inmonplandid
 	ORDER BY U.UNITID, SP.STACK_NAME
