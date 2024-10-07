@@ -158,7 +158,7 @@ BEGIN
                                     modc_cd
                               from  camdecmps.DERIVED_HRLY_VALUE
                              where  mon_loc_id = any( monLocIds )
-                               and  rpt_period_id = 123
+                               and  rpt_period_id = vrptperiodid
                                and  parameter_cd = 'NOXR'
                         ) noxr
                           on noxr.hour_id = hod.hour_id
@@ -172,7 +172,7 @@ BEGIN
                                     calc_adjusted_hrly_value
                               from  camdecmps.DERIVED_HRLY_VALUE
                              where  mon_loc_id = any( monLocIds )
-                               and  rpt_period_id = 123
+                               and  rpt_period_id = vrptperiodid
                                and  parameter_cd = 'HI'
                         ) hi
                           on hi.hour_id = hod.hour_id
@@ -188,7 +188,7 @@ BEGIN
                                     calc_adjusted_hrly_value
                               from  camdecmps.DERIVED_HRLY_VALUE
                              where  mon_loc_id = any( monLocIds )
-                               and  rpt_period_id = 123
+                               and  rpt_period_id = vrptperiodid
                                and  parameter_cd = 'NOX'
                         ) nox
                           on nox.hour_id = hod.hour_id
@@ -202,14 +202,14 @@ BEGIN
                                     modc_cd
                               from  camdecmps.DERIVED_HRLY_VALUE
                              where  mon_loc_id = any( monLocIds )
-                               and  rpt_period_id = 123
+                               and  rpt_period_id = vrptperiodid
                                and  parameter_cd = 'H2O'
                         ) h2o
                           on h2o.hour_id = hod.hour_id
                          and h2o.mon_loc_id = hod.mon_loc_id
                          and h2o.rpt_period_id = hod.rpt_period_id
                  where  hod.MON_LOC_ID = any( monLocIds )
-                   and  hod.RPT_PERIOD_ID = 123
+                   and  hod.RPT_PERIOD_ID = vrptperiodid
             ) dhv
               ON dhv.HOUR_ID = hod.HOUR_ID
              and dhv.MON_LOC_ID = hod.MON_LOC_ID
@@ -240,7 +240,7 @@ BEGIN
                                     modc_cd
                               from  camdecmps.MONITOR_HRLY_VALUE
                              where  mon_loc_id = any( monLocIds )
-                               and  rpt_period_id = 123
+                               and  rpt_period_id = vrptperiodid
                                and  parameter_cd = 'NOXC'
                                and  modc_cd not in ( '47', '48' )
                         ) noxc
@@ -256,7 +256,7 @@ BEGIN
                                     modc_cd
                               from  camdecmps.MONITOR_HRLY_VALUE
                              where  mon_loc_id = any( monLocIds )
-                               and  rpt_period_id = 123
+                               and  rpt_period_id = vrptperiodid
                                and  parameter_cd = 'CO2C'
                                and  modc_cd not in ( '47', '48' )
                         ) co2c
@@ -271,7 +271,7 @@ BEGIN
                                     modc_cd
                               from  camdecmps.MONITOR_HRLY_VALUE
                              where  mon_loc_id = any( monLocIds )
-                               and  rpt_period_id = 123
+                               and  rpt_period_id = vrptperiodid
                                and  parameter_cd = 'H2O'
                         ) h2o
                           on h2o.hour_id = hod.hour_id
@@ -286,7 +286,7 @@ BEGIN
                                     modc_cd
                               from  camdecmps.MONITOR_HRLY_VALUE
                              where  mon_loc_id = any( monLocIds )
-                               and  rpt_period_id = 123
+                               and  rpt_period_id = vrptperiodid
                                and  parameter_cd = 'O2C'
                                and  moisture_basis = 'D'
                                and  modc_cd not in ( '47', '48' )
@@ -303,7 +303,7 @@ BEGIN
                                     modc_cd
                               from  camdecmps.MONITOR_HRLY_VALUE
                              where  mon_loc_id = any( monLocIds )
-                               and  rpt_period_id = 123
+                               and  rpt_period_id = vrptperiodid
                                and  parameter_cd = 'O2C'
                                and  moisture_basis = 'W'
                                and  modc_cd not in ( '47', '48' )
@@ -312,7 +312,7 @@ BEGIN
                          and o2c_w.mon_loc_id = hod.mon_loc_id
                          and o2c_w.rpt_period_id = hod.rpt_period_id
                  where  hod.MON_LOC_ID = any( monLocIds )
-                   and  hod.RPT_PERIOD_ID = 123
+                   and  hod.RPT_PERIOD_ID = vrptperiodid
             ) mhv
               ON mhv.HOUR_ID = hod.HOUR_ID
              and mhv.MON_LOC_ID = hod.MON_LOC_ID
