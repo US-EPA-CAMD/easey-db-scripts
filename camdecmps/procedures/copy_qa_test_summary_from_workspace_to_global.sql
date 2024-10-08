@@ -969,5 +969,13 @@ ON CONFLICT (on_off_cal_id) DO UPDATE
 		userid = EXCLUDED.userid,
 		add_date = EXCLUDED.add_date,
 		update_date = EXCLUDED.update_date;
+
+	---------------------------------- DELETE WORKSPACE DATA ---------------------------------------------------
+    DELETE FROM camdecmpswks.check_session
+    WHERE chk_session_id = (
+      SELECT chk_session_id FROM camdecmpswks.test_summary WHERE test_sum_id = testSumId
+    );
+
+    DELETE FROM camdecmpswks.test_summary WHERE test_sum_id = testSumId;
 END;
 $BODY$;
