@@ -1,98 +1,125 @@
-CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_dailycal(IN vmonplanid character varying, IN vrptperiodid numeric)
+CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_dailycal
+(
+    IN vmonplanid character varying,
+    IN vrptperiodid NUMERIC
+)
  LANGUAGE plpgsql
 AS $procedure$
 BEGIN
-  RAISE NOTICE 'Loading temp_daily_test_errors...';
-	CALL camdecmps.load_temp_daily_test_errors(vMonPlanId, vRptPeriodId);
+    RAISE NOTICE 'Deleting existing records...';
+
+    DELETE FROM camdecmps.EMISSION_VIEW_DAILYCAL
+    WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
+
+
+    RAISE NOTICE 'Refreshing view data...';
+
+    INSERT 
+      INTO  camdecmps.EMISSION_VIEW_DAILYCAL
+            (
+                MON_PLAN_ID,
+                MON_LOC_ID,
+                RPT_PERIOD_ID,
+                TEST_SUM_ID,
+                COMPONENT_IDENTIFIER,
+                COMPONENT_TYPE_CD,
+                SPAN_SCALE_CD,
+                END_DATETIME,
+                RPT_TEST_RESULT_CD,
+                CALC_TEST_RESULT_CD,
+                APPLICABLE_SPAN_VALUE,
+                UPSCALE_GAS_LEVEL_CD,
+                UPSCALE_INJECTION_DATE,
+                UPSCALE_INJECTION_TIME,
+                UPSCALE_MEASURED_VALUE,
+                UPSCALE_REF_VALUE,
+                RPT_UPSCALE_CE_OR_MEAN_DIFF,
+                RPT_UPSCALE_APS_IND,
+                CALC_UPSCALE_CE_OR_MEAN_DIFF,
+                CALC_UPSCALE_APS_IND,
+                ZERO_INJECTION_DATE,
+                ZERO_INJECTION_TIME,
+                ZERO_MEASURED_VALUE,
+                ZERO_REF_VALUE,
+                RPT_ZERO_CE_OR_MEAN_DIFF,
+                RPT_ZERO_APS_IND,
+                CALC_ZERO_CE_OR_MEAN_DIFF,
+                CALC_ZERO_APS_IND,
+                RPT_ONLINE_OFFLINE_IND,
+                CALC_ONLINE_OFFLINE_IND,
+                UPSCALE_GAS_TYPE_CD,
+                VENDOR_ID,
+                CYLINDER_ID,
+                EXPIRATION_DATE,
+                ERROR_CODES
+            )
+    select  mpl.MON_PLAN_ID, 
+            dts.MON_LOC_ID, 
+            dts.RPT_PERIOD_ID,
+            dts.DAILY_TEST_SUM_ID,
+            cmp.COMPONENT_IDENTIFIER,
+            cmp.COMPONENT_TYPE_CD,
+            dts.SPAN_SCALE_CD,
+            camdecmps.format_date_hour( dts.DAILY_TEST_DATE, dts.DAILY_TEST_HOUR, dts.DAILY_TEST_MIN ) as END_DATETIME,
+            dts.TEST_RESULT_CD as RPT_TEST_RESULT_CD,
+            dts.CALC_TEST_RESULT_CD as CALC_TEST_RESULT_CD,
+            spn.SPAN_VALUE as APPLICABLE_SPAN_VALUE,
+            dcl.UPSCALE_GAS_LEVEL_CD,
+            dcl.UPSCALE_INJECTION_DATE,
+            camdecmps.format_time( dcl.UPSCALE_INJECTION_HOUR, dcl.UPSCALE_INJECTION_MIN ) as UPSCALE_INJECTION_TIME,
+            dcl.UPSCALE_MEASURED_VALUE,
+            dcl.UPSCALE_REF_VALUE,
+            dcl.UPSCALE_CAL_ERROR as RPT_UPSCALE_CE_OR_MEAN_DIFF,
+            dcl.UPSCALE_APS_IND as RPT_UPSCALE_APS_IND,
+            dcl.CALC_UPSCALE_CAL_ERROR as CALC_UPSCALE_CE_OR_MEAN_DIFF,
+            dcl.CALC_UPSCALE_APS_IND,
+            dcl.ZERO_INJECTION_DATE,
+            camdecmps.format_time( dcl.ZERO_INJECTION_HOUR, dcl.ZERO_INJECTION_MIN ) as ZERO_INJECTION_TIME,
+            dcl.ZERO_MEASURED_VALUE,
+            dcl.ZERO_REF_VALUE,
+            dcl.ZERO_CAL_ERROR as RPT_ZERO_CE_OR_MEAN_DIFF,
+            dcl.ZERO_APS_IND as RPT_ZERO_APS_IND,
+            dcl.CALC_ZERO_CAL_ERROR as CALC_ZERO_CE_OR_MEAN_DIFF,
+            dcl.CALC_ZERO_APS_IND,
+            dcl.ONLINE_OFFLINE_IND as RPT_ONLINE_OFFLINE_IND,
+            dcl.CALC_ONLINE_OFFLINE_IND,
+            dcl.UPSCALE_GAS_TYPE_CD,
+            dcl.VENDOR_ID,
+            dcl.CYLINDER_IDENTIFIER,
+            dcl.EXPIRATION_DATE,
+            (
+                select  case when max( coalesce( sev.SEVERITY_LEVEL, 0 ) ) > 0 then 'Y' else NULL end
+                  from  camdecmpsaux.CHECK_LOG chl
+                        left join camdecmpsmd.SEVERITY_CODE sev
+                          on sev.SEVERITY_CD = chl.SEVERITY_CD
+                 where  chl.CHK_SESSION_ID = ems.CHK_SESSION_ID
+                   and  chl.TEST_SUM_ID = dts.DAILY_TEST_SUM_ID
+            ) as ERROR_CODES
+      from  (
+                select  vmonplanid as MON_PLAN_ID,
+                        vrptperiodid as RPT_PERIOD_ID
+            ) sel
+            join camdecmps.EMISSION_EVALUATION ems
+              on ems.MON_PLAN_ID = sel.MON_PLAN_ID
+             and ems.RPT_PERIOD_ID = sel.RPT_PERIOD_ID
+            join camdecmps.MONITOR_PLAN_LOCATION mpl
+              on mpl.MON_PLAN_ID = sel.MON_PLAN_ID
+            join camdecmps.DAILY_TEST_SUMMARY as dts
+              on dts.RPT_PERIOD_ID = sel.RPT_PERIOD_ID
+             and dts.MON_LOC_ID = mpl.MON_LOC_ID
+             and dts.TEST_TYPE_CD = 'DAYCAL'
+            join camdecmps.DAILY_CALIBRATION as dcl
+              on dcl.RPT_PERIOD_ID = dts.RPT_PERIOD_ID
+             and dcl.DAILY_TEST_SUM_ID = dts.DAILY_TEST_SUM_ID
+            left join camdecmps.COMPONENT AS cmp
+              on cmp.COMPONENT_ID = dts.COMPONENT_ID
+            left join camdecmps.MONITOR_SPAN as spn
+              on spn.MON_LOC_ID = dts.MON_LOC_ID
+             and spn.COMPONENT_TYPE_CD = cmp.COMPONENT_TYPE_CD
+             and coalesce( spn.SPAN_SCALE_CD, '' ) = coalesce( dts.SPAN_SCALE_CD, '' )
+             and camdecmps.EMISSIONS_MONITOR_SPAN_ACTIVE( spn.BEGIN_DATE, spn.BEGIN_HOUR, spn.END_DATE, spn.END_HOUR, dts.DAILY_TEST_DATE, dts.DAILY_TEST_HOUR ) = 1;
 
-  RAISE NOTICE 'Deleting existing records...';
-	DELETE FROM camdecmps.EMISSION_VIEW_DAILYCAL
-	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
-
-  RAISE NOTICE 'Refreshing view data...';
-	INSERT INTO camdecmps.EMISSION_VIEW_DAILYCAL(
-		    MON_PLAN_ID,
-		    MON_LOC_ID,
-        RPT_PERIOD_ID,
-        TEST_SUM_ID,
-        COMPONENT_IDENTIFIER,
-		    COMPONENT_TYPE_CD,
-        SPAN_SCALE_CD,
-		    END_DATETIME,
-        RPT_TEST_RESULT_CD,
-        CALC_TEST_RESULT_CD,
-		    APPLICABLE_SPAN_VALUE,
-        UPSCALE_GAS_LEVEL_CD,
-        UPSCALE_INJECTION_DATE,
-        UPSCALE_INJECTION_TIME,
-        UPSCALE_MEASURED_VALUE,
-        UPSCALE_REF_VALUE,
-        RPT_UPSCALE_CE_OR_MEAN_DIFF,
-        RPT_UPSCALE_APS_IND,
-        CALC_UPSCALE_CE_OR_MEAN_DIFF,
-        CALC_UPSCALE_APS_IND,
-        ZERO_INJECTION_DATE,
-        ZERO_INJECTION_TIME,
-        ZERO_MEASURED_VALUE,
-        ZERO_REF_VALUE,
-        RPT_ZERO_CE_OR_MEAN_DIFF,
-        RPT_ZERO_APS_IND,
-        CALC_ZERO_CE_OR_MEAN_DIFF,
-        CALC_ZERO_APS_IND,
-        RPT_ONLINE_OFFLINE_IND,
-        CALC_ONLINE_OFFLINE_IND,
-        UPSCALE_GAS_TYPE_CD,
-        VENDOR_ID,
-        CYLINDER_ID,
-        EXPIRATION_DATE,
-        ERROR_CODES
-	)
-	SELECT
-		DTS.MON_PLAN_ID, 
-		DTS.MON_LOC_ID, 
-		DTS.RPT_PERIOD_ID,
-		DTS.DAILY_TEST_SUM_ID,
-		DTS.COMPONENT_IDENTIFIER,
-		DTS.COMPONENT_TYPE_CD,
-		DTS.SPAN_SCALE_CD,
-		camdecmps.format_date_hour(DTS.END_DATE, null, null) || ' ' || DTS.END_TIME AS END_DATETIME,
-		DTS.TEST_RESULT_CD AS RPT_TEST_RESULT_CD,
-		DTS.CALC_TEST_RESULT_CD AS CALC_TEST_RESULT_CD,
-		MS.SPAN_VALUE AS APPLICABLE_SPAN_VALUE,
-		DC.UPSCALE_GAS_LEVEL_CD,
-		DC.UPSCALE_INJECTION_DATE,
-		camdecmps.format_time( DC.UPSCALE_INJECTION_HOUR, DC.UPSCALE_INJECTION_MIN ) as UPSCALE_INJECTION_TIME,
-		DC.UPSCALE_MEASURED_VALUE,
-		DC.UPSCALE_REF_VALUE,
-		DC.UPSCALE_CAL_ERROR AS RPT_UPSCALE_CE_OR_MEAN_DIFF,
-		DC.UPSCALE_APS_IND AS RPT_UPSCALE_APS_IND,
-		DC.CALC_UPSCALE_CAL_ERROR AS CALC_UPSCALE_CE_OR_MEAN_DIFF,
-		DC.CALC_UPSCALE_APS_IND,
-		DC.ZERO_INJECTION_DATE,
-		camdecmps.format_time( DC.ZERO_INJECTION_HOUR, DC.ZERO_INJECTION_MIN ) as ZERO_INJECTION_TIME,
-		DC.ZERO_MEASURED_VALUE,
-		DC.ZERO_REF_VALUE,
-		DC.ZERO_CAL_ERROR AS RPT_ZERO_CE_OR_MEAN_DIFF,
-		DC.ZERO_APS_IND AS RPT_ZERO_APS_IND,
-		DC.CALC_ZERO_CAL_ERROR AS CALC_ZERO_CE_OR_MEAN_DIFF,
-		DC.CALC_ZERO_APS_IND,
-		DC.ONLINE_OFFLINE_IND AS RPT_ONLINE_OFFLINE_IND,
-		DC.CALC_ONLINE_OFFLINE_IND,
-		DC.UPSCALE_GAS_TYPE_CD,
-		DC.VENDOR_ID,
-		DC.CYLINDER_IDENTIFIER,
-		DC.EXPIRATION_DATE,
-		DTS.ERROR_CODES
-	FROM temp_daily_test_errors AS DTS
-	JOIN camdecmps.DAILY_CALIBRATION AS DC
-		ON DTS.DAILY_TEST_SUM_ID = DC.DAILY_TEST_SUM_ID
-	LEFT JOIN camdecmps.MONITOR_SPAN AS MS
-		ON DTS.MON_LOC_ID = MS.MON_LOC_ID AND DTS.COMPONENT_TYPE_CD = MS.COMPONENT_TYPE_CD AND
-		Coalesce(DTS.SPAN_SCALE_CD,'') = Coalesce(MS.SPAN_SCALE_CD,'') AND
-		camdecmps.EMISSIONS_MONITOR_SPAN_ACTIVE(MS.BEGIN_DATE, MS.BEGIN_HOUR, MS.END_DATE, MS.END_HOUR, DTS.END_DATE, CAST(LEFT(DTS.END_TIME, 2) AS numeric)) = 1
-	WHERE DTS.TEST_TYPE_CD = 'DAYCAL';
-
-  RAISE NOTICE 'Refreshing view counts...';
-  CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'DAILYCAL');
+    RAISE NOTICE 'Refreshing view counts...';
+    CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'DAILYCAL');
 END
 $procedure$
