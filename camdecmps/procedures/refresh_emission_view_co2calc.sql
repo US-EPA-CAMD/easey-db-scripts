@@ -15,26 +15,7 @@ BEGIN
 	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
 
   RAISE NOTICE 'Refreshing view data...';
-	INSERT INTO camdecmps.EMISSION_VIEW_CO2CALC(
-		MON_PLAN_ID,
-		MON_LOC_ID,
-		RPT_PERIOD_ID,
-		DATE_HOUR,
-		OP_TIME,
-		CO2C_MODC,
-		CO2C_PMA,
-		RPT_PCT_O2,
-		PCT_O2_USED,
-		O2_MODC,
-		PCT_H2O_USED,
-		SOURCE_H2O_VALUE,
-		FC_FACTOR,
-		FD_FACTOR,
-		FORMULA_CD,
-		RPT_PCT_CO2,
-		CALC_PCT_CO2,
-		ERROR_CODES
-	)
+	INSERT INTO camdecmps.EMISSION_VIEW_CO2CALC(		MON_PLAN_ID,		MON_LOC_ID,		RPT_PERIOD_ID,		DATE_HOUR,		OP_TIME,		CO2C_MODC,		CO2C_PMA,		RPT_PCT_O2,		PCT_O2_USED,		O2_MODC,		PCT_H2O_USED,		SOURCE_H2O_VALUE,		FC_FACTOR,		FD_FACTOR,		FORMULA_CD,		RPT_PCT_CO2,		CALC_PCT_CO2,		ERROR_CODES	)
 	SELECT
 		hod.MON_PLAN_ID, 
 		hod.MON_LOC_ID, 
@@ -108,7 +89,7 @@ BEGIN
 	) ON dhv.HOUR_ID = hod.HOUR_ID
 		AND dhv.MON_LOC_ID = hod.MON_LOC_ID
 		AND dhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
-	JOIN camdecmps.get_monitor_hourly_values_pivoted(
+	LEFT JOIN camdecmps.get_monitor_hourly_values_pivoted(
 			vmonplanid, vrptperiodid, mhvParamCodes, mhvMoistureParams, mhvMoistureCodes) AS mhv (
 		hour_id character varying,
 		mon_loc_id character varying,
