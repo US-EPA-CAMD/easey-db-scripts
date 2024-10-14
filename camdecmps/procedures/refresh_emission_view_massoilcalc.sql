@@ -1,17 +1,16 @@
-CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_massoilcalc(IN vmonplanid character varying, IN vrptperiodid numeric)
+CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_massoilcalc
+(
+    IN vmonplanid character varying,
+    IN vrptperiodid numeric
+)
  LANGUAGE plpgsql
 AS $procedure$
 DECLARE
-    hpffParamCodes text[] := ARRAY['DENSOIL'];
 BEGIN
-  RAISE NOTICE 'Loading temp_hourly_test_errors...';
-	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+    RAISE NOTICE 'Deleting existing records...';
+    DELETE FROM camdecmps.EMISSION_VIEW_MASSOILCALC	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
 
-  RAISE NOTICE 'Deleting existing records...';
-	DELETE FROM camdecmps.EMISSION_VIEW_MASSOILCALC
-	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
-
-  RAISE NOTICE 'Refreshing view data...';
+    RAISE NOTICE 'Refreshing view data...';
 	INSERT INTO camdecmps.EMISSION_VIEW_MASSOILCALC(
 		MON_PLAN_ID,
 		MON_LOC_ID,
@@ -32,54 +31,58 @@ BEGIN
 		CALC_MASS_OIL_FLOW,
 		ERROR_CODES
 	)
-	SELECT
-		HOD.MON_PLAN_ID, 
-		HOD.MON_LOC_ID, 
-		HOD.RPT_PERIOD_ID,
-		camdecmps.format_date_hour(hod.BEGIN_DATE, hod.BEGIN_HOUR, null),
-		HOD.OP_TIME,
-		COALESCE(MS.SYSTEM_IDENTIFIER, '') AS FUEL_SYS_ID,
-		HFF.FUEL_CD AS OIL_TYPE,
-		HFF.FUEL_USAGE_TIME AS FUEL_USE_TIME,
-		HFF.VOLUMETRIC_FLOW_RATE AS RPT_VOLUMETRIC_OIL_FLOW,
-		HFF.CALC_VOLUMETRIC_FLOW_RATE AS CALC_VOLUMETRIC_OIL_FLOW,
-		HFF.VOLUMETRIC_UOM_CD AS VOLUMETRIC_OIL_FLOW_UOM,
-		HFF.SOD_VOLUMETRIC_CD AS VOLUMETRIC_OIL_FLOW_SODC,
-		HPFF.DENSOIL_PARAM_VAL_FUEL AS OIL_DENSITY,
-		HPFF.DENSOIL_PARAMETER_UOM_CD AS OIL_DENSITY_UOM,
-		HPFF.DENSOIL_SAMPLE_TYPE_CD AS OIL_DENSITY_SAMPLING_TYPE,
-		HFF.MASS_FLOW_RATE AS RPT_MASS_OIL_FLOW,
-		HFF.CALC_MASS_FLOW_RATE AS CALC_MASS_OIL_FLOW,
-		HOD.ERROR_CODES
-	FROM temp_hourly_test_errors AS HOD 
-	JOIN camdecmps.HRLY_FUEL_FLOW HFF 
-		ON HOD.HOUR_ID = HFF.HOUR_ID
-		AND HOD.MON_LOC_ID = HFF.MON_LOC_ID
-		AND HOD.RPT_PERIOD_ID = HFF.RPT_PERIOD_ID
-	JOIN camdecmps.get_hourly_param_fuel_flow_pivoted(
-	  vmonplanid, vrptperiodid, hpffParamCodes
-	) AS hpff (
-		hrly_fuel_flow_id character varying,
-		hour_id character varying,
-		mon_loc_id character varying,
-		rpt_period_id numeric,
-		densoil_hrly_fuel_flow_id character varying,
-		densoil_mon_sys_id character varying,
-		densoil_mon_form_id character varying,
-		densoil_param_val_fuel numeric,
-		densoil_calc_param_val_fuel numeric,
-		densoil_segment_num numeric,
-		densoil_sample_type_cd character varying,
-		densoil_parameter_uom_cd character varying,
-		densoil_operating_condition_cd character varying
-	)   ON hpff.HRLY_FUEL_FLOW_ID = hff.HRLY_FUEL_FLOW_ID
-		AND hpff.HOUR_ID = hff.HOUR_ID
-		AND hpff.MON_LOC_ID = hff.MON_LOC_ID
-		AND hpff.RPT_PERIOD_ID = hff.RPT_PERIOD_ID
-	LEFT JOIN camdecmps.MONITOR_SYSTEM MS 
-		ON HFF.MON_SYS_ID = MS.MON_SYS_ID
-	WHERE HFF.VOLUMETRIC_FLOW_RATE > 0 
-		AND HFF.MASS_FLOW_RATE > 0;
+    select  mpl.MON_PLAN_ID, 
+            hod.MON_LOC_ID, 
+            hod.RPT_PERIOD_ID,
+            camdecmps.format_date_hour( hod.BEGIN_DATE, hod.BEGIN_HOUR, null ) AS DATE_HOUR,
+            hod.OP_TIME,
+            COALESCE( sys.SYSTEM_IDENTIFIER, '' ) AS FUEL_SYS_ID,
+            hff.FUEL_CD AS FUEL_TYPE,
+            hff.FUEL_USAGE_TIME AS FUEL_USE_TIME,
+            hff.VOLUMETRIC_FLOW_RATE AS RPT_VOLUMETRIC_OIL_FLOW,
+            hff.CALC_VOLUMETRIC_FLOW_RATE AS CALC_VOLUMETRIC_OIL_FLOW,
+            hff.VOLUMETRIC_UOM_CD AS VOLUMETRIC_OIL_FLOW_UOM,
+            hff.SOD_VOLUMETRIC_CD AS VOLUMETRIC_OIL_FLOW_SODC,
+            hpff.PARAM_VAL_FUEL AS OIL_DENSITY,
+            hpff.PARAMETER_UOM_CD AS OIL_DENSITY_UOM,
+            hpff.SAMPLE_TYPE_CD AS OIL_DENSITY_SAMPLING_TYPE,
+            hff.MASS_FLOW_RATE AS RPT_MASS_OIL_FLOW,
+            hff.CALC_MASS_FLOW_RATE AS CALC_MASS_OIL_FLOW,
+            (
+                select  case when max( coalesce( sev.SEVERITY_LEVEL, 0 ) ) > 0 then 'Y' else NULL end
+                  from  camdecmpsaux.CHECK_LOG chl
+                        left join camdecmpsmd.SEVERITY_CODE sev
+                          on sev.SEVERITY_CD = chl.SEVERITY_CD
+                 where  chl.CHK_SESSION_ID = ems.CHK_SESSION_ID
+                   and  chl.MON_LOC_ID = hod.MON_LOC_ID
+                   and  ( chl.OP_BEGIN_DATE < hod.BEGIN_DATE or ( chl.OP_BEGIN_DATE = hod.BEGIN_DATE and chl.OP_BEGIN_HOUR <= hod.BEGIN_HOUR ) )
+                   and  ( chl.OP_END_DATE > hod.BEGIN_DATE or ( chl.OP_END_DATE = hod.BEGIN_DATE and chl.OP_END_HOUR >= hod.BEGIN_HOUR ) )
+            ) as ERROR_CODES
+      from  (
+                select  vmonplanid as MON_PLAN_ID,
+                        vrptperiodid as RPT_PERIOD_ID
+            ) sel
+            join camdecmps.MONITOR_PLAN_LOCATION mpl
+              on mpl.MON_PLAN_ID = sel.MON_PLAN_ID
+            join camdecmps.EMISSION_EVALUATION ems
+              on ems.RPT_PERIOD_ID = sel.RPT_PERIOD_ID
+             and ems.MON_PLAN_ID = mpl.MON_PLAN_ID
+            join camdecmps.HRLY_OP_DATA hod 
+              on hod.rpt_period_id = ems.rpt_period_id
+             and hod.mon_loc_id = mpl.mon_loc_id
+            join camdecmps.HRLY_FUEL_FLOW hff
+              on hff.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
+             and hff.MON_LOC_ID = hod.MON_LOC_ID
+             and hff.HOUR_ID = hod.HOUR_ID
+            left join camdecmps.MONITOR_SYSTEM sys
+              on sys.MON_SYS_ID = hff.MON_SYS_ID
+            left join camdecmps.HRLY_PARAM_FUEL_FLOW hpff
+              on hpff.RPT_PERIOD_ID = hff.RPT_PERIOD_ID
+             and hpff.MON_LOC_ID = hff.MON_LOC_ID
+             and hpff.HRLY_FUEL_FLOW_ID = hff.HRLY_FUEL_FLOW_ID
+             and hpff.PARAMETER_CD = 'DENSOIL'
+     where  hff.VOLUMETRIC_FLOW_RATE > 0
+       and  hff.MASS_FLOW_RATE > 0;
 
   RAISE NOTICE 'Refreshing view counts...';
   CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'MASSOILCALC');
