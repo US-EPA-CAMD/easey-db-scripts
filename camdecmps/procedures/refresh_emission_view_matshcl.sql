@@ -1,210 +1,225 @@
-CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_matshcl(IN vmonplanid character varying, IN vrptperiodid numeric)
+CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_matshcl
+(
+    IN vmonplanid character varying,
+    IN vrptperiodid NUMERIC
+)
  LANGUAGE plpgsql
 AS $procedure$
-DECLARE   
-	dhvParamCodes text[] := ARRAY['H2O'];
-    mhvParamCodes text[] := ARRAY['CO2C', 'FLOW', 'H2O'];
-    mhvMoistureParams text[] := ARRAY['O2C'];
-    mhvMoistureCodes text[] := ARRAY['D', 'W'];
+DECLARE
 BEGIN
-  RAISE NOTICE 'Loading temp_hourly_test_errors...';
-	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
-
-  RAISE NOTICE 'Deleting existing records...';
-	DELETE FROM camdecmps.EMISSION_VIEW_MATSHCL
-	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
-
-  RAISE NOTICE 'Refreshing view data...';
-	INSERT INTO camdecmps.EMISSION_VIEW_MATSHCL(
-		MON_PLAN_ID,
-		MON_LOC_ID,
-		RPT_PERIOD_ID,
-		DATE_HOUR,
-		OP_TIME,
-		MATS_LOAD,
-		MATS_STARTUP_SHUTDOWN,
-		HCL_CONC_VALUE,
-		HCL_CONC_MODC_CD,
-		HCL_CONC_PMA,
-		FLOW_RATE,
-		FLOW_MODC,
-		FLOW_PMA,
-		RPT_PCT_DILUENT,
-		DILUENT_PARAMETER,
-		CALC_PCT_DILUENT,
-		DILUENT_MODC,
-		CALC_PCT_H2O,
-		H2O_SOURCE,
-		F_FACTOR,
-		HCL_FORMULA_CD,
-		RPT_HCL_RATE,
-		CALC_HCL_RATE,
-		HCL_UOM,
-		HCL_MODC_CD,
-		ERROR_CODES
-	)
-	SELECT DISTINCT
-		hod.MON_PLAN_ID, 
-		hod.MON_LOC_ID, 
-		hod.RPT_PERIOD_ID, 
-		camdecmps.format_date_hour(hod.BEGIN_DATE, hod.BEGIN_HOUR, null), 
-		hod.OP_TIME, 
-		hod.MATS_LOAD,
-		hod.MATS_STARTUP_SHUTDOWN,
-		mmhv.UNADJUSTED_HRLY_VALUE AS HCL_CONC_VALUE, 
-		mmhv.MODC_CD AS HCL_CONC_MODC_CD,
-		mmhv.PCT_AVAILABLE AS HCL_CONC_PMA,
-		mhv.flow_UNADJUSTED_HRLY_VALUE AS FLOW_RATE,
-		mhv.flow_MODC_CD AS FLOW_MODC,
-		mhv.flow_PCT_AVAILABLE AS FLOW_PMA,
-		CASE
-			WHEN (mdhv.PARAMETER_CD IN ('HCLRE', 'HFRE', 'HGRE' )) THEN NULL
-		    WHEN (mdhv.PARAMETER_CD IN ('HCLRH', 'HFRH', 'HGRH' )) THEN 
-				CASE
-					WHEN mf.EQUATION_CD IN ('19-6', '19-7', '19-8', '19-9') THEN mhv.co2c_UNADJUSTED_HRLY_VALUE
-				  WHEN mf.EQUATION_CD IN ('19-1', '19-4') THEN mhv.o2_d_UNADJUSTED_HRLY_VALUE
-					WHEN mf.EQUATION_CD IN ('19-2', '19-3', '19-3D', '19-5', '19-5D') THEN mhv.o2_w_UNADJUSTED_HRLY_VALUE
-					ELSE NULL
-				END
-			ELSE NULL
-		END AS RPT_PCT_DILUENT,
-		CASE
-			WHEN (mdhv.PARAMETER_CD IN ('HCLRE', 'HFRE', 'HGRE' )) THEN NULL
-		    WHEN (mdhv.PARAMETER_CD IN ('HCLRH', 'HFRH', 'HGRH' )) THEN 
-				CASE
-					WHEN mf.EQUATION_CD IN ('19-6', '19-7', '19-8', '19-9') THEN 'CO2'
-					WHEN mf.EQUATION_CD IN ('19-1', '19-2', '19-3', '19-3D', '19-4', '19-5', '19-5D') THEN 'O2'
-					ELSE NULL
-				END
-			ELSE NULL
-		END AS DILUENT_PARAMETER,
-		mdhv.CALC_PCT_DILUENT AS CALC_PCT_DILUENT,
-		CASE
-			WHEN (mdhv.PARAMETER_CD IN ('HCLRE', 'HFRE', 'HGRE' )) THEN NULL
-		    WHEN (mdhv.PARAMETER_CD IN ('HCLRH', 'HFRH', 'HGRH' )) THEN 
-				CASE
-					WHEN mf.EQUATION_CD IN ('19-6', '19-7', '19-8', '19-9') THEN mhv.co2c_MODC_CD 
-				  WHEN mf.EQUATION_CD IN ('19-1', '19-4') THEN mhv.o2_d_MODC_CD
-					WHEN mf.EQUATION_CD IN ('19-2', '19-3', '19-3D', '19-5', '19-5D') THEN mhv.o2_w_MODC_CD
-					ELSE NULL
-				END
-			 ELSE NULL
-		END AS DILUENT_MODC,
-		mdhv.CALC_PCT_MOISTURE AS CALC_PCT_H2O,
-		CASE 
-			WHEN mdhv.CALC_PCT_MOISTURE IS NULL THEN NULL 
-			WHEN dhv.h2o_MODC_CD IS NOT NULL THEN dhv.h2o_MODC_CD
-			WHEN mhv.h2o_MODC_CD IS NOT NULL THEN mhv.h2o_MODC_CD
-			ELSE 'DF'
-		END AS H2O_SOURCE,
-		CASE
-			WHEN (mdhv.PARAMETER_CD IN ('HCLRE', 'HFRE', 'HGRE' )) THEN NULL
-		    WHEN (mdhv.PARAMETER_CD IN ('HCLRH', 'HFRH', 'HGRH' )) THEN 
-				CASE
-					WHEN mf.EQUATION_CD IN ('19-6', '19-7', '19-8', '19-9') THEN hod.FC_FACTOR
-					WHEN mf.EQUATION_CD IN ('19-1', '19-3', '19-3D', '19-4', '19-5', '19-5D') THEN hod.FD_FACTOR
-				  WHEN mf.EQUATION_CD IN ('19-2') THEN hod.FW_FACTOR
-					ELSE NULL
-				END
-			ELSE NULL
-		END AS F_FACTOR,
-		mf.EQUATION_CD AS HCL_FORMULA_CD,
-		mdhv.UNADJUSTED_HRLY_VALUE AS RPT_HCL_RATE,
-		mdhv.CALC_UNADJUSTED_HRLY_VALUE AS CALC_HCL_RATE,
- 		CASE
-			WHEN mdhv.PARAMETER_CD = 'HGRE' THEN 'lb/GWh'
-			WHEN mdhv.PARAMETER_CD = 'HGRH' THEN 'lb/TBtu'
-			WHEN mdhv.PARAMETER_CD IN ('HCLRE', 'HFRE', 'SO2RE') THEN 'lb/MWh'
-			WHEN mdhv.PARAMETER_CD IN ('HCLRH', 'HFRH', 'SO2RH') THEN 'lb/mmBtu'
-		END AS HCL_UOM,
-		mdhv.MODC_CD HCL_MODC_CD,
-		hod.ERROR_CODES
-	FROM temp_hourly_test_errors AS hod
-	JOIN camdecmps.MATS_MONITOR_HRLY_VALUE AS mmhv 
-		ON mmhv.HOUR_ID = hod.HOUR_ID
-		AND mmhv.MON_LOC_ID = hod.MON_LOC_ID
-		AND mmhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
-		AND mmhv.PARAMETER_CD = 'HCLC'
-	JOIN camdecmps.MATS_DERIVED_HRLY_VALUE AS mdhv
-		ON mdhv.HOUR_ID = hod.HOUR_ID
-		AND mdhv.MON_LOC_ID = hod.MON_LOC_ID
-		AND mdhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
-		AND mdhv.PARAMETER_CD IN ( 'HCLRE', 'HCLRH' )
-	LEFT JOIN camdecmps.get_derived_hourly_values_pivoted(
-			vmonplanid, vrptperiodid, dhvParamCodes
-		) AS dhv (
-			hour_id character varying,
-			mon_loc_id character varying,
-			rpt_period_id numeric,
-			h2o_hour_id character varying,
-			h2o_mon_sys_id character varying,
-			h2o_mon_form_id character varying,
-			h2o_adjusted_hrly_value numeric,
-			h2o_calc_adjusted_hrly_value numeric,
-			h2o_unadjusted_hrly_value numeric,
-			h2o_calc_unadjusted_hrly_value numeric,
-			h2o_applicable_bias_adj_factor numeric,
-			h2o_calc_pct_moisture numeric,
-			h2o_calc_pct_diluent numeric,
-			h2o_pct_available numeric,
-			h2o_segment_num numeric,
-			h2o_operating_condition_cd character varying,
-			h2o_fuel_cd character varying,
-			h2o_modc_cd character varying
-	) ON dhv.HOUR_ID = hod.HOUR_ID
-		AND dhv.MON_LOC_ID = hod.MON_LOC_ID
-		AND dhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
-	LEFT JOIN camdecmps.MONITOR_FORMULA AS mf
-		ON mf.MON_FORM_ID = mdhv.MON_FORM_ID
-	LEFT JOIN camdecmps.get_monitor_hourly_values_pivoted(
-			vmonplanid, vrptperiodid, mhvParamCodes, mhvMoistureParams, mhvMoistureCodes) AS mhv (
-		hour_id character varying,
-		mon_loc_id character varying,
-		rpt_period_id numeric,
-		co2c_hour_id character varying,
-		co2c_adjusted_hrly_value numeric,
-		co2c_calc_adjusted_hrly_value numeric,
-		co2c_unadjusted_hrly_value numeric,
-		co2c_applicable_bias_adj_factor numeric,
-		co2c_pct_available numeric,
-		co2c_moisture_basis character varying,
-		co2c_modc_cd character varying,
-		flow_hour_id character varying,
-		flow_adjusted_hrly_value numeric,
-		flow_calc_adjusted_hrly_value numeric,
-		flow_unadjusted_hrly_value numeric,
-		flow_applicable_bias_adj_factor numeric,
-		flow_pct_available numeric,
-		flow_moisture_basis character varying,
-		flow_modc_cd character varying,
-		h2o_hour_id character varying,
-		h2o_adjusted_hrly_value numeric,
-		h2o_calc_adjusted_hrly_value numeric,
-		h2o_unadjusted_hrly_value numeric,
-		h2o_applicable_bias_adj_factor numeric,
-		h2o_pct_available numeric,
-		h2o_moisture_basis character varying,
-		h2o_modc_cd character varying,
-		o2_d_hour_id character varying,
-		o2_d_adjusted_hrly_value numeric,
-		o2_d_calc_adjusted_hrly_value numeric,
-		o2_d_unadjusted_hrly_value numeric,
-		o2_d_applicable_bias_adj_factor numeric,
-		o2_d_pct_available numeric,
-		o2_d_moisture_basis character varying,
-		o2_d_modc_cd character varying,
-		o2_w_hour_id character varying,
-		o2_w_adjusted_hrly_value numeric,
-		o2_w_calc_adjusted_hrly_value numeric,
-		o2_w_unadjusted_hrly_value numeric,
-		o2_w_applicable_bias_adj_factor numeric,
-		o2_w_pct_available numeric,
-		o2_w_moisture_basis character varying,
-		o2_w_modc_cd character varying
-	)	ON mhv.HOUR_ID = hod.HOUR_ID
-		AND mhv.MON_LOC_ID = hod.MON_LOC_ID
-		AND mhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID;
-
+    RAISE NOTICE 'Deleting existing records...';
+	DELETE FROM camdecmps.EMISSION_VIEW_MATSHCL	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
+
+    RAISE NOTICE 'Refreshing view data...';
+	INSERT INTO camdecmps.EMISSION_VIEW_MATSHCL(		MON_PLAN_ID,		MON_LOC_ID,		RPT_PERIOD_ID,		DATE_HOUR,		OP_TIME,		MATS_LOAD,		MATS_STARTUP_SHUTDOWN,		HCL_CONC_VALUE,		HCL_CONC_MODC_CD,		HCL_CONC_PMA,		FLOW_RATE,		FLOW_MODC,		FLOW_PMA,		RPT_PCT_DILUENT,		DILUENT_PARAMETER,		CALC_PCT_DILUENT,		DILUENT_MODC,		CALC_PCT_H2O,		H2O_SOURCE,		F_FACTOR,		HCL_FORMULA_CD,		RPT_HCL_RATE,		CALC_HCL_RATE,		HCL_UOM,		HCL_MODC_CD,		ERROR_CODES	)    select  dat.MON_PLAN_ID,
+            dat.MON_LOC_ID,
+            dat.RPT_PERIOD_ID,
+            camdecmps.format_date_hour( dat.BEGIN_DATE, dat.BEGIN_HOUR, null ) as DATE_HOUR,
+            dat.OP_TIME,
+            dat.MATS_LOAD,
+            dat.MATS_STARTUP_SHUTDOWN,
+            dat.HCLC_UNADJUSTED_HRLY_VALUE as HCL_CONC_VALUE, 
+            dat.HCLC_MODC_CD as HCL_CONC_MODC_CD,
+            dat.HCLC_PCT_AVAILABLE as HCL_CONC_PMA,
+            dat.FLOW_UNADJUSTED_HRLY_VALUE as FLOW_RATE,
+            dat.FLOW_MODC_CD as FLOW_MODC,
+            dat.FLOW_PCT_AVAILABLE as FLOW_PMA,
+            case 
+                when ( dat.HCLRE_IND = 1 ) then null
+                when ( dat.HCLRH_IND = 1 ) then
+                    case
+                        when dat.HCLRH_FORMULA_CD in ( '19-6', '19-7', '19-8', '19-9' ) then dat.CO2C_UNADJUSTED_HRLY_VALUE
+                        when dat.HCLRH_FORMULA_CD in ( '19-1', '19-4' ) then dat.O2D_UNADJUSTED_HRLY_VALUE
+                        when dat.HCLRH_FORMULA_CD in ( '19-2', '19-3', '19-3D', '19-5', '19-5D' ) then dat.O2W_UNADJUSTED_HRLY_VALUE
+                        else null
+                    end
+                else null
+            end as RPT_PCT_DILUENT,
+            case
+                when ( dat.HCLRE_IND = 1 ) then null
+                when ( dat.HCLRH_IND = 1 ) then
+                    case
+                        when dat.HCLRH_FORMULA_CD in ( '19-6', '19-7', '19-8', '19-9' ) then 'CO2'
+                        when dat.HCLRH_FORMULA_CD in ( '19-1', '19-2', '19-3', '19-3D', '19-4', '19-5', '19-5D' ) then 'O2'
+                        else null
+                    end
+                else null
+            end as DILUENT_PARAMETER,
+            case
+                when ( dat.HCLRE_IND = 1 ) then dat.HCLRE_CALC_PCT_DILUENT
+                when ( dat.HCLRH_IND = 1 ) then dat.HCLRH_CALC_PCT_DILUENT
+            end as CALC_PCT_DILUENT,
+            case
+                when ( dat.HCLRE_IND = 1 ) then null
+                when ( dat.HCLRH_IND = 1 ) then
+                    case
+                        when dat.HCLRH_FORMULA_CD in ( '19-6', '19-7', '19-8', '19-9' ) then dat.CO2C_MODC_CD 
+                        when dat.HCLRH_FORMULA_CD in ( '19-1', '19-4' ) then dat.O2D_MODC_CD
+                        when dat.HCLRH_FORMULA_CD in ( '19-2', '19-3', '19-3D', '19-5', '19-5D' ) then dat.O2W_MODC_CD
+                        else null
+                    end
+                else null
+            end as DILUENT_MODC,
+            case
+                when ( dat.HCLRE_IND = 1 ) then dat.HCLRE_CALC_PCT_MOISTURE
+                when ( dat.HCLRH_IND = 1 ) then dat.HCLRH_CALC_PCT_MOISTURE
+            end as CALC_PCT_H2O,
+            case
+                when ( dat.HCLRE_IND = 1 ) and ( dat.HCLRE_CALC_PCT_MOISTURE is null ) then null
+                when ( dat.HCLRH_IND = 1 ) and ( dat.HCLRH_CALC_PCT_MOISTURE is null ) then null
+                when ( dat.H2O_DHV_MODC_CD is not null ) then dat.H2O_DHV_MODC_CD
+                when ( dat.H2O_MHV_MODC_CD is not null ) then dat.H2O_MHV_MODC_CD
+                else 'DF'
+            end as H2O_SOURCE,
+            case
+                when ( dat.HCLRE_IND = 1 ) then null
+                when ( dat.HCLRH_IND = 1 ) then
+                    case
+                        when dat.HCLRH_FORMULA_CD in ( '19-6', '19-7', '19-8', '19-9' ) then dat.FC_FACTOR
+                        when dat.HCLRH_FORMULA_CD in ( '19-1', '19-3', '19-3D', '19-4', '19-5', '19-5D' ) then dat.FD_FACTOR
+                        when dat.HCLRH_FORMULA_CD in ( '19-2' ) then dat.FW_FACTOR
+                        else null
+                    end
+                else null
+            end as F_FACTOR,
+            case
+                when ( dat.HCLRE_IND = 1 ) then dat.HCLRE_FORMULA_CD
+                when ( dat.HCLRH_IND = 1 ) then dat.HCLRH_FORMULA_CD
+            end as HCL_FORMULA_CD,
+            case
+                when ( dat.HCLRE_IND = 1 ) then dat.HCLRE_UNADJUSTED_HRLY_VALUE
+                when ( dat.HCLRH_IND = 1 ) then dat.HCLRH_UNADJUSTED_HRLY_VALUE
+            end as RPT_HCL_RATE,
+            case
+                when ( dat.HCLRE_IND = 1 ) then dat.HCLRE_CALC_UNADJUSTED_HRLY_VALUE
+                when ( dat.HCLRH_IND = 1 ) then dat.HCLRH_CALC_UNADJUSTED_HRLY_VALUE
+            end as CALC_HCL_RATE,
+            case
+                when ( dat.HCLRE_IND = 1 ) then 'lb/MWh'
+                when ( dat.HCLRH_IND = 1 ) then 'lb/mmBtu'
+            end as HCL_UOM,
+            case
+                when ( dat.HCLRE_IND = 1 ) then dat.HCLRE_MODC_CD
+                when ( dat.HCLRH_IND = 1 ) then dat.HCLRH_MODC_CD
+            end as HCL_MODC_CD,
+            (
+                select  case when max( coalesce( sev.SEVERITY_LEVEL, 0 ) ) > 0 then 'Y' else null end
+                  from  camdecmpsaux.CHECK_LOG chl
+                        left join camdecmpsmd.SEVERITY_CODE sev
+                          on sev.SEVERITY_CD = chl.SEVERITY_CD
+                 where  chl.CHK_SESSION_ID = dat.CHK_SESSION_ID
+                   and  chl.MON_LOC_ID = dat.MON_LOC_ID
+                   and  ( chl.OP_BEGIN_DATE < dat.BEGIN_DATE or ( chl.OP_BEGIN_DATE = dat.BEGIN_DATE and chl.OP_BEGIN_HOUR <= dat.BEGIN_HOUR ) )
+                   and  ( chl.OP_END_DATE > dat.BEGIN_DATE or ( chl.OP_END_DATE = dat.BEGIN_DATE and chl.OP_END_HOUR >= dat.BEGIN_HOUR ) )
+            ) as ERROR_CODES
+      from  (
+                select  mpl.MON_PLAN_ID,
+                        hod.MON_LOC_ID,
+                        hod.RPT_PERIOD_ID,
+                        hod.BEGIN_DATE,
+                        hod.BEGIN_HOUR,
+                        hod.OP_TIME,
+                        hod.MATS_LOAD,
+                        case
+                            when hod.MATS_STARTUP_SHUTDOWN_FLG = 'U' then 'Startup'
+                            when hod.MATS_STARTUP_SHUTDOWN_FLG = 'D' then 'Shutdown'
+                            else hod.MATS_STARTUP_SHUTDOWN_FLG
+                        end as MATS_STARTUP_SHUTDOWN, 
+                        hod.FC_FACTOR,
+                        hod.FD_FACTOR,
+                        hod.FW_FACTOR,
+                        -- HCLRE
+                        max( case when mdv.PARAMETER_CD = 'HCLRE' then 1 else 0 end ) as HCLRE_IND,
+                        max( case when mdv.PARAMETER_CD = 'HCLRE' then mdv.UNADJUSTED_HRLY_VALUE end ) as HCLRE_UNADJUSTED_HRLY_VALUE,
+                        max( case when mdv.PARAMETER_CD = 'HCLRE' then mdv.MODC_CD end ) as HCLRE_MODC_CD,
+                        max( case when mdv.PARAMETER_CD = 'HCLRE' then mdv.CALC_UNADJUSTED_HRLY_VALUE end ) as HCLRE_CALC_UNADJUSTED_HRLY_VALUE,
+                        max( case when mdv.PARAMETER_CD = 'HCLRE' then mdv.CALC_PCT_DILUENT end ) as HCLRE_CALC_PCT_DILUENT,
+                        max( case when mdv.PARAMETER_CD = 'HCLRE' then mdv.CALC_PCT_MOISTURE end ) as HCLRE_CALC_PCT_MOISTURE,
+                        max( case when mdv.PARAMETER_CD = 'HCLRE' then frm.EQUATION_CD end ) as HCLRE_FORMULA_CD,
+                        -- HCLRH
+                        max( case when mdv.PARAMETER_CD = 'HCLRH' then 1 else 0 end ) as HCLRH_IND,
+                        max( case when mdv.PARAMETER_CD = 'HCLRH' then mdv.UNADJUSTED_HRLY_VALUE end ) as HCLRH_UNADJUSTED_HRLY_VALUE,
+                        max( case when mdv.PARAMETER_CD = 'HCLRH' then mdv.MODC_CD end ) as HCLRH_MODC_CD,
+                        max( case when mdv.PARAMETER_CD = 'HCLRH' then mdv.CALC_UNADJUSTED_HRLY_VALUE end ) as HCLRH_CALC_UNADJUSTED_HRLY_VALUE,
+                        max( case when mdv.PARAMETER_CD = 'HCLRH' then mdv.CALC_PCT_DILUENT end ) as HCLRH_CALC_PCT_DILUENT,
+                        max( case when mdv.PARAMETER_CD = 'HCLRH' then mdv.CALC_PCT_MOISTURE end ) as HCLRH_CALC_PCT_MOISTURE,
+                        max( case when mdv.PARAMETER_CD = 'HCLRH' then frm.EQUATION_CD end ) as HCLRH_FORMULA_CD,
+                        -- HCLC
+                        max( case when mmv.PARAMETER_CD = 'HCLC'  then mmv.UNADJUSTED_HRLY_VALUE end ) as HCLC_UNADJUSTED_HRLY_VALUE,
+                        max( case when mmv.PARAMETER_CD = 'HCLC'  then mmv.MODC_CD end ) as HCLC_MODC_CD,
+                        max( case when mmv.PARAMETER_CD = 'HCLC'  then mmv.PCT_AVAILABLE end ) as HCLC_PCT_AVAILABLE,
+                        -- H2O DHV
+                        max( case when dhv.PARAMETER_CD = 'H2O'   then dhv.MODC_CD end ) as H2O_DHV_MODC_CD,
+                        -- CO2C
+                        max( case when mhv.PARAMETER_CD = 'CO2C'  then mhv.UNADJUSTED_HRLY_VALUE end ) as CO2C_UNADJUSTED_HRLY_VALUE,
+                        max( case when mhv.PARAMETER_CD = 'CO2C'  then mhv.MODC_CD end ) as CO2C_MODC_CD,
+                        -- FLOW
+                        max( case when mhv.PARAMETER_CD = 'FLOW'  then mhv.UNADJUSTED_HRLY_VALUE end ) as FLOW_UNADJUSTED_HRLY_VALUE,
+                        max( case when mhv.PARAMETER_CD = 'FLOW'  then mhv.MODC_CD end ) as FLOW_MODC_CD,
+                        max( case when mhv.PARAMETER_CD = 'FLOW'  then mhv.PCT_AVAILABLE end ) as FLOW_PCT_AVAILABLE,
+                        -- H2O MHV
+                        max( case when mhv.PARAMETER_CD = 'H2O'   then mhv.MODC_CD end ) as H2O_MHV_MODC_CD,
+                        -- O2D
+                        max( case when mhv.PARAMETER_CD = 'O2C'   and mhv.MOISTURE_BASIS = 'D' then mhv.UNADJUSTED_HRLY_VALUE end ) as O2D_UNADJUSTED_HRLY_VALUE,
+                        max( case when mhv.PARAMETER_CD = 'O2C'   and mhv.MOISTURE_BASIS = 'D' then mhv.MODC_CD end ) as O2D_MODC_CD,
+                        -- O2W
+                        max( case when mhv.PARAMETER_CD = 'O2C'   and mhv.MOISTURE_BASIS = 'W' then mhv.UNADJUSTED_HRLY_VALUE end ) as O2W_UNADJUSTED_HRLY_VALUE,
+                        max( case when mhv.PARAMETER_CD = 'O2C'   and mhv.MOISTURE_BASIS = 'W' then mhv.MODC_CD end ) as O2W_MODC_CD,
+                        -- Error Information
+                        ems.CHK_SESSION_ID
+                  from  (
+                            select  vmonplanid as MON_PLAN_ID,
+                                    vrptperiodid as RPT_PERIOD_ID
+                        ) sel
+                        join camdecmps.MONITOR_PLAN_LOCATION mpl
+                          on mpl.MON_PLAN_ID = sel.MON_PLAN_ID
+                        join camdecmps.EMISSION_EVALUATION ems
+                          on ems.RPT_PERIOD_ID = sel.RPT_PERIOD_ID
+                         and ems.MON_PLAN_ID = mpl.MON_PLAN_ID
+                        join camdecmps.HRLY_OP_DATA hod 
+                          on hod.rpt_period_id = ems.rpt_period_id
+                         and hod.mon_loc_id = mpl.mon_loc_id
+                        join camdecmps.MATS_DERIVED_HRLY_VALUE mdv
+                          on mdv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
+                         and mdv.MON_LOC_ID = hod.MON_LOC_ID
+                         and mdv.HOUR_ID = hod.HOUR_ID
+                         and mdv.PARAMETER_CD in ( 'HCLRE', 'HCLRH' )
+                        join camdecmps.MATS_MONITOR_HRLY_VALUE mmv
+                          on mmv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
+                         and mmv.MON_LOC_ID = hod.MON_LOC_ID
+                         and mmv.HOUR_ID = hod.HOUR_ID
+                         and mmv.PARAMETER_CD = 'HCLC'
+                        left join camdecmps.DERIVED_HRLY_VALUE dhv
+                          on dhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
+                         and dhv.MON_LOC_ID = hod.MON_LOC_ID
+                         and dhv.HOUR_ID = hod.HOUR_ID
+                         and dhv.PARAMETER_CD = 'H2O'
+                        left join camdecmps.MONITOR_HRLY_VALUE mhv
+                          on mhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
+                         and mhv.MON_LOC_ID = hod.MON_LOC_ID
+                         and mhv.HOUR_ID = hod.HOUR_ID
+                         and mhv.PARAMETER_CD in ( 'CO2C', 'FLOW', 'H2O', 'O2C' )
+                         and mhv.MODC_CD not in ( '47', '48' )
+                        left join camdecmps.MONITOR_FORMULA frm
+                          on frm.MON_FORM_ID = mdv.MON_FORM_ID
+                 group
+                    by  mpl.MON_PLAN_ID,
+                        hod.MON_LOC_ID,
+                        hod.RPT_PERIOD_ID,
+                        hod.BEGIN_DATE,
+                        hod.BEGIN_HOUR,
+                        hod.OP_TIME,
+                        hod.MATS_LOAD,
+                        case
+                            when hod.MATS_STARTUP_SHUTDOWN_FLG = 'U' then 'Startup'
+                            when hod.MATS_STARTUP_SHUTDOWN_FLG = 'D' then 'Shutdown'
+                            else hod.MATS_STARTUP_SHUTDOWN_FLG
+                        end,
+                        hod.FC_FACTOR,
+                        hod.FD_FACTOR,
+                        hod.FW_FACTOR,
+                        ems.CHK_SESSION_ID
+        ) dat;
 
   RAISE NOTICE 'Refreshing view counts...';
   CALL camdecmps.refresh_emission_view_count(vmonplanid, vrptperiodid, 'MATSHCL');
