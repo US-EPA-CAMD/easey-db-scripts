@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS camdecmpsmd.analytical_principle_code;
