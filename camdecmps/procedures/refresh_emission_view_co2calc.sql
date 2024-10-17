@@ -5,11 +5,7 @@ CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_co2calc
 )
  LANGUAGE plpgsql
 AS $procedure$
-DECLARE
-  dhvParamCodes text[] := ARRAY['CO2C','H2O'];
-  mhvParamCodes text[] := ARRAY['H2O'];
-  mhvMoistureParams text[] := ARRAY['O2C'];
-  mhvMoistureCodes text[] := ARRAY['D', 'W'];
+DECLARE
 BEGIN
     RAISE NOTICE 'Loading temp_hourly_test_errors...';
 	CALL camdecmps.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
