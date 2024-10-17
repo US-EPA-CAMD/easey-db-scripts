@@ -8,7 +8,11 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.evaluation_queue
     test_extension_exemption_id character varying(45) COLLATE pg_catalog."default",
     rpt_period_id numeric(38,0),
     eval_status_cd character varying(8) COLLATE pg_catalog."default",
-    submitted_on timestamp without time zone NOT NULL,
+    queued_time timestamp without time zone NOT NULL,
     status_cd character varying(8) COLLATE pg_catalog."default" NOT NULL,
-    details text COLLATE pg_catalog."default"
+    details text COLLATE pg_catalog."default",
+    started_time timestamp without time zone,
+    completed_time timestamp without time zone,
+    note character varying(1000) COLLATE pg_catalog."default",
+    note_time timestamp without time zone
 );
