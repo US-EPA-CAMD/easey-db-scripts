@@ -71,8 +71,17 @@ BEGIN
             end as CALC_HI_RATE_ALL_FUELS,
             nox_mf.EQUATION_CD as NOX_MASS_RATE_FORMULA_CD,
             dhv.NOX_ADJUSTED_HRLY_VALUE as RPT_NOX_MASS_ALL_FUELS,
-            dhv.NOX_CALC_ADJUSTED_HRLY_VALUE as CALC_NOX_MASS_ALL_FUELS,
-            hod.ERROR_CODES
+            dhv.NOX_CALC_ADJUSTED_HRLY_VALUE as CALC_NOX_MASS_ALL_FUELS, 
+            (
+                select  case when max( coalesce( sev.SEVERITY_LEVEL, 0 ) ) > 0 then 'Y' else NULL end
+                  from  camdecmpsaux.CHECK_LOG chl
+                        left join camdecmpsmd.SEVERITY_CODE sev
+                          on sev.SEVERITY_CD = chl.SEVERITY_CD
+                 where  chl.CHK_SESSION_ID = hod.CHK_SESSION_ID
+                   and  chl.MON_LOC_ID = hod.MON_LOC_ID
+                   and  ( chl.OP_BEGIN_DATE < hod.BEGIN_DATE or ( chl.OP_BEGIN_DATE = hod.BEGIN_DATE and chl.OP_BEGIN_HOUR <= hod.BEGIN_HOUR ) )
+                   and  ( chl.OP_END_DATE > hod.BEGIN_DATE or ( chl.OP_END_DATE = hod.BEGIN_DATE and chl.OP_END_HOUR >= hod.BEGIN_HOUR ) )
+            ) as ERROR_CODES
       from  (
                 select  sel.MON_PLAN_ID, 
                         hod.MON_LOC_ID, 
@@ -83,7 +92,7 @@ BEGIN
                         hod.OP_TIME,
                         hod.HR_LOAD,
                         hod.LOAD_UOM_CD,
-                        ' ' as ERROR_CODES
+                        ems.CHK_SESSION_ID
                   from  (
                             select  vmonplanid as MON_PLAN_ID,
                                     vrptperiodid as RPT_PERIOD_ID
