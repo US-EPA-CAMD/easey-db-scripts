@@ -1,155 +1,129 @@
-CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_co2calc(IN vmonplanid character varying, IN vrptperiodid numeric)
+CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_co2calc
+(
+    IN vmonplanid character varying,
+    IN vrptperiodid numeric
+)
  LANGUAGE plpgsql
 AS $procedure$
-DECLARE
-  dhvParamCodes text[] := ARRAY['CO2C','H2O'];
-  mhvParamCodes text[] := ARRAY['H2O'];
-  mhvMoistureParams text[] := ARRAY['O2C'];
-  mhvMoistureCodes text[] := ARRAY['D', 'W'];
+DECLARE
 BEGIN
-  RAISE NOTICE 'Loading temp_hourly_test_errors...';
-	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
-
-  RAISE NOTICE 'Deleting existing records...';
-	DELETE FROM camdecmpswks.EMISSION_VIEW_CO2CALC
-	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
-
-  RAISE NOTICE 'Refreshing view data...';
-	INSERT INTO camdecmpswks.EMISSION_VIEW_CO2CALC(
-		MON_PLAN_ID,
-		MON_LOC_ID,
-		RPT_PERIOD_ID,
-		DATE_HOUR,
-		OP_TIME,
-		CO2C_MODC,
-		CO2C_PMA,
-		RPT_PCT_O2,
-		PCT_O2_USED,
-		O2_MODC,
-		PCT_H2O_USED,
-		SOURCE_H2O_VALUE,
-		FC_FACTOR,
-		FD_FACTOR,
-		FORMULA_CD,
-		RPT_PCT_CO2,
-		CALC_PCT_CO2,
-		ERROR_CODES
-	)
-	SELECT
-		hod.MON_PLAN_ID, 
-		hod.MON_LOC_ID, 
-		hod.RPT_PERIOD_ID, 
-		camdecmpswks.format_date_hour(hod.BEGIN_DATE, hod.BEGIN_HOUR, null) AS DATE_HOUR,
-		hod.OP_TIME,	
-		dhv.CO2C_MODC_CD AS CO2C_MODC,
-		dhv.CO2C_PCT_AVAILABLE AS CO2C_PMA,
-		CASE (mf.EQUATION_CD)
-			WHEN 'F-14A' THEN mhv.O2C_D_UNADJUSTED_HRLY_VALUE
-			WHEN 'F-14B' THEN mhv.O2C_W_UNADJUSTED_HRLY_VALUE
-		END AS RPT_PCT_O2,
-		dhv.CO2C_CALC_PCT_DILUENT AS PCT_O2_USED,
-		CASE (mf.EQUATION_CD)
-			WHEN 'F-14A' THEN mhv.O2C_D_MODC_CD
-			WHEN 'F-14B' THEN mhv.O2C_W_MODC_CD
-		END AS O2_MODC,
-		dhv.CO2C_CALC_PCT_MOISTURE AS PCT_H2O_USED,
-		CASE 
-			WHEN (dhv.CO2C_CALC_PCT_MOISTURE IS NOT NULL) THEN 
-				CASE 
-					WHEN (dhv.H2O_HOUR_ID IS NOT NULL) THEN dhv.H2O_MODC_CD
-					WHEN (mhv.H2O_HOUR_ID IS NOT NULL) THEN mhv.H2O_MODC_CD
-					ELSE 'DF'
-				END 
-			ELSE NULL
-		END AS SOURCE_H2O_VALUE, 
-		hod.FC_FACTOR AS FC_FACTOR,
-		hod.FD_FACTOR AS FD_FACTOR,
-		mf.EQUATION_CD AS FORMULA_CD,
-		dhv.CO2C_ADJUSTED_HRLY_VALUE AS RPT_PCT_CO2,
-		dhv.CO2C_CALC_ADJUSTED_HRLY_VALUE AS CALC_PCT_CO2,
-		hod.ERROR_CODES
-	FROM temp_hourly_test_errors AS hod
-	JOIN camdecmpswks.get_derived_hourly_values_pivoted(
-			vmonplanid, vrptperiodid, dhvParamCodes
-		) AS dhv (
-			hour_id character varying,
-			mon_loc_id character varying,
-			rpt_period_id numeric,
-			co2c_hour_id character varying,
-			co2c_mon_sys_id character varying,
-			co2c_mon_form_id character varying,
-			co2c_adjusted_hrly_value numeric,
-			co2c_calc_adjusted_hrly_value numeric,
-			co2c_unadjusted_hrly_value numeric,
-			co2c_calc_unadjusted_hrly_value numeric,
-			co2c_applicable_bias_adj_factor numeric,
-			co2c_calc_pct_moisture numeric,
-			co2c_calc_pct_diluent numeric,
-			co2c_pct_available numeric,
-			co2c_segment_num numeric,
-			co2c_operating_condition_cd character varying,
-			co2c_fuel_cd character varying,
-			co2c_modc_cd character varying,
-			h2o_hour_id character varying,
-			h2o_mon_sys_id character varying,
-			h2o_mon_form_id character varying,
-			h2o_adjusted_hrly_value numeric,
-			h2o_calc_adjusted_hrly_value numeric,
-			h2o_unadjusted_hrly_value numeric,
-			h2o_calc_unadjusted_hrly_value numeric,
-			h2o_applicable_bias_adj_factor numeric,
-			h2o_calc_pct_moisture numeric,
-			h2o_calc_pct_diluent numeric,
-			h2o_pct_available numeric,
-			h2o_segment_num numeric,
-			h2o_operating_condition_cd character varying,
-			h2o_fuel_cd character varying,
-			h2o_modc_cd character varying
-	) ON dhv.HOUR_ID = hod.HOUR_ID
-		AND dhv.MON_LOC_ID = hod.MON_LOC_ID
-		AND dhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
-	JOIN camdecmpswks.get_monitor_hourly_values_pivoted(
-			vmonplanid, vrptperiodid, mhvParamCodes, mhvMoistureParams, mhvMoistureCodes) AS mhv (
-		hour_id character varying,
-		mon_loc_id character varying,
-		rpt_period_id numeric,
-		h2o_hour_id character varying,
-		h2o_adjusted_hrly_value numeric,
-		h2o_calc_adjusted_hrly_value numeric,
-		h2o_unadjusted_hrly_value numeric,
-		h2o_applicable_bias_adj_factor numeric,
-		h2o_pct_available numeric,
-		h2o_moisture_basis character varying,
-		h2o_modc_cd character varying,
-		o2c_d_hour_id character varying,
-		o2c_d_adjusted_hrly_value numeric,
-		o2c_d_calc_adjusted_hrly_value numeric,
-		o2c_d_unadjusted_hrly_value numeric,
-		o2c_d_applicable_bias_adj_factor numeric,
-		o2c_d_pct_available numeric,
-		o2c_d_moisture_basis character varying,
-		o2c_d_modc_cd character varying,
-		o2c_w_hour_id character varying,
-		o2c_w_adjusted_hrly_value numeric,
-		o2c_w_calc_adjusted_hrly_value numeric,
-		o2c_w_unadjusted_hrly_value numeric,
-		o2c_w_applicable_bias_adj_factor numeric,
-		o2c_w_pct_available numeric,
-		o2c_w_moisture_basis character varying,
-		o2c_w_modc_cd character varying
-	)	ON mhv.HOUR_ID = hod.HOUR_ID
-		AND mhv.MON_LOC_ID = hod.MON_LOC_ID
-		AND mhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
-	LEFT JOIN camdecmpswks.MONITOR_FORMULA AS mf
-		ON mf.MON_FORM_ID = dhv.CO2C_MON_FORM_ID
-	LEFT JOIN camdecmpswks.MONITOR_DEFAULT AS md_H2O
-		ON md_H2O.MON_LOC_ID = hod.MON_LOC_ID
-		AND md_H2O.DEFAULT_PURPOSE_CD = 'PM'
-		AND md_H2O.PARAMETER_CD = 'H2O'
-		AND camdecmpswks.emissions_monitor_default_active(md_H2O.BEGIN_DATE, md_H2O.BEGIN_HOUR, md_H2O.END_DATE, md_H2O.END_HOUR, hod.BEGIN_DATE, hod.BEGIN_HOUR) = 1
-	where dhv.co2c_hour_id is not null;
-
-  RAISE NOTICE 'Refreshing view counts...';
-  CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'CO2CALC');
+    RAISE NOTICE 'Loading temp_hourly_test_errors...';
+	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
+    RAISE NOTICE 'Deleting existing records...';
+	DELETE FROM camdecmpswks.EMISSION_VIEW_CO2CALC	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
+    RAISE NOTICE 'Refreshing view data...';
+	INSERT INTO camdecmpswks.EMISSION_VIEW_CO2CALC(		MON_PLAN_ID,		MON_LOC_ID,		RPT_PERIOD_ID,		DATE_HOUR,		OP_TIME,		CO2C_MODC,		CO2C_PMA,		RPT_PCT_O2,		PCT_O2_USED,		O2_MODC,		PCT_H2O_USED,		SOURCE_H2O_VALUE,		FC_FACTOR,		FD_FACTOR,		FORMULA_CD,		RPT_PCT_CO2,		CALC_PCT_CO2,		ERROR_CODES	)
+    select  dat.MON_PLAN_ID, 
+            dat.MON_LOC_ID, 
+            dat.RPT_PERIOD_ID,
+            camdecmpswks.format_date_hour( dat.BEGIN_DATE, dat.BEGIN_HOUR, null ) as DATE_HOUR,
+            dat.OP_TIME,
+            dat.CO2C_MODC_CD as CO2C_MODC,
+            dat.CO2C_PCT_AVAILABLE as CO2C_PMA,
+            case ( dat.CO2C_FORMULA_CD )
+                when 'F-14A' then dat.O2D_UNADJUSTED_HRLY_VALUE
+                when 'F-14B' then dat.O2W_UNADJUSTED_HRLY_VALUE
+            end as RPT_PCT_O2,
+            dat.CO2C_CALC_PCT_DILUENT as PCT_O2_USED,
+            case ( dat.CO2C_FORMULA_CD )
+                when 'F-14A' then dat.O2D_MODC_CD
+                when 'F-14B' then dat.O2W_MODC_CD
+            end as O2_MODC,
+            dat.CO2C_CALC_PCT_MOISTURE as PCT_H2O_USED, 
+            case 
+                when ( dat.CO2C_CALC_PCT_MOISTURE is not null ) then 
+                    case 
+                        when ( dat.H2O_DHV_HOUR_ID is not null ) then dat.H2O_DHV_MODC_CD 
+                        when ( dat.H2O_MHV_HOUR_ID is not null ) then dat.H2O_MHV_MODC_CD 
+                        else 'DF'
+                    end 
+                else null
+            end as SOURCE_H2O_VALUE, 
+            dat.FC_FACTOR as FC_FACTOR,
+            dat.FD_FACTOR as FD_FACTOR,
+            dat.CO2C_FORMULA_CD as FORMULA_CODE,
+            dat.CO2C_ADJUSTED_HRLY_VALUE as RPT_PCT_CO2,
+            dat.CO2C_CALC_ADJUSTED_HRLY_VALUE as CALC_PCT_CO2,
+            (
+                select  case when max( coalesce( sev.SEVERITY_LEVEL, 0 ) ) > 0 then 'Y' else NULL end
+                  from  camdecmpswks.CHECK_LOG chl
+                        left join camdecmpsmd.SEVERITY_CODE sev
+                          on sev.SEVERITY_CD = chl.SEVERITY_CD
+                 where  chl.CHK_SESSION_ID = dat.CHK_SESSION_ID
+                   and  chl.MON_LOC_ID = dat.MON_LOC_ID
+                   and  ( chl.OP_BEGIN_DATE < dat.BEGIN_DATE or ( chl.OP_BEGIN_DATE = dat.BEGIN_DATE and chl.OP_BEGIN_HOUR <= dat.BEGIN_HOUR ) )
+                   and  ( chl.OP_END_DATE > dat.BEGIN_DATE or ( chl.OP_END_DATE = dat.BEGIN_DATE and chl.OP_END_HOUR >= dat.BEGIN_HOUR ) )
+            ) as ERROR_CODES
+      from  (
+                select  mpl.MON_PLAN_ID, 
+                        hod.MON_LOC_ID, 
+                        hod.RPT_PERIOD_ID,
+                        hod.BEGIN_DATE,
+                        hod.BEGIN_HOUR,
+                        hod.OP_TIME,
+                        hod.FC_FACTOR,
+                        hod.FD_FACTOR,
+                        ems.CHK_SESSION_ID,
+                        -- CO2C
+                        max( case when dhv.PARAMETER_CD = 'CO2C' then dhv.HOUR_ID end ) as CO2C_HOUR_ID,
+                        max( case when dhv.PARAMETER_CD = 'CO2C' then dhv.ADJUSTED_HRLY_VALUE end ) as CO2C_ADJUSTED_HRLY_VALUE,
+                        max( case when dhv.PARAMETER_CD = 'CO2C' then dhv.MODC_CD end ) as CO2C_MODC_CD,
+                        max( case when dhv.PARAMETER_CD = 'CO2C' then dhv.PCT_AVAILABLE end ) as CO2C_PCT_AVAILABLE,
+                        max( case when dhv.PARAMETER_CD = 'CO2C' then dhv.CALC_ADJUSTED_HRLY_VALUE end ) as CO2C_CALC_ADJUSTED_HRLY_VALUE,
+                        max( case when dhv.PARAMETER_CD = 'CO2C' then dhv.CALC_PCT_DILUENT end ) as CO2C_CALC_PCT_DILUENT,
+                        max( case when dhv.PARAMETER_CD = 'CO2C' then dhv.CALC_PCT_MOISTURE end ) as CO2C_CALC_PCT_MOISTURE,
+                        max( case when dhv.PARAMETER_CD = 'CO2C' then frm.EQUATION_CD end ) as CO2C_FORMULA_CD,
+                        -- H2O DHV
+                        max( case when dhv.PARAMETER_CD = 'H2O'  then dhv.HOUR_ID end ) as H2O_DHV_HOUR_ID,
+                        max( case when dhv.PARAMETER_CD = 'H2O'  then dhv.MODC_CD end ) as H2O_DHV_MODC_CD,
+                        -- H2O MHV
+                        max( case when mhv.PARAMETER_CD = 'H2O'  then mhv.HOUR_ID end ) as H2O_MHV_HOUR_ID,
+                        max( case when mhv.PARAMETER_CD = 'H2O'  then mhv.MODC_CD end ) as H2O_MHV_MODC_CD,
+                        -- O2D
+                        max( case when mhv.PARAMETER_CD = 'O2C'  and mhv.MOISTURE_BASIS = 'D' then mhv.UNADJUSTED_HRLY_VALUE end ) as O2D_UNADJUSTED_HRLY_VALUE,
+                        max( case when mhv.PARAMETER_CD = 'O2C'  and mhv.MOISTURE_BASIS = 'D' then mhv.MODC_CD end ) as O2D_MODC_CD,
+                        -- O2W
+                        max( case when mhv.PARAMETER_CD = 'O2C'  and mhv.MOISTURE_BASIS = 'W' then mhv.UNADJUSTED_HRLY_VALUE end ) as O2W_UNADJUSTED_HRLY_VALUE,
+                        max( case when mhv.PARAMETER_CD = 'O2C'  and mhv.MOISTURE_BASIS = 'W' then mhv.MODC_CD end ) as O2W_MODC_CD
+                  from  (
+                            select  vmonplanid as MON_PLAN_ID,
+                                    vrptperiodid as RPT_PERIOD_ID
+                        ) sel
+                        join camdecmpswks.MONITOR_PLAN_LOCATION mpl
+                          on mpl.MON_PLAN_ID = sel.MON_PLAN_ID
+                        join camdecmpswks.EMISSION_EVALUATION ems
+                          on ems.RPT_PERIOD_ID = sel.RPT_PERIOD_ID
+                         and ems.MON_PLAN_ID = mpl.MON_PLAN_ID
+                        join camdecmpswks.HRLY_OP_DATA hod 
+                          on hod.rpt_period_id = ems.rpt_period_id
+                         and hod.mon_loc_id = mpl.mon_loc_id
+                        join camdecmpswks.DERIVED_HRLY_VALUE dhv
+                          on dhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
+                         and dhv.MON_LOC_ID = hod.MON_LOC_ID
+                         and dhv.HOUR_ID = hod.HOUR_ID
+                         and dhv.PARAMETER_CD in ( 'CO2C', 'H2O' )
+                        left join camdecmpswks.MONITOR_HRLY_VALUE mhv
+                          on mhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
+                         and mhv.MON_LOC_ID = hod.MON_LOC_ID
+                         and mhv.HOUR_ID = hod.HOUR_ID
+                         and mhv.PARAMETER_CD in ( 'H2O', 'O2C' )
+                        left join camdecmpswks.MONITOR_FORMULA frm
+                          on frm.MON_FORM_ID = dhv.MON_FORM_ID
+                 group
+                    by  mpl.MON_PLAN_ID, 
+                        hod.MON_LOC_ID, 
+                        hod.RPT_PERIOD_ID,
+                        hod.BEGIN_DATE,
+                        hod.BEGIN_HOUR,
+                        hod.OP_TIME,
+                        hod.FC_FACTOR,
+                        hod.FD_FACTOR,
+                        ems.CHK_SESSION_ID
+        ) dat
+     where  dat.CO2C_HOUR_ID is not null;
+
+
+    RAISE NOTICE 'Refreshing view counts...';
+    CALL camdecmpswks.refresh_emission_view_count(vmonplanid, vrptperiodid, 'CO2CALC');
 END
 $procedure$
