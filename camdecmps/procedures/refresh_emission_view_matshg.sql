@@ -6,11 +6,6 @@ CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_matshg
  LANGUAGE plpgsql
 AS $procedure$
 DECLARE  
-    dhvParamCodes text[] := ARRAY['H2O'];
-    mhvParamCodes text[] := ARRAY['CO2C', 'FLOW', 'H2O'];
-    mhvMoistureParams text[] := ARRAY['O2C'];
-    mhvMoistureCodes text[] := ARRAY['D', 'W'];
-   
 BEGIN
     RAISE NOTICE 'Loading temp_hourly_test_errors...';
 
