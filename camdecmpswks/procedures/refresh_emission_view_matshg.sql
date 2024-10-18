@@ -7,9 +7,6 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emission_view_matshg
 AS $procedure$
 DECLARE  
 BEGIN
-    RAISE NOTICE 'Loading temp_hourly_test_errors...';
-
-	CALL camdecmpswks.load_temp_hourly_test_errors(vMonPlanId, vRptPeriodId);
     RAISE NOTICE 'Deleting existing records...';
 	DELETE
       FROM  camdecmpswks.EMISSION_VIEW_MATSHG
