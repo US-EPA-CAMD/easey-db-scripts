@@ -23,88 +23,132 @@ BEGIN
 
     RAISE NOTICE 'Refreshing view data...';
 
-	INSERT INTO camdecmps.EMISSION_VIEW_NOXRATECEMS(		MON_PLAN_ID,		MON_LOC_ID,		RPT_PERIOD_ID,		DATE_HOUR,		OP_TIME,		UNIT_LOAD,		LOAD_UOM,		NOX_RATE_MODC,		NOX_RATE_PMA,		UNADJ_NOX,		NOX_MODC,		DILUENT_PARAM,		PCT_DILUENT_USED,		DILUENT_MODC,		RPT_DILUENT,		PCT_H2O_USED,		SOURCE_H2O_VALUE,		F_FACTOR,		NOX_RATE_FORMULA_CD,		RPT_UNADJ_NOX_RATE,		CALC_UNADJ_NOX_RATE,		CALC_NOX_BAF,		RPT_ADJ_NOX_RATE,		CALC_ADJ_NOX_RATE,		CALC_HI_RATE,		NOX_MASS_FORMULA_CD,		RPT_NOX_MASS,		CALC_NOX_MASS,		ERROR_CODES	)    select  HOD.MON_PLAN_ID, 
-            HOD.MON_LOC_ID, 
-            HOD.RPT_PERIOD_ID, 
-            camdecmps.format_date_hour(hod.BEGIN_DATE, hod.BEGIN_HOUR, null),
-            HOD.OP_TIME, 
-            HOD.HR_LOAD as UNIT_LOAD, 
-            HOD.LOAD_UOM_CD as LOAD_UOM, 
-            DHV.NOXR_MODC_CD as NOX_RATE_MODC, 
-            DHV.NOXR_PCT_AVAILABLE as NOX_RATE_PMA,
-            MHV.NOXC_UNADJUSTED_HRLY_VALUE as UNADJ_NOX, 
-            MHV.NOXC_MODC_CD as NOX_MODC, 
-            case when (MF.EQUATION_CD in ('19-6', '19-7', '19-8', '19-9', 'F-6')) then 'CO2' 
-                 when (MF.EQUATION_CD in ('19-1', '19-2', '19-3', '19-3D', '19-4', '19-5', '19-5D', 'F-5')) then 'O2' 
-                 else null 
-            end as DILUENT_PARAM, 
-            DHV.NOXR_CALC_PCT_DILUENT as PCT_DILUENT_USED, 
-            case when (MF.EQUATION_CD in ('19-6', '19-7', '19-8', '19-9', 'F-6')) then MHV.CO2C_MODC_CD
-                 when (MF.EQUATION_CD in ('19-1', '19-4', 'F-5')) then MHV.O2C_D_MODC_CD
-                 when (MF.EQUATION_CD in ('19-2', '19-3', '19-5', '19-3D', '19-5D')) then MHV.O2C_W_MODC_CD      
-            end as DILUENT_MODC, 
-            case when (MF.EQUATION_CD in ('19-6', '19-7', '19-8', '19-9', 'F-6')) then MHV.CO2C_UNADJUSTED_HRLY_VALUE
-                 when (MF.EQUATION_CD in ('19-1', '19-4', 'F-5')) then MHV.O2C_D_UNADJUSTED_HRLY_VALUE
-                 when (MF.EQUATION_CD in ('19-2', '19-3', '19-5', '19-3D', '19-5D')) then MHV.O2C_W_UNADJUSTED_HRLY_VALUE        
-            end as RPT_DILUENT,
-            DHV.NOXR_CALC_PCT_MOISTURE as PCT_H2O_USED, 
-            case 
-                when (DHV.NOXR_CALC_PCT_MOISTURE is not null) then 
-                    case when (DHV.H2O_MODC_CD is not null) then DHV.H2O_MODC_CD 
-                         when (MHV.H2O_MODC_CD is not null) then MHV.H2O_MODC_CD 
-                         else 'DF'
-                    end 
+	INSERT INTO camdecmps.EMISSION_VIEW_NOXRATECEMS(		MON_PLAN_ID,		MON_LOC_ID,		RPT_PERIOD_ID,		DATE_HOUR,		OP_TIME,		UNIT_LOAD,		LOAD_UOM,		NOX_RATE_MODC,		NOX_RATE_PMA,		UNADJ_NOX,		NOX_MODC,		DILUENT_PARAM,		PCT_DILUENT_USED,		DILUENT_MODC,		RPT_DILUENT,		PCT_H2O_USED,		SOURCE_H2O_VALUE,		F_FACTOR,		NOX_RATE_FORMULA_CD,		RPT_UNADJ_NOX_RATE,		CALC_UNADJ_NOX_RATE,		CALC_NOX_BAF,		RPT_ADJ_NOX_RATE,		CALC_ADJ_NOX_RATE,		CALC_HI_RATE,		NOX_MASS_FORMULA_CD,		RPT_NOX_MASS,		CALC_NOX_MASS,		ERROR_CODES	)    select  dat.MON_PLAN_ID,
+            dat.MON_LOC_ID,
+            dat.RPT_PERIOD_ID,
+            camdecmps.format_date_hour( dat.BEGIN_DATE, dat.BEGIN_HOUR, null ) as DATE_HOUR,
+            dat.OP_TIME,
+            dat.HR_LOAD as UNIT_LOAD,
+            dat.LOAD_UOM_CD as LOAD_UOM,
+            dat.NOXR_MODC_CD as NOX_RATE_MODC, 
+            dat.NOXR_PCT_AVAILABLE as NOX_RATE_PMA,
+            dat.NOXC_UNADJUSTED_HRLY_VALUE as UNADJ_NOX, 
+            dat.NOXC_MODC_CD as NOX_MODC, 
+            case
+                when ( dat.NOXR_FORMULA_CD in ( '19-6', '19-7', '19-8', '19-9', 'F-6' ) ) then 'CO2'
+                when ( dat.NOXR_FORMULA_CD in ( '19-1', '19-2', '19-3', '19-3D', '19-4', '19-5', '19-5D', 'F-5' ) ) then 'O2'
                 else null
+            end as DILUENT_PARAM,
+            dat.NOXR_CALC_PCT_DILUENT as PCT_DILUENT_USED, 
+            case
+                when ( dat.NOXR_FORMULA_CD in ( '19-6', '19-7', '19-8', '19-9', 'F-6' ) ) then dat.CO2C_MODC_CD
+                when ( dat.NOXR_FORMULA_CD in ( '19-1', '19-4', 'F-5' ) ) then dat.O2D_MODC_CD
+                when ( dat.NOXR_FORMULA_CD in ( '19-2', '19-3', '19-5', '19-3D', '19-5D' ) ) then dat.O2W_MODC_CD
+            end as DILUENT_MODC,
+            case
+                when ( dat.NOXR_FORMULA_CD in ( '19-6', '19-7', '19-8', '19-9', 'F-6' ) ) then dat.CO2C_UNADJUSTED_HRLY_VALUE
+                when ( dat.NOXR_FORMULA_CD in ( '19-1', '19-4', 'F-5' ) ) then dat.O2D_UNADJUSTED_HRLY_VALUE
+                when ( dat.NOXR_FORMULA_CD in ( '19-2', '19-3', '19-5', '19-3D', '19-5D' ) ) then dat.O2W_UNADJUSTED_HRLY_VALUE
+            end as RPT_DILUENT,
+            dat.NOXR_CALC_PCT_MOISTURE as PCT_H2O_USED, 
+            case 
+                when ( dat.NOXR_CALC_PCT_MOISTURE is not null ) then 
+                    case
+                        when ( dat.H2O_DHV_MODC_CD is not null ) then dat.H2O_DHV_MODC_CD 
+                        when ( dat.H2O_MHV_MODC_CD is not null ) then dat.H2O_MHV_MODC_CD 
+                        else 'DF'
+                    end 
+                else
+                    null
             end as SOURCE_H2O_VALUE, 
-            case when (MF.EQUATION_CD in ('19-6', '19-7', '19-8', '19-9', 'F-6')) then HOD.FC_FACTOR 
-                 when (MF.EQUATION_CD in ('19-1', '19-3', '19-3D', '19-4', '19-5', '19-5D', 'F-5')) then HOD.FD_FACTOR 
-                 when (MF.EQUATION_CD = '19-2') then FW_FACTOR 
+            case
+                when ( dat.NOXR_FORMULA_CD in ( '19-6', '19-7', '19-8', '19-9', 'F-6' ) ) then dat.FC_FACTOR 
+                when ( dat.NOXR_FORMULA_CD in ( '19-1', '19-3', '19-3D', '19-4', '19-5', '19-5D', 'F-5' ) ) then dat.FD_FACTOR 
+                when ( dat.NOXR_FORMULA_CD = '19-2' ) then dat.FW_FACTOR 
             end as F_FACTOR, 
-            MF.EQUATION_CD as nox_rate_formula_cd, 
-            DHV.NOXR_UNADJUSTED_HRLY_VALUE as RPT_UNADJ_NOX_RATE, 
-            DHV.NOXR_CALC_UNADJUSTED_HRLY_VALUE as CALC_UNADJ_NOX_RATE, 
-            DHV.NOXR_APPLICABLE_BIAS_ADJ_FACTOR as CALC_NOX_BAF, 
-            DHV.NOXR_ADJUSTED_HRLY_VALUE as RPT_ADJ_NOX_RATE, 
-            DHV.NOXR_CALC_ADJUSTED_HRLY_VALUE as CALC_ADJ_NOX_RATE, 
-            case when NOX_MF.EQUATION_CD = 'F-24A' then DHV.HI_CALC_ADJUSTED_HRLY_VALUE 
-                 else null
+            dat.NOXR_FORMULA_CD as NOX_RATE_FORMULA_CD, 
+            dat.NOXR_UNADJUSTED_HRLY_VALUE as RPT_UNADJ_NOX_RATE, 
+            dat.NOXR_CALC_UNADJUSTED_HRLY_VALUE as CALC_UNADJ_NOX_RATE, 
+            dat.NOXR_APPLICABLE_BIAS_ADJ_FACTOR as CALC_NOX_BAF, 
+            dat.NOXR_ADJUSTED_HRLY_VALUE as RPT_ADJ_NOX_RATE, 
+            dat.NOXR_CALC_ADJUSTED_HRLY_VALUE as CALC_ADJ_NOX_RATE, 
+            case
+                when dat.NOX_FORMULA_CD = 'F-24A'
+                then dat.HI_CALC_ADJUSTED_HRLY_VALUE 
+                else null
             end as CALC_HI_RATE, 
-            case when NOX_MF.EQUATION_CD = 'F-24A' then NOX_MF.EQUATION_CD
-                 else null
-            end as nox_mass_formula_cd,
-            case when NOX_MF.EQUATION_CD = 'F-24A' then DHV.NOX_ADJUSTED_HRLY_VALUE
-                 else null
+            case
+                when dat.NOX_FORMULA_CD = 'F-24A'
+                then dat.NOX_FORMULA_CD
+                else null
+            end as NOX_MASS_FORMULA_CD,
+            case
+                when dat.NOX_FORMULA_CD = 'F-24A'
+                then dat.NOX_ADJUSTED_HRLY_VALUE
+                else null
             end as RPT_NOX_MASS, 
-            case when NOX_MF.EQUATION_CD = 'F-24A' then DHV.NOX_CALC_ADJUSTED_HRLY_VALUE
-                 else null
+            case
+                when dat.NOX_FORMULA_CD = 'F-24A'
+                then dat.NOX_CALC_ADJUSTED_HRLY_VALUE
+                else null
             end as CALC_NOX_MASS, 
-            HOD.ERROR_CODES
+            (
+                select  case when max( coalesce( sev.SEVERITY_LEVEL, 0 ) ) > 0 then 'Y' else NULL end
+                  from  camdecmpsaux.CHECK_LOG chl
+                        left join camdecmpsmd.SEVERITY_CODE sev
+                          on sev.SEVERITY_CD = chl.SEVERITY_CD
+                 where  chl.CHK_SESSION_ID = dat.CHK_SESSION_ID
+                   and  chl.MON_LOC_ID = dat.MON_LOC_ID
+                   and  ( chl.OP_BEGIN_DATE < dat.BEGIN_DATE or ( chl.OP_BEGIN_DATE = dat.BEGIN_DATE and chl.OP_BEGIN_HOUR <= dat.BEGIN_HOUR ) )
+                   and  ( chl.OP_END_DATE > dat.BEGIN_DATE or ( chl.OP_END_DATE = dat.BEGIN_DATE and chl.OP_END_HOUR >= dat.BEGIN_HOUR ) )
+            ) as ERROR_CODES
       from  (
-                select  sel.MON_PLAN_ID, 
-                        hod.MON_LOC_ID, 
-                        sel.RPT_PERIOD_ID,
-                        hod.HOUR_ID,
+                select  mpl.MON_PLAN_ID,
+                        hod.MON_LOC_ID,
+                        hod.RPT_PERIOD_ID,
                         hod.BEGIN_DATE,
                         hod.BEGIN_HOUR,
                         hod.OP_TIME,
                         hod.HR_LOAD,
                         hod.LOAD_UOM_CD,
-                        hod.LOAD_RANGE, 
-                        hod.COMMON_STACK_LOAD_RANGE, 
-                        hod.FUEL_CD,
                         hod.FC_FACTOR,
                         hod.FD_FACTOR,
-                        hod.FW_FACTOR, 
-                        (
-                            select  case when max( coalesce( sev.SEVERITY_LEVEL, 0 ) ) > 0 then 'Y' else NULL end
-                              from  camdecmpsaux.CHECK_LOG chl
-                                    left join camdecmpsmd.SEVERITY_CODE sev
-                                      on sev.SEVERITY_CD = chl.SEVERITY_CD
-                             where  chl.CHK_SESSION_ID = ems.CHK_SESSION_ID
-                               and  chl.MON_LOC_ID = hod.MON_LOC_ID
-                               and  ( chl.OP_BEGIN_DATE < hod.BEGIN_DATE or ( chl.OP_BEGIN_DATE = hod.BEGIN_DATE and chl.OP_BEGIN_HOUR <= hod.BEGIN_HOUR ) )
-                               and  ( chl.OP_END_DATE > hod.BEGIN_DATE or ( chl.OP_END_DATE = hod.BEGIN_DATE and chl.OP_END_HOUR >= hod.BEGIN_HOUR ) )
-                        ) as ERROR_CODES
+                        hod.FW_FACTOR,
+                        ems.CHK_SESSION_ID,
+                        -- H2O DHV
+                        max( case when dhv.PARAMETER_CD = 'H2O'  then dhv.MODC_CD end ) as H2O_DHV_MODC_CD,
+                        -- HI
+                        max( case when dhv.PARAMETER_CD = 'HI'   then dhv.CALC_ADJUSTED_HRLY_VALUE end ) as HI_CALC_ADJUSTED_HRLY_VALUE,
+                        -- NOX
+                        max( case when dhv.PARAMETER_CD = 'NOX'  then dhv.ADJUSTED_HRLY_VALUE end ) as NOX_ADJUSTED_HRLY_VALUE,
+                        max( case when dhv.PARAMETER_CD = 'NOX'  then dhv.CALC_ADJUSTED_HRLY_VALUE end ) as NOX_CALC_ADJUSTED_HRLY_VALUE,
+                        max( case when dhv.PARAMETER_CD = 'NOX'  then frm.EQUATION_CD end ) as NOX_FORMULA_CD,
+                        -- NOXR
+                        max( case when dhv.PARAMETER_CD = 'NOXR' then dhv.HOUR_ID end ) as NOXR_HOUR_ID,
+                        max( case when dhv.PARAMETER_CD = 'NOXR' then dhv.UNADJUSTED_HRLY_VALUE end ) as NOXR_UNADJUSTED_HRLY_VALUE,
+                        max( case when mhv.PARAMETER_CD = 'NOXR' then dhv.APPLICABLE_BIAS_ADJ_FACTOR end ) as NOXR_APPLICABLE_BIAS_ADJ_FACTOR,
+                        max( case when dhv.PARAMETER_CD = 'NOXR' then dhv.ADJUSTED_HRLY_VALUE end ) as NOXR_ADJUSTED_HRLY_VALUE,
+                        max( case when dhv.PARAMETER_CD = 'NOXR' then dhv.MODC_CD end ) as NOXR_MODC_CD,
+                        max( case when mhv.PARAMETER_CD = 'NOXR' then dhv.PCT_AVAILABLE end ) as NOXR_PCT_AVAILABLE,
+                        max( case when dhv.PARAMETER_CD = 'NOXR' then dhv.CALC_UNADJUSTED_HRLY_VALUE end ) as NOXR_CALC_UNADJUSTED_HRLY_VALUE,
+                        max( case when dhv.PARAMETER_CD = 'NOXR' then dhv.CALC_ADJUSTED_HRLY_VALUE end ) as NOXR_CALC_ADJUSTED_HRLY_VALUE,
+                        max( case when dhv.PARAMETER_CD = 'NOXR' then dhv.CALC_PCT_DILUENT end ) as NOXR_CALC_PCT_DILUENT,
+                        max( case when dhv.PARAMETER_CD = 'NOXR' then dhv.CALC_PCT_MOISTURE end ) as NOXR_CALC_PCT_MOISTURE,
+                        max( case when dhv.PARAMETER_CD = 'NOXR' then frm.EQUATION_CD end ) as NOXR_FORMULA_CD,
+                        -- CO2C
+                        max( case when mhv.PARAMETER_CD = 'CO2C' then mhv.UNADJUSTED_HRLY_VALUE end ) as CO2C_UNADJUSTED_HRLY_VALUE,
+                        max( case when mhv.PARAMETER_CD = 'CO2C' then mhv.MODC_CD end ) as CO2C_MODC_CD,
+                        -- H2O MHV
+                        max( case when mhv.PARAMETER_CD = 'H2O'  then mhv.MODC_CD end ) as H2O_MHV_MODC_CD,
+                        -- NOXC
+                        max( case when mhv.PARAMETER_CD = 'NOXC' then mhv.UNADJUSTED_HRLY_VALUE end ) as NOXC_UNADJUSTED_HRLY_VALUE,
+                        max( case when mhv.PARAMETER_CD = 'NOXC' then mhv.MODC_CD end ) as NOXC_MODC_CD,
+                        -- O2D
+                        max( case when mhv.PARAMETER_CD = 'O2C'  and mhv.MOISTURE_BASIS = 'D' then mhv.UNADJUSTED_HRLY_VALUE end ) as O2D_UNADJUSTED_HRLY_VALUE,
+                        max( case when mhv.PARAMETER_CD = 'O2C'  and mhv.MOISTURE_BASIS = 'D' then mhv.MODC_CD end ) as O2D_MODC_CD,
+                        -- O2W
+                        max( case when mhv.PARAMETER_CD = 'O2C'  and mhv.MOISTURE_BASIS = 'W' then mhv.UNADJUSTED_HRLY_VALUE end ) as O2W_UNADJUSTED_HRLY_VALUE,
+                        max( case when mhv.PARAMETER_CD = 'O2C'  and mhv.MOISTURE_BASIS = 'W' then mhv.MODC_CD end ) as O2W_MODC_CD
                   from  (
                             select  vmonplanid as MON_PLAN_ID,
                                     vrptperiodid as RPT_PERIOD_ID
@@ -117,211 +161,34 @@ BEGIN
                         join camdecmps.HRLY_OP_DATA hod 
                           on hod.rpt_period_id = ems.rpt_period_id
                          and hod.mon_loc_id = mpl.mon_loc_id
-            ) AS hod
-            left join
-            (
-                select  hod.hour_id,
-                        hod.mon_loc_id,
-                        hod.rpt_period_id,
-                        noxr.hour_id                      as noxr_hour_id,
-                        noxr.mon_form_id                  as noxr_mon_form_id,
-                        noxr.adjusted_hrly_value          as noxr_adjusted_hrly_value,
-                        noxr.calc_adjusted_hrly_value     as noxr_calc_adjusted_hrly_value,
-                        noxr.unadjusted_hrly_value        as noxr_unadjusted_hrly_value,
-                        noxr.calc_unadjusted_hrly_value   as noxr_calc_unadjusted_hrly_value,
-                        noxr.applicable_bias_adj_factor   as noxr_applicable_bias_adj_factor,
-                        noxr.calc_pct_moisture            as noxr_calc_pct_moisture,
-                        noxr.calc_pct_diluent             as noxr_calc_pct_diluent,
-                        noxr.pct_available                as noxr_pct_available,
-                        noxr.modc_cd                      as noxr_modc_cd,
-                        hi.calc_adjusted_hrly_value       as hi_calc_adjusted_hrly_value,
-                        nox.mon_form_id                   as nox_mon_form_id,
-                        nox.adjusted_hrly_value           as nox_adjusted_hrly_value,
-                        nox.calc_adjusted_hrly_value      as nox_calc_adjusted_hrly_value,
-                        h2o.modc_cd                       as h2o_modc_cd
-                  from  camdecmps.HRLY_OP_DATA hod
-                        left join
-                        (
-                            select  hour_id,
-                                    mon_loc_id,
-                                    rpt_period_id,
-                                    mon_form_id,
-                                    adjusted_hrly_value,
-                                    calc_adjusted_hrly_value,
-                                    unadjusted_hrly_value,
-                                    calc_unadjusted_hrly_value,
-                                    applicable_bias_adj_factor,
-                                    calc_pct_moisture,
-                                    calc_pct_diluent,
-                                    pct_available,
-                                    segment_num,
-                                    modc_cd
-                              from  camdecmps.DERIVED_HRLY_VALUE
-                             where  mon_loc_id = any( monLocIds )
-                               and  rpt_period_id = vrptperiodid
-                               and  parameter_cd = 'NOXR'
-                        ) noxr
-                          on noxr.hour_id = hod.hour_id
-                         and noxr.mon_loc_id = hod.mon_loc_id
-                         and noxr.rpt_period_id = hod.rpt_period_id
-                        left join
-                        (
-                            select  hour_id,
-                                    mon_loc_id,
-                                    rpt_period_id,
-                                    calc_adjusted_hrly_value
-                              from  camdecmps.DERIVED_HRLY_VALUE
-                             where  mon_loc_id = any( monLocIds )
-                               and  rpt_period_id = vrptperiodid
-                               and  parameter_cd = 'HI'
-                        ) hi
-                          on hi.hour_id = hod.hour_id
-                         and hi.mon_loc_id = hod.mon_loc_id
-                         and hi.rpt_period_id = hod.rpt_period_id
-                        left join
-                        (
-                            select  hour_id,
-                                    mon_loc_id,
-                                    rpt_period_id,
-                                    mon_form_id,
-                                    adjusted_hrly_value,
-                                    calc_adjusted_hrly_value
-                              from  camdecmps.DERIVED_HRLY_VALUE
-                             where  mon_loc_id = any( monLocIds )
-                               and  rpt_period_id = vrptperiodid
-                               and  parameter_cd = 'NOX'
-                        ) nox
-                          on nox.hour_id = hod.hour_id
-                         and nox.mon_loc_id = hod.mon_loc_id
-                         and nox.rpt_period_id = hod.rpt_period_id
-                        left join
-                        (
-                            select  hour_id,
-                                    mon_loc_id,
-                                    rpt_period_id,
-                                    modc_cd
-                              from  camdecmps.DERIVED_HRLY_VALUE
-                             where  mon_loc_id = any( monLocIds )
-                               and  rpt_period_id = vrptperiodid
-                               and  parameter_cd = 'H2O'
-                        ) h2o
-                          on h2o.hour_id = hod.hour_id
-                         and h2o.mon_loc_id = hod.mon_loc_id
-                         and h2o.rpt_period_id = hod.rpt_period_id
-                 where  hod.MON_LOC_ID = any( monLocIds )
-                   and  hod.RPT_PERIOD_ID = vrptperiodid
-            ) dhv
-              ON dhv.HOUR_ID = hod.HOUR_ID
-             and dhv.MON_LOC_ID = hod.MON_LOC_ID
-             and dhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
-            left join
-            (
-                select  hod.hour_id,
-                        hod.mon_loc_id,
-                        hod.rpt_period_id,
-                        noxc.unadjusted_hrly_value        as noxc_unadjusted_hrly_value,
-                        noxc.modc_cd                      as noxc_modc_cd,
-                        co2c.unadjusted_hrly_value        as co2c_unadjusted_hrly_value,
-                        co2c.modc_cd                      as co2c_modc_cd,
-                        h2o.modc_cd                       as h2o_modc_cd,
-                        o2c_d.hour_id                     as o2c_d_hour_id,
-                        o2c_d.unadjusted_hrly_value       as o2c_d_unadjusted_hrly_value,
-                        o2c_d.modc_cd                     as o2c_d_modc_cd,
-                        o2c_w.hour_id                     as o2c_w_hour_id,
-                        o2c_w.unadjusted_hrly_value       as o2c_w_unadjusted_hrly_value,
-                        o2c_w.modc_cd                     as o2c_w_modc_cd
-                  from  camdecmps.HRLY_OP_DATA hod
-                        left join
-                        (
-                            select  hour_id,
-                                    mon_loc_id,
-                                    rpt_period_id,
-                                    unadjusted_hrly_value,
-                                    modc_cd
-                              from  camdecmps.MONITOR_HRLY_VALUE
-                             where  mon_loc_id = any( monLocIds )
-                               and  rpt_period_id = vrptperiodid
-                               and  parameter_cd = 'NOXC'
-                               and  modc_cd not in ( '47', '48' )
-                        ) noxc
-                          on noxc.hour_id = hod.hour_id
-                         and noxc.mon_loc_id = hod.mon_loc_id
-                         and noxc.rpt_period_id = hod.rpt_period_id
-                        left join
-                        (
-                            select  hour_id,
-                                    mon_loc_id,
-                                    rpt_period_id,
-                                    unadjusted_hrly_value,
-                                    modc_cd
-                              from  camdecmps.MONITOR_HRLY_VALUE
-                             where  mon_loc_id = any( monLocIds )
-                               and  rpt_period_id = vrptperiodid
-                               and  parameter_cd = 'CO2C'
-                               and  modc_cd not in ( '47', '48' )
-                        ) co2c
-                          on co2c.hour_id = hod.hour_id
-                         and co2c.mon_loc_id = hod.mon_loc_id
-                         and co2c.rpt_period_id = hod.rpt_period_id
-                        left join
-                        (
-                            select  hour_id,
-                                    mon_loc_id,
-                                    rpt_period_id,
-                                    modc_cd
-                              from  camdecmps.MONITOR_HRLY_VALUE
-                             where  mon_loc_id = any( monLocIds )
-                               and  rpt_period_id = vrptperiodid
-                               and  parameter_cd = 'H2O'
-                        ) h2o
-                          on h2o.hour_id = hod.hour_id
-                         and h2o.mon_loc_id = hod.mon_loc_id
-                         and h2o.rpt_period_id = hod.rpt_period_id
-                        left join
-                        (
-                            select  hour_id,
-                                    mon_loc_id,
-                                    rpt_period_id,
-                                    unadjusted_hrly_value,
-                                    modc_cd
-                              from  camdecmps.MONITOR_HRLY_VALUE
-                             where  mon_loc_id = any( monLocIds )
-                               and  rpt_period_id = vrptperiodid
-                               and  parameter_cd = 'O2C'
-                               and  moisture_basis = 'D'
-                               and  modc_cd not in ( '47', '48' )
-                        ) o2c_d
-                          on o2c_d.hour_id = hod.hour_id
-                         and o2c_d.mon_loc_id = hod.mon_loc_id
-                         and o2c_d.rpt_period_id = hod.rpt_period_id
-                        left join
-                        (
-                            select  hour_id,
-                                    mon_loc_id,
-                                    rpt_period_id,
-                                    unadjusted_hrly_value,
-                                    modc_cd
-                              from  camdecmps.MONITOR_HRLY_VALUE
-                             where  mon_loc_id = any( monLocIds )
-                               and  rpt_period_id = vrptperiodid
-                               and  parameter_cd = 'O2C'
-                               and  moisture_basis = 'W'
-                               and  modc_cd not in ( '47', '48' )
-                        ) o2c_w
-                          on o2c_w.hour_id = hod.hour_id
-                         and o2c_w.mon_loc_id = hod.mon_loc_id
-                         and o2c_w.rpt_period_id = hod.rpt_period_id
-                 where  hod.MON_LOC_ID = any( monLocIds )
-                   and  hod.RPT_PERIOD_ID = vrptperiodid
-            ) mhv
-              ON mhv.HOUR_ID = hod.HOUR_ID
-             and mhv.MON_LOC_ID = hod.MON_LOC_ID
-             and mhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
-            left join camdecmps.MONITOR_FORMULA mf
-              ON mf.MON_FORM_ID = dhv.NOXR_MON_FORM_ID
-            left join camdecmps.MONITOR_FORMULA nox_mf
-              ON nox_mf.MON_FORM_ID = dhv.NOX_MON_FORM_ID
-     where dhv.noxr_modc_cd is not null and dhv.noxr_hour_id is not null;
+                        join camdecmps.DERIVED_HRLY_VALUE dhv
+                          on dhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
+                         and dhv.MON_LOC_ID = hod.MON_LOC_ID
+                         and dhv.HOUR_ID = hod.HOUR_ID
+                         and dhv.PARAMETER_CD in ( 'H2O', 'HI', 'NOX', 'NOXR' )
+                        left join camdecmps.MONITOR_HRLY_VALUE mhv
+                          on mhv.RPT_PERIOD_ID = hod.RPT_PERIOD_ID
+                         and mhv.MON_LOC_ID = hod.MON_LOC_ID
+                         and mhv.HOUR_ID = hod.HOUR_ID
+                         and mhv.PARAMETER_CD in ( 'CO2C', 'H2O', 'NOXC', 'O2C' )
+                         and mhv.MODC_CD not in ( '47', '48' )
+                        left join camdecmps.MONITOR_FORMULA frm
+                          on frm.MON_FORM_ID = dhv.MON_FORM_ID
+                 group
+                    by  mpl.MON_PLAN_ID,
+                        hod.MON_LOC_ID,
+                        hod.RPT_PERIOD_ID,
+                        hod.BEGIN_DATE,
+                        hod.BEGIN_HOUR,
+                        hod.OP_TIME,
+                        hod.HR_LOAD,
+                        hod.LOAD_UOM_CD,
+                        hod.FC_FACTOR,
+                        hod.FD_FACTOR,
+                        hod.FW_FACTOR,
+                        ems.CHK_SESSION_ID
+        ) dat
+ where  dat.NOXR_HOUR_ID is not null;
 	    
     
     RAISE NOTICE 'Refreshing view counts...';
