@@ -126,10 +126,10 @@ BEGIN
                         -- NOXR
                         max( case when dhv.PARAMETER_CD = 'NOXR' then dhv.HOUR_ID end ) as NOXR_HOUR_ID,
                         max( case when dhv.PARAMETER_CD = 'NOXR' then dhv.UNADJUSTED_HRLY_VALUE end ) as NOXR_UNADJUSTED_HRLY_VALUE,
-                        max( case when mhv.PARAMETER_CD = 'NOXR' then dhv.APPLICABLE_BIAS_ADJ_FACTOR end ) as NOXR_APPLICABLE_BIAS_ADJ_FACTOR,
+                        max( case when dhv.PARAMETER_CD = 'NOXR' then dhv.APPLICABLE_BIAS_ADJ_FACTOR end ) as NOXR_APPLICABLE_BIAS_ADJ_FACTOR,
                         max( case when dhv.PARAMETER_CD = 'NOXR' then dhv.ADJUSTED_HRLY_VALUE end ) as NOXR_ADJUSTED_HRLY_VALUE,
                         max( case when dhv.PARAMETER_CD = 'NOXR' then dhv.MODC_CD end ) as NOXR_MODC_CD,
-                        max( case when mhv.PARAMETER_CD = 'NOXR' then dhv.PCT_AVAILABLE end ) as NOXR_PCT_AVAILABLE,
+                        max( case when dhv.PARAMETER_CD = 'NOXR' then dhv.PCT_AVAILABLE end ) as NOXR_PCT_AVAILABLE,
                         max( case when dhv.PARAMETER_CD = 'NOXR' then dhv.CALC_UNADJUSTED_HRLY_VALUE end ) as NOXR_CALC_UNADJUSTED_HRLY_VALUE,
                         max( case when dhv.PARAMETER_CD = 'NOXR' then dhv.CALC_ADJUSTED_HRLY_VALUE end ) as NOXR_CALC_ADJUSTED_HRLY_VALUE,
                         max( case when dhv.PARAMETER_CD = 'NOXR' then dhv.CALC_PCT_DILUENT end ) as NOXR_CALC_PCT_DILUENT,
