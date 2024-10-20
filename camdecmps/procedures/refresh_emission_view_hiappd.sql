@@ -6,16 +6,8 @@ CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_hiappd
  LANGUAGE plpgsql
 AS $procedure$
 DECLARE
-    monlocids text[];
 BEGIN
-    
-    select  array
-            (
-                select  MON_LOC_ID
-                  from  camdecmps.MONITOR_PLAN_LOCATION
-                 where  MON_PLAN_ID = vmonplanid
-            )
-      into  monLocIds;
+
     RAISE NOTICE 'Deleting existing records...';
     DELETE FROM camdecmps.EMISSION_VIEW_HIAPPD    WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;
     RAISE NOTICE 'Refreshing view data...';

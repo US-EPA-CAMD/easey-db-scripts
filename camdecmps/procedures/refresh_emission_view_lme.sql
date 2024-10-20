@@ -6,7 +6,6 @@ CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_lme
  LANGUAGE plpgsql
 AS $procedure$
 DECLARE
-    monlocids text[];
 BEGIN    
     RAISE NOTICE 'Deleting existing records...';
 	DELETE FROM camdecmps.EMISSION_VIEW_LME	WHERE MON_PLAN_ID = vMonPlanId AND RPT_PERIOD_ID = vRptPeriodId;

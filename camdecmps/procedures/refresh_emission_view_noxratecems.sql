@@ -6,21 +6,10 @@ CREATE OR REPLACE PROCEDURE camdecmps.refresh_emission_view_noxratecems
  LANGUAGE plpgsql
 AS $procedure$
 DECLARE 
-    monlocids text[];
 BEGIN    
-    select  array
-            (
-                select  MON_LOC_ID
-                  from  camdecmps.MONITOR_PLAN_LOCATION
-                 where  MON_PLAN_ID = vmonplanid
-            )
-      into  monLocIds;
-    
-    
     RAISE NOTICE 'Deleting existing records...';
 
-	DELETE FROM camdecmps.EMISSION_VIEW_NOXRATECEMS 	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
-
+	DELETE FROM camdecmps.EMISSION_VIEW_NOXRATECEMS 	WHERE MON_PLAN_ID = vmonplanid AND RPT_PERIOD_ID = vrptperiodid;
     RAISE NOTICE 'Refreshing view data...';
 
 	INSERT INTO camdecmps.EMISSION_VIEW_NOXRATECEMS(		MON_PLAN_ID,		MON_LOC_ID,		RPT_PERIOD_ID,		DATE_HOUR,		OP_TIME,		UNIT_LOAD,		LOAD_UOM,		NOX_RATE_MODC,		NOX_RATE_PMA,		UNADJ_NOX,		NOX_MODC,		DILUENT_PARAM,		PCT_DILUENT_USED,		DILUENT_MODC,		RPT_DILUENT,		PCT_H2O_USED,		SOURCE_H2O_VALUE,		F_FACTOR,		NOX_RATE_FORMULA_CD,		RPT_UNADJ_NOX_RATE,		CALC_UNADJ_NOX_RATE,		CALC_NOX_BAF,		RPT_ADJ_NOX_RATE,		CALC_ADJ_NOX_RATE,		CALC_HI_RATE,		NOX_MASS_FORMULA_CD,		RPT_NOX_MASS,		CALC_NOX_MASS,		ERROR_CODES	)    select  dat.MON_PLAN_ID,
@@ -187,9 +176,9 @@ BEGIN
                         hod.FD_FACTOR,
                         hod.FW_FACTOR,
                         ems.CHK_SESSION_ID
-        ) dat
- where  dat.NOXR_HOUR_ID is not null;
-	    
+            ) dat
+     where  dat.NOXR_HOUR_ID is not null;
+    
     
     RAISE NOTICE 'Refreshing view counts...';
 
