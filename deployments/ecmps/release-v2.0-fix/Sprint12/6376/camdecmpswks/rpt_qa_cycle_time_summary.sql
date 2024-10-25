@@ -1,5 +1,3 @@
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_cycle_time_summary(text) CASCADE;
-
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_cycle_time_summary(
 	testsumid text)
     RETURNS TABLE("unitStack" text, "gpIndicator" numeric, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "beginDateTime" text ,"endDateTime" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "quarter" text, "evalStatus" text, "submissionStatus" text, "submittedOn" text, "totalCycleTime" numeric, "calcTotalCycleTime" numeric) 

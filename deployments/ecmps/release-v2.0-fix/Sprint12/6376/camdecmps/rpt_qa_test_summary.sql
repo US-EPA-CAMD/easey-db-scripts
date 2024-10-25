@@ -1,7 +1,5 @@
 -- FUNCTION: camdecmps.rpt_qa_test_summary(text)
 
-DROP FUNCTION IF EXISTS camdecmps.rpt_qa_test_summary(text) CASCADE;
-
 CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_test_summary(
 	testsumid text)
     RETURNS TABLE("unitStack" text, "gpIndicator" numeric, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "beginDateTime" text ,"endDateTime" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "quarter" text, "evalStatus" text, "submissionStatus" text, "submittedOn" text, "testDescription" text) 
