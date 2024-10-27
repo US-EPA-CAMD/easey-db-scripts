@@ -1,34 +1,32 @@
 -- FUNCTION: camdecmpswks.update_ecmps_status_for_qa_evaluation(character varying, character varying)
 
-DROP FUNCTION IF EXISTS camdecmpswks.update_ecmps_status_for_qa_evaluation(character varying, character varying) CASCADE;
+-- DROP FUNCTION IF EXISTS camdecmpswks.update_ecmps_status_for_qa_evaluation(character varying, character varying);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.update_ecmps_status_for_qa_evaluation(
 	vtestsumid character varying,
 	vchksessionid character varying)
     RETURNS TABLE(result text, error_msg character varying) 
     LANGUAGE 'plpgsql'
-
     COST 100
-    VOLATILE 
+    VOLATILE PARALLEL UNSAFE
     ROWS 1000
-    
+
 AS $BODY$
+
 declare 
-    vSubmittable    char(1);
-	vListID         character varying; 
     vCount          int;
 	vContinue       char(1);
-	I				int;
-	TEST_CSR        CURSOR FOR SELECT TEST_SUM_ID FROM tmpTestsStatus;
+	V_TEST_SUM_ID	character varying;
 	vTempID         character varying;
+	V_MON_PLAN_ID   character varying;
+	V_RPT_PERIOD_ID  int;
+	EM_CSR 			CURSOR FOR SELECT MON_PLAN_ID, RPT_PERIOD_ID
+					FROM tmpEmissionsStatus;
 	
 begin    
     error_msg := '';
     result := 'T';
-	
-	create temp table tmpTestsStatus (TEST_SUM_ID character varying PRIMARY KEY);
-	
- /* Remove check session for the record that are not the current check session. */
+ -- Remove check session for the record that are not the current check session. 
 	  DELETE FROM camdecmpswks.CHECK_SESSION 
 		WHERE TEST_SUM_ID = vTestSumId
 		 AND  CHK_SESSION_ID != vChkSessionId;	
@@ -42,31 +40,29 @@ begin
 		
 		UPDATE camdecmpswks.QA_SUPP_DATA
 			SET UPDATED_STATUS_FLG	= 'Y'
-			WHERE TEST_SUM_ID = vTestSumId AND (
-				submission_availability_cd IS NULL OR
-				submission_availability_cd = 'GRANTED' OR
-				submission_availability_cd = 'REQUIRE'
-			);
+			WHERE TEST_SUM_ID = vTestSumId 
+			  AND (submission_availability_cd IS NULL 
+			       OR submission_availability_cd = 'GRANTED' 
+				   OR submission_availability_cd = 'REQUIRE');
 		
 		--common part for QA Test-------
-		vContinue:='Y';
-		
+		vContinue:='Y';		
 			   --Check no test_sum_id or can't submit
 				SELECT count(*) into vCount
 					FROM camdecmpswks.QA_SUPP_DATA
-					 WHERE TEST_SUM_ID != vTestSumId OR (
-						TEST_SUM_ID = vTestSumId AND (
-							submission_availability_cd IS NULL OR
+					 WHERE TEST_SUM_ID != vTestSumId 
+					   OR (	TEST_SUM_ID = vTestSumId AND 
+					          (submission_availability_cd IS NULL OR
 							submission_availability_cd = 'GRANTED' OR
-							submission_availability_cd = 'REQUIRE'
-						));
+							submission_availability_cd = 'REQUIRE' ));
 
-				  if vCount=0 then 
+			  if vCount=0 then 
 				      vContinue:='N';
-                   end if;
+                end if;
 				   
-		 If vContinue='Y' then
-		   	-- wipe out calculated test data for related tests		
+	 If vContinue='Y' then
+	   	create temp table tmpTestsStatus (TEST_SUM_ID character varying PRIMARY KEY);
+			   	-- wipe out calculated test data for related tests		
 				   INSERT INTO tmpTestsStatus 
 						SELECT TT.TEST_SUM_ID FROM (
 							SELECT DISTINCT T.TEST_SUM_ID
@@ -131,78 +127,59 @@ begin
 							LEFT OUTER JOIN camdecmpswks.QA_SUPP_DATA QS ON TT.TEST_SUM_ID = QS.TEST_SUM_ID
 							WHERE QS.SUBMISSION_AVAILABILITY_CD IS NULL OR
 								QS.SUBMISSION_AVAILABILITY_CD IN ('GRANTED','REQUIRE');
-	 
-		     select * into result, error_msg from camdecmpswks.Delete_Calculated_QA_Data_from_Workspace();	
+	----calling deletion for ID in tmpTestsStatus
+		    select * into result, error_msg
+			  from camdecmpswks.Delete_Calculated_QA_Data_from_Workspace();			                   
+		     
+			  if result = 'F' then   -- 	del sp failed, bail the loop
+				 return;
+			  end if;			
 		
-	/*	   I:=0;
-		   OPEN TEST_CSR;
-		     FETCH TEST_CSR into vTempID;
-			  I:=I+1;		   
-			 If I=1 then 
-			   vListID:=vTemID;
-			 elsif I>0 and vTempID is not null then
-			   vListID:=(vListID||',');
-			 end if;
-			if I=100 then			 
-		        select  camdecmpswks.Delete_Calculated_QA_Data_from_Workspace(vListId, result, error_msg );	
-				I:=0;
-				vListID:=null;
-			end if;
-			if vListID is not null then
-			   select  camdecmpswks.Delete_Calculated_QA_Data_from_Workspace(vListId, result, error_msg );	
-			 end if;
-		  close TEST_CSR;
-		  */
-	----------------------------------------------
-	/*		--	update EM evaluation
-					INSERT INTO @tmpEmissionsStatus SELECT DISTINCT E.MON_PLAN_ID, E.RPT_PERIOD_ID
-						FROM EMISSION_EVALUATION E,
-							EM_SUBMISSION_ACCESS ESA,
-							MONITOR_PLAN_LOCATION M, 
-							REPORTING_PERIOD R,
+	--	update EM evaluation
+	 create temp table camdecmpswks.tmpEmissionsStatus(MON_PLAN_ID character varying,RPT_PERIOD_ID int);
+		   INSERT INTO camdecmpswks.tmpEmissionsStatus 
+		     SELECT DISTINCT E.MON_PLAN_ID, E.RPT_PERIOD_ID
+						FROM camdecmpswks.EMISSION_EVALUATION E,
+							camdecmpsaux.EM_SUBMISSION_ACCESS ESA,
+							camdecmpswks.MONITOR_PLAN_LOCATION M, 
+							camdecmpsmd.REPORTING_PERIOD R,
 							(SELECT MON_LOC_ID, TEST_SUM_ID,
 							CASE WHEN TS.RPT_PERIOD_ID IS NULL THEN extract(year from TS.END_DATE) ELSE RP.CALENDAR_YEAR END AS CALENDAR_YEAR,
 							CASE WHEN TS.RPT_PERIOD_ID IS NULL THEN FLOOR((extract(month from TS.END_DATE) + 2) / 3) ELSE RP.QUARTER END AS QUARTER
-						FROM TEST_SUMMARY TS
-							LEFT OUTER JOIN REPORTING_PERIOD RP ON TS.RPT_PERIOD_ID = RP.RPT_PERIOD_ID) T
+						FROM camdecmpswks.TEST_SUMMARY TS
+							LEFT OUTER JOIN camdecmpsmd.REPORTING_PERIOD RP ON TS.RPT_PERIOD_ID = RP.RPT_PERIOD_ID) T
 						WHERE E.MON_PLAN_ID = M.MON_PLAN_ID AND 
 							E.RPT_PERIOD_ID = R.RPT_PERIOD_ID AND
 							E.NEEDS_EVAL_FLG = 'N' AND
 							E.MON_PLAN_ID = ESA.MON_PLAN_ID AND 
 							E.RPT_PERIOD_ID = ESA.RPT_PERIOD_ID AND
-							ESA.SUBMISSION_AVAILABILITY_CD IN ('GRANTED','REQUIRE') AND
+							ESA.SUB_AVAILABILITY_CD IN ('GRANTED','REQUIRE') AND
 							M.MON_LOC_ID = T.MON_LOC_ID AND
 							(R.CALENDAR_YEAR > T.CALENDAR_YEAR OR 
-							(R.CALENDAR_YEAR = T.CALENDAR_YEAR AND R.QUARTER >= T.QUARTER)) AND
-							TEST_SUM_ID IN 
-								(SELECT Ids.ID.value('.','varchar(45)') as ID
-								 FROM @XMLIDKEYS.nodes('/IDs/ID') as Ids(ID));
-
-					DECLARE EM_CSR CURSOR local FOR
-						SELECT MON_PLAN_ID, RPT_PERIOD_ID
-						FROM @tmpEmissionsStatus;
-
-					OPEN EM_CSR;
-					FETCH EM_CSR INTO @V_MON_PLAN_ID, @V_RPT_PERIOD_ID;
-
-					WHILE (@@fetch_status = 0) 
-					BEGIN
-						EXEC dbo.DEL_CALCULATED_EMISSIONS_DATA @V_MON_PLAN_ID = @V_MON_PLAN_ID, @V_RPT_PERIOD_ID = @V_RPT_PERIOD_ID, @V_RESULT = @V_RESULT OUTPUT, @V_ERROR_MSG = @V_ERROR_MSG OUTPUT;
-						IF @V_RESULT = 'F'
-							BREAK;
-						FETCH EM_CSR INTO @V_MON_PLAN_ID, @V_RPT_PERIOD_ID;
-					END
-
-					CLOSE EM_CSR;
-					DEALLOCATE EM_CSR;
-	*/
-     end if;
-   return next;
+							(R.CALENDAR_YEAR = T.CALENDAR_YEAR AND R.QUARTER >= T.QUARTER)) 
+							AND	TEST_SUM_ID IN 
+							(select distinct test_sum_id from camdecmpswks.tmpTestsStatus);
+	
+			OPEN EM_CSR;	
+			  LOOP
+				FETCH NEXT FROM EM_CSR INTO V_MON_PLAN_ID, V_RPT_PERIOD_ID;
+				   EXIT WHEN NOT FOUND;
+				   select * into result, error_msg 
+				   from camdecmpswks.delete_calculated_em_data_from_workspace(V_MON_PLAN_ID, V_RPT_PERIOD_ID);	
+					IF result = 'F' then
+					 return;
+				    end if;
+				 RETURN NEXT;
+			  END LOOP;
+			CLOSE EM_CSR;
+   end if;   --vContinue if
+   return;
 
 exception when others then
     get stacked diagnostics error_msg := message_text;
     result = 'F';
-   
-   return next;
+    error_msg :='From update_ecmps_status_for_qa_evaluation ' ||' '|| error_msg;
+	
+   return;
 END;
 $BODY$;
