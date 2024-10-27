@@ -17,8 +17,8 @@ WHERE cross_chk_catalog_value_id=(select cross_chk_catalog_value_id
 																from camdecmpsmd.cross_check_catalog
 																where cross_chk_catalog_name='Parameter to Category') 
 																	and value1='SORX' 
-																	and value2='DEFAULT');																	
-
+																	and value2='DEFAULT');
+																	
 --Units of Measure Code for Default
 INSERT INTO camdecmpsmd.cross_check_catalog(cross_chk_catalog_name
 											, cross_chk_catalog_description
