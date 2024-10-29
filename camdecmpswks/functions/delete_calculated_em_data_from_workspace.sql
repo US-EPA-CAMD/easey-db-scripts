@@ -127,15 +127,13 @@ BEGIN
 	 select * into result, error_msg 
 	   from camdecmpswks.emissions_grid_remove_eval(vmonplan_id, vrptperiod_id );	
 	
-	 return next;
+	 return;
 
 exception when others then
     get stacked diagnostics error_msg := message_text;
     result = 'F'; 
 	error_msg :='From delete_calculated_em_data_from_workspace '||' '|| message_text;
 	
-   return next;
+   return;
 END;
 $BODY$;
-
-

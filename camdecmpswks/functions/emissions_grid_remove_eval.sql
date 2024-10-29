@@ -16,10 +16,6 @@ AS $BODY$
 BEGIN
     error_msg := '';
     result := 'T';
-
-	--AY keep the line below for 'Client.DeleteEMGridTables', in case we do need take care of it
-	-- NOTE: if you modify this, also check Client.DeleteEMGridTables procedure too!
-	--
 	
 	UPDATE camdecmpswks.EMISSION_VIEW_CO2APPD
 		SET	CALC_HI_RATE = NULL,
@@ -168,13 +164,13 @@ BEGIN
 		where MON_PLAN_ID =vmonplan_id
 		  and RPT_PERIOD_ID = vrptperiod_id;
 
- return next;
+ return;
 
 exception when others then
     get stacked diagnostics error_msg := message_text;
     result = 'F';  
 	error_msg :='From emissions_grid_remove_eval '||' '|| message_text;
 	
-   return next;
+   return;
 END;
 $BODY$;
