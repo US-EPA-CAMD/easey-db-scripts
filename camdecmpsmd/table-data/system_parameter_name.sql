@@ -1,0 +1,10 @@
+INSERT INTO camdecmpsmd.system_parameter_name (sys_param_name, sys_param_description) VALUES ('ADD_EDIT_MESSAGES', 'Add/Edit Messages');
+INSERT INTO camdecmpsmd.system_parameter_name (sys_param_name, sys_param_description) VALUES ('CLIENT_SETTINGS', 'Client Settings');
+INSERT INTO camdecmpsmd.system_parameter_name (sys_param_name, sys_param_description) VALUES ('DB_PREFIX', 'Database prefix for this ECMPS Client Database');
+INSERT INTO camdecmpsmd.system_parameter_name (sys_param_name, sys_param_description) VALUES ('CAMD_CONTACT_INFO', 'CAMD''s contact information');
+INSERT INTO camdecmpsmd.system_parameter_name (sys_param_name, sys_param_description) VALUES ('HOST_SETTINGS', 'Host Settings');
+INSERT INTO camdecmpsmd.system_parameter_name (sys_param_name, sys_param_description) VALUES ('DB_SETTINGS', 'Database settings');
+INSERT INTO camdecmpsmd.system_parameter_name (sys_param_name, sys_param_description) VALUES ('REPORT_SETTINGS', 'Reports settings');
+INSERT INTO camdecmpsmd.system_parameter_name (sys_param_name, sys_param_description) VALUES ('PGVP_AETB_RULE_DATE', 'PGVP/AETB Rule date');
+INSERT INTO camdecmpsmd.system_parameter_name (sys_param_name, sys_param_description) VALUES ('EXPORT_SETTINGS', 'Export Settings');
+INSERT INTO camdecmpsmd.system_parameter_name (sys_param_name, sys_param_description) VALUES ('MATS_RULE', 'MATS Rule Parameters');
