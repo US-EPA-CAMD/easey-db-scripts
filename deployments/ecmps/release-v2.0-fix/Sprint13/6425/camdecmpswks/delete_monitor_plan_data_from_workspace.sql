@@ -1,7 +1,5 @@
 -- PROCEDURE: camdecmpswks.delete_monitor_plan_from_workspace(text)
 
-DROP PROCEDURE IF EXISTS camdecmpswks.delete_monitor_plan_data_from_workspace(text);
-
 CREATE OR REPLACE PROCEDURE camdecmpswks.delete_monitor_plan_data_from_workspace(
 	monplanid text)
 LANGUAGE 'plpgsql'
