@@ -1,0 +1,10 @@
+INSERT INTO camdecmpsmd.check_data_type_code (check_data_type_cd, check_data_type_cd_name) VALUES ('BOOLEAN', 'Boolean');
+INSERT INTO camdecmpsmd.check_data_type_code (check_data_type_cd, check_data_type_cd_name) VALUES ('DATALST', 'Delimited List');
+INSERT INTO camdecmpsmd.check_data_type_code (check_data_type_cd, check_data_type_cd_name) VALUES ('DATAREF', 'Data View Reference');
+INSERT INTO camdecmpsmd.check_data_type_code (check_data_type_cd, check_data_type_cd_name) VALUES ('DATAROW', 'Data Row');
+INSERT INTO camdecmpsmd.check_data_type_code (check_data_type_cd, check_data_type_cd_name) VALUES ('DATAVW', 'Data View');
+INSERT INTO camdecmpsmd.check_data_type_code (check_data_type_cd, check_data_type_cd_name) VALUES ('DATE', 'Date');
+INSERT INTO camdecmpsmd.check_data_type_code (check_data_type_cd, check_data_type_cd_name) VALUES ('DECIMAL', 'Decimal');
+INSERT INTO camdecmpsmd.check_data_type_code (check_data_type_cd, check_data_type_cd_name) VALUES ('INTEGER', 'Integer');
+INSERT INTO camdecmpsmd.check_data_type_code (check_data_type_cd, check_data_type_cd_name) VALUES ('OBJECT', 'Object');
+INSERT INTO camdecmpsmd.check_data_type_code (check_data_type_cd, check_data_type_cd_name) VALUES ('STRING', 'String');
