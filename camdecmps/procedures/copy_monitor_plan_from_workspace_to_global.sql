@@ -34,8 +34,8 @@ BEGIN
 
     WITH mp_timeframe as (
         SELECT
-            brp.begin_date,
-            erp.end_date
+            brp.end_date AS begin_date,
+            erp.begin_date AS end_date
         FROM camdecmpswks.monitor_plan mp
         JOIN camdecmpsmd.reporting_period brp ON mp.begin_rpt_period_id = brp.rpt_period_id
         JOIN camdecmpsmd.reporting_period erp ON mp.end_rpt_period_id = erp.rpt_period_id
