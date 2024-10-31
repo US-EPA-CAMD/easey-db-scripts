@@ -40,7 +40,15 @@ INSERT INTO camdecmpswks.stack_pipe(
 SELECT
     stack_pipe_id, fac_id, stack_name, active_date, retire_date, userid, add_date, update_date
 FROM camdecmps.stack_pipe
-WHERE stack_pipe_id = ANY(stackPipeIds);
+WHERE stack_pipe_id = ANY(stackPipeIds)
+ON CONFLICT (stack_pipe_id) DO UPDATE
+SET fac_id = EXCLUDED.fac_id,
+    stack_name = EXCLUDED.stack_name,
+    active_date = EXCLUDED.active_date,
+    retire_date = EXCLUDED.retire_date,
+    userid = EXCLUDED.userid,
+    add_date = EXCLUDED.add_date,
+    update_date = EXCLUDED.update_date;
 
 -- UNIT --
 INSERT INTO camdecmpswks.unit(
