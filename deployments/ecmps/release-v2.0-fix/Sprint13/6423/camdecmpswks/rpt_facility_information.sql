@@ -67,7 +67,7 @@ SELECT
 		rp.period_abbreviation AS "yearQuarter",
 		( SELECT max(osd.Op_Value)
 			FROM camdecmpswks.operating_supp_data osd
-			JOIN camdecmpswks.monitor_plan_location mploc USING (mon_loc_id)
+			JOIN camdecmpswks.monitor_plan_location mploc USING(mon_loc_id)
 			WHERE mploc.mon_plan_id = vMonPlanId 
 				AND osd.rpt_period_id = rp.rpt_period_id
 				AND osd.op_type_cd = 'OPTIME'

@@ -28,7 +28,7 @@ BEGIN
 		(datatableId, 8, 'longitude', 'Longitude'),
 		(datatableId, 9, 'hidden2', 'HIDDEN'),
 		(datatableId, 10, 'yearQuarter', 'Year/Quarter'),
-		(datatableId, 11, 'totalHours', 'Total Hours'),
+		(datatableId, 11, 'totalOPTime', 'Total OP Time'),
 		(datatableId, 12, 'hidden3', 'HIDDEN');
 	
 	/***** PARAMETERS *****/
