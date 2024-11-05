@@ -37,7 +37,7 @@ SELECT
 		rp.period_abbreviation as "quarter",
 		null as "evalStatus",
 		sac.sub_avail_cd_description as "submisionStatus",
-		TO_CHAR(eq.submitted_on, 'MM/DD/YYYY HH24:MI') as "submittedOn",
+		TO_CHAR(eq.queued_time, 'MM/DD/YYYY HH24:MI') as "submittedOn",
 		ts.test_description as "testDescription",
 		r.num_load_level as "noLoad",
 		r.overall_bias_adj_factor as "biasAdjFactor",

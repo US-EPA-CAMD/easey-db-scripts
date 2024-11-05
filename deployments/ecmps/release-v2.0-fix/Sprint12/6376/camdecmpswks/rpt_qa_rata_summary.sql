@@ -1,5 +1,3 @@
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_rata_summary(text);
-
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_rata_summary(
 	testsumid text)
     RETURNS TABLE(

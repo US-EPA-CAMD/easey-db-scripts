@@ -32,7 +32,7 @@ SELECT
 		rp.period_abbreviation as "quarter",
 		esc.eval_status_cd_description as "evalStatus",
 		sac.sub_avail_cd_description as "submisionStatus",
-		TO_CHAR(eq.submitted_on, 'MM/DD/YYYY HH24:MI') as "submittedOn",
+		TO_CHAR(eq.queued_time, 'MM/DD/YYYY HH24:MI') as "submittedOn",
 		cts.total_time AS "totalCycleTime",
 		cts.calc_total_time AS "calcTotalCycleTime"
 	FROM camdecmpswks.cycle_time_summary cts

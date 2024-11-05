@@ -1,10 +1,8 @@
--- FUNCTION: camdecmps.rpt_qa_cycle_time_summary(text)
+-- FUNCTION: camdecmps.rpt_qa_test_summary(text)
 
-DROP FUNCTION IF EXISTS camdecmps.rpt_qa_cycle_time_summary(text) CASCADE;
-
-CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_cycle_time_summary(
+CREATE OR REPLACE FUNCTION camdecmps.rpt_qa_test_summary(
 	testsumid text)
-    RETURNS TABLE("unitStack" text, "gpIndicator" numeric, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "beginDateTime" text ,"endDateTime" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "quarter" text, "evalStatus" text, "submissionStatus" text, "submittedOn" text, "totalCycleTime" numeric, "calcTotalCycleTime" numeric) 
+    RETURNS TABLE("unitStack" text, "gpIndicator" numeric, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "beginDateTime" text ,"endDateTime" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "quarter" text, "evalStatus" text, "submissionStatus" text, "submittedOn" text, "testDescription" text) 
     LANGUAGE 'sql'
     COST 100
     VOLATILE PARALLEL UNSAFE
@@ -35,10 +33,8 @@ SELECT
 		null as "evalStatus",
 		sac.sub_avail_cd_description as "submisionStatus",
 		TO_CHAR(eq.queued_time, 'MM/DD/YYYY HH24:MI') as "submittedOn",
-		cts.total_time AS "totalCycleTime",
-		cts.calc_total_time AS "calcTotalCycleTime"
-	FROM camdecmps.cycle_time_summary cts
-	JOIN camdecmps.test_summary ts ON ts.test_sum_id = cts.test_sum_id
+		ts.test_description as "testDescription"
+	FROM camdecmps.test_summary ts
 	JOIN camdecmps.qa_supp_data supp on ts.test_sum_id = supp.test_sum_id
 	JOIN camdecmps.monitor_location ml ON ts.mon_loc_id = ml.mon_loc_id
 	JOIN camdecmpsmd.submission_availability_code sac USING(submission_availability_cd)
