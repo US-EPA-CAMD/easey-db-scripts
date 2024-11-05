@@ -38,7 +38,7 @@ BEGIN
             erp.begin_date AS end_date
         FROM camdecmpswks.monitor_plan mp
         JOIN camdecmpsmd.reporting_period brp ON mp.begin_rpt_period_id = brp.rpt_period_id
-        JOIN camdecmpsmd.reporting_period erp ON mp.end_rpt_period_id = erp.rpt_period_id
+        LEFT JOIN camdecmpsmd.reporting_period erp ON mp.end_rpt_period_id = erp.rpt_period_id
         WHERE mon_plan_id = monPlanId
     )
 	SELECT ARRAY(
