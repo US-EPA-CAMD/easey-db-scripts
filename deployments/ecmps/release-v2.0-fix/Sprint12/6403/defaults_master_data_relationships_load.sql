@@ -73,6 +73,7 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, 
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Units of Measure Code for Defaults'), 'NOCX', 'PPM', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Units of Measure Code for Defaults'), 'MNGF', 'HSCF', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Units of Measure Code for Defaults'), 'BWA', 'PCT', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Units of Measure Code for Defaults'), 'SORX', 'LBMMBTU', null);
 
 --Purpose Code for Default
 INSERT INTO camdecmpsmd.cross_check_catalog(cross_chk_catalog_name
@@ -125,6 +126,7 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, 
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Purpose Code for Defaults'), 'NOCX', 'MD', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Purpose Code for Defaults'), 'MNGF', 'DM', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Purpose Code for Defaults'), 'BWA', 'PM', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Purpose Code for Defaults'), 'SORX', 'MD', null);
 
 --Fuel Code for Default
 INSERT INTO camdecmpsmd.cross_check_catalog(cross_chk_catalog_name
@@ -554,7 +556,9 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, 
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Fuel Code for Defaults'), 'BWA', 'TDF', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Fuel Code for Defaults'), 'BWA', 'W', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Fuel Code for Defaults'), 'BWA', 'WF', null);
-
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Fuel Code for Defaults'), 'SORX', 'DSL', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Fuel Code for Defaults'), 'SORX', 'NFS', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Fuel Code for Defaults'), 'SORX', 'PNG', null);
 -- Source Code
 INSERT INTO camdecmpsmd.cross_check_catalog(cross_chk_catalog_name
 											, cross_chk_catalog_description
@@ -629,14 +633,16 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, 
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Source Code for Defaults'), 'NOCX', 'TEST', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Source Code for Defaults'), 'MNGF', 'DATA', null);
 INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Source Code for Defaults'), 'BWA', 'DATA', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Source Code for Defaults'), 'SORX', 'DATA', null);
+INSERT INTO camdecmpsmd.cross_check_catalog_value(cross_chk_catalog_id, value1, value2, value3) VALUES ((select cross_chk_catalog_id from camdecmpsmd.cross_check_catalog where cross_chk_catalog_name='Parameter Code to Source Code for Defaults'), 'SORX', 'DEF', null);
 
 /*
 --DATA VALIDATION SCRIPTS
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Parameter to Category' and value2='DEFAULT'; --20 rows
-select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Parameter Code to Units of Measure Code for Defaults'; --24 rows
-select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Parameter Code to Purpose Code for Defaults'; --21 rows
-select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Parameter Code to Fuel Code for Defaults'; --398 rows
+select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Parameter Code to Units of Measure Code for Defaults'; --25 rows
+select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Parameter Code to Purpose Code for Defaults'; --22 rows
+select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Parameter Code to Fuel Code for Defaults'; --401 rows
 select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Operating Condition to Category' and value2='DEFAULT'; --5 rows
-select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Parameter Code to Source Code for Defaults'; --44 rows
+select * from camdecmpsmd.vw_cross_check_catalog_value where cross_chk_catalog_name='Parameter Code to Source Code for Defaults'; --46 rows
 select * from camdecmpsmd.vw_defaults_master_data_relationships --4725 rows
 */
