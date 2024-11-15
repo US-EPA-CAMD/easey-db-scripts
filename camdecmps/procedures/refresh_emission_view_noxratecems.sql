@@ -133,11 +133,11 @@ BEGIN
                         max( case when mhv.PARAMETER_CD = 'NOXC' then mhv.UNADJUSTED_HRLY_VALUE end ) as NOXC_UNADJUSTED_HRLY_VALUE,
                         max( case when mhv.PARAMETER_CD = 'NOXC' then mhv.MODC_CD end ) as NOXC_MODC_CD,
                         -- O2D
-                        max( case when mhv.PARAMETER_CD = 'O2C'  and mhv.MOISTURE_BASIS = 'D' then mhv.UNADJUSTED_HRLY_VALUE end ) as O2D_UNADJUSTED_HRLY_VALUE,
-                        max( case when mhv.PARAMETER_CD = 'O2C'  and mhv.MOISTURE_BASIS = 'D' then mhv.MODC_CD end ) as O2D_MODC_CD,
+                        max( case when mhv.PARAMETER_CD = 'O2C'  and ( mhv.MOISTURE_BASIS = 'D' or mhv.MOISTURE_BASIS is null ) then mhv.UNADJUSTED_HRLY_VALUE end ) as O2D_UNADJUSTED_HRLY_VALUE,
+                        max( case when mhv.PARAMETER_CD = 'O2C'  and ( mhv.MOISTURE_BASIS = 'D' or mhv.MOISTURE_BASIS is null ) then mhv.MODC_CD end ) as O2D_MODC_CD,
                         -- O2W
-                        max( case when mhv.PARAMETER_CD = 'O2C'  and mhv.MOISTURE_BASIS = 'W' then mhv.UNADJUSTED_HRLY_VALUE end ) as O2W_UNADJUSTED_HRLY_VALUE,
-                        max( case when mhv.PARAMETER_CD = 'O2C'  and mhv.MOISTURE_BASIS = 'W' then mhv.MODC_CD end ) as O2W_MODC_CD
+                        max( case when mhv.PARAMETER_CD = 'O2C'  and ( mhv.MOISTURE_BASIS = 'W' or mhv.MOISTURE_BASIS is null ) then mhv.UNADJUSTED_HRLY_VALUE end ) as O2W_UNADJUSTED_HRLY_VALUE,
+                        max( case when mhv.PARAMETER_CD = 'O2C'  and ( mhv.MOISTURE_BASIS = 'W' or mhv.MOISTURE_BASIS is null ) then mhv.MODC_CD end ) as O2W_MODC_CD
                   from  (
                             select  vmonplanid as MON_PLAN_ID,
                                     vrptperiodid as RPT_PERIOD_ID

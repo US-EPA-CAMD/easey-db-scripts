@@ -25,43 +25,76 @@ BEGIN
                 cp2.component_id as component_id_2,
                 sel.component_identifier_2
           from  (
-                    select  trp.mon_loc_id,
-                            trp.mon_sys_id,
-                            trp.begin_date,
-                            trp.begin_hour,
-                            trp.end_date,
-                            trp.end_hour,
+                    select  cmb.mon_loc_id,
+                            cmb.mon_sys_id,
+                            cmb.begin_date,
+                            cmb.begin_hour,
+                            cmb.end_date,
+                            cmb.end_hour,
                             min( cmp.component_identifier ) as component_identifier_1,
                             max( cmp.component_identifier ) as component_identifier_2
                       from  (
-                                select  vmonplanid as mon_plan_id,
-                                        vrptperiodid as rpt_period_id
-                            ) par
-                            join camdecmps.EMISSION_EVALUATION ems
-                              on ems.rpt_period_id = par.rpt_period_id
-                             and ems.mon_plan_id = par.mon_plan_id
-                            join camdecmpsmd.REPORTING_PERIOD prd
-                              on prd.rpt_period_id = ems.rpt_period_id
-                            join camdecmps.MONITOR_PLAN_LOCATION mpl
-                              on mpl.mon_plan_id= ems.mon_plan_id 
-                            join camdecmps.SORBENT_TRAP trp
-                              on trp.rpt_period_id = ems.rpt_period_id 
-                             and trp.mon_loc_id = mpl.mon_loc_id
-                             and trp.begin_date <= prd.end_date
-                             and trp.end_date >= prd.begin_date
-                            join camdecmps.SAMPLING_TRAIN trn
-                              on trn.rpt_period_id = ems.rpt_period_id 
-                             and trn.trap_id = trp.trap_id
+                                select  trp.mon_loc_id,
+                                        trp.mon_sys_id,
+                                        trp.begin_date,
+                                        trp.begin_hour,
+                                        trp.end_date,
+                                        trp.end_hour,
+                                        trn.component_id
+                                  from  (
+                                            select  vmonplanid as mon_plan_id,
+                                                    vrptperiodid as rpt_period_id
+                                        ) par
+                                        join camdecmps.EMISSION_EVALUATION ems
+                                          on ems.rpt_period_id = par.rpt_period_id
+                                         and ems.mon_plan_id = par.mon_plan_id
+                                        join camdecmpsmd.REPORTING_PERIOD prd
+                                          on prd.rpt_period_id = ems.rpt_period_id
+                                        join camdecmps.MONITOR_PLAN_LOCATION mpl
+                                          on mpl.mon_plan_id= ems.mon_plan_id 
+                                        join camdecmps.SORBENT_TRAP trp
+                                          on trp.rpt_period_id = ems.rpt_period_id 
+                                         and trp.mon_loc_id = mpl.mon_loc_id
+                                         and trp.begin_date <= prd.end_date
+                                         and trp.end_date >= prd.begin_date
+                                        join camdecmps.SAMPLING_TRAIN trn
+                                          on trn.rpt_period_id = ems.rpt_period_id 
+                                         and trn.trap_id = trp.trap_id
+                                union  all
+                                select  trp.mon_loc_id,
+                                        trp.mon_sys_id,
+                                        trp.begin_date,
+                                        trp.begin_hour,
+                                        trp.end_date,
+                                        trp.end_hour,
+                                        trn.component_id
+                                  from  (
+                                            select  vmonplanid as mon_plan_id,
+                                                    vrptperiodid as rpt_period_id
+                                        ) par
+                                        join camdecmps.EMISSION_EVALUATION ems
+                                          on ems.rpt_period_id = par.rpt_period_id
+                                         and ems.mon_plan_id = par.mon_plan_id
+                                        join camdecmpsmd.REPORTING_PERIOD prd
+                                          on prd.rpt_period_id = ems.rpt_period_id
+                                        join camdecmps.MONITOR_PLAN_LOCATION mpl
+                                          on mpl.mon_plan_id= ems.mon_plan_id 
+                                        join camdecmps.SORBENT_TRAP_SUPP_DATA trp
+                                          on trp.mon_loc_id = mpl.mon_loc_id
+                                         and trp.begin_date <= prd.end_date
+                                         and trp.end_date >= prd.begin_date
+                                        join camdecmps.SAMPLING_TRAIN_SUPP_DATA trn
+                                          on trn.trap_id = trp.trap_id
+                            ) cmb
                             join camdecmps.COMPONENT cmp
-                              on cmp.component_id = trn.component_id
-                     where  par.RPT_PERIOD_ID = vrptperiodid
+                              on cmp.component_id = cmb.component_id
                      group 
-                        by  trp.mon_loc_id,
-                            trp.mon_sys_id,
-                            trp.begin_date,
-                            trp.begin_hour,
-                            trp.end_date,
-                            trp.end_hour
+                        by  cmb.mon_loc_id,
+                            cmb.mon_sys_id,
+                            cmb.begin_date,
+                            cmb.begin_hour,
+                            cmb.end_date,
+                            cmb.end_hour
                 ) sel
                 left join camdecmps.COMPONENT cp1
                   on cp1.mon_loc_id = sel.mon_loc_id
@@ -78,7 +111,11 @@ BEGIN
             camdecmps.format_date_hour( dat.begin_date, dat.begin_hour, NULL ) as date_hour,
             dat.op_time,
             dat.mats_load,
-            dat.mats_startup_shutdown_flg as mats_startup_shutdown,
+            case
+                when dat.mats_startup_shutdown_flg = 'U' then 'Startup'
+                when dat.mats_startup_shutdown_flg = 'D' then 'Shutdown'
+                else dat.mats_startup_shutdown_flg
+            end as mats_startup_shutdown, 
             dat.hgc_unadjusted_hrly_value as hg_conc_value, 
             sys.system_identifier as hg_conc_system_id, 
             stc.sys_type_description as hg_conc_sys_type,
