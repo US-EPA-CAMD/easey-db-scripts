@@ -60,8 +60,6 @@ BEGIN
                                         join camdecmpswks.SAMPLING_TRAIN trn
                                           on trn.rpt_period_id = ems.rpt_period_id 
                                          and trn.trap_id = trp.trap_id
-                                        join camdecmpswks.COMPONENT cmp
-                                          on cmp.component_id = trn.component_id
                                 union   all
                                 select  trp.mon_loc_id,
                                         trp.mon_sys_id,
@@ -87,8 +85,6 @@ BEGIN
                                          and trp.end_date >= prd.begin_date
                                         join camdecmpswks.SAMPLING_TRAIN_SUPP_DATA trn
                                           on trn.trap_id = trp.trap_id
-                                        join camdecmpswks.COMPONENT cmp
-                                          on cmp.component_id = trn.component_id
                             ) cmb
                             join camdecmpswks.COMPONENT cmp
                               on cmp.component_id = cmb.component_id
