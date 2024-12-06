@@ -36,7 +36,7 @@ BEGIN
         ORDER BY rp.calendar_year
     LOOP
         -- Get the last quarter for this year from the passed-in reporting period id list
-        SELECT MAX(rp.rpt_period_id) INTO maxQuarter
+        SELECT MAX(rp.quarter) INTO maxQuarter
         FROM camdecmpsmd.reporting_period rp
         WHERE rp.calendar_year = year
           AND rp.rpt_period_id IN (SELECT unnest(string_to_array(reportingPeriodIds, ',')::NUMERIC[]));
@@ -55,7 +55,7 @@ BEGIN
             JOIN camdecmpsmd.reporting_period rp USING(rpt_period_id)
         WHERE evs.mon_plan_id = monitorPlanId
           AND evs.mon_loc_id = locationId
-          AND evs.rpt_period_id <= maxQuarter
+          AND rp.quarter <= maxQuarter
           AND evs.row_num = 1 -- quarterly reported data
           AND rp.calendar_year = year
 
@@ -74,7 +74,7 @@ BEGIN
             JOIN camdecmpsmd.reporting_period rp USING(rpt_period_id)
         WHERE evs.mon_plan_id = monitorPlanId
           AND evs.mon_loc_id = locationId
-          AND evs.rpt_period_id = maxQuarter
+          AND rp.quarter = maxQuarter
           AND evs.row_num = 5 -- ozone season reported data
           AND rp.calendar_year = year
 
@@ -93,7 +93,7 @@ BEGIN
         JOIN camdecmpsmd.reporting_period rp USING(rpt_period_id)
         WHERE evs.mon_plan_id = monitorPlanId
           AND evs.mon_loc_id = locationId
-          AND evs.rpt_period_id = maxQuarter
+          AND rp.quarter = maxQuarter
           AND evs.row_num = 3 -- year to date reported data
           AND rp.calendar_year = year; 
     END LOOP;
