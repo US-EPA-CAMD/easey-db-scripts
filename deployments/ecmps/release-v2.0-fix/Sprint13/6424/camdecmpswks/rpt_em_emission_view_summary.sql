@@ -1,7 +1,5 @@
 -- FUNCTION: camdecmpswks.rpt_em_emission_view_summary(text, text, text)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_emission_view_summary(text, text, text) CASCADE;
-
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_emission_view_summary(
     monitorPlanId text,
     locationId text,
