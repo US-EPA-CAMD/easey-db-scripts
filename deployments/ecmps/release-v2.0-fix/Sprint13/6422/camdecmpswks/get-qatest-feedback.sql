@@ -1,5 +1,3 @@
-DROP FUNCTION IF EXISTS camdecmpswks.get_qatest_feedback(text[]) CASCADE;
-
 CREATE OR REPLACE FUNCTION camdecmpswks.get_qatest_feedback(testId text[])
 RETURNS TABLE(
     unit_stack_pipe character varying,
