@@ -1,9 +1,9 @@
 -- PROCEDURE: camdecmpswks.copy_monitor_plan_qa_data_to_workspace(text)
 
-DROP PROCEDURE IF EXISTS camdecmpswks.copy_monitor_plan_qa_data_to_workspace(text);
+-- DROP PROCEDURE IF EXISTS camdecmpswks.copy_monitor_plan_qa_data_to_workspace(text);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.copy_monitor_plan_qa_data_to_workspace(
-	monplanid text)
+	IN monplanid text)
 LANGUAGE 'plpgsql'
 AS $BODY$
 DECLARE
@@ -122,16 +122,7 @@ BEGIN
 			check_cd = EXCLUDED.check_cd,
 			error_suppress_id = EXCLUDED.error_suppress_id;
   -- END LOOP;
-
-	INSERT INTO camdecmpswks.qa_cert_event_supp_data(
-		qa_cert_event_supp_data_id, qa_cert_event_id, qa_cert_event_supp_data_cd, qa_cert_event_supp_date_cd, count_from_datehour, count, count_from_included_ind, mon_loc_id, rpt_period_id, delete_ind, userid, add_date, update_date
-	)
-	SELECT
-		a.qa_cert_event_supp_data_id, a.qa_cert_event_id, a.qa_cert_event_supp_data_cd, a.qa_cert_event_supp_date_cd, a.count_from_datehour, a.count, a.count_from_included_ind, a.mon_loc_id, a.rpt_period_id, a.delete_ind, a.userid, a.add_date, a.update_date
-	FROM camdecmps.qa_cert_event_supp_data AS a
-	JOIN camdecmps.qa_cert_event USING(qa_cert_event_id)
-	WHERE a.mon_loc_id = ANY(monLocIds);
-
+  
 	-- TEST EXTENSION EXEMPTION
 
 	-- Load the check_session + check_logs

@@ -11,7 +11,6 @@ DECLARE
 	monLocIds 		text[];
 	rptPeriodIds    int[]; 
 BEGIN
-
 	-- GET LIST OF LOCATION IDs IN THE MONITOR PLAN
 	SELECT ARRAY(
 		SELECT mon_loc_id
@@ -19,16 +18,20 @@ BEGIN
 		WHERE mon_plan_id = monplanid
 	) INTO monLocIds;
 
-	-- Get list of report period IDs
+	-- Get list of report period IDs from both schemas 
 	SELECT ARRAY(
-		SELECT rpt_period_id
-		 from CAMDECMPSWKS.EMISSION_EVALUATION
-        where MON_PLAN_ID= monplanid
+		  SELECT rpt_period_id
+		   from CAMDECMPSWKS.EMISSION_EVALUATION
+           where MON_PLAN_ID= monplanid
+		union
+		   SELECT rpt_period_id
+		   from CAMDECMPS.EMISSION_EVALUATION
+            where MON_PLAN_ID= monplanid
 	) INTO rptPeriodIds;
 		
 	DELETE FROM camdecmpswks.emission_evaluation
 	WHERE mon_plan_id = monPlanId
-	and rpt_period_id = ANY(rptPeriodIds); --maybe not need this condition for this one?
+	and rpt_period_id = ANY(rptPeriodIds); 
 
 	DELETE FROM camdecmpswks.sorbent_trap
 	 WHERE mon_loc_id = ANY(monLocIds)
