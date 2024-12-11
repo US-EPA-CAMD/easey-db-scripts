@@ -1,0 +1,14 @@
+INSERT INTO camdmd.program_exemption (prg_cd, exemption_type_cd) VALUES ('ARP', 'NUE');
+INSERT INTO camdmd.program_exemption (prg_cd, exemption_type_cd) VALUES ('ARP', 'RUE');
+INSERT INTO camdmd.program_exemption (prg_cd, exemption_type_cd) VALUES ('CAIRNOX', 'RUE');
+INSERT INTO camdmd.program_exemption (prg_cd, exemption_type_cd) VALUES ('CAIROS', 'RUE');
+INSERT INTO camdmd.program_exemption (prg_cd, exemption_type_cd) VALUES ('CAIRSO2', 'RUE');
+INSERT INTO camdmd.program_exemption (prg_cd, exemption_type_cd) VALUES ('CSNOX', 'RUE');
+INSERT INTO camdmd.program_exemption (prg_cd, exemption_type_cd) VALUES ('CSNOXOS', 'RUE');
+INSERT INTO camdmd.program_exemption (prg_cd, exemption_type_cd) VALUES ('CSOSG1', 'RUE');
+INSERT INTO camdmd.program_exemption (prg_cd, exemption_type_cd) VALUES ('CSOSG2', 'RUE');
+INSERT INTO camdmd.program_exemption (prg_cd, exemption_type_cd) VALUES ('CSOSG3', 'RUE');
+INSERT INTO camdmd.program_exemption (prg_cd, exemption_type_cd) VALUES ('CSSO2G1', 'RUE');
+INSERT INTO camdmd.program_exemption (prg_cd, exemption_type_cd) VALUES ('CSSO2G2', 'RUE');
+INSERT INTO camdmd.program_exemption (prg_cd, exemption_type_cd) VALUES ('NBP', '25TON');
+INSERT INTO camdmd.program_exemption (prg_cd, exemption_type_cd) VALUES ('TXSO2', 'RUE');

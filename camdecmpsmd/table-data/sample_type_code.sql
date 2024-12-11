@@ -1,0 +1,11 @@
+INSERT INTO camdecmpsmd.sample_type_code (sample_type_cd, sample_type_cd_description) VALUES ('0', 'Actual Measured Hourly Value From GCH');
+INSERT INTO camdecmpsmd.sample_type_code (sample_type_cd, sample_type_cd_description) VALUES ('1', 'Actual Measured Value From Oil Composite or Tank Sample');
+INSERT INTO camdecmpsmd.sample_type_code (sample_type_cd, sample_type_cd_description) VALUES ('10', 'OBSOLETE');
+INSERT INTO camdecmpsmd.sample_type_code (sample_type_cd, sample_type_cd_description) VALUES ('2', 'Actual Measured Value From Daily Sample');
+INSERT INTO camdecmpsmd.sample_type_code (sample_type_cd, sample_type_cd_description) VALUES ('3', 'Actual Measured GCV From Monthly Sample');
+INSERT INTO camdecmpsmd.sample_type_code (sample_type_cd, sample_type_cd_description) VALUES ('4', 'Actual Measured Value from Shipment or Lot');
+INSERT INTO camdecmpsmd.sample_type_code (sample_type_cd, sample_type_cd_description) VALUES ('5', 'Highest Sampled Value in 30 Daily Samples');
+INSERT INTO camdecmpsmd.sample_type_code (sample_type_cd, sample_type_cd_description) VALUES ('6', 'Highest Sampled Value in Previous Calendar Year (or higher sampled value)');
+INSERT INTO camdecmpsmd.sample_type_code (sample_type_cd, sample_type_cd_description) VALUES ('7', 'Maximum Value Allowed by Contract (or higher sampled value)');
+INSERT INTO camdecmpsmd.sample_type_code (sample_type_cd, sample_type_cd_description) VALUES ('8', 'Missing Data (MPV from Table D-6 for missing data or emergency fuel)');
+INSERT INTO camdecmpsmd.sample_type_code (sample_type_cd, sample_type_cd_description) VALUES ('9', 'OBSOLETE');

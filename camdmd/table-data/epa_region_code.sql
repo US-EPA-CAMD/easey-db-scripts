@@ -1,0 +1,10 @@
+INSERT INTO camdmd.epa_region_code (epa_region_cd, epa_region_description) VALUES (1, 'Region 1');
+INSERT INTO camdmd.epa_region_code (epa_region_cd, epa_region_description) VALUES (2, 'Region 2');
+INSERT INTO camdmd.epa_region_code (epa_region_cd, epa_region_description) VALUES (3, 'Region 3');
+INSERT INTO camdmd.epa_region_code (epa_region_cd, epa_region_description) VALUES (4, 'Region 4');
+INSERT INTO camdmd.epa_region_code (epa_region_cd, epa_region_description) VALUES (5, 'Region 5');
+INSERT INTO camdmd.epa_region_code (epa_region_cd, epa_region_description) VALUES (6, 'Region 6');
+INSERT INTO camdmd.epa_region_code (epa_region_cd, epa_region_description) VALUES (7, 'Region 7');
+INSERT INTO camdmd.epa_region_code (epa_region_cd, epa_region_description) VALUES (8, 'Region 8');
+INSERT INTO camdmd.epa_region_code (epa_region_cd, epa_region_description) VALUES (9, 'Region 9');
+INSERT INTO camdmd.epa_region_code (epa_region_cd, epa_region_description) VALUES (10, 'Region 10');

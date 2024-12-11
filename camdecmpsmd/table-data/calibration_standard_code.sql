@@ -1,0 +1,12 @@
+INSERT INTO camdecmpsmd.calibration_standard_code (cal_standard_cd, cal_standard_cd_description) VALUES ('SIA', 'Scrubbed Instrument Air');
+INSERT INTO camdecmpsmd.calibration_standard_code (cal_standard_cd, cal_standard_cd_description) VALUES ('BBP', 'Bi-Blend Protocol Gas');
+INSERT INTO camdecmpsmd.calibration_standard_code (cal_standard_cd, cal_standard_cd_description) VALUES ('E', 'Elemental Hg');
+INSERT INTO camdecmpsmd.calibration_standard_code (cal_standard_cd, cal_standard_cd_description) VALUES ('GMIS', 'Gas Manufacturers Intermediate Standard');
+INSERT INTO camdecmpsmd.calibration_standard_code (cal_standard_cd, cal_standard_cd_description) VALUES ('MBP', 'Multi-Blend Protocol Gas');
+INSERT INTO camdecmpsmd.calibration_standard_code (cal_standard_cd, cal_standard_cd_description) VALUES ('NTRM', 'NIST-Traceable Reference Material');
+INSERT INTO camdecmpsmd.calibration_standard_code (cal_standard_cd, cal_standard_cd_description) VALUES ('O', 'Oxidized Hg');
+INSERT INTO camdecmpsmd.calibration_standard_code (cal_standard_cd, cal_standard_cd_description) VALUES ('PRM', 'SRM-Equivalent Compressed Gas Primary Reference Material');
+INSERT INTO camdecmpsmd.calibration_standard_code (cal_standard_cd, cal_standard_cd_description) VALUES ('RGM', 'Research Gas Mixture');
+INSERT INTO camdecmpsmd.calibration_standard_code (cal_standard_cd, cal_standard_cd_description) VALUES ('SBP', 'Single-Blend Protocol Gas');
+INSERT INTO camdecmpsmd.calibration_standard_code (cal_standard_cd, cal_standard_cd_description) VALUES ('SRM', 'Standard Reference Material');
+INSERT INTO camdecmpsmd.calibration_standard_code (cal_standard_cd, cal_standard_cd_description) VALUES ('ZAM', 'Zero Air Material');

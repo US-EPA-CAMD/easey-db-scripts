@@ -1,0 +1,15 @@
+INSERT INTO camdmd.source_category_code (source_category_cd, source_category_description) VALUES ('AUTSTMP', 'Automotive Stampings');
+INSERT INTO camdmd.source_category_code (source_category_cd, source_category_description) VALUES ('BKINCHM', 'Bulk Industrial Chemical');
+INSERT INTO camdmd.source_category_code (source_category_cd, source_category_description) VALUES ('CEMENTM', 'Cement Manufacturing');
+INSERT INTO camdmd.source_category_code (source_category_cd, source_category_description) VALUES ('COGEN', 'Cogeneration');
+INSERT INTO camdmd.source_category_code (source_category_cd, source_category_description) VALUES ('ELECTRC', 'Electric Utility');
+INSERT INTO camdmd.source_category_code (source_category_cd, source_category_description) VALUES ('INDBLR', 'Industrial Boiler');
+INSERT INTO camdmd.source_category_code (source_category_cd, source_category_description) VALUES ('INDTUR', 'Industrial Turbine');
+INSERT INTO camdmd.source_category_code (source_category_cd, source_category_description) VALUES ('INSTITU', 'Institutional');
+INSERT INTO camdmd.source_category_code (source_category_cd, source_category_description) VALUES ('IRONSTL', 'Iron & Steel');
+INSERT INTO camdmd.source_category_code (source_category_cd, source_category_description) VALUES ('MUNWAST', 'Municipal Waste Combustor');
+INSERT INTO camdmd.source_category_code (source_category_cd, source_category_description) VALUES ('PAPMILL', 'Pulp & Paper Mill');
+INSERT INTO camdmd.source_category_code (source_category_cd, source_category_description) VALUES ('PETRORE', 'Petroleum Refinery');
+INSERT INTO camdmd.source_category_code (source_category_cd, source_category_description) VALUES ('PRTCMNT', 'Portland Cement Plant');
+INSERT INTO camdmd.source_category_code (source_category_cd, source_category_description) VALUES ('SMLPWR', 'Small Power Producer');
+INSERT INTO camdmd.source_category_code (source_category_cd, source_category_description) VALUES ('THMPARK', 'Theme Park');

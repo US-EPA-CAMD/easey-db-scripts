@@ -1,0 +1,7 @@
+INSERT INTO camdecmpsmd.accuracy_test_method_code (acc_test_method_cd, acc_test_method_cd_description) VALUES ('AGA7', 'AGA Report No. 7, Measurement of Natural Gas by Turbine Meter');
+INSERT INTO camdecmpsmd.accuracy_test_method_code (acc_test_method_cd, acc_test_method_cd_description) VALUES ('API', 'American Petroleum Institute Method in Appendix D');
+INSERT INTO camdecmpsmd.accuracy_test_method_code (acc_test_method_cd, acc_test_method_cd_description) VALUES ('ASME', 'ASME Method in Appendix D');
+INSERT INTO camdecmpsmd.accuracy_test_method_code (acc_test_method_cd, acc_test_method_cd_description) VALUES ('ILMMF', 'In-Line Comparison against Master Meter at Facility');
+INSERT INTO camdecmpsmd.accuracy_test_method_code (acc_test_method_cd, acc_test_method_cd_description) VALUES ('ISO', 'International Organization for Standardization Method in Appendix D');
+INSERT INTO camdecmpsmd.accuracy_test_method_code (acc_test_method_cd, acc_test_method_cd_description) VALUES ('LCRM', 'Laboratory Comparison against Reference Meter');
+INSERT INTO camdecmpsmd.accuracy_test_method_code (acc_test_method_cd, acc_test_method_cd_description) VALUES ('NIST', 'NIST-Traceable Method Approved by Petition');
