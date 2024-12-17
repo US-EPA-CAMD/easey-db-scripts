@@ -20,16 +20,6 @@ VALUES
     ('F', 'Furnaces'),
     ('T', 'Turbines');
 -----------------------------------------------------------------------
-TRUNCATE camdecmpsmd.analytical_principle_code;
-INSERT INTO camdecmpsmd.analytical_principle_code(
-  analytical_principle_cd, analytical_principle_cd_description
-) VALUES
-  ('BA', 'Beta Attenuation'),
-  ('ELS', 'Extractive Light Scatter'), 
-  ('ILS', 'In-stack Light Scatter'), 
-  ('LS', 'Light Scintillation'), 
-  ('MAD', 'Mass Accumulation Detection');
------------------------------------------------------------------------
 DELETE FROM camdecmpsmd.control_equip_param_code WHERE control_equip_param_cd = 'PM';
 INSERT INTO camdecmpsmd.control_equip_param_code(
 	control_equip_param_cd, control_equip_param_desc
@@ -151,6 +141,8 @@ INSERT INTO camdaux.template_code(template_cd, group_cd, template_type, display_
 VALUES
   ('BACKSTOP',      'EM',		    'DEFAULT',	'Daily Backstop'),
   ('EMALL',         'EM',		    'DEFAULT',	'Hourly Combined Parameters View'),
+  ('QRTSUMDATA',    'EMSR',		  'DEFAULT',	'Quarterly Emissions Summary Data'),
+  ('FUELOPHRS',     'EMSR',		  'DEFAULT',	'Fuel Operating Hours'),
   ('ERRDTL',        'ERRDTL',   'DEFAULT',	'Error Details'),
 	('EVAL',          'EVAL',		  'DEFAULT',	'Evaluation Results'),
 	('GENERR',        'EVAL',		  'DEFAULT',	'General Errors'),

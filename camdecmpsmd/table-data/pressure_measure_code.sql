@@ -1,0 +1,3 @@
+INSERT INTO camdecmpsmd.pressure_measure_code (pressure_meas_cd, pressure_meas_cd_description) VALUES ('ELEC', 'Electronic Manometer/Transducer');
+INSERT INTO camdecmpsmd.pressure_measure_code (pressure_meas_cd, pressure_meas_cd_description) VALUES ('FLUID', 'Fluid Manometer');
+INSERT INTO camdecmpsmd.pressure_measure_code (pressure_meas_cd, pressure_meas_cd_description) VALUES ('MECH', 'Mechanical Gauge');

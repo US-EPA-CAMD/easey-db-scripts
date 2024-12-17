@@ -1,0 +1,10 @@
+INSERT INTO camdecmpsmd.check_operator_code (check_operator_cd, check_operator_cd_name) VALUES ('BW', 'Begins With');
+INSERT INTO camdecmpsmd.check_operator_code (check_operator_cd, check_operator_cd_name) VALUES ('CT', 'Contains');
+INSERT INTO camdecmpsmd.check_operator_code (check_operator_cd, check_operator_cd_name) VALUES ('EQ', 'Equals');
+INSERT INTO camdecmpsmd.check_operator_code (check_operator_cd, check_operator_cd_name) VALUES ('EW', 'Ends With');
+INSERT INTO camdecmpsmd.check_operator_code (check_operator_cd, check_operator_cd_name) VALUES ('GE', 'Greater Than or Equal');
+INSERT INTO camdecmpsmd.check_operator_code (check_operator_cd, check_operator_cd_name) VALUES ('GT', 'Greater Than');
+INSERT INTO camdecmpsmd.check_operator_code (check_operator_cd, check_operator_cd_name) VALUES ('IN', 'In List');
+INSERT INTO camdecmpsmd.check_operator_code (check_operator_cd, check_operator_cd_name) VALUES ('LE', 'Less Than or Equal');
+INSERT INTO camdecmpsmd.check_operator_code (check_operator_cd, check_operator_cd_name) VALUES ('LT', 'Less Than');
+INSERT INTO camdecmpsmd.check_operator_code (check_operator_cd, check_operator_cd_name) VALUES ('NE', 'Not Equal');

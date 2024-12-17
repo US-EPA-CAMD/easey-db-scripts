@@ -6,22 +6,6 @@ DECLARE
 BEGIN
 	DELETE FROM camdaux.dataset WHERE group_cd = groupCode;
 ----------------------------------------------------------------------------------------------------------------------------
-	datasetCode := 'analytical-principle-codes';
-	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
-	VALUES(datasetCode, 'MDM', 'Analytical Principle Codes & Descriptions');
-
-	/***** DATATABLE 1 *****/
-	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement)
-	VALUES(datasetCode, 1, 'Analytical Principle Codes & Descriptions', 'SELECT * FROM camdecmpsmd.analytical_principle_code')
-	RETURNING datatable_id INTO datatableId;
-
-	/***** COLUMNS *****/
-	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
-	VALUES
-		(datatableId, 1, 'analytical_principle_cd', 'analyticalPrincipleCode', 'Analytical Principle Code'),
-		(datatableId, 2, 'analytical_principle_cd_description', 'analyticalPrincipleDescription', 'Analytical Principle Description');
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	datasetCode := 'control-equip-param-codes';
 	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
 	VALUES(datasetCode, 'MDM', 'Control Equipment Parameter Codes & Descriptions');

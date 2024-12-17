@@ -1398,7 +1398,7 @@ SELECT
                 FROM   camdecmpswks.emission_evaluation
                 WHERE  mon_plan_id = monplanid
                 AND    rpt_period_id = rptperiodid );
-  
+
   CALL camdecmpswks.delete_monitor_plan_emissions_data_from_workspace(monPlanId, rptPeriodId);
 END
 $BODY$;

@@ -1,0 +1,12 @@
+INSERT INTO camdecmpsmd.operating_condition_code (operating_condition_cd, op_condition_cd_description) VALUES ('A', 'Any Hour');
+INSERT INTO camdecmpsmd.operating_condition_code (operating_condition_cd, op_condition_cd_description) VALUES ('B', 'Base Load Hour');
+INSERT INTO camdecmpsmd.operating_condition_code (operating_condition_cd, op_condition_cd_description) VALUES ('C', 'Controlled Hour');
+INSERT INTO camdecmpsmd.operating_condition_code (operating_condition_cd, op_condition_cd_description) VALUES ('E', 'Emergency Fuel Used');
+INSERT INTO camdecmpsmd.operating_condition_code (operating_condition_cd, op_condition_cd_description) VALUES ('M', 'AE Correlation Curve Expired');
+INSERT INTO camdecmpsmd.operating_condition_code (operating_condition_cd, op_condition_cd_description) VALUES ('N', 'Operating Parameter outside of Normal Limits');
+INSERT INTO camdecmpsmd.operating_condition_code (operating_condition_cd, op_condition_cd_description) VALUES ('P', 'Peak Load Hour');
+INSERT INTO camdecmpsmd.operating_condition_code (operating_condition_cd, op_condition_cd_description) VALUES ('U', 'Uncontrolled Hour');
+INSERT INTO camdecmpsmd.operating_condition_code (operating_condition_cd, op_condition_cd_description) VALUES ('W', 'Operation above Highest HI Rate on AE Correlation Curve');
+INSERT INTO camdecmpsmd.operating_condition_code (operating_condition_cd, op_condition_cd_description) VALUES ('X', 'Operating Parameter Data Missing or Invalid');
+INSERT INTO camdecmpsmd.operating_condition_code (operating_condition_cd, op_condition_cd_description) VALUES ('Y', 'Operational and Control Equipment Parameters within Normal Limits');
+INSERT INTO camdecmpsmd.operating_condition_code (operating_condition_cd, op_condition_cd_description) VALUES ('Z', 'Operation below Lowest HI Rate on AE Correlation Curve');

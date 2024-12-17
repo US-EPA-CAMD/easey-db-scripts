@@ -2,8 +2,6 @@ ALTER TABLE IF EXISTS camdecmps.component
     ADD CONSTRAINT pk_component PRIMARY KEY (component_id),
     ADD CONSTRAINT fk_component_acquisition_method_code FOREIGN KEY (acq_cd)
         REFERENCES camdecmpsmd.acquisition_method_code (acq_cd) MATCH SIMPLE,
-    ADD CONSTRAINT fk_component_analytical_principle_code FOREIGN KEY (analytical_principle_cd)
-        REFERENCES camdecmpsmd.analytical_principle_code (analytical_principle_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_component_basis_code FOREIGN KEY (basis_cd)
         REFERENCES camdecmpsmd.basis_code (basis_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_component_component_type_code FOREIGN KEY (component_type_cd)
@@ -15,10 +13,6 @@ ALTER TABLE IF EXISTS camdecmps.component
 CREATE INDEX IF NOT EXISTS idx_component_acq_cd
     ON camdecmps.component USING btree
     (acq_cd COLLATE pg_catalog."default" ASC NULLS LAST);
-
-CREATE INDEX IF NOT EXISTS idx_component_analytical_principle_cd
-    ON camdecmps.component USING btree
-    (analytical_principle_cd COLLATE pg_catalog."default" ASC NULLS LAST);
 
 CREATE INDEX IF NOT EXISTS idx_component_basis_cd
     ON camdecmps.component USING btree

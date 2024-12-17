@@ -17,7 +17,6 @@ CREATE TABLE IF NOT EXISTS camdecmps.component
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     hg_converter_ind numeric(1,0),
-    analytical_principle_cd character varying(7) COLLATE pg_catalog."default"
 );
 
 COMMENT ON TABLE camdecmps.component

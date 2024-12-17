@@ -1,0 +1,23 @@
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('COR', 'Coriolis');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('DIL', 'Dilution');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('DIN', 'Dilution In-Stack');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('DOD', 'Dry Out-of-Stack Dilution');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('DOU', 'Dilution Out-of-Stack');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('DP', 'Differential Pressure');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('EXT', 'Dry Extractive');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('IS', 'In Situ');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('ISC', 'Cross Stack In Situ');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('ISP', 'Point/Path In Situ');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('NOZ', 'Nozzle');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('O', 'Other');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('ORF', 'Orifice');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('PDP', 'Positive Displacement');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('T', 'Thermal Mass Flowmeter');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('TUR', 'Turbine');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('U', 'Ultrasonic');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('VCON', 'V-Cone');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('VEN', 'Venturi');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('VTX', 'Vortex');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('WXT', 'Wet Extractive');
+INSERT INTO camdecmpsmd.acquisition_method_code (acq_cd, acq_cd_description) VALUES ('ADSP', 'Hg Adsorption on Sorbent Medium');
+
