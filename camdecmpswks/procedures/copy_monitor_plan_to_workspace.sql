@@ -3,12 +3,12 @@
 -- DROP PROCEDURE IF EXISTS camdecmpswks.copy_monitor_plan_to_workspace(text, text[]);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.copy_monitor_plan_to_workspace(
-	monplanid text,
-    monLocIds text[])
+	IN monplanid text,
+	IN monlocids text[])
 LANGUAGE 'plpgsql'
 AS $BODY$
 DECLARE
-unitIds   			int[];
+	unitIds   		int[];
 	stackPipeIds		text[];
 	unitStackConfigIds 	text[];
 BEGIN
