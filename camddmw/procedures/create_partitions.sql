@@ -1,12 +1,9 @@
--- PROCEDURE: camddmw.create_partitions(integer, character)
-
-DROP PROCEDURE IF EXISTS camddmw.create_partitions(integer, character);
-
 CREATE OR REPLACE PROCEDURE camddmw.create_partitions(
-	year integer,
-	executeflag character DEFAULT 'N'::bpchar)
+	IN year integer,
+	IN executeflag character DEFAULT 'N'::bpchar)
 LANGUAGE 'plpgsql'
 AS $BODY$
+
 DECLARE
 	counter integer;
 	toDate date;
@@ -37,6 +34,37 @@ BEGIN
 		RAISE NOTICE '-- executed --';
 	END IF;
 
+-------------------------------------------------------------------------------------------------------------------
+	tableName := 'allowance_holding_dim';
+	partitionName := tableName || '_all_hold_dim_p';
+	EXECUTE format('
+		SELECT MAX(CAST(REPLACE(table_name, %L, %L) AS integer))
+		FROM information_schema.tables
+		WHERE table_name like ''%s%%'';
+	', partitionName, '', partitionName) INTO partitionNumber;
+	cmdStmt := format('CREATE TABLE IF NOT EXISTS %s.%s%s PARTITION OF %s.%s
+				    FOR VALUES FROM (%L) TO (%L);', schemaName, partitionName, partitionNumber+1, schemaName, tableName, year+30, year+31);
+	RAISE NOTICE '%', cmdStmt;
+	IF executeFlag = 'Y' THEN
+		EXECUTE cmdStmt;
+		RAISE NOTICE '-- executed --';
+	END IF;	
+
+-------------------------------------------------------------------------------------------------------------------
+	tableName := 'rep_year_dim';
+	partitionName := tableName || '_rep_year_dm_p';
+	EXECUTE format('
+		SELECT MAX(CAST(REPLACE(table_name, %L, %L) AS integer))
+		FROM information_schema.tables
+		WHERE table_name like ''%s%%'';
+	', partitionName, '', partitionName) INTO partitionNumber;
+	cmdStmt := format('CREATE TABLE IF NOT EXISTS %s.%s%s PARTITION OF %s.%s
+				    FOR VALUES FROM (%L) TO (%L);', schemaName, partitionName, partitionNumber+1, schemaName, tableName, year, year+1);
+	RAISE NOTICE '%', cmdStmt;
+	IF executeFlag = 'Y' THEN
+		EXECUTE cmdStmt;
+		RAISE NOTICE '-- executed --';
+	END IF;	
 -------------------------------------------------------------------------------------------------------------------
 	tableName := 'control_year_dim';
 	partitionName := tableName || '_cntrl_yr_dim_p';
