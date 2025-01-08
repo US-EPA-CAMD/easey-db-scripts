@@ -205,7 +205,18 @@ INSERT INTO camdecmpswks.mats_method_data(
 SELECT
     mats_method_data_id, mon_loc_id, mats_method_cd, mats_method_parameter_cd, begin_date, begin_hour, end_date, end_hour, userid, add_date, update_date
 FROM camdecmps.mats_method_data
-WHERE mon_loc_id = ANY(monLocIds);
+WHERE mon_loc_id = ANY(monLocIds)
+ON CONFLICT (mats_method_data_id) DO UPDATE
+SET mon_loc_id = EXCLUDED.mon_loc_id,
+    mats_method_cd = EXCLUDED.mats_method_cd,
+    mats_method_parameter_cd = EXCLUDED.mats_method_parameter_cd,
+    begin_date = EXCLUDED.begin_date,
+    begin_hour = EXCLUDED.begin_hour,
+    end_date = EXCLUDED.end_date,
+    end_hour = EXCLUDED.end_hour,
+    userid = EXCLUDED.userid,
+    add_date = EXCLUDED.add_date,
+    update_date = EXCLUDED.update_date;
 
 -- MONITOR_DEFAULT --
 INSERT INTO camdecmpswks.monitor_default(
