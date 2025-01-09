@@ -1,0 +1,13 @@
+INSERT INTO camdecmpsmd.eval_score_code (eval_score_cd, eval_score_description) VALUES ('-1', 'Fatal Error');
+INSERT INTO camdecmpsmd.eval_score_code (eval_score_cd, eval_score_description) VALUES ('0', 'Critical Error Level 1');
+INSERT INTO camdecmpsmd.eval_score_code (eval_score_cd, eval_score_description) VALUES ('1', 'Critical Error Level 2');
+INSERT INTO camdecmpsmd.eval_score_code (eval_score_cd, eval_score_description) VALUES ('10', 'No Errors');
+INSERT INTO camdecmpsmd.eval_score_code (eval_score_cd, eval_score_description) VALUES ('2', 'Critical Error Level 3');
+INSERT INTO camdecmpsmd.eval_score_code (eval_score_cd, eval_score_description) VALUES ('3', 'Pretty bad');
+INSERT INTO camdecmpsmd.eval_score_code (eval_score_cd, eval_score_description) VALUES ('4', 'Bad');
+INSERT INTO camdecmpsmd.eval_score_code (eval_score_cd, eval_score_description) VALUES ('5', 'OK  I guess');
+INSERT INTO camdecmpsmd.eval_score_code (eval_score_cd, eval_score_description) VALUES ('6', 'Not too horrible');
+INSERT INTO camdecmpsmd.eval_score_code (eval_score_cd, eval_score_description) VALUES ('7', 'Passing, but still a C');
+INSERT INTO camdecmpsmd.eval_score_code (eval_score_cd, eval_score_description) VALUES ('8', 'Non-Critical Error');
+INSERT INTO camdecmpsmd.eval_score_code (eval_score_cd, eval_score_description) VALUES ('9', 'Information Message');
+INSERT INTO camdecmpsmd.eval_score_code (eval_score_cd, eval_score_description) VALUES ('-2', 'Eval Score Use is Obsolete (Report to DJW2)');

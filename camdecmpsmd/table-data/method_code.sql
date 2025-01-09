@@ -1,0 +1,26 @@
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('AD', 'Appendix D');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('ADCALC', 'Appendix D Measured and Apportioned');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('AE', 'Appendix E');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('AMS', 'Alternative Monitoring System');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('CALC', 'Apportioned or Summed Value');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('CEM', 'Continuous Emission Monitor');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('CEMF23', 'Continuous Emission Monitor or Equation F-23');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('CEMNOXR', 'Continuous Emission Monitor or Calculation from NOx Rate');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('COM', 'Continuous Opacity or Particulate Matter Monitor');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('EXP', 'Exempt');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('F23', 'Equation F-23');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('FSA', 'Fueling Sample and Analysis');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('LME', 'Low Mass Emissions');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('LTFCALC', 'Long-Term Fuel Flow Measured and Apportioned');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('LTFF', 'Long-Term Fuel Flow');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('MDF', 'Moisture Default');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('MHHI', 'Maximum Hourly Heat Input');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('MMS', 'Moisture Sensor');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('MTB', 'Moisture Lookup Table');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('MWD', 'Wet and Dry O2 Monitors');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('NOXR', 'NOx Mass Calculated from NOx Emission Rate');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('PEM', 'Predictive Emissions Monitor');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('CEMST', 'Hg CEMS and Sorbent Trap Monitoring System');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('ST', 'Sorbent Trap Monitoring System');
+INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('CPMS', 'PM Continuous Parametric Monitoring System');
+

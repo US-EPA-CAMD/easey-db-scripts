@@ -1,0 +1,2 @@
+INSERT INTO camdecmpsmd.plugin_type_code (plugin_type_cd, plugin_type_cd_description) VALUES ('CONST', 'Constant');
+INSERT INTO camdecmpsmd.plugin_type_code (plugin_type_cd, plugin_type_cd_description) VALUES ('VALUE', 'Field Value');

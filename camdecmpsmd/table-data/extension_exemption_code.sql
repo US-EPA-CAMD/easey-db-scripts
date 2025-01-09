@@ -1,0 +1,10 @@
+INSERT INTO camdecmpsmd.extension_exemption_code (extens_exempt_cd, extens_exemp_cd_description) VALUES ('F2LEXP', 'Flow-to-Load Exemption for Flow System');
+INSERT INTO camdecmpsmd.extension_exemption_code (extens_exempt_cd, extens_exemp_cd_description) VALUES ('NONQADB', 'Non-QA Operating Quarter for Fuel Flowmeter Feeding Duct Burner');
+INSERT INTO camdecmpsmd.extension_exemption_code (extens_exempt_cd, extens_exemp_cd_description) VALUES ('LOWSQTR', 'Only Very-Low-Sulfur Fuel Used This Quarter');
+INSERT INTO camdecmpsmd.extension_exemption_code (extens_exempt_cd, extens_exemp_cd_description) VALUES ('LOWSYTD', 'Non-Very-Low Sulfur Fuel Used Less than 480 Hours YTD');
+INSERT INTO camdecmpsmd.extension_exemption_code (extens_exempt_cd, extens_exemp_cd_description) VALUES ('NONQAOS', 'Non-QA Operating Quarters for Ozone-Season Reporter');
+INSERT INTO camdecmpsmd.extension_exemption_code (extens_exempt_cd, extens_exemp_cd_description) VALUES ('NONQAPB', 'Non-QA Operating Quarter for PB Monitor on Bypass Stack');
+INSERT INTO camdecmpsmd.extension_exemption_code (extens_exempt_cd, extens_exemp_cd_description) VALUES ('NRB720', 'Non-Redundant Backup Monitor Used Less than 720 Hours YTD');
+INSERT INTO camdecmpsmd.extension_exemption_code (extens_exempt_cd, extens_exemp_cd_description) VALUES ('RANGENU', 'Analyzer Range Not Used This Quarter');
+INSERT INTO camdecmpsmd.extension_exemption_code (extens_exempt_cd, extens_exemp_cd_description) VALUES ('FLOWEXP', 'RATA Exemption for Flow Component in Multiple Systems');
+INSERT INTO camdecmpsmd.extension_exemption_code (extens_exempt_cd, extens_exemp_cd_description) VALUES ('GRACEPB', 'Within 720 Grace Period for PB Monitor on Bypass Stack');

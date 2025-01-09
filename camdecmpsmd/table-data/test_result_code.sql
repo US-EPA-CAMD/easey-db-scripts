@@ -1,0 +1,10 @@
+INSERT INTO camdecmpsmd.test_result_code (test_result_cd, test_result_cd_description) VALUES ('IGNORED', 'Does Not Fulfill Testing Requirement');
+INSERT INTO camdecmpsmd.test_result_code (test_result_cd, test_result_cd_description) VALUES ('ABORTED', 'Test Aborted');
+INSERT INTO camdecmpsmd.test_result_code (test_result_cd, test_result_cd_description) VALUES ('EXC168H', 'Fewer than 168 Hours after Exclusions');
+INSERT INTO camdecmpsmd.test_result_code (test_result_cd, test_result_cd_description) VALUES ('FAILED', 'Test Failed');
+INSERT INTO camdecmpsmd.test_result_code (test_result_cd, test_result_cd_description) VALUES ('FEW168H', 'Fewer than 168 QA Operating Hours');
+INSERT INTO camdecmpsmd.test_result_code (test_result_cd, test_result_cd_description) VALUES ('INC', 'Incomplete Test');
+INSERT INTO camdecmpsmd.test_result_code (test_result_cd, test_result_cd_description) VALUES ('INPROG', 'Baseline Data Collection In Progress');
+INSERT INTO camdecmpsmd.test_result_code (test_result_cd, test_result_cd_description) VALUES ('INVALID', 'Invalid Test');
+INSERT INTO camdecmpsmd.test_result_code (test_result_cd, test_result_cd_description) VALUES ('PASSAPS', 'Test Passed Alt Spec');
+INSERT INTO camdecmpsmd.test_result_code (test_result_cd, test_result_cd_description) VALUES ('PASSED', 'Test Passed');
