@@ -3,18 +3,18 @@ create or replace function camdecmpsaux.PDEM_Is_Mats_Emission_Report
     in vMonPlanId varchar,
     in vRptPeriodId numeric
 )
-    returns smallint
+    returns boolean
 
 language plpgsql
 
 as $function$
 
 declare
-    vResult smallint;
+    vIndicator smallint;
 begin
 
     select  coalesce( max( 1 ), 0 )
-      into  vResult
+      into  vIndicator
       from  camdecmps.EMISSION_EVALUATION ems
             join camdecmpsmd.REPORTING_PERIOD prd
               on prd.Rpt_Period_Id = ems.Rpt_Period_Id
@@ -36,7 +36,7 @@ begin
                    and  mdv.Parameter_Cd in ( 'HGRE', 'HGRH', 'HCLRE', 'HCLRH', 'HFRE', 'HFRH' )
             );
     
-    return vResult;
+    return ( vIndicator > 0 );
     
 end;
 
