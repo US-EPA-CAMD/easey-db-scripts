@@ -53,7 +53,7 @@ COMMENT ON TABLE camdecmpsaux.pdem_p75_unit_hour IS 'Progam Data Emissions (PDEM
 
 -- Column Comments
 COMMENT ON COLUMN camdecmpsaux.pdem_p75_unit_hour.pdem_p75_unit_hour_id IS 'Primary key.';
-COMMENT ON COLUMN camdecmpsaux.pdem_p75_monitor_hour.pdem_report_id IS 'Foreign key into the PDEM_REPORT table that identifies the latest ECMPS Program Data for an emissions report.';
+COMMENT ON COLUMN camdecmpsaux.pdem_p75_unit_hour.pdem_report_id IS 'Foreign key into the PDEM_REPORT table that identifies the latest ECMPS Program Data for an emissions report.';
 COMMENT ON COLUMN camdecmpsaux.pdem_p75_unit_hour.unit_id IS 'Foreign key into the UNIT table that uniquely identifies the unit of the emissions data.';
 COMMENT ON COLUMN camdecmpsaux.pdem_p75_unit_hour.op_date IS 'The operating date indicating the aggregate time period of the data in the current record.';
 COMMENT ON COLUMN camdecmpsaux.pdem_p75_unit_hour.op_hour IS 'The operating hour indicating the aggregate time period of the data in the current record.';
