@@ -1,4 +1,4 @@
-create or replace function camdecmpsaux.PDEM_Get_Apportionment_Range_Table
+create or replace function camdecmpsaux.PDEM_Apportionment_Get_Range_Table
 (
     in vMonPlanId varchar,
     in vRptPeriodId numeric

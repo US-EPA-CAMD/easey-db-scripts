@@ -1,4 +1,4 @@
-create or replace function camdecmpsaux.PDEM_Get_Apportionment_Formula_Table
+create or replace function camdecmpsaux.PDEM_Apportionment_Get_Condition_Table
 (
     in vMonPlanId varchar,
     in vRptPeriodId numeric
@@ -8,10 +8,8 @@ create or replace function camdecmpsaux.PDEM_Get_Apportionment_Formula_Table
                 Apport_Id numeric,
                 Apport_Range_Id numeric,
                 Apport_Data_Id numeric,
-                Monitor_Tag varchar,
-                Unit_Tag varchar,
-                Hi_Load_Formula varchar,
-                Op_Time_Formula varchar
+                Target_Tag varchar,
+                Operating_Ind integer
             )
 
 language plpgsql
@@ -25,10 +23,11 @@ begin
         select  app.Apport_Id,
                 apr.Apport_Range_Id,
                 apd.Apport_Data_Id,
-                xml.Monitor_Tag,
-                xml.Unit_Tag,
-                xml.Hi_Load_Formula,
-                xml.Op_Time_Formula
+                xml.Target_Tag,
+                case xml.Operating
+                    when 'true' then 1
+                    when 'false' then 0
+                end Operating_Ind
           from  camdecmpsaux.Apportionment app
                 join camdecmpsmd.REPORTING_PERIOD prd
                   on prd.Rpt_Period_Id = vRptPeriodId /*Replace Rpt_Period_Id*/
@@ -42,24 +41,21 @@ begin
                   on apd.Apport_Range_Id = apr.Apport_Range_Id
                 join xmltable
                      (
-                        'FORMULAE/FORMULA'
-                        passing apd.Formulae_Xml
-                        columns Monitor_Tag varchar         path '@MONITOR_TAG',
-                                Unit_Tag varchar            path '@UNIT_TAG',
-                                Hi_Load_Formula varchar     path 'HI_LOAD_FORMULA',
-                                Op_Time_Formula varchar     path 'OP_TIME_FORMULA'
+                        'CONDITIONS/CONDITION'
+                        passing apd.Condition_Xml
+                        columns Target_Tag varchar  path '@TARGET_TAG',
+                                Operating varchar   path 'OPERATING'
                      ) xml
                   on null is null
          where  app.Mon_Plan_Id = vMonPlanId /*Replace Mon_Plan_Id*/
            and  prd.Begin_Date <= coalesce( pre.End_Date, prd.End_Date )
            and  prd.End_Date >= prb.Begin_Date
-         order  
+         order
             by  app.Apport_Id,
                 apr.Apport_Range_Id,
                 apd.Apport_Data_Id,
                 apd.Evaluation_Order,
-                Monitor_Tag,
-                Unit_Tag;
+                Target_Tag;
 
 end;
 

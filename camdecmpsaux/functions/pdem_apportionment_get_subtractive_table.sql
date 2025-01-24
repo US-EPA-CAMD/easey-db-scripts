@@ -1,4 +1,4 @@
-create or replace function camdecmpsaux.PDEM_Get_Apportionment_Subtractive_Table
+create or replace function camdecmpsaux.PDEM_Apportionment_Get_Subtractive_Table
 (
     in vMonPlanId varchar,
     in vRptPeriodId numeric
