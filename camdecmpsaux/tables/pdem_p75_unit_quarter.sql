@@ -23,8 +23,6 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.pdem_p75_unit_quarter
     reported_months             numeric(1) NOT NULL,
     mon_plan_id                 varchar(45) NOT NULL,
     rpt_period_id               numeric(38) NOT NULL,
-    data_source                 varchar(35) NOT NULL,
-    userid                      varchar(160) NOT NULL,
     add_date                    timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
     
     CONSTRAINT pdem_p75_unit_quarter_pk PRIMARY KEY ( pdem_p75_unit_quarter_id ),
@@ -66,5 +64,4 @@ COMMENT ON COLUMN camdecmpsaux.pdem_p75_unit_quarter.noxr_count IS 'The count of
 COMMENT ON COLUMN camdecmpsaux.pdem_p75_unit_quarter.reported_months IS 'The numeric of months reported in the emissions data.';
 COMMENT ON COLUMN camdecmpsaux.pdem_p75_unit_quarter.mon_plan_id IS 'Foreign key into the MONITOR_PLAN table that uniquely identifies a monitoring plan of the emissions data.';
 COMMENT ON COLUMN camdecmpsaux.pdem_p75_unit_quarter.rpt_period_id IS 'Foreign key into the REPORTING_PERIOD table that uniquely indentifies the reporting period of the emissions report.';
-COMMENT ON COLUMN camdecmpsaux.pdem_p75_unit_quarter.userid IS 'The user id of the submitter of the emissions report.';
 COMMENT ON COLUMN camdecmpsaux.pdem_p75_unit_quarter.add_date IS 'The date this record was inserted into the table.';

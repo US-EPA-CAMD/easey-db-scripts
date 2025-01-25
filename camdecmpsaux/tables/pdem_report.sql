@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.pdem_report
 	rpt_period_id           numeric(38) NOT NULL,
 	submission_id           bigint NOT NULL,
 	apportionment_type_cd   varchar(35) NULL,
+    emissions_created_flg   varchar(1) NOT NULL DEFAULT 'N',
 	add_date                timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	update_date             timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
     
@@ -29,5 +30,6 @@ COMMENT ON COLUMN camdecmpsaux.pdem_report.mon_plan_id IS 'Foreign key into the 
 COMMENT ON COLUMN camdecmpsaux.pdem_report.rpt_period_id IS 'Foreign key into the REPORTING_PERIOD table that uniquely indentifies the reporting period of the emissions report.';
 COMMENT ON COLUMN camdecmpsaux.pdem_report.submission_id IS 'Foreign key into the SUBMISSION_QUEUE table that uniquely identifies the (emisson report) submission generating the Program Data Emissions (PDEM).';
 COMMENT ON COLUMN camdecmpsaux.pdem_report.apportionment_type_cd IS 'Code used to indicate the apportionment type of an emissions report.';
+COMMENT ON COLUMN camdecmpsaux.pdem_report.emissions_created_flg IS 'Indicates whether the emissions values have been completely loaded and generated.';
 COMMENT ON COLUMN camdecmpsaux.pdem_report.add_date IS 'The date this row was inserted into the table.';
 COMMENT ON COLUMN camdecmpsaux.pdem_report.update_date IS 'The date this row was last updated.';

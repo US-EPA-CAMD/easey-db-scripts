@@ -26,7 +26,6 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.pdem_mats_unit_hour
     mon_plan_id             varchar(45) NOT NULL,
     rpt_period_id           numeric(38) NOT NULL,
     op_year                 numeric(4) NOT NULL,
-    userid                  varchar(160) NOT NULL,
     add_date                timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
     
     CONSTRAINT pdem_mats_unit_hour_pk PRIMARY KEY ( pdem_mats_unit_hour_id ),
@@ -75,5 +74,4 @@ COMMENT ON COLUMN camdecmpsaux.pdem_mats_unit_hour.hf_hour_measure_cd IS 'Foreig
 COMMENT ON COLUMN camdecmpsaux.pdem_mats_unit_hour.mon_plan_id IS 'Foreign key into the MONITOR_PLAN table that uniquely identifies a monitoring plan of the emissions data.';
 COMMENT ON COLUMN camdecmpsaux.pdem_mats_unit_hour.rpt_period_id IS 'Foreign key into the REPORTING_PERIOD table that uniquely indentifies the reporting period of the emissions report.';
 COMMENT ON COLUMN camdecmpsaux.pdem_mats_unit_hour.op_year IS 'The year of the operating date of the record.';
-COMMENT ON COLUMN camdecmpsaux.pdem_mats_unit_hour.userid IS 'The user id of the submitter of the emissions report.';
 COMMENT ON COLUMN camdecmpsaux.pdem_mats_unit_hour.add_date IS 'The date this record was inserted into the table.';

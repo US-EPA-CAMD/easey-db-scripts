@@ -13,6 +13,10 @@ language plpgsql
 as $procedure$
 
 declare
+    cRoutineName constant varchar := 'PDEM_Update_Init';
+    
+    vSqlState text;
+    vErrorContext text;
 begin
 
     call camdecmpsaux.PDEM_Update_Init_Reset( vMonPlanId, vRptPeriodId, vSubmissionId, vPdemReportId, vResult, vErrorMessage );
@@ -29,12 +33,19 @@ begin
 	
 	end if;
     
-exception
-
-    when others then
-
-        vErrorMessage := IsNULL(Error_Procedure(),'DmEm.UpdateFailure') + ': ' + ERROR_MESSAGE() + ' (' + cast(Error_Line() as varchar) + ')';
-        vResult := 'F';
+exception when others then
+    
+    get stacked diagnostics 
+        vSqlState := returned_sqlstate,
+        vErrorMessage := message_text,
+        vErrorContext := pg_exception_context;
+    
+    raise notice 'SQL State: %', vSqlState;
+    raise notice 'Error Message: %', vErrorMessage;
+    raise notice 'Error Context: %', vErrorContext;
+    
+    vResult := 'F';
+    vErrorMessage := concat( cRoutineName, ': ', vErrorMessage );
     
 end;
 
