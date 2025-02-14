@@ -22,6 +22,6 @@ BEGIN
 		(datatableId, 3, 'daily_noxm', 'dailyNOXMass', 'Daily NOx Mass Rate (lb/hr)'),
 		(datatableId, 4, 'daily_hit', 'daily_hit', 'Daily Heat Input'),
 		(datatableId, 5, 'daily_avg_noxr', 'dailyAvgNOXRate', 'Daily Avg. NOx Rate (lb/mmBtu)'),
-		(datatableId, 6, 'daily_noxm_exceed', 'dailyNOXMassExceedence', 'Daily NOx Mass Exceedence'),
-		(datatableId, 7, 'cumulative_os_noxm_exceed', 'cumulativeNOXMassExceedence', 'Cumulative NOx Mass Exceedence');
+		(datatableId, 6, 'daily_noxm_exceed', 'dailyNOXMassExceedance', 'Daily NOx Mass Exceedance'),
+		(datatableId, 7, 'cumulative_os_noxm_exceed', 'cumulativeNOXMassExceedance', 'Cumulative NOx Mass Exceedance');
 END $$;
