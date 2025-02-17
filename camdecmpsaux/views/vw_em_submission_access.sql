@@ -62,7 +62,7 @@ JOIN camdecmpsmd.em_sub_type_code stc USING (em_sub_type_cd)
 JOIN camdecmpsmd.submission_availability_code sac
 	ON em.sub_availability_cd = sac.submission_availability_cd
 JOIN camd.plant pl USING(fac_id)
-LEFT JOIN camdecmpsaux.submission_queue sq ON camdecmpsaux.get_submission_in_window(em.mon_plan_id, em.rpt_period_id, em.access_begin_date, em.access_end_date) = sq.submission_id
+LEFT JOIN camdecmpsaux.submission_queue sq ON camdecmpsaux.get_last_submission_in_window(em.mon_plan_id, em.rpt_period_id, em.access_begin_date, em.access_end_date) = sq.submission_id
 LEFT JOIN camdecmpsmd.severity_code sc USING (severity_cd)
 GROUP BY em.em_sub_access_id, stc.em_sub_type_cd, statc.em_status_cd, sac.submission_availability_cd, pl.fac_id,
 	rp.calendar_year, rp.quarter, rf.report_freq_cd, sq.submission_id, sc.severity_cd, rp.period_abbreviation, mp.config
