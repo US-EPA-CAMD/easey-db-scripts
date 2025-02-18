@@ -19,7 +19,7 @@ BEGIN
     error_msg := '';
     result := 'T';	 
 
-	 create temp table tmpMonInfo(MON_PLAN_ID character varying,
+	create temp table tmpMonInfo(MON_PLAN_ID character varying,
 	          MON_LOC_ID character varying, RPT_PERIOD_ID int);
 	
          ----- Get the MON_LOC_IDs for this MP
@@ -127,13 +127,13 @@ BEGIN
 	 select * into result, error_msg 
 	   from camdecmpswks.emissions_grid_remove_eval(vmonplan_id, vrptperiod_id );	
 	
-	 return;
+	RETURN NEXT; -- Add row to return table.
 
 exception when others then
     get stacked diagnostics error_msg := message_text;
     result = 'F'; 
 	error_msg :='From delete_calculated_em_data_from_workspace '||' '|| message_text;
 	
-   return;
+    RETURN NEXT; -- Add row to return table.
 END;
 $BODY$;

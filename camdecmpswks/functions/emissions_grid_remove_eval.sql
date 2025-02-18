@@ -164,13 +164,13 @@ BEGIN
 		where MON_PLAN_ID =vmonplan_id
 		  and RPT_PERIOD_ID = vrptperiod_id;
 
- return;
+    RETURN NEXT; -- Add row to return table.
 
 exception when others then
     get stacked diagnostics error_msg := message_text;
     result = 'F';  
 	error_msg :='From emissions_grid_remove_eval '||' '|| message_text;
 	
-   return;
+    RETURN NEXT; -- Add row to return table.
 END;
 $BODY$;
