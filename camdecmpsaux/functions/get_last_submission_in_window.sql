@@ -23,7 +23,7 @@ BEGIN
             SQ.submission_set_id,
             SS.mon_plan_id,
             SQ.rpt_period_id,
-            SQ.queued_time::date AS queued_time,
+            SQ.queued_time,
             SQ.process_cd,
             SQ.submission_id
         FROM camdecmpsaux.submission_set SS
