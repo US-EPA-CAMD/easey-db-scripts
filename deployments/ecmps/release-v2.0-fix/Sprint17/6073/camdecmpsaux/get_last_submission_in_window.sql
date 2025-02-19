@@ -19,7 +19,7 @@ BEGIN
             SQ.submission_set_id,
             SS.mon_plan_id,
             SQ.rpt_period_id,
-            SQ.queued_time::date AS queued_time,
+            SQ.queued_time,
             SQ.process_cd,
             SQ.submission_id
         FROM camdecmpsaux.submission_set SS
@@ -50,7 +50,7 @@ BEGIN
         WHERE SL.process_cd = 'EM'
           AND SL.mon_plan_id = v_mon_plan_id
           AND SL.rpt_period_id = v_rpt_period_id
-          AND SL.queued_time BETWEEN v_begin_date AND v_end_date
+          AND SL.queued_time::date BETWEEN v_begin_date AND v_end_date
           AND (ESA.mon_plan_id IS NULL OR SL.queued_time < ESA.access_begin_date)
         GROUP BY SL.mon_plan_id, SL.rpt_period_id
     )
