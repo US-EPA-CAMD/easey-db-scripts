@@ -34,7 +34,7 @@ SELECT
 		rp.period_abbreviation as "quarter",
 		null as "evalStatus",
 		sac.sub_avail_cd_description as "submisionStatus",
-		TO_CHAR(eq.queued_time, 'MM/DD/YYYY HH24:MI') as "submittedOn",
+		COALESCE(TO_CHAR(eq.queued_time, 'MM/DD/YYYY HH24:MI'), 'No Data Available') as "submittedOn",
 		cts.total_time AS "totalCycleTime",
 		cts.calc_total_time AS "calcTotalCycleTime"
 	FROM camdecmps.cycle_time_summary cts
