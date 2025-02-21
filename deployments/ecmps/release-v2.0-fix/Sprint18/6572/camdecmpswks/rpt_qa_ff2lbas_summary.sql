@@ -1,10 +1,6 @@
--- FUNCTION: camdecmpswks.rpt_qa_test_summary(text)
-
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_test_summary(text) CASCADE;
-
-CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_test_summary(
+CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_ffl2bas_summary(
 	testsumid text)
-    RETURNS TABLE("unitStack" text, "gpIndicator" numeric, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "beginDateTime" text ,"endDateTime" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "quarter" text, "evalStatus" text, "submissionStatus" text, "submittedOn" text, "testDescription" text) 
+    RETURNS TABLE("unitStack" text, "gpIndicator" numeric, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "beginDateTime" text ,"endDateTime" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "quarter" text, "evalStatus" text, "submissionStatus" text, "submittedOn" text, "testDescription" text, "accNum" text, "peiTestNum" text) 
     LANGUAGE 'sql'
     COST 100
     VOLATILE PARALLEL UNSAFE
@@ -35,9 +31,12 @@ SELECT
 		esc.eval_status_cd_description as "evalStatus",
 		sac.sub_avail_cd_description as "submisionStatus",
 		COALESCE(TO_CHAR(eq.queued_time, 'MM/DD/YYYY HH24:MI'), 'No Data Available') as "submittedOn",
-		ts.test_description as "testDescription"
+		ts.test_description as "testDescription",
+		ffl2b.accuracy_test_number as "accTestNum",
+		ffl2b.pei_test_number as "peiTestNum"
 	FROM camdecmpswks.test_summary ts
 	JOIN camdecmpswks.qa_supp_data supp on ts.test_sum_id = supp.test_sum_id
+	JOIN camdecmps.fuel_flow_to_load_baseline ffl2b on ts.test_sum_id =  ffl2b.test_sum_id
 	JOIN camdecmpswks.monitor_location ml ON ts.mon_loc_id = ml.mon_loc_id
 	JOIN camdecmpsmd.eval_status_code esc USING(eval_status_cd)
 	JOIN camdecmpsmd.submission_availability_code sac USING(submission_availability_cd)

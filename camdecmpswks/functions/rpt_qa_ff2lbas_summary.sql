@@ -32,7 +32,7 @@ SELECT
 		rp.period_abbreviation as "quarter",
 		esc.eval_status_cd_description as "evalStatus",
 		sac.sub_avail_cd_description as "submisionStatus",
-		TO_CHAR(eq.queued_time, 'MM/DD/YYYY HH24:MI') as "submittedOn",
+		COALESCE(TO_CHAR(eq.queued_time, 'MM/DD/YYYY HH24:MI'), 'No Data Available') as "submittedOn",
 		ts.test_description as "testDescription",
 		ffl2b.accuracy_test_number as "accTestNum",
 		ffl2b.pei_test_number as "peiTestNum"

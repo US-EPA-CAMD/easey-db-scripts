@@ -1,10 +1,6 @@
--- FUNCTION: camdecmpswks.rpt_qa_test_summary(text)
-
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_test_summary(text) CASCADE;
-
-CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_test_summary(
+CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_cycle_time_summary(
 	testsumid text)
-    RETURNS TABLE("unitStack" text, "gpIndicator" numeric, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "beginDateTime" text ,"endDateTime" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "quarter" text, "evalStatus" text, "submissionStatus" text, "submittedOn" text, "testDescription" text) 
+    RETURNS TABLE("unitStack" text, "gpIndicator" numeric, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "beginDateTime" text ,"endDateTime" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "quarter" text, "evalStatus" text, "submissionStatus" text, "submittedOn" text, "totalCycleTime" numeric, "calcTotalCycleTime" numeric) 
     LANGUAGE 'sql'
     COST 100
     VOLATILE PARALLEL UNSAFE
@@ -35,8 +31,10 @@ SELECT
 		esc.eval_status_cd_description as "evalStatus",
 		sac.sub_avail_cd_description as "submisionStatus",
 		COALESCE(TO_CHAR(eq.queued_time, 'MM/DD/YYYY HH24:MI'), 'No Data Available') as "submittedOn",
-		ts.test_description as "testDescription"
-	FROM camdecmpswks.test_summary ts
+		cts.total_time AS "totalCycleTime",
+		cts.calc_total_time AS "calcTotalCycleTime"
+	FROM camdecmpswks.cycle_time_summary cts
+	JOIN camdecmpswks.test_summary ts on ts.test_sum_id = cts.test_sum_id
 	JOIN camdecmpswks.qa_supp_data supp on ts.test_sum_id = supp.test_sum_id
 	JOIN camdecmpswks.monitor_location ml ON ts.mon_loc_id = ml.mon_loc_id
 	JOIN camdecmpsmd.eval_status_code esc USING(eval_status_cd)

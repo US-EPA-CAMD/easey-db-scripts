@@ -1,10 +1,11 @@
--- FUNCTION: camdecmpswks.rpt_qa_test_summary(text)
-
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_qa_test_summary(text) CASCADE;
-
-CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_test_summary(
+CREATE OR REPLACE FUNCTION camdecmpswks.rpt_qa_rata_summary(
 	testsumid text)
-    RETURNS TABLE("unitStack" text, "gpIndicator" numeric, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "beginDateTime" text ,"endDateTime" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "quarter" text, "evalStatus" text, "submissionStatus" text, "submittedOn" text, "testDescription" text) 
+    RETURNS TABLE(
+		"unitStack" text, "gpIndicator" numeric, "testTypeCode" text, "testNumber" text, "testReasonCode" text, "testResultCode" text, "calcTestResultCode" text, "spanScaleCode" text, "calcSpanValue" numeric, "beginDateTime" text ,"endDateTime" text, "systemIdentifier" text, "systemTypeCode" text, "componentIdentifier" text, "componentTypeCode" text, "quarter" text, "evalStatus" text, "submissionStatus" text, "submittedOn" text, "testDescription" text,
+		"noLoad" numeric,
+		"biasAdjFactor" numeric,
+		"calcBiasAdjFactor" numeric,
+		"freqCd" text) 
     LANGUAGE 'sql'
     COST 100
     VOLATILE PARALLEL UNSAFE
@@ -35,8 +36,13 @@ SELECT
 		esc.eval_status_cd_description as "evalStatus",
 		sac.sub_avail_cd_description as "submisionStatus",
 		COALESCE(TO_CHAR(eq.queued_time, 'MM/DD/YYYY HH24:MI'), 'No Data Available') as "submittedOn",
-		ts.test_description as "testDescription"
+		ts.test_description as "testDescription",
+		r.num_load_level as "noLoad",
+		r.overall_bias_adj_factor as "biasAdjFactor",
+		r.calc_overall_bias_adj_factor as "calcBiasAdjFactor",
+		r.rata_frequency_cd as "freqCd"
 	FROM camdecmpswks.test_summary ts
+	JOIN camdecmpswks.rata r on r.test_sum_id = ts.test_sum_id 
 	JOIN camdecmpswks.qa_supp_data supp on ts.test_sum_id = supp.test_sum_id
 	JOIN camdecmpswks.monitor_location ml ON ts.mon_loc_id = ml.mon_loc_id
 	JOIN camdecmpsmd.eval_status_code esc USING(eval_status_cd)
