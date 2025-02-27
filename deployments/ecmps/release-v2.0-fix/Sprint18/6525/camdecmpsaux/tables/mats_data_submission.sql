@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.mats_data_submission (
     original_sub_id bigint,
     fac_id numeric(38, 0) NOT NULL,
     mon_plan_id varchar(45) COLLATE pg_catalog."default" NOT NULL,
-    mats_status_cd varchar(7) COLLATE pg_catalog."default" NOT NULL DEFAULT 'NEW',
+    mats_status_cd varchar(8) COLLATE pg_catalog."default" NOT NULL DEFAULT 'NEW',
     user_id varchar(45) COLLATE pg_catalog."default" NOT NULL,
     add_time timestamp without time zone NOT NULL,
     update_time timestamp without time zone
