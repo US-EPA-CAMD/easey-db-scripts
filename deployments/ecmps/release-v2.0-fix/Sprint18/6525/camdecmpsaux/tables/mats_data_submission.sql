@@ -3,7 +3,6 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.mats_data_submission (
     mon_loc_id varchar(45) COLLATE pg_catalog."default" NOT NULL,
     mats_rpt_type_cd varchar(7) COLLATE pg_catalog."default" NOT NULL,
     mats_avg_group_cd varchar(7) COLLATE pg_catalog."default",
-    mats_test_meth_cd varchar(7) COLLATE pg_catalog."default",
     test_number varchar(100) COLLATE pg_catalog."default",
     test_date date,
     test_comment text COLLATE pg_catalog."default",
@@ -27,8 +26,6 @@ COMMENT ON COLUMN camdecmpsaux.mats_data_submission.mon_loc_id IS 'Foreign key t
 COMMENT ON COLUMN camdecmpsaux.mats_data_submission.mats_rpt_type_cd IS 'Foreign key to the MATS Report Type Code table.';
 
 COMMENT ON COLUMN camdecmpsaux.mats_data_submission.mats_avg_group_cd IS 'Foreign key to the MATS Averaging Group Code table.';
-
-COMMENT ON COLUMN camdecmpsaux.mats_data_submission.mats_test_meth_cd IS 'Foreign key to the MATS Test Method Code table.';
 
 COMMENT ON COLUMN camdecmpsaux.mats_data_submission.test_number IS 'Test number for the involved test.';
 

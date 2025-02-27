@@ -3,7 +3,6 @@ ALTER TABLE IF EXISTS camdecmpsaux.mats_data_submission
     ADD CONSTRAINT fk_mats_data_submission_monitor_location FOREIGN KEY (mon_loc_id) REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH simple,
     ADD CONSTRAINT fk_mats_data_submission_mats_report_type_code FOREIGN KEY (mats_rpt_type_cd) REFERENCES camdecmpsaux.mats_report_type_code (mats_rpt_type_cd) MATCH simple,
     ADD CONSTRAINT fk_mats_data_submission_mats_averaging_group_code FOREIGN KEY (mats_avg_group_cd) REFERENCES camdecmpsaux.mats_averaging_group_code (mats_avg_group_cd) MATCH simple,
-    ADD CONSTRAINT fk_mats_data_submission_mats_test_method_code FOREIGN KEY (mats_test_meth_cd) REFERENCES camdecmpsaux.mats_test_method_code (mats_test_meth_cd) MATCH simple,
     ADD CONSTRAINT fk_mats_data_submission FOREIGN KEY (mats_data_sub_id) REFERENCES camdecmpsaux.mats_data_submission (mats_data_sub_id) MATCH simple,
     ADD CONSTRAINT fk_mats_data_submission_plant FOREIGN KEY (fac_id) REFERENCES camd.plant (fac_id) MATCH simple,
     ADD CONSTRAINT fk_mats_data_submission_monitor_plan FOREIGN KEY (mon_plan_id) REFERENCES camdecmps.monitor_plan (mon_plan_id) MATCH simple,
