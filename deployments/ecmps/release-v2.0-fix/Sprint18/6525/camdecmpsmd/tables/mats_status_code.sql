@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS camdecmpsmd.MATS_STATUS_CODE (
-    mats_status_cd varchar(7) COLLATE pg_catalog."default" NOT NULL,
+    mats_status_cd varchar(8) COLLATE pg_catalog."default" NOT NULL,
     mats_status_description varchar(100) COLLATE pg_catalog."default" NOT NULL
 );
 
