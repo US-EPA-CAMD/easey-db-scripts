@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.pdem_mats_monitor_hour
     tload                   numeric(8,2),
     hit                     numeric(15,3),
     hit_hour_measure_cd     varchar(7),
+	hit_From_Fuel_Flow      numeric(14, 4) NULL,
     hg_rate_eo              varchar(35),
     hg_rate_hi              varchar(35),
     hg_mass                 numeric(22,10),
@@ -29,7 +30,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.pdem_mats_monitor_hour
     add_date                timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
     
     CONSTRAINT pdem_mats_monitor_hour_pk PRIMARY KEY ( pdem_mats_mon_hour_id ),
-    CONSTRAINT pdem_mats_monitor_hour_uq UNIQUE ( mon_loc_id, op_date, op_hour ),
+    CONSTRAINT pdem_mats_monitor_hour_uq UNIQUE ( pdem_report_id, mon_loc_id, op_date, op_hour ),
     CONSTRAINT pdem_mats_monitor_hour_rpt_fk FOREIGN KEY ( pdem_report_id ) REFERENCES camdecmpsaux.pdem_report ( pdem_report_id ) ON DELETE CASCADE,
     CONSTRAINT pdem_mats_monitor_hour_loc_fk FOREIGN KEY ( mon_loc_id ) REFERENCES camdecmps.monitor_location ( mon_loc_id ),
     CONSTRAINT pdem_mats_monitor_hour_pln_fk FOREIGN KEY ( mon_plan_id ) REFERENCES camdecmps.monitor_plan ( mon_plan_id ),
@@ -59,6 +60,7 @@ COMMENT ON COLUMN camdecmpsaux.pdem_mats_monitor_hour.sload IS 'The Steam Load f
 COMMENT ON COLUMN camdecmpsaux.pdem_mats_monitor_hour.tload IS 'The Thermal Load for the indicated time period within the emissions report.';
 COMMENT ON COLUMN camdecmpsaux.pdem_mats_monitor_hour.hit IS 'The Heat Input Total for the indicated time period within the emissions report.';
 COMMENT ON COLUMN camdecmpsaux.pdem_mats_monitor_hour.hit_hour_measure_cd IS 'Foreign key into the HOUR_MEASURE_CODE table that uniquely indentifies the hour measure code for Heat Input Total.';
+COMMENT ON COLUMN camdecmpsaux.pdem_mats_monitor_hour.hit_From_Fuel_Flow IS 'The Heat Input Total from Fuel Flow for the indicated time period within the emissions report.';
 COMMENT ON COLUMN camdecmpsaux.pdem_mats_monitor_hour.hg_rate_eo IS 'The Electrical Output Based Mercury (Hg) Rate for the time period. (lb/GWh)';
 COMMENT ON COLUMN camdecmpsaux.pdem_mats_monitor_hour.hg_rate_hi IS 'The Heat Input Based Mercury (Hg) Rate for the time period. (lb/TBtu)';
 COMMENT ON COLUMN camdecmpsaux.pdem_mats_monitor_hour.hg_mass IS 'The Mercury (Hg) Mass for the time period. (lb)';

@@ -18,6 +18,7 @@ create or replace function camdecmpsaux.PDEM_Update_Init_Get_Combined_Hourly_Dat
                 -- HIT Value and Measure Code
                 Hit numeric,
                 Hit_Hour_Measure_Cd varchar,
+                Hit_From_Fuel_Flow numeric,
                 -- Part 75 SO2, CO2 and NOx Mass and Rate Values and Measure Codes
                 So2m numeric,
                 So2m_Hour_Measure_Cd varchar,
@@ -70,6 +71,7 @@ begin
                 -- HIT Value and Measure Code
                 max( cmb.Hit ) as Hit,
                 max( cmb.Hit_Hour_Measure_Cd )::varchar as Hit_Hour_Measure_Cd,
+                max( cmb.Hit_From_Fuel_Flow ) as Hit_From_Fuel_Flow,
                 -- Part 75 SO2, CO2 and NOx Mass and Rate Values and Measure Codes
                 max( cmb.So2m ) as So2m,
                 max( cmb.So2m_Hour_Measure_Cd )::varchar as So2m_Hour_Measure_Cd,
@@ -115,6 +117,7 @@ begin
                             -- HIT Value and Measure Code
                             dat.Hit,
                             dat.Hit_Hour_Measure_Cd,
+							dat.Hit_From_Fuel_Flow,
                             -- Part 75 SO2, CO2 and NOx Mass and Rate Values and Measure Codes
                             dat.So2m,
                             dat.So2m_Hour_Measure_Cd,
@@ -163,6 +166,7 @@ begin
                             -- HIT Value and Measure Code
                             dat.Hit,
                             dat.Hit_Hour_Measure_Cd,
+							dat.Hit_From_Fuel_Flow,
                             -- Part 75 SO2, CO2 and NOx Mass and Rate Values and Measure Codes
                             null as So2m,
                             null as So2m_Hour_Measure_Cd,

@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.pdem_p75_unit_month
     add_date                timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
     
     CONSTRAINT pdem_p75_unit_month_pk PRIMARY KEY ( pdem_p75_unit_month_id ),
-    CONSTRAINT pdem_p75_unit_month_uq UNIQUE ( unit_id, op_year, op_month ),
+    CONSTRAINT pdem_p75_unit_month_uq UNIQUE ( pdem_report_id, unit_id, op_year, op_month ),
     CONSTRAINT pdem_p75_unit_month_rpt_fk FOREIGN KEY ( pdem_report_id ) REFERENCES camdecmpsaux.pdem_report ( pdem_report_id ) ON DELETE CASCADE,
     CONSTRAINT pdem_p75_unit_month_loc_fk FOREIGN KEY ( unit_id ) REFERENCES camd.unit ( unit_id ),
     CONSTRAINT pdem_p75_unit_month_pln_fk FOREIGN KEY ( mon_plan_id ) REFERENCES camdecmps.monitor_plan ( mon_plan_id ),

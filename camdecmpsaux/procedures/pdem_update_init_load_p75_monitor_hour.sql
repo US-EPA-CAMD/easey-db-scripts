@@ -49,6 +49,7 @@ begin
                     Tload,
                     Hit,
                     Hit_Hour_Measure_Cd,
+					Hit_From_Fuel_Flow,
                     So2m,
                     So2m_Hour_Measure_Cd,
                     So2r,
@@ -77,6 +78,7 @@ begin
                 -- HI Values, Measure Codes and Fuel Flow Values
                 rst.Hit,
                 rst.Hit_Hour_Measure_Cd,
+                rst.Hit_From_Fuel_Flow,
                 -- SO2 Values and Measure Codes
                 rst.So2m,
                 rst.So2m_Hour_Measure_Cd,
@@ -133,6 +135,12 @@ begin
                                 when flt.Hit_Hour_Id_From_Hit is not null then flt.Hit_Measure_From_Hit
                                 else null
                             end as Hit_Hour_Measure_Cd,
+                            case
+                                when flt.Op_Time = 0 or flt.Op_Time is null then null 
+                                when flt.Hit_Hour_Id_From_Hi is not null then flt.Hit_From_Fuel_Flow_From_Hi
+                                when flt.Hit_Hour_Id_From_Hit is not null then flt.Hit_From_Fuel_Flow_From_Hit
+                                else null
+                            end as Hit_From_Fuel_Flow,
                             -- SO2 Values and Measure Codes
                             case
                                 when flt.Op_Time = 0 or flt.Op_Time is null then null 
@@ -222,9 +230,11 @@ begin
                                         max( case when dhv.Parameter_cd = 'HI'    then dhv.Hour_Id end ) as Hit_Hour_Id_From_Hi,
                                         max( case when dhv.Parameter_cd = 'HI'    then round( dhv.Adjusted_Hrly_Value * hod.Op_Time, 3 ) end ) as Hit_From_Hi,
                                         max( case when dhv.Parameter_cd = 'HI'    then dhv.Calc_Hour_Measure_Cd end ) as Hit_Measure_From_Hi,
+                                        max( case when dhv.Parameter_cd = 'HI' 	  then dhv.Calc_Fuel_Flow_Total end ) as Hit_From_Fuel_Flow_From_Hi,
                                         max( case when dhv.Parameter_cd = 'HIT'   then dhv.Hour_Id end ) as Hit_Hour_Id_From_Hit,
                                         max( case when dhv.Parameter_cd = 'HIT'   then dhv.Adjusted_Hrly_Value  end ) as Hit_From_Hit,
                                         max( case when dhv.Parameter_cd = 'HIT'   then dhv.Calc_Hour_Measure_Cd end ) as Hit_Measure_From_Hit,
+                                        max( case when dhv.Parameter_cd = 'HIT'   then dhv.Calc_Fuel_Flow_Total end ) as Hit_From_Fuel_Flow_From_Hit,
                                         -- SO2 Values and Measure Codes
                                         max( case when dhv.Parameter_cd = 'SO2'   then dhv.Hour_Id end ) as So2m_Hour_Id_From_So2,
                                         max( case when dhv.Parameter_cd = 'SO2'   then round( dhv.Adjusted_Hrly_Value * hod.Op_Time, 3 ) end ) as So2m_From_So2,

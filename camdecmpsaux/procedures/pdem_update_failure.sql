@@ -2,7 +2,8 @@ create or replace procedure camdecmpsaux.PDEM_Update_Failure
 (
     in vPdemReportId bigint,
     in vApportionmentTypeCd varchar,
-    out vResult char, 
+    in vFailureMessage text,
+    out vResult boolean, 
     out vErrorMessage varchar
 )
 
@@ -20,10 +21,12 @@ begin
     -- Update DM emissions with apportionment type and created flag
     update  camdecmpsaux.PDEM_REPORT
        set  Apportionment_type_Cd = vApportionmentTypeCd,
-            Emissions_Created_Flg = 'N'
+            Completed_Time = null,
+            Note = vFailureMessage,
+            Note_Time = current_timestamp
      where  Pdem_Report_Id = vPdemReportId;
     
-    vResult := 'T';
+    vResult := true;
     vErrorMessage := '';
 
 exception when others then
@@ -37,7 +40,7 @@ exception when others then
     raise notice 'Error Message: %', vErrorMessage;
     raise notice 'Error Context: %', vErrorContext;
     
-    vResult := 'F';
+    vResult := false;
     vErrorMessage := concat( cRoutineName, ': ', vErrorMessage );
     
 end;

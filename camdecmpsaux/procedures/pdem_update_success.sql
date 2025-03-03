@@ -35,8 +35,17 @@ begin
     if vResult then
         update  camdecmpsaux.PDEM_REPORT
            set  Apportionment_Type_Cd = vApportionmentTypeCd,
-                Emissions_Created_Flg = 'Y'
+                Completed_Time = current_timestamp,
+                Note = null,
+                Note_Time = null
          where  Pdem_Report_Id = vPdemReportId;
+    else
+        update  camdecmpsaux.PDEM_REPORT
+           set  Apportionment_type_Cd = vApportionmentTypeCd,
+                Completed_Time = null,
+                Note = vErrorMessage,
+                Note_Time = current_timestamp
+     where  Pdem_Report_Id = vPdemReportId;
     end if;
     
 exception when others then

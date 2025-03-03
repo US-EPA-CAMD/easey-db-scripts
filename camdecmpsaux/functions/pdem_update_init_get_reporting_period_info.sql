@@ -4,7 +4,7 @@ create or replace function camdecmpsaux.PDEM_Update_Init_Get_Reporting_Period_In
 )
     returns table
             (
-                Calendar_Year numeric,
+                Year numeric,
                 Quarter numeric,
                 Begin_Date date,
                 End_Date date
@@ -18,7 +18,7 @@ declare
 begin
 
     return query
-        select  prd.Calendar_Year,
+        select  prd.Calendar_Year as Year,
                 prd.Quarter,
                 prd.Begin_Date,
                 prd.End_Date

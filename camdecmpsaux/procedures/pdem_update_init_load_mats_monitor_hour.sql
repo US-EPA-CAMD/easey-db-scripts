@@ -54,6 +54,7 @@ begin
                         Tload,
                         Hit,
                         Hit_Hour_Measure_Cd,
+						Hit_From_Fuel_Flow,
                         -- HG Values and Measure Code
                         Hg_Rate_Eo,
                         Hg_Rate_Hi,
@@ -86,6 +87,7 @@ begin
                     -- HI Values, Measure Codes and Fuel Flow Values
                     rst.Hit,
                     rst.Hit_Hour_Measure_Cd,
+					rst.Hit_From_Fuel_Flow,
                     -- HG Values and Measure Code
                     rst.Hg_Rate_Eo,
                     rst.Hg_Rate_Hi,
@@ -125,6 +127,11 @@ begin
                                     when flt.Hit_Hour_Id is not null then flt.Hit_Measure_Cd
                                     else null
                                 end as Hit_Hour_Measure_Cd,
+                                case
+                                    when flt.Op_Time = 0 or flt.Op_Time is null then null 
+                                    when flt.Hit_Hour_Id is not null then flt.Calc_Fuel_Flow_Total
+                                    else null
+                                end as Hit_From_Fuel_Flow,
                                 -- HG Values and Measure Code
                                 case
                                     when flt.Op_Time = 0 or flt.Op_Time is null then null 
@@ -233,6 +240,7 @@ begin
                                             max( case when dhv.Parameter_cd = 'HI' then dhv.Hour_Id end ) as Hit_Hour_Id,
                                             max( case when dhv.Parameter_cd = 'HI' then round( dhv.Adjusted_Hrly_Value * hod.Op_Time, 3 ) end ) as Hit,
                                             max( case when dhv.Parameter_cd = 'HI' then dhv.Calc_Hour_Measure_Cd end ) as Hit_Measure_Cd,
+                                            max( case when dhv.Parameter_cd = 'HI' then dhv.Calc_Fuel_Flow_Total end ) as Calc_Fuel_Flow_Total,
                                             -- HG Values and Measure Code
                                             max( case when mdv.Parameter_cd = 'HGRE' then mdv.Hour_Id end ) as Hgre_Hour_Id,
                                             max( case when mdv.Parameter_cd = 'HGRE' then mdv.Unadjusted_Hrly_Value end ) as Hgre,

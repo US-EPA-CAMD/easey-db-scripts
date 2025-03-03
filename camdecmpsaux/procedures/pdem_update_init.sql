@@ -1,9 +1,9 @@
 create or replace procedure camdecmpsaux.PDEM_Update_Init
 (
-    in vMonPlanId varchar,
-    in vRptPeriodId numeric,
-    in vSubmissionId bigint,
-    out vPdemReportId bigint,
+    in  vPdemReportId bigint,
+    out vMonPlanId varchar,
+    out vRptPeriodId numeric,
+    out vIsMatsEmissionReport boolean, 
     out vResult boolean, 
     out vErrorMessage text
 )
@@ -19,7 +19,19 @@ declare
     vErrorContext text;
 begin
 
-    call camdecmpsaux.PDEM_Update_Init_Reset( vMonPlanId, vRptPeriodId, vSubmissionId, vPdemReportId, vResult, vErrorMessage );
+    -- Get Output Parameters
+    select  rpt.Mon_Plan_Id,
+            rpt.Rpt_Period_Id
+      into  vMonPlanId,
+            vRptPeriodId
+      from  camdecmpsaux.PDEM_REPORT rpt
+     where  rpt.Pdem_Report_Id = vPdemReportId;
+    
+    vIsMatsEmissionReport := camdecmpsaux.PDEM_Is_Mats_Emission_Report( vMonPlanId, vRptPeriodId );
+    
+    
+    -- Initialize Data
+    call camdecmpsaux.PDEM_Update_Init_Reset( vPdemReportId, vResult, vErrorMessage );
 	
 	if vResult then
 	

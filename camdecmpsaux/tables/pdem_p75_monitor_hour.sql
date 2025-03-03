@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.pdem_p75_monitor_hour
 	tload                   numeric(8, 2) NULL,
 	hit                     numeric(15, 3) NULL,
 	hit_hour_measure_cd     varchar(7) NULL,
+	hit_From_Fuel_Flow      numeric(14, 4) NULL,
 	so2m                    numeric(15, 3) NULL,
 	so2m_hour_measure_cd    varchar(7) NULL,
 	so2r                    numeric(15, 3) NULL,
@@ -29,7 +30,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.pdem_p75_monitor_hour
 	add_date                timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
     
     CONSTRAINT pdem_p75_monitor_hour_pk PRIMARY KEY ( pdem_p75_mon_hour_id ),
-    CONSTRAINT pdem_p75_monitor_hour_uq UNIQUE ( mon_loc_id, op_date, op_hour ),
+    CONSTRAINT pdem_p75_monitor_hour_uq UNIQUE ( pdem_report_id, mon_loc_id, op_date, op_hour ),
     CONSTRAINT pdem_p75_monitor_hour_rpt_fk FOREIGN KEY ( pdem_report_id ) REFERENCES camdecmpsaux.pdem_report ( pdem_report_id ) ON DELETE CASCADE,
     CONSTRAINT pdem_p75_monitor_hour_loc_fk FOREIGN KEY ( mon_loc_id ) REFERENCES camdecmps.monitor_location ( mon_loc_id ),
     CONSTRAINT pdem_p75_monitor_hour_pln_fk FOREIGN KEY ( mon_plan_id ) REFERENCES camdecmps.monitor_plan ( mon_plan_id ),
@@ -62,6 +63,7 @@ COMMENT ON COLUMN camdecmpsaux.pdem_p75_monitor_hour.sload IS 'The Steam Load fo
 COMMENT ON COLUMN camdecmpsaux.pdem_p75_monitor_hour.tload IS 'The Thermal Load for the indicated time period within the emissions report.';
 COMMENT ON COLUMN camdecmpsaux.pdem_p75_monitor_hour.hit IS 'The Heat Input Total for the indicated time period within the emissions report.';
 COMMENT ON COLUMN camdecmpsaux.pdem_p75_monitor_hour.hit_hour_measure_cd IS 'Foreign key into the HOUR_MEASURE_CODE table that uniquely indentifies the hour measure code for Heat Input Total.';
+COMMENT ON COLUMN camdecmpsaux.pdem_p75_monitor_hour.hit_From_Fuel_Flow IS 'The Heat Input Total from Fuel Flow for the indicated time period within the emissions report.';
 COMMENT ON COLUMN camdecmpsaux.pdem_p75_monitor_hour.so2m IS 'The SO2 mass value for the indicated hour within the emissions report.';
 COMMENT ON COLUMN camdecmpsaux.pdem_p75_monitor_hour.so2m_hour_measure_cd IS 'Foreign key into the HOUR_MEASURE_CODE table that uniquely indentifies the hour measure code for SO2 mass.';
 COMMENT ON COLUMN camdecmpsaux.pdem_p75_monitor_hour.so2r IS 'The SO2 rate value for the indicated hour within the emissions report.';

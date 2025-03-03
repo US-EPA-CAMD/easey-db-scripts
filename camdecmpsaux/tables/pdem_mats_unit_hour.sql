@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.pdem_mats_unit_hour
     add_date                timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
     
     CONSTRAINT pdem_mats_unit_hour_pk PRIMARY KEY ( pdem_mats_unit_hour_id ),
-    CONSTRAINT pdem_mats_unit_hour_uq UNIQUE ( unit_id, op_date, op_hour ),
+    CONSTRAINT pdem_mats_unit_hour_uq UNIQUE ( pdem_report_id, unit_id, op_date, op_hour ),
     CONSTRAINT pdem_mats_unit_hour_rpt_fk FOREIGN KEY ( pdem_report_id ) REFERENCES camdecmpsaux.pdem_report ( pdem_report_id ) ON DELETE CASCADE,
     CONSTRAINT pdem_mats_unit_hour_loc_fk FOREIGN KEY ( unit_id ) REFERENCES camd.unit ( unit_id ),
     CONSTRAINT pdem_mats_unit_hour_pln_fk FOREIGN KEY ( mon_plan_id ) REFERENCES camdecmps.monitor_plan ( mon_plan_id ),
