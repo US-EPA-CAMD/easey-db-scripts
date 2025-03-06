@@ -10,6 +10,7 @@ create or replace function camdecmpsaux.PDEM_Apportionment_Get_Formula_Table
                 Apport_Data_Id numeric,
                 Monitor_Tag varchar,
                 Unit_Tag varchar,
+                Pollutant_Cd varchar,
                 Hi_Load_Formula varchar,
                 Op_Time_Formula varchar
             )
@@ -27,6 +28,7 @@ begin
                 apd.Apport_Data_Id,
                 xml.Monitor_Tag,
                 xml.Unit_Tag,
+                xml.Pollutant_Cd,
                 xml.Hi_Load_Formula,
                 xml.Op_Time_Formula
           from  camdecmpsaux.Apportionment app
@@ -46,6 +48,7 @@ begin
                         passing apd.Formulae_Xml
                         columns Monitor_Tag varchar         path '@MONITOR_TAG',
                                 Unit_Tag varchar            path '@UNIT_TAG',
+                                Pollutant_Cd varchar        path 'POLLUTANT_CD',
                                 Hi_Load_Formula varchar     path 'HI_LOAD_FORMULA',
                                 Op_Time_Formula varchar     path 'OP_TIME_FORMULA'
                      ) xml

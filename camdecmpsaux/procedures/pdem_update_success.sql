@@ -20,33 +20,12 @@ begin
     vResult := true;
     vErrorMessage := '';
     
-    if vResult then
-        call camdecmpsaux.PDEM_Update_Success_Load_Unit_Day( vPdemReportId, vResult, vErrorMessage );
-    end if;
-    
-    if vResult then
-        call camdecmpsaux.PDEM_Update_Success_Load_Unit_Month( vPdemReportId, vResult, vErrorMessage );
-    end if;
-    
-    if vResult then
-        call camdecmpsaux.PDEM_Update_Success_Load_Unit_Quarter( vPdemReportId, vResult, vErrorMessage );
-    end if;
-    
-    if vResult then
-        update  camdecmpsaux.PDEM_REPORT
-           set  Apportionment_Type_Cd = vApportionmentTypeCd,
-                Completed_Time = current_timestamp,
-                Note = null,
-                Note_Time = null
-         where  Pdem_Report_Id = vPdemReportId;
-    else
-        update  camdecmpsaux.PDEM_REPORT
-           set  Apportionment_type_Cd = vApportionmentTypeCd,
-                Completed_Time = null,
-                Note = vErrorMessage,
-                Note_Time = current_timestamp
+    update  camdecmpsaux.PDEM_REPORT
+       set  Apportionment_Type_Cd = vApportionmentTypeCd,
+            Completed_Time = current_timestamp,
+            Note = null,
+            Note_Time = null
      where  Pdem_Report_Id = vPdemReportId;
-    end if;
     
 exception when others then
     
