@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS camdecmps.get_em_reporting_status(numeric, numeric, character varying);
+DROP FUNCTION IF EXISTS camdecmps.get_em_reporting_status(numeric, numeric, character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmps.get_em_reporting_status(
     inUnitID       numeric,      

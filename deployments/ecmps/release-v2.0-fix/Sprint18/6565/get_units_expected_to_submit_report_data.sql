@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS get_units_expected_to_submit_report_data(numeric, character varying, character varying, character varying, numeric, numeric, character varying);
+DROP FUNCTION IF EXISTS get_units_expected_to_submit_report_data(numeric, character varying, character varying, character varying, numeric, numeric, character varying) CASCADE;
 
 CREATE OR REPLACE FUNCTION get_units_expected_to_submit_report_data(
     V_FAC_ID            numeric,

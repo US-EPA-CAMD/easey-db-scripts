@@ -38,36 +38,13 @@ SELECT
         ELSE 'Closed'
     END AS window_status,
     CASE
-        WHEN sq.sub_stage_cd = 'RECCRIT' THEN 'Received with Critical 1 Errors' -- when can we get the value of sub_stage_cd?
+        WHEN sq.severity_cd = 'CRIT1' THEN 'Received with Critical 1 Errors'
         WHEN sq.submission_id IS NULL AND em.em_status_cd = 'RECVD' AND em.mon_plan_id IS NOT NULL THEN 'Received via ETS'
-        WHEN sc.severity_cd = 'CRIT2' THEN 'Received with Critical 2 Errors'
-        WHEN sc.severity_cd IS NOT NULL THEN 'Received'
+        WHEN sq.severity_cd = 'CRIT2' THEN 'Received with Critical 2 Errors'
+        WHEN sq.severity_cd IS NOT NULL THEN 'Received'
         WHEN sq.submission_id IS NOT NULL THEN 'Data Not Loaded'
         ELSE 'No Submission'
     END AS submission_status,
-    -- here's the legacy code for the submission status:
-    -- CASE
-    --     WHEN SSL.SUB_STAGE_CD = 'RECCRIT'
-    --     THEN
-    --         'Received with Critical 1 Errors'
-    --     WHEN     SL.SUBMISSION_ID IS NULL
-    --          AND ESA.EM_STATUS_CD = 'RECVD'
-    --          AND EE.MON_PLAN_ID IS NOT NULL
-    --     THEN
-    --         'Received via ETS'
-    --     WHEN CS.SEVERITY_CD = 'CRIT2'
-    --     THEN
-    --         'Received with Critical 2 Errors'
-    --     WHEN CS.SEVERITY_CD IS NOT NULL
-    --     THEN
-    --         'Received'
-    --     WHEN SL.SUBMISSION_ID IS NOT NULL
-    --     THEN
-    --         'Data Not Loaded'
-    --     ELSE
-    --         'No Submission'
-    -- END
-    -- AS SUBMISSION_STATUS
     mp.config AS locations
 FROM camdecmpsaux.em_submission_access em
 JOIN (
@@ -129,7 +106,6 @@ GROUP BY
     rf.report_freq_cd,
     sq.submission_id,
     sq.queued_time,
-    sq.sub_stage_cd,
     sc.severity_cd,
     sc.severity_cd_description,
     mp.config
