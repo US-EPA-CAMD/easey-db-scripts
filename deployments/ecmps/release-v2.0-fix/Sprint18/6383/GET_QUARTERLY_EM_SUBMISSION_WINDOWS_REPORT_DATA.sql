@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS GET_QUARTERLY_EM_SUBMISSION_WINDOWS_REPORT_DATA(numeric, character varying, character varying, numeric, numeric);
+DROP FUNCTION IF EXISTS GET_QUARTERLY_EM_SUBMISSION_WINDOWS_REPORT_DATA(numeric, character varying, character varying, numeric, numeric) CASCADE;
 
 CREATE OR REPLACE FUNCTION GET_QUARTERLY_EM_SUBMISSION_WINDOWS_REPORT_DATA(
     V_FAC_ID            numeric,
@@ -23,15 +23,15 @@ RETURNS TABLE (
     ACCEPTED_SUBMISSION_IN_PERIOD   character varying, 
     LAST_WINDOW_WITH_OK_SUBMISSION  character varying,
     SUBMISSION_ID                   bigint,
-    SUBMIT_DATE                     date,
+    SUBMISSION_DATE                 date,
     SEVERITY_CD_DESCRIPTION         character varying,
     SUBMITTER_USER_ID               character varying
 ) AS $BODY$
 DECLARE
-    v_rpt_period_id numeric;
+    V_RPT_PERIOD_ID numeric;
 BEGIN
     SELECT RPT_PERIOD_ID
-      INTO v_rpt_period_id
+      INTO V_RPT_PERIOD_ID
       FROM camdecmpsmd.reporting_period
      WHERE calendar_year = V_YEAR
        AND quarter = V_QUARTER;
@@ -41,10 +41,10 @@ BEGIN
         V.ORIS_CODE,
         V.FACILITY_NAME,
         V.STATE,
-        V.LOCATIONS,
+        camdecmps.get_mp_location_list(V.MON_PLAN_ID) AS LOCATIONS,
         V.PERIOD,
-        V.ACCESS_BEGIN_DATE::date AS ACCESS_BEGIN_DATE,
-        V.ACCESS_END_DATE::date AS ACCESS_END_DATE,
+        V.ACCESS_BEGIN_DATE,
+        V.ACCESS_END_DATE,
         V.EM_SUB_TYPE_CD_DESCRIPTION,
         V.WINDOW_STATUS,
         V.LAST_WINDOW,
@@ -53,14 +53,14 @@ BEGIN
         V.ACCEPTED_SUBMISSION_IN_PERIOD, 
         V.LAST_WINDOW_WITH_OK_SUBMISSION,
         V.SUBMISSION_ID,
-        V.SUBMIT_DATE,
+        V.SUBMISSION_DATE,
         V.SEVERITY_CD_DESCRIPTION,
         V.SUBMITTER_USER_ID
-    FROM camdecmpsaux.VW_EM_SUBMISSION_ACCESS V
+    FROM CAMDECMPSAUX.VW_EM_SUBMISSION_ACCESS V
     WHERE V.FAC_ID = COALESCE(V_FAC_ID, V.FAC_ID)
       AND V.FACILITY_NAME = COALESCE(V_FACILITY_NAME, V.FACILITY_NAME)
-      AND V.RPT_PERIOD_ID = COALESCE(v_rpt_period_id, V.RPT_PERIOD_ID)
+      AND V.RPT_PERIOD_ID = COALESCE(V_RPT_PERIOD_ID, V.RPT_PERIOD_ID)
       AND V.SUBMISSION_STATUS = COALESCE(V_SUBMISSION_STATUS, V.SUBMISSION_STATUS)
-    ORDER BY V.ORIS_CODE ASC, V.PERIOD DESC, V.LOCATIONS ASC;
+    ORDER BY V.ORIS_CODE ASC, V.PERIOD DESC;
 END;
 $BODY$ LANGUAGE plpgsql;

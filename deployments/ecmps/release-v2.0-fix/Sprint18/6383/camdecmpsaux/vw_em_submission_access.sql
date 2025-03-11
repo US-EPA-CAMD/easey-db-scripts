@@ -37,26 +37,23 @@ SELECT
         ELSE 'Closed'
     END AS window_status,
     CASE
-        WHEN sq.sub_stage_cd = 'RECCRIT' THEN 'Received with Critical 1 Errors' -- need to get the confirmation from #6565 to move forward. 
+        WHEN sq.severity_cd = 'CRIT1' THEN 'Received with Critical 1 Errors'
         WHEN sq.submission_id IS NULL AND em.em_status_cd = 'RECVD' AND em.mon_plan_id IS NOT NULL THEN 'Received via ETS'
-        WHEN sc.severity_cd = 'CRIT2' THEN 'Received with Critical 2 Errors'
-        WHEN sc.severity_cd IS NOT NULL THEN 'Received'
+        WHEN sq.severity_cd = 'CRIT2' THEN 'Received with Critical 2 Errors'
+        WHEN sq.severity_cd IS NOT NULL THEN 'Received'
         WHEN sq.submission_id IS NOT NULL THEN 'Data Not Loaded'
         ELSE 'No Submission'
     END AS submission_status,
     mp.config AS locations,
-    -- New Column 1: last_window
     CASE
-        WHEN em.em_sub_access_id = get_last_submission_access(em.mon_plan_id, em.rpt_period_id)
+        WHEN em.em_sub_access_id = camdecmpsaux.get_last_submission_access(em.mon_plan_id, em.rpt_period_id)
         THEN 'Yes'
         ELSE 'No'
     END AS last_window,
-    -- New Column 2: accepted_submission_in_period
     CASE
         WHEN ee.mon_plan_id IS NULL THEN 'No'
         ELSE 'Yes'
     END AS accepted_submission_in_period,
-    -- New Column 3: last_window_with_ok_submission
     CASE
         WHEN ee.mon_plan_id IS NULL THEN 'No'
         WHEN sq.submission_id IS NULL AND em.em_status_cd = 'RECVD' AND ee.submission_id IS NULL THEN 'Yes'
@@ -64,8 +61,7 @@ SELECT
         WHEN ee.submission_id IS NOT NULL THEN 'No'
         ELSE 'Unknown'
     END AS last_window_with_ok_submission,
-    -- New Column 4: submitter_id
-    sq.userid AS submitter_user_id
+    ss.user_id AS submitter_user_id
 FROM camdecmpsaux.em_submission_access em
 JOIN (
     SELECT
@@ -99,9 +95,11 @@ JOIN camdecmpsmd.submission_availability_code sac
 JOIN camd.plant pl USING(fac_id)
 LEFT JOIN camdecmpsaux.submission_queue sq
     ON camdecmpsaux.get_last_submission_in_window(em.mon_plan_id, em.rpt_period_id, em.access_begin_date, em.access_end_date) = sq.submission_id
-LEFT JOIN camdecmpsmd.severity_code sc USING (severity_cd)
--- New join for emission evaluation (EE)
-LEFT JOIN camdecmpsaux.emission_evaluation ee
+LEFT JOIN camdecmpsaux.submission_set ss
+    ON sq.submission_set_id = ss.submission_set_id
+LEFT JOIN camdecmpsmd.severity_code sc
+    ON sq.severity_cd = sc.severity_cd
+LEFT JOIN camdecmps.emission_evaluation ee
     ON ee.mon_plan_id = em.mon_plan_id
    AND ee.rpt_period_id = em.rpt_period_id
 GROUP BY
@@ -130,12 +128,12 @@ GROUP BY
     rf.report_freq_cd,
     sq.submission_id,
     sq.queued_time,
-    sq.sub_stage_cd,
     sc.severity_cd,
     sc.severity_cd_description,
     mp.config,
     ee.mon_plan_id,
-    ee.submission_id
+    ee.submission_id,
+	ss.user_id
 ORDER BY
     em.rpt_period_id DESC,
     em.access_begin_date DESC;
