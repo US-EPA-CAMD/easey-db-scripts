@@ -1,0 +1,3 @@
+INSERT INTO camdecmpsmd.run_status_code (run_status_cd, run_status_description) VALUES ('NOTUSED', 'Run Not Used in RATA Calculation');
+INSERT INTO camdecmpsmd.run_status_code (run_status_cd, run_status_description) VALUES ('RUNUSED', 'Run Used in RATA Calculation');
+INSERT INTO camdecmpsmd.run_status_code (run_status_cd, run_status_description) VALUES ('IGNORED', 'Run Not Used in RATA Calculations. Data can be used in hourly emissions reporting but does not meet QA criteria. (Sorbent Trap Systems Only)');

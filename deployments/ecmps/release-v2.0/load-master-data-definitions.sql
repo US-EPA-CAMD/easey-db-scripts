@@ -1106,4 +1106,19 @@ BEGIN
 		(datatableId, 3, 'activation_date', 'activationDate', 'Vendor Activation Date'),
 		(datatableId, 4, 'deactivation_date', 'deactivationDate', 'Vendor Deactivation Date'),
 		(datatableId, 5, 'active_ind', 'activeIndicator', 'Active');
+----------------------------------------------------------------------------------------------------------------------------
+    datasetCode := 'mats-report-type-codes';
+    INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
+    VALUES (datasetCode, 'MDM', 'MATS Report Type Codes & Descriptions');
+
+	/***** DATATABLE 1 *****/
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement)
+	VALUES(datasetCode, 1, 'MATS Report Type Codes & Descriptions', 'SELECT * FROM camdecmpsmd.mats_report_type_code')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
+	VALUES
+		(datatableId, 1, 'mats_rpt_type_cd', 'matsReportTypeCode', 'MATS Report Type Code'),
+		(datatableId, 2, 'mats_rpt_type_description', 'matsReportTypeDescription', 'MATS Report Type Description');
 END $$;

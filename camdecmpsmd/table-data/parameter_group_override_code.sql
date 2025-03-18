@@ -1,0 +1,3 @@
+INSERT INTO camdecmpsmd.parameter_group_override_code (parameter_group_override_cd, parameter_group_override_description) VALUES ('EM', 'Hourly Report and LME Generation and Screen Parameters');
+INSERT INTO camdecmpsmd.parameter_group_override_code (parameter_group_override_cd, parameter_group_override_description) VALUES ('MP', 'Monitoring Plan Report and Screen Parameters');
+INSERT INTO camdecmpsmd.parameter_group_override_code (parameter_group_override_cd, parameter_group_override_description) VALUES ('QA', 'Test, Certification, Extension and Exemption Report, Screen and Calculation Parameters');

@@ -49,7 +49,7 @@ BEGIN
                evs.co2_mass,
                evs.nox_rate,
                evs.nox_mass
-        FROM camdecmpswks.emission_view_sumval evs
+        FROM camdecmps.emission_view_sumval evs
             JOIN camdecmpsmd.reporting_period rp USING(rpt_period_id)
         WHERE evs.mon_plan_id = monitorPlanId
           AND evs.mon_loc_id = locationId
@@ -68,7 +68,7 @@ BEGIN
                evs.co2_mass,
                evs.nox_rate,
                evs.nox_mass
-        FROM camdecmpswks.emission_view_sumval evs
+        FROM camdecmps.emission_view_sumval evs
             JOIN camdecmpsmd.reporting_period rp USING(rpt_period_id)
         WHERE evs.mon_plan_id = monitorPlanId
           AND evs.mon_loc_id = locationId
@@ -87,7 +87,7 @@ BEGIN
                evs.co2_mass,
                evs.nox_rate,
                evs.nox_mass
-        FROM camdecmpswks.emission_view_sumval evs
+        FROM camdecmps.emission_view_sumval evs
         JOIN camdecmpsmd.reporting_period rp USING(rpt_period_id)
         WHERE evs.mon_plan_id = monitorPlanId
           AND evs.mon_loc_id = locationId

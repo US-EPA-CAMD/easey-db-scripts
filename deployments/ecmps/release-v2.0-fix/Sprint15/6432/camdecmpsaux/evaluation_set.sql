@@ -1,0 +1,1 @@
+ALTER TABLE camdecmpsaux.evaluation_set RENAME COLUMN submitted_on TO queued_time;

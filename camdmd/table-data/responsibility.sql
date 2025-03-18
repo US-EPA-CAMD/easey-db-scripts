@@ -1,0 +1,14 @@
+INSERT INTO camdmd.responsibility (responsibility_id, responsibility_description, group_type_cd) VALUES ('ACP', 'Year End Compliance', 'FR');
+INSERT INTO camdmd.responsibility (responsibility_id, responsibility_description, group_type_cd) VALUES ('ALL', 'Allowance Trading', 'FR');
+INSERT INTO camdmd.responsibility (responsibility_id, responsibility_description, group_type_cd) VALUES ('ALT', 'Alternate', 'REP');
+INSERT INTO camdmd.responsibility (responsibility_id, responsibility_description, group_type_cd) VALUES ('ARG', 'General', 'FR');
+INSERT INTO camdmd.responsibility (responsibility_id, responsibility_description, group_type_cd) VALUES ('CST', 'Consultant Access', 'CST');
+INSERT INTO camdmd.responsibility (responsibility_id, responsibility_description, group_type_cd) VALUES ('ECM', 'ECMPS Analyst', 'FR');
+INSERT INTO camdmd.responsibility (responsibility_id, responsibility_description, group_type_cd) VALUES ('ENF', 'Enforcement', 'FR');
+INSERT INTO camdmd.responsibility (responsibility_id, responsibility_description, group_type_cd) VALUES ('MON', 'Monitoring Plan and QA Feedback', 'FR');
+INSERT INTO camdmd.responsibility (responsibility_id, responsibility_description, group_type_cd) VALUES ('OOI', 'Offer of Information', 'FR');
+INSERT INTO camdmd.responsibility (responsibility_id, responsibility_description, group_type_cd) VALUES ('PRM', 'Primary', 'REP');
+INSERT INTO camdmd.responsibility (responsibility_id, responsibility_description, group_type_cd) VALUES ('PRT', 'Retired Unit Exemption Feedback', 'FR');
+INSERT INTO camdmd.responsibility (responsibility_id, responsibility_description, group_type_cd) VALUES ('REP', 'Emissions Feedback', 'FR');
+INSERT INTO camdmd.responsibility (responsibility_id, responsibility_description, group_type_cd) VALUES ('RO', 'Responsible Official', 'RO');
+INSERT INTO camdmd.responsibility (responsibility_id, responsibility_description, group_type_cd) VALUES ('SMS', 'Source Management', 'FR');

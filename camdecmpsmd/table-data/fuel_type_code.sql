@@ -1,0 +1,17 @@
+INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('DSL', 'Diesel Oil', 'OIL');
+INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('LPG', 'Liquified Petroleum Gas', 'GAS');
+INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('NNG', 'Natural Gas', 'GAS');
+INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('OGS', 'Other Gas', 'GAS');
+INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('OIL', 'Residual Oil', 'OIL');
+INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('OOL', 'Other Oil', 'OIL');
+INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('OSF', 'Other Solid Fuel', 'OTHER');
+INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('PNG', 'Pipeline Natural Gas', 'GAS');
+INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('PRG', 'Process Gas', 'GAS');
+INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('PRS', 'Process Sludge', 'OTHER');
+INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('R', 'Refuse', 'OTHER');
+INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('TDF', 'Tire Derived Fuel', 'OTHER');
+INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('W', 'Wood', 'OTHER');
+INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('WL', 'Waste Liquid', 'OTHER');
+INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('C', 'Coal', 'COAL');
+INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('CRF', 'Coal Refuse', 'COAL');
+INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('PTC', 'Petroleum Coke', 'COAL');

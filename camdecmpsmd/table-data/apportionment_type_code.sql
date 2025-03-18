@@ -1,0 +1,11 @@
+INSERT INTO camdecmpsmd.apportionment_type_code (apportionment_type_cd, apportionment_type_description) VALUES ('CHANGED', 'Changed During Reporting Period');
+INSERT INTO camdecmpsmd.apportionment_type_code (apportionment_type_cd, apportionment_type_description) VALUES ('CP', 'Common Pipe');
+INSERT INTO camdecmpsmd.apportionment_type_code (apportionment_type_cd, apportionment_type_description) VALUES ('CPLTFF', 'Common Pipe LTFF');
+INSERT INTO camdecmpsmd.apportionment_type_code (apportionment_type_cd, apportionment_type_description) VALUES ('CS', 'Common Stack');
+INSERT INTO camdecmpsmd.apportionment_type_code (apportionment_type_cd, apportionment_type_description) VALUES ('CSP', 'Common Stack and Common Pipe');
+INSERT INTO camdecmpsmd.apportionment_type_code (apportionment_type_cd, apportionment_type_description) VALUES ('COMPLEX', 'Complex');
+INSERT INTO camdecmpsmd.apportionment_type_code (apportionment_type_cd, apportionment_type_description) VALUES ('MP', 'Multiple Pipe');
+INSERT INTO camdecmpsmd.apportionment_type_code (apportionment_type_cd, apportionment_type_description) VALUES ('MPI', 'Multiple Pipe Involved');
+INSERT INTO camdecmpsmd.apportionment_type_code (apportionment_type_cd, apportionment_type_description) VALUES ('MS', 'Multiple Stack');
+INSERT INTO camdecmpsmd.apportionment_type_code (apportionment_type_cd, apportionment_type_description) VALUES ('NOT', 'Unable to determine');
+INSERT INTO camdecmpsmd.apportionment_type_code (apportionment_type_cd, apportionment_type_description) VALUES ('UN', 'Unit Only');

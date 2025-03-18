@@ -1,0 +1,16 @@
+INSERT INTO camdecmpsmd.test_type_group_code (test_type_group_cd, test_type_group_cd_description, child_depth) VALUES ('APPESUM', 'Appendix E Correlation Test Summary', 4);
+INSERT INTO camdecmpsmd.test_type_group_code (test_type_group_cd, test_type_group_cd_description, child_depth) VALUES ('CALINJ', 'Calibration Injection', 2);
+INSERT INTO camdecmpsmd.test_type_group_code (test_type_group_cd, test_type_group_cd_description, child_depth) VALUES ('CYCSUM', 'Cycle Time Summary', 3);
+INSERT INTO camdecmpsmd.test_type_group_code (test_type_group_cd, test_type_group_cd_description, child_depth) VALUES ('FLC', 'Flow to Load Check', 2);
+INSERT INTO camdecmpsmd.test_type_group_code (test_type_group_cd, test_type_group_cd_description, child_depth) VALUES ('FLR', 'Flow to Load Reference', 2);
+INSERT INTO camdecmpsmd.test_type_group_code (test_type_group_cd, test_type_group_cd_description, child_depth) VALUES ('FFLB', 'Fuel Flow to Load Baseline', 2);
+INSERT INTO camdecmpsmd.test_type_group_code (test_type_group_cd, test_type_group_cd_description, child_depth) VALUES ('FFL', 'Fuel Flow to Load', 2);
+INSERT INTO camdecmpsmd.test_type_group_code (test_type_group_cd, test_type_group_cd_description, child_depth) VALUES ('FFACC', 'Fuel Flowmeter Accuracy', 2);
+INSERT INTO camdecmpsmd.test_type_group_code (test_type_group_cd, test_type_group_cd_description, child_depth) VALUES ('HGL3LS', 'Hg Linearity and 3-Level Summary', 3);
+INSERT INTO camdecmpsmd.test_type_group_code (test_type_group_cd, test_type_group_cd_description, child_depth) VALUES ('LINSUM', 'Linearity Summary', 3);
+INSERT INTO camdecmpsmd.test_type_group_code (test_type_group_cd, test_type_group_cd_description, child_depth) VALUES ('OLOLCAL', 'Online Offline Calibration', 2);
+INSERT INTO camdecmpsmd.test_type_group_code (test_type_group_cd, test_type_group_cd_description, child_depth) VALUES ('RELACC', 'Relative Accuracy', 6);
+INSERT INTO camdecmpsmd.test_type_group_code (test_type_group_cd, test_type_group_cd_description, child_depth) VALUES ('TTACC', 'Transmitter Transducer Accuracy', 2);
+INSERT INTO camdecmpsmd.test_type_group_code (test_type_group_cd, test_type_group_cd_description, child_depth) VALUES ('PEI', 'Primary Element Inspection', 1);
+INSERT INTO camdecmpsmd.test_type_group_code (test_type_group_cd, test_type_group_cd_description, child_depth) VALUES ('LME', 'Unit Default', 3);
+INSERT INTO camdecmpsmd.test_type_group_code (test_type_group_cd, test_type_group_cd_description, child_depth) VALUES ('MISC', 'Miscellaneous', 1);
