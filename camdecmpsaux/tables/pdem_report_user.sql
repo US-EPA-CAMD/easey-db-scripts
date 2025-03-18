@@ -6,12 +6,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.pdem_report_user
     process_date            timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
     complete_date           timestamp,
     note                    varchar(1000),
-    note_date               timestamp,
-    
-    CONSTRAINT pdem_report_user_pk PRIMARY KEY ( pdem_report_user_id ),
-    CONSTRAINT pdem_report_user_uq UNIQUE ( pdem_report_id, pdem_report_user_cd ),
-    CONSTRAINT pdem_report_user_rpt_fk FOREIGN KEY ( pdem_report_id ) REFERENCES camdecmpsaux.pdem_report ( pdem_report_id ) ON DELETE CASCADE,
-    CONSTRAINT pdem_report_user_usr_fk FOREIGN KEY ( pdem_report_user_cd ) REFERENCES camdecmpsmd.pdem_report_user_code ( pdem_report_user_cd )
+    note_date               timestamp
 );
 
 -- Add comments to the table 
