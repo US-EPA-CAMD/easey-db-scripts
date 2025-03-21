@@ -2,8 +2,6 @@
 
 DROP VIEW IF EXISTS camdecmpswks.vw_test_summary_eval_and_submit;
 
-## foud issue
-
 CREATE OR REPLACE VIEW camdecmps.vw_test_summary_eval_and_submit
  AS
  SELECT p.oris_code,
