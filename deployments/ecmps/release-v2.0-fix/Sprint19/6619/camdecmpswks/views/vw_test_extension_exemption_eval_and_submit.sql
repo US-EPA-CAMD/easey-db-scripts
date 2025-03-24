@@ -23,7 +23,7 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_test_extension_exemption_eval_and_submit
                     SELECT MIN(row_num)
                     FROM (
                         SELECT evq.test_extension_exemption_id,
-                               ROW_NUMBER() OVER (ORDER BY evq.queued_time) AS row_num
+                               ROW_NUMBER() OVER (ORDER BY evq.queued_time DESC) AS row_num
                         FROM camdecmpsaux.evaluation_queue evq
                         WHERE evq.status_cd = 'QUEUED'
                     ) AS queue

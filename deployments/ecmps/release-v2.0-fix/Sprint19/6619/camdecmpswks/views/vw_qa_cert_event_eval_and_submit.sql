@@ -35,7 +35,7 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_qa_cert_event_eval_and_submit
                     SELECT MIN(row_num)
                     FROM (
                         SELECT evq.qa_cert_event_id,
-                               ROW_NUMBER() OVER (ORDER BY evq.queued_time) AS row_num
+                               ROW_NUMBER() OVER (ORDER BY evq.queued_time DESC) AS row_num
                         FROM camdecmpsaux.evaluation_queue evq
                         WHERE evq.status_cd = 'QUEUED'
                     ) AS queue
