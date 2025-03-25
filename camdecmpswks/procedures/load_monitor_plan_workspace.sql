@@ -1,6 +1,6 @@
 -- PROCEDURE: camdecmpswks.load_monitor_plan_workspace()
 
-DROP PROCEDURE IF EXISTS camdecmpswks.load_monitor_plan_workspace();
+-- DROP PROCEDURE IF EXISTS camdecmpswks.load_monitor_plan_workspace();
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.load_monitor_plan_workspace(
 	)
@@ -16,7 +16,11 @@ BEGIN
     FROM camdecmps.monitor_plan mp
     LEFT JOIN camdecmpsaux.check_session cs on cs.chk_session_id = mp.chk_session_id
     LEFT JOIN camdecmpsmd.severity_code sc on sc.severity_cd = cs.severity_cd;
-
+    -- need update two flags when SUBMISSION_AVAILABILITY_CD=UPDATED
+	UPDATE camdecmpswks.monitor_plan
+	 SET UPDATED_STATUS_FLG='N', NEEDS_EVAL_FLG='Y'
+	  	 WHERE SUBMISSION_AVAILABILITY_CD='UPDATED';
+	 
 		-- MONITOR_PLAN_REPORTING_FREQ --
 		INSERT INTO camdecmpswks.monitor_plan_reporting_freq(
 			mon_plan_rf_id, mon_plan_id, report_freq_cd, end_rpt_period_id, begin_rpt_period_id, userid, add_date, update_date
