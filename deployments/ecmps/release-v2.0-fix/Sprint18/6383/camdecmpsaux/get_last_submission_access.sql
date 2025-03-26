@@ -1,5 +1,3 @@
-DROP FUNCTION IF EXISTS camdecmpsaux.get_last_submission_access(character varying, numeric) CASCADE;
-
 CREATE OR REPLACE FUNCTION camdecmpsaux.get_last_submission_access(
     inmonplanid   character varying,
     inrptperiodid numeric)
