@@ -1,0 +1,28 @@
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('1', 'Method 1', 100);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('2', 'Method 2', 200);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('2A', 'Method 2A', 201);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('2C', 'Method 2C', 203);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('2F', 'Method 2F', 206);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('2G', 'Method 2G', 207);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('2H', 'Method 2H', 208);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('3', 'Method 3', 300);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('3A', 'Method 3A', 301);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('3B', 'Method 3B', 302);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('4', 'Method 4', 400);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('5', 'Method 5', 500);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('5B', 'Method 5B', 502);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('5D', 'Method 5D', 504);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('5I', 'Method 5I', 509);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('6C', 'Method 6C', 603);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('17', 'Method 17', 1700);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('19', 'Method 19', 1900);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('26', 'Method 26', 2600);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('26A', 'Method 26A', 2601);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('29', 'Method 29', 2900);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('30B', 'Method 30B', 3002);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('320', 'Method 320', 32000);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('041', 'Method CTM-041', 41000);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('D6348', 'ASTM- D6348-03', 99990400);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('OH', 'ASTM D6784-02 (Ontario Hydro Method)', 99991500);
+INSERT INTO camdecmpsmd.mats_test_method_code (mats_test_meth_cd, mats_test_meth_description, display_order) VALUES ('PTC', 'ANSI/ASME PTC19.10-1981', 99991600);
+
