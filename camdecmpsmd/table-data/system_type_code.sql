@@ -20,4 +20,3 @@ INSERT INTO camdecmpsmd.system_type_code (sys_type_cd, sys_type_description, par
 INSERT INTO camdecmpsmd.system_type_code (sys_type_cd, sys_type_description, parameter_cd) VALUES ('HCL', 'HCl Concentration CEMS', 'HCL');
 INSERT INTO camdecmpsmd.system_type_code (sys_type_cd, sys_type_description, parameter_cd) VALUES ('HF', 'HF Concentration CEMS', 'HF');
 INSERT INTO camdecmpsmd.system_type_code (sys_type_cd, sys_type_description, parameter_cd) VALUES ('ST', 'Sorbent Trap Monitoring System', 'HG');
-INSERT INTO camdecmpsmd.system_type_code (sys_type_cd, sys_type_description, parameter_cd) VALUES ('CPMS', 'Particulate Matter Parametric Monitoring System', 'PMCO');
