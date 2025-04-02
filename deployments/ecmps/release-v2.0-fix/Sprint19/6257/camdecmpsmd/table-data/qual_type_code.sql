@@ -1,0 +1,11 @@
+INSERT INTO camdecmpsmd.qual_type_code (qual_type_cd, qual_type_cd_description, qual_type_group_cd) VALUES ('LEE', 'LEE qualification', 'LEE');
+INSERT INTO camdecmpsmd.qual_type_code (qual_type_cd, qual_type_cd_description, qual_type_group_cd) VALUES ('LMEA', 'Annual LME Unit', 'LME');
+INSERT INTO camdecmpsmd.qual_type_code (qual_type_cd, qual_type_cd_description, qual_type_group_cd) VALUES ('LMES', 'Ozone-Season LME Unit', 'LME');
+INSERT INTO camdecmpsmd.qual_type_code (qual_type_cd, qual_type_cd_description, qual_type_group_cd) VALUES ('GF', 'Gas-Fired Unit', 'PCT');
+INSERT INTO camdecmpsmd.qual_type_code (qual_type_cd, qual_type_cd_description, qual_type_group_cd) VALUES ('PK', 'Year-Round Peaking Unit', 'PCT');
+INSERT INTO camdecmpsmd.qual_type_code (qual_type_cd, qual_type_cd_description, qual_type_group_cd) VALUES ('SK', 'Ozone-Season Peaking Unit', 'PCT');
+INSERT INTO camdecmpsmd.qual_type_code (qual_type_cd, qual_type_cd_description, qual_type_group_cd) VALUES ('COMPLEX', 'Flow-to-Load Test Exemption due to Complex Stack Configuration (Petition Approved)', 'OTHR');
+INSERT INTO camdecmpsmd.qual_type_code (qual_type_cd, qual_type_cd_description, qual_type_group_cd) VALUES ('LOWSULF', 'RATA Exemption for Using Only Very Low Sulfur Fuel', 'OTHR');
+INSERT INTO camdecmpsmd.qual_type_code (qual_type_cd, qual_type_cd_description, qual_type_group_cd) VALUES ('PRATA1', 'Single-Level RATA (Petition Approved)', 'OTHR');
+INSERT INTO camdecmpsmd.qual_type_code (qual_type_cd, qual_type_cd_description, qual_type_group_cd) VALUES ('PRATA2', 'Two-Level RATA (Petition Approved)', 'OTHR');
+INSERT INTO camdecmpsmd.qual_type_code (qual_type_cd, qual_type_cd_description, qual_type_group_cd) VALUES ('HGAVG', 'MATS Hg Averaging Group', 'OTHR');
