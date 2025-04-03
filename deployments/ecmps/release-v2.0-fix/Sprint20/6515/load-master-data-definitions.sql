@@ -5,7 +5,7 @@ DECLARE
     datasetCodes text[];
 	datatableId integer;
 BEGIN
-    datasetCodes := ARRAY['mats-pollutant-codes', 'mats-test-method-codes'];
+    datasetCodes := ARRAY['mats-pollutant-codes', 'mats-test-method-codes', 'mats-averaging-group-codes'];
 
 	DELETE FROM camdaux.dataset WHERE group_cd = groupCode AND dataset_cd = ANY (datasetCodes);
     WITH deletedRows AS (
@@ -45,5 +45,22 @@ BEGIN
     VALUES
         (datatableId, 1, 'mats_test_meth_cd', 'matsTestMethodCode', 'MATS Test Method Code'),
         (datatableId, 2, 'mats_test_meth_description', 'matsTestMethodDescription', 'MATS Test Method Description');
+----------------------------------------------------------------------------------------------------------------------------
+    datasetCode := 'mats-averaging-group-codes';
+    INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
+    VALUES (datasetCode, groupCode, 'MATS Averaging Group Codes & Descriptions');
+
+    /***** DATATABLE 1 *****/
+    INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement)
+    VALUES (datasetCode, 1, 'MATS Averaging Group Codes & Descriptions', 'SELECT * FROM camdecmpsmd.mats_averaging_group_code')
+    RETURNING datatable_id INTO datatableId;
+
+    /***** COLUMNS *****/
+    INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
+    VALUES
+        (datatableId, 1, 'mats_avg_group_cd', 'matsAveragingGroupCode', 'MATS Averaging Group Code'),
+        (datatableId, 2, 'mats_avg_group_description', 'matsAveragingGroupDescription', 'MATS Averaging Group Description');
+
+    COMMIT;
 END $$;
 
