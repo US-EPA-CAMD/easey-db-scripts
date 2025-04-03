@@ -34,6 +34,7 @@ DELETE FROM camdecmpsmd.method_code
 WHERE method_cd = 'CPMS';
 
 --Remove row for Qualification Type Code "CPMS"
+DELETE FROM camdecmps.monitor_qualification where qual_type_cd  = 'CPMS';
 DELETE FROM camdecmpsmd.qual_type_code
 WHERE qual_type_cd = 'CPMS';
 
