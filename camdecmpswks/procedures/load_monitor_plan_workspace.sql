@@ -1,6 +1,6 @@
 -- PROCEDURE: camdecmpswks.load_monitor_plan_workspace()
 
-DROP PROCEDURE IF EXISTS camdecmpswks.load_monitor_plan_workspace();
+-- DROP PROCEDURE IF EXISTS camdecmpswks.load_monitor_plan_workspace();
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.load_monitor_plan_workspace(
 	)
@@ -12,11 +12,15 @@ BEGIN
       mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, begin_rpt_period_id, end_rpt_period_id, last_evaluated_date, eval_status_cd
     )
     SELECT
-      mp.mon_plan_id, mp.fac_id, mp.config_type_cd, mp.last_updated, mp.updated_status_flg, mp.needs_eval_flg, mp.chk_session_id, mp.userid, mp.add_date, mp.update_date, mp.submission_id, mp.submission_availability_cd, mp.begin_rpt_period_id, mp.end_rpt_period_id, mp.last_evaluated_date, coalesce(sc.eval_status_cd, 'PASS')
+      mp.mon_plan_id, mp.fac_id, mp.config_type_cd, mp.last_updated,  
+	  (case when mp.submission_availability_cd = 'UPDATED' then 'N' else 'Y' end ) as updated_status_flg, 
+     'Y' as needs_eval_flg,  mp.chk_session_id, mp.userid, mp.add_date, mp.update_date, mp.submission_id, 
+	  mp.submission_availability_cd,  mp.begin_rpt_period_id, mp.end_rpt_period_id, mp.last_evaluated_date, 
+	  coalesce(sc.eval_status_cd, 'PASS')
     FROM camdecmps.monitor_plan mp
     LEFT JOIN camdecmpsaux.check_session cs on cs.chk_session_id = mp.chk_session_id
     LEFT JOIN camdecmpsmd.severity_code sc on sc.severity_cd = cs.severity_cd;
-
+    
 		-- MONITOR_PLAN_REPORTING_FREQ --
 		INSERT INTO camdecmpswks.monitor_plan_reporting_freq(
 			mon_plan_rf_id, mon_plan_id, report_freq_cd, end_rpt_period_id, begin_rpt_period_id, userid, add_date, update_date
