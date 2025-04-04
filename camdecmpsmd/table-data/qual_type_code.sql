@@ -9,4 +9,3 @@ INSERT INTO camdecmpsmd.qual_type_code (qual_type_cd, qual_type_cd_description, 
 INSERT INTO camdecmpsmd.qual_type_code (qual_type_cd, qual_type_cd_description, qual_type_group_cd) VALUES ('PRATA1', 'Single-Level RATA (Petition Approved)', 'OTHR');
 INSERT INTO camdecmpsmd.qual_type_code (qual_type_cd, qual_type_cd_description, qual_type_group_cd) VALUES ('PRATA2', 'Two-Level RATA (Petition Approved)', 'OTHR');
 INSERT INTO camdecmpsmd.qual_type_code (qual_type_cd, qual_type_cd_description, qual_type_group_cd) VALUES ('HGAVG', 'MATS Hg Averaging Group', 'OTHR');
-INSERT INTO camdecmpsmd.qual_type_code (qual_type_cd, qual_type_cd_description, qual_type_group_cd) VALUES ('CPMS', 'PM CPMS System operating limit', 'CPMS');
