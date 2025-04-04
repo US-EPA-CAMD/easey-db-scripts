@@ -78,8 +78,6 @@ SELECT
   ) ELSE esc.eval_status_cd_description END AS eval_status_cd_description, 
     sac.submission_availability_cd,
     sac.sub_avail_cd_description AS submission_availability_cd_description,
-    sac.submission_availability_cd,
-    sac.sub_avail_cd_description AS submission_availability_cd_description,
     sel.userid :: varchar(160),
         sel.last_updated AS update_date,
     (
