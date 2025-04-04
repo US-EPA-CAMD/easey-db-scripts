@@ -4,7 +4,47 @@ DROP VIEW IF EXISTS camdecmpswks.vw_qa_cert_event_eval_and_submit;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_qa_cert_event_eval_and_submit
  AS
- SELECT p.oris_code,
+ WITH ord AS (
+  SELECT 
+    evs.evaluation_set_id, 
+    evq.evaluation_id, 
+    evs.mon_plan_id, 
+    evq.test_sum_id, 
+    evq.qa_cert_event_id, 
+    evq.test_extension_exemption_id, 
+    evq.rpt_period_id, 
+    ROW_NUMBER() OVER (
+      ORDER BY 
+        evs.queued_time
+    ) AS queue_position 
+  FROM 
+    camdecmpsaux.EVALUATION_SET evs 
+    JOIN camdecmpsaux.EVALUATION_QUEUE evq ON evq.evaluation_set_id = evs.evaluation_set_id 
+    AND evq.status_cd = 'QUEUED' 
+    LEFT JOIN camdecmpswks.MONITOR_PLAN pln ON pln.mon_plan_id = evs.mon_plan_id 
+    LEFT JOIN camdecmpswks.TEST_SUMMARY tst ON tst.test_sum_id = evq.test_sum_id 
+    LEFT JOIN camdecmpswks.QA_CERT_EVENT qce ON qce.qa_cert_event_id = evq.qa_cert_event_id 
+    LEFT JOIN camdecmpswks.TEST_EXTENSION_EXEMPTION tee ON tee.test_extension_exemption_id = evq.test_extension_exemption_id 
+    LEFT JOIN camdecmpswks.EMISSION_EVALUATION ems ON ems.mon_plan_id = evs.mon_plan_id 
+    AND ems.rpt_period_id = evq.rpt_period_id 
+  WHERE 
+    (
+      evq.process_cd = 'MP' 
+      AND pln.eval_status_cd = 'INQ' 
+      OR evq.process_cd = 'QA' 
+      AND evq.test_sum_id IS NOT NULL 
+      AND tst.eval_status_cd = 'INQ' 
+      OR evq.process_cd = 'QA' 
+      AND evq.qa_cert_event_id IS NOT NULL 
+      AND qce.eval_status_cd = 'INQ' 
+      OR evq.process_cd = 'QA' 
+      AND evq.test_extension_exemption_id IS NOT NULL 
+      AND tee.eval_status_cd = 'INQ' 
+      OR evq.process_cd = 'EM' 
+      AND ems.eval_status_cd = 'INQ'
+    )
+) 
+SELECT p.oris_code,
     p.facility_name,
     mpl.mon_plan_id,
     COALESCE(u.unitid, sp.stack_name) AS location_info,
@@ -28,23 +68,17 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_qa_cert_event_eval_and_submit
     qce.userid,
     COALESCE(qce.update_date, qce.add_date) AS update_date,
     qce.eval_status_cd,
-    CASE 
-        WHEN qce.eval_status_cd = 'INQ' THEN 
-            COALESCE(
-                'In Queue (#' || (
-                    SELECT MIN(row_num)
-                    FROM (
-                        SELECT evq.qa_cert_event_id,
-                               ROW_NUMBER() OVER (ORDER BY evq.queued_time DESC) AS row_num
-                        FROM camdecmpsaux.evaluation_queue evq
-                        WHERE evq.status_cd = 'QUEUED'
-                    ) AS queue
-                    WHERE queue.qa_cert_event_id = qce.qa_cert_event_id
-                )::TEXT || ' in queue)',
-                esc.eval_status_cd_description
-            )
-        ELSE esc.eval_status_cd_description
-    END AS eval_status_cd_description,
+    CASE WHEN qce.eval_status_cd = 'INQ' THEN COALESCE(
+    'In Queue (#' || (
+      SELECT 
+        MIN(queue_position) 
+      FROM 
+        ord 
+      WHERE 
+        ord.qa_cert_event_id = qce.qa_cert_event_id
+    ):: TEXT || ' in queue)', 
+    esc.eval_status_cd_description
+  ) ELSE esc.eval_status_cd_description END AS eval_status_cd_description, 
     qce.submission_availability_cd,
     sac.sub_avail_cd_description as submission_availability_cd_description
    FROM camd.plant p
