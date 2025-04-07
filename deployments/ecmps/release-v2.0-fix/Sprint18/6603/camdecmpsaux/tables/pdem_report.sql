@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS camdecmpsaux.pdem_report
 (
-	pdem_report_id              bigserial,
-	mon_plan_id                 varchar(45) NOT NULL,
-	rpt_period_id               numeric(38) NOT NULL,
-	submission_id               bigint NOT NULL,
-	apportionment_type_cd       varchar(35) NULL,
+    pdem_report_id              bigserial,
+    mon_plan_id                 varchar(45) NOT NULL,
+    rpt_period_id               numeric(38) NOT NULL,
+    submission_id               bigint NOT NULL,
+    apportionment_type_cd       varchar(35) NULL,
     queued_time                 timestamp without time zone DEFAULT current_timestamp NOT NULL,
     triggered_time              timestamp without time zone,
     started_time                timestamp without time zone,
@@ -38,7 +38,7 @@ COMMENT ON COLUMN camdecmpsaux.pdem_report.rpt_period_id IS 'Foreign key into th
 COMMENT ON COLUMN camdecmpsaux.pdem_report.submission_id IS 'Foreign key into the SUBMISSION_QUEUE table that uniquely identifies the (emisson report) submission generating the Program Data Emissions (PDEM).';
 COMMENT ON COLUMN camdecmpsaux.pdem_report.apportionment_type_cd IS 'Code used to indicate the apportionment type of an emissions report.';
 COMMENT ON COLUMN camdecmpsaux.pdem_report.queued_time IS 'The timestamp for when the generation of the Program Data Emissions was gueued.';
-COMMENT ON COLUMN camdecmpsaux.pdem_report.started_time IS 'The timestamp for when the generation of the Program Data Emissions was triggered.';
+COMMENT ON COLUMN camdecmpsaux.pdem_report.triggered_time IS 'The timestamp for when the generation of the Program Data Emissions was triggered.';
 COMMENT ON COLUMN camdecmpsaux.pdem_report.started_time IS 'The timestamp for when the generation of the Program Data Emissions was started.';
 COMMENT ON COLUMN camdecmpsaux.pdem_report.completed_time IS 'The timestamp for when the generation of the Program Data Emissions was successfully completed.';
 COMMENT ON COLUMN camdecmpsaux.pdem_report.note IS 'The note indicating why the generation of the Program Data Emissions failed.';
