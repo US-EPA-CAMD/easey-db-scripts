@@ -10,7 +10,7 @@ language plpgsql
 as $procedure$
 
 declare
-    cRoutineName constant varchar := 'PDEM_Update_Public_Load_Unit_Quarter';
+    cRoutineName constant varchar := 'PDEM_Update_Public_Load_P75_Unit_Quarter';
     
     vArchived boolean;
     vBeginMonth smallint;

@@ -31,21 +31,6 @@ begin
     delete 
       from  camdecmpsaux.PDEM_P75_MONITOR_HOUR 
      where  Pdem_Report_Id = vPdemReportId;
-
-    -- Delete from PDEM_P75_UNIT_QUARTER for MON_PLAN_ID/RPT_PERIOD_ID or PDEM_REPORT_ID matching MON_PLAN_ID/RPT_PERIOD_ID
-    delete 
-      from  camdecmpsaux.PDEM_P75_UNIT_QUARTER 
-     where  Pdem_Report_Id = vPdemReportId;
-    
-    -- Delete from PDEM_P75_UNIT_MONTH for MON_PLAN_ID/RPT_PERIOD_ID or PDEM_REPORT_ID matching MON_PLAN_ID/RPT_PERIOD_ID
-    delete 
-      from  camdecmpsaux.PDEM_P75_UNIT_MONTH 
-     where  Pdem_Report_Id = vPdemReportId;
-    
-    -- Delete from PDEM_P75_UNIT_DAY for MON_PLAN_ID/RPT_PERIOD_ID or PDEM_REPORT_ID matching MON_PLAN_ID/RPT_PERIOD_ID
-    delete 
-      from  camdecmpsaux.PDEM_P75_UNIT_DAY 
-     where  Pdem_Report_Id = vPdemReportId;
     
     -- Delete from PDEM_P75_UNIT_HOUR for MON_PLAN_ID/RPT_PERIOD_ID or PDEM_REPORT_ID matching MON_PLAN_ID/RPT_PERIOD_ID
     delete 
