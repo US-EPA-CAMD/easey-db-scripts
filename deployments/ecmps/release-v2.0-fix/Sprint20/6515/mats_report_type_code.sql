@@ -32,3 +32,5 @@ INSERT INTO camdecmpsmd.mats_report_type_to_pollutant_crosscheck (mats_rpt_type_
 INSERT INTO camdecmpsmd.mats_report_type_to_pollutant_crosscheck (mats_rpt_type_cd, mats_pollutant_cd)
     VALUES ('SVA', 'FPM');
 
+COMMENT ON COLUMN camdecmpsmd.mats_report_type_code.enforce_attachment_rules IS 'Flag indicating whether the attachment rules should be enforced.';
+
