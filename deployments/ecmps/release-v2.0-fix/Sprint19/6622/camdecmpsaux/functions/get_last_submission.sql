@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION camdecmps.get_last_submission_list(
+CREATE OR REPLACE FUNCTION camdecmpsaux.get_last_submission(
     v_mon_plan_id character varying,
     v_rpt_period_id numeric,
     v_submission_type character varying

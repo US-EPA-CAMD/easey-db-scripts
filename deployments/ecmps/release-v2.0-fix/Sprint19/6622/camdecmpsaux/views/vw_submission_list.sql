@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW camdecmps.vw_submission_list
+CREATE OR REPLACE VIEW camdecmpsaux.vw_submission_list
  AS
 select  fac.oris_code,
        fac.facility_name,
@@ -27,7 +27,7 @@ select  fac.oris_code,
        sev.severity_cd_description as severity_level,
         (SELECT
                 CASE 
-                WHEN sbq.submission_id = camdecmps.get_last_submission_list(sbs.mon_plan_id,sbq.rpt_period_id,sbq.process_cd) 
+                WHEN sbq.submission_id = camdecmpsaux.get_last_submission(sbs.mon_plan_id,sbq.rpt_period_id,sbq.process_cd) 
                 THEN 'Yes'
                 ELSE  'No'
                 END   
