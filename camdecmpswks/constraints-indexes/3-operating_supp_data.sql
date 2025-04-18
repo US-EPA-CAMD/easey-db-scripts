@@ -3,7 +3,8 @@ ALTER TABLE IF EXISTS camdecmpswks.operating_supp_data
     ADD CONSTRAINT fk_operating_supp_data_fuel_code FOREIGN KEY (fuel_cd)
         REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_operating_supp_data_monitor_location FOREIGN KEY (mon_loc_id)
-        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE,
+        REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
+        ON DELETE CASCADE,
     ADD CONSTRAINT fk_operating_supp_data_operating_type_code FOREIGN KEY (op_type_cd)
         REFERENCES camdecmpsmd.operating_type_code (op_type_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_operating_supp_data_reporting_period FOREIGN KEY (rpt_period_id)
