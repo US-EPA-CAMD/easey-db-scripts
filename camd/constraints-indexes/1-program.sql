@@ -1,6 +1,5 @@
 ALTER TABLE IF EXISTS camd.program
     ADD CONSTRAINT pk_program PRIMARY KEY (prg_id),
-    ADD CONSTRAINT uq_program_code_by_state UNIQUE (prg_cd, state_cd),
     ADD CONSTRAINT fk_program_program_code FOREIGN KEY (prg_cd)
         REFERENCES camdmd.program_code (prg_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_program_state_code FOREIGN KEY (state_cd)

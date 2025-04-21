@@ -280,6 +280,8 @@ BEGIN
 	DROP VIEW IF EXISTS camdecmps.vw_emissions_submissions_expected;
 	DROP VIEW IF EXISTS camdecmps.vw_emissions_submissions_received;
 	DROP VIEW IF EXISTS camdecmps.vw_emissions_submissions_gdm;
+	DROP VIEW IF EXISTS camdecmps.vw_em_eval_and_submit;
+	DROP VIEW IF EXISTS camdecmpswks.vw_evem_emissions;
 	SELECT COALESCE(MAX(em_sub_access_id)+1, 1) FROM camdecmpsaux.em_submission_access INTO startVal;
 	ALTER TABLE IF EXISTS camdecmpsaux.em_submission_access
 		ALTER COLUMN em_sub_access_id TYPE bigint;

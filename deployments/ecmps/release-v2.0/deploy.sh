@@ -20,6 +20,17 @@ function getFiles() {
   done
 }
 
+function getFileAndAppend() {
+  cat "$1" >> "$2"
+}
+
+function getFilesAndAppend() {
+  for FILE in "$1"/*.sql
+  do
+    cat "$FILE" >> "$2"
+  done
+}
+
 function createTables() {
   FILES="$FILES
   \i ./create-schemas.sql
@@ -314,6 +325,74 @@ if [ $2 == "ADD_CONSTRAINTS_INDEXES" ]; then
   getFilesAndCommit "../../../camdecmpsaux/constraints-indexes"
   getFilesAndCommit "../../../camdecmpswks/constraints-indexes"
   getFilesAndCommit "../../../camdecmpscalc/constraints-indexes"
+fi
+
+if [ $2 == "GENERATE_ADD_CONSTRAINTS_INDEXES" ]; then
+  > "./create-constraints-indexes.sql"
+
+  # THESE ARE ALL PRETTY QUICK
+  getFilesAndAppend "../../../camdmd/constraints-indexes" "./create-constraints-indexes.sql"
+  getFilesAndAppend "../../../camdecmpsmd/constraints-indexes" "./create-constraints-indexes.sql"
+  getFilesAndAppend "../../../camd/constraints-indexes" "./create-constraints-indexes.sql"
+  getFilesAndAppend "../../../camdaux/constraints-indexes" "./create-constraints-indexes.sql"
+  getFilesAndAppend "../../../camdecmps/constraints-indexes/group1" "./create-constraints-indexes.sql"
+
+  # CAN TAKE MANY HOURS
+  getFileAndAppend "../../../camdecmps/constraints-indexes/3-hrly_op_data.sql" "./create-constraints-indexes.sql"
+
+  # THESE ARE ALL PRETTY QUICK
+  getFilesAndAppend "../../../camdecmps/constraints-indexes/group2" "./create-constraints-indexes.sql"
+  getFileAndAppend "../../../camdecmps/constraints-indexes/3-operating_supp_data.sql" "./create-constraints-indexes.sql"
+  getFilesAndAppend "../../../camdecmps/constraints-indexes/group3" "./create-constraints-indexes.sql"
+  getFileAndAppend "../../../camdecmps/constraints-indexes/4-daily_test_summary.sql" "./create-constraints-indexes.sql"
+
+  # CAN TAKE MANY HOURS
+  getFileAndAppend "../../../camdecmps/constraints-indexes/4-derived_hrly_value.sql" "./create-constraints-indexes.sql"
+
+  # CAN TAKE MANY HOURS
+  getFileAndAppend "../../../camdecmps/constraints-indexes/4-hrly_fuel_flow.sql" "./create-constraints-indexes.sql"
+
+  # CAN TAKE MANY HOURS
+  getFileAndAppend "../../../camdecmps/constraints-indexes/4-hrly_gas_flow_meter.sql" "./create-constraints-indexes.sql"
+
+  # THIS ONE IS QUICK
+  getFilesAndAppend "../../../camdecmps/constraints-indexes/group4" "./create-constraints-indexes.sql"
+
+  # CAN TAKE MANY HOURS
+  getFileAndAppend "../../../camdecmps/constraints-indexes/4-mats_derived_hrly_value.sql" "./create-constraints-indexes.sql"
+
+  # CAN TAKE MANY HOURS
+  getFileAndAppend "../../../camdecmps/constraints-indexes/4-mats_monitor_hrly_value.sql" "./create-constraints-indexes.sql"
+
+  # CAN TAKE MANY HOURS
+  getFileAndAppend "../../../camdecmps/constraints-indexes/4-monitor_hrly_value.sql" "./create-constraints-indexes.sql"
+
+  # THESE ARE ALL PRETTY QUICK
+  getFilesAndAppend "../../../camdecmps/constraints-indexes/group5" "./create-constraints-indexes.sql"
+  getFileAndAppend "../../../camdecmps/constraints-indexes/4-test_summary.sql" "./create-constraints-indexes.sql"
+  getFilesAndAppend "../../../camdecmps/constraints-indexes/group6" "./create-constraints-indexes.sql"
+  getFileAndAppend "../../../camdecmps/constraints-indexes/5-daily_calibration.sql" "./create-constraints-indexes.sql"
+  getFilesAndAppend "../../../camdecmps/constraints-indexes/group7" "./create-constraints-indexes.sql"
+
+  # CAN TAKE MANY HOURS
+  getFileAndAppend "../../../camdecmps/constraints-indexes/5-hrly_param_fuel_flow.sql" "./create-constraints-indexes.sql"
+
+  # THESE ARE ALL PRETTY QUICK
+  getFileAndAppend "../../../camdecmps/constraints-indexes/5-linearity_summary.sql" "./create-constraints-indexes.sql"
+  getFileAndAppend "../../../camdecmps/constraints-indexes/5-on_off_cal.sql" "./create-constraints-indexes.sql"
+  getFileAndAppend "../../../camdecmps/constraints-indexes/5-protocol_gas.sql" "./create-constraints-indexes.sql"
+  getFileAndAppend "../../../camdecmps/constraints-indexes/5-qa_cert_event_supp_data.sql" "./create-constraints-indexes.sql"
+  getFileAndAppend "../../../camdecmps/constraints-indexes/5-qa_supp_data.sql" "./create-constraints-indexes.sql"
+  getFilesAndAppend "../../../camdecmps/constraints-indexes/group8" "./create-constraints-indexes.sql"
+  getFileAndAppend "../../../camdecmps/constraints-indexes/6-linearity_injection.sql" "./create-constraints-indexes.sql"
+  getFilesAndAppend "../../../camdecmps/constraints-indexes/group9" "./create-constraints-indexes.sql"
+  getFileAndAppend "../../../camdecmps/constraints-indexes/7-rata_run.sql" "./create-constraints-indexes.sql"
+  getFileAndAppend "../../../camdecmps/constraints-indexes/8-flow_rata_run.sql" "./create-constraints-indexes.sql"
+  getFileAndAppend "../../../camdecmps/constraints-indexes/9-rata_traverse.sql" "./create-constraints-indexes.sql"
+  getFilesAndAppend "../../../camdecmps/constraints-indexes/group10" "./create-constraints-indexes.sql"
+  getFilesAndAppend "../../../camdecmpsaux/constraints-indexes" "./create-constraints-indexes.sql"
+  getFilesAndAppend "../../../camdecmpswks/constraints-indexes" "./create-constraints-indexes.sql"
+  getFilesAndAppend "../../../camdecmpscalc/constraints-indexes" "./create-constraints-indexes.sql"
 fi
 
 if [ $2 == "POST_DEPLOYMENT_CLEANUP" ]; then
