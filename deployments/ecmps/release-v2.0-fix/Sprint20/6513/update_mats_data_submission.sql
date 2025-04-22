@@ -5,7 +5,7 @@ ADD COLUMN STARTED_TIME timestamp,
 ADD COLUMN COMPLETED_TIME timestamp,
 ADD COLUMN NOTE text,
 ADD COLUMN NOTE_TIME timestamp,
-ADD COLUMN CDX_SUB_ID varchar(160);
+ADD COLUMN ACTIVITY_ID text;
 
 -- Add comments for the new columns
 COMMENT ON COLUMN camdecmpsaux.MATS_DATA_SUBMISSION.QUEUED_TIME IS 'Timestamp for when the submission was queued';
@@ -13,7 +13,7 @@ COMMENT ON COLUMN camdecmpsaux.MATS_DATA_SUBMISSION.STARTED_TIME IS 'Timestamp f
 COMMENT ON COLUMN camdecmpsaux.MATS_DATA_SUBMISSION.COMPLETED_TIME IS 'Timestamp for when the submission completed';
 COMMENT ON COLUMN camdecmpsaux.MATS_DATA_SUBMISSION.NOTE IS 'Note indicating why the submission failed';
 COMMENT ON COLUMN camdecmpsaux.MATS_DATA_SUBMISSION.NOTE_TIME IS 'Timestamp for when the submission failed';
-COMMENT ON COLUMN camdecmpsaux.MATS_DATA_SUBMISSION.CDX_SUB_ID IS 'Central Data Exchange (CDX) id for the submission';
+COMMENT ON COLUMN camdecmpsaux.MATS_DATA_SUBMISSION.ACTIVITY_ID IS 'Central Data Exchange (CDX) id for the submission';
 
 -- Drop the existing MATS_STATUS_CD constraint if it exists
 ALTER TABLE camdecmpsaux.MATS_DATA_SUBMISSION 
