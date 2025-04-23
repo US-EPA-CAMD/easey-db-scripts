@@ -36,8 +36,7 @@ INSERT INTO camdecmpsmd.mats_report_type_to_pollutant_crosscheck (mats_rpt_type_
 INSERT INTO camdecmpsmd.mats_report_type_to_pollutant_crosscheck (mats_rpt_type_cd, mats_pollutant_cd) VALUES ('RATA', 'SO2');
 INSERT INTO camdecmpsmd.mats_report_type_to_pollutant_crosscheck (mats_rpt_type_cd, mats_pollutant_cd) VALUES ('RCA', 'FPM');
 INSERT INTO camdecmpsmd.mats_report_type_to_pollutant_crosscheck (mats_rpt_type_cd, mats_pollutant_cd) VALUES ('RRA', 'FPM');
-INSERT INTO camdecmpsmd.mats_report_type_to_pollutant_crosscheck (mats_rpt_type_cd, mats_pollutant_cd) VALUES ('QATPS11', 'FPM');
-INSERT INTO camdecmpsmd.mats_report_type_to_pollutant_crosscheck (mats_rpt_type_cd, mats_pollutant_cd) VALUES ('QATRCA', 'FPM');
-INSERT INTO camdecmpsmd.mats_report_type_to_pollutant_crosscheck (mats_rpt_type_cd, mats_pollutant_cd) VALUES ('QATRRA', 'FPM');
 INSERT INTO camdecmpsmd.mats_report_type_to_pollutant_crosscheck (mats_rpt_type_cd, mats_pollutant_cd) VALUES ('EMPM', 'FPM');
+INSERT INTO camdecmpsmd.mats_report_type_to_pollutant_crosscheck (mats_rpt_type_cd, mats_pollutant_cd) VALUES ('ACA', 'FPM');
+INSERT INTO camdecmpsmd.mats_report_type_to_pollutant_crosscheck (mats_rpt_type_cd, mats_pollutant_cd) VALUES ('SVA', 'FPM');
 

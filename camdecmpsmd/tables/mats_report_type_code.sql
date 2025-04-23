@@ -3,7 +3,8 @@ CREATE TABLE IF NOT EXISTS camdecmpsmd.mats_report_type_code (
     mats_rpt_type_description varchar(100) COLLATE pg_catalog."default" NOT NULL,
     metadata_rpt_type_cd varchar(12) COLLATE pg_catalog."default" NOT NULL,
     requires_pollutant boolean NOT NULL,
-    requires_test_method boolean NOT NULL
+    requires_test_method boolean NOT NULL,
+    enforce_attachment_rules boolean NOT NULL
 );
 
 COMMENT ON TABLE camdecmpsmd.mats_report_type_code IS 'Lookup table for MATS report types.';
@@ -18,3 +19,4 @@ COMMENT ON COLUMN camdecmpsmd.mats_report_type_code.requires_pollutant IS 'Flag 
 
 COMMENT ON COLUMN camdecmpsmd.mats_report_type_code.requires_test_method IS 'Flag indicating whether the selection of a test method is required.';
 
+COMMENT ON COLUMN camdecmpsmd.mats_report_type_code.enforce_attachment_rules IS 'Flag indicating whether the attachment rules should be enforced.';
