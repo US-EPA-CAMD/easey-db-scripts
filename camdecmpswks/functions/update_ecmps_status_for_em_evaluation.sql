@@ -57,6 +57,7 @@ begin
 	-- Update Monitoring Plan Needs Evaluation, if needed
     UPDATE  camdecmpswks.MONITOR_PLAN
        SET NEEDS_EVAL_FLG = 'Y',
+           EVAL_STATUS_CD = 'EVAL',
            CHK_SESSION_ID = null
      WHERE MON_PLAN_ID = vmon_plan_id
        AND EXISTS

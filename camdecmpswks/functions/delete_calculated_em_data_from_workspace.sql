@@ -39,6 +39,7 @@ BEGIN
 		-- Clear the eval
 	UPDATE camdecmpswks.EMISSION_EVALUATION
 		SET NEEDS_EVAL_FLG = 'Y',
+			EVAL_STATUS_CD = 'EVAL',
 			CHK_SESSION_ID = null
 		where MON_PLAN_ID = vmonplan_id 
 		  and RPT_PERIOD_ID = vrptperiod_id;			
