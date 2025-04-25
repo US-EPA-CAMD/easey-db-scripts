@@ -1,10 +1,10 @@
 -- Add new columns to the MATS_DATA_SUBMISSION table
 ALTER TABLE camdecmpsaux.MATS_DATA_SUBMISSION
-ADD COLUMN QUEUED_TIME timestamp,
-ADD COLUMN STARTED_TIME timestamp,
-ADD COLUMN COMPLETED_TIME timestamp,
+ADD COLUMN QUEUED_TIME timestamp without time zone,
+ADD COLUMN STARTED_TIME timestamp without time zone,
+ADD COLUMN COMPLETED_TIME timestamp without time zone,
 ADD COLUMN NOTE text,
-ADD COLUMN NOTE_TIME timestamp,
+ADD COLUMN NOTE_TIME timestamp without time zone,
 ADD COLUMN ACTIVITY_ID text;
 
 -- Add comments for the new columns
@@ -17,7 +17,7 @@ COMMENT ON COLUMN camdecmpsaux.MATS_DATA_SUBMISSION.ACTIVITY_ID IS 'Central Data
 
 -- Drop the existing MATS_STATUS_CD constraint if it exists
 ALTER TABLE camdecmpsaux.MATS_DATA_SUBMISSION 
-DROP CONSTRAINT IF EXISTS FK_MATS_DATA_SUBMISSION_MATS_STATUS_CD;
+DROP CONSTRAINT IF EXISTS FK_MATS_DATA_SUBMISSION_MATS_STATUS_CODE;
 
 -- Modify MATS_STATUS_CD to be nullable and a generated column
 ALTER TABLE camdecmpsaux.MATS_DATA_SUBMISSION
@@ -26,7 +26,8 @@ ALTER COLUMN MATS_STATUS_CD DROP DEFAULT;
 
 -- Create a generated column for MATS_STATUS_CD with description
 COMMENT ON COLUMN camdecmpsaux.MATS_DATA_SUBMISSION.MATS_STATUS_CD IS 
-    'Indicates the current status of the submission. Generated column with logic: 
+    'Foreign key to the MATS Status Code table.
+    Indicates the current status of the submission. Generated column with logic: 
     NEW when all timestamps null, 
     QUEUED when only QUEUED_TIME set, 
     WIP when QUEUED_TIME and STARTED_TIME set, 
@@ -47,5 +48,5 @@ ALTER COLUMN MATS_STATUS_CD SET GENERATED ALWAYS AS (
 
 -- Re-add the foreign key constraint for MATS_STATUS_CD
 ALTER TABLE camdecmpsaux.MATS_DATA_SUBMISSION
-ADD CONSTRAINT FK_MATS_DATA_SUBMISSION_MATS_STATUS_CD 
-FOREIGN KEY (MATS_STATUS_CD) REFERENCES camdecmpsaux.MATS_STATUS_CODE(MATS_STATUS_CD);
+ADD CONSTRAINT FK_MATS_DATA_SUBMISSION_MATS_STATUS_CODE 
+FOREIGN KEY (MATS_STATUS_CD) REFERENCES camdecmpsmd.MATS_STATUS_CODE(MATS_STATUS_CD);
