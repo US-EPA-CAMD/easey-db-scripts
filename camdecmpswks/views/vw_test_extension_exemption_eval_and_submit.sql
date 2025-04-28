@@ -1,4 +1,10 @@
-WITH ord AS (
+-- View: camdecmpswks.vw_test_extension_exemption_eval_and_submit
+
+DROP VIEW IF EXISTS camdecmpswks.vw_test_extension_exemption_eval_and_submit;
+
+CREATE OR REPLACE VIEW camdecmpswks.vw_test_extension_exemption_eval_and_submit
+ AS
+ WITH ord AS (
     SELECT  
         evs.evaluation_set_id, 
         evq.evaluation_id,
