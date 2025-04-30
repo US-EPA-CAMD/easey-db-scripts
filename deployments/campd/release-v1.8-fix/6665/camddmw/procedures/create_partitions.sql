@@ -49,6 +49,10 @@ BEGIN
 	IF executeFlag = 'Y' THEN
 		EXECUTE cmdStmt;
 		RAISE NOTICE '-- executed --';
+	END IF;
+	
+	-- Separately check and insert op_year record
+	IF executeFlag = 'Y' THEN
 		EXECUTE format('SELECT COUNT(*) FROM camddmw.op_year WHERE op_year = %s', year) 
         INTO op_year_count;
 		IF op_year_count = 0 THEN
