@@ -1,6 +1,6 @@
 delete
   from  camdaux.job_configuration
- where  job_type = 'PdemJobQueue';
+ where  job_type = 'PdemJob';
 
 insert 
   into  camdaux.job_configuration 
