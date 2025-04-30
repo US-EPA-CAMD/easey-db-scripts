@@ -45,6 +45,7 @@ UNION
    	 ( 
 	   SELECT DISTINCT ON (esa_1.mon_plan_id, esa_1.rpt_period_id) *
        FROM camdecmpsaux.em_submission_access esa_1
+       WHERE esa_1.sub_availability_cd != 'DELETE'
        ORDER BY esa_1.mon_plan_id, esa_1.rpt_period_id, esa_1.access_begin_date DESC
 	 ) esa
      JOIN camdecmpsmd.reporting_period rp ON esa.rpt_period_id = rp.rpt_period_id
