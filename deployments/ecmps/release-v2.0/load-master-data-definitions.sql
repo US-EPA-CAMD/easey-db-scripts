@@ -1106,4 +1106,64 @@ BEGIN
 		(datatableId, 3, 'activation_date', 'activationDate', 'Vendor Activation Date'),
 		(datatableId, 4, 'deactivation_date', 'deactivationDate', 'Vendor Deactivation Date'),
 		(datatableId, 5, 'active_ind', 'activeIndicator', 'Active');
+----------------------------------------------------------------------------------------------------------------------------
+    datasetCode := 'mats-report-type-codes';
+    INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
+    VALUES (datasetCode, 'MDM', 'MATS Report Type Codes & Descriptions');
+
+	/***** DATATABLE 1 *****/
+	INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement)
+	VALUES(datasetCode, 1, 'MATS Report Type Codes & Descriptions', 'SELECT * FROM camdecmpsmd.mats_report_type_code')
+	RETURNING datatable_id INTO datatableId;
+
+	/***** COLUMNS *****/
+	INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
+	VALUES
+		(datatableId, 1, 'mats_rpt_type_cd', 'matsReportTypeCode', 'MATS Report Type Code'),
+		(datatableId, 2, 'mats_rpt_type_description', 'matsReportTypeDescription', 'MATS Report Type Description');
+----------------------------------------------------------------------------------------------------------------------------
+    datasetCode := 'mats-pollutant-codes';
+    INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
+    VALUES (datasetCode, groupCode, 'MATS Pollutant Codes & Descriptions');
+    
+    /***** DATATABLE 1 *****/
+    INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement)
+    VALUES (datasetCode, 1, 'MATS Pollutant Codes & Descriptions', 'SELECT * FROM camdecmpsmd.mats_pollutant_code')
+    RETURNING datatable_id INTO datatableId;
+
+    /***** COLUMNS *****/
+    INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
+    VALUES
+        (datatableId, 1, 'mats_pollutant_cd', 'matsPollutantCode', 'MATS Pollutant Code'),
+        (datatableId, 2, 'mats_pollutant_description', 'matsPollutantDescription', 'MATS Pollutant Description');
+----------------------------------------------------------------------------------------------------------------------------
+    datasetCode := 'mats-test-method-codes';
+    INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
+    VALUES (datasetCode, groupCode, 'MATS Test Method Codes & Descriptions');
+
+    /***** DATATABLE 1 *****/
+    INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement)
+    VALUES (datasetCode, 1, 'MATS Test Method Codes & Descriptions', 'SELECT * FROM camdecmpsmd.mats_test_method_code')
+    RETURNING datatable_id INTO datatableId;
+
+    /***** COLUMNS *****/
+    INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
+    VALUES
+        (datatableId, 1, 'mats_test_meth_cd', 'matsTestMethodCode', 'MATS Test Method Code'),
+        (datatableId, 2, 'mats_test_meth_description', 'matsTestMethodDescription', 'MATS Test Method Description');
+----------------------------------------------------------------------------------------------------------------------------
+    datasetCode := 'mats-averaging-group-codes';
+    INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
+    VALUES (datasetCode, groupCode, 'MATS Averaging Group Codes & Descriptions');
+
+    /***** DATATABLE 1 *****/
+    INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement)
+    VALUES (datasetCode, 1, 'MATS Averaging Group Codes & Descriptions', 'SELECT * FROM camdecmpsmd.mats_averaging_group_code')
+    RETURNING datatable_id INTO datatableId;
+
+    /***** COLUMNS *****/
+    INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
+    VALUES
+        (datatableId, 1, 'mats_avg_group_cd', 'matsAveragingGroupCode', 'MATS Averaging Group Code'),
+        (datatableId, 2, 'mats_avg_group_description', 'matsAveragingGroupDescription', 'MATS Averaging Group Description');
 END $$;

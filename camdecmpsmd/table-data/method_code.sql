@@ -22,5 +22,4 @@ INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('
 INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('PEM', 'Predictive Emissions Monitor');
 INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('CEMST', 'Hg CEMS and Sorbent Trap Monitoring System');
 INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('ST', 'Sorbent Trap Monitoring System');
-INSERT INTO camdecmpsmd.method_code (method_cd, method_cd_description) VALUES ('CPMS', 'PM Continuous Parametric Monitoring System');
 
