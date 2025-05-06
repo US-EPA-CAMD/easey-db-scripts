@@ -25,6 +25,5 @@ INSERT INTO camdecmpsmd.component_type_code (component_type_cd, component_type_c
 INSERT INTO camdecmpsmd.component_type_code (component_type_cd, component_type_cd_description, span_indicator, parameter_cd) VALUES ('HCL', 'HCl Concentration Analyzer', 1, 'HCLC');
 INSERT INTO camdecmpsmd.component_type_code (component_type_cd, component_type_cd_description, span_indicator, parameter_cd) VALUES ('HF', 'HF Concentration Analyzer', NULL, 'HFC');
 INSERT INTO camdecmpsmd.component_type_code (component_type_cd, component_type_cd_description, span_indicator, parameter_cd) VALUES ('STRAIN', 'Sorbent Trap Sampling Train Component, consisting of a sample gas flow meter and the associated sorbent trap', NULL, 'HG');
-INSERT INTO camdecmpsmd.component_type_code (component_type_cd, component_type_cd_description, span_indicator, parameter_cd) VALUES ('CPM', 'PM Continuous Parametric Monitor', NULL, 'PMCO');
 INSERT INTO camdecmpsmd.component_type_code (component_type_cd, component_type_cd_description, span_indicator, parameter_cd) VALUES ('PM', 'Particulate Matter Analyzer', NULL, 'PMC');
 

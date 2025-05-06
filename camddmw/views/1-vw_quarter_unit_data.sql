@@ -30,7 +30,8 @@ CREATE OR REPLACE VIEW camddmw.vw_quarter_unit_data
     uf.nox_control_info,
     uf.part_control_info,
     uf.hg_control_info,
-    uf.prg_code_info
+    uf.prg_code_info,
+    qud.add_date
    FROM camddmw.quarter_unit_data qud
      JOIN camddmw.unit_fact uf ON qud.unit_id = uf.unit_id AND qud.op_year = uf.op_year
      JOIN camddmw.op_year oy ON qud.op_year = oy.op_year AND oy.archive_ind = 0::numeric
@@ -61,7 +62,8 @@ UNION ALL
     uf.nox_control_info,
     uf.part_control_info,
     uf.hg_control_info,
-    uf.prg_code_info
+    uf.prg_code_info,
+    qud.add_date
    FROM camddmw_arch.quarter_unit_data_a qud
      JOIN camddmw.unit_fact uf ON qud.unit_id = uf.unit_id AND qud.op_year = uf.op_year
      JOIN camddmw.op_year oy ON qud.op_year = oy.op_year AND oy.archive_ind = 1::numeric;

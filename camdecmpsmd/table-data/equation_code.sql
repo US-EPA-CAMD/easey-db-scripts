@@ -44,7 +44,6 @@ INSERT INTO camdecmpsmd.equation_code (equation_cd, equation_cd_description, moi
 INSERT INTO camdecmpsmd.equation_code (equation_cd, equation_cd_description, moisture_ind) VALUES ('F-25', 'HI (for common stack summed from HI for units)', NULL);
 INSERT INTO camdecmpsmd.equation_code (equation_cd, equation_cd_description, moisture_ind) VALUES ('F-26A', 'NOX (hourly from wet NOXC, flow)', NULL);
 INSERT INTO camdecmpsmd.equation_code (equation_cd, equation_cd_description, moisture_ind) VALUES ('F-26B', 'NOX (hourly from dry NOXC, flow, H2O)', 1);
-INSERT INTO camdecmpsmd.equation_code (equation_cd, equation_cd_description, moisture_ind) VALUES ('F-29', 'HGM (from Hg concentration, flow, H2O)', 1);
 INSERT INTO camdecmpsmd.equation_code (equation_cd, equation_cd_description, moisture_ind) VALUES ('F-31', 'H2O (from wet and dry O2)', NULL);
 INSERT INTO camdecmpsmd.equation_code (equation_cd, equation_cd_description, moisture_ind) VALUES ('F-5', 'NOXR/SO2R (from NOX or SO2 dry, O2 dry, Fd)', NULL);
 INSERT INTO camdecmpsmd.equation_code (equation_cd, equation_cd_description, moisture_ind) VALUES ('F-6', 'NOXR/SO2R (from NOX or SO2 wet, CO2 wet, Fc)', NULL);
@@ -59,7 +58,6 @@ INSERT INTO camdecmpsmd.equation_code (equation_cd, equation_cd_description, moi
 INSERT INTO camdecmpsmd.equation_code (equation_cd, equation_cd_description, moisture_ind) VALUES ('G-5', 'CO2M (for sorbent)', NULL);
 INSERT INTO camdecmpsmd.equation_code (equation_cd, equation_cd_description, moisture_ind) VALUES ('G-6', 'CO2M (for sorbent with SO2 controls)', NULL);
 INSERT INTO camdecmpsmd.equation_code (equation_cd, equation_cd_description, moisture_ind) VALUES ('G-8', 'CO2M (from CO2M for both fuel and sorbent)', NULL);
-INSERT INTO camdecmpsmd.equation_code (equation_cd, equation_cd_description, moisture_ind) VALUES ('K-5', 'HGC (from Hg in trap, gas volume)', NULL);
 INSERT INTO camdecmpsmd.equation_code (equation_cd, equation_cd_description, moisture_ind) VALUES ('M-1K', 'H2O (from wet and dry O2 with K-factor adjustment)', NULL);
 INSERT INTO camdecmpsmd.equation_code (equation_cd, equation_cd_description, moisture_ind) VALUES ('N-GAS', 'FGAS (net gas flow rate)', NULL);
 INSERT INTO camdecmpsmd.equation_code (equation_cd, equation_cd_description, moisture_ind) VALUES ('N-OIL', 'FOIL (net volumetric oil flow rate)', NULL);
