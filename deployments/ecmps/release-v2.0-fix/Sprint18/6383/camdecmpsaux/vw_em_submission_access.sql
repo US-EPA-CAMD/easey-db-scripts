@@ -1,5 +1,3 @@
-DROP VIEW IF EXISTS camdecmpsaux.vw_em_submission_access;
-
 CREATE OR REPLACE VIEW camdecmpsaux.vw_em_submission_access AS
 SELECT
     em.em_sub_access_id,
