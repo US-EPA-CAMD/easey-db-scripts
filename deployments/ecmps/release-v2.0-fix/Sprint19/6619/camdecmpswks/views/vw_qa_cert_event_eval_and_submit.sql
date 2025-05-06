@@ -4,7 +4,42 @@ DROP VIEW IF EXISTS camdecmpswks.vw_qa_cert_event_eval_and_submit;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_qa_cert_event_eval_and_submit
  AS
- WITH ord AS (
+ WITH submission_ord AS (
+    SELECT  
+        ss.submission_set_id, 
+        sq.submission_id,
+        ss.mon_plan_id,
+        sq.test_sum_id,
+        sq.qa_cert_event_id,
+        sq.test_extension_exemption_id,
+        sq.rpt_period_id,
+        ROW_NUMBER() OVER (ORDER BY ss.queued_time) AS submission_queue_position 
+    FROM camdecmpsaux.submission_set ss 
+    JOIN camdecmpsaux.submission_queue sq
+        ON sq.submission_set_id = ss.submission_set_id 
+        AND sq.status_cd = 'QUEUED'
+    LEFT JOIN camdecmpswks.MONITOR_PLAN pln
+        ON pln.mon_plan_id = ss.mon_plan_id 
+    LEFT JOIN camdecmpswks.TEST_SUMMARY tst
+        ON tst.test_sum_id = sq.test_sum_id
+    LEFT JOIN camdecmpswks.QA_CERT_EVENT qce
+        ON qce.qa_cert_event_id = sq.qa_cert_event_id
+    LEFT JOIN camdecmpswks.TEST_EXTENSION_EXEMPTION tee
+        ON tee.test_extension_exemption_id = sq.test_extension_exemption_id
+    LEFT JOIN camdecmpswks.EMISSION_EVALUATION ems
+        ON ems.mon_plan_id = ss.mon_plan_id
+        AND ems.rpt_period_id = sq.rpt_period_id
+    WHERE (
+        sq.process_cd = 'MP' AND pln.submission_availability_cd = 'PENDING'
+        OR
+        sq.process_cd = 'QA' AND sq.qa_cert_event_id IS NOT NULL AND qce.submission_availability_cd = 'PENDING'
+        OR
+        sq.process_cd = 'QA' AND sq.test_extension_exemption_id IS NOT NULL AND tee.submission_availability_cd = 'PENDING'
+        OR
+        sq.process_cd = 'EM' AND ems.submission_availability_cd = 'PENDING'
+    )
+),
+ evaluation_ord AS (
   SELECT 
     evs.evaluation_set_id, 
     evq.evaluation_id, 
@@ -16,7 +51,7 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_qa_cert_event_eval_and_submit
     ROW_NUMBER() OVER (
       ORDER BY 
         evs.queued_time
-    ) AS queue_position 
+    ) AS evaluation_queue_position 
   FROM 
     camdecmpsaux.EVALUATION_SET evs 
     JOIN camdecmpsaux.EVALUATION_QUEUE evq ON evq.evaluation_set_id = evs.evaluation_set_id 
@@ -71,16 +106,27 @@ SELECT p.oris_code,
     CASE WHEN qce.eval_status_cd = 'INQ' THEN COALESCE(
     'In Queue (#' || (
       SELECT 
-        MIN(queue_position) 
+        MIN(evaluation_queue_position) 
       FROM 
-        ord 
+        evaluation_ord 
       WHERE 
-        ord.qa_cert_event_id = qce.qa_cert_event_id
+        evaluation_ord.qa_cert_event_id = qce.qa_cert_event_id
     ):: TEXT || ' in queue)', 
     esc.eval_status_cd_description
   ) ELSE esc.eval_status_cd_description END AS eval_status_cd_description, 
     qce.submission_availability_cd,
-    sac.sub_avail_cd_description as submission_availability_cd_description
+    CASE 
+        WHEN qce.submission_availability_cd = 'PENDING' THEN 
+            COALESCE(
+                'Submitted, Host Update Pending (#' || (
+                    SELECT MIN(submission_queue_position) 
+                    FROM submission_ord 
+                    WHERE submission_ord.qa_cert_event_id = qce.qa_cert_event_id
+                )::TEXT || ' in queue)', 
+                sac.sub_avail_cd_description
+            )
+        ELSE sac.sub_avail_cd_description 
+    END AS submission_availability_cd_description
    FROM camd.plant p
      JOIN camdecmpswks.monitor_plan mp USING (fac_id)
      JOIN camdecmpswks.monitor_plan_location mpl USING (mon_plan_id)
