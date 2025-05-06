@@ -294,8 +294,8 @@ begin
             vErrorMessage := '';
         
         else
-            vResult := false;
-            vErrorMessage := concat( cRoutineName, ': ', 'PDEM Report row does not exist. (Id: ', vPdemReportId, ')' );
+            vResult := true;
+            vErrorMessage := '';
         end if;
     
     else
