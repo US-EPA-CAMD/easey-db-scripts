@@ -50,6 +50,13 @@ BEGIN
 		EXECUTE cmdStmt;
 		RAISE NOTICE '-- executed --';
 	END IF;
+	
+	cmdStmt := format('INSERT INTO camddmw.op_year (op_year, archive_ind, hourly_data_ind) VALUES (%s, 0, 1)', year);
+	RAISE NOTICE '%', cmdStmt;
+	IF executeFlag = 'Y' THEN
+		EXECUTE cmdStmt;
+		RAISE NOTICE '-- executed --';
+	END IF;
 
 -------------------------------------------------------------------------------------------------------------------
 	tableName := 'allowance_holding_dim';
