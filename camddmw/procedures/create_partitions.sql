@@ -51,16 +51,11 @@ BEGIN
 		RAISE NOTICE '-- executed --';
 	END IF;
 	
-	-- Separately check and insert op_year record
+	cmdStmt := format('INSERT INTO camddmw.op_year (op_year, archive_ind, hourly_data_ind) VALUES (%s, 0, 1)', year);
+	RAISE NOTICE '%', cmdStmt;
 	IF executeFlag = 'Y' THEN
-		EXECUTE format('SELECT COUNT(*) FROM camddmw.op_year WHERE op_year = %s', year) 
-        INTO op_year_count;
-		IF op_year_count = 0 THEN
-            EXECUTE format('
-                INSERT INTO camddmw.op_year (op_year, archive_ind, hourly_data_ind)
-                VALUES (%s, 0, 1)', year);
-            RAISE NOTICE '-- Added op_year record for year % --', year;
-		END IF;
+		EXECUTE cmdStmt;
+		RAISE NOTICE '-- executed --';
 	END IF;
 
 -------------------------------------------------------------------------------------------------------------------
