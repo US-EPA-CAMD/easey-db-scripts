@@ -4,7 +4,33 @@ DROP VIEW IF EXISTS camdecmpswks.vw_test_summary_eval_and_submit;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_test_summary_eval_and_submit
  AS
- WITH ord AS (
+  WITH submission_ord AS (
+    SELECT  
+        ss.submission_set_id, 
+        sq.submission_id,
+        ss.mon_plan_id,
+        sq.test_sum_id,
+        sq.qa_cert_event_id,
+        sq.test_extension_exemption_id,
+        sq.rpt_period_id,
+        ROW_NUMBER() OVER (ORDER BY ss.queued_time) AS submission_queue_position 
+    FROM camdecmpsaux.submission_set ss 
+    JOIN camdecmpsaux.submission_queue sq
+        ON sq.submission_set_id = ss.submission_set_id 
+        AND sq.status_cd = 'QUEUED'
+    LEFT JOIN camdecmpswks.MONITOR_PLAN pln
+        ON pln.mon_plan_id = ss.mon_plan_id 
+    LEFT JOIN camdecmpswks.TEST_SUMMARY tst
+        ON tst.test_sum_id = sq.test_sum_id
+    LEFT JOIN camdecmpswks.QA_CERT_EVENT qce
+        ON qce.qa_cert_event_id = sq.qa_cert_event_id
+    LEFT JOIN camdecmpswks.TEST_EXTENSION_EXEMPTION tee
+        ON tee.test_extension_exemption_id = sq.test_extension_exemption_id
+    LEFT JOIN camdecmpswks.EMISSION_EVALUATION ems
+        ON ems.mon_plan_id = ss.mon_plan_id
+        AND ems.rpt_period_id = sq.rpt_period_id
+),
+ evaluation_ord AS (
     SELECT  
         evs.evaluation_set_id, 
         evq.evaluation_id,
@@ -72,15 +98,26 @@ SELECT p.oris_code,
             COALESCE(
                 'In Queue (#' || (
                     SELECT MIN(queue_position)
-                    FROM ord
-                    WHERE ord.test_sum_id = ts.test_sum_id 
+                    FROM evaluation_ord
+                    WHERE evaluation_ord.test_sum_id = ts.test_sum_id 
                 )::TEXT || ' in queue)',
                 esc.eval_status_cd_description
             )
         ELSE esc.eval_status_cd_description 
     END AS eval_status_cd_description,
     qsd.submission_availability_cd,
-    sac.sub_avail_cd_description as submission_availability_cd_description,
+    CASE 
+        WHEN sac.submission_availability_cd = 'PENDING' THEN 
+            COALESCE(
+                'Submitted, Host Update Pending (#' || (
+                    SELECT MIN(submission_queue_position) 
+                    FROM submission_ord 
+                    WHERE submission_ord.test_sum_id = ts.test_sum_id
+                )::TEXT || ' in queue)', 
+                sac.sub_avail_cd_description
+            )
+        ELSE sac.sub_avail_cd_description 
+    END AS submission_availability_cd_description,
     rp.period_abbreviation
    FROM camd.plant p
      JOIN camdecmpswks.monitor_plan mp USING (fac_id)

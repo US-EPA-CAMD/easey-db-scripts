@@ -27,15 +27,6 @@ WITH submission_ord AS (
     LEFT JOIN camdecmpswks.EMISSION_EVALUATION ems
         ON ems.mon_plan_id = ss.mon_plan_id
         AND ems.rpt_period_id = sq.rpt_period_id
-    WHERE (
-        sq.process_cd = 'MP' AND pln.submission_availability_cd = 'PENDING'
-        OR
-        sq.process_cd = 'QA' AND sq.qa_cert_event_id IS NOT NULL AND qce.submission_availability_cd = 'PENDING'
-        OR
-        sq.process_cd = 'QA' AND sq.test_extension_exemption_id IS NOT NULL AND tee.submission_availability_cd = 'PENDING'
-        OR
-        sq.process_cd = 'EM' AND ems.submission_availability_cd = 'PENDING'
-    )
 ),
 evaluation_ord AS (
   SELECT 
