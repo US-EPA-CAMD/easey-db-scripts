@@ -1,0 +1,2 @@
+INSERT INTO camdecmpsmd.parameter_uom (param_id, parameter_cd, uom_cd, parameter_format, min_value, max_value, decimals_hrly, decimals_fuel_flow, decimals_summary) VALUES (142, 'PMRE', 'LBMWH', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO camdecmpsmd.parameter_uom (param_id, parameter_cd, uom_cd, parameter_format, min_value, max_value, decimals_hrly, decimals_fuel_flow, decimals_summary) VALUES (143, 'PMRH', 'LBMMBTU', NULL, NULL, NULL, NULL, NULL, NULL);

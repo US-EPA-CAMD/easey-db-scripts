@@ -1,5 +1,3 @@
-DROP FUNCTION IF EXISTS camdecmps.get_em_reporting_status(numeric, numeric, character varying) CASCADE;
-
 CREATE OR REPLACE FUNCTION camdecmps.get_em_reporting_status(
     inUnitID       numeric,      
     inRptPeriodID  numeric,      
@@ -54,10 +52,10 @@ BEGIN
              WHERE prg_cd = 'OTC'
            ) otc ON up.unit_id = otc.unit_id
       LEFT JOIN (
-            SELECT ue.up_id
+            SELECT up2.up_id
               FROM camd.unit_exemption ue
               INNER JOIN camd.unit_program up2 ON ue.unit_id = up2.unit_id
-              INNER JOIN camd.program_exemption pe ON up2.prg_cd = pe.prg_cd 
+              INNER JOIN camdmd.program_exemption pe ON up2.prg_cd = pe.prg_cd 
                                               AND ue.exemption_type_cd = pe.exemption_type_cd
              WHERE ue.begin_date <= lBeginDate
                AND (ue.end_date IS NULL OR ue.end_date >= lEndDate)

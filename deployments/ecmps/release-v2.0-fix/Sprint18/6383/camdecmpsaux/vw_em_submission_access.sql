@@ -1,0 +1,137 @@
+CREATE OR REPLACE VIEW camdecmpsaux.vw_em_submission_access AS
+SELECT
+    em.em_sub_access_id,
+    em.mon_plan_id,
+    em.rpt_period_id,
+    em.access_begin_date,
+    em.access_end_date,
+    stc.em_sub_type_cd,
+    stc.em_sub_type_cd_description,
+    em.userid,
+    em.add_date,
+    em.update_date,
+    statc.em_status_cd,
+    statc.em_status_cd_description,
+    sac.submission_availability_cd AS sub_availability_cd,
+    sac.sub_avail_cd_description AS sub_availability_cd_description,
+    em.resub_explanation,
+    pl.fac_id,
+    pl.oris_code,
+    pl.state,
+    pl.facility_name,
+    rp.calendar_year,
+    rp.quarter,
+    rp.period_abbreviation,
+    rf.report_freq_cd,
+    sq.submission_id,
+    sq.queued_time AS submission_date,
+    sc.severity_cd,
+    sc.severity_cd_description,
+    CASE
+        WHEN em.sub_availability_cd = 'DELETE' THEN 'Cancelled'
+        WHEN em.em_status_cd = 'PENDING' THEN 'Pending Approval'
+        WHEN em.sub_availability_cd IS NULL AND em.access_end_date::date >= CURRENT_DATE THEN 'Not Yet Open'
+        WHEN em.sub_availability_cd IN ('GRANTED', 'REQUIRE') THEN 'Open'
+        ELSE 'Closed'
+    END AS window_status,
+    CASE
+        WHEN sq.severity_cd = 'CRIT1' THEN 'Received with Critical 1 Errors'
+        WHEN sq.submission_id IS NULL AND em.em_status_cd = 'RECVD' AND em.mon_plan_id IS NOT NULL THEN 'Received via ETS'
+        WHEN sq.severity_cd = 'CRIT2' THEN 'Received with Critical 2 Errors'
+        WHEN sq.severity_cd IS NOT NULL THEN 'Received'
+        WHEN sq.submission_id IS NOT NULL THEN 'Data Not Loaded'
+        ELSE 'No Submission'
+    END AS submission_status,
+    mp.config AS locations,
+    CASE
+        WHEN em.em_sub_access_id = camdecmpsaux.get_last_submission_access(em.mon_plan_id, em.rpt_period_id)
+        THEN 'Yes'
+        ELSE 'No'
+    END AS last_window,
+    CASE
+        WHEN ee.mon_plan_id IS NULL THEN 'No'
+        ELSE 'Yes'
+    END AS accepted_submission_in_period,
+    CASE
+        WHEN ee.mon_plan_id IS NULL THEN 'No'
+        WHEN sq.submission_id IS NULL AND em.em_status_cd = 'RECVD' AND ee.submission_id IS NULL THEN 'Yes'
+        WHEN sq.submission_id IS NOT NULL AND ee.submission_id IS NOT NULL AND sq.submission_id = ee.submission_id THEN 'Yes'
+        WHEN ee.submission_id IS NOT NULL THEN 'No'
+        ELSE 'Unknown'
+    END AS last_window_with_ok_submission,
+    ss.user_id AS submitter_user_id
+FROM camdecmpsaux.em_submission_access em
+JOIN (
+    SELECT
+        fac_id,
+        mon_plan_id,
+        string_agg(d.unit_stack, ', ') AS config
+    FROM (
+        SELECT
+            mpl.mon_plan_id,
+            COALESCE(u.fac_id, sp.fac_id) AS fac_id,
+            COALESCE(u.unitid, sp.stack_name) AS unit_stack
+        FROM camdecmps.monitor_plan_location mpl
+        JOIN camdecmps.monitor_location ml USING(mon_loc_id)
+        LEFT JOIN camdecmps.stack_pipe sp USING (stack_pipe_id)
+        LEFT JOIN camd.unit u USING (unit_id)
+        ORDER BY mon_plan_id, unitid, stack_name
+    ) AS d
+    GROUP BY mon_plan_id, fac_id
+) AS mp USING(mon_plan_id)
+JOIN camdecmps.monitor_plan_reporting_freq rf
+    ON rf.mon_plan_id = em.mon_plan_id
+    AND (
+         (rf.begin_rpt_period_id <= em.rpt_period_id AND rf.end_rpt_period_id IS NULL)
+         OR (rf.begin_rpt_period_id <= em.rpt_period_id AND rf.end_rpt_period_id >= em.rpt_period_id)
+    )
+JOIN camdecmpsmd.reporting_period rp USING (rpt_period_id)
+JOIN camdecmpsmd.em_status_code statc USING (em_status_cd)
+JOIN camdecmpsmd.em_sub_type_code stc USING (em_sub_type_cd)
+JOIN camdecmpsmd.submission_availability_code sac
+    ON em.sub_availability_cd = sac.submission_availability_cd
+JOIN camd.plant pl USING(fac_id)
+LEFT JOIN camdecmpsaux.submission_queue sq
+    ON camdecmpsaux.get_last_submission_in_window(em.mon_plan_id, em.rpt_period_id, em.access_begin_date, em.access_end_date) = sq.submission_id
+LEFT JOIN camdecmpsaux.submission_set ss
+    ON sq.submission_set_id = ss.submission_set_id
+LEFT JOIN camdecmpsmd.severity_code sc
+    ON sq.severity_cd = sc.severity_cd
+LEFT JOIN camdecmps.emission_evaluation ee
+    ON ee.mon_plan_id = em.mon_plan_id
+   AND ee.rpt_period_id = em.rpt_period_id
+GROUP BY
+    em.em_sub_access_id,
+    em.mon_plan_id,
+    em.rpt_period_id,
+    em.access_begin_date,
+    em.access_end_date,
+    stc.em_sub_type_cd,
+    stc.em_sub_type_cd_description,
+    em.userid,
+    em.add_date,
+    em.update_date,
+    statc.em_status_cd,
+    statc.em_status_cd_description,
+    sac.submission_availability_cd,
+    sac.sub_avail_cd_description,
+    em.resub_explanation,
+    pl.fac_id,
+    pl.oris_code,
+    pl.state,
+    pl.facility_name,
+    rp.calendar_year,
+    rp.quarter,
+    rp.period_abbreviation,
+    rf.report_freq_cd,
+    sq.submission_id,
+    sq.queued_time,
+    sc.severity_cd,
+    sc.severity_cd_description,
+    mp.config,
+    ee.mon_plan_id,
+    ee.submission_id,
+	ss.user_id
+ORDER BY
+    em.rpt_period_id DESC,
+    em.access_begin_date DESC;

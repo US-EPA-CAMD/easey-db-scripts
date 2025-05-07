@@ -1,6 +1,3 @@
--- View: camdecmpsaux.vw_em_submission_access
-
-DROP VIEW IF EXISTS camdecmpsaux.vw_em_submission_access;
 CREATE OR REPLACE VIEW camdecmpsaux.vw_em_submission_access AS
 SELECT
     em.em_sub_access_id,
@@ -45,7 +42,24 @@ SELECT
         WHEN sq.submission_id IS NOT NULL THEN 'Data Not Loaded'
         ELSE 'No Submission'
     END AS submission_status,
-    mp.config AS locations
+    mp.config AS locations,
+    CASE
+        WHEN em.em_sub_access_id = camdecmpsaux.get_last_submission_access(em.mon_plan_id, em.rpt_period_id)
+        THEN 'Yes'
+        ELSE 'No'
+    END AS last_window,
+    CASE
+        WHEN ee.mon_plan_id IS NULL THEN 'No'
+        ELSE 'Yes'
+    END AS accepted_submission_in_period,
+    CASE
+        WHEN ee.mon_plan_id IS NULL THEN 'No'
+        WHEN sq.submission_id IS NULL AND em.em_status_cd = 'RECVD' AND ee.submission_id IS NULL THEN 'Yes'
+        WHEN sq.submission_id IS NOT NULL AND ee.submission_id IS NOT NULL AND sq.submission_id = ee.submission_id THEN 'Yes'
+        WHEN ee.submission_id IS NOT NULL THEN 'No'
+        ELSE 'Unknown'
+    END AS last_window_with_ok_submission,
+    ss.user_id AS submitter_user_id
 FROM camdecmpsaux.em_submission_access em
 JOIN (
     SELECT
@@ -79,7 +93,13 @@ JOIN camdecmpsmd.submission_availability_code sac
 JOIN camd.plant pl USING(fac_id)
 LEFT JOIN camdecmpsaux.submission_queue sq
     ON camdecmpsaux.get_last_submission_in_window(em.mon_plan_id, em.rpt_period_id, em.access_begin_date, em.access_end_date) = sq.submission_id
-LEFT JOIN camdecmpsmd.severity_code sc USING (severity_cd)
+LEFT JOIN camdecmpsaux.submission_set ss
+    ON sq.submission_set_id = ss.submission_set_id
+LEFT JOIN camdecmpsmd.severity_code sc
+    ON sq.severity_cd = sc.severity_cd
+LEFT JOIN camdecmps.emission_evaluation ee
+    ON ee.mon_plan_id = em.mon_plan_id
+   AND ee.rpt_period_id = em.rpt_period_id
 GROUP BY
     em.em_sub_access_id,
     em.mon_plan_id,
@@ -108,7 +128,10 @@ GROUP BY
     sq.queued_time,
     sc.severity_cd,
     sc.severity_cd_description,
-    mp.config
+    mp.config,
+    ee.mon_plan_id,
+    ee.submission_id,
+	ss.user_id
 ORDER BY
     em.rpt_period_id DESC,
     em.access_begin_date DESC;
