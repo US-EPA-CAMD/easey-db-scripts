@@ -1,5 +1,4 @@
 -- View: camdecmpswks.vw_em_eval_and_submit
-DROP VIEW IF EXISTS camdecmpswks.vw_em_eval_and_submit;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_em_eval_and_submit AS
 SELECT
@@ -23,7 +22,7 @@ SELECT
         WHERE
             mpl.mon_plan_id = sel.mon_plan_id
     ) AS configuration,
-    esc.eval_status_cd, 
+    esc.eval_status_cd,
     sac.submission_availability_cd,
     sac.sub_avail_cd_description AS submission_availability_cd_description,
     sel.userid :: varchar(160),
