@@ -13,16 +13,11 @@ CREATE OR REPLACE FUNCTION camdecmpswks.update_collateral_qat_data_for_mp_update
 AS $BODY$
 
 declare
-    vTestSumId character varying;
-begin    
+
+begin
 
     error_msg := '';
     result := 'T';
-
-    SELECT test_sum_id INTO vTestSumId
-    FROM camdecmpswks.test_summary
-    WHERE mon_loc_id = vMonLocId LIMIT 1;
-
 
     create temp table tmpTestsStatus (TEST_SUM_ID character varying PRIMARY KEY);
        -- wipe out calculated test data for related tests
@@ -30,9 +25,9 @@ begin
             SELECT TT.TEST_SUM_ID FROM (
                 SELECT DISTINCT T.TEST_SUM_ID
                 FROM camdecmpswks.TEST_SUMMARY T
-                WHERE T.MON_LOC_ID = vMonLocId AND
-                    T.NEEDS_EVAL_FLG = 'N' AND
-                    T.TEST_SUM_ID =vTestSumId ) TT
+                WHERE
+                    T.MON_LOC_ID = vMonLocId AND
+                    T.NEEDS_EVAL_FLG = 'N' ) TT
                 LEFT OUTER JOIN camdecmpswks.QA_SUPP_DATA QS ON TT.TEST_SUM_ID = QS.TEST_SUM_ID
                 WHERE QS.SUBMISSION_AVAILABILITY_CD IS NULL OR
                     QS.SUBMISSION_AVAILABILITY_CD IN ('GRANTED','REQUIRE');

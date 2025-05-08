@@ -29,10 +29,11 @@ begin
             camdecmpsaux.EM_SUBMISSION_ACCESS ESA,
             camdecmpswks.MONITOR_PLAN_LOCATION M,
             camdecmpsmd.REPORTING_PERIOD R,
-    (SELECT MON_LOC_ID, EE.MON_PLAN_ID, EE.RPT_PERIOD_ID,CALENDAR_YEAR, QUARTER
-        FROM camdecmpswks.EMISSION_EVALUATION EE
-            INNER JOIN camdecmpsmd.REPORTING_PERIOD RP ON EE.RPT_PERIOD_ID = RP.RPT_PERIOD_ID
-            INNER JOIN camdecmpswks.MONITOR_PLAN_LOCATION MPL ON EE.MON_PLAN_ID = MPL.MON_PLAN_ID) T
+            (SELECT MON_LOC_ID, EE.MON_PLAN_ID, EE.RPT_PERIOD_ID,CALENDAR_YEAR, QUARTER
+                FROM camdecmpswks.EMISSION_EVALUATION EE
+                    INNER JOIN camdecmpsmd.REPORTING_PERIOD RP ON EE.RPT_PERIOD_ID = RP.RPT_PERIOD_ID
+                    INNER JOIN camdecmpswks.MONITOR_PLAN_LOCATION MPL ON EE.MON_PLAN_ID = MPL.MON_PLAN_ID
+            ) T
         WHERE E.MON_PLAN_ID = M.MON_PLAN_ID
           AND E.RPT_PERIOD_ID = R.RPT_PERIOD_ID
           AND E.MON_PLAN_ID = ESA.MON_PLAN_ID
@@ -44,7 +45,6 @@ begin
           AND T.MON_PLAN_ID = vmon_plan_id
           AND T.RPT_PERIOD_ID = vperiod_id;
 
-       -- camdecmpswks.emission_evaluation has column=SUBMISSION_AVAILABILITY_CD
        OPEN EM_CSR;
          LOOP
             FETCH Next from EM_CSR INTO V_MON_PLAN_ID, V_RPT_PERIOD_ID;

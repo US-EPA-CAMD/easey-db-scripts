@@ -33,7 +33,8 @@ begin
                 camdecmpsmd.REPORTING_PERIOD R,
                 (SELECT MON_LOC_ID, TEST_EXTENSION_EXEMPTION_ID,CALENDAR_YEAR, QUARTER 
                     FROM camdecmpswks.TEST_EXTENSION_EXEMPTION TEE
-                    INNER JOIN camdecmpsmd.REPORTING_PERIOD RP ON TEE.RPT_PERIOD_ID = RP.RPT_PERIOD_ID) T
+                    INNER JOIN camdecmpsmd.REPORTING_PERIOD RP ON TEE.RPT_PERIOD_ID = RP.RPT_PERIOD_ID
+                ) T
             WHERE E.MON_PLAN_ID = M.MON_PLAN_ID 
               AND E.RPT_PERIOD_ID = R.RPT_PERIOD_ID 
               AND E.NEEDS_EVAL_FLG = 'N' 
@@ -42,7 +43,7 @@ begin
               AND ESA.SUB_AVAILABILITY_CD IN ('GRANTED','REQUIRE') 
               AND M.MON_LOC_ID = T.MON_LOC_ID 
               AND (R.CALENDAR_YEAR > T.CALENDAR_YEAR OR 
-                        (R.CALENDAR_YEAR = T.CALENDAR_YEAR AND R.QUARTER >= T.QUARTER))
+                  (R.CALENDAR_YEAR = T.CALENDAR_YEAR AND R.QUARTER >= T.QUARTER))
               AND TEST_EXTENSION_EXEMPTION_ID =vteeid;
                         
     OPEN EM_CSR;

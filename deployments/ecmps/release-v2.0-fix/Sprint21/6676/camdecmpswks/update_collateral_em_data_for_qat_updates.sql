@@ -52,10 +52,11 @@ begin
                         camdecmpswks.MONITOR_PLAN_LOCATION M,
                         camdecmpsmd.REPORTING_PERIOD R,
                         (SELECT MON_LOC_ID, TEST_SUM_ID,
-                        CASE WHEN TS.RPT_PERIOD_ID IS NULL THEN extract(year from TS.END_DATE) ELSE RP.CALENDAR_YEAR END AS CALENDAR_YEAR,
-                        CASE WHEN TS.RPT_PERIOD_ID IS NULL THEN FLOOR((extract(month from TS.END_DATE) + 2) / 3) ELSE RP.QUARTER END AS QUARTER
-                    FROM camdecmpswks.TEST_SUMMARY TS
-                        LEFT OUTER JOIN camdecmpsmd.REPORTING_PERIOD RP ON TS.RPT_PERIOD_ID = RP.RPT_PERIOD_ID) T
+                            CASE WHEN TS.RPT_PERIOD_ID IS NULL THEN extract(year from TS.END_DATE) ELSE RP.CALENDAR_YEAR END AS CALENDAR_YEAR,
+                            CASE WHEN TS.RPT_PERIOD_ID IS NULL THEN FLOOR((extract(month from TS.END_DATE) + 2) / 3) ELSE RP.QUARTER END AS QUARTER
+                            FROM camdecmpswks.TEST_SUMMARY TS
+                                LEFT OUTER JOIN camdecmpsmd.REPORTING_PERIOD RP ON TS.RPT_PERIOD_ID = RP.RPT_PERIOD_ID
+                        ) T
                     WHERE E.MON_PLAN_ID = M.MON_PLAN_ID AND
                         E.RPT_PERIOD_ID = R.RPT_PERIOD_ID AND
                         E.NEEDS_EVAL_FLG = 'N' AND

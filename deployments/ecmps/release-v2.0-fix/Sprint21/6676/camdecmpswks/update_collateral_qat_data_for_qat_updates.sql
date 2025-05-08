@@ -1,10 +1,9 @@
--- FUNCTION: camdecmpswks.update_collateral_qat_data_for_qat_updates(character varying, character varying)
+-- FUNCTION: camdecmpswks.update_collateral_qat_data_for_qat_updates(character varying)
 
--- DROP FUNCTION IF EXISTS camdecmpswks.update_collateral_qat_data_for_qat_updates(character varying, character varying);
+-- DROP FUNCTION IF EXISTS camdecmpswks.update_collateral_qat_data_for_qat_updates(character varying);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.update_collateral_qat_data_for_qat_updates(
-	vtestsumid character varying,
-	vchksessionid character varying)
+	vtestsumid character varying)
     RETURNS TABLE(result text, error_msg character varying) 
     LANGUAGE 'plpgsql'
     COST 100
@@ -28,8 +27,6 @@ begin
     result := 'T';
 	vContinue:='Y';
 
-	--TODO need to check if this meets all requirements on the ticket.
-    
     --Check no test_sum_id or can't submit
     SELECT count(*) into vCount
       FROM camdecmpswks.QA_SUPP_DATA
