@@ -94,14 +94,14 @@ FROM
             (
                 SELECT
                     ems.Mon_Plan_Id,
-                    min(ems.rpt_period_id) AS earlist_quarter
+                    max(ems.last_updated) AS last_updated
                 FROM
                     camdecmpswks.EMISSION_EVALUATION ems
                 GROUP BY
                     ems.Mon_Plan_Id
             ) sel
                 JOIN camdecmpswks.EMISSION_EVALUATION ems ON ems.Mon_Plan_Id = sel.Mon_Plan_Id
-                AND ems.rpt_period_id = sel.earlist_quarter
+                AND ems.last_updated = sel.last_updated
     ) sel
         JOIN camdecmpsmd.reporting_period prd ON prd.rpt_period_id = sel.rpt_period_id
         JOIN camdecmpswks.monitor_plan pln ON pln.mon_plan_id = sel.mon_plan_id
