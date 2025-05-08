@@ -650,7 +650,7 @@ DROP TABLE camdecmps.hrly_fuel_flow_2002_q2;
 DROP TABLE camdecmps.hrly_fuel_flow_2002_q3;
 DROP TABLE camdecmps.hrly_fuel_flow_2002_q4;
 
----------------------------
+------------hrly_gas_flow_meter---------------
 ALTER TABLE camdecmps.hrly_gas_flow_meter DETACH PARTITION camdecmps.hrly_gas_flow_meter_1993_q1;
 ALTER TABLE camdecmps.hrly_gas_flow_meter DETACH PARTITION camdecmps.hrly_gas_flow_meter_1993_q2;
 ALTER TABLE camdecmps.hrly_gas_flow_meter DETACH PARTITION camdecmps.hrly_gas_flow_meter_1993_q3;
@@ -828,7 +828,7 @@ DROP TABLE camdecmps.hrly_gas_flow_meter_2014_q2;
 DROP TABLE camdecmps.hrly_gas_flow_meter_2014_q3;
 DROP TABLE camdecmps.hrly_gas_flow_meter_2014_q4;
 
---------------------
+-----------hrly_op_data---------
 ALTER TABLE camdecmps.hrly_op_data DETACH PARTITION camdecmps.hrly_op_data_1993_q1;
 ALTER TABLE camdecmps.hrly_op_data DETACH PARTITION camdecmps.hrly_op_data_1993_q2;
 ALTER TABLE camdecmps.hrly_op_data DETACH PARTITION camdecmps.hrly_op_data_1993_q3;
@@ -910,7 +910,92 @@ DROP TABLE camdecmps.hrly_op_data_2002_q2;
 DROP TABLE camdecmps.hrly_op_data_2002_q3;
 DROP TABLE camdecmps.hrly_op_data_2002_q4;
 
---------------------
+
+----------hrly_param_fuel_flow---------
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1993_q1;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1993_q2;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1993_q3;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1993_q4;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1994_q1;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1994_q2;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1994_q3;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1994_q4;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1995_q1;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1995_q2;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1995_q3;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1995_q4;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1996_q1;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1996_q2;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1996_q3;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1996_q4;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1997_q1;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1997_q2;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1997_q3;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1997_q4;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1998_q1;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1998_q2;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1998_q3;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1998_q4;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1999_q1;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1999_q2;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1999_q3;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_1999_q4;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_2000_q1;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_2000_q2;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_2000_q3;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_2000_q4;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_2001_q1;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_2001_q2;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_2001_q3;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_2001_q4;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_2002_q1;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_2002_q2;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_2002_q3;
+ALTER TABLE camdecmps.hrly_param_fuel_flow DETACH PARTITION camdecmps.hrly_param_fuel_flow_2002_q4;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1993_q1;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1993_q2;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1993_q3;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1993_q4;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1994_q1;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1994_q2;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1994_q3;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1994_q4;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1995_q1;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1995_q2;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1995_q3;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1995_q4;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1996_q1;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1996_q2;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1996_q3;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1996_q4;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1997_q1;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1997_q2;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1997_q3;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1997_q4;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1998_q1;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1998_q2;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1998_q3;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1998_q4;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1999_q1;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1999_q2;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1999_q3;
+DROP TABLE camdecmps.hrly_param_fuel_flow_1999_q4;
+DROP TABLE camdecmps.hrly_param_fuel_flow_2000_q1;
+DROP TABLE camdecmps.hrly_param_fuel_flow_2000_q2;
+DROP TABLE camdecmps.hrly_param_fuel_flow_2000_q3;
+DROP TABLE camdecmps.hrly_param_fuel_flow_2000_q4;
+DROP TABLE camdecmps.hrly_param_fuel_flow_2001_q1;
+DROP TABLE camdecmps.hrly_param_fuel_flow_2001_q2;
+DROP TABLE camdecmps.hrly_param_fuel_flow_2001_q3;
+DROP TABLE camdecmps.hrly_param_fuel_flow_2001_q4;
+DROP TABLE camdecmps.hrly_param_fuel_flow_2002_q1;
+DROP TABLE camdecmps.hrly_param_fuel_flow_2002_q2;
+DROP TABLE camdecmps.hrly_param_fuel_flow_2002_q3;
+DROP TABLE camdecmps.hrly_param_fuel_flow_2002_q4;
+
+
+
+----------long_term_fuel_flow----------
 ALTER TABLE camdecmps.long_term_fuel_flow DETACH PARTITION camdecmps.long_term_fuel_flow_1993_q1;
 ALTER TABLE camdecmps.long_term_fuel_flow DETACH PARTITION camdecmps.long_term_fuel_flow_1993_q2;
 ALTER TABLE camdecmps.long_term_fuel_flow DETACH PARTITION camdecmps.long_term_fuel_flow_1993_q3;
@@ -992,7 +1077,7 @@ DROP TABLE camdecmps.long_term_fuel_flow_2002_q2;
 DROP TABLE camdecmps.long_term_fuel_flow_2002_q3;
 DROP TABLE camdecmps.long_term_fuel_flow_2002_q4;
 
------------------------
+----------mats_derived_hrly_value-------------
 ALTER TABLE camdecmps.mats_derived_hrly_value DETACH PARTITION camdecmps.mats_derived_hrly_value_1993_q1;
 ALTER TABLE camdecmps.mats_derived_hrly_value DETACH PARTITION camdecmps.mats_derived_hrly_value_1993_q2;
 ALTER TABLE camdecmps.mats_derived_hrly_value DETACH PARTITION camdecmps.mats_derived_hrly_value_1993_q3;
@@ -1170,7 +1255,7 @@ DROP TABLE camdecmps.mats_derived_hrly_value_2014_q2;
 DROP TABLE camdecmps.mats_derived_hrly_value_2014_q3;
 DROP TABLE camdecmps.mats_derived_hrly_value_2014_q4;
 
---------------------
+-----------mats_monitor_hrly_value---------
 ALTER TABLE camdecmps.mats_monitor_hrly_value DETACH PARTITION camdecmps.mats_monitor_hrly_value_1993_q1;
 ALTER TABLE camdecmps.mats_monitor_hrly_value DETACH PARTITION camdecmps.mats_monitor_hrly_value_1993_q2;
 ALTER TABLE camdecmps.mats_monitor_hrly_value DETACH PARTITION camdecmps.mats_monitor_hrly_value_1993_q3;
@@ -1348,7 +1433,7 @@ DROP TABLE camdecmps.mats_monitor_hrly_value_2014_q2;
 DROP TABLE camdecmps.mats_monitor_hrly_value_2014_q3;
 DROP TABLE camdecmps.mats_monitor_hrly_value_2014_q4;
 
----------------------
+----------monitor_hrly_value-----------
 ALTER TABLE camdecmps.monitor_hrly_value DETACH PARTITION camdecmps.monitor_hrly_value_1993_q1;
 ALTER TABLE camdecmps.monitor_hrly_value DETACH PARTITION camdecmps.monitor_hrly_value_1993_q2;
 ALTER TABLE camdecmps.monitor_hrly_value DETACH PARTITION camdecmps.monitor_hrly_value_1993_q3;
@@ -1430,7 +1515,7 @@ DROP TABLE camdecmps.monitor_hrly_value_2002_q2;
 DROP TABLE camdecmps.monitor_hrly_value_2002_q3;
 DROP TABLE camdecmps.monitor_hrly_value_2002_q4;
 
-----------------------
+-----------nsps4t_annual-----------
 ALTER TABLE camdecmps.nsps4t_annual DETACH PARTITION camdecmps.nsps4t_annual_1993_q1;
 ALTER TABLE camdecmps.nsps4t_annual DETACH PARTITION camdecmps.nsps4t_annual_1993_q2;
 ALTER TABLE camdecmps.nsps4t_annual DETACH PARTITION camdecmps.nsps4t_annual_1993_q3;
@@ -1630,7 +1715,7 @@ DROP TABLE camdecmps.nsps4t_annual_2017_q1;
 DROP TABLE camdecmps.nsps4t_annual_2017_q2;
 DROP TABLE camdecmps.nsps4t_annual_2017_q3;
 
-----------------------
+---------nsps4t_compliance_period-------------
 ALTER TABLE camdecmps.nsps4t_compliance_period DETACH PARTITION camdecmps.nsps4t_compliance_period_1993_q1;
 ALTER TABLE camdecmps.nsps4t_compliance_period DETACH PARTITION camdecmps.nsps4t_compliance_period_1993_q2;
 ALTER TABLE camdecmps.nsps4t_compliance_period DETACH PARTITION camdecmps.nsps4t_compliance_period_1993_q3;
@@ -1830,7 +1915,7 @@ DROP TABLE camdecmps.nsps4t_compliance_period_2017_q1;
 DROP TABLE camdecmps.nsps4t_compliance_period_2017_q2;
 DROP TABLE camdecmps.nsps4t_compliance_period_2017_q3;
 
----------------------
+-----------nsps4t_summary----------
 ALTER TABLE camdecmps.nsps4t_summary DETACH PARTITION camdecmps.nsps4t_summary_1993_q1;
 ALTER TABLE camdecmps.nsps4t_summary DETACH PARTITION camdecmps.nsps4t_summary_1993_q2;
 ALTER TABLE camdecmps.nsps4t_summary DETACH PARTITION camdecmps.nsps4t_summary_1993_q3;
@@ -2030,7 +2115,7 @@ DROP TABLE camdecmps.nsps4t_summary_2017_q1;
 DROP TABLE camdecmps.nsps4t_summary_2017_q2;
 DROP TABLE camdecmps.nsps4t_summary_2017_q3;
 
-------------------
+---------sampling_train---------
 ALTER TABLE camdecmps.sampling_train DETACH PARTITION camdecmps.sampling_train_1993_q1;
 ALTER TABLE camdecmps.sampling_train DETACH PARTITION camdecmps.sampling_train_1993_q2;
 ALTER TABLE camdecmps.sampling_train DETACH PARTITION camdecmps.sampling_train_1993_q3;
@@ -2208,7 +2293,7 @@ DROP TABLE camdecmps.sampling_train_2014_q2;
 DROP TABLE camdecmps.sampling_train_2014_q3;
 DROP TABLE camdecmps.sampling_train_2014_q4;
 
-------------------
+----------sorbent_trap--------
 ALTER TABLE camdecmps.sorbent_trap DETACH PARTITION camdecmps.sorbent_trap_1993_q1;
 ALTER TABLE camdecmps.sorbent_trap DETACH PARTITION camdecmps.sorbent_trap_1993_q2;
 ALTER TABLE camdecmps.sorbent_trap DETACH PARTITION camdecmps.sorbent_trap_1993_q3;
@@ -2386,7 +2471,7 @@ DROP TABLE camdecmps.sorbent_trap_2014_q2;
 DROP TABLE camdecmps.sorbent_trap_2014_q3;
 DROP TABLE camdecmps.sorbent_trap_2014_q4;
 
-------------------
+---------summary_value---------
 ALTER TABLE camdecmps.summary_value DETACH PARTITION camdecmps.summary_value_1993_q1;
 ALTER TABLE camdecmps.summary_value DETACH PARTITION camdecmps.summary_value_1993_q2;
 ALTER TABLE camdecmps.summary_value DETACH PARTITION camdecmps.summary_value_1993_q3;
@@ -2468,7 +2553,7 @@ DROP TABLE camdecmps.summary_value_2002_q2;
 DROP TABLE camdecmps.summary_value_2002_q3;
 DROP TABLE camdecmps.summary_value_2002_q4;
 
-------------------
+---------weekly_system_integrity---------
 ALTER TABLE camdecmps.weekly_system_integrity DETACH PARTITION camdecmps.weekly_system_integrity_1993_q1;
 ALTER TABLE camdecmps.weekly_system_integrity DETACH PARTITION camdecmps.weekly_system_integrity_1993_q2;
 ALTER TABLE camdecmps.weekly_system_integrity DETACH PARTITION camdecmps.weekly_system_integrity_1993_q3;
@@ -2646,7 +2731,7 @@ DROP TABLE camdecmps.weekly_system_integrity_2014_q2;
 DROP TABLE camdecmps.weekly_system_integrity_2014_q3;
 DROP TABLE camdecmps.weekly_system_integrity_2014_q4;
 
-------------------
+----------weekly_test_summary--------
 ALTER TABLE camdecmps.weekly_test_summary DETACH PARTITION camdecmps.weekly_test_summary_1993_q1;
 ALTER TABLE camdecmps.weekly_test_summary DETACH PARTITION camdecmps.weekly_test_summary_1993_q2;
 ALTER TABLE camdecmps.weekly_test_summary DETACH PARTITION camdecmps.weekly_test_summary_1993_q3;
@@ -2823,8 +2908,3 @@ DROP TABLE camdecmps.weekly_test_summary_2014_q1;
 DROP TABLE camdecmps.weekly_test_summary_2014_q2;
 DROP TABLE camdecmps.weekly_test_summary_2014_q3;
 DROP TABLE camdecmps.weekly_test_summary_2014_q4;
-
-
-
-
-
