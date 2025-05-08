@@ -23,8 +23,7 @@ SELECT
         WHERE
             mpl.mon_plan_id = sel.mon_plan_id
     ) AS configuration,
-    esc.eval_status_cd,
-    esc.eval_status_cd_description,
+    esc.eval_status_cd, 
     sac.submission_availability_cd,
     sac.sub_avail_cd_description AS submission_availability_cd_description,
     sel.userid :: varchar(160),
