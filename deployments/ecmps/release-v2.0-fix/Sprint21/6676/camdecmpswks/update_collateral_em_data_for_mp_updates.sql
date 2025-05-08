@@ -24,12 +24,21 @@ begin
 
     INSERT INTO tmpEmissionsStatus
         SELECT DISTINCT E.MON_PLAN_ID, E.RPT_PERIOD_ID
-        FROM camdecmpswks.EMISSION_EVALUATION E, camdecmpsaux.EM_SUBMISSION_ACCESS ESA
+        FROM camdecmpswks.EMISSION_EVALUATION E,
+            camdecmpsaux.EM_SUBMISSION_ACCESS ESA,
+            camdecmpswks.MONITOR_PLAN_LOCATION M,
+            (
+                SELECT  MON_LOC_ID, MP.MON_PLAN_ID
+                  FROM  camdecmpswks.MONITOR_PLAN MP
+                        INNER JOIN camdecmpswks.MONITOR_PLAN_LOCATION MPL ON MP.MON_PLAN_ID = MPL.MON_PLAN_ID
+            ) T
         WHERE E.NEEDS_EVAL_FLG = 'N'
+          AND E.MON_PLAN_ID = M.MON_PLAN_ID
           AND E.MON_PLAN_ID = ESA.MON_PLAN_ID
           AND E.RPT_PERIOD_ID = ESA.RPT_PERIOD_ID
-          AND ESA.SUB_AVAILABILITY_CD IN ('REQUIRE','GRANTED')
-          AND E.MON_PLAN_ID = vmon_plan_id;
+          AND ESA.SUB_AVAILABILITY_CD IN ('GRANTED','REQUIRE')
+          AND M.MON_LOC_ID = T.MON_LOC_ID
+          AND T.MON_PLAN_ID = vmon_plan_id;
 
            OPEN EM_CSR;
              LOOP
