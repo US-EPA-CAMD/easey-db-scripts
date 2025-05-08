@@ -1,6 +1,46 @@
 -- View: camdecmpswks.vw_em_eval_and_submit
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_em_eval_and_submit AS
+WITH ord AS (
+  SELECT 
+    evs.evaluation_set_id, 
+    evq.evaluation_id, 
+    evs.mon_plan_id, 
+    evq.test_sum_id, 
+    evq.qa_cert_event_id, 
+    evq.test_extension_exemption_id, 
+    evq.rpt_period_id, 
+    ROW_NUMBER() OVER (
+      ORDER BY 
+        evs.queued_time
+    ) AS queue_position 
+  FROM 
+    camdecmpsaux.EVALUATION_SET evs 
+    JOIN camdecmpsaux.EVALUATION_QUEUE evq ON evq.evaluation_set_id = evs.evaluation_set_id 
+    AND evq.status_cd = 'QUEUED' 
+    LEFT JOIN camdecmpswks.MONITOR_PLAN pln ON pln.mon_plan_id = evs.mon_plan_id 
+    LEFT JOIN camdecmpswks.TEST_SUMMARY tst ON tst.test_sum_id = evq.test_sum_id 
+    LEFT JOIN camdecmpswks.QA_CERT_EVENT qce ON qce.qa_cert_event_id = evq.qa_cert_event_id 
+    LEFT JOIN camdecmpswks.TEST_EXTENSION_EXEMPTION tee ON tee.test_extension_exemption_id = evq.test_extension_exemption_id 
+    LEFT JOIN camdecmpswks.EMISSION_EVALUATION ems ON ems.mon_plan_id = evs.mon_plan_id 
+    AND ems.rpt_period_id = evq.rpt_period_id 
+  WHERE 
+    (
+      evq.process_cd = 'MP' 
+      AND pln.eval_status_cd = 'INQ' 
+      OR evq.process_cd = 'QA' 
+      AND evq.test_sum_id IS NOT NULL 
+      AND tst.eval_status_cd = 'INQ' 
+      OR evq.process_cd = 'QA' 
+      AND evq.qa_cert_event_id IS NOT NULL 
+      AND qce.eval_status_cd = 'INQ' 
+      OR evq.process_cd = 'QA' 
+      AND evq.test_extension_exemption_id IS NOT NULL 
+      AND tee.eval_status_cd = 'INQ' 
+      OR evq.process_cd = 'EM' 
+      AND ems.eval_status_cd = 'INQ'
+    )
+)
 SELECT
     fac.oris_code,
     fac.facility_name,
@@ -23,6 +63,18 @@ SELECT
             mpl.mon_plan_id = sel.mon_plan_id
     ) AS configuration,
     esc.eval_status_cd,
+    CASE WHEN esc.eval_status_cd = 'INQ' THEN COALESCE(
+    'In Queue (#' || (
+      SELECT 
+        MIN(queue_position) 
+      FROM 
+        ord 
+      WHERE 
+        ord.rpt_period_id = sel.rpt_period_id
+        and ord.mon_plan_id  = sel.mon_plan_id 
+    ):: TEXT || ' in queue)', 
+    esc.eval_status_cd_description
+  ) ELSE esc.eval_status_cd_description END AS eval_status_cd_description, 
     sac.submission_availability_cd,
     sac.sub_avail_cd_description AS submission_availability_cd_description,
     sel.userid :: varchar(160),
