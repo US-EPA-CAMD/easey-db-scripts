@@ -1,8 +1,8 @@
--- FUNCTION: camdecmpswks.update_collateral_em_data_for_tee_updates(character varying)
+-- FUNCTION: camdecmpswks.update_collateral_em_data_for_tee_changes(character varying)
 
--- DROP FUNCTION IF EXISTS camdecmpswks.update_collateral_em_data_for_tee_updates(character varying);
+-- DROP FUNCTION IF EXISTS camdecmpswks.update_collateral_em_data_for_tee_changes(character varying);
 
-CREATE OR REPLACE FUNCTION camdecmpswks.update_collateral_em_data_for_tee_updates(
+CREATE OR REPLACE FUNCTION camdecmpswks.update_collateral_em_data_for_tee_changes(
 	vteeid character varying)
     RETURNS TABLE(result text, error_msg character varying) 
     LANGUAGE 'plpgsql'
@@ -64,7 +64,7 @@ begin
 exception when others then
     get stacked diagnostics error_msg := message_text;
     result = 'F';
-    error_msg :='From update_collateral_em_data_for_tee_updates' ||' '|| error_msg;
+    error_msg :='From update_collateral_em_data_for_tee_changes' ||' '|| error_msg;
 	
     return next; -- Add row to return table.
 END;

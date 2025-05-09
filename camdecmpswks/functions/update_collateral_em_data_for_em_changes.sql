@@ -1,8 +1,8 @@
--- FUNCTION: camdecmpswks.update_collateral_em_data_for_em_updates(character varying, integer)
+-- FUNCTION: camdecmpswks.update_collateral_em_data_for_em_changes(character varying, integer)
 
--- DROP FUNCTION IF EXISTS camdecmpswks.update_collateral_em_data_for_em_updates(character varying, integer);
+-- DROP FUNCTION IF EXISTS camdecmpswks.update_collateral_em_data_for_em_changes(character varying, integer);
 
-CREATE OR REPLACE FUNCTION camdecmpswks.update_collateral_em_data_for_em_updates(
+CREATE OR REPLACE FUNCTION camdecmpswks.update_collateral_em_data_for_em_changes(
 	vmon_plan_id character varying,
 	vperiod_id integer)
     RETURNS TABLE(result text, error_msg character varying) 
@@ -63,7 +63,7 @@ begin
 exception when others then
     get stacked diagnostics error_msg:= message_text;
     result = 'F';
-    error_msg :='From update_collateral_em_data_for_em_updates' ||' '|| error_msg;
+    error_msg :='From update_collateral_em_data_for_em_changes' ||' '|| error_msg;
 	 
     RETURN NEXT; -- Add row to return table.
 END;
