@@ -3,6 +3,13 @@ CREATE OR REPLACE VIEW camdecmpsaux.vw_submission_list
 select  fac.oris_code,
        fac.facility_name,
        fac.state,
+        CASE 
+        WHEN sbq.test_sum_id IS NOT NULL THEN 'Test'
+        WHEN sbq.qa_cert_event_id IS NOT NULL THEN 'Events'
+        WHEN sbq.test_extension_exemption_id IS NOT NULL THEN 'TEE'
+        ELSE NULL
+        END AS qa_data_type_cd,
+        ts.test_type_cd as test_type_cd,
        (
            select  string_agg( coalesce( unt.unitid, stp.stack_name ), ', ' order by stp.stack_name, unt.unitid )
              from  camdecmps.MONITOR_PLAN_LOCATION mpl
@@ -167,6 +174,7 @@ WHERE ADFOR.submission_id = sbq.submission_id),
        join camd.PLANT fac using ( fac_id )
        left join camdecmpsmd.REPORTING_PERIOD prd using( rpt_period_id )
        left join camdecmpsmd.SEVERITY_CODE sev using ( severity_cd )
+       left join camdecmps.test_summary ts on ts.test_sum_id = sbq.test_sum_id
 order
    by  oris_code,
        locations,
