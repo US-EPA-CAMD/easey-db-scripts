@@ -25,7 +25,7 @@ select  fac.oris_code,
        sbq.submission_id,
        sbq.queued_time,
        sev.severity_cd_description as severity_level,
-        (SELECT
+	           (SELECT
                 CASE 
                 WHEN sbq.submission_id = camdecmpsaux.get_last_submission(sbs.mon_plan_id,sbq.rpt_period_id,sbq.process_cd) 
                 THEN 'Yes'
@@ -34,56 +34,131 @@ select  fac.oris_code,
                )  as most_recent,
        sbq.status_cd as submission_status,
        sbq.severity_cd,
-       (SELECT 
-    	CASE 
-        	WHEN COALESCE(COUNT(cl.chk_session_id), 0) > 0 THEN 'Yes'
-        	ELSE 'No'
-    		END AS severity_critical_1
-		from camdecmps.monitor_plan mp 
-	    join camdecmpsaux.check_session cs using (mon_plan_id)
-	    jOIN camdecmpsaux.check_log cl on cs.chk_session_id  = cl.chk_session_id
-		WHERE cl.severity_cd = 'CRIT1'
-    	AND mp.submission_id = sbq.submission_id),
+        (SELECT 
+  CASE 
+    WHEN COALESCE(CRIT1.crit1_count, 0) > 0 THEN 'Yes'
+    ELSE 'No'
+  END AS severity_critical_1
+FROM (
+    SELECT 
+    q.submission_id,
+    COUNT(cl.chk_session_id) FILTER (WHERE cl.severity_cd = 'CRIT1') AS crit1_count
+  FROM 
+    camdecmpsaux.submission_set s
+  JOIN 
+    camdecmpsaux.submission_queue q USING (submission_set_id)
+  JOIN 
+    camd.plant f USING (fac_id)
+  JOIN 
+    camdecmps.monitor_plan mp ON f.fac_id = mp.fac_id
+  left JOIN  
+    camdecmpsaux.check_session cs ON mp.chk_session_id  = cs.chk_session_id 
+  left JOIN  
+    camdecmpsaux.check_log cl ON cs.chk_session_id = cl.chk_session_id
+  GROUP BY 
+    q.submission_id
+) CRIT1
+WHERE CRIT1.submission_id = sbq.submission_id),
     	(SELECT 
-    	CASE 
-        	WHEN COALESCE(COUNT(cl.chk_session_id), 0) > 0 THEN 'Yes'
-        	ELSE 'No'
-    		END AS severity_critical_2
-		from camdecmps.monitor_plan mp 
-	    join camdecmpsaux.check_session cs using (mon_plan_id)
-	    jOIN camdecmpsaux.check_log cl on cs.chk_session_id  = cl.chk_session_id
-		WHERE cl.severity_cd = 'CRIT2'
-    	AND mp.submission_id = sbq.submission_id),
-    	(SELECT 
-    	CASE 
-        	WHEN COALESCE(COUNT(cl.chk_session_id), 0) > 0 THEN 'Yes'
-        	ELSE 'No'
-    		END AS severity_non_critical
-		from camdecmps.monitor_plan mp 
-	    join camdecmpsaux.check_session cs using (mon_plan_id)
-	    jOIN camdecmpsaux.check_log cl on cs.chk_session_id  = cl.chk_session_id
-		WHERE cl.severity_cd = 'NONCRIT'
-    	AND mp.submission_id = sbq.submission_id),
-    	(SELECT 
-    	CASE 
-        	WHEN COALESCE(COUNT(cl.chk_session_id), 0) > 0 THEN 'Yes'
-        	ELSE 'No'
-    		END AS severity_informational
-		from camdecmps.monitor_plan mp 
-	    join camdecmpsaux.check_session cs using (mon_plan_id)
-	    jOIN camdecmpsaux.check_log cl on cs.chk_session_id  = cl.chk_session_id
-		WHERE cl.severity_cd = 'INFORM'
-    	AND mp.submission_id = sbq.submission_id),
-    	(SELECT 
-    	CASE 
-        	WHEN COALESCE(COUNT(cl.chk_session_id), 0) > 0 THEN 'Yes'
-        	ELSE 'No'
-    		END AS severity_administrative_override
-		from camdecmps.monitor_plan mp 
-	    join camdecmpsaux.check_session cs using (mon_plan_id)
-	    jOIN camdecmpsaux.check_log cl on cs.chk_session_id  = cl.chk_session_id
-		WHERE cl.severity_cd IN ('ADMNOVR','FORGIVE')
-    	AND mp.submission_id = sbq.submission_id),
+  CASE 
+    WHEN COALESCE(CRIT2.crit2_count, 0) > 0 THEN 'Yes'
+    ELSE 'No'
+  END AS severity_critical_2
+FROM (
+    SELECT 
+    q.submission_id,
+    COUNT(cl.chk_session_id) FILTER (WHERE cl.severity_cd = 'CRIT2') AS crit2_count
+  FROM 
+    camdecmpsaux.submission_set s
+  JOIN 
+    camdecmpsaux.submission_queue q USING (submission_set_id)
+  JOIN 
+    camd.plant f USING (fac_id)
+  JOIN 
+    camdecmps.monitor_plan mp ON f.fac_id = mp.fac_id
+  left JOIN  
+    camdecmpsaux.check_session cs ON mp.chk_session_id  = cs.chk_session_id 
+  left JOIN  
+    camdecmpsaux.check_log cl ON cs.chk_session_id = cl.chk_session_id
+  GROUP BY 
+    q.submission_id
+) CRIT2
+WHERE CRIT2.submission_id = sbq.submission_id),
+(SELECT 
+  CASE 
+    WHEN COALESCE(NONCRIT.NONCRIT_count, 0) > 0 THEN 'Yes'
+    ELSE 'No'
+  END AS severity_non_critical
+FROM (
+    SELECT 
+    q.submission_id,
+    COUNT(cl.chk_session_id) FILTER (WHERE cl.severity_cd = 'NONCRIT') AS NONCRIT_count
+  FROM 
+    camdecmpsaux.submission_set s
+  JOIN 
+    camdecmpsaux.submission_queue q USING (submission_set_id)
+  JOIN 
+    camd.plant f USING (fac_id)
+  JOIN 
+    camdecmps.monitor_plan mp ON f.fac_id = mp.fac_id
+  left JOIN  
+    camdecmpsaux.check_session cs ON mp.chk_session_id  = cs.chk_session_id 
+  left JOIN  
+    camdecmpsaux.check_log cl ON cs.chk_session_id = cl.chk_session_id
+  GROUP BY 
+    q.submission_id
+) NONCRIT
+WHERE NONCRIT.submission_id = sbq.submission_id),
+(SELECT 
+  CASE 
+    WHEN COALESCE(INFORM.INFORM_count, 0) > 0 THEN 'Yes'
+    ELSE 'No'
+  END AS severity_informational
+FROM (
+    SELECT 
+    q.submission_id,
+    COUNT(cl.chk_session_id) FILTER (WHERE cl.severity_cd = 'INFORM') AS INFORM_count
+  FROM 
+    camdecmpsaux.submission_set s
+  JOIN 
+    camdecmpsaux.submission_queue q USING (submission_set_id)
+  JOIN 
+    camd.plant f USING (fac_id)
+  JOIN 
+    camdecmps.monitor_plan mp ON f.fac_id = mp.fac_id
+  left JOIN 
+    camdecmpsaux.check_session cs ON mp.chk_session_id  = cs.chk_session_id 
+  left JOIN 
+    camdecmpsaux.check_log cl ON cs.chk_session_id = cl.chk_session_id
+  GROUP BY 
+    q.submission_id
+) INFORM
+WHERE INFORM.submission_id = sbq.submission_id),
+(SELECT 
+  CASE 
+    WHEN COALESCE(ADFOR.counts, 0) > 0 THEN 'Yes'
+    ELSE 'No'
+  END AS severity_administrative_override
+FROM (
+    SELECT 
+    q.submission_id,
+    COUNT(cl.chk_session_id) FILTER (WHERE cl.severity_cd IN ('ADMNOVR','FORGIVE')) AS counts
+  FROM 
+    camdecmpsaux.submission_set s
+  JOIN 
+    camdecmpsaux.submission_queue q USING (submission_set_id)
+  JOIN 
+    camd.plant f USING (fac_id)
+  JOIN 
+    camdecmps.monitor_plan mp ON f.fac_id = mp.fac_id
+  left JOIN  
+    camdecmpsaux.check_session cs ON mp.chk_session_id  = cs.chk_session_id 
+  left JOIN  
+    camdecmpsaux.check_log cl ON cs.chk_session_id = cl.chk_session_id
+  GROUP BY 
+    q.submission_id
+) ADFOR
+WHERE ADFOR.submission_id = sbq.submission_id),
        sbs.user_id as submitter,
        sbs.mon_plan_id,
        sbq.rpt_period_id
