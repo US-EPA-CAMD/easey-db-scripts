@@ -5,7 +5,7 @@ select  fac.oris_code,
        fac.state,
         CASE 
         WHEN sbq.test_sum_id IS NOT NULL THEN 'Test'
-        WHEN sbq.qa_cert_event_id IS NOT NULL THEN 'Events'
+        WHEN sbq.qa_cert_event_id IS NOT NULL THEN 'Event'
         WHEN sbq.test_extension_exemption_id IS NOT NULL THEN 'TEE'
         ELSE NULL
         END AS qa_data_type_cd,
