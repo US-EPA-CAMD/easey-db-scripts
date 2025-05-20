@@ -8,7 +8,7 @@ AS SELECT qce.qa_cert_event_id AS cert_event_id,
     qce.resub_explanation,
     COALESCE(up.oris_code, spp.oris_code) AS oris_code,
     COALESCE(u.unitid, sp.stack_name) AS unit_stack,
-    ms.system_identifier,
+    ms.system_identifier,amdecmps.vw_qa_test_extens_exempt_maintenance
     c.component_identifier,
     cec.qa_cert_event_cd AS cert_event_cd,
     cec.qa_cert_event_cd_description AS cert_event_description,
