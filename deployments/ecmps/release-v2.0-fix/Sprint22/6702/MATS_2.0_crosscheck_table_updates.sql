@@ -1,13 +1,3 @@
--- Remove the PMPMA and PMPMC rows. cross_chk_catalog_id 8
-DELETE FROM camdecmpsmd.cross_check_catalog_value
-WHERE cross_chk_catalog_id = 8
-AND value1 in ('PMPMA,PMPMC');
-
--- Remove the PMPMA and PMPMC rows. cross_chk_catalog_id 11
-DELETE FROM camdecmpsmd.cross_check_catalog_value
-WHERE cross_chk_catalog_id = 11
-AND value1 in ('PMPMA,PMPMC');
-
 -- Remove the MATS row. cross_chk_catalog_id 85
 DELETE FROM camdecmpsmd.cross_check_catalog_value
 WHERE value1 = 'MATS' AND cross_chk_catalog_id = 85;
