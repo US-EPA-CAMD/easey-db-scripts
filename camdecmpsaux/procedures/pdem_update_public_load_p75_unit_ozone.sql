@@ -94,7 +94,10 @@ begin
                 sum( dat.Sload) as Sload,
                 sum( dat.Tload) as Tload,
                 sum( dat.Heat_Input ) as Heat_Input,
-                sum( dat.So2_Mass ) as So2_Mass,
+                case
+                    when sum( dat.So2_Mass_Lbs ) is null then null
+                    else round( sum( dat.So2_Mass_Lbs ) / 2000, 3)
+                end as So2_Mass,
                 sum( dat.So2_Mass_Lbs ) as So2_Mass_Lbs,
                 case
                     when sum( dat.So2_Rate_Sum ) is null then null
@@ -111,7 +114,10 @@ begin
                 end as Co2_Rate,
                 sum( dat.Co2_Rate_Sum ) as Co2_Rate_Sum,
                 sum( dat.Co2_Rate_Count ) as Co2_Rate_Count,
-                sum( dat.Nox_Mass ) as Nox_Mass,
+                case
+                    when sum( dat.Nox_Mass_Lbs ) is null then null
+                    else round( sum( dat.Nox_Mass_Lbs ) / 2000, 3)
+                end as Nox_Mass,
                 sum( dat.Nox_Mass_Lbs ) as Nox_Mass_Lbs,
                 case
                     when sum( dat.Nox_Rate_Sum ) is null then null
