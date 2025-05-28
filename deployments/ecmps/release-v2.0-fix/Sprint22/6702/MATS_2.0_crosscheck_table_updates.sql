@@ -4,22 +4,22 @@ WHERE value1 = 'MATS' AND cross_chk_catalog_id = 85;
 
 -- Update value2 for HCL in cross_check_catalog_value to include MATSSUP 
 UPDATE camdecmpsmd.cross_check_catalog_value
-SET value2 = 'HCLRE,HCLRH,SO2RE,SO2RH,HCL,MATSSUP'
+SET value2 = 'HCLRE,HCLRH,SO2RE,SO2RH,MATSSUP'
 WHERE value1 = 'HCL' AND cross_chk_catalog_id = 85;
 
 -- Update value2 for HF in cross_check_catalog_value to include MATSSUP 
 UPDATE camdecmpsmd.cross_check_catalog_value
-SET value2 = 'HFRE,HFRH,HF,MATSSUP'
+SET value2 = 'HFRE,HFRH,MATSSUP'
 WHERE value1 = 'HF' AND cross_chk_catalog_id = 85;
 
 -- Update value2 for HG in cross_check_catalog_value to include MATSSUP 
 UPDATE camdecmpsmd.cross_check_catalog_value
-SET value2 = 'HGRE,HGRH,HG,MATSSUP'
+SET value2 = 'HGRE,HGRH,MATSSUP'
 WHERE value1 = 'HG' AND cross_chk_catalog_id = 85;
 
 -- Update value2 for HG in cross_check_catalog_value to include MATSSUP 
 UPDATE camdecmpsmd.cross_check_catalog_value
-SET value2 = 'PMRE,PMRH,PM,MATSSUP'
+SET value2 = 'PMRE,PMRH,MATSSUP'
 WHERE value1 = 'PM' AND cross_chk_catalog_id = 85;
 
 -- Remove the PMCO, PMPMA, and PMPMC rows
