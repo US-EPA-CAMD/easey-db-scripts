@@ -62,13 +62,11 @@ select  fac.oris_code,
        sbq.submission_id,
        sbq.queued_time,
        sev.severity_cd_description as severity_level,
-        (SELECT
-                case 
-                when sbq.submission_id = camdecmpsaux.get_last_submission(sbs.mon_plan_id,sbq.rpt_period_id,sbq.process_cd,sbq.test_sum_id,sbq.qa_cert_event_id,sbq.test_extension_exemption_id) 
-                then 'Yes'
-                else  'No'
-                END   
-        )  as most_recent,
+       case
+          when sbq.submission_id = camdecmpsaux.get_last_submission( sbs.mon_plan_id, sbq.rpt_period_id, sbq.process_cd,sbq.test_sum_id, sbq.qa_cert_event_id, sbq.test_extension_exemption_id )
+          then 'Yes'
+          else 'No'
+       end most_recent,
        sbq.status_cd as submission_status,
        sbq.severity_cd,
     (SELECT 
@@ -206,6 +204,7 @@ select  fac.oris_code,
         left join camdecmpsmd.REPORTING_PERIOD prd using( rpt_period_id )
         left join camdecmpsmd.SEVERITY_CODE sev using ( severity_cd )
         left join camdecmps.test_summary ts on ts.test_sum_id = sbq.test_sum_id
+        where  sbq.process_cd IN ('EM', 'QA', 'MP')
  order
     by  oris_code,
         locations,

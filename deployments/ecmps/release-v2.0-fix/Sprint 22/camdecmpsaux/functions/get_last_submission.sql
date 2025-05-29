@@ -21,19 +21,17 @@ BEGIN
              where  (
                         ( ( v_process_cd = 'MP' ) and ( lss.mon_plan_id = v_mon_plan_id  ))
                         or
-                        ( ( v_process_cd= 'EM' ) and ( lss.mon_plan_id = v_mon_plan_id  ) and ( lsq.rpt_period_id = v_rpt_period_id ) )
+                        ( ( v_process_cd = 'EM' ) and ( lss.mon_plan_id = v_mon_plan_id  ) and ( lsq.rpt_period_id = v_rpt_period_id ) )
                         or
                         ( ( v_process_cd = 'QA' ) and ( ( lsq.test_sum_id = v_test_sum_id ) ) )
                         or
-                        ( ( v_process_cd= 'QA' ) and ( ( lsq.qa_cert_event_id = v_qa_cert_event_id) ) )
+                        ( ( v_process_cd = 'QA' ) and ( ( lsq.qa_cert_event_id = v_qa_cert_event_id) ) )
                         or
                         ( ( v_process_cd = 'QA' ) and ( ( lsq.test_extension_exemption_id = v_test_extension_exemption_id ) ) )
-                        or
-                        (( v_process_cd NOT IN ('EM', 'QA', 'MP') ) and ( lss.mon_plan_id = v_mon_plan_id ))
-                    
                     )
                and  lsq.status_cd = 'COMPLETE'
                and  lss.mon_plan_Id = v_mon_plan_id
+               and  lsq.process_cd = v_process_cd
              order
                 by  lsq.completed_time desc,
                     lsq.submission_id desc
