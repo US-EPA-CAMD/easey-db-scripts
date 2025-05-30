@@ -1,3 +1,15 @@
+--Remove rows with Method Parameter Code equal to "PMPMA" or "PMPMC"
+DELETE FROM camdecmpsmd.cross_check_catalog_value
+WHERE cross_chk_catalog_id = 8
+  AND value1 in ('PMPMA','PMPMC');
+
+--Remove row for Parameter Code: "PMPMA", Category Code: "METHOD"
+--Remove row for Parameter Code "PMPMC", Category Code: "METHOD"
+DELETE FROM camdecmpsmd.cross_check_catalog_value
+WHERE cross_chk_catalog_id = 11
+  AND value1 in ('PMPMA','PMPMC')
+  AND value2 = 'METHOD';
+
 -- Remove the MATS row. cross_chk_catalog_id 85
 DELETE FROM camdecmpsmd.cross_check_catalog_value
 WHERE value1 = 'MATS' AND cross_chk_catalog_id = 85;
