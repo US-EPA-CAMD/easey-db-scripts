@@ -1166,8 +1166,8 @@ BEGIN
     VALUES
         (datatableId, 1, 'mats_avg_group_cd', 'matsAveragingGroupCode', 'MATS Averaging Group Code'),
         (datatableId, 2, 'mats_avg_group_description', 'matsAveragingGroupDescription', 'MATS Averaging Group Description');
-------------------------------------------------------------------------------------------------------------------------
-    datasetCode := 'reporting-frequency-codes';
+--------------------------------------------------------------------------------------------------------------------------
+  datasetCode := 'reporting-frequency-codes';
     INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
     VALUES (datasetCode, groupCode, 'Report Frequency Codes & Descriptions');
 
@@ -1210,7 +1210,5 @@ BEGIN
     INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
     VALUES
         (datatableId, 1, 'file_type_cd', 'fileTypeCode', 'File Type Code'),
-        (datatableId, 2, 'file_type_cd_description', 'fileTypeCodeDescription', 'File Type Code Description');
-
-
+        (datatableId, 2, 'file_type_cd_description', 'fileTypeCodeDescription', 'File Type Code Description');		
 END $$;
