@@ -7,11 +7,11 @@ BEGIN
   --------------------------------------------------------------------
   datasetCode := 'reporting-frequency-codes';
     INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
-    VALUES (datasetCode, groupCode, 'Report Frequency Codes & Descriptions');
+    VALUES (datasetCode, groupCode, 'Reporting Frequency Codes & Descriptions');
 
     /***** DATATABLE 1 *****/
     INSERT INTO camdaux.datatable(dataset_cd, table_order, display_name, sql_statement)
-    VALUES (datasetCode, 1, 'Report Frequency Codes & Descriptions', 'SELECT * FROM camdecmpsmd.report_freq_code')
+    VALUES (datasetCode, 1, 'Reporting Frequency Codes & Descriptions', 'SELECT * FROM camdecmpsmd.report_freq_code')
     RETURNING datatable_id INTO datatableId;
 
     /***** COLUMNS *****/
