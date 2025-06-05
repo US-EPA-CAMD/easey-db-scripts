@@ -133,7 +133,7 @@ BEGIN
 exception when others then
     get stacked diagnostics error_msg := message_text;
     result = 'F'; 
-	error_msg :='From delete_calculated_em_data_from_workspace '||' '|| message_text;
+	error_msg :='From delete_calculated_em_data_from_workspace '||' '|| error_msg;
 	
     RETURN NEXT; -- Add row to return table.
 END;
