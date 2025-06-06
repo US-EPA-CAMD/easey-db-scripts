@@ -14,19 +14,16 @@ CREATE OR REPLACE FUNCTION camdecmpswks.delete_calculated_em_data_from_workspace
 AS $BODY$
 
 declare 
+
+	vMON_LOC_ID_LIST VARCHAR ARRAY;
     
 BEGIN
     error_msg := '';
     result := 'T';	 
-
-	create temp table tmpMonInfo(MON_PLAN_ID character varying,
-	          MON_LOC_ID character varying, RPT_PERIOD_ID int);
 	
-         ----- Get the MON_LOC_IDs for this MP
-	insert into tmpMonInfo
-		SELECT distinct vmonplan_id, MON_LOC_ID, vrptperiod_id
-	    	FROM camdecmpswks.MONITOR_PLAN_LOCATION 
-			 where MON_PLAN_ID = vmonplan_id;
+	vMON_LOC_ID_LIST := array(select distinct MON_LOC_ID
+		FROM camdecmpswks.MONITOR_PLAN_LOCATION 
+		 where MON_PLAN_ID = vmonplan_id);
 			 
 	-- Delete the check session for this MP/RPT Period		
 	DELETE FROM camdecmpswks.CHECK_SESSION 
@@ -55,12 +52,12 @@ BEGIN
 		 (select distinct DAILY_TEST_SUM_ID
 			 from camdecmpswks.DAILY_TEST_SUMMARY 
 			   where RPT_PERIOD_ID= vrptperiod_id
-				 and MON_LOC_ID in (select distinct MON_LOC_ID from tmpMonInfo));
+				 and MON_LOC_ID  = ANY(vMON_LOC_ID_LIST));
 				 
     UPDATE camdecmpswks.DAILY_TEST_SUMMARY 
 		SET CALC_TEST_RESULT_CD = null
 		where RPT_PERIOD_ID= vrptperiod_id
-		  and MON_LOC_ID in (select distinct MON_LOC_ID from tmpMonInfo);
+		  and MON_LOC_ID  = ANY(vMON_LOC_ID_LIST);
 				
 	UPDATE camdecmpswks.DERIVED_HRLY_VALUE 
 		SET CALC_UNADJUSTED_HRLY_VALUE = null,
@@ -69,7 +66,7 @@ BEGIN
 			CALC_RATA_STATUS = null,
 			CALC_APPE_STATUS = null
 		where RPT_PERIOD_ID= vrptperiod_id
-		  and MON_LOC_ID in (select distinct MON_LOC_ID from tmpMonInfo);
+		  and MON_LOC_ID  = ANY(vMON_LOC_ID_LIST);
 
     UPDATE camdecmpswks.MONITOR_HRLY_VALUE 	
 		SET CALC_ADJUSTED_HRLY_VALUE = null,
@@ -77,38 +74,38 @@ BEGIN
 			CALC_LINE_STATUS = null,
 			CALC_RATA_STATUS = null,
 			CALC_DAYCAL_STATUS = null
-		where MON_LOC_ID in (select distinct MON_LOC_ID from tmpMonInfo)
+		where MON_LOC_ID  = ANY(vMON_LOC_ID_LIST)
 		  and RPT_PERIOD_ID= vrptperiod_id;
 		  
 		UPDATE camdecmpswks.SUMMARY_VALUE
 		 SET CALC_CURRENT_RPT_PERIOD_TOTAL = null,
 			 CALC_YEAR_TOTAL = null,		
 			 CALC_OS_TOTAL = null
-		where MON_LOC_ID in (select distinct MON_LOC_ID from tmpMonInfo)
+		where MON_LOC_ID  = ANY(vMON_LOC_ID_LIST)
 		  and RPT_PERIOD_ID= vrptperiod_id;
 		
 		UPDATE camdecmpswks.HRLY_FUEL_FLOW
 		SET CALC_VOLUMETRIC_FLOW_RATE = null,
 			CALC_MASS_FLOW_RATE = null,
 			CALC_APPD_STATUS = null
-		  where MON_LOC_ID in (select distinct MON_LOC_ID from tmpMonInfo)
+		  where MON_LOC_ID  = ANY(vMON_LOC_ID_LIST)
 		  and RPT_PERIOD_ID= vrptperiod_id;
 		
 		UPDATE camdecmpswks.HRLY_PARAM_FUEL_FLOW
 		SET CALC_PARAM_VAL_FUEL = null,
 			CALC_APPE_STATUS = null
-		 where MON_LOC_ID in (select distinct MON_LOC_ID from tmpMonInfo)
+		 where MON_LOC_ID  = ANY(vMON_LOC_ID_LIST)
 		  and RPT_PERIOD_ID= vrptperiod_id;
 		  
 		UPDATE camdecmpswks.LONG_TERM_FUEL_FLOW
 		SET CALC_TOTAL_HEAT_INPUT = null
-		   where MON_LOC_ID in (select distinct MON_LOC_ID from tmpMonInfo)
+		   where MON_LOC_ID  = ANY(vMON_LOC_ID_LIST)
 		  and RPT_PERIOD_ID= vrptperiod_id;
 		
 		-- RGGI field
 		UPDATE camdecmpswks.DAILY_EMISSION
 		SET CALC_TOTAL_DAILY_EMISSION = null
-		  where MON_LOC_ID in (select distinct MON_LOC_ID from tmpMonInfo)
+		  where MON_LOC_ID  = ANY(vMON_LOC_ID_LIST)
 		  and RPT_PERIOD_ID= vrptperiod_id;
 		
 		-- RGGI table/field
@@ -116,7 +113,7 @@ BEGIN
 		SET CALC_FUEL_CARBON_BURNED = null
 		where DAILY_EMISSION_id in
 		 (select distinct DAILY_EMISSION_id from camdecmpswks.DAILY_EMISSION
-		   where MON_LOC_ID in (select distinct MON_LOC_ID from tmpMonInfo)
+		   where MON_LOC_ID  = ANY(vMON_LOC_ID_LIST)
 		    and RPT_PERIOD_ID= vrptperiod_id);
 		  
 	-- Delete rows for DM_EMISSIONS and its child tables
