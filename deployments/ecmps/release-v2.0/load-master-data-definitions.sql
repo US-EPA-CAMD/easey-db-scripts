@@ -1179,8 +1179,8 @@ BEGIN
     /***** COLUMNS *****/
     INSERT INTO camdaux.datacolumn(datatable_id, column_order, name, alias, display_name)
     VALUES
-        (datatableId, 1, 'report_freq_cd', 'reportFrequencyCode', 'Report Frequency Code'),
-        (datatableId, 2, 'report_freq_cd_description', 'reportFrequencyCodeDescription', 'Report Frequency Code Descriptions');
+        (datatableId, 1, 'report_freq_cd', 'reportFrequencyCode', 'Reporting Frequency Code'),
+        (datatableId, 2, 'report_freq_cd_description', 'reportFrequencyCodeDescription', 'Reporting Frequency Code Descriptions');
 ---------------------------------------------------------------------------------------------------------------------------
     datasetCode := 'operating-type-codes';
     INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name)
