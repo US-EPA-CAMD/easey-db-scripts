@@ -1,6 +1,3 @@
--- View: camdecmpswks.vw_em_eval_and_submit
-DROP VIEW IF EXISTS camdecmpswks.vw_em_eval_and_submit;
-
 CREATE OR REPLACE VIEW camdecmpswks.vw_em_eval_and_submit AS
 SELECT
     fac.oris_code,
