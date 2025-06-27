@@ -68,8 +68,5 @@ INSERT INTO camdecmpsmd.parameter_code (parameter_cd, parameter_cd_description) 
 INSERT INTO camdecmpsmd.parameter_code (parameter_cd, parameter_cd_description) VALUES ('FLOW', 'Stack Flow (scfh)');
 INSERT INTO camdecmpsmd.parameter_code (parameter_cd, parameter_cd_description) VALUES ('SULFUR', 'Sulfur Content');
 INSERT INTO camdecmpsmd.parameter_code (parameter_cd, parameter_cd_description) VALUES ('PMC', 'PM Concentration (mg/acm)');
-INSERT INTO camdecmpsmd.parameter_code (parameter_cd, parameter_cd_description) VALUES ('PMCO', 'PM Concentration Parameter Output (mA, or other unit of measure)');
 INSERT INTO camdecmpsmd.parameter_code (parameter_cd, parameter_cd_description) VALUES ('PMRE', 'Gross Output-Based PM Emission Rate (lb/MWh)');
 INSERT INTO camdecmpsmd.parameter_code (parameter_cd, parameter_cd_description) VALUES ('PMRH', 'Heat Input-Based PM Emission Rate (lb/mmBtu)');
-INSERT INTO camdecmpsmd.parameter_code (parameter_cd, parameter_cd_description) VALUES ('PMPMA', 'PM Parametric Emissions (mA)');
-INSERT INTO camdecmpsmd.parameter_code (parameter_cd, parameter_cd_description) VALUES ('PMPMC', 'PM Parametric Emissions (mg/acm)');

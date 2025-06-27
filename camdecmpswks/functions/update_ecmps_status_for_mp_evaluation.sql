@@ -60,6 +60,7 @@ begin
 		
         UPDATE camdecmpswks.QA_CERT_EVENT
 		 SET NEEDS_EVAL_FLG = 'Y', 
+             EVAL_STATUS_CD = 'EVAL',
 		 	 CHK_SESSION_ID = null, 
 	 	 	 UPDATE_DATE = current_timestamp
 		 where NEEDS_EVAL_FLG = 'N' 
@@ -78,6 +79,7 @@ begin
 							
         UPDATE camdecmpswks.TEST_EXTENSION_EXEMPTION
 		 SET NEEDS_EVAL_FLG = 'Y', 
+             EVAL_STATUS_CD = 'EVAL',
 		     CHK_SESSION_ID = null, 
 			 UPDATE_DATE = current_timestamp
 		  where NEEDS_EVAL_FLG = 'N' 

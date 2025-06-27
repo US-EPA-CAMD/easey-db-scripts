@@ -1,0 +1,52 @@
+-- Add new columns to the MATS_DATA_SUBMISSION table
+ALTER TABLE camdecmpsaux.MATS_DATA_SUBMISSION
+ADD COLUMN QUEUED_TIME timestamp without time zone,
+ADD COLUMN STARTED_TIME timestamp without time zone,
+ADD COLUMN COMPLETED_TIME timestamp without time zone,
+ADD COLUMN NOTE text,
+ADD COLUMN NOTE_TIME timestamp without time zone,
+ADD COLUMN ACTIVITY_ID text;
+
+-- Add comments for the new columns
+COMMENT ON COLUMN camdecmpsaux.MATS_DATA_SUBMISSION.QUEUED_TIME IS 'Timestamp for when the submission was queued';
+COMMENT ON COLUMN camdecmpsaux.MATS_DATA_SUBMISSION.STARTED_TIME IS 'Timestamp for when the submission started';
+COMMENT ON COLUMN camdecmpsaux.MATS_DATA_SUBMISSION.COMPLETED_TIME IS 'Timestamp for when the submission completed';
+COMMENT ON COLUMN camdecmpsaux.MATS_DATA_SUBMISSION.NOTE IS 'Note indicating why the submission failed';
+COMMENT ON COLUMN camdecmpsaux.MATS_DATA_SUBMISSION.NOTE_TIME IS 'Timestamp for when the submission failed';
+COMMENT ON COLUMN camdecmpsaux.MATS_DATA_SUBMISSION.ACTIVITY_ID IS 'Central Data Exchange (CDX) id for the submission';
+
+-- Drop the existing MATS_STATUS_CD constraint if it exists
+ALTER TABLE camdecmpsaux.MATS_DATA_SUBMISSION 
+DROP CONSTRAINT IF EXISTS FK_MATS_DATA_SUBMISSION_MATS_STATUS_CODE;
+
+-- Drop the MATS_STATUS_CD column to recreate it as a generated column
+ALTER TABLE camdecmpsaux.MATS_DATA_SUBMISSION
+DROP COLUMN MATS_STATUS_CD;
+
+-- Recreate MATS_STATUS_CD as a generated column with description
+ALTER TABLE camdecmpsaux.MATS_DATA_SUBMISSION
+ADD COLUMN MATS_STATUS_CD text GENERATED ALWAYS AS (
+    CASE 
+        WHEN QUEUED_TIME IS NULL AND STARTED_TIME IS NULL AND COMPLETED_TIME IS NULL AND NOTE_TIME IS NULL THEN 'NEW'
+        WHEN QUEUED_TIME IS NOT NULL AND STARTED_TIME IS NULL AND COMPLETED_TIME IS NULL AND NOTE_TIME IS NULL THEN 'QUEUED'
+        WHEN QUEUED_TIME IS NOT NULL AND STARTED_TIME IS NOT NULL AND COMPLETED_TIME IS NULL AND NOTE_TIME IS NULL THEN 'WIP'
+        WHEN QUEUED_TIME IS NOT NULL AND STARTED_TIME IS NOT NULL AND COMPLETED_TIME IS NOT NULL AND NOTE_TIME IS NULL THEN 'COMPLETE'
+        WHEN QUEUED_TIME IS NOT NULL AND STARTED_TIME IS NOT NULL AND COMPLETED_TIME IS NULL AND NOTE_TIME IS NOT NULL THEN 'ERROR'
+        ELSE NULL
+    END
+) STORED;
+
+-- Create a generated column for MATS_STATUS_CD with description
+COMMENT ON COLUMN camdecmpsaux.MATS_DATA_SUBMISSION.MATS_STATUS_CD IS 
+    'Foreign key to the MATS Status Code table.
+    Indicates the current status of the submission. Generated column with logic: 
+    NEW when all timestamps null, 
+    QUEUED when only QUEUED_TIME set, 
+    WIP when QUEUED_TIME and STARTED_TIME set, 
+    COMPLETE when all timestamps except NOTE_TIME set, 
+    ERROR when NOTE_TIME set with other timestamps';
+
+-- Re-add the foreign key constraint for MATS_STATUS_CD
+ALTER TABLE camdecmpsaux.MATS_DATA_SUBMISSION
+ADD CONSTRAINT FK_MATS_DATA_SUBMISSION_MATS_STATUS_CODE 
+FOREIGN KEY (MATS_STATUS_CD) REFERENCES camdecmpsmd.MATS_STATUS_CODE(MATS_STATUS_CD);
