@@ -68,7 +68,22 @@ BEGIN
         JOIN camdecmps.MONITOR_PLAN pln USING (mon_plan_id)
         JOIN camdecmpsmd.REPORTING_PERIOD prd USING (rpt_period_id)
         JOIN camd.PLANT fac ON fac.fac_id = pln.fac_id
-        LEFT JOIN camdecmpsaux.PDEM_REPORT rpt ON rpt.submission_id = sbq.submission_id
+        -- LEFT JOIN camdecmpsaux.PDEM_REPORT rpt ON rpt.submission_id = sbq.submission_id
+        LEFT JOIN LATERAL (
+            SELECT pr.submission_id, pr.status_cd
+            FROM camdecmpsaux.PDEM_REPORT pr
+            WHERE
+                pr.submission_id = sbq.submission_id OR
+                (
+                    pr.mon_plan_id = sbs.mon_plan_id AND
+                    pr.rpt_period_id = sbq.rpt_period_id AND
+                    pr.queued_time > sbq.started_time
+                )
+            ORDER BY
+                CASE WHEN pr.submission_id = sbq.submission_id THEN 1 ELSE 2 END,
+                pr.queued_time ASC
+            LIMIT 1
+        ) rpt ON true
         WHERE sbq.completed_time >= COALESCE(v_submission_from, sbq.completed_time)
           AND sbq.completed_time <= COALESCE(v_submission_to, sbq.completed_time)
           AND sbq.process_cd = 'EM'
@@ -128,7 +143,22 @@ BEGIN
         JOIN camdecmpsaux.SUBMISSION_SET sbs USING (mon_plan_id)
         JOIN camdecmpsaux.SUBMISSION_QUEUE sbq USING (submission_set_id)
         JOIN camdecmpsmd.REPORTING_PERIOD prd USING (rpt_period_id)
-        LEFT JOIN camdecmpsaux.PDEM_REPORT rpt ON rpt.submission_id = sbq.submission_id
+        -- LEFT JOIN camdecmpsaux.PDEM_REPORT rpt ON rpt.submission_id = sbq.submission_id
+        LEFT JOIN LATERAL (
+            SELECT pr.submission_id, pr.status_cd
+            FROM camdecmpsaux.PDEM_REPORT pr
+            WHERE
+                pr.submission_id = sbq.submission_id OR
+                (
+                    pr.mon_plan_id = sbs.mon_plan_id AND
+                    pr.rpt_period_id = sbq.rpt_period_id AND
+                    pr.queued_time > sbq.started_time
+                )
+            ORDER BY
+                CASE WHEN pr.submission_id = sbq.submission_id THEN 1 ELSE 2 END,
+                pr.queued_time ASC
+            LIMIT 1
+        ) rpt ON true
         WHERE
             ((fac.oris_code = v_oris_code) OR (fac.facility_name = v_facility_name))
           AND sbq.completed_time >= COALESCE(v_submission_from, sbq.completed_time)
