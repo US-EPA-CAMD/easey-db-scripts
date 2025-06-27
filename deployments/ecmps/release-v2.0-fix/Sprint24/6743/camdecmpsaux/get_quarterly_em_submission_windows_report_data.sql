@@ -1,5 +1,3 @@
-DROP FUNCTION IF EXISTS camdecmpsaux.get_quarterly_em_submission_windows_report_data(numeric, character varying, character varying, numeric, numeric) CASCADE;
-
 CREATE OR REPLACE FUNCTION camdecmpsaux.get_quarterly_em_submission_windows_report_data(
     V_FAC_ID            numeric,
     V_FACILITY_NAME     character varying,
