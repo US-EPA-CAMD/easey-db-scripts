@@ -3,24 +3,24 @@ CREATE EXTENSION IF NOT EXISTS pg_cron;
 DO $$
 DECLARE
 	vJobId 		 bigint;
-	vrptperiodid numeric;
+	vrptperiodid 	 numeric;
 	vDatabase 	 text := 'REPLACE WITH DB NAME';
 	v_year_qt	 varchar(300);	 
- 	i            int;
+ 	i            	 int;
 	
 BEGIN
  --report period for current date 
     select (rpt_period_id -1)
-       into v_rptperiodid
+       into vrptperiodid
       from CAMDECMPSMD.REPORTING_PERIOD 
        where CURRENT_DATE between begin_date and end_date;
 
-    -- rpt_period_id=127 is for 2024 Q3, we need for quaters after it  
-   for i in 128 to v_rptperiodid     LOOP
+    -- rpt_period_id=127 is for 2024 Q3  
+   for i in 127 to vrptperiodid     LOOP
        select  calendar_year||' Q'||quarter 
 	     into v_year_qt
          from CAMDECMPSMD.REPORTING_PERIOD
-           where rpt_period_id=v_rptperiodid;
+           where rpt_period_id=vrptperiodid;
 
         SELECT cron.schedule(
 		'Open '||v_year_qt||' Emissions Window',
@@ -40,7 +40,7 @@ BEGIN
 )
 SELECT
 	mon_plan_id,
-	' || v_rptperiodid || ',
+	' || vrptperiodid || ',
 	CURRENT_DATE,
 	CURRENT_DATE + interval ''30 days'',
 	''RQRESUB'',
@@ -55,7 +55,7 @@ WHERE end_rpt_period_id IS NULL
 AND mon_plan_id NOT IN (
 	SELECT DISTINCT mon_plan_id
 	FROM camdecmpsaux.em_submission_access
-	WHERE rpt_period_id = ' || v_rptperiodid || '
+	WHERE rpt_period_id = ' || vrptperiodid || '
 	AND em_status_cd IN (''PENDING'',''APPRVD'')
 	AND sub_availability_cd IN (''GRANTED'',''REQUIRE'')
 );'
