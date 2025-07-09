@@ -20,7 +20,7 @@ CREATE OR REPLACE FUNCTION camdecmpswks.check_session_init(
 	v_eval_end_date date,
 	v_userid text,
 	v_batch_id text,
-	v_evaluation_id bigint DEFAULT NULL)
+	v_evaluation_id bigint)
     RETURNS TABLE(chk_session character varying, result text, error_msg character varying) 
     LANGUAGE 'plpgsql'
     COST 100
