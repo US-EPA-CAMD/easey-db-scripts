@@ -53,8 +53,8 @@ select  fac.oris_code,
                 		then qce.qa_cert_event_cd || ' (' || camdecmps.format_date_hour(qce.qa_cert_event_date, qce.qa_cert_event_hour, 0::numeric) || ') C: (' || cmp.component_type_cd || '/' || cmp.component_identifier || ')'
                 	end                      
                     from  camdecmps.QA_CERT_EVENT qce
-                            full outer join camdecmps.MONITOR_SYSTEM sys using ( mon_sys_id )
-                            full outer join camdecmps.COMPONENT cmp using ( component_id )
+                            left join camdecmps.MONITOR_SYSTEM sys using ( mon_sys_id )
+                            left join camdecmps.COMPONENT cmp using ( component_id )
                      where  qce.qa_cert_event_id = sbq.qa_cert_event_id
                 UNION ALL
                      SELECT 'Data Unavailable'
@@ -67,14 +67,17 @@ select  fac.oris_code,
                 (
                  select 
                 	case 
+                    	when tee.extens_exempt_cd is not null and prd.period_abbreviation is not null and sys.sys_type_cd  is not null and sys.system_identifier is not null and cmp.component_type_cd  is not null and cmp.component_identifier is not null
+	                	then tee.extens_exempt_cd || ' (' || prd.period_abbreviation || ') S: (' || sys.sys_type_cd || '/' || sys.system_identifier || ') C: (' || cmp.component_type_cd || '/' || cmp.component_identifier ||  ')'
 	                	when tee.extens_exempt_cd is not null and prd.period_abbreviation is not null and sys.sys_type_cd  is not null and sys.system_identifier is not null 
 	                	then tee.extens_exempt_cd || ' (' || prd.period_abbreviation || ') S: (' || sys.sys_type_cd || '/' || sys.system_identifier || ')'
-	                	when tee.extens_exempt_cd is not null and prd.period_abbreviation is not null
-	                	then tee.extens_exempt_cd || ' (' || prd.period_abbreviation || ')'
+                        when tee.extens_exempt_cd is not null and prd.period_abbreviation is not null and cmp.component_type_cd  is not null and cmp.component_identifier is not null
+	                	then tee.extens_exempt_cd || ' (' || prd.period_abbreviation || ') C: (' || cmp.component_type_cd || '/' || cmp.component_identifier ||  ')'
                 	end
                       from  camdecmps.TEST_EXTENSION_EXEMPTION tee
-                            full outer join camdecmpsmd.REPORTING_PERIOD prd using ( rpt_period_id )
-                            full outer join camdecmps.MONITOR_SYSTEM sys using ( mon_sys_id )
+                            join camdecmpsmd.REPORTING_PERIOD prd using ( rpt_period_id )
+                            left join camdecmps.MONITOR_SYSTEM sys using ( mon_sys_id )
+                            left join camdecmps.COMPONENT cmp using ( component_id )
                      where  tee.test_extension_exemption_id = sbq.test_extension_exemption_id
                 UNION ALL
                      SELECT 'Data Unavailable'
