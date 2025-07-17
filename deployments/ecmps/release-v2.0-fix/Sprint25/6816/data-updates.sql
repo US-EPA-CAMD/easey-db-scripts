@@ -20,3 +20,12 @@ update  camdecmpsmd.CROSS_CHECK_CATALOG_VALUE
    and  value3 = '';
 
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (9337, 28, 'NOCX', 'MAXD', null);
+
+delete 
+  from  camdecmpsmd.CROSS_CHECK_CATALOG_VALUE
+ where  cross_chk_catalog_id in ( 192, 194, 195 );
+
+
+delete 
+  from  camdecmpsmd.CROSS_CHECK_CATALOG
+ where  cross_chk_catalog_id in ( 192, 194, 195 );
