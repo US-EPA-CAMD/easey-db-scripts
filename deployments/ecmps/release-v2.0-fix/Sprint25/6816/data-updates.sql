@@ -11,3 +11,12 @@ delete
    and  dat.value1 = 'HFRE'
    and  dat.value2 = 'O2B'
    and  dat.value3 = '19-5';
+
+update  camdecmpsmd.CROSS_CHECK_CATALOG_VALUE
+   set  value3 = null
+ where  cross_chk_catalog_id = 27
+   and  value1 = 'CO2R'
+   and  value2 = 'LM'
+   and  value3 = '';
+
+INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (9337, 28, 'NOCX', 'MAXD', null);
