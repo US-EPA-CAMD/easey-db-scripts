@@ -1,0 +1,1 @@
+INSERT INTO camdecmpsmd.check_catalog_process (check_catalog_id, process_cd) VALUES (3677, 'EMIMPRT');
