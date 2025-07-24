@@ -13,10 +13,18 @@ BEGIN
     )
     SELECT
       mp.mon_plan_id, mp.fac_id, mp.config_type_cd, mp.last_updated,  
-	  (case when mp.submission_availability_cd = 'UPDATED' then 'N' else 'Y' end ) as updated_status_flg, 
-     'Y' as needs_eval_flg,  mp.chk_session_id, mp.userid, mp.add_date, mp.update_date, mp.submission_id, 
+	  'N' as updated_status_flg, 
+      CASE 
+        WHEN mp.submission_availability_cd IN ('REQUIRE', 'GRANTED') THEN 'Y'
+        ELSE 'N'
+      END as needs_eval_flg,
+      mp.chk_session_id, mp.userid, mp.add_date, mp.update_date, mp.submission_id, 
 	  mp.submission_availability_cd,  mp.begin_rpt_period_id, mp.end_rpt_period_id, mp.last_evaluated_date, 
-	  coalesce(sc.eval_status_cd, 'PASS')
+	  CASE 
+        WHEN mp.submission_availability_cd IN ('REQUIRE', 'GRANTED') THEN 'EVAL'
+        WHEN mp.chk_session_id IS NULL OR cs.chk_session_id IS NULL THEN 'PASS'
+        ELSE coalesce(sc.eval_status_cd, 'PASS')
+      END as eval_status_cd
     FROM camdecmps.monitor_plan mp
     LEFT JOIN camdecmpsaux.check_session cs on cs.chk_session_id = mp.chk_session_id
     LEFT JOIN camdecmpsmd.severity_code sc on sc.severity_cd = cs.severity_cd;

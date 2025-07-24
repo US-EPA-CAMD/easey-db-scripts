@@ -50,7 +50,18 @@ BEGIN
       mon_loc_id, mon_sys_id, component_id, qa_cert_event_cd, qa_cert_event_date, qa_cert_event_hour, required_test_cd, conditional_data_begin_date, conditional_data_begin_hour, last_test_completed_date, last_test_completed_hour, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, qa_cert_event_id, submission_id, submission_availability_cd, eval_status_cd
     )
 		SELECT
-			mon_loc_id, mon_sys_id, component_id, qa_cert_event_cd, qa_cert_event_date, qa_cert_event_hour, required_test_cd, conditional_data_begin_date, conditional_data_begin_hour, last_test_completed_date, last_test_completed_hour, last_updated, updated_status_flg, needs_eval_flg, qce.chk_session_id, qce.userid, qce.add_date, qce.update_date, qce.qa_cert_event_id, qce.submission_id, qce.submission_availability_cd, coalesce(sc.eval_status_cd, 'PASS')
+			qce.mon_loc_id, qce.mon_sys_id, qce.component_id, qce.qa_cert_event_cd, qce.qa_cert_event_date, qce.qa_cert_event_hour, qce.required_test_cd, qce.conditional_data_begin_date, qce.conditional_data_begin_hour, qce.last_test_completed_date, qce.last_test_completed_hour, qce.last_updated,
+			'N' as updated_status_flg,
+			CASE 
+				WHEN qce.submission_availability_cd IN ('REQUIRE', 'GRANTED') THEN 'Y'
+				ELSE 'N'
+			END as needs_eval_flg,
+			qce.chk_session_id, qce.userid, qce.add_date, qce.update_date, qce.qa_cert_event_id, qce.submission_id, qce.submission_availability_cd,
+			CASE 
+				WHEN qce.submission_availability_cd IN ('REQUIRE', 'GRANTED') THEN 'EVAL'
+				WHEN qce.chk_session_id IS NULL OR cs.chk_session_id IS NULL THEN 'PASS'
+				ELSE coalesce(sc.eval_status_cd, 'PASS')
+			END as eval_status_cd
 		FROM camdecmps.qa_cert_event qce
 		LEFT JOIN camdecmpsaux.check_session cs ON cs.chk_session_id = qce.chk_session_id 
 		LEFT JOIN camdecmpsmd.severity_code sc ON sc.severity_cd = cs.severity_cd
@@ -139,7 +150,18 @@ BEGIN
 		  test_extension_exemption_id, mon_loc_id, rpt_period_id, mon_sys_id, component_id, fuel_cd, extens_exempt_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, hours_used, userid, add_date, update_date, span_scale_cd, submission_id, submission_availability_cd, eval_status_cd
 		)
 		SELECT
-			tee.test_extension_exemption_id, tee.mon_loc_id, tee.rpt_period_id, tee.mon_sys_id, tee.component_id, tee.fuel_cd, tee.extens_exempt_cd, tee.last_updated, tee.updated_status_flg, tee.needs_eval_flg, tee.chk_session_id, tee.hours_used, tee.userid, tee.add_date, tee.update_date, tee.span_scale_cd, tee.submission_id, tee.submission_availability_cd, coalesce(sc.eval_status_cd, 'PASS')
+			tee.test_extension_exemption_id, tee.mon_loc_id, tee.rpt_period_id, tee.mon_sys_id, tee.component_id, tee.fuel_cd, tee.extens_exempt_cd, tee.last_updated,
+			'N' as updated_status_flg,
+			CASE 
+				WHEN tee.submission_availability_cd IN ('REQUIRE', 'GRANTED') THEN 'Y'
+				ELSE 'N'
+			END as needs_eval_flg,
+			tee.chk_session_id, tee.hours_used, tee.userid, tee.add_date, tee.update_date, tee.span_scale_cd, tee.submission_id, tee.submission_availability_cd,
+			CASE 
+				WHEN tee.submission_availability_cd IN ('REQUIRE', 'GRANTED') THEN 'EVAL'
+				WHEN tee.chk_session_id IS NULL OR cs.chk_session_id IS NULL THEN 'PASS'
+				ELSE coalesce(sc.eval_status_cd, 'PASS')
+			END as eval_status_cd
 		FROM camdecmps.test_extension_exemption tee
 		LEFT JOIN camdecmpsaux.check_session cs ON cs.chk_session_id = tee.chk_session_id
 		LEFT JOIN camdecmpsmd.severity_code sc ON sc.severity_cd = cs.severity_cd
