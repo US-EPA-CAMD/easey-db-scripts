@@ -7,6 +7,8 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.delete_workspace(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+	TRUNCATE TABLE camdecmpswks.check_session CASCADE;
+	
 	CALL camdecmpswks.delete_emissions_workspace();
 	CALL camdecmpswks.delete_qa_workspace();
 	CALL camdecmpswks.delete_monitor_plan_workspace();
