@@ -1,7 +1,7 @@
--- View: camdecmpswks.vw_em_eval_and_submit
-DROP VIEW IF EXISTS camdecmpswks.vw_em_eval_and_submit;
+-- View: camdecmpswks.vw_em_eval_and_submit_earliest
+DROP VIEW IF EXISTS camdecmpswks.vw_em_eval_and_submit_earliest;
 
-CREATE OR REPLACE VIEW camdecmpswks.vw_em_eval_and_submit AS
+CREATE OR REPLACE VIEW camdecmpswks.vw_em_eval_and_submit_earliest AS
 SELECT
     fac.oris_code,
     fac.facility_name,

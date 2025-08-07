@@ -1,0 +1,96 @@
+-- View: camdecmpswks.vw_em_eval_and_submit_all
+CREATE OR REPLACE VIEW camdecmpswks.vw_em_eval_and_submit_all AS
+SELECT
+    fac.oris_code,
+    fac.facility_name,
+    sel.mon_plan_id,
+    (
+        SELECT
+            string_agg(
+                coalesce(unt.unitid, stp.stack_name), ', ' :: text
+                ORDER BY unt.unitid, stp.stack_name
+            )
+        FROM
+            camdecmpswks.monitor_plan_location mpl
+                JOIN camdecmpswks.monitor_location loc ON loc.mon_loc_id = mpl.mon_loc_id
+                LEFT JOIN camd.unit unt ON unt.unit_id = loc.unit_id
+                LEFT JOIN camdecmpswks.stack_pipe stp ON stp.stack_pipe_id = loc.stack_pipe_id
+        WHERE
+            mpl.mon_plan_id = sel.mon_plan_id
+    ) AS configuration,
+    esc.eval_status_cd,
+    esc.eval_status_cd_description,
+    sac.submission_availability_cd,
+    sac.sub_avail_cd_description AS submission_availability_cd_description,
+    sel.userid :: varchar(160),
+    sel.last_updated AS update_date,
+    (
+        SELECT
+            esa.sub_availability_cd
+        FROM
+            (
+                SELECT
+                    sub.mon_plan_id,
+                    sub.rpt_period_id,
+                    max(sub.access_begin_date) AS last_access_begin_date
+                FROM
+                    camdecmpsaux.em_submission_access sub
+                WHERE
+                    sub.mon_plan_id = sel.mon_plan_id
+                  AND sub.rpt_period_id = sel.rpt_period_id
+                GROUP BY
+                    sub.mon_plan_id,
+                    sub.rpt_period_id
+            ) lst1
+                JOIN camdecmpsaux.EM_SUBMISSION_ACCESS esa ON esa.mon_plan_id = lst1.mon_plan_id
+                AND esa.rpt_period_id = lst1.rpt_period_id
+                AND esa.access_begin_date = lst1.last_access_begin_date
+    ) AS window_status,
+    esa.access_end_date as window_expired_date,
+    prd.period_abbreviation
+FROM
+    (
+        SELECT
+            ems.eval_status_cd,
+            ems.mon_plan_id,
+            ems.rpt_period_id,
+            ems.last_updated,
+            (
+                SELECT
+                    max(smv.Userid)
+                FROM
+                    camdecmpswks.MONITOR_PLAN_LOCATION mpl
+                    JOIN camdecmpswks.SUMMARY_VALUE smv ON smv.Mon_Loc_Id = mpl.Mon_Loc_Id
+                        AND smv.rpt_period_id = ems.rpt_period_id
+                        AND mpl.Mon_Plan_Id = ems.Mon_Plan_Id
+            ) AS Userid,
+            (
+                SELECT
+                    esa_1.em_sub_access_id
+                FROM
+                    camdecmpsaux.em_submission_access esa_1
+                WHERE esa_1.mon_plan_id = ems.mon_plan_id
+                    AND esa_1.rpt_period_id = ems.rpt_period_id
+                    AND esa_1.access_begin_date =
+                        (
+                            SELECT CASE
+                                -- If there's a non-'DELETE' record, pick its latest access_begin_date
+                                WHEN MAX(CASE WHEN esa2.sub_availability_cd != 'DELETE' THEN esa2.access_begin_date END) IS NOT NULL
+                                    THEN MAX(CASE WHEN esa2.sub_availability_cd != 'DELETE' THEN esa2.access_begin_date END)
+                                    -- Otherwise, pick the latest record (even if it is 'DELETE')
+                                    ELSE MAX(esa2.access_begin_date)
+                                END
+                            FROM camdecmpsaux.em_submission_access esa2
+                            WHERE esa2.mon_plan_id = ems.mon_plan_id
+                                AND esa2.rpt_period_id = ems.rpt_period_id
+                        )
+            ) AS last_em_sub_access_id
+        FROM
+            camdecmpswks.emission_evaluation ems
+    ) sel
+    JOIN camdecmpsmd.reporting_period prd ON prd.rpt_period_id = sel.rpt_period_id
+    JOIN camdecmpswks.monitor_plan pln ON pln.mon_plan_id = sel.mon_plan_id
+    JOIN camd.plant fac ON fac.fac_id = pln.fac_id
+    JOIN camdecmpsmd.eval_status_code esc ON esc.eval_status_cd :: text = sel.eval_status_cd :: text
+    LEFT JOIN camdecmpsaux.em_submission_access esa ON esa.em_sub_access_id = sel.last_em_sub_access_id
+    LEFT JOIN camdecmpsmd.submission_availability_code sac ON sac.submission_availability_cd = esa.sub_availability_cd;
