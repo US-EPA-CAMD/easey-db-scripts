@@ -1,6 +1,4 @@
 -- PROCEDURE: camdecmpsaux.add_window_email(numeric, character varying, character varying, numeric, bigint, text, text)
-DROP PROCEDURE IF EXISTS camdecmpsaux.add_window_email(numeric, character varying, character varying, numeric, bigint, text, text);
-
 CREATE OR REPLACE PROCEDURE camdecmpsaux.add_window_email(
 	v_event_action_id numeric,
 	v_email_type character varying,
