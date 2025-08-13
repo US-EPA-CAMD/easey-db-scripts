@@ -41,7 +41,7 @@ BEGIN
     SELECT 
         NULL::numeric       AS em_sub_access_id,
         vmp.mon_plan_id::text		AS mon_plan_id,
-        em.rpt_period_id    AS rpt_period_id,
+        rp.rpt_period_id    AS rpt_period_id,
         NULL::date          AS access_begin_date,
         NULL::date          AS access_end_date,
         NULL::text          AS em_sub_type_cd,
@@ -67,46 +67,36 @@ BEGIN
         NULL::text          AS severity_cd_description,
         vmp.locations       AS locations
     FROM camdecmps.vw_monitor_plan vmp
-    JOIN (
-        SELECT 
-            mp.mon_plan_id,
-            rp.rpt_period_id,
-            CONCAT(rp.calendar_year, ' Q', rp.quarter) AS period,
-            camdecmpsaux.get_em_submission_status(mp.mon_plan_id, rp.calendar_year, rp.quarter) AS em_sub_status
-        FROM camdecmps.monitor_plan mp
-        JOIN camdecmpsmd.reporting_period rp
-            ON mp.begin_rpt_period_id <= rp.rpt_period_id
-           AND (mp.end_rpt_period_id IS NULL OR mp.end_rpt_period_id >= rp.rpt_period_id)
-        JOIN camd.plant p 
-            ON mp.fac_id = p.fac_id
-        LEFT JOIN (
-            SELECT DISTINCT e.mon_plan_id
-            FROM camdecmps.emission_evaluation e
-            WHERE e.submission_id IS NULL
-        ) ee 
-            ON mp.mon_plan_id = ee.mon_plan_id
-        WHERE rp.end_date + INTERVAL '30 days' < CURRENT_DATE
-          AND (rp.rpt_period_id >= p.first_ecmps_rpt_period_id OR ee.mon_plan_id IS NULL)
-           AND p.oris_code = COALESCE(v_orisCode, p.oris_code)
-           AND rp.calendar_year = COALESCE(v_calendarYear, rp.calendar_year)
-           AND rp.quarter = COALESCE(v_quarter, rp.quarter)
-    ) em 
-        ON vmp.mon_plan_id = em.mon_plan_id
+    JOIN camdecmpsmd.reporting_period rp
+        ON vmp.begin_rpt_period_id <= rp.rpt_period_id
+       AND (vmp.end_rpt_period_id IS NULL OR vmp.end_rpt_period_id >= rp.rpt_period_id)
+       AND rp.calendar_year = COALESCE(v_calendarYear, rp.calendar_year)
+       AND rp.quarter = COALESCE(v_quarter, rp.quarter) 
+       AND rp.end_date < CURRENT_DATE
     LEFT JOIN camdecmps.monitor_plan_reporting_freq rf
-        ON rf.mon_plan_id = em.mon_plan_id
+        ON vmp.mon_plan_id = rf.mon_plan_id
        AND (
-         (rf.begin_rpt_period_id <= em.rpt_period_id AND rf.end_rpt_period_id IS NULL) 
-         OR (rf.begin_rpt_period_id <= em.rpt_period_id AND rf.end_rpt_period_id >= em.rpt_period_id)
+         (rf.begin_rpt_period_id <= rp.rpt_period_id AND rf.end_rpt_period_id IS NULL) 
+         OR (rf.begin_rpt_period_id <= rp.rpt_period_id AND rf.end_rpt_period_id >= rp.rpt_period_id)
        )
-    JOIN camdecmpsmd.reporting_period rp 
-        ON rp.rpt_period_id = em.rpt_period_id
-    WHERE em.em_sub_status IS NOT NULL
-      AND NOT EXISTS (
-          SELECT 1
-          FROM camdecmpsaux.em_submission_access esa
-          WHERE esa.mon_plan_id = em.mon_plan_id
-            AND esa.rpt_period_id = em.rpt_period_id
-            AND esa.sub_availability_cd <> 'DELETE'
-      );
+    WHERE rp.rpt_period_id >= coalesce(vmp.first_ecmps_rpt_period_id, (select first_ecmps_rp.rpt_period_id from camdecmpsmd.reporting_period first_ecmps_rp where first_ecmps_rp.calendar_year = 2009 and first_ecmps_rp.quarter = 1))
+      AND vmp.oris_code = COALESCE(v_orisCode, vmp.oris_code)
+	  AND EXISTS (
+		  SELECT 1
+		    FROM camdecmps.vw_em_reporting_status ers
+	       WHERE ers.mon_plan_id = vmp.mon_plan_id
+		     AND ers.rpt_period_id = rp.rpt_period_id
+	         AND ers.calendar_year = COALESCE(2025, rp.calendar_year)
+	         AND ers.quarter = COALESCE(2, rp.quarter)
+		     and ers.em_reporting_status is not null	
+		)
+	  AND NOT EXISTS (
+		   SELECT 1
+		     FROM camdecmpsaux.em_submission_access esa
+		    WHERE esa.mon_plan_id = vmp.mon_plan_id
+		      AND esa.rpt_period_id = rp.rpt_period_id
+		      AND esa.sub_availability_cd <> 'DELETE'
+		)
+    ORDER BY VMP.ORIS_CODE ASC, rp.period_abbreviation DESC, VMP.LOCATIONS ASC;
 END;
 $$;

@@ -1,7 +1,5 @@
 -- PROCEDURE: camdecmpsaux.init_and_close_em_submission_access(text, numeric, text, text)
 
-DROP PROCEDURE IF EXISTS camdecmpsaux.init_and_close_em_submission_access(text, numeric, text, text);
-
 CREATE OR REPLACE PROCEDURE camdecmpsaux.init_and_close_em_submission_access(
 	v_sysdate text,
 	v_fac_id numeric,
@@ -83,7 +81,7 @@ BEGIN
 		SELECT swjo.MON_PLAN_ID, 
 			   swjo.EM_SUB_STATUS, 
 			   swjo.em_sub_access_id,
-			   swjo.create_pending
+			   swjo.new_location_count
 			FROM camdecmpsaux.vw_submission_window_job_open swjo
 			WHERE swjo.rpt_period_id = V_PERIOD_ID 
 	  		AND COALESCE(V_FAC_ID, swjo.FAC_ID) = swjo.FAC_ID
@@ -94,7 +92,10 @@ BEGIN
 				-- no window exists; create one
 				
 				-- MPs with locations that have not previously submitted data get pending windows that must be manually approved
-				V_PENDING := swjo.create_pending;
+				V_PENDING := 'F';
+				IF SUB_ACCESS_REC.new_location_count > 0 THEN 
+					V_PENDING := 'T';
+				END IF;
 	
 				INSERT INTO CAMDECMPSAUX.EM_SUBMISSION_ACCESS
 					(
