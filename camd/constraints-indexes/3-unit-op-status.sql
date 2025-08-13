@@ -13,3 +13,7 @@ CREATE INDEX IF NOT EXISTS idx_unit_op_status_op_status_cd
 CREATE INDEX IF NOT EXISTS idx_unit_op_status_unit_id
     ON camd.unit_op_status USING btree
     (unit_id ASC NULLS LAST);
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_unit_op_status_all 
+	ON camd.unit_op_status USING btree 
+	(unit_id ASC NULLS LAST, op_status_cd ASC NULLS LAST, begin_date ASC NULLS LAST, end_date ASC NULLS LAST);
