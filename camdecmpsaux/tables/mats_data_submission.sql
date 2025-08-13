@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.mats_data_submission (
     mon_plan_id varchar(45) COLLATE pg_catalog."default" NOT NULL,
     mats_status_cd varchar(8) COLLATE pg_catalog."default" NOT NULL DEFAULT 'NEW',
     user_id varchar(45) COLLATE pg_catalog."default" NOT NULL,
+    user_email varchar(100) COLLATE pg_catalog."default" NOT NULL,
     add_time timestamp without time zone NOT NULL,
     update_time timestamp without time zone
 );
@@ -75,4 +76,7 @@ COMMENT ON COLUMN camdecmpsaux.mats_data_submission.user_id IS 'User ID of the p
 COMMENT ON COLUMN camdecmpsaux.mats_data_submission.add_time IS 'Date and time the record was added to the system.';
 
 COMMENT ON COLUMN camdecmpsaux.mats_data_submission.update_time IS 'Date and time the record was last updated in the system.';
+
+COMMENT ON COLUMN camdecmpsaux.MATS_DATA_SUBMISSION.user_email IS 'Email address of the user who submitted the data';
+
 
