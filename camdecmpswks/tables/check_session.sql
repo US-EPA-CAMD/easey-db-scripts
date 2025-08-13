@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.check_session
     di character varying(50) COLLATE pg_catalog."default",
     last_updated timestamp without time zone,
     userid character varying(160) COLLATE pg_catalog."default",
-    batch_id character varying(45) COLLATE pg_catalog."default"
+    batch_id character varying(45) COLLATE pg_catalog."default",
+    evaluation_id bigint
 );
 
 COMMENT ON TABLE camdecmpswks.check_session
@@ -63,3 +64,6 @@ COMMENT ON COLUMN camdecmpswks.check_session.process_cd
 
 COMMENT ON COLUMN camdecmpswks.check_session.userid
     IS ' User account or source of data that added or updated record.';
+
+COMMENT ON COLUMN camdecmpswks.check_session.evaluation_id
+    IS ' Unique identifier of an evaluation queue record.';

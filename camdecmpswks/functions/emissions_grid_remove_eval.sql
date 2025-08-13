@@ -169,7 +169,7 @@ BEGIN
 exception when others then
     get stacked diagnostics error_msg := message_text;
     result = 'F';  
-	error_msg :='From emissions_grid_remove_eval '||' '|| message_text;
+	error_msg :='From emissions_grid_remove_eval '||' '|| error_msg;
 	
     RETURN NEXT; -- Add row to return table.
 END;
