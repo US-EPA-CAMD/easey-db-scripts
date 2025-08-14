@@ -10,3 +10,7 @@ CREATE INDEX IF NOT EXISTS idx_program_phase_phase
 CREATE INDEX IF NOT EXISTS idx_program_phase_prg_id
     ON camd.program_phase USING btree
     (prg_id ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_program_phase_pmcd 
+	ON camd.program_phase USING btree 
+	(phase_monitor_cert_deadline ASC NULLS LAST);

@@ -39,3 +39,19 @@ CREATE INDEX IF NOT EXISTS idx_unit_program_unit_id_prg_cd
 CREATE INDEX IF NOT EXISTS idx_unit_program_prg_cd_class_cd
     ON camd.unit_program USING btree
     (prg_cd COLLATE pg_catalog."default" ASC NULLS LAST, class_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+	
+CREATE INDEX IF NOT EXISTS idx_unit_program_umcbd 
+	ON camd.unit_program USING btree 
+	(unit_monitor_cert_begin_date ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_unit_program_end_date 
+	ON camd.unit_program USING btree 
+	(end_date ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_unit_program_class_cd 
+	ON camd.unit_program USING btree 
+	(class_cd ASC NULLS LAST);	
+
+CREATE INDEX IF NOT EXISTS idx_unit_program_prg_cd 
+	ON camd.unit_program USING btree 
+	(prg_cd ASC NULLS LAST);

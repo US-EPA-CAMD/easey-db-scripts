@@ -1,15 +1,8 @@
--- PROCEDURE: camdecmps.initialize_em_submission_access(numeric, numeric, text, text)
-
-DROP PROCEDURE IF EXISTS camdecmps.initialize_em_submission_access(numeric, numeric, text, text);
-
-CREATE OR REPLACE PROCEDURE camdecmps.initialize_em_submission_access(
-	v_calendar_year numeric,
-	v_quarter numeric,
-	INOUT v_result text,
-	INOUT v_error_msg text)
-LANGUAGE 'plpgsql'
-AS $BODY$
+DO $$
 DECLARE
+	v_calendar_year NUMERIC := 2025; --change to desired year
+	v_quarter NUMERIC := 3; -- change to desired quarter
+
 	V_PERIOD_ID CAMDECMPSMD.REPORTING_PERIOD.RPT_PERIOD_ID%TYPE;
 	V_BEGINDATE CAMDECMPSAUX.EM_SUBMISSION_ACCESS.ACCESS_BEGIN_DATE%TYPE;
 	V_ENDDATE   CAMDECMPSAUX.EM_SUBMISSION_ACCESS.ACCESS_END_DATE%TYPE;
@@ -43,51 +36,26 @@ BEGIN
 		ACCESS_BEGIN_DATE,
 		ACCESS_END_DATE,
 		EM_SUB_TYPE_CD,
-		RESUB_EXPLANATION,
 		USERID,
 		ADD_DATE,
-		UPDATE_DATE,
 		EM_STATUS_CD,
-		DATA_LOADED_FLG,
 		SUB_AVAILABILITY_CD
 	)
-	SELECT X.MON_PLAN_ID,
-		V_PERIOD_ID,
+	SELECT sjwo.MON_PLAN_ID,
+		sjwo.RPT_PERIOD_ID,
 		V_BEGINDATE,
 		V_ENDDATE,
 		'INITIAL',
-		NULL,
 		'ECMPSOPN',
 		CURRENT_TIMESTAMP,
-		NULL,
-		'APPRVD',
-		NULL,
-		X.SUB_AVAILABILITY_CD
-	FROM (
-		SELECT EM.*
-		FROM CAMDECMPS.MONITOR_PLAN MP, (
-			SELECT MON_PLAN_ID,
-				SUBSTR(
-					camdecmps.get_submission_status(
-						MON_PLAN_ID, 
-						V_CALENDAR_YEAR, 
-						V_QUARTER
-					),
-					1,
-					7
-				) AS SUB_AVAILABILITY_CD
-			FROM CAMDECMPS.MONITOR_PLAN
-		) AS EM
-		WHERE EM.MON_PLAN_ID = MP.MON_PLAN_ID AND 
-			EM.SUB_AVAILABILITY_CD IS NOT NULL
-	) AS X;
-
-	V_RESULT := 'T';
+		CASE WHEN sjwo.create_pending = 'T' THEN 'PENDING' ELSE 'APPRVD' END,
+		CASE WHEN sjwo.create_pending = 'T' THEN NULL ELSE 'REQUIRE' END
+	FROM camdecmpsaux.vw_submission_window_job_open sjwo
+		where sjwo.CALENDAR_YEAR = V_CALENDAR_YEAR
+		  and sjwo.QUARTER = V_QUARTER; 
 	
 	EXCEPTION
 		WHEN OTHERS THEN
-			V_RESULT    := 'F';
-			V_ERROR_MSG := SQLERRM;
 			ROLLBACK;
-END;
-$BODY$;
+			RAISE;
+end $$;
