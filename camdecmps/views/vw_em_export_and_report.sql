@@ -1,8 +1,7 @@
--- View: camdecmps.vw_em_eval_and_submit_all
+-- View: camdecmps.vw_em_export_and_report
+DROP VIEW IF EXISTS camdecmps.vw_em_export_and_report;
 
-DROP VIEW IF EXISTS camdecmps.vw_em_eval_and_submit_all;
-
-CREATE OR REPLACE VIEW camdecmps.vw_em_eval_and_submit_all AS
+CREATE OR REPLACE VIEW camdecmps.vw_em_export_and_report AS
 SELECT
     fac.oris_code,
     fac.facility_name,

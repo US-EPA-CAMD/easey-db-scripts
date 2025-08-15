@@ -1,7 +1,7 @@
--- View: camdecmpswks.vw_em_eval_and_submit_earliest
-DROP VIEW IF EXISTS camdecmpswks.vw_em_eval_and_submit_earliest;
+-- View: camdecmpswks.vw_em_eval_and_submit
+DROP VIEW IF EXISTS camdecmpswks.vw_em_eval_and_submit;
 
-CREATE OR REPLACE VIEW camdecmpswks.vw_em_eval_and_submit_earliest AS
+CREATE OR REPLACE VIEW camdecmpswks.vw_em_eval_and_submit AS
 SELECT
     fac.oris_code,
     fac.facility_name,
@@ -110,3 +110,4 @@ FROM
         JOIN camdecmpsmd.eval_status_code esc ON esc.eval_status_cd :: text = sel.eval_status_cd :: text
   LEFT JOIN camdecmpsaux.em_submission_access esa ON esa.em_sub_access_id = sel.last_em_sub_access_id
     LEFT JOIN camdecmpsmd.submission_availability_code sac ON sac.submission_availability_cd = esa.sub_availability_cd
+

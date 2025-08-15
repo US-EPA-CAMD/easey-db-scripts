@@ -1,5 +1,5 @@
--- View: camdecmpswks.vw_em_eval_and_submit_all
-CREATE OR REPLACE VIEW camdecmpswks.vw_em_eval_and_submit_all AS
+-- View: camdecmpswks.vw_em_export_and_report
+CREATE OR REPLACE VIEW camdecmpswks.vw_em_export_and_report AS
 SELECT
     fac.oris_code,
     fac.facility_name,
