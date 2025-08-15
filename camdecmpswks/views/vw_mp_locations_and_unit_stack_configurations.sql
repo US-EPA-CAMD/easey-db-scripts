@@ -1,4 +1,4 @@
- -- View: camdecmpswks.vw_mp_location
+ -- View: camdecmpswks.vw_mp_locations_and_unit_stack_configurations
 
 DROP VIEW IF EXISTS camdecmpswks.vw_mp_locations_and_unit_stack_configurations;
 
