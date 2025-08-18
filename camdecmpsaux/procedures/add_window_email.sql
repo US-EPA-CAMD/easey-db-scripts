@@ -35,7 +35,8 @@ BEGIN
 											  rpt_period_id,
 											  em_sub_access_id,
 											  context,
-											  status_cd)
+											  status_cd,
+											  queued_time)
 		VALUES (MON_PLAN_INFO.fac_id,
 				v_email_type,
 				v_event_action_id,
@@ -48,6 +49,7 @@ BEGIN
 								   'locationList', MON_PLAN_INFO.locations, 
 								   'periodAbbreviation', PERIOD_ABR, 
 								   'windowOpenDate', EM_SUB_ACCESS_WINDOW)::text,
-				'QUEUED');
+				'QUEUED',
+				CURRENT_TIMESTAMP);
 END
 $BODY$;
