@@ -36,21 +36,10 @@ SELECT
         WHERE mpl.mon_plan_id = mp.mon_plan_id
     ) AS locations
 FROM camdecmpswks.monitor_plan mp
-    LEFT JOIN camd.plant p ON mp.fac_id = p.fac_id
-    LEFT JOIN camdecmpsmd.reporting_period rpb ON mp.begin_rpt_period_id = rpb.rpt_period_id
+    INNER JOIN camd.plant p ON mp.fac_id = p.fac_id
+    INNER JOIN camdecmpsmd.reporting_period rpb ON mp.begin_rpt_period_id = rpb.rpt_period_id
     LEFT JOIN camdecmpsmd.reporting_period rpe ON mp.end_rpt_period_id = rpe.rpt_period_id
-    LEFT JOIN camdecmpsmd.eval_status_code esc ON mp.eval_status_cd = esc.eval_status_cd
+    INNER JOIN camdecmpsmd.eval_status_code esc ON mp.eval_status_cd = esc.eval_status_cd
     LEFT JOIN camdecmpsmd.submission_availability_code sac ON mp.submission_availability_cd = sac.submission_availability_cd
     LEFT JOIN camdecmpswks.check_session cs ON cs.chk_session_id = mp.chk_session_id
-    LEFT JOIN camdecmpsmd.severity_code sc ON sc.severity_cd = cs.severity_cd
-GROUP BY
-    mp.mon_plan_id,
-    p.oris_code,
-    p.facility_name,
-    p.frs_id,
-    rpb.period_abbreviation,
-    rpe.period_abbreviation,
-    esc.eval_status_cd_description,
-    sac.sub_avail_cd_description,
-    sc.severity_cd_description,
-    sc.severity_cd;
+    LEFT JOIN camdecmpsmd.severity_code sc ON sc.severity_cd = cs.severity_cd;
