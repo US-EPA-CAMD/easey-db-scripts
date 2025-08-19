@@ -1,5 +1,3 @@
-DROP FUNCTION IF EXISTS camdecmpsaux.get_em_submission_access_no_window_view;
-
 CREATE OR REPLACE FUNCTION camdecmpsaux.get_em_submission_access_no_window_view(
     v_orisCode numeric,
     v_calendarYear numeric,

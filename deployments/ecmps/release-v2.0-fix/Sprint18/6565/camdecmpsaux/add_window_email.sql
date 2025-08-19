@@ -1,6 +1,4 @@
 -- PROCEDURE: camdecmpsaux.add_window_email(numeric, character varying, character varying, numeric, bigint, text, text)
-DROP PROCEDURE IF EXISTS camdecmpsaux.add_window_email(numeric, character varying, character varying, numeric, bigint, text, text);
-
 CREATE OR REPLACE PROCEDURE camdecmpsaux.add_window_email(
 	v_event_action_id numeric,
 	v_email_type character varying,
@@ -35,8 +33,7 @@ BEGIN
 											  rpt_period_id,
 											  em_sub_access_id,
 											  context,
-											  status_cd,
-											  queued_time)
+											  status_cd)
 		VALUES (MON_PLAN_INFO.fac_id,
 				v_email_type,
 				v_event_action_id,
@@ -49,7 +46,6 @@ BEGIN
 								   'locationList', MON_PLAN_INFO.locations, 
 								   'periodAbbreviation', PERIOD_ABR, 
 								   'windowOpenDate', EM_SUB_ACCESS_WINDOW)::text,
-				'QUEUED',
-				CURRENT_TIMESTAMP);
+				'QUEUED');
 END
 $BODY$;

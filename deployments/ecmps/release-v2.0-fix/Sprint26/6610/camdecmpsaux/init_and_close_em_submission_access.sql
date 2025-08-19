@@ -1,7 +1,5 @@
 -- PROCEDURE: camdecmpsaux.init_and_close_em_submission_access(text, numeric, text, text)
 
-DROP PROCEDURE IF EXISTS camdecmpsaux.init_and_close_em_submission_access(text, numeric, text, text);
-
 CREATE OR REPLACE PROCEDURE camdecmpsaux.init_and_close_em_submission_access(
 	v_sysdate text,
 	v_fac_id numeric,
@@ -83,7 +81,7 @@ BEGIN
 		SELECT swjo.MON_PLAN_ID, 
 			   swjo.EM_SUB_STATUS, 
 			   swjo.em_sub_access_id,
-			   swjo.create_pending
+			   swjo.new_location_count
 			FROM camdecmpsaux.vw_submission_window_job_open swjo
 			WHERE swjo.rpt_period_id = V_PERIOD_ID 
 	  		AND COALESCE(V_FAC_ID, swjo.FAC_ID) = swjo.FAC_ID
@@ -94,7 +92,10 @@ BEGIN
 				-- no window exists; create one
 				
 				-- MPs with locations that have not previously submitted data get pending windows that must be manually approved
-				V_PENDING := swjo.create_pending;
+				V_PENDING := 'F';
+				IF SUB_ACCESS_REC.new_location_count > 0 THEN 
+					V_PENDING := 'T';
+				END IF;
 	
 				INSERT INTO CAMDECMPSAUX.EM_SUBMISSION_ACCESS
 					(
@@ -117,9 +118,9 @@ BEGIN
 					'ECMPSOPN',
 					CURRENT_TIMESTAMP,
 					CASE WHEN V_PENDING = 'T' THEN 'PENDING' ELSE 'APPRVD' END,
-					CASE WHEN V_SYSDATE_AS_DATE < V_BEGINDATE OR V_PENDING = 'T' THEN NULL ELSE 'REQUIRE' END);
+					CASE WHEN CURRENT_DATE < V_BEGINDATE OR V_PENDING = 'T' THEN NULL ELSE 'REQUIRE' END);
 
-				IF V_SYSDATE_AS_DATE >= V_BEGINDATE::date AND V_PENDING = 'F' THEN
+				IF CURRENT_DATE >= V_BEGINDATE::date AND V_PENDING = 'F' THEN
 					-- send notifications when initial windows are created after the start of the reporting period
 					V_SEND_INITIAL_WINDOW_NOTIFICATION := TRUE;
 				END IF;
@@ -239,10 +240,10 @@ BEGIN
 					-- 	close it and mark it as deleted
 					--	do not send a reminder
 					UPDATE CAMDECMPSAUX.EM_SUBMISSION_ACCESS
-					SET ACCESS_END_DATE     = GREATEST(V_SYSDATE_AS_DATE - 1, ACCESS_BEGIN_DATE),
+					SET ACCESS_END_DATE     = GREATEST(CURRENT_DATE - 1, ACCESS_BEGIN_DATE),
 						SUB_AVAILABILITY_CD = 'DELETE',
 						USERID              = 'ECMPSCLS',
-						UPDATE_DATE         = CURRENT_TIMESTAMP
+						UPDATE_DATE         = CURRENT_DATE
 				 	WHERE EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID;
 				
 				ELSIF CLOSE_ACCESS_REC.SUBMISSION_STATUS_CD IS NULL THEN
@@ -298,18 +299,18 @@ BEGIN
 				-- 	close it and mark it as deleted
 				--	do not send a reminder
 				UPDATE CAMDECMPSAUX.EM_SUBMISSION_ACCESS
-				SET ACCESS_END_DATE     = GREATEST(V_SYSDATE_AS_DATE - 1, ACCESS_BEGIN_DATE),
+				SET ACCESS_END_DATE     = GREATEST(CURRENT_DATE - 1, ACCESS_BEGIN_DATE),
 					SUB_AVAILABILITY_CD = 'DELETE',
 					USERID              = 'ECMPSCLS',
-					UPDATE_DATE         = CURRENT_TIMESTAMP
+					UPDATE_DATE         = CURRENT_DATE
 				WHERE EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID;
 
 			ELSIF CLOSE_ACCESS_REC.EXTEND_WINDOW = 'T' THEN
 				-- extend window
 				UPDATE CAMDECMPSAUX.EM_SUBMISSION_ACCESS
-				SET ACCESS_END_DATE = CLOSE_ACCESS_REC.ACCESS_END_DATE + 30,
+				SET ACCESS_END_DATE = CURRENT_DATE + 29,
 					USERID          = 'ECMPSEXT',
-					UPDATE_DATE     = CURRENT_TIMESTAMP
+					UPDATE_DATE     = CURRENT_DATE
 				WHERE EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID;
 			
 				IF CLOSE_ACCESS_REC.SUBMISSION_STATUS_CD IS NULL OR
