@@ -37,16 +37,23 @@ SELECT
         ELSE 'Closed'
     END AS window_status,
     CASE
-        WHEN sq.severity_cd = 'CRIT1' THEN 'Received with Critical 1 Errors'
+        WHEN sc.severity_cd = 'CRIT1' THEN 'Received with Critical 1 Errors'
         WHEN sq.submission_id IS NULL AND em.em_status_cd = 'RECVD' AND em.mon_plan_id IS NOT NULL THEN 'Received via ETS'
-        WHEN sq.severity_cd = 'CRIT2' THEN 'Received with Critical 2 Errors'
-        WHEN sq.severity_cd IS NOT NULL THEN 'Received'
+        WHEN sc.severity_cd = 'CRIT2' THEN 'Received with Critical 2 Errors'
+        WHEN sc.severity_cd IS NOT NULL THEN 'Received'
         WHEN sq.submission_id IS NOT NULL THEN 'Data Not Loaded'
         ELSE 'No Submission'
     END AS submission_status,
-    mp.config AS locations,
+    mp.locations,
     CASE
-        WHEN em.em_sub_access_id = camdecmpsaux.get_last_submission_access(em.mon_plan_id, em.rpt_period_id)
+        WHEN em.access_begin_date = (
+            SELECT MAX(esa_max.access_begin_date) AS access_begin_date
+              FROM camdecmpsaux.em_submission_access esa_max
+             WHERE esa_max.mon_plan_id = em.mon_plan_id
+               AND esa_max.rpt_period_id = em.rpt_period_id           
+               AND (esa_max.sub_availability_cd <> 'DELETE' OR esa_max.sub_availability_cd IS null)
+             GROUP BY esa_max.mon_plan_id, esa_max.rpt_period_id
+             )
         THEN 'Yes'
         ELSE 'No'
     END AS last_window,
@@ -61,26 +68,9 @@ SELECT
         WHEN ee.submission_id IS NOT NULL THEN 'No'
         ELSE 'Unknown'
     END AS last_window_with_ok_submission,
-    ss.user_id AS submitter_user_id
+    sq.user_id AS submitter_user_id
 FROM camdecmpsaux.em_submission_access em
-JOIN (
-    SELECT
-        fac_id,
-        mon_plan_id,
-        string_agg(d.unit_stack, ', ') AS config
-    FROM (
-        SELECT
-            mpl.mon_plan_id,
-            COALESCE(u.fac_id, sp.fac_id) AS fac_id,
-            COALESCE(u.unitid, sp.stack_name) AS unit_stack
-        FROM camdecmps.monitor_plan_location mpl
-        JOIN camdecmps.monitor_location ml USING(mon_loc_id)
-        LEFT JOIN camdecmps.stack_pipe sp USING (stack_pipe_id)
-        LEFT JOIN camd.unit u USING (unit_id)
-        ORDER BY mon_plan_id, unitid, stack_name
-    ) AS d
-    GROUP BY mon_plan_id, fac_id
-) AS mp USING(mon_plan_id)
+JOIN camdecmps.vw_monitor_plan mp USING(mon_plan_id)
 JOIN camdecmps.monitor_plan_reporting_freq rf
     ON rf.mon_plan_id = em.mon_plan_id
     AND (
@@ -93,10 +83,8 @@ JOIN camdecmpsmd.em_sub_type_code stc USING (em_sub_type_cd)
 JOIN camdecmpsmd.submission_availability_code sac
     ON em.sub_availability_cd = sac.submission_availability_cd
 JOIN camd.plant pl USING(fac_id)
-LEFT JOIN camdecmpsaux.submission_queue sq
-    ON camdecmpsaux.get_last_submission_in_window(em.mon_plan_id, em.rpt_period_id, em.access_begin_date, em.access_end_date) = sq.submission_id
-LEFT JOIN camdecmpsaux.submission_set ss
-    ON sq.submission_set_id = ss.submission_set_id
+LEFT JOIN camdecmpsaux.vw_last_submission_in_window sq
+    ON  em.em_sub_access_id = sq.em_sub_access_id
 LEFT JOIN camdecmpsmd.severity_code sc
     ON sq.severity_cd = sc.severity_cd
 LEFT JOIN camdecmps.emission_evaluation ee
@@ -130,10 +118,10 @@ GROUP BY
     sq.queued_time,
     sc.severity_cd,
     sc.severity_cd_description,
-    mp.config,
+    mp.locations,
     ee.mon_plan_id,
     ee.submission_id,
-	ss.user_id
+	sq.user_id
 ORDER BY
     em.rpt_period_id DESC,
     em.access_begin_date DESC;

@@ -51,6 +51,7 @@ SELECT
                 AND esa.rpt_period_id = lst1.rpt_period_id
                 AND esa.access_begin_date = lst1.last_access_begin_date
     ) AS window_status,
+    esa.access_end_date as window_expired_date,
     prd.period_abbreviation
 FROM
     (

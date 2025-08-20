@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.check_session
     process_cd character varying(7) COLLATE pg_catalog."default",
     rpt_period_id numeric(38,0),
     test_sum_id character varying(45) COLLATE pg_catalog."default",
-    submission_id double precision
+    submission_id double precision,
+    evaluation_id bigint
 );
 
 COMMENT ON TABLE camdecmpsaux.check_session
@@ -60,3 +61,6 @@ COMMENT ON COLUMN camdecmpsaux.check_session.test_sum_id
 
 COMMENT ON COLUMN camdecmpsaux.check_session.submission_id
     IS ' Unique identifier of a submission.';
+
+COMMENT ON COLUMN camdecmpsaux.check_session.evaluation_id
+    IS ' Unique identifier of an evaluation queue record.';

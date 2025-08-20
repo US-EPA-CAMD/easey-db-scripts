@@ -9,15 +9,16 @@ CREATE OR REPLACE FUNCTION camdecmpsaux.get_quarterly_em_submission_windows_repo
 )
 RETURNS TABLE (
     ORIS_CODE                       numeric,
-    FACILITY_NAME                   text,
-    STATE                           text,
+    FACILITY_NAME                   character varying,
+    STATE                           character varying,
     LOCATIONS                       text,
     PERIOD_ABBREVIATION             character varying,
     ACCESS_BEGIN_DATE               date,
     ACCESS_END_DATE                 date,
-    EM_SUB_TYPE_CD_DESCRIPTION      text,
+    EM_SUB_TYPE_CD_DESCRIPTION      character varying,
     WINDOW_STATUS                   text,
     LAST_WINDOW                     text,
+    USER_ID                         character varying,
     SUBMISSION_STATUS               text,
     ACCEPTED_SUBMISSION_IN_PERIOD   text, 
     LAST_WINDOW_WITH_OK_SUBMISSION  text,
@@ -57,6 +58,7 @@ BEGIN
         V.EM_SUB_TYPE_CD_DESCRIPTION,
         V.WINDOW_STATUS,
         V.LAST_WINDOW,
+        V.USERID,
         V.SUBMISSION_STATUS,
         V.ACCEPTED_SUBMISSION_IN_PERIOD, 
         V.LAST_WINDOW_WITH_OK_SUBMISSION,
@@ -69,6 +71,6 @@ BEGIN
       AND V.FACILITY_NAME = COALESCE(V_FACILITY_NAME, V.FACILITY_NAME)
       AND V.RPT_PERIOD_ID = COALESCE(V_RPT_PERIOD_ID, V.RPT_PERIOD_ID)
       AND V.SUBMISSION_STATUS = COALESCE(V_SUBMISSION_STATUS, V.SUBMISSION_STATUS)
-    ORDER BY V.ORIS_CODE ASC, V.PERIOD_ABBREVIATION DESC;
+    ORDER BY V.ORIS_CODE ASC, V.PERIOD_ABBREVIATION DESC, V.LOCATIONS ASC;
 END;
 $BODY$ LANGUAGE plpgsql;
