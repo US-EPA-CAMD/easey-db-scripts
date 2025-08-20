@@ -14,7 +14,7 @@ select  fac.oris_code,
             else null
         end as qa_data_type_cd,
         ts.test_type_cd as test_type_cd,
-        camdecmps.get_mp_location_list( sbs.mon_plan_id ) as locations,
+        pln.locations,
         prd.period_abbreviation as reporting_period,
         case
             when sbq.process_cd = 'MP' then
@@ -102,7 +102,7 @@ select  fac.oris_code,
        sbq.queued_time,
        sev.severity_cd_description as severity_level,
        case
-          when sbq.submission_id = camdecmpsaux.get_last_submission( sbs.mon_plan_id, sbq.rpt_period_id, sbq.process_cd,sbq.test_sum_id, sbq.qa_cert_event_id, sbq.test_extension_exemption_id )
+          when sbq.submission_id = ls.last_submission_id
           then 'Yes'
           else 'No'
        end most_recent,
@@ -113,11 +113,12 @@ select  fac.oris_code,
        sbq.rpt_period_id
   from  camdecmpsaux.SUBMISSION_QUEUE sbq
         join camdecmpsaux.SUBMISSION_SET sbs using ( submission_set_id )
-        join camdecmps.MONITOR_PLAN pln using ( mon_plan_id )
-        join camd.PLANT fac on fac.fac_id = pln.fac_id
+        join camd.PLANT fac using ( fac_id )
+        join camdecmps.VW_MONITOR_PLAN pln using ( mon_plan_id )
         left join camdecmpsmd.REPORTING_PERIOD prd using( rpt_period_id )
         left join camdecmpsmd.SEVERITY_CODE sev using ( severity_cd )
-        left join camdecmps.test_summary ts on ts.test_sum_id = sbq.test_sum_id
+        left join camdecmps.test_summary ts on ts.test_sum_id = sbq.test_sum_id   
+        join camdecmpsaux.vw_last_submission ls using (submission_id)
         where  sbq.process_cd IN ('EM', 'QA', 'MP')
  order
     by  oris_code,
