@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION camdecmpsaux.get_quarterly_em_submission_windows_report_data(
-    V_FAC_ID            numeric,
+    V_ORIS_CODE         numeric,
     V_FACILITY_NAME     character varying,
     V_SUBMISSION_STATUS character varying,
     V_YEAR              numeric,
@@ -65,7 +65,7 @@ BEGIN
         V.SEVERITY_CD_DESCRIPTION,
         V.SUBMITTER_USER_ID
     FROM camdecmpsaux.vw_em_submission_access V
-    WHERE V.FAC_ID = COALESCE(V_FAC_ID, V.FAC_ID)
+    WHERE V.ORIS_CODE = COALESCE(V_ORIS_CODE, V.ORIS_CODE)
       AND V.FACILITY_NAME = COALESCE(V_FACILITY_NAME, V.FACILITY_NAME)
       AND V.RPT_PERIOD_ID = COALESCE(V_RPT_PERIOD_ID, V.RPT_PERIOD_ID)
       AND V.SUBMISSION_STATUS = COALESCE(V_SUBMISSION_STATUS, V.SUBMISSION_STATUS)
