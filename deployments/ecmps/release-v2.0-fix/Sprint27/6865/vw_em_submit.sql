@@ -45,7 +45,7 @@ FROM
         AND esa.rpt_period_id = ems.rpt_period_id
         AND esa.access_begin_date <= CURRENT_DATE
         AND esa.access_end_date > CURRENT_DATE
-        AND esa.sub_availability_cd IN ('GRANTED', 'REQUIRE')
+        AND esa.sub_availability_cd IN ('GRANTED', 'REQUIRE', 'CRITERR')
         AND esa.access_begin_date = (
             SELECT
                 CASE WHEN MAX(
