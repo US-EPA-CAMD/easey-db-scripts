@@ -7,8 +7,8 @@ DECLARE
 BEGIN
         SELECT cron.schedule(
 		'Open Emissions Submission Windows for 2024 Q3 thru the latest reporting period',
-		'0 * * * *',--every hour on the hour
-		'select camdecmpsaux.open_beta_em_submission_windows();'
+		'0 3 * * *',--every day at 3 AM
+		'call camdecmpsaux.open_beta_em_submission_windows();'
 	) INTO vJobId;
 
 	UPDATE cron.job SET database = vDatabase WHERE jobid = vJobId;
