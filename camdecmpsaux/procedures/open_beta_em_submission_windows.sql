@@ -5,7 +5,6 @@ CREATE OR REPLACE PROCEDURE camdecmpsaux.open_beta_em_submission_windows()
 AS $procedure$
 DECLARE
 	vrptperiodid numeric;
-	v_year_qt	 varchar(300);	
 	i            int;			
 BEGIN			
 	--get latest report period for current date 
@@ -15,10 +14,6 @@ BEGIN
 	 
 	-- loop over all reporting periods starting with 2024 Q3 thru the latest reporting period
 	for i in 127..vrptperiodid LOOP
-		select  calendar_year||' Q'||quarter  v_year_qt
-		  from CAMDECMPSMD.REPORTING_PERIOD
-		 where rpt_period_id=i;	
-		 
 		INSERT INTO camdecmpsaux.em_submission_access(
 			mon_plan_id,
 			rpt_period_id,
