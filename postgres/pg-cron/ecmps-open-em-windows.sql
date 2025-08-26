@@ -6,7 +6,7 @@ DECLARE
 	vDatabase 	 text := 'replace with DB name';	
 BEGIN
         SELECT cron.schedule(
-		'Open Emissions Submission Windows for 2024 Q3 thru the latest reporting period',
+		'Open Emissions Submission Windows for Beta testing',
 		'0 3 * * *',--every day at 3 AM
 		'call camdecmpsaux.open_beta_em_submission_windows();'
 	) INTO vJobId;
@@ -17,4 +17,4 @@ END $$;
 --SELECT * FROM cron.job;
 --SELECT * FROM cron.job_run_details order by end_time desc;
 --SELECT * FROM cron.job_run_details WHERE status = 'failed';
---SELECT cron.unschedule('Open Emissions Submission Windows for 2024 Q3 thru the latest reporting period');
+--SELECT cron.unschedule('Open Emissions Submission Windows for Beta testing');
