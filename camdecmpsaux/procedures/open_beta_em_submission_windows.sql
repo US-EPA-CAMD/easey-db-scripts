@@ -12,8 +12,8 @@ BEGIN
 	  from CAMDECMPSMD.REPORTING_PERIOD 
 	 where CURRENT_DATE between begin_date and end_date;
 	 
-	-- loop over all reporting periods starting with 2024 Q3 thru the latest reporting period
-	for i in 127..vrptperiodid LOOP
+	-- loop over all reporting periods starting with 2024 Q4 thru the latest reporting period
+	for i in 128..vrptperiodid LOOP
 		INSERT INTO camdecmpsaux.em_submission_access(
 			mon_plan_id,
 			rpt_period_id,
