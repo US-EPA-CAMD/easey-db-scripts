@@ -1,5 +1,6 @@
 -- FUNCTION: camdecmpswks.delete_calculated_qa_data_from_workspace()
 
+DROP FUNCTION IF EXISTS camdecmpswks.delete_calculated_qa_data_from_workspace() CASCADE;
 DROP FUNCTION IF EXISTS camdecmpswks.delete_calculated_qa_data_from_workspace(character varying[]) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.delete_calculated_qa_data_from_workspace(
