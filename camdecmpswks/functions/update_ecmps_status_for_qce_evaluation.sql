@@ -15,10 +15,7 @@ AS $BODY$
 
 declare 
     vSubmittable    char(1);
-	V_MON_PLAN_ID   character varying;
-	V_RPT_PERIOD_ID  int;
-	EM_CSR CURSOR FOR SELECT MON_PLAN_ID, RPT_PERIOD_ID
-					FROM tmpEmissionsStatus;
+	emission_record RECORD;
 
 begin    
     error_msg := '';
@@ -43,10 +40,8 @@ begin
 	----------------------------------------------
     --EM evaluation part 
     IF vSubmittable = 'Y' then
-        create temp table tmpEmissionsStatus(MON_PLAN_ID character varying,RPT_PERIOD_ID int);
-        
-		--	update EM evaluation
-		INSERT INTO tmpEmissionsStatus 
+        -- Update EM evaluation
+		FOR emission_record IN ( 
 			SELECT DISTINCT E.MON_PLAN_ID, E.RPT_PERIOD_ID
 				FROM camdecmps.EMISSION_EVALUATION E,
 				camdecmpsaux.EM_SUBMISSION_ACCESS ESA,
@@ -65,20 +60,15 @@ begin
 						M.MON_LOC_ID = T.MON_LOC_ID AND
 						(R.CALENDAR_YEAR > T.CALENDAR_YEAR OR 
 						(R.CALENDAR_YEAR = T.CALENDAR_YEAR AND R.QUARTER >= T.QUARTER)) AND
-						QA_CERT_EVENT_ID =vQceId;					
-
-		OPEN EM_CSR;	
-		LOOP
-			FETCH NEXT FROM EM_CSR INTO V_MON_PLAN_ID, V_RPT_PERIOD_ID;
-        EXIT WHEN NOT FOUND;
+						QA_CERT_EVENT_ID =vQceId
+        ) LOOP
 		    select * into result, error_msg 
-		      from camdecmpswks.delete_calculated_em_data_from_workspace(V_MON_PLAN_ID, V_RPT_PERIOD_ID);	
+		      from camdecmpswks.delete_calculated_em_data_from_workspace(emission_record.MON_PLAN_ID, emission_record.RPT_PERIOD_ID);	
             
 			if result = 'F' then
-                exit;
+                EXIT;
 			end if;
         END LOOP;
-		CLOSE EM_CSR;
 				
 	end if; --vSubmittable if
     
