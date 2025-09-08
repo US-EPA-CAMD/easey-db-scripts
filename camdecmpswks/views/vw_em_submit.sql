@@ -51,14 +51,14 @@ FROM
         AND esa.access_begin_date = (
             SELECT
                 CASE WHEN MAX(
-                    CASE WHEN sub.sub_availability_cd != 'DELETE' THEN
+                    CASE WHEN sub.sub_availability_cd NOT IN ('DELETE', 'NOTSUB') THEN
                         sub.access_begin_date
                     END
                 ) IS NOT NULL
                 -- If there's a non-'DELETE' record, pick its latest access_begin_date
                 THEN
                     MAX(
-                        CASE WHEN sub.sub_availability_cd != 'DELETE' THEN
+                        CASE WHEN sub.sub_availability_cd NOT IN ('DELETE', 'NOTSUB') THEN
                             sub.access_begin_date
                         END
                     )
