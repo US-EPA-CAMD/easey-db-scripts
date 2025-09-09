@@ -1,6 +1,4 @@
--- FUNCTION: camdecmpswks.emissions_grid_remove_eval(character varying, numeric)
-
--- DROP FUNCTION IF EXISTS camdecmpswks.emissions_grid_remove_eval(character varying, numeric);
+-- DROP FUNCTION IF EXISTS camdecmpswks.emissions_grid_remove_eval(character varying, integer);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.emissions_grid_remove_eval(
 	vmonplan_id character varying,
