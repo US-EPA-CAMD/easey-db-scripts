@@ -11,6 +11,8 @@ DROP VIEW IF EXISTS camdaux.vw_allowance_based_compliance_bulk_files_to_generate
 DROP VIEW IF EXISTS camdaux.vw_annual_emissions_bulk_files_per_state_to_generate;
 DROP VIEW IF EXISTS camdecmpsmd.vw_es_check_catalog_result;
 DROP VIEW IF EXISTS camdecmpswks.vw_em_eval_and_submit;
+DROP VIEW IF EXISTS camdecmpswks.vw_em_eval_and_submit_all;
+DROP VIEW IF EXISTS camdecmpswks.vw_em_eval_and_submit_earliest;
 --------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdmd.program_code
     DROP COLUMN IF EXISTS emissions_ui_filter;
