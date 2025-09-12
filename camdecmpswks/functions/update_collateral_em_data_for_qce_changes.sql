@@ -23,14 +23,14 @@ begin
     -- EM evaluation part
     FOR emission_record IN (
         SELECT DISTINCT E.MON_PLAN_ID, E.RPT_PERIOD_ID
-            FROM camdecmps.EMISSION_EVALUATION E,
+            FROM camdecmpswks.EMISSION_EVALUATION E,
             camdecmpsaux.EM_SUBMISSION_ACCESS ESA,
-            camdecmps.MONITOR_PLAN_LOCATION M, 
+            camdecmpswks.MONITOR_PLAN_LOCATION M,
             camdecmpsmd.REPORTING_PERIOD R,
             (SELECT MON_LOC_ID, QA_CERT_EVENT_ID,
-                (SELECT EXTRACT('year' FROM qa_cert_event_date ) )AS CALENDAR_YEAR,
+                extract(year FROM qa_cert_event_date) AS CALENDAR_YEAR,
                 FLOOR((extract(month from QA_CERT_EVENT_DATE) + 2) / 3) AS QUARTER
-                FROM camdecmps.QA_CERT_EVENT) T
+                FROM camdecmpswks.QA_CERT_EVENT) T
             WHERE E.MON_PLAN_ID = M.MON_PLAN_ID AND 
                     E.RPT_PERIOD_ID = R.RPT_PERIOD_ID AND
                     E.NEEDS_EVAL_FLG = 'N' AND

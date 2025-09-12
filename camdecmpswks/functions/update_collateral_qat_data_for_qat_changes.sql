@@ -15,8 +15,6 @@ AS $BODY$
 declare 
     vCount          int;
 	vContinue       char(1);
-	V_TEST_SUM_ID	character varying;
-	vTempID         character varying;
 	v_test_ids      character varying[];
 	
 begin    
