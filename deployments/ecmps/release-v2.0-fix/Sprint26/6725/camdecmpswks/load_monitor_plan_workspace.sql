@@ -1,24 +1,19 @@
--- PROCEDURE: camdecmpswks.load_monitor_plan_workspace()
-
--- DROP PROCEDURE IF EXISTS camdecmpswks.load_monitor_plan_workspace();
-
-CREATE OR REPLACE PROCEDURE camdecmpswks.load_monitor_plan_workspace(
-	)
-LANGUAGE 'plpgsql'
-AS $BODY$
+CREATE OR REPLACE PROCEDURE camdecmpswks.load_monitor_plan_workspace()
+ LANGUAGE plpgsql
+AS $procedure$
 BEGIN
-		-- UNIT --
-	INSERT INTO camdecmpswks.unit 
-		(unit_id, fac_id, unitid, unit_description, indian_country_ind, stateid, boiler_sequence_number, 
-		comm_op_date, comm_op_date_cd, comr_op_date, comr_op_date_cd, source_category_cd, 
-		naics_cd, no_active_gen_ind, non_load_based_ind, actual_90th_op_date, 
-		moved_ind, userid, add_date, update_date)
-	SELECT unit_id, fac_id, unitid, unit_description, indian_country_ind, stateid, boiler_sequence_number, 
-		comm_op_date, comm_op_date_cd, comr_op_date, comr_op_date_cd, source_category_cd, 
-		naics_cd, no_active_gen_ind, non_load_based_ind, actual_90th_op_date, 
-		moved_ind, userid, add_date, update_date
-	FROM camdecmpswks.unit;
-	
+			-- UNIT --
+		INSERT INTO camdecmpswks.unit 
+			(unit_id, fac_id, unitid, unit_description, indian_country_ind, stateid, boiler_sequence_number, 
+			comm_op_date, comm_op_date_cd, comr_op_date, comr_op_date_cd, source_category_cd, 
+			naics_cd, no_active_gen_ind, non_load_based_ind, actual_90th_op_date, 
+			moved_ind, userid, add_date, update_date)
+		SELECT unit_id, fac_id, unitid, unit_description, indian_country_ind, stateid, boiler_sequence_number, 
+			comm_op_date, comm_op_date_cd, comr_op_date, comr_op_date_cd, source_category_cd, 
+			naics_cd, no_active_gen_ind, non_load_based_ind, actual_90th_op_date, 
+			moved_ind, userid, add_date, update_date
+		FROM camdecmpswks.unit;
+
 		-- MONITOR_PLAN --
     INSERT INTO camdecmpswks.monitor_plan(
       mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, begin_rpt_period_id, end_rpt_period_id, last_evaluated_date, eval_status_cd
@@ -286,5 +281,5 @@ BEGIN
     JOIN camdecmpsaux.check_session cs on mp.chk_session_id = cs.chk_session_id
     JOIN camdecmpsaux.check_log cl on cs.chk_session_id = cl.chk_session_id;
 END;
-
-$BODY$;
+$procedure$
+;
