@@ -17,7 +17,7 @@ BEGIN
 		comm_op_date, comm_op_date_cd, comr_op_date, comr_op_date_cd, source_category_cd, 
 		naics_cd, no_active_gen_ind, non_load_based_ind, actual_90th_op_date, 
 		moved_ind, userid, add_date, update_date
-	FROM camdecmpswks.unit;
+	FROM camd.unit;
 	
 		-- MONITOR_PLAN --
     INSERT INTO camdecmpswks.monitor_plan(
