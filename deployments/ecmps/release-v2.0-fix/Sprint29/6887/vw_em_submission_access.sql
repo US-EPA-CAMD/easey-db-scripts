@@ -1,5 +1,3 @@
-DROP VIEW IF EXISTS camdecmpsaux.vw_em_submission_access;
-
 CREATE OR REPLACE VIEW camdecmpsaux.vw_em_submission_access AS
 SELECT
     em.em_sub_access_id,
@@ -50,7 +48,7 @@ SELECT
             SELECT MAX(esa_max.access_begin_date) AS access_begin_date
               FROM camdecmpsaux.em_submission_access esa_max
              WHERE esa_max.mon_plan_id = em.mon_plan_id
-               AND esa_max.rpt_period_id = em.rpt_period_id           
+               AND esa_max.rpt_period_id = em.rpt_period_id
                AND (esa_max.sub_availability_cd <> 'DELETE' OR esa_max.sub_availability_cd IS null)
              GROUP BY esa_max.mon_plan_id, esa_max.rpt_period_id
              )
