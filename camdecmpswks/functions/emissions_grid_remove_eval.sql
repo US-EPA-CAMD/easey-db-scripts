@@ -1,10 +1,10 @@
--- FUNCTION: camdecmpswks.emissions_grid_remove_eval(character varying, integer)
+-- FUNCTION: camdecmpswks.emissions_grid_remove_eval(character varying, numeric)
 
--- DROP FUNCTION IF EXISTS camdecmpswks.emissions_grid_remove_eval(character varying, integer);
+-- DROP FUNCTION IF EXISTS camdecmpswks.emissions_grid_remove_eval(character varying, numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.emissions_grid_remove_eval(
 	vmonplan_id character varying,
-	vrptperiod_id integer)
+	vrptperiod_id numeric)
     RETURNS TABLE(result text, error_msg character varying) 
     LANGUAGE 'plpgsql'
     COST 100

@@ -15,12 +15,9 @@ CREATE OR REPLACE FUNCTION camdecmpswks.update_ecmps_status_for_em_evaluation(
 AS $BODY$
 declare 
     vSubmittable    char(1);
-	V_MON_PLAN_ID   character varying;
-	V_RPT_PERIOD_ID int;
 	vYear  			int;
 	vQuarter		int;
-	EM_CSR 			CURSOR FOR SELECT MON_PLAN_ID, RPT_PERIOD_ID
-					FROM tmpEmissionsStatus;
+	emission_record RECORD;
 begin
     vSubmittable :='N';
     error_msg := '';
@@ -72,9 +69,8 @@ begin
            );	
  
     if vSubmittable = 'Y' then  
-        create temp table tmpEmissionsStatus(MON_PLAN_ID character varying,RPT_PERIOD_ID int);
-        
-	    INSERT INTO tmpEmissionsStatus 
+
+	    FOR emission_record IN (
 		 SELECT DISTINCT E.MON_PLAN_ID, E.RPT_PERIOD_ID 
            FROM camdecmpswks.EMISSION_EVALUATION E,
                 camdecmpsaux.EM_SUBMISSION_ACCESS ESA,
@@ -93,21 +89,17 @@ begin
 			  AND (R.CALENDAR_YEAR > T.CALENDAR_YEAR OR 
 			        (R.CALENDAR_YEAR = T.CALENDAR_YEAR AND R.QUARTER > T.QUARTER))
 			  AND T.MON_PLAN_ID = vmon_plan_id
-			  AND T.RPT_PERIOD_ID = vperiod_id;
+			  AND T.RPT_PERIOD_ID = vperiod_id
+        ) LOOP
 
             -- camdecmpswks.emission_evaluation has column=SUBMISSION_AVAILABILITY_CD
-           OPEN EM_CSR;
-			 LOOP
-				FETCH Next from EM_CSR INTO V_MON_PLAN_ID, V_RPT_PERIOD_ID;
-  				  Exit when not found;
-					  select * into result, error_msg 
-				       from camdecmpswks.delete_calculated_em_data_from_workspace(V_MON_PLAN_ID, V_RPT_PERIOD_ID);	
-					 -- Deleting Calculated data failed, bail (PJR)
-					 IF result = 'F' then
-					    exit;
-				      end if;
-				 end loop;
-				CLOSE EM_CSR;	
+            select * into result, error_msg 
+              from camdecmpswks.delete_calculated_em_data_from_workspace(emission_record.MON_PLAN_ID, emission_record.RPT_PERIOD_ID);
+            -- Deleting Calculated data failed, bail (PJR)
+            IF result = 'F' then
+                EXIT;
+            END IF;
+        END LOOP;	
              
     end if; --vSubmittable if
     

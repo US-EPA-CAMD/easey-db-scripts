@@ -1,0 +1,11 @@
+INSERT INTO camdecmpsmd.earliest_partition_quarter (earliest_partition_quarter_id, table_name, rpt_period_id) VALUES (1, 'HRLY_GAS_FLOW_METER', 89);
+INSERT INTO camdecmpsmd.earliest_partition_quarter (earliest_partition_quarter_id, table_name, rpt_period_id) VALUES (2, 'MATS_DERIVED_HRLY_VALUE', 89);
+INSERT INTO camdecmpsmd.earliest_partition_quarter (earliest_partition_quarter_id, table_name, rpt_period_id) VALUES (3, 'MATS_MONITOR_HRLY_VALUE', 89);
+INSERT INTO camdecmpsmd.earliest_partition_quarter (earliest_partition_quarter_id, table_name, rpt_period_id) VALUES (4, 'SAMPLING_TRAIN', 89);
+INSERT INTO camdecmpsmd.earliest_partition_quarter (earliest_partition_quarter_id, table_name, rpt_period_id) VALUES (5, 'SORBENT_TRAP', 89);
+INSERT INTO camdecmpsmd.earliest_partition_quarter (earliest_partition_quarter_id, table_name, rpt_period_id) VALUES (6, 'WEEKLY_SYSTEM_INTEGRITY', 89);
+INSERT INTO camdecmpsmd.earliest_partition_quarter (earliest_partition_quarter_id, table_name, rpt_period_id) VALUES (7, 'WEEKLY_TEST_SUMMARY', 89);
+INSERT INTO camdecmpsmd.earliest_partition_quarter (earliest_partition_quarter_id, table_name, rpt_period_id) VALUES (8, 'NSPS4T_ANNUAL', 100);
+INSERT INTO camdecmpsmd.earliest_partition_quarter (earliest_partition_quarter_id, table_name, rpt_period_id) VALUES (9, 'NSPS4T_COMPLIANCE_PERIOD', 100);
+INSERT INTO camdecmpsmd.earliest_partition_quarter (earliest_partition_quarter_id, table_name, rpt_period_id) VALUES (10, 'NSPS4T_SUMMARY', 100);
+INSERT INTO camdecmpsmd.earliest_partition_quarter (earliest_partition_quarter_id, table_name, rpt_period_id) VALUES (11, 'DAILY_BACKSTOP', 125);

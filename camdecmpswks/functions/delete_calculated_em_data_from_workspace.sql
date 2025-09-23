@@ -1,10 +1,10 @@
--- FUNCTION: camdecmpswks.delete_calculated_em_data_from_workspace(character varying, integer)
+-- FUNCTION: camdecmpswks.delete_calculated_em_data_from_workspace(character varying, numeric)
 
--- DROP FUNCTION IF EXISTS camdecmpswks.delete_calculated_em_data_from_workspace(character varying, integer);
+-- DROP FUNCTION IF EXISTS camdecmpswks.delete_calculated_em_data_from_workspace(character varying, numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.delete_calculated_em_data_from_workspace(
 	vmonplan_id character varying,
-	vrptperiod_id integer)
+	vrptperiod_id numeric)
     RETURNS TABLE(result text, error_msg character varying) 
     LANGUAGE 'plpgsql'
     COST 100

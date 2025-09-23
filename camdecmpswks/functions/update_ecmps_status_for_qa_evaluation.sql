@@ -18,10 +18,8 @@ declare
 	vContinue       char(1);
 	V_TEST_SUM_ID	character varying;
 	vTempID         character varying;
-	V_MON_PLAN_ID   character varying;
-	V_RPT_PERIOD_ID  int;
-	EM_CSR 			CURSOR FOR SELECT MON_PLAN_ID, RPT_PERIOD_ID
-					FROM tmpEmissionsStatus;
+	v_test_ids      character varying[];
+	emission_record RECORD;
 	
 begin    
     error_msg := '';
@@ -63,10 +61,8 @@ begin
     end if;
 				   
 	If vContinue='Y' then
-	   	create temp table tmpTestsStatus (TEST_SUM_ID character varying PRIMARY KEY);
-			   	-- wipe out calculated test data for related tests		
-				   INSERT INTO tmpTestsStatus 
-						SELECT TT.TEST_SUM_ID FROM (
+	   	-- wipe out calculated test data for related tests		
+				   SELECT array_agg(TT.TEST_SUM_ID) INTO v_test_ids FROM (
 							SELECT DISTINCT T.TEST_SUM_ID
 							FROM camdecmpswks.TEST_SUMMARY T,
 							(SELECT TS.MON_SYS_ID, TS.END_DATE, TS.END_HOUR, TS.END_MIN, TS.TEST_SUM_ID
@@ -130,50 +126,42 @@ begin
 							WHERE QS.SUBMISSION_AVAILABILITY_CD IS NULL OR
 								QS.SUBMISSION_AVAILABILITY_CD IN ('GRANTED','REQUIRE');
             
-        ----calling deletion for ID in tmpTestsStatus
-		select * into result, error_msg
-		  from camdecmpswks.Delete_Calculated_QA_Data_from_Workspace();			                   
+        -- Call deletion function with array parameter
+        IF v_test_ids IS NOT NULL AND array_length(v_test_ids, 1) > 0 THEN
+            select * into result, error_msg
+              from camdecmpswks.Delete_Calculated_QA_Data_from_Workspace(v_test_ids);
+        END IF;			                   
 		 
-		if result = 'T' then
-            --	update EM evaluation
-            create temp table tmpEmissionsStatus(MON_PLAN_ID character varying,RPT_PERIOD_ID int);
-            
-            INSERT INTO tmpEmissionsStatus 
-		     SELECT DISTINCT E.MON_PLAN_ID, E.RPT_PERIOD_ID
-						FROM camdecmpswks.EMISSION_EVALUATION E,
-							camdecmpsaux.EM_SUBMISSION_ACCESS ESA,
-							camdecmpswks.MONITOR_PLAN_LOCATION M, 
-							camdecmpsmd.REPORTING_PERIOD R,
-							(SELECT MON_LOC_ID, TEST_SUM_ID,
-							CASE WHEN TS.RPT_PERIOD_ID IS NULL THEN extract(year from TS.END_DATE) ELSE RP.CALENDAR_YEAR END AS CALENDAR_YEAR,
-							CASE WHEN TS.RPT_PERIOD_ID IS NULL THEN FLOOR((extract(month from TS.END_DATE) + 2) / 3) ELSE RP.QUARTER END AS QUARTER
-						FROM camdecmpswks.TEST_SUMMARY TS
-							LEFT OUTER JOIN camdecmpsmd.REPORTING_PERIOD RP ON TS.RPT_PERIOD_ID = RP.RPT_PERIOD_ID) T
-						WHERE E.MON_PLAN_ID = M.MON_PLAN_ID AND 
-							E.RPT_PERIOD_ID = R.RPT_PERIOD_ID AND
-							E.NEEDS_EVAL_FLG = 'N' AND
-							E.MON_PLAN_ID = ESA.MON_PLAN_ID AND 
-							E.RPT_PERIOD_ID = ESA.RPT_PERIOD_ID AND
-							ESA.SUB_AVAILABILITY_CD IN ('GRANTED','REQUIRE') AND
-							M.MON_LOC_ID = T.MON_LOC_ID AND
-							(R.CALENDAR_YEAR > T.CALENDAR_YEAR OR 
-							(R.CALENDAR_YEAR = T.CALENDAR_YEAR AND R.QUARTER >= T.QUARTER)) 
-							AND	TEST_SUM_ID IN 
-							(select distinct test_sum_id from tmpTestsStatus);
-	
-			OPEN EM_CSR;
-            
-			LOOP
-				FETCH NEXT FROM EM_CSR INTO V_MON_PLAN_ID, V_RPT_PERIOD_ID;
-			EXIT WHEN NOT FOUND;
-				   select * into result, error_msg 
-				   from camdecmpswks.delete_calculated_em_data_from_workspace(V_MON_PLAN_ID, V_RPT_PERIOD_ID);	
-					IF result = 'F' then
-					 exit;
-				    end if;
-			END LOOP;
-            
-			CLOSE EM_CSR;
+		if result = 'T' AND v_test_ids IS NOT NULL AND array_length(v_test_ids, 1) > 0 then
+            -- Update EM evaluation
+            FOR emission_record IN (
+                SELECT DISTINCT E.MON_PLAN_ID, E.RPT_PERIOD_ID
+                    FROM camdecmpswks.EMISSION_EVALUATION E,
+                        camdecmpsaux.EM_SUBMISSION_ACCESS ESA,
+                        camdecmpswks.MONITOR_PLAN_LOCATION M, 
+                        camdecmpsmd.REPORTING_PERIOD R,
+                        (SELECT MON_LOC_ID, TEST_SUM_ID,
+                        CASE WHEN TS.RPT_PERIOD_ID IS NULL THEN extract(year from TS.END_DATE) ELSE RP.CALENDAR_YEAR END AS CALENDAR_YEAR,
+                        CASE WHEN TS.RPT_PERIOD_ID IS NULL THEN FLOOR((extract(month from TS.END_DATE) + 2) / 3) ELSE RP.QUARTER END AS QUARTER
+                    FROM camdecmpswks.TEST_SUMMARY TS
+                        LEFT OUTER JOIN camdecmpsmd.REPORTING_PERIOD RP ON TS.RPT_PERIOD_ID = RP.RPT_PERIOD_ID) T
+                    WHERE E.MON_PLAN_ID = M.MON_PLAN_ID AND 
+                        E.RPT_PERIOD_ID = R.RPT_PERIOD_ID AND
+                        E.NEEDS_EVAL_FLG = 'N' AND
+                        E.MON_PLAN_ID = ESA.MON_PLAN_ID AND 
+                        E.RPT_PERIOD_ID = ESA.RPT_PERIOD_ID AND
+                        ESA.SUB_AVAILABILITY_CD IN ('GRANTED','REQUIRE') AND
+                        M.MON_LOC_ID = T.MON_LOC_ID AND
+                        (R.CALENDAR_YEAR > T.CALENDAR_YEAR OR 
+                        (R.CALENDAR_YEAR = T.CALENDAR_YEAR AND R.QUARTER >= T.QUARTER)) 
+                        AND	TEST_SUM_ID = ANY(v_test_ids)
+            ) LOOP
+                select * into result, error_msg 
+                  from camdecmpswks.delete_calculated_em_data_from_workspace(emission_record.MON_PLAN_ID, emission_record.RPT_PERIOD_ID);	
+                IF result = 'F' then
+                    EXIT;
+                END IF;
+            END LOOP;
 		end if;			
     end if;   --vContinue if
     

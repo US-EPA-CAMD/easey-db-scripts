@@ -7,16 +7,36 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.load_monitor_plan_workspace(
 LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
+		-- UNIT --
+	INSERT INTO camdecmpswks.unit 
+		(unit_id, fac_id, unitid, unit_description, indian_country_ind, stateid, boiler_sequence_number, 
+		comm_op_date, comm_op_date_cd, comr_op_date, comr_op_date_cd, source_category_cd, 
+		naics_cd, no_active_gen_ind, non_load_based_ind, actual_90th_op_date, 
+		moved_ind, userid, add_date, update_date)
+	SELECT unit_id, fac_id, unitid, unit_description, indian_country_ind, stateid, boiler_sequence_number, 
+		comm_op_date, comm_op_date_cd, comr_op_date, comr_op_date_cd, source_category_cd, 
+		naics_cd, no_active_gen_ind, non_load_based_ind, actual_90th_op_date, 
+		moved_ind, userid, add_date, update_date
+	FROM camd.unit;
+	
 		-- MONITOR_PLAN --
     INSERT INTO camdecmpswks.monitor_plan(
       mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, begin_rpt_period_id, end_rpt_period_id, last_evaluated_date, eval_status_cd
     )
     SELECT
       mp.mon_plan_id, mp.fac_id, mp.config_type_cd, mp.last_updated,  
-	  (case when mp.submission_availability_cd = 'UPDATED' then 'N' else 'Y' end ) as updated_status_flg, 
-     'Y' as needs_eval_flg,  mp.chk_session_id, mp.userid, mp.add_date, mp.update_date, mp.submission_id, 
+	  'N' as updated_status_flg, 
+      CASE 
+        WHEN mp.submission_availability_cd IN ('REQUIRE', 'GRANTED') THEN 'Y'
+        ELSE 'N'
+      END as needs_eval_flg,
+      mp.chk_session_id, mp.userid, mp.add_date, mp.update_date, mp.submission_id, 
 	  mp.submission_availability_cd,  mp.begin_rpt_period_id, mp.end_rpt_period_id, mp.last_evaluated_date, 
-	  coalesce(sc.eval_status_cd, 'PASS')
+	  CASE 
+        WHEN mp.submission_availability_cd IN ('REQUIRE', 'GRANTED') THEN 'EVAL'
+        WHEN mp.chk_session_id IS NULL OR cs.chk_session_id IS NULL THEN 'PASS'
+        ELSE coalesce(sc.eval_status_cd, 'PASS')
+      END as eval_status_cd
     FROM camdecmps.monitor_plan mp
     LEFT JOIN camdecmpsaux.check_session cs on cs.chk_session_id = mp.chk_session_id
     LEFT JOIN camdecmpsmd.severity_code sc on sc.severity_cd = cs.severity_cd;
@@ -266,4 +286,5 @@ BEGIN
     JOIN camdecmpsaux.check_session cs on mp.chk_session_id = cs.chk_session_id
     JOIN camdecmpsaux.check_log cl on cs.chk_session_id = cl.chk_session_id;
 END;
+
 $BODY$;
