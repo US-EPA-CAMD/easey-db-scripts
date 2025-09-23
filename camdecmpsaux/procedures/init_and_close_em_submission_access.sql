@@ -92,9 +92,9 @@ BEGIN
 
 			IF V_EM_SUB_ACCESS_ID IS NULL THEN
 				-- no window exists; create one
-				
+
 				-- MPs with locations that have not previously submitted data get pending windows that must be manually approved
-				V_PENDING := swjo.create_pending;
+				V_PENDING := SUB_ACCESS_REC.create_pending;
 	
 				INSERT INTO CAMDECMPSAUX.EM_SUBMISSION_ACCESS
 					(
@@ -117,9 +117,9 @@ BEGIN
 					'ECMPSOPN',
 					CURRENT_TIMESTAMP,
 					CASE WHEN V_PENDING = 'T' THEN 'PENDING' ELSE 'APPRVD' END,
-					CASE WHEN V_SYSDATE_AS_DATE < V_BEGINDATE OR V_PENDING = 'T' THEN NULL ELSE 'REQUIRE' END);
+					CASE WHEN CURRENT_DATE < V_BEGINDATE OR V_PENDING = 'T' THEN NULL ELSE 'REQUIRE' END);
 
-				IF V_SYSDATE_AS_DATE >= V_BEGINDATE::date AND V_PENDING = 'F' THEN
+				IF CURRENT_DATE >= V_BEGINDATE::date AND V_PENDING = 'F' THEN
 					-- send notifications when initial windows are created after the start of the reporting period
 					V_SEND_INITIAL_WINDOW_NOTIFICATION := TRUE;
 				END IF;
@@ -165,10 +165,10 @@ BEGIN
 			END IF;
 
 			IF V_SEND_INITIAL_WINDOW_NOTIFICATION THEN
-				CALL camdecmpsaux.ADD_WINDOW_EMAIL('155', 'windowNotification',
+				CALL camdecmpsaux.ADD_WINDOW_EMAIL(155::numeric, 'windowNotification',
 												SUB_ACCESS_REC.MON_PLAN_ID,
 												V_PERIOD_ID,
-												V_EM_SUB_ACCESS_ID,
+												V_EM_SUB_ACCESS_ID::bigint,
 												V_RESULT,
 												V_ERROR_MSG);
 				
@@ -239,19 +239,19 @@ BEGIN
 					-- 	close it and mark it as deleted
 					--	do not send a reminder
 					UPDATE CAMDECMPSAUX.EM_SUBMISSION_ACCESS
-					SET ACCESS_END_DATE     = GREATEST(V_SYSDATE_AS_DATE - 1, ACCESS_BEGIN_DATE),
+					SET ACCESS_END_DATE     = GREATEST(CURRENT_DATE - 1, ACCESS_BEGIN_DATE),
 						SUB_AVAILABILITY_CD = 'DELETE',
 						USERID              = 'ECMPSCLS',
-						UPDATE_DATE         = CURRENT_TIMESTAMP
+						UPDATE_DATE         = CURRENT_DATE
 				 	WHERE EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID;
 				
 				ELSIF CLOSE_ACCESS_REC.SUBMISSION_STATUS_CD IS NULL THEN
 					-- unused window 
 					-- 	send day 20 no submission warning email to agent					
-					CALL camdecmpsaux.ADD_WINDOW_EMAIL('151', 'submissionReminder',
+					CALL camdecmpsaux.ADD_WINDOW_EMAIL(151::numeric, 'submissionReminder',
 													CLOSE_ACCESS_REC.MON_PLAN_ID,
 													CLOSE_ACCESS_REC.RPT_PERIOD_ID,
-													CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID,
+													CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID::bigint,
 													V_RESULT,
 													V_ERROR_MSG);
 					
@@ -267,10 +267,10 @@ BEGIN
 							CLOSE_ACCESS_REC.SEVERITY_CD = 'CRIT2' THEN
 					-- used window with CRIT1 or CRIT2 submission
 					-- send day 20 critical error warning email to agent					           
-					CALL camdecmpsaux.ADD_WINDOW_EMAIL('152', 'submissionReminder',
+					CALL camdecmpsaux.ADD_WINDOW_EMAIL(152::numeric, 'submissionReminder',
 																 CLOSE_ACCESS_REC.MON_PLAN_ID,
 																 CLOSE_ACCESS_REC.RPT_PERIOD_ID,
-																 CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID,
+																 CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID::bigint,
 																 V_RESULT,
 																 V_ERROR_MSG);					
 				
@@ -298,27 +298,27 @@ BEGIN
 				-- 	close it and mark it as deleted
 				--	do not send a reminder
 				UPDATE CAMDECMPSAUX.EM_SUBMISSION_ACCESS
-				SET ACCESS_END_DATE     = GREATEST(V_SYSDATE_AS_DATE - 1, ACCESS_BEGIN_DATE),
+				SET ACCESS_END_DATE     = GREATEST(CURRENT_DATE - 1, ACCESS_BEGIN_DATE),
 					SUB_AVAILABILITY_CD = 'DELETE',
 					USERID              = 'ECMPSCLS',
-					UPDATE_DATE         = CURRENT_TIMESTAMP
+					UPDATE_DATE         = CURRENT_DATE
 				WHERE EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID;
 
 			ELSIF CLOSE_ACCESS_REC.EXTEND_WINDOW = 'T' THEN
 				-- extend window
 				UPDATE CAMDECMPSAUX.EM_SUBMISSION_ACCESS
-				SET ACCESS_END_DATE = CLOSE_ACCESS_REC.ACCESS_END_DATE + 30,
+				SET ACCESS_END_DATE = CURRENT_DATE + 29,
 					USERID          = 'ECMPSEXT',
-					UPDATE_DATE     = CURRENT_TIMESTAMP
+					UPDATE_DATE     = CURRENT_DATE
 				WHERE EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID;
 			
 				IF CLOSE_ACCESS_REC.SUBMISSION_STATUS_CD IS NULL OR
 					CLOSE_ACCESS_REC.SUBMISSION_STATUS_CD = 'NOLOAD' THEN
 					-- send extension notification for missing and failed submissions 					
-					CALL camdecmpsaux.ADD_WINDOW_EMAIL('156', 'submissionReminder',
+					CALL camdecmpsaux.ADD_WINDOW_EMAIL(156::numeric, 'submissionReminder',
 											CLOSE_ACCESS_REC.MON_PLAN_ID,
 											CLOSE_ACCESS_REC.RPT_PERIOD_ID,
-											CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID,
+											CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID::bigint,
 											V_RESULT,
 											V_ERROR_MSG);							
 
@@ -338,10 +338,10 @@ BEGIN
 				WHERE EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID;
 
 				-- send closing of resubmission window email to DR				
-				CALL camdecmpsaux.ADD_WINDOW_EMAIL('157', 'windowNotification',
+				CALL camdecmpsaux.ADD_WINDOW_EMAIL(157::numeric, 'windowNotification',
 					CLOSE_ACCESS_REC.MON_PLAN_ID,
 					CLOSE_ACCESS_REC.RPT_PERIOD_ID,
-					CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID,
+					CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID::bigint,
 					V_RESULT,
 					V_ERROR_MSG);				
 
