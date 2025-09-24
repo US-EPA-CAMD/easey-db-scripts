@@ -119,7 +119,7 @@ select  uni.oris_code,
             select  fac.oris_code,
                     fac.facility_name,
                     unt.unitid as unit_name,
-                    'Annaul' Period, 5 Ord, dat.op_year,
+                    'Annual' Period, 5 Ord, dat.op_year,
                     sum(dat.sum_op_time) op_time,
                     sum(dat.count_op_time) op_hours,
                     sum(dat.gload) gload,
@@ -158,7 +158,7 @@ select  uni.oris_code,
         uni.co2r,
         uni.noxm,
         uni.noxr
-having  ( string_agg( uni.Period, ', ' order by uni.Ord ) != 'Hour, Day, Month, Quarter, Annaul' )
+having  ( string_agg( uni.Period, ', ' order by uni.Ord ) != 'Hour, Day, Month, Quarter, Annual' )
  order
     by  uni.oris_code,
         uni.facility_name,
