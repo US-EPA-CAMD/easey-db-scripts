@@ -1,4 +1,8 @@
-CREATE OR REPLACE VIEW camdecmpsmd.vw_dto_unit_of_measure_code AS
+
+
+
+ 
+ CREATE OR REPLACE VIEW camdecmpsmd.vw_dto_unit_of_measure_code AS
 WITH cross_check as (
     SELECT cccv.cross_chk_catalog_value_id,
     ccc.cross_chk_catalog_name,
@@ -28,7 +32,7 @@ UNION
 SELECT unit.value1 AS unit_of_measure_code,
         null as unit_of_standard_code,
         unit.value2 AS record_type
-           FROM cross_check unit,
+           FROM cross_check unit
           WHERE unit.cross_chk_catalog_name::text = 'Units of Measure to Category'::text AND unit.value2 = 'SYSFUEL'::text
 UNION
 SELECT uom.unit_of_measure_code,
