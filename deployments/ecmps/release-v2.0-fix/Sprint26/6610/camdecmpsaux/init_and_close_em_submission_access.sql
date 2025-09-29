@@ -263,7 +263,7 @@ BEGIN
 							CLOSE_ACCESS_REC.RPT_PERIOD_ID;
 					END IF;
 
-				ELSIF CLOSE_ACCESS_REC.SUBMISSION_STATUS_CD = 'RECCRIT' OR
+				ELSIF CLOSE_ACCESS_REC.SEVERITY_CD = 'CRIT1' OR
 							CLOSE_ACCESS_REC.SEVERITY_CD = 'CRIT2' THEN
 					-- used window with CRIT1 or CRIT2 submission
 					-- send day 20 critical error warning email to agent					           
