@@ -60,9 +60,4 @@ RETURN QUERY
 END;
 $BODY$;
 
-GRANT EXECUTE ON FUNCTION camdecmps.rpt_em_emission_view_summary(text, text, text) TO PUBLIC;
-
-GRANT EXECUTE ON FUNCTION camdecmps.rpt_em_emission_view_summary(text, text, text) TO "r_quartz-scheduler";
-
-GRANT EXECUTE ON FUNCTION camdecmps.rpt_em_emission_view_summary(text, text, text) TO uryp8x9bvx7lbph4;
 
