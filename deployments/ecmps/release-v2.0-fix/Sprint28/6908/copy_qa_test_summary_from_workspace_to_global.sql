@@ -1,7 +1,5 @@
 -- PROCEDURE: camdecmps.copy_qa_test_summary_from_workspace_to_global(character varying)
 
-DROP PROCEDURE IF EXISTS camdecmps.copy_qa_test_summary_from_workspace_to_global(character varying);
-
 CREATE OR REPLACE PROCEDURE camdecmps.copy_qa_test_summary_from_workspace_to_global(
 	testsumid character varying)
 LANGUAGE 'plpgsql'
@@ -974,3 +972,4 @@ ON CONFLICT (on_off_cal_id) DO UPDATE
     DELETE FROM camdecmpswks.test_summary WHERE test_sum_id = testSumId;
 END;
 $BODY$;
+

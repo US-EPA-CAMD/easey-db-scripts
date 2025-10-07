@@ -1,7 +1,5 @@
--- View: camdecmpswks.vw_em_evaluate
-DROP VIEW IF EXISTS camdecmpswks.vw_em_evaluate;
-
-CREATE OR REPLACE VIEW camdecmpswks.vw_em_evaluate AS
+-- View: camdecmpswks.vw_em_submit
+CREATE OR REPLACE VIEW camdecmpswks.vw_em_submit AS
 SELECT
     fac.oris_code,
     fac.facility_name,
@@ -43,8 +41,11 @@ FROM
     JOIN camdecmpswks.MONITOR_PLAN pln ON pln.mon_plan_id = ems.mon_plan_id
     JOIN camd.PLANT fac ON fac.fac_id = pln.fac_id
     JOIN camdecmpsmd.EVAL_STATUS_CODE esc ON esc.eval_status_cd = ems.eval_status_cd
-    LEFT JOIN camdecmpsaux.EM_SUBMISSION_ACCESS esa ON esa.mon_plan_id = ems.mon_plan_id
+    JOIN camdecmpsaux.EM_SUBMISSION_ACCESS esa ON esa.mon_plan_id = ems.mon_plan_id
         AND esa.rpt_period_id = ems.rpt_period_id
+        AND esa.access_begin_date <= CURRENT_DATE
+        AND esa.access_end_date > CURRENT_DATE
+        AND esa.sub_availability_cd IN ('GRANTED', 'REQUIRE', 'CRITERR')
         AND esa.access_begin_date = (
             SELECT
                 CASE WHEN MAX(
@@ -69,6 +70,6 @@ FROM
                 sub.mon_plan_id = ems.mon_plan_id
                 AND sub.rpt_period_id = ems.rpt_period_id
         )
-    LEFT JOIN camdecmpsmd.SUBMISSION_AVAILABILITY_CODE sac ON sac.submission_availability_cd = esa.sub_availability_cd
-    LEFT JOIN camdecmpswks.check_session cs ON cs.chk_session_id = ems.chk_session_id
-    LEFT JOIN camdecmpsmd.severity_code sc on sc.severity_cd = cs.severity_cd
+    JOIN camdecmpsmd.SUBMISSION_AVAILABILITY_CODE sac ON sac.submission_availability_cd = esa.sub_availability_cd
+    JOIN camdecmpswks.check_session cs ON cs.chk_session_id = ems.chk_session_id
+    JOIN camdecmpsmd.severity_code sc on sc.severity_cd = cs.severity_cd

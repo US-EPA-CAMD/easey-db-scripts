@@ -120,15 +120,25 @@ INSERT INTO camdecmpsmd.test_type_group_code(
     ('MISC', 'Miscellaneous', 1);
 -----------------------------------------------------------------------
 TRUNCATE camdecmpsaux.email_template;
-INSERT INTO camdecmpsaux.email_template(
-  template_id, template_location, template_subject
-) VALUES
-  (150,	'templates/submission-confirmation.html', 'Submission Completion Notification'),
-  (151,	'templates/submission-151.html', 'Emissions Submission Reminder'),
-  (152,	'templates/submission-152.html', 'Emissions Submission Reminder'),
-  (155,	'templates/submission-155.html', 'Submission Window Open for Quarterly Emission File'),
-  (156,	'templates/submission-156.html', 'Outstanding Emissions Submission Reminder'),
-  (157,	'templates/submission-157.html', 'Emissions Resubmission Window Closed');
+INSERT INTO camdecmpsaux.email_template (template_id, template_location, template_subject, template_description)
+VALUES
+    (151, 'templates/email/submission-reminder/submission-reminder-not-received-151.html', 'Emissions Submission Reminder', 'Reminder email sent to users when no submission has been received by the deadline'),
+    (152, 'templates/email/submission-reminder/submission-reminder-resubmit-errors-152.html', 'Emissions Submission Reminder', 'Reminder email sent to users to resubmit data with errors that need correction'),
+    (155, 'templates/email/window-notification/submission-window-open-155.html', 'Submission Window Open for Quarterly Emission File', 'Notification email sent when the quarterly submission window opens for data submissions'),
+    (156, 'templates/email/submission-reminder/submission-reminder-past-due-156.html', 'Outstanding Emissions Submission Reminder', 'Reminder email sent to users when their submission is past due and overdue'),
+    (157, 'templates/email/window-notification/resubmission-window-closed-157.html', 'Emissions Resubmission Window Closed', 'Notification email sent when the resubmission window has closed for the quarter');
+    (200, 'templates/email/submissions/confirmation/submission-confirmation.hbs', NULL, 'Main submission confirmation email sent to users'),
+    (201, 'templates/email/submissions/feedback/submission-feedback.hbs', NULL, 'Detailed submission feedback with evaluation results'),
+    (202, 'templates/email/submissions/errors/submission-failure-user.hbs', NULL, 'Submission processing failure email to Users'),
+    (203, 'templates/email/submissions/errors/submission-failure-support.hbs', NULL, 'Submission processing failure email to Support team'),
+    (204, 'templates/email/evaluations/evaluation-queueing-failure-user.hbs', NULL, 'Evaluation queueing failure email to Users'),
+    (205, 'templates/email/evaluations/evaluation-queueing-failure-support.hbs', NULL, 'Evaluation queueing failure email to Support team'),
+    (206, 'templates/email/evaluations/mass-evaluation.hbs', NULL, 'Mass evaluation results and reports'),
+    (207, 'templates/email/submissions/mats/mats-submission.hbs', NULL, 'MATS file submission confirmation');
+    (208, 'templates/email/submissions/errors/submission-queueing-failure-user.hbs', NULL, 'Submission queueing failure email to Users'),
+    (209, 'templates/email/submissions/errors/submission-queueing-failure-support.hbs', NULL, 'Submission queueing failure email to Support team');
+
+
 -----------------------------------------------------------------------
 TRUNCATE camdecmpswks.certification_statement;
 INSERT INTO camdecmpswks.certification_statement(statement_text, prg_cd)

@@ -1,17 +1,17 @@
 TRUNCATE camdaux.job_configuration;
 
-INSERT INTO camdaux.job_configuration (job_type, job_group, job_name, job_description, trigger_name, trigger_description, cron_expression, active, run_once, run_at)
-    VALUES ('AllowanceComplianceBulkDataFiles', 'BULK_DATA', 'Allowance Compliance Bulk Data', 'Determine which allowance compliance data needs to be regenerated and schedule BulkDataFile jobs to handle the regen', 'Allowance Compliance Bulk Data Trigger', 'Runs yearly to determine if files need to be regenerated based on query results', '0 0/10 2-4 15 * ? *', TRUE, FALSE, NULL),
-    ('AllowanceHoldingsBulkDataFiles', 'BULK_DATA', 'Allowance Holdings Bulk Data', 'Generate Allowance Holdings and schedule BulkDataFile jobs to handle the regen', 'Allowance Holdings Bulk Data Trigger', 'Runs nightly to generate allowance holdings files', '0 0/10 2-4 ? * * *', TRUE, FALSE, NULL),
-    ('AllowanceTransactionsBulkDataFiles', 'BULK_DATA', 'Allowance Transactions Bulk Data', 'Determine which allowance transactions need to be regenerated and schedule BulkDataFile jobs to handle the regen', 'Allowance Transactions Bulk Data Trigger', 'Runs nightly to determine if files need to be regenerated based on query results', '0 0/10 2-4 15 1 ? *', TRUE, FALSE, NULL),
-    ('ApportionedEmissionsBulkData', 'BULK_DATA', 'Apportioned Emissions Bulk Data', 'Determine which emissions need to be regenerated and schedule BulkDataFile jobs to handle the regen', 'Apportioned Emissions Bulk Data Trigger', 'Runs nightly to determine if files need to be regenerated based on query results or end of reporting quarter', '0 0/10 4-6 ? * * *', TRUE, FALSE, NULL),
-    ('BulkDataFileMaintenance', 'BULK_DATA', 'Bulk Data File Maintenance', 'Run a check on the bulk data file maintenance queue', 'Bulk Data File Maintenance Trigger', 'Run nightly and check which files need to get rerun or cleaned up', '0 0 6 ? * * *', TRUE, FALSE, NULL),
-    ('BulkFileJobQueue', 'MAINTAINANCE', 'Bulk File Job Queue', 'Operates on an interval to determine if files in queue can be triggered.', 'Bulk File Job Queue Trigger', 'Operate every minute to determine if there are files in queue which can be triggered', '0 0/1 * 1/1 * ? *', TRUE, FALSE, NULL),
-    ('EmailQueue', 'MAINTAINANCE', 'Email Queue', 'Operates on an interval to determine if emails in the send email table can be sent.', 'Email Queue Trigger', 'Operate every minute to determine if there are emails in the queue which can be sent', '0 0/1 * 1/1 * ? *', TRUE, FALSE, NULL),
-    ('EmissionsComplianceBulkDataFiles', 'BULK_DATA', 'Emissions Compliance Bulk Data', 'Determine which emissions compliance data needs to be regenerated and schedule BulkDataFile jobs to handle the regen', 'Emissions Compliance Bulk Data Trigger', 'Runs nightly to determine if files need to be regenerated based on query results', '0 0/10 2-4 15 * ? *', TRUE, FALSE, NULL),
-    ('EvaluationJobQueue', 'MAINTAINANCE', 'Evaluation Job Queue', 'Operates on an interval to determine if files in evaluation queue can be triggered.', 'Evaluation Job Queue Trigger', 'Operate every 15 seconds to determine if there are files in evaluation queue which can be triggered', '*/15 * * * * ? *', TRUE, FALSE, NULL),
-    ('FacilityAttributesBulkDataFiles', 'BULK_DATA', 'Facility Attributes Bulk Data', 'Determine which facility attributes need to be regenerated and schedule BulkDataFile jobs to handle the regen', 'Facility Attributes Bulk Data Trigger', 'Runs nightly to determine if files need to be regenerated based on query results', '0 0/10 2-4 ? * * *', TRUE, FALSE, NULL),
-    ('InventoryChanges', 'MAINTAINANCE', 'Inventory Changes', 'Operates on an interval to determine if any remote facility/unit inventory changes require changes to existing monitoring plans.', 'Inventory Changes Trigger', 'Operate every 5 minutes to determine if there are any new changes recorded in the inventory status log.', '0 0/5 * * * ?', TRUE, FALSE, NULL),
-    ('PdemJob', 'MAINTAINANCE', 'Program Data Emissions Job Queue', 'Operates on an interval to determine if emission reports in PDEM_REPORT table need to be generated.', 'Program Data Emissions Job Queue Trigger', 'Operate every minute to determine if there are PDEM reports which can be triggered for generation', '0 0/1 * 1/1 * ? *', TRUE, FALSE, NULL),
-    ('SubmissionJobQueue', 'MAINTAINANCE', 'Submission Job Queue', 'Operates on an interval to determine if sets in SubmissionSet table can be submitted.', 'Submission Job Queue Trigger', 'Operate every minute to determine if there are files in submission queue which can be triggered', '0 0/1 * 1/1 * ? *', TRUE, FALSE, NULL),
-    ('SubmissionWindowManagement', 'MAINTAINANCE', 'Submission Window Management', 'Manages emission submission windows', 'Submission Window Management Trigger', 'Runs daily at 3AM to initialize and close emission submission access', '0 0 3 ? * * *', TRUE, FALSE, NULL);
+INSERT INTO camdaux.job_configuration (job_class, cron_expression, active, run_once, run_at)
+    VALUES ('AllowanceComplianceBulkDataFiles', '0 0/10 2-4 15 * ? *', TRUE, FALSE, NULL),
+    ('AllowanceHoldingsBulkDataFiles', '0 0/10 2-4 ? * * *', TRUE, FALSE, NULL),
+    ('AllowanceTransactionsBulkDataFiles', '0 0/10 2-4 15 1 ? *', TRUE, FALSE, NULL),
+    ('ApportionedEmissionsBulkData', '0 0/10 4-6 ? * * *', TRUE, FALSE, NULL),
+    ('BulkDataFileMaintenance', '0 0 6 ? * * *', TRUE, FALSE, NULL),
+    ('BulkFileJobQueue', '0 0/1 * 1/1 * ? *', TRUE, FALSE, NULL),
+    ('EmailQueue', '0 0/1 * 1/1 * ? *', TRUE, FALSE, NULL),
+    ('EmissionsComplianceBulkDataFiles', '0 0/10 2-4 15 * ? *', TRUE, FALSE, NULL),
+    ('EvaluationJobQueue', '*/15 * * * * ? *', TRUE, FALSE, NULL),
+    ('FacilityAttributesBulkDataFiles', '0 0/10 2-4 ? * * *', TRUE, FALSE, NULL),
+    ('InventoryChanges', '0 0/5 * * * ?', TRUE, FALSE, NULL),
+    ('PdemJob', '0 0/1 * 1/1 * ? *', TRUE, FALSE, NULL),
+    ('SubmissionJobQueue', '0 0/1 * 1/1 * ? *', TRUE, FALSE, NULL),
+    ('SubmissionWindowManagement', '0 0 3 ? * * *', TRUE, FALSE, NULL);
