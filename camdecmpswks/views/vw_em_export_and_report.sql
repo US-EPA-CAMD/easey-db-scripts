@@ -34,7 +34,9 @@ SELECT
     ems.last_updated AS update_date,
     esa.sub_availability_cd AS window_status,
     esa.access_end_date AS window_expired_date,
-    prd.period_abbreviation
+    prd.period_abbreviation,
+    sc.severity_cd,
+    sc.severity_cd_description
 FROM
     camdecmpswks.EMISSION_EVALUATION ems
     JOIN camdecmpsmd.REPORTING_PERIOD prd ON prd.rpt_period_id = ems.rpt_period_id
@@ -46,23 +48,27 @@ FROM
         AND esa.access_begin_date = (
             SELECT
                 CASE WHEN MAX(
-                    CASE WHEN sub.sub_availability_cd != 'DELETE' THEN
+                    CASE WHEN sub.sub_availability_cd NOT IN ('DELETE', 'NOTSUB') THEN
                         sub.access_begin_date
-                    END) IS NOT NULL
+                    END
+                ) IS NOT NULL
                 -- If there's a non-'DELETE' record, pick its latest access_begin_date
                 THEN
                     MAX(
-                        CASE WHEN sub.sub_availability_cd != 'DELETE' THEN
+                        CASE WHEN sub.sub_availability_cd NOT IN ('DELETE', 'NOTSUB') THEN
                             sub.access_begin_date
-                        END)
+                        END
+                    )
                     -- Otherwise, pick the latest record (even if it is 'DELETE')
                 ELSE
                     MAX(sub.access_begin_date)
                 END
             FROM
                 camdecmpsaux.EM_SUBMISSION_ACCESS sub
-        WHERE
-            sub.mon_plan_id = ems.mon_plan_id
-            AND sub.rpt_period_id = ems.rpt_period_id
+            WHERE
+                sub.mon_plan_id = ems.mon_plan_id
+                AND sub.rpt_period_id = ems.rpt_period_id
         )
     LEFT JOIN camdecmpsmd.SUBMISSION_AVAILABILITY_CODE sac ON sac.submission_availability_cd = esa.sub_availability_cd
+    LEFT JOIN camdecmpswks.check_session cs ON cs.chk_session_id = ems.chk_session_id
+    LEFT JOIN camdecmpsmd.severity_code sc on sc.severity_cd = cs.severity_cd
