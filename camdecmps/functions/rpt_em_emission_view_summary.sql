@@ -3,10 +3,20 @@
 -- DROP FUNCTION IF EXISTS camdecmps.rpt_em_emission_view_summary(text, text, text);
 
 CREATE OR REPLACE FUNCTION camdecmps.rpt_em_emission_view_summary(
-	p_mon_plan_id text,
-	p_loc_id text,
-	p_rpt_period_id text)
-    RETURNS TABLE(period_description character varying, row_name text, op_hours numeric, op_time numeric, heat_input numeric, so2_mass numeric, co2_mass numeric, nox_rate numeric, nox_mass numeric) 
+	monitorPlanId text,
+	locationId text,
+	reportingPeriodIds text)
+    RETURNS TABLE
+    (
+        period_description varchar,
+        op_hours numeric,
+        op_time numeric,
+        heat_input numeric,
+        so2_mass numeric,
+        co2_mass numeric,
+        nox_rate numeric,
+        nox_mass numeric
+    ) 
     LANGUAGE 'plpgsql'
     COST 100
     VOLATILE PARALLEL UNSAFE
@@ -17,7 +27,7 @@ AS $BODY$
 BEGIN
 
 RETURN QUERY
-  select  lst.period_description, lst.summary_name as row_name,
+  select  lst.period_description,
 			max( case when lst.parameter_cd = 'OPHOURS' then lst.summary_value end ) as op_hours,
 			max( case when lst.parameter_cd = 'OPTIME' then lst.summary_value end ) as op_time,
 			max( case when lst.parameter_cd = 'HIT' then lst.summary_value end ) as heat_input,
@@ -37,12 +47,12 @@ RETURN QUERY
                     end as summary_value
  	   from camdecmps.SUMMARY_VALUE smv
 	   join camdecmps.MONITOR_PLAN_LOCATION mpl on mpl.mon_loc_id=smv.mon_loc_id
-		   and mpl.mon_plan_id = p_mon_plan_id
+		   and mpl.mon_plan_id = monitorPlanId
 		   and smv.parameter_cd in ('CO2M','HIT','NOXM','NOXR','OPHOURS','OPTIME','SO2M') 
-		   and smv.mon_loc_id = p_loc_id
+		   and smv.mon_loc_id = locationId
   	   join camdecmps.EMISSION_EVALUATION ems  on ems.rpt_period_id =smv.rpt_period_id
            and mpl.mon_plan_id=ems.mon_plan_id 
-	       and smv.rpt_period_id = any( string_to_array( p_rpt_period_id, ',' )::numeric[] )
+	       and smv.rpt_period_id = any( string_to_array( reportingPeriodIds, ',' )::numeric[] )
  	   join camdecmpsmd.REPORTING_PERIOD prs on prs.rpt_period_id = ems.rpt_period_id
   	   join (
 			 select 'QTRRPT' as summary_type_cd, 'Quarterly Reported' as summary_name, 1 as summary_num union all
