@@ -39,7 +39,9 @@ VALUES
     (201, 'templates/email/submissions/feedback/submission-feedback.hbs', NULL, 'Detailed submission feedback with evaluation results'),
     (202, 'templates/email/submissions/errors/submission-failure-user.hbs', NULL, 'Submission processing failure email to Users'),
     (203, 'templates/email/submissions/errors/submission-failure-support.hbs', NULL, 'Submission processing failure email to Support team'),
-    (204, 'templates/email/submissions/errors/queueing-failure-user.hbs', NULL, 'Submission queueing failure email to Users'),
-    (205, 'templates/email/submissions/errors/queueing-failure-support.hbs', NULL, 'Submission queueing failure email to Support team'),
+    (204, 'templates/email/evaluations/evaluation-queueing-failure-user.hbs', NULL, 'Evaluation queueing failure email to Users'),
+    (205, 'templates/email/evaluations/evaluation-queueing-failure-support.hbs', NULL, 'Evaluation queueing failure email to Support team'),
     (206, 'templates/email/evaluations/mass-evaluation.hbs', NULL, 'Mass evaluation results and reports'),
     (207, 'templates/email/submissions/mats/mats-submission.hbs', NULL, 'MATS file submission confirmation');
+    (208, 'templates/email/submissions/errors/submission-queueing-failure-user.hbs', NULL, 'Submission queueing failure email to Users'),
+    (209, 'templates/email/submissions/errors/submission-queueing-failure-support.hbs', NULL, 'Submission queueing failure email to Support team');
