@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW camdecmpsmd.vw_uom_code_for_load AS
+CREATE OR REPLACE VIEW camdecmpsmd.vw_dto_uom_code_for_load AS
 select  ccv.value1 as unit_of_measure_code
 from  camdecmpsmd.CROSS_CHECK_CATALOG ccc
 join camdecmpsmd.CROSS_CHECK_CATALOG_VALUE ccv using ( cross_chk_catalog_id )

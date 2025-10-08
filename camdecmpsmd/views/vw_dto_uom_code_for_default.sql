@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW camdecmpsmd.vw_uom_code_for_default AS
+CREATE OR REPLACE VIEW camdecmpsmd.vw_dto_uom_code_for_default AS
 select  distinct
         uom.unit_of_measure_code
 from  ( 
