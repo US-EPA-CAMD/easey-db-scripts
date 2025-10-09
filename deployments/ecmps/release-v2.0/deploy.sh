@@ -325,7 +325,7 @@ if [ $2 == "POST_DEPLOYMENT_CLEANUP" ]; then
   DROP TABLE IF EXISTS camdaux.missing_oris CASCADE;
   DROP TABLE IF EXISTS camdaux.sftp_failures CASCADE;
   DROP TABLE IF EXISTS camdaux.sftp_log CASCADE;
-  \i ./camdecmpswks-em-supp-data-cleanup.sql
+  \i ./em-supp-data-cleanup.sql
   \i ./update-mp-qa-em-check-session-ids.sql
   CALL camdecmpswks.load_workspace();
   "
