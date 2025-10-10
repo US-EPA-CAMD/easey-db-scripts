@@ -33,9 +33,12 @@ DECLARE
 	CURR_SUB_STATUS         RECORD;
 	V_COLLATERAL_RESULT     TEXT;
 	V_COLLATERAL_ERROR_MSG  VARCHAR;
-BEGIN
+BEGIN	
 	v_result := 'T';
 	v_error_msg := '';
+
+	-- Start explicit transaction
+	BEGIN
 
 	-- Convert text parameter to date
 	V_SYSDATE_AS_DATE := TO_DATE(v_sysdate, 'YYYY-MM-DD');
@@ -85,7 +88,7 @@ BEGIN
 		SELECT swjo.MON_PLAN_ID, 
 			   swjo.EM_SUB_STATUS, 
 			   swjo.em_sub_access_id,
-			   swjo.create_pending
+			   swjo.new_location_count
 			FROM camdecmpsaux.vw_submission_window_job_open swjo
 			WHERE swjo.rpt_period_id = V_PERIOD_ID 
 	  		AND COALESCE(V_FAC_ID, swjo.FAC_ID) = swjo.FAC_ID
@@ -94,9 +97,12 @@ BEGIN
 
 			IF V_EM_SUB_ACCESS_ID IS NULL THEN
 				-- no window exists; create one
-
+				
 				-- MPs with locations that have not previously submitted data get pending windows that must be manually approved
-				V_PENDING := SUB_ACCESS_REC.create_pending;
+				V_PENDING := 'F';
+				IF SUB_ACCESS_REC.new_location_count > 0 THEN 
+					V_PENDING := 'T';
+				END IF;
 	
 				INSERT INTO CAMDECMPSAUX.EM_SUBMISSION_ACCESS
 					(
@@ -119,17 +125,17 @@ BEGIN
 					'ECMPSOPN',
 					CURRENT_TIMESTAMP,
 					CASE WHEN V_PENDING = 'T' THEN 'PENDING' ELSE 'APPRVD' END,
-					CASE WHEN V_SYSDATE_AS_DATE < V_BEGINDATE OR V_PENDING = 'T' THEN NULL ELSE 'REQUIRE' END);
+					CASE WHEN CURRENT_DATE < V_BEGINDATE OR V_PENDING = 'T' THEN NULL ELSE 'REQUIRE' END);
 
-            -- Trigger collateral EM data updates for ESA changes
-            SELECT * INTO V_COLLATERAL_RESULT, V_COLLATERAL_ERROR_MSG
-            FROM camdecmpswks.update_collateral_em_data_for_esa_changes(SUB_ACCESS_REC.MON_PLAN_ID, V_PERIOD_ID);
+				-- Trigger collateral EM data updates for ESA changes
+				SELECT * INTO V_COLLATERAL_RESULT, V_COLLATERAL_ERROR_MSG
+				FROM camdecmpswks.update_collateral_em_data_for_esa_changes(SUB_ACCESS_REC.MON_PLAN_ID, V_PERIOD_ID);
+				
+				IF V_COLLATERAL_RESULT = 'F' THEN
+					RAISE EXCEPTION 'Failed to update collateral EM data for ESA changes: %', V_COLLATERAL_ERROR_MSG;
+				END IF;
 
-            IF V_COLLATERAL_RESULT = 'F' THEN
-                RAISE EXCEPTION 'Failed to update collateral EM data for ESA changes: %', V_COLLATERAL_ERROR_MSG;
-            END IF;
-
-            IF V_SYSDATE_AS_DATE >= V_BEGINDATE::date AND V_PENDING = 'F' THEN
+				IF CURRENT_DATE >= V_BEGINDATE::date AND V_PENDING = 'F' THEN
 					-- send notifications when initial windows are created after the start of the reporting period
 					V_SEND_INITIAL_WINDOW_NOTIFICATION := TRUE;
 				END IF;
@@ -172,7 +178,7 @@ BEGIN
 					-- Trigger collateral EM data updates for ESA changes
 					SELECT * INTO V_COLLATERAL_RESULT, V_COLLATERAL_ERROR_MSG
 					FROM camdecmpswks.update_collateral_em_data_for_esa_changes(SUB_ACCESS_REC.MON_PLAN_ID, V_PERIOD_ID);
-
+					
 					IF V_COLLATERAL_RESULT = 'F' THEN
 						RAISE EXCEPTION 'Failed to update collateral EM data for ESA changes: %', V_COLLATERAL_ERROR_MSG;
 					END IF;
@@ -183,10 +189,10 @@ BEGIN
 			END IF;
 
 			IF V_SEND_INITIAL_WINDOW_NOTIFICATION THEN
-				CALL camdecmpsaux.ADD_WINDOW_EMAIL(155::numeric, 'windowNotification',
+				CALL camdecmpsaux.ADD_WINDOW_EMAIL('155', 'windowNotification',
 												SUB_ACCESS_REC.MON_PLAN_ID,
 												V_PERIOD_ID,
-												V_EM_SUB_ACCESS_ID::bigint,
+												V_EM_SUB_ACCESS_ID,
 												V_RESULT,
 												V_ERROR_MSG);
 				
@@ -241,13 +247,13 @@ BEGIN
 				UPDATE CAMDECMPSAUX.EM_SUBMISSION_ACCESS
 					 SET SUB_AVAILABILITY_CD = 'REQUIRE',
 							 USERID          = 'ECMPSOPN',
-							 UPDATE_DATE     =  CURRENT_TIMESTAMP
+							 UPDATE_DATE     = CURRENT_TIMESTAMP
 				 WHERE EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID;
 
 				-- Trigger collateral EM data updates for ESA changes
 				SELECT * INTO V_COLLATERAL_RESULT, V_COLLATERAL_ERROR_MSG
 				FROM camdecmpswks.update_collateral_em_data_for_esa_changes(CLOSE_ACCESS_REC.MON_PLAN_ID, CLOSE_ACCESS_REC.RPT_PERIOD_ID);
-
+				
 				IF V_COLLATERAL_RESULT = 'F' THEN
 					RAISE EXCEPTION 'Failed to update collateral EM data for ESA changes: %', V_COLLATERAL_ERROR_MSG;
 				END IF;
@@ -268,24 +274,24 @@ BEGIN
 					SET ACCESS_END_DATE     = GREATEST(V_SYSDATE_AS_DATE - 1, ACCESS_BEGIN_DATE),
 						SUB_AVAILABILITY_CD = 'DELETE',
 						USERID              = 'ECMPSCLS',
-						UPDATE_DATE         =  CURRENT_TIMESTAMP
+						UPDATE_DATE         = CURRENT_TIMESTAMP
 				 	WHERE EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID;
 
 					-- Trigger collateral EM data updates for ESA changes
 					SELECT * INTO V_COLLATERAL_RESULT, V_COLLATERAL_ERROR_MSG
 					FROM camdecmpswks.update_collateral_em_data_for_esa_changes(CLOSE_ACCESS_REC.MON_PLAN_ID, CLOSE_ACCESS_REC.RPT_PERIOD_ID);
-
+					
 					IF V_COLLATERAL_RESULT = 'F' THEN
 						RAISE EXCEPTION 'Failed to update collateral EM data for ESA changes: %', V_COLLATERAL_ERROR_MSG;
 					END IF;
-
+				
 				ELSIF CLOSE_ACCESS_REC.SUBMISSION_STATUS_CD IS NULL THEN
 					-- unused window 
 					-- 	send day 20 no submission warning email to agent					
-					CALL camdecmpsaux.ADD_WINDOW_EMAIL(151::numeric, 'submissionReminder',
+					CALL camdecmpsaux.ADD_WINDOW_EMAIL('151', 'submissionReminder',
 													CLOSE_ACCESS_REC.MON_PLAN_ID,
 													CLOSE_ACCESS_REC.RPT_PERIOD_ID,
-													CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID::bigint,
+													CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID,
 													V_RESULT,
 													V_ERROR_MSG);
 					
@@ -297,14 +303,14 @@ BEGIN
 							CLOSE_ACCESS_REC.RPT_PERIOD_ID;
 					END IF;
 
-				ELSIF CLOSE_ACCESS_REC.SEVERITY_CD = 'CRIT1' OR
+				ELSIF CLOSE_ACCESS_REC.SUBMISSION_STATUS_CD = 'RECCRIT' OR
 							CLOSE_ACCESS_REC.SEVERITY_CD = 'CRIT2' THEN
 					-- used window with CRIT1 or CRIT2 submission
 					-- send day 20 critical error warning email to agent					           
-					CALL camdecmpsaux.ADD_WINDOW_EMAIL(152::numeric, 'submissionReminder',
+					CALL camdecmpsaux.ADD_WINDOW_EMAIL('152', 'submissionReminder',
 																 CLOSE_ACCESS_REC.MON_PLAN_ID,
 																 CLOSE_ACCESS_REC.RPT_PERIOD_ID,
-																 CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID::bigint,
+																 CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID,
 																 V_RESULT,
 																 V_ERROR_MSG);					
 				
@@ -335,13 +341,13 @@ BEGIN
 				SET ACCESS_END_DATE     = GREATEST(V_SYSDATE_AS_DATE - 1, ACCESS_BEGIN_DATE),
 					SUB_AVAILABILITY_CD = 'DELETE',
 					USERID              = 'ECMPSCLS',
-					UPDATE_DATE         =  CURRENT_TIMESTAMP
+					UPDATE_DATE         = CURRENT_TIMESTAMP
 				WHERE EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID;
 
 				-- Trigger collateral EM data updates for ESA changes
 				SELECT * INTO V_COLLATERAL_RESULT, V_COLLATERAL_ERROR_MSG
 				FROM camdecmpswks.update_collateral_em_data_for_esa_changes(CLOSE_ACCESS_REC.MON_PLAN_ID, CLOSE_ACCESS_REC.RPT_PERIOD_ID);
-
+				
 				IF V_COLLATERAL_RESULT = 'F' THEN
 					RAISE EXCEPTION 'Failed to update collateral EM data for ESA changes: %', V_COLLATERAL_ERROR_MSG;
 				END IF;
@@ -349,26 +355,26 @@ BEGIN
 			ELSIF CLOSE_ACCESS_REC.EXTEND_WINDOW = 'T' THEN
 				-- extend window
 				UPDATE CAMDECMPSAUX.EM_SUBMISSION_ACCESS
-				SET ACCESS_END_DATE = V_SYSDATE_AS_DATE + 30,
+				SET ACCESS_END_DATE = CURRENT_DATE + 29,
 					USERID          = 'ECMPSEXT',
-					UPDATE_DATE     =  CURRENT_TIMESTAMP
+					UPDATE_DATE     = CURRENT_TIMESTAMP
 				WHERE EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID;
 
 				-- Trigger collateral EM data updates for ESA changes
 				SELECT * INTO V_COLLATERAL_RESULT, V_COLLATERAL_ERROR_MSG
 				FROM camdecmpswks.update_collateral_em_data_for_esa_changes(CLOSE_ACCESS_REC.MON_PLAN_ID, CLOSE_ACCESS_REC.RPT_PERIOD_ID);
-
+				
 				IF V_COLLATERAL_RESULT = 'F' THEN
 					RAISE EXCEPTION 'Failed to update collateral EM data for ESA changes: %', V_COLLATERAL_ERROR_MSG;
 				END IF;
-
+			
 				IF CLOSE_ACCESS_REC.SUBMISSION_STATUS_CD IS NULL OR
 					CLOSE_ACCESS_REC.SUBMISSION_STATUS_CD = 'NOLOAD' THEN
 					-- send extension notification for missing and failed submissions 					
-					CALL camdecmpsaux.ADD_WINDOW_EMAIL(156::numeric, 'submissionReminder',
+					CALL camdecmpsaux.ADD_WINDOW_EMAIL('156', 'submissionReminder',
 											CLOSE_ACCESS_REC.MON_PLAN_ID,
 											CLOSE_ACCESS_REC.RPT_PERIOD_ID,
-											CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID::bigint,
+											CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID,
 											V_RESULT,
 											V_ERROR_MSG);							
 
@@ -390,16 +396,16 @@ BEGIN
 				-- Trigger collateral EM data updates for ESA changes
 				SELECT * INTO V_COLLATERAL_RESULT, V_COLLATERAL_ERROR_MSG
 				FROM camdecmpswks.update_collateral_em_data_for_esa_changes(CLOSE_ACCESS_REC.MON_PLAN_ID, CLOSE_ACCESS_REC.RPT_PERIOD_ID);
-
+				
 				IF V_COLLATERAL_RESULT = 'F' THEN
 					RAISE EXCEPTION 'Failed to update collateral EM data for ESA changes: %', V_COLLATERAL_ERROR_MSG;
 				END IF;
 
-				-- send closing of resubmission window email to DR
-				CALL camdecmpsaux.ADD_WINDOW_EMAIL(157::numeric, 'windowNotification',
+				-- send closing of resubmission window email to DR				
+				CALL camdecmpsaux.ADD_WINDOW_EMAIL('157', 'windowNotification',
 					CLOSE_ACCESS_REC.MON_PLAN_ID,
 					CLOSE_ACCESS_REC.RPT_PERIOD_ID,
-					CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID::bigint,
+					CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID,
 					V_RESULT,
 					V_ERROR_MSG);				
 
@@ -412,11 +418,20 @@ BEGIN
 
 		END IF;
 	END LOOP;
+	
+	-- Commit transaction if we reach here successfully
+	COMMIT;
+	
+	EXCEPTION
+	    WHEN OTHERS THEN
+	        -- Rollback transaction on any exception
+	        ROLLBACK;
+	        GET STACKED DIAGNOSTICS V_RESULT = PG_EXCEPTION_DETAIL,
+	                            V_ERROR_MSG = PG_EXCEPTION_HINT;
+	        V_RESULT := 'F';
+	        V_ERROR_MSG := SQLERRM ||
+	                       COALESCE(V_ERROR_MSG, '');
+	END;
 
-EXCEPTION
-	WHEN OTHERS THEN
-		V_RESULT := 'F';
-		V_ERROR_MSG := SQLERRM;
-		RAISE NOTICE 'Error in init_and_close_em_submission_access: %', V_ERROR_MSG;
 END
 $BODY$;

@@ -1,6 +1,4 @@
 -- View: camdecmpswks.vw_em_evaluate
-DROP VIEW IF EXISTS camdecmpswks.vw_em_evaluate;
-
 CREATE OR REPLACE VIEW camdecmpswks.vw_em_evaluate AS
 SELECT
     fac.oris_code,
