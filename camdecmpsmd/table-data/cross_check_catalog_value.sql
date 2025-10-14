@@ -78,7 +78,6 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, c
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (109, 8, 'HI', 'AD', NULL);
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (110, 8, 'HI', 'ADCALC', NULL);
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (111, 8, 'SO2', 'AD', NULL);
-INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (112, 16, 'CO2', 'CO2W', 'F-11');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (113, 16, 'CO2', 'CO2D', 'F-2');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (114, 16, 'CO2C', 'O2W', 'F-14B');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (115, 16, 'CO2C', 'O2D', 'F-14A');
@@ -120,7 +119,6 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, c
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (153, 16, 'HI', 'GFFM', 'F-20');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (154, 16, 'OILM', 'OFFM', 'D-3');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (155, 16, 'SO2', 'OFFM', 'D-2');
-INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (156, 16, 'SO2', 'GFFM', 'D-4');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (157, 16, 'SO2', 'GFFM', 'D-5');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (159, 16, 'CO2', 'GFFM', 'G-4');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (161, 17, 'CO2', 'HI', NULL);
@@ -348,7 +346,6 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, c
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (437, 16, 'CO2', 'O2B', 'F-2');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (438, 16, 'CO2C', 'O2B', 'F-14A');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (439, 16, 'CO2C', 'O2B', 'F-14B');
-INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (440, 16, 'HI', 'O2B', 'F-17');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (441, 16, 'HI', 'O2B', 'F-18');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (472, 11, 'CO2', 'FORMULA', NULL);
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (473, 11, 'CO2C', 'FORMULA', NULL);
@@ -411,10 +408,8 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, c
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (530, 33, 'LINE', 'O2', NULL);
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (531, 33, 'RATA', NULL, 'NOXP');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (532, 16, 'CO2', NULL, 'G-4A');
-INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (534, 16, 'CO2M', NULL, 'G-1');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (535, 16, 'CO2M', NULL, 'G-2');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (536, 16, 'CO2M', NULL, 'G-3');
-INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (537, 16, 'CO2M', NULL, 'G-5');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (538, 16, 'CO2M', NULL, 'G-6');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (539, 16, 'CO2M', NULL, 'G-8');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (540, 16, 'FC', NULL, 'F-7B');
@@ -1148,7 +1143,6 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, c
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (1414, 16, 'HGRH', 'STRAIND', '19-5');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (1415, 16, 'HGRH', 'STRAIND', '19-9');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (1416, 16, 'HGRH', 'STRAIND', '19-6');
-INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (1417, 16, 'HGRH', 'CO2D', '19-6');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (1418, 16, 'SO2', 'GFFM', 'D-4');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (1419, 16, 'HGRH', 'O2D', '19-1');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (1420, 16, 'HGRH', 'O2D', '19-4');
@@ -1246,7 +1240,7 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, c
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (1517, 16, 'HFRH', 'CO2W', '19-9');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (1518, 16, 'HFRH', 'O2B', '19-1');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (1519, 16, 'HFRH', 'O2B', '19-2');
-INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (1520, 16, 'HFRH', 'O2B', '19-3');
+
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (1521, 16, 'HFRH', 'O2B', '19-3');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (1522, 16, 'HFRH', 'O2B', '19-4');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (1524, 16, 'HFRH', 'O2D', '19-1');
@@ -2461,13 +2455,4 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, c
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (9336, 190, 'PM', 'W', null);
 
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (9337, 28, 'NOCX', 'MAXD', null);
---delete the dup records--------
-delete from camdecmpsmd.CROSS_CHECK_CATALOG_VALUE
-where cross_chk_catalog_value_id in
-(select cross_chk_catalog_value_id from (select min(cross_chk_catalog_value_id) cross_chk_catalog_value_id,
-   cross_chk_catalog_id, value1, value2, value3
-   from camdecmpsmd.CROSS_CHECK_CATALOG_VALUE 
-   group  by  cross_chk_catalog_id,value1, value2,value3
-   having  count( * ) > 1 
- order by cross_chk_catalog_id, value1, value2, value3) 
- val);
+
