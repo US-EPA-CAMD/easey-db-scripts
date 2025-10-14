@@ -2461,3 +2461,13 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, c
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (9336, 190, 'PM', 'W', null);
 
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (9337, 28, 'NOCX', 'MAXD', null);
+--delete the dup records--------
+delete from camdecmpsmd.CROSS_CHECK_CATALOG_VALUE
+where cross_chk_catalog_value_id in
+(select cross_chk_catalog_value_id from (select min(cross_chk_catalog_value_id) cross_chk_catalog_value_id,
+   cross_chk_catalog_id, value1, value2, value3
+   from camdecmpsmd.CROSS_CHECK_CATALOG_VALUE 
+   group  by  cross_chk_catalog_id,value1, value2,value3
+   having  count( * ) > 1 
+ order by cross_chk_catalog_id, value1, value2, value3) 
+ val);
