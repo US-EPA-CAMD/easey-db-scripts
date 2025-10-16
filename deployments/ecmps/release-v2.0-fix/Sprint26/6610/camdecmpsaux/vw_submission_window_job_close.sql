@@ -30,8 +30,8 @@ select
 		else 'F'
 	end as CHECK_FOR_REMINDER,
 	case
-		when S.STATUS_CD IN ('NOLOAD', 'RECCRIT') OR
-			S.SEVERITY_CD = 'CRIT2' then 'T'
+		when S.STATUS_CD IN ('NOLOAD') OR
+             S.SEVERITY_CD = 'CRIT1' OR S.SEVERITY_CD = 'CRIT2' then 'T'
 		else 'F'
 	end as EXTEND_WINDOW	
 from
