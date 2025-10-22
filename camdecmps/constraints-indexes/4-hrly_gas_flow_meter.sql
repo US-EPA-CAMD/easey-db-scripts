@@ -1,11 +1,10 @@
 ALTER TABLE IF EXISTS camdecmps.hrly_gas_flow_meter
-    ADD CONSTRAINT pk_hrly_gas_flow_meter PRIMARY KEY (hrly_gas_flow_meter_id, rpt_period_id),
+    ADD CONSTRAINT pk_hrly_gas_flow_meter PRIMARY KEY (rpt_period_id, hrly_gas_flow_meter_id),
     ADD CONSTRAINT fk_hrly_gas_flow_meter_component FOREIGN KEY (component_id)
         REFERENCES camdecmps.component (component_id) MATCH SIMPLE
         ON DELETE CASCADE,
-    ADD CONSTRAINT fk_hrly_gas_flow_meter_hrly_op_data FOREIGN KEY (hour_id, rpt_period_id)
-        REFERENCES camdecmps.hrly_op_data (hour_id, rpt_period_id) MATCH SIMPLE
-        ON DELETE CASCADE,
+    ADD CONSTRAINT fk_hrly_gas_flow_meter_hrly_op_data FOREIGN KEY (rpt_period_id, hour_id)
+        REFERENCES camdecmps.hrly_op_data (rpt_period_id, hour_id) MATCH SIMPLE,
     ADD CONSTRAINT fk_hrly_gas_flow_meter_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE
         ON DELETE CASCADE,
@@ -39,6 +38,10 @@ CREATE INDEX IF NOT EXISTS idx_hrly_gas_flow_meter_begin_end_hour_flg
 CREATE INDEX IF NOT EXISTS idx_hrly_gas_flow_meter_sampling_rate_uom
     ON camdecmps.hrly_gas_flow_meter USING btree
     (sampling_rate_uom COLLATE pg_catalog."default" ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_hrly_gas_flow_meter_rpt_period_id_hour_id
+    ON camdecmps.hrly_gas_flow_meter USING btree
+    (rpt_period_id ASC NULLS LAST, hour_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
 CREATE INDEX IF NOT EXISTS idx_hrly_gas_flow_meter_rpt_period_id_mon_loc_id
     ON camdecmps.hrly_gas_flow_meter USING btree
