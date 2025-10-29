@@ -48,6 +48,12 @@ BEGIN
 			AND em_status_cd IN ('PENDING','APPRVD')
 			AND sub_availability_cd IN ('GRANTED','REQUIRE')
 		); 
+		
+		UPDATE camdecmpsaux.em_submission_access
+		SET access_end_date = CURRENT_DATE + interval '30 days', userid = 'WINMGMT', update_date = current_timestamp
+		WHERE rpt_period_id = i
+		AND em_status_cd IN ('PENDING','APPRVD')
+		AND sub_availability_cd IN ('GRANTED','REQUIRE');
 	END LOOP;		
 EXCEPTION WHEN OTHERS THEN 
 	RAISE NOTICE 'Error opening em submission windows: %', SQLERRM;
