@@ -8,7 +8,9 @@ ALTER TABLE IF EXISTS camdecmpswks.monitor_qualification_pct
     ADD CONSTRAINT fk_monitor_qualification_pct_qual_data_type_code_yr2 FOREIGN KEY (yr2_qual_data_type_cd)
         REFERENCES camdecmpsmd.qual_data_type_code (qual_data_type_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_monitor_qualification_pct_qual_data_type_code_yr3 FOREIGN KEY (yr3_qual_data_type_cd)
-        REFERENCES camdecmpsmd.qual_data_type_code (qual_data_type_cd) MATCH SIMPLE;
+        REFERENCES camdecmpsmd.qual_data_type_code (qual_data_type_cd) MATCH SIMPLE,
+    ADD CONSTRAINT uq_monitor_qualification_pct_key
+        UNIQUE (MON_QUAL_ID, QUAL_YEAR);
 
 CREATE INDEX IF NOT EXISTS idx_monitor_qualification_pct_mon_qual_id
     ON camdecmpswks.monitor_qualification_pct USING btree

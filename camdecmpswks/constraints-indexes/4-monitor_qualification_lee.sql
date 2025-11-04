@@ -8,7 +8,9 @@ ALTER TABLE IF EXISTS camdecmpswks.monitor_qualification_lee
     ADD CONSTRAINT fk_monitor_qualification_lee_qual_test_type_code FOREIGN KEY (qual_lee_test_type_cd)
         REFERENCES camdecmpsmd.qual_lee_test_type_code (qual_lee_test_type_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_monitor_qualification_lee_units_of_measure_code FOREIGN KEY (emission_standard_uom)
-        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE;
+        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE,
+    ADD CONSTRAINT uq_monitor_qualification_lee_key
+        UNIQUE (MON_QUAL_ID, QUAL_TEST_DATE);
 
 CREATE INDEX IF NOT EXISTS idx_monitor_qualification_lee_emission_standard_uom
     ON camdecmpswks.monitor_qualification_lee USING btree

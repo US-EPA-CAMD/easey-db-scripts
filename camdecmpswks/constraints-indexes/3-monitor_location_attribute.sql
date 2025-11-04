@@ -6,7 +6,9 @@ ALTER TABLE IF EXISTS camdecmpswks.monitor_location_attribute
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_monitor_location_attribute_shape_code FOREIGN KEY (shape_cd)
-        REFERENCES camdecmpsmd.shape_code (shape_cd) MATCH SIMPLE;
+        REFERENCES camdecmpsmd.shape_code (shape_cd) MATCH SIMPLE,
+    ADD CONSTRAINT uq_monitor_location_attribute_key
+        UNIQUE (MON_LOC_ID, BEGIN_DATE);
 
 CREATE INDEX IF NOT EXISTS idx_monitor_location_material_cd
     ON camdecmpswks.monitor_location_attribute USING btree

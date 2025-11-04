@@ -6,7 +6,9 @@ ALTER TABLE IF EXISTS camdecmpswks.mats_method_data
         REFERENCES camdecmpsmd.mats_method_parameter_code (mats_method_parameter_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_mats_method_data_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
-        ON DELETE CASCADE;
+        ON DELETE CASCADE,
+    ADD CONSTRAINT uq_mats_method_data_key
+        UNIQUE (MON_LOC_ID, MATS_METHOD_PARAMETER_CD, BEGIN_DATE, BEGIN_HOUR);
 
 CREATE INDEX IF NOT EXISTS idx_mats_method_data_mats_method_cd
     ON camdecmpswks.mats_method_data USING btree

@@ -8,7 +8,9 @@ ALTER TABLE IF EXISTS camdecmpswks.monitor_system
     ADD CONSTRAINT fk_monitor_system_system_designation_code FOREIGN KEY (sys_designation_cd)
         REFERENCES camdecmpsmd.system_designation_code (sys_designation_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_monitor_system_system_type_code FOREIGN KEY (sys_type_cd)
-        REFERENCES camdecmpsmd.system_type_code (sys_type_cd) MATCH SIMPLE;
+        REFERENCES camdecmpsmd.system_type_code (sys_type_cd) MATCH SIMPLE,
+    ADD CONSTRAINT uq_monitor_system_key
+        UNIQUE (MON_LOC_ID, SYSTEM_IDENTIFIER);
 
 CREATE INDEX IF NOT EXISTS idx_monitor_system_fuel_cd
     ON camdecmpswks.monitor_system USING btree
