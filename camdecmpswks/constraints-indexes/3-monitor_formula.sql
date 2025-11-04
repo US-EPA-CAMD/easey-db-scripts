@@ -6,7 +6,9 @@ ALTER TABLE IF EXISTS camdecmpswks.monitor_formula
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_monitor_formula_parameter_code FOREIGN KEY (parameter_cd)
-        REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE;
+        REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE,
+    ADD CONSTRAINT uq_monitor_formula_key
+        UNIQUE (mon_loc_id, formula_identifier);
 
 CREATE INDEX IF NOT EXISTS idx_monitor_formula_equation_cd
     ON camdecmpswks.monitor_formula USING btree

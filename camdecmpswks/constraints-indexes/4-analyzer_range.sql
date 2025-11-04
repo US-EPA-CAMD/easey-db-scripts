@@ -5,7 +5,9 @@ ALTER TABLE IF EXISTS camdecmpswks.analyzer_range
     ADD CONSTRAINT fk_analyzer_range_component FOREIGN KEY (component_id)
         REFERENCES camdecmpswks.component (component_id) MATCH SIMPLE
         ON DELETE CASCADE,
-    ADD CONSTRAINT ck_analyzer_range_begin_date_end_date CHECK (begin_date <= end_date);
+    ADD CONSTRAINT ck_analyzer_range_begin_date_end_date CHECK (begin_date <= end_date),
+    ADD CONSTRAINT uq_analyzer_range_key
+        UNIQUE (COMPONENT_ID, BEGIN_DATE, BEGIN_HOUR);
 
 CREATE INDEX IF NOT EXISTS idx_analyzer_range_analyzer_range_cd
     ON camdecmpswks.analyzer_range USING btree

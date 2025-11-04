@@ -6,7 +6,9 @@ ALTER TABLE IF EXISTS camdecmpswks.system_fuel_flow
         REFERENCES camdecmpswks.monitor_system (mon_sys_id) MATCH SIMPLE
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_system_fuel_flow_units_of_measure_code FOREIGN KEY (sys_fuel_uom_cd)
-        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE;
+        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE,
+    ADD CONSTRAINT uq_system_fuel_flow_key
+        UNIQUE (MON_SYS_ID, BEGIN_DATE, BEGIN_HOUR);
 
 CREATE INDEX IF NOT EXISTS idx_system_fuel_flow_max_rate_source_cd
     ON camdecmpswks.system_fuel_flow USING btree

@@ -4,7 +4,9 @@ ALTER TABLE IF EXISTS camdecmpswks.rect_duct_waf
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_rect_duct_waf_waf_method_code FOREIGN KEY (waf_method_cd)
-        REFERENCES camdecmpsmd.waf_method_code (waf_method_cd) MATCH SIMPLE;
+        REFERENCES camdecmpsmd.waf_method_code (waf_method_cd) MATCH SIMPLE,
+    ADD CONSTRAINT uq_rect_duct_waf_key
+        UNIQUE (MON_LOC_ID, WAF_EFFECTIVE_DATE, WAF_EFFECTIVE_HOUR);
 
 CREATE INDEX IF NOT EXISTS idx_rect_duct_waf_mon_loc_id
     ON camdecmpswks.rect_duct_waf USING btree

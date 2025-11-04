@@ -10,7 +10,9 @@ ALTER TABLE IF EXISTS camdecmpswks.monitor_span
     ADD CONSTRAINT fk_monitor_span_span_scale_code FOREIGN KEY (span_scale_cd)
         REFERENCES camdecmpsmd.span_scale_code (span_scale_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_monitor_span_units_of_measure_code FOREIGN KEY (span_uom_cd)
-        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE;
+        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE,
+    ADD CONSTRAINT uq_monitor_span_key
+        UNIQUE (MON_LOC_ID, COMPONENT_TYPE_CD, SPAN_SCALE_CD, BEGIN_DATE, BEGIN_HOUR);
 
 CREATE INDEX IF NOT EXISTS idx_monitor_span_component_type_cd
     ON camdecmpswks.monitor_span USING btree

@@ -5,7 +5,9 @@ ALTER TABLE IF EXISTS camdecmpswks.monitor_system_component
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_monitor_system_component_monitor_system FOREIGN KEY (mon_sys_id)
         REFERENCES camdecmpswks.monitor_system (mon_sys_id) MATCH SIMPLE
-        ON DELETE CASCADE;
+        ON DELETE CASCADE,
+    ADD CONSTRAINT uq_monitor_system_component_key
+        UNIQUE (MON_SYS_ID, COMPONENT_ID, BEGIN_DATE, BEGIN_HOUR);
 
 CREATE INDEX IF NOT EXISTS idx_monitor_system_component_mon_sys_id
     ON camdecmpswks.monitor_system_component USING btree

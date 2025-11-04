@@ -7,7 +7,9 @@ ALTER TABLE IF EXISTS camdecmpswks.unit_control
     ADD CONSTRAINT fk_unit_control_fuel_indicator_code FOREIGN KEY (indicator_cd)
         REFERENCES camdecmpsmd.fuel_indicator_code (fuel_indicator_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_unit_control_unit FOREIGN KEY (unit_id)
-        REFERENCES camd.unit (unit_id) MATCH SIMPLE;
+        REFERENCES camd.unit (unit_id) MATCH SIMPLE,
+    ADD CONSTRAINT uq_unit_control_key
+        UNIQUE (UNIT_ID, CE_PARAM, CONTROL_CD, INSTALL_DATE);
 
 CREATE INDEX IF NOT EXISTS idx_unit_control_unit_id
     ON camdecmpswks.unit_control USING btree

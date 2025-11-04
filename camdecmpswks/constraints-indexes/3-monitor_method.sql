@@ -10,7 +10,9 @@ ALTER TABLE IF EXISTS camdecmpswks.monitor_method
     ADD CONSTRAINT fk_monitor_method_parameter_code FOREIGN KEY (parameter_cd)
         REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_monitor_method_substitute_data_code FOREIGN KEY (sub_data_cd)
-        REFERENCES camdecmpsmd.substitute_data_code (sub_data_cd) MATCH SIMPLE;
+        REFERENCES camdecmpsmd.substitute_data_code (sub_data_cd) MATCH SIMPLE,
+    ADD CONSTRAINT uq_monitor_method_key
+        UNIQUE (MON_LOC_ID, PARAMETER_CD, BEGIN_DATE, BEGIN_HOUR);
 
 CREATE INDEX IF NOT EXISTS idx_monitor_method_mon_loc_id
     ON camdecmpswks.monitor_method USING btree
