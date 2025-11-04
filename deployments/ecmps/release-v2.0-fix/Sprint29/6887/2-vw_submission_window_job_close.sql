@@ -1,5 +1,3 @@
-drop view if exists camdecmpsaux.vw_submission_window_job_close;
-
 create or replace
 view camdecmpsaux.vw_submission_window_job_close
 as
@@ -20,7 +18,7 @@ select
 	ESA.EM_SUB_TYPE_CD,
 	S.STATUS_CD as SUBMISSION_STATUS_CD,
 	S.SEVERITY_CD,
-	case 
+	case
 		when ESA.SUB_AVAILABILITY_CD = 'UPDATED' AND
 			S.SEVERITY_CD = 'CRIT2' then 'T'
 		else 'F'
@@ -32,10 +30,10 @@ select
 		else 'F'
 	end as CHECK_FOR_REMINDER,
 	case
-		when S.STATUS_CD IN ('NOLOAD') OR
-             S.SEVERITY_CD = 'CRIT1' OR S.SEVERITY_CD = 'CRIT2' then 'T'
+		when S.STATUS_CD IN ('NOLOAD', 'RECCRIT') OR
+			S.SEVERITY_CD = 'CRIT2' then 'T'
 		else 'F'
-	end as EXTEND_WINDOW	
+	end as EXTEND_WINDOW
 from
 	CAMDECMPSAUX.EM_SUBMISSION_ACCESS ESA
 join CAMDECMPS.VW_MONITOR_PLAN MP on
@@ -48,3 +46,4 @@ where
 	(ESA.SUB_AVAILABILITY_CD in ('REQUIRE', 'GRANTED')
 		or (ESA.SUB_AVAILABILITY_CD = 'UPDATED'
 			and S.SEVERITY_CD = 'CRIT2'));
+
