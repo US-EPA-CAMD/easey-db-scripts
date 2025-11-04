@@ -44,13 +44,8 @@ join CAMDECMPS.VW_MONITOR_PLAN MP on
 	ESA.MON_PLAN_ID = MP.MON_PLAN_ID
 join CAMDECMPSMD.REPORTING_PERIOD RP on
 	ESA.RPT_PERIOD_ID = RP.RPT_PERIOD_ID
-left join camdecmpsaux.vw_last_submission_in_window lsiw 
-	on	esa.mon_plan_id = lsiw.mon_plan_id
-	and esa.rpt_period_id = lsiw.rpt_period_id
-	and esa.ACCESS_BEGIN_DATE = lsiw.ACCESS_BEGIN_DATE
-	and esa.ACCESS_END_DATE = lsiw.ACCESS_END_DATE
-left join CAMDECMPSAUX.SUBMISSION_QUEUE S 
-	on	lsiw.submission_id = s.submission_id
+left join CAMDECMPSAUX.SUBMISSION_QUEUE S on
+    ESA.SUBMISSION_ID = S.SUBMISSION_ID
 where
 	(ESA.SUB_AVAILABILITY_CD in ('REQUIRE', 'GRANTED')
 		or (ESA.SUB_AVAILABILITY_CD = 'UPDATED'
