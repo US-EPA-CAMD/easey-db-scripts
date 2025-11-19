@@ -130,7 +130,7 @@ VALUES
     (200, 'templates/email/submissions/confirmation/submission-confirmation.hbs', NULL, 'Main submission confirmation email sent to users'),
     (201, 'templates/email/submissions/feedback/submission-feedback.hbs', NULL, 'Detailed submission feedback with evaluation results'),
     (202, 'templates/email/submissions/errors/submission-failure-user.hbs', NULL, 'Submission processing failure email to Users'),
-    (203, 'templates/email/submissions/errors/submission-failure-support.hbs', NULL, 'Submission processing failure email to Support team'),
+    (203, 'templates/email/submissions/errors/submission-failure-support.hbs', 'Error - Submission Processing Failed', 'Submission processing failure email to Support team'),
     (204, 'templates/email/evaluations/evaluation-queueing-failure-user.hbs', NULL, 'Evaluation queueing failure email to Users'),
     (205, 'templates/email/evaluations/evaluation-queueing-failure-support.hbs', NULL, 'Evaluation queueing failure email to Support team'),
     (206, 'templates/email/evaluations/mass-evaluation.hbs', NULL, 'Mass evaluation results and reports'),
