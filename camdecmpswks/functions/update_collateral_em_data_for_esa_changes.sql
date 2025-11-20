@@ -2,6 +2,20 @@
 
 -- DROP FUNCTION IF EXISTS camdecmpswks.update_collateral_em_data_for_esa_changes(character varying, integer);
 
+
+/******************************************************************************************************************************
+UPDATE_COLLATERAL_EM_DATA_FOR_ESA_CHANGES:
+
+    Executes camdecmpswks DELETE_CALCULATED_EM_DATA_FROM_WORKSPACE for emission reports containing locations in the MP for the
+    passed MON_PLAN_ID and for reporting periods equal to or after the passed RPT_PERIOD_ID when the emission report has an
+    open window.
+
+Modifications:
+
+Date        Programmer      Tecket      Change
+----------  --------------  ----------  ---------------------------------------------------------------------------------------
+2025-11-19  Dwayne Whitten  #6754       Replaced camdecmps table references with camdecmpswks.
+******************************************************************************************************************************/
 CREATE OR REPLACE FUNCTION camdecmpswks.update_collateral_em_data_for_esa_changes(
 	vmonplanid character varying,
 	vrptperiodid integer)
@@ -23,14 +37,14 @@ begin
         SELECT DISTINCT
                 uem.mon_plan_id,
                 uem.rpt_period_id
-          FROM camdecmps.EMISSION_EVALUATION sem
+          FROM camdecmpswks.EMISSION_EVALUATION sem
                 JOIN camdecmpsmd.REPORTING_PERIOD srp
                   ON srp.rpt_period_id = sem.rpt_period_id
-                JOIN camdecmps.MONITOR_PLAN_LOCATION spl
+                JOIN camdecmpswks.MONITOR_PLAN_LOCATION spl
                   ON spl.mon_plan_id = sem.mon_plan_id
-                JOIN camdecmps.MONITOR_PLAN_LOCATION upl
+                JOIN camdecmpswks.MONITOR_PLAN_LOCATION upl
                   ON upl.mon_loc_id = spl.mon_loc_id
-                JOIN camdecmps.EMISSION_EVALUATION uem
+                JOIN camdecmpswks.EMISSION_EVALUATION uem
                   ON uem.mon_plan_id = upl.mon_plan_id
                  AND EXISTS
                      (
