@@ -2,6 +2,18 @@
 
 -- DROP FUNCTION IF EXISTS camdecmpswks.update_collateral_qat_data_for_qat_changes(character varying);
 
+/******************************************************************************************************************************
+UPDATE_COLLATERAL_QAT_DATA_FOR_QAT_CHANGES:
+
+    Executes camdecmpswks DELETE_CALCULATED_QA_DATA_FROM_WORKSPACE for collateral QA test reports that depend on an updated 
+    (or deleted) QA test when the collateral test is required for submission.
+
+Modifications:
+
+Date        Programmer      Tecket      Change
+----------  --------------  ----------  ---------------------------------------------------------------------------------------
+2025-11-24  Dwayne Whitten  #6902       Replace unions with union alls since the sub-queries already have distincts.
+******************************************************************************************************************************/
 CREATE OR REPLACE FUNCTION camdecmpswks.update_collateral_qat_data_for_qat_changes(
 	vtestsumid character varying)
     RETURNS TABLE(result text, error_msg character varying) 
@@ -51,7 +63,8 @@ begin
 								(T.END_DATE = T2.END_DATE AND T.END_HOUR = T2.END_HOUR AND T.END_MIN >= T2.END_MIN)) AND
 								T.NEEDS_EVAL_FLG = 'N' AND
 								T2.TEST_SUM_ID =vTestSumId
-							UNION SELECT DISTINCT T.TEST_SUM_ID
+							UNION ALL
+                            SELECT DISTINCT T.TEST_SUM_ID
 							FROM camdecmpswks.TEST_SUMMARY T, camdecmpsmd.REPORTING_PERIOD R,
 							(SELECT TS.MON_SYS_ID, TS.TEST_SUM_ID,
 									extract(year from TS.END_DATE) AS CALENDAR_YEAR,
@@ -65,7 +78,8 @@ begin
 								(R.CALENDAR_YEAR = T2.CALENDAR_YEAR AND R.QUARTER >= T2.QUARTER)) AND
 								T.NEEDS_EVAL_FLG = 'N' AND
 								T2.TEST_SUM_ID =vTestSumId
-							UNION SELECT DISTINCT T.TEST_SUM_ID
+							UNION ALL
+                            SELECT DISTINCT T.TEST_SUM_ID
 							FROM camdecmpswks.TEST_SUMMARY T, camdecmpsmd.REPORTING_PERIOD R,
 							(SELECT TS.MON_SYS_ID, TS.TEST_SUM_ID,
 									extract(year from TS.END_DATE) AS CALENDAR_YEAR,
@@ -78,7 +92,8 @@ begin
 								(R.CALENDAR_YEAR = T2.CALENDAR_YEAR AND R.QUARTER >= T2.QUARTER)) AND
 								T.NEEDS_EVAL_FLG = 'N' AND
 								T2.TEST_SUM_ID =vTestSumId 
-							UNION SELECT DISTINCT T.TEST_SUM_ID
+							UNION All
+                            SELECT DISTINCT T.TEST_SUM_ID
 							FROM camdecmpswks.TEST_SUMMARY T
 								INNER JOIN camdecmpswks.FUEL_FLOW_TO_LOAD_BASELINE B ON T.TEST_SUM_ID = B.TEST_SUM_ID,
 								(SELECT TS.MON_LOC_ID, TS.TEST_SUM_ID, TS.TEST_NUM
@@ -88,7 +103,8 @@ begin
 								B.ACCURACY_TEST_NUMBER = T2.TEST_NUM AND
 								T.NEEDS_EVAL_FLG = 'N' AND
 								T2.TEST_SUM_ID =vTestSumId 
-							UNION SELECT DISTINCT T.TEST_SUM_ID
+							UNION ALL
+                            SELECT DISTINCT T.TEST_SUM_ID
 							FROM camdecmpswks.TEST_SUMMARY T
 								INNER JOIN camdecmpswks.FUEL_FLOW_TO_LOAD_BASELINE B ON T.TEST_SUM_ID = B.TEST_SUM_ID,
 								(SELECT TS.MON_LOC_ID, TS.TEST_SUM_ID, TS.TEST_NUM
