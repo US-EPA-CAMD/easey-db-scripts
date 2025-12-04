@@ -1,8 +1,7 @@
 ALTER TABLE IF EXISTS camdecmps.hrly_param_fuel_flow
-    ADD CONSTRAINT pk_hrly_param_fuel_flow PRIMARY KEY (hrly_param_ff_id, rpt_period_id),
-    ADD CONSTRAINT fk_hrly_param_fuel_flow_hrly_fuel_flow FOREIGN KEY (hrly_fuel_flow_id, rpt_period_id)
-        REFERENCES camdecmps.hrly_fuel_flow (hrly_fuel_flow_id, rpt_period_id) MATCH SIMPLE
-        ON DELETE CASCADE,
+    ADD CONSTRAINT pk_hrly_param_fuel_flow PRIMARY KEY (rpt_period_id, hrly_param_ff_id),
+    ADD CONSTRAINT fk_hrly_param_fuel_flow_hrly_fuel_flow FOREIGN KEY (rpt_period_id, hrly_fuel_flow_id)
+        REFERENCES camdecmps.hrly_fuel_flow (hrly_fuel_flow_id, rpt_period_id) MATCH SIMPLE,
     ADD CONSTRAINT fk_hrly_param_fuel_flow_monitor_formula FOREIGN KEY (mon_form_id)
         REFERENCES camdecmps.monitor_formula (mon_form_id) MATCH SIMPLE
         ON DELETE CASCADE,
@@ -58,6 +57,10 @@ CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_flow_sample_type_cd
 CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_flow_parameter_uom_cd
     ON camdecmps.hrly_param_fuel_flow USING btree
     (parameter_uom_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_flow_rpt_period_id_hrly_fuel_flow_id
+    ON camdecmps.hrly_param_fuel_flow USING btree
+    (rpt_period_id ASC NULLS LAST, hrly_fuel_flow_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
 CREATE INDEX IF NOT EXISTS idx_hrly_param_fuel_flow_rpt_period_id_mon_loc_id
     ON camdecmps.hrly_param_fuel_flow USING btree
