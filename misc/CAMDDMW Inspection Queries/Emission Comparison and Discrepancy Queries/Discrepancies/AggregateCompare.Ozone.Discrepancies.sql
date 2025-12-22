@@ -1,20 +1,3 @@
-with
-    sel as
-    (
-        select     10 as oris_code, '1'      as unitid, 2023 as op_year union
-        select     10 as oris_code, '2'      as unitid, 2023 as op_year union
-        select   1250 as oris_code, '4'      as unitid, 2023 as op_year union
-        select   2832 as oris_code, '7'      as unitid, 2023 as op_year union
-        select   3297 as oris_code, 'WAT1'   as unitid, 2023 as op_year union
-        select   3297 as oris_code, 'WAT2'   as unitid, 2023 as op_year union
-        select   3470 as oris_code, 'WAP8'   as unitid, 2023 as op_year union
-        select   4041 as oris_code, '5'      as unitid, 2023 as op_year union
-        select   4041 as oris_code, '6'      as unitid, 2023 as op_year union
-        select   6166 as oris_code, 'MB1'    as unitid, 2023 as op_year union
-        select   6166 as oris_code, 'MB2'    as unitid, 2023 as op_year union
-        select   7900 as oris_code, 'SH2'    as unitid, 2023 as op_year union
-        select  50368 as oris_code, 'CT1'    as unitid, 2023 as op_year
-    )
 select  uni.oris_code,
         uni.facility_name,
         uni.unit_name,
@@ -153,6 +136,7 @@ select  uni.oris_code,
         uni.co2r,
         uni.noxm,
         uni.noxr
+having  ( string_agg( uni.Period, ', ' order by uni.Ord ) != 'Hour, Day, Month, Ozone Season' )
  order
     by  uni.oris_code,
         uni.facility_name,
