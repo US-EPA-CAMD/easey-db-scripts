@@ -1,7 +1,6 @@
 create or replace function camdecmpsaux.PDEM_Update_Init_Get_Combined_Hourly_Data
 (
-    in vMonPlanId varchar,
-    in vRptPeriodId numeric
+    in  vPdemReportId bigint
 )
     returns table
             (
@@ -148,8 +147,7 @@ begin
                             dat.Mon_Plan_Id,
                             dat.Op_Year
                       from  camdecmpsaux.PDEM_P75_MONITOR_HOUR dat
-                     where  dat.Rpt_Period_Id = vRptPeriodId
-                       and  dat.Mon_Plan_Id = vMonPlanId
+                     where  dat.Pdem_Report_Id = vPdemReportId
                      union  all
                     -- MATS DF
                     select  -- Key Information
@@ -197,8 +195,7 @@ begin
                             dat.Mon_Plan_Id,
                             dat.Op_Year
                       from  camdecmpsaux.PDEM_MATS_MONITOR_HOUR dat
-                     where  dat.Rpt_Period_Id = vRptPeriodId
-                       and  dat.Mon_Plan_Id = vMonPlanId
+                     where  dat.Pdem_Report_Id = vPdemReportId
                 ) cmb
          group
             by  cmb.Mon_Loc_Id,
