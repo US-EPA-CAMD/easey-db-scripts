@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_qa_cert_event_eval_and_submit
 
-DROP VIEW IF EXISTS camdecmpswks.vw_qa_cert_event_eval_and_submit;
+--DROP VIEW IF EXISTS camdecmpswks.vw_qa_cert_event_eval_and_submit;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_qa_cert_event_eval_and_submit
  AS

@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_test_extension_exemption_eval_and_submit
 
-DROP VIEW IF EXISTS camdecmpswks.vw_test_extension_exemption_eval_and_submit;
+--DROP VIEW IF EXISTS camdecmpswks.vw_test_extension_exemption_eval_and_submit;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_test_extension_exemption_eval_and_submit
  AS
