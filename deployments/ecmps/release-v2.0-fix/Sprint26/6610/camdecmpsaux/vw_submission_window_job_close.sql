@@ -30,8 +30,9 @@ select
 		else 'F'
 	end as CHECK_FOR_REMINDER,
 	case
+        when S.SUBMISSION_ID IS NULL THEN 'T' --Also, extend the window if there are no submissions
 		when S.STATUS_CD IN ('NOLOAD') OR
-             S.SEVERITY_CD = 'CRIT1' OR S.SEVERITY_CD = 'CRIT2' then 'T'
+             S.SEVERITY_CD IN ('CRIT1','CRIT2') then 'T'
 		else 'F'
 	end as EXTEND_WINDOW	
 from
@@ -40,12 +41,12 @@ join CAMDECMPS.VW_MONITOR_PLAN MP on
 	ESA.MON_PLAN_ID = MP.MON_PLAN_ID
 join CAMDECMPSMD.REPORTING_PERIOD RP on
 	ESA.RPT_PERIOD_ID = RP.RPT_PERIOD_ID
-left join camdecmpsaux.vw_last_submission_in_window lsiw 
+left join camdecmpsaux.vw_last_submission_in_window lsiw
 	on	esa.mon_plan_id = lsiw.mon_plan_id
 	and esa.rpt_period_id = lsiw.rpt_period_id
 	and esa.ACCESS_BEGIN_DATE = lsiw.ACCESS_BEGIN_DATE
 	and esa.ACCESS_END_DATE = lsiw.ACCESS_END_DATE
-left join CAMDECMPSAUX.SUBMISSION_QUEUE S 
+left join CAMDECMPSAUX.SUBMISSION_QUEUE S
 	on	lsiw.submission_id = s.submission_id
 where
 	(ESA.SUB_AVAILABILITY_CD in ('REQUIRE', 'GRANTED')
