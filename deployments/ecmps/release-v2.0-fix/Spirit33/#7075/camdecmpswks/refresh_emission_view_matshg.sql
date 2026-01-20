@@ -155,38 +155,44 @@ BEGIN
                         max( case when mhv.parameter_cd = 'O2' and mhv.moisture_basis = 'W' then mhv.modc_cd end ) as o2w_modc_cd,
                         -- Sampling Train Components
                         (
-                            select  array_agg( sub.component_id ) as component_array
+                            select  cmb.component_array
                               from  (
-                                        select  cmb.component_id,
-                                                cmb.component_identifier
-                                          from  (
-                                                    select  cmp.component_id,
-                                                            cmp.component_identifier
-                                                      from  camdecmpswks.SORBENT_TRAP trp
-                                                            join camdecmpswks.SAMPLING_TRAIN trn using ( trap_id )
-                                                            join camdecmpswks.COMPONENT cmp using ( component_id )
-                                                     where  trp.mon_sys_id = hgc.mon_sys_id
-                                                       and  ( hod.begin_date + interval '1 hour' * hod.begin_hour ) between ( trp.begin_date + interval '1 hour' * trp.begin_hour )
-                                                                                                                        and ( trp.end_date + interval '1 hour' * trp.end_hour )
-                                                    union   all
-                                                    select  cmp.component_id,
-                                                            cmp.component_identifier
-                                                      from  camdecmpswks.SORBENT_TRAP_SUPP_DATA trp
-                                                            join camdecmpswks.SAMPLING_TRAIN_SUPP_DATA trn using ( trap_id )
-                                                            join camdecmpswks.COMPONENT cmp using ( component_id )
-                                                     where  trp.mon_sys_id = hgc.mon_sys_id
-                                                       and  ( hod.begin_date + interval '1 hour' * hod.begin_hour ) between ( trp.begin_date + interval '1 hour' * trp.begin_hour )
-                                                                                                                        and ( trp.end_date + interval '1 hour' * trp.end_hour )
-                                                       and  not exists
-                                                            (
-                                                                select  1
-                                                                  from  camdecmpswks.SORBENT_TRAP exs
-                                                                 where  exs.trap_id = trp.trap_id
-                                                            )
-                                                ) cmb
-                                         order
-                                            by  component_identifier asc
-                                    ) sub
+                                        select  ( trp.begin_date + interval '1 hour' * trp.begin_hour ) as begin_datehour,
+                                                array_agg( cmp.component_id order by cmp.component_identifier asc ) as component_array
+                                          from  camdecmpswks.SORBENT_TRAP trp
+                                                join camdecmpswks.SAMPLING_TRAIN trn using ( trap_id )
+                                                join camdecmpswks.COMPONENT cmp using ( component_id )
+                                         where  trp.mon_sys_id = hgc.mon_sys_id
+                                           and  ( hod.begin_date + interval '1 hour' * hod.begin_hour ) >= ( trp.begin_date + interval '1 hour' * trp.begin_hour )
+                                           and  ( hod.begin_date + interval '1 hour' * hod.begin_hour ) <= ( trp.end_date + interval '1 hour' * trp.end_hour )
+                                         group
+                                            by  trp.trap_id,
+                                                trp.begin_date,
+                                                trp.begin_hour
+                                        union   all
+                                        select  ( trp.begin_date + interval '1 hour' * trp.begin_hour ) as begin_datehour,
+                                                array_agg( cmp.component_id order by cmp.component_identifier asc ) as component_array
+                                          from  camdecmpswks.SORBENT_TRAP_SUPP_DATA trp
+                                                join camdecmpswks.SAMPLING_TRAIN_SUPP_DATA trn using ( trap_id )
+                                                join camdecmpswks.COMPONENT cmp using ( component_id )
+                                         where  trp.mon_sys_id = hgc.mon_sys_id
+                                           and  ( hod.begin_date + interval '1 hour' * hod.begin_hour ) >= ( trp.begin_date + interval '1 hour' * trp.begin_hour )
+                                           and  ( hod.begin_date + interval '1 hour' * hod.begin_hour ) <= ( trp.end_date + interval '1 hour' * trp.end_hour )
+                                                -- Exclude if sorbent trap exists in the workspace
+                                           and  not exists
+                                                (
+                                                    select  1
+                                                      from  camdecmpswks.SORBENT_TRAP exs
+                                                     where  exs.trap_id = trp.trap_id
+                                                )
+                                         group
+                                            by  trp.trap_id,
+                                                trp.begin_date,
+                                                trp.begin_hour
+                                    ) cmb
+                             order
+                                by  cmb.begin_datehour
+                             limit  1
                         ) as component_array,
                         -- Error Information
                         ems.chk_Session_Id
@@ -252,20 +258,20 @@ BEGIN
               on sys.mon_sys_id = dat.hgc_mon_sys_id
             left join camdecmpsmd.SYSTEM_TYPE_CODE stc
               on stc.sys_type_cd = sys.sys_type_cd
-            left join camdecmpswks.COMPONENT cmp1
-              on ( ( cardinality( dat.component_array ) > 0 ) and ( cmp1.component_id = dat.component_array[1] ) )
-            left join camdecmpswks.COMPONENT cmp2
-              on ( ( cardinality( dat.component_array ) > 1 ) and ( cmp2.component_id = dat.component_array[2] ) )
             left join camdecmpswks.HRLY_GAS_FLOW_METER gfm1
               on gfm1.rpt_period_id = dat.rpt_period_id
              and gfm1.mon_loc_id = dat.mon_loc_id
              and gfm1.hour_id = dat.hour_id
-             and gfm1.component_id = cmp1.component_id
+             and ( ( cardinality( dat.component_array ) > 0 ) and ( gfm1.component_id = dat.component_array[1] ) )
             left join camdecmpswks.HRLY_GAS_FLOW_METER gfm2
               on gfm2.rpt_period_id = dat.rpt_period_id
              and gfm2.mon_loc_id = dat.mon_loc_id
              and gfm2.hour_id = dat.hour_id
-             and gfm2.component_id = cmp2.component_id
+             and ( ( cardinality( dat.component_array ) > 1 ) and ( gfm2.component_id = dat.component_array[2] ) )
+            left join camdecmpswks.COMPONENT cmp1
+              on cmp1.component_id = gfm1.component_id
+            left join camdecmpswks.COMPONENT cmp2
+              on cmp2.component_id = gfm2.component_id
      order
         by  mon_plan_id, 
             mon_loc_id, 
