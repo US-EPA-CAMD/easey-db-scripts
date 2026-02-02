@@ -16,22 +16,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.submission_migration
     completed_time                  timestamp without time zone,
     note                            character varying(4000)         COLLATE pg_catalog."default",
     note_time                       timestamp without time zone,
-    
-    -- Calculated Column for Logical Key
-    OLD_SUBMISSION_DIFFERENTIATOR TEXT GENERATED ALWAYS AS 
-    (
-        CASE
-            WHEN PROCESS_CD = 'QA' THEN
-                CASE
-                    WHEN TEST_SUM_ID IS NOT NULL THEN PROCESS_CD || ': ' || TEST_SUM_ID
-                    WHEN QA_CERT_EVENT_ID IS NOT NULL THEN PROCESS_CD || ': ' || QA_CERT_EVENT_ID
-                    WHEN TEST_EXTENSION_EXEMPTION_ID IS NOT NULL THEN PROCESS_CD || ': ' || TEST_EXTENSION_EXEMPTION_ID
-                    ELSE ''
-                END
-            ELSE ''
-        END 
-    )
-    STORED
+    old_submission_differentiator   text
 );
 
 -- Add comments for the table
