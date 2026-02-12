@@ -44,7 +44,7 @@ UNIQUE (MON_QUAL_ID, QUAL_YEAR);
 
 ALTER TABLE camdecmpswks.monitor_qualification_lme
 ADD CONSTRAINT uq_monitor_qualification_lme_key
-UNIQUE (MON_QUAL_ID, QUAL_YEAR);
+UNIQUE (MON_QUAL_ID, QUAL_DATA_YEAR);
 
 ALTER TABLE camdecmpswks.monitor_qualification_lee
 ADD CONSTRAINT uq_monitor_qualification_lee_key
@@ -69,3 +69,5 @@ UNIQUE (UNIT_ID, CE_PARAM, CONTROL_CD, INSTALL_DATE);
 ALTER TABLE camdecmpswks.unit_capacity
 ADD CONSTRAINT uq_unit_capacity_key
 UNIQUE (UNIT_ID, BEGIN_DATE);
+
+commit;
