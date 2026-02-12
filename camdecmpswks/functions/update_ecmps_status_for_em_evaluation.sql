@@ -49,7 +49,7 @@ begin
 	 FROM camdecmpsmd.reporting_period
 	WHERE rpt_period_id = vperiod_id;
 	
-	CALL camdecmpswks.refresh_emissions_views(vmon_plan_id,vYear, vQuarter);	
+	CALL camdecmpswks.delete_emissions_views(vmon_plan_id,vYear, vQuarter);	
 
 	-- Update Monitoring Plan Needs Evaluation, if needed
     UPDATE  camdecmpswks.MONITOR_PLAN
