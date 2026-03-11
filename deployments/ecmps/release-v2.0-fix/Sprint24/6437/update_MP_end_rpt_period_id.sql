@@ -1,43 +1,73 @@
---update retired end_rpt_period_id for table monitor_plan
-DECLARE
-  cursor mp_cursor is  
-  select mon_plan_id, first_retire_date, rpt_period_id, begin_date, end_date
-   from (select  pln.Mon_Plan_Id,   
-         (select  min ( cmb.Retire_Date )    
-           from  (select  uos.Begin_Date as Retire_Date  from  MONITOR_PLAN_LOCATION mpl
-              join MONITOR_LOCATION loc on loc.Mon_Loc_Id = mpl.Mon_Loc_Id
-              join UNIT_OP_STATUS uos on uos.Unit_Id = loc.Unit_Id and uos.Op_Status_Cd='RET' and uos.End_Date is null
-               where  mpl.Mon_Plan_Id = pln.Mon_Plan_Id
-         union   all
-          select stp.Retire_Date from  MONITOR_PLAN_LOCATION mpl
-              join MONITOR_LOCATION loc on loc.Mon_Loc_Id = mpl.Mon_Loc_Id
-              join STACK_PIPE stp on stp.Stack_Pipe_Id = loc.Stack_Pipe_Id  and stp.Retire_Date is not null
-               where  mpl.Mon_Plan_Id = pln.Mon_Plan_Id
-          ) cmb
-         ) as First_Retire_Date                                   
-     from  MONITOR_PLAN pln
-     where pln.End_Rpt_Period_Id is null 
-       and  (exists (select 1 from MONITOR_PLAN_LOCATION mpl 
-                        join MONITOR_LOCATION loc on loc.Mon_Loc_Id = mpl.Mon_Loc_Id
-                        join UNIT_OP_STATUS uos on uos.Unit_Id = loc.Unit_Id and uos.Op_Status_Cd = 'RET' and uos.End_Date is null
-                        where  mpl.Mon_Plan_Id = pln.Mon_Plan_Id )
-              or  exists(select 1 from  MONITOR_PLAN_LOCATION mpl 
-                        join MONITOR_LOCATION loc on loc.Mon_Loc_Id = mpl.Mon_Loc_Id
-                        join STACK_PIPE stp on stp.Stack_Pipe_Id = loc.Stack_Pipe_Id and stp.Retire_Date is not null
-                        where  mpl.Mon_Plan_Id = pln.Mon_Plan_Id )    
-              )
-           ) dbset, REPORTING_PERIOD rp
-     where dbset.first_retire_date between rp.begin_date and rp.end_date ;
-              
-BEGIN
-   FOR mp_record IN mp_cursor
-   LOOP
-     case when mp_record.first_retire_date=mp_record.begin_date then
-            update monitor_plan set end_rpt_period_id=(mp_record.rpt_period_id-1) 
-                  where monitor_plan.MON_PLAN_ID=mp_record.MON_PLAN_ID;
-         when mp_record.first_retire_date>mp_record.begin_date then
-            update monitor_plan set end_rpt_period_id=(mp_record.rpt_period_id) 
-                  where monitor_plan.MON_PLAN_ID=mp_record.MON_PLAN_ID;
-     end case;
-   END LOOP;
-END;
+/* Formatted on 3/11/2026 4:15:04 PM (QP5 v5.300) */
+MERGE INTO MONITOR_PLAN d
+     USING (  SELECT mp.mon_plan_id,
+                     mp.fac_id,
+                     mp.begin_rpt_period_id,
+                     MAX (ee.rpt_period_id) AS last_em_rpt_period_Id,
+                     ret.min_retire_date,
+                     rp.RPT_PERIOD_ID     AS ret_rpt_period_id
+                FROM monitor_plan mp
+                     INNER JOIN
+                     (  SELECT mpl.mon_plan_id, COUNT (ml.unit_id) AS unit_count
+                          FROM monitor_plan_location mpl
+                               INNER JOIN monitor_location ml
+                                   ON     mpl.MON_LOC_ID = ml.MON_LOC_ID
+                                      AND ml.unit_id IS NOT NULL
+                      GROUP BY mpl.mon_plan_id) mp_unit_count
+                         ON mp.MON_PLAN_ID = mp_unit_count.mon_plan_id
+                     INNER JOIN
+                     (  SELECT mpl.mon_plan_id,
+                               COUNT (ml.unit_id) AS ret_unit_count
+                          FROM monitor_plan_location mpl
+                               INNER JOIN monitor_location ml
+                                   ON     mpl.MON_LOC_ID = ml.MON_LOC_ID
+                                      AND ml.unit_id IS NOT NULL
+                               INNER JOIN unit_op_status uos
+                                   ON     ml.unit_Id = uos.unit_Id
+                                      AND uos.op_status_cd = 'RET'
+                                      AND uos.end_date IS NULL
+                      GROUP BY mpl.mon_plan_id) mp_ret_unit_count
+                         ON mp.MON_PLAN_ID = mp_ret_unit_count.mon_plan_id
+                     LEFT OUTER JOIN emission_evaluation ee
+                         ON mp.MON_PLAN_ID = ee.MON_PLAN_ID
+                     LEFT OUTER JOIN
+                     (  SELECT mon_plan_id, MIN (retire_date) AS min_retire_date
+                          FROM (SELECT mpl.mon_plan_id,
+                                       uos.begin_date AS retire_date
+                                  FROM unit_op_status uos
+                                       INNER JOIN monitor_location ml
+                                           ON uos.unit_id = ml.unit_Id
+                                       INNER JOIN monitor_plan_location mpl
+                                           ON ml.mon_loc_id = mpl.mon_loc_id
+                                 WHERE     uos.op_status_cd = 'RET'
+                                       AND uos.end_date IS NULL
+                                UNION ALL
+                                SELECT mpl.mon_plan_id, sp.retire_date
+                                  FROM stack_pipe sp
+                                       INNER JOIN monitor_location ml
+                                           ON sp.stack_pipe_id = ml.stack_pipe_Id
+                                       INNER JOIN monitor_plan_location mpl
+                                           ON ml.mon_loc_id = mpl.mon_loc_id
+                                 WHERE sp.retire_date IS NOT NULL)
+                      GROUP BY mon_plan_id) ret
+                         ON mp.mon_plan_id = ret.mon_plan_Id
+                     LEFT OUTER JOIN reporting_period rp
+                         ON (ret.min_retire_date - 1) BETWEEN rp.BEGIN_DATE
+                                                          AND rp.end_date
+               WHERE     mp.end_rpt_period_id IS NULL
+                     AND mp_unit_count.unit_count =
+                             mp_ret_unit_count.ret_unit_count
+            GROUP BY mp.mon_plan_id,
+                     mp.fac_id,
+                     mp.begin_rpt_period_id,
+                     ret.min_retire_date,
+                     rp.RPT_PERIOD_ID) s
+        ON (d.MON_PLAN_ID = s.MON_PLAN_ID)
+WHEN MATCHED
+THEN
+    UPDATE SET
+        d.USERID = 'ECMPS20',
+        d.UPDATE_DATE = SYSDATE,
+        d.END_RPT_PERIOD_ID =
+            LEAST (ret_rpt_period_id,
+                   NVL (ret_rpt_period_id, last_em_rpt_period_Id));
