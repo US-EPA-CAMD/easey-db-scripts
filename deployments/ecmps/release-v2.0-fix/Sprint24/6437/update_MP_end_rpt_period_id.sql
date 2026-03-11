@@ -69,5 +69,5 @@ THEN
         d.USERID = 'ECMPS20',
         d.UPDATE_DATE = SYSDATE,
         d.END_RPT_PERIOD_ID =
-            LEAST (ret_rpt_period_id,
+            GREATEST (ret_rpt_period_id,
                    NVL (ret_rpt_period_id, last_em_rpt_period_Id));
