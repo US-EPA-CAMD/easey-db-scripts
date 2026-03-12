@@ -1,6 +1,7 @@
 /* Formatted on 3/11/2026 4:15:04 PM (QP5 v5.300) */
 MERGE INTO unit_stack_configuration d
-     USING (    SELECT usc.config_id,
+     USING (   --TODO: limit to only update records that are linked to an active MP with all units retired (same set of MPs as in the MP end script for this ticket)
+     SELECT usc.config_id,
        usc.unit_id,
        usc.stack_pipe_id,
        usc.begin_date,
@@ -11,7 +12,7 @@ MERGE INTO unit_stack_configuration d
   FROM unit_stack_configuration  usc
        INNER JOIN unit_op_status uos
            ON     usc.unit_id = uos.unit_id
-              AND uos.OP_STATUS_CD = 'OPR'
+              AND uos.OP_STATUS_CD = 'RET'
               AND uos.end_date IS NULL
        INNER JOIN stack_pipe sp ON usc.stack_pipe_id = sp.stack_pipe_id
  WHERE usc.end_date IS NULL) s
