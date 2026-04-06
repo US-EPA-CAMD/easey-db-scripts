@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.mats_data_submission (
     queued_time timestamp without time zone,
     started_time timestamp without time zone,
     completed_time timestamp without time zone,
-    note timestamp without time zone,
+    note text,
     note_time timestamp without time zone,
     activity_id text,
     fac_id numeric(38, 0) NOT NULL,
