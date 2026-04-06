@@ -24,6 +24,18 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.mats_data_submission (
     update_time timestamp without time zone
 );
 
+ALTER TABLE camdecmpsaux.mats_data_submission ADD mats_status_cd text GENERATED ALWAYS AS (
+CASE
+    WHEN queued_time IS NULL AND started_time IS NULL AND completed_time IS NULL AND note_time IS NULL THEN 'NEW'::text
+    WHEN queued_time IS NOT NULL AND started_time IS NULL AND completed_time IS NULL AND note_time IS NULL THEN 'QUEUED'::text
+    WHEN queued_time IS NOT NULL AND started_time IS NOT NULL AND completed_time IS NULL AND note_time IS NULL THEN 'WIP'::text
+    WHEN queued_time IS NOT NULL AND started_time IS NOT NULL AND completed_time IS NOT NULL AND note_time IS NULL THEN 'COMPLETE'::text
+    WHEN queued_time IS NOT NULL AND started_time IS NOT NULL AND completed_time IS NULL AND note_time IS NOT NULL THEN 'ERROR'::text
+    ELSE NULL::text
+END) STORED NULL;
+
+ALTER TABLE camdecmpsaux.mats_data_submission ALTER COLUMN mats_status_cd SET STORAGE EXTENDED;
+
 COMMENT ON TABLE camdecmpsaux.mats_data_submission IS 'Stores information about MATS Data Submissions.';
 
 COMMENT ON COLUMN camdecmpsaux.mats_data_submission.mats_data_sub_id IS 'Primary key for MATS Data Submission table.';
