@@ -15,25 +15,25 @@ begin
          merge
           into  camdecmpswks.UNIT snk
          using  (
-                    select  new.unit_id
-                            new.fac_id
-                            new.unitid
-                            new.unit_description
-                            new.indian_country_ind
-                            new.stateid
-                            new.boiler_sequence_number
-                            new.comm_op_date
-                            new.comm_op_date_cd
-                            new.comr_op_date
-                            new.comr_op_date_cd
-                            new.source_category_cd
-                            new.naics_cd
-                            new.no_active_gen_ind
-                            new.non_load_based_ind
-                            new.actual_90th_op_date
-                            new.moved_ind
-                            new.userid
-                            new.add_date
+                    select  new.unit_id,
+                            new.fac_id,
+                            new.unitid,
+                            new.unit_description,
+                            new.indian_country_ind,
+                            new.stateid,
+                            new.boiler_sequence_number,
+                            new.comm_op_date,
+                            new.comm_op_date_cd,
+                            new.comr_op_date,
+                            new.comr_op_date_cd,
+                            new.source_category_cd,
+                            new.naics_cd,
+                            new.no_active_gen_ind,
+                            -- non_load_based_ind not included
+                            new.actual_90th_op_date,
+                            new.moved_ind,
+                            new.userid,
+                            new.add_date,
                             new.update_date
                 ) src
             on  ( snk.unit_id = src.unit_id )
