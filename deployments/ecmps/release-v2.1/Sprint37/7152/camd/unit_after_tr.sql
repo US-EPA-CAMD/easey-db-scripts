@@ -10,7 +10,7 @@ $UNIT_AFTER_TR$
 declare
 begin
 
-    if ( tg_op in ( 'INSERT', 'UPDATE' ) then
+    if ( tg_op in ( 'INSERT', 'UPDATE' ) ) then
     
          merge
           into  camdecmpswks.UNIT snk
@@ -112,6 +112,8 @@ begin
          where  unt.unit_id = old.unit_id;
     
     end if;
+    
+    return NULL;
 
 end;
 $UNIT_AFTER_TR$
@@ -122,8 +124,8 @@ language plpgsql;
 -- Trigger Definition --
 ------------------------
 
-create or replace trigger camd.UNIT_AFTER_TR
+create or replace trigger UNIT_AFTER_TR
     after insert or update or delete
     on camd.UNIT
     for each row
-    execute function camd.UNIT_AFTER_TRIGGER;
+    execute function camd.UNIT_AFTER_TRIGGER();

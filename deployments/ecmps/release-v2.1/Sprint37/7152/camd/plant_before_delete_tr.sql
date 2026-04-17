@@ -17,6 +17,8 @@ begin
          where  isl.fac_id = old.fac_id;
     
     end if;
+    
+    return OLD;
 
 end;
 $PLANT_BEFORE_DELETE_TR$
@@ -27,8 +29,8 @@ language plpgsql;
 -- Trigger Definition --
 ------------------------
 
-create or replace trigger camd.PLANT_BEFORE_DELETE_TR
+create or replace trigger PLANT_BEFORE_DELETE_TR
     before delete
     on camd.PLANT
     for each row
-    execute function camd.PLANT_BEFORE_DELETE_TRIGGER;
+    execute function camd.PLANT_BEFORE_DELETE_TRIGGER();

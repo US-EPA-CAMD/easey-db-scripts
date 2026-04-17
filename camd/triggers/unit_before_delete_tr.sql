@@ -17,6 +17,8 @@ begin
          where  isl.unit_id = old.unit_id;
     
     end if;
+    
+    return OLD;
 
 end;
 $UNIT_BEFORE_DELETE_TR$
@@ -27,8 +29,8 @@ language plpgsql;
 -- Trigger Definition --
 ------------------------
 
-create or replace trigger camd.UNIT_BEFORE_DELETE_TR
+create or replace trigger UNIT_BEFORE_DELETE_TR
     before delete
     on camd.UNIT
     for each row
-    execute function camd.UNIT_BEFORE_DELETE_TRIGGER;
+    execute function camd.UNIT_BEFORE_DELETE_TRIGGER();
