@@ -1,3 +1,10 @@
+/*
+    The purpose of this script is to identify POTENTIALLY stalled submissions
+    
+    The query RETURNS ANY SUBMISSION that is NOT 'COMPLETE' or 'ERROR', and was queued in the LAST 60 DAYS. 
+    
+    ANALYZE THE RESULTS, before using them with the Correct Stalled Submissions query.  More recent submission are more likely not actually have stalled.
+*/
 select  sbs.queued_time::date as queued_date,
         sbq.submission_set_id,
         sbq.submission_id,
@@ -185,7 +192,7 @@ select  sbs.queued_time::date as queued_date,
         sbq.completed_time as submission_completed,
         sbs.completed_time as set_completed,
         sbq.note as submission_note,
-        sbs.note as submission_note,
+        sbs.note as set_note,
         sbq.note_time as submission_noted,
         sbs.note_time as set_noted
         --, sbq.*

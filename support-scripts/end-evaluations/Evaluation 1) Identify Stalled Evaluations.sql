@@ -1,3 +1,10 @@
+/*
+    The purpose of this script is to identify POTENTIALLY stalled evaluations
+    
+    The query RETURNS ANY EVALUATION that is NOT 'COMPLETE' or 'ERROR', and was queued in the LAST 60 DAYS. 
+    
+    ANALYZE THE RESULTS, before using them with the Correct Stalled Evaluations query.  More recent evaluations are more likely not actually have stalled.
+*/
 select  evq.evaluation_id,
         evs.queued_time::date as queued_date,
         fac.oris_code,

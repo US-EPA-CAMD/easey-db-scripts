@@ -1,3 +1,12 @@
+/*
+    The purpose of this ticket is to end the listed submission ids as errored.
+    
+    The runner of this script should do the following:
+    
+    1) Ensure that the identified or related submission set is actually stalled.  More recent submissions may not actually be stalled.
+    2) Updated either the vSubmissionSetId or vSubmissionId value, but not both, to select the Submission Set to end.  If a vSubmissionId is provided, it will be used to determine the Submission Set.
+    3) Provide an error note in the vNote variable.  It is required for the script to run.
+*/
 do $$
 declare
     vSubmissionSetId    camdecmpsaux.SUBMISSION_SET.submission_set_id%type   := null; -- Only set one of these two variables.
@@ -81,6 +90,8 @@ begin
         end if;
         
     else
+    
+        raise notice 'Update Starting';
     
         -- Update SUBMISSION_SET
         update  camdecmpsaux.SUBMISSION_SET
