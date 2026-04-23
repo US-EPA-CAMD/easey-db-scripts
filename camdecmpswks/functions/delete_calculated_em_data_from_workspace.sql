@@ -115,11 +115,6 @@ BEGIN
 		 (select distinct DAILY_EMISSION_id from camdecmpswks.DAILY_EMISSION
 		   where MON_LOC_ID  = ANY(vMON_LOC_ID_LIST)
 		    and RPT_PERIOD_ID= vrptperiod_id);
-		  
-	-- Delete rows for DM_EMISSIONS and its child tables
-   	DELETE FROM camdecmps.DM_EMISSIONS
-		WHERE MON_PLAN_ID = vmonplan_id
-		  and RPT_PERIOD_ID=vrptperiod_id;
 	
 	--Remove error codes and calculated values from pre-rendered View Emissions tables.
 	 select * into result, error_msg 
