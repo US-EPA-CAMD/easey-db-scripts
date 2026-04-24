@@ -45,6 +45,9 @@ The following environment variables must be setup on the system/machine from whe
    ```
 7. The script files to be run will be displayed on the screen and you will be prompted for the password
 
+#### Timestamp Convention
+Activity columns that participate in session/check-out maintenance — `camdecmpswks.user_session.last_activity` and `last_login_date`, plus `camdecmpswks.user_check_out.last_activity` and `checked_out_on` — are `timestamp with time zone` (UTC). Procedures that compare against "now" (e.g. `user_session_maintenance`) use `NOW()` / `CURRENT_TIMESTAMP`, which return `timestamptz` representing the current UTC instant regardless of the session's `TimeZone` setting. When adding new timestamp columns that will be compared to these, prefer `timestamptz` — mixing `timestamp` with `timestamptz` forces an implicit cast through the session TZ and produces wrong results when the server TZ drifts. Note that `user_session.token_expiration` intentionally remains `timestamp without time zone` pending a follow-up that also migrates its auth-api writers and UI consumers.
+
 ## License & Contributing
 ​
 This project is licensed under the MIT License. We encourage you to read this project’s [License](https://github.com/US-EPA-CAMD/devops/blob/master/LICENSE), [Contributing Guidelines](https://github.com/US-EPA-CAMD/devops/blob/master/CONTRIBUTING.md), and [Code of Conduct](https://github.com/US-EPA-CAMD/devops/blob/master/CODE_OF_CONDUCT.md).

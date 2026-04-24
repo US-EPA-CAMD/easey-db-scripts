@@ -1,4 +1,3 @@
--- PROCEDURE: camdecmpswks.user_session_maintenance()
 DROP PROCEDURE IF EXISTS camdecmpswks.user_session_maintenance ();
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.user_session_maintenance ()
