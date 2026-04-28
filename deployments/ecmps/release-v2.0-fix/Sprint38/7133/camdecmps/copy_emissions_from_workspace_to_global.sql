@@ -1,5 +1,3 @@
-DROP PROCEDURE IF EXISTS camdecmps.copy_emissions_from_workspace_to_global(character varying, numeric);
-
 CREATE OR REPLACE PROCEDURE camdecmps.copy_emissions_from_workspace_to_global(
   monPlanId character varying(45), rptPeriodId numeric
 ) LANGUAGE 'plpgsql' AS $BODY$ DECLARE monLocIds text[];

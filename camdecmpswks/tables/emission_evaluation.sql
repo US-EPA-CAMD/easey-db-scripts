@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_evaluation
     submission_id numeric(38,0),
     submission_availability_cd character varying(7) COLLATE pg_catalog."default" DEFAULT 'GRANTED'::character varying,
     eval_status_cd character varying(7) COLLATE pg_catalog."default" NOT NULL DEFAULT 'EVAL'::character varying,
-    pending_status_cd character varying(7) COLLATE pg_catalog."default"
+    pending_status_cd character varying(7) COLLATE pg_catalog."default",
+    submission_comment text COLLATE pg_catalog."default"
 );
 
 COMMENT ON TABLE camdecmpswks.emission_evaluation
@@ -38,3 +39,6 @@ COMMENT ON COLUMN camdecmpswks.emission_evaluation.submission_id
 
 COMMENT ON COLUMN camdecmpswks.emission_evaluation.submission_availability_cd
     IS 'Unique code value for a lookup table.';
+
+COMMENT ON COLUMN camdecmpswks.emission_evaluation.submission_comment
+    IS 'Comment provided by the user at the time of submission.';

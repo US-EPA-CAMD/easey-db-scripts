@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_evaluation
     needs_eval_flg character varying(1) COLLATE pg_catalog."default",
     chk_session_id character varying(45) COLLATE pg_catalog."default",
     submission_id numeric(38,0),
-    submission_availability_cd character varying(7) COLLATE pg_catalog."default"
+    submission_availability_cd character varying(7) COLLATE pg_catalog."default",
+    submission_comment text COLLATE pg_catalog."default"
 ) PARTITION BY RANGE (rpt_period_id);
 
 COMMENT ON TABLE camdecmps.emission_evaluation
@@ -36,3 +37,6 @@ COMMENT ON COLUMN camdecmps.emission_evaluation.submission_id
 
 COMMENT ON COLUMN camdecmps.emission_evaluation.submission_availability_cd
     IS 'Unique code value for a lookup table.';
+
+COMMENT ON COLUMN camdecmps.emission_evaluation.submission_comment
+    IS 'Comment provided by the user at the time of submission.';
