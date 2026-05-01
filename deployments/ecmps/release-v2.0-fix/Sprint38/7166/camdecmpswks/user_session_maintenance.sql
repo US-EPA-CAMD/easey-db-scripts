@@ -22,10 +22,10 @@ BEGIN
             WHERE
                 mon_plan_id = uco.mon_plan_id
                 AND status_cd NOT IN ('COMPLETE', 'ERROR'))
-        AND last_activity + interval '20 mins' < NOW();
+        AND last_activity + interval '20 mins' < CURRENT_TIMESTAMP;
     DELETE FROM camdecmpswks.user_session
-    WHERE last_activity + interval '20 mins' < NOW()
-        AND token_expiration + interval '5 mins' < NOW();
+    WHERE last_activity + interval '20 mins' < CURRENT_TIMESTAMP
+        AND token_expiration + interval '5 mins' < CURRENT_TIMESTAMP;
 END
 $BODY$;
 
