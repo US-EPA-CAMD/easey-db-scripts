@@ -1,9 +1,15 @@
+
+----------------------------------------------------------------
+-- Replace the date range in the where clause near the bottom --
+----------------------------------------------------------------
+
 select  dat.mp_exists,
         dat.qa_exists,
         dat.em_count,
         -- QA Min and Max Counts
         min( dat.qa_count ) as qa_count_min,
         max( dat.qa_count ) as qa_count_max,
+        -- Submission Set Count
         count(1) as submission_set_count,
         -- Run Duration
         sum(case when dat.run_seconds <=  5                          then 1 else 0 end) as run_le_5,
@@ -72,7 +78,7 @@ select  dat.mp_exists,
                            and  sbq.process_cd = 'EM'
                     ) as Em_Count
               from  camdecmpsaux.SUBMISSION_SET sbs
-             where  sbs.queued_time::date between '2026-04-01' and '2026-04-30'
+             where  sbs.queued_time::date between '2026-04-01' and '2026-04-30' /* REPLACE DATE RANGE */
                and  sbs.status_cd = 'COMPLETE'
         ) dat
  group
