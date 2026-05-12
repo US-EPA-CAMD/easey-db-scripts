@@ -1,16 +1,16 @@
--- FUNCTION: camdecmps.rpt_em_fuel_operating_hours(text, numeric)
+-- FUNCTION: camdecmpswks.rpt_em_fuel_operating_hours(text, numeric)
 
-DROP FUNCTION IF EXISTS camdecmps.rpt_em_fuel_operating_hours(text, numeric) CASCADE;
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_fuel_operating_hours(text, numeric) CASCADE;
 
-CREATE OR REPLACE FUNCTION camdecmps.rpt_em_fuel_operating_hours(
+CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_fuel_operating_hours(
 	monplanid text,
 	vyear numeric)
     RETURNS TABLE(
-        location character varying,
-        "calendar_year" numeric,
+        location character varying, 
+        "calendar_year" numeric, 
         "period" text,
         "fuel_cd" character varying, 
-        "op_hours" text
+        "op_hours" text 
     ) 
     LANGUAGE 'plpgsql'
 
@@ -31,8 +31,8 @@ BEGIN
             prd.calendar_year, 
             prd.quarter 
         from 
-            camdecmps.monitor_plan pln, 
-            camdecmps.monitor_plan_location mpl, 
+            camdecmpswks.monitor_plan pln, 
+            camdecmpswks.monitor_plan_location mpl, 
             camdecmpsmd.reporting_period prd 
         where 
             pln.mon_plan_id = monplanid
@@ -44,7 +44,7 @@ BEGIN
     cmb.calendar_year, 
     cmb.Period, 
     cmb.fuel_cd,
-    TO_CHAR(cmb.Op_Hours, 'FM999999999990') as Op_Hours
+    TO_CHAR(cmb.Op_Hours, 'FM999999999990') as Op_Hours 
     from 
     (
         --
@@ -72,7 +72,7 @@ BEGIN
             ) as Fuel_Exists_Ind 
             from 
             lst  
-            join camdecmps.operating_supp_data osd on osd.mon_loc_id = lst.mon_loc_id 
+            join camdecmpswks.operating_supp_data osd on osd.mon_loc_id = lst.mon_loc_id 
             and osd.rpt_period_id = lst.rpt_period_id 
             and osd.op_type_cd in (
                 'BCO2', 'CO2M', 'HIT', 'NOXM', 'NOXR', 
@@ -84,7 +84,7 @@ BEGIN
             lst.mon_loc_id
         ) sel 
         join camdecmpsmd.reporting_period prd on prd.rpt_period_id = sel.rpt_period_id 
-        left join camdecmps.operating_supp_data osd on osd.mon_loc_id = sel.mon_loc_id 
+        left join camdecmpswks.operating_supp_data osd on osd.mon_loc_id = sel.mon_loc_id 
         and ((Fuel_Exists_Ind = 0 and osd.op_type_cd = 'OPHOURS' and  osd.fuel_cd is null) or osd.fuel_cd is not null)
         and osd.rpt_period_id = sel.rpt_period_id 
         group by 
@@ -96,11 +96,11 @@ BEGIN
         osd.fuel_cd
         
     ) cmb 
-    join camdecmps.monitor_plan pln on pln.mon_plan_id = cmb.mon_plan_id 
+    join camdecmpswks.monitor_plan pln on pln.mon_plan_id = cmb.mon_plan_id 
     join camd.plant fac on fac.fac_id = pln.fac_id 
-    join camdecmps.monitor_location loc on loc.mon_loc_id = cmb.mon_loc_id 
+    join camdecmpswks.monitor_location loc on loc.mon_loc_id = cmb.mon_loc_id 
     left join camd.unit unt on unt.unit_id = loc.unit_id 
-    left join camdecmps.stack_pipe stp on stp.stack_pipe_id = loc.stack_pipe_id 
+    left join camdecmpswks.stack_pipe stp on stp.stack_pipe_id = loc.stack_pipe_id 
     order by 
     oris_code, 
     case when cmb.fuel_cd is null then 0 else 1 end, 
