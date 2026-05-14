@@ -8,8 +8,8 @@ CREATE OR REPLACE FUNCTION camdecmpsaux.get_unit_program_subrecords(
 RETURNS TABLE (
   unitId character varying,
   programCode character varying,
+  unitClassification character varying,
   programDescription character varying,
-  unitTypeDescription character varying,
   commOpDate date,
   comrOpDate date,
   opStatusDescription character varying,
@@ -23,8 +23,8 @@ BEGIN
   SELECT  
     unt.unitid,
     unp.prg_cd,
+    unp.class_cd,
     prc.prg_description,
-    utc.unit_type_description,
     unt.comm_op_date,
     unt.comr_op_date,
     osc.op_status_description,
@@ -36,7 +36,6 @@ BEGIN
   JOIN camdmd.program_code prc USING (prg_cd)
   LEFT JOIN camd.unit_boiler_type ubt 
     ON ubt.unit_id = unt.unit_id AND ubt.end_date IS NULL
-  LEFT JOIN camdmd.unit_type_code utc USING (unit_type_cd)
   LEFT JOIN camd.unit_op_status uos 
     ON uos.unit_id = unt.unit_id AND uos.end_date IS NULL
   LEFT JOIN camdmd.operating_status_code osc USING (op_status_cd)
