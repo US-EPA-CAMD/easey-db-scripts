@@ -179,6 +179,8 @@ BEGIN
 				)
 			)
 		)
+		and sq.note not like '%duplicate key value violates unique constraint%'
+		and sq.note not like '%ENOSPC: no space left on device, mkdir%'
 	order by
 		sq.process_cd,
 		sq.queued_time desc,
