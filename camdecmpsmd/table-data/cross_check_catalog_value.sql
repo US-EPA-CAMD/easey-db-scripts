@@ -1362,7 +1362,6 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, c
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (1646, 37, 'RATA', 'ConfidenceCoefficientUGSCM', '0.1');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (8015, 17, 'PM', 'PMRE', 'PMRE/CEM');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (8016, 17, 'PM', 'PMRH', 'PMRH/CEM');
-INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (8017, 14, 'CPMS', 'NFS', NULL);
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (8018, 85, 'PM', 'PMRE,PMRH,MATSSUP', 'PMRE (or PMRH version for heat input based method or PM Supplemental Method)');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (1361, 85, 'HCL', 'HCLRE,HCLRH,SO2RE,SO2RH,MATSSUP', 'HCLRE (or HCLRH version for heat input based method, or equivalent SO2 method, or HCL Supplemental Method)');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (1362, 85, 'HF', 'HFRE,HFRH,MATSSUP', 'HFRE (or HFRH version for heat input based method or HF Supplemental Method)');
@@ -1677,7 +1676,7 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, c
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (8327, 21, 'CALR', NULL, 'U');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (8328, 21, 'CALR', NULL, 'VCON');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (1093, 11, 'AKSF', NULL, NULL);
-INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (670, 11, 'SORX', NULL, NULL);
+INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (670, 11, 'SORX', 'DEFAULT', NULL);
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (8329, 191, 'CO2N', 'PCT', NULL);
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (8330, 191, 'CO2X', 'PCT', NULL);
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (8331, 191, 'H2O', 'PCT', NULL);
@@ -2102,7 +2101,6 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, c
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (8934, 16, 'PMRE', NULL, 'MS-2');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (8935, 16, 'PMRH', NULL, '19-3D');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (8936, 16, 'PMRH', NULL, '19-5D');
-INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (8937, 16, 'PMRE', NULL, '11-3');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (8937, 16, 'PM', NULL, '11-3');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (8938, 16, 'PM', NULL, '11-16');
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (8939, 16, 'PM', NULL, '11-34');
@@ -2456,3 +2454,49 @@ INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, c
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (9337, 28, 'NOCX', 'MAXD', null);
 
 INSERT INTO camdecmpsmd.cross_check_catalog_value (cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3) OVERRIDING SYSTEM VALUE VALUES (9320, 193, 'SORX', 'PNG', NULL);
+
+
+------------------
+-- #7178: Begin --
+------------------
+
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9287, 191, 'BWA',  'PCT',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9321, 191, 'SORX', 'LBMMBTU', null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9288, 193, 'BWA',  'ANT',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9289, 193, 'BWA',  'BFG',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9290, 193, 'BWA',  'BT',      null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9291, 193, 'BWA',  'BUT',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9292, 193, 'BWA',  'C',       null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9293, 193, 'BWA',  'CDG',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9294, 193, 'BWA',  'COG',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9295, 193, 'BWA',  'CRF',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9296, 193, 'BWA',  'DGG',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9297, 193, 'BWA',  'DSL',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9298, 193, 'BWA',  'LFG',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9299, 193, 'BWA',  'LIG',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9300, 193, 'BWA',  'LPG',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9301, 193, 'BWA',  'MIX',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9302, 193, 'BWA',  'NNG',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9303, 193, 'BWA',  'OGS',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9304, 193, 'BWA',  'OIL',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9305, 193, 'BWA',  'OOL',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9306, 193, 'BWA',  'OSF',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9307, 193, 'BWA',  'PDG',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9308, 193, 'BWA',  'PNG',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9309, 193, 'BWA',  'PRG',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9310, 193, 'BWA',  'PRP',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9311, 193, 'BWA',  'PRS',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9312, 193, 'BWA',  'PTC',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9313, 193, 'BWA',  'R',       null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9314, 193, 'BWA',  'PFG',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9315, 193, 'BWA',  'SRG',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9316, 193, 'BWA',  'SUB',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9317, 193, 'BWA',  'TDF',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9318, 193, 'BWA',  'W',       null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9319, 193, 'BWA',  'WF',      null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9324, 193, 'SORX', 'NFS',     null );
+insert into camdecmpsmd.cross_check_catalog_value ( cross_chk_catalog_value_id, cross_chk_catalog_id, value1, value2, value3 ) overriding system value values ( 9328, 193, 'SORX', 'DSL',     null );
+
+----------------
+-- #7178: End --
+----------------
