@@ -1,5 +1,3 @@
-DROP FUNCTION IF EXISTS camdecmpsaux.get_units_expected_to_submit_report_data(numeric, character varying, character varying, character varying, numeric, numeric, character varying) CASCADE;
-
 create or replace
 function camdecmpsaux.get_units_expected_to_submit_report_data(
     V_FAC_ID numeric,
