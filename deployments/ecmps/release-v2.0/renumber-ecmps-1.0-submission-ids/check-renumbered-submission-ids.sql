@@ -103,9 +103,9 @@ select  cmb.oris_code,
                     lst.report_primary_columns,
                     lst.report_primary_values
               from  (
-                        select  pln.oris_code,
-                                pln.facility_name,
-                                pln.locations,
+                        select  coalesce( pln.oris_code, fac.oris_code ) as oris_code,
+                                coalesce( pln.facility_name, fac.facility_name ) as facility_name,
+                                coalesce( pln.locations, coalesce( unt.unitid, stp.stack_name ) ) as locations,
                                 'QAT' as file_type_cd,
                                 prd.period_description as quarter,
                                 coalesce( unt.unitid, stp.stack_name ) as locaiton_name,
@@ -126,6 +126,7 @@ select  cmb.oris_code,
                                 left join camdecmps.MONITOR_LOCATION loc using ( mon_loc_id )
                                 left join camd.UNIT unt using ( unit_id )
                                 left join camdecmps.STACK_PIPE stp using ( stack_pipe_id )
+                                left join camd.PLANT fac on fac.fac_id in ( unt.fac_id, stp.fac_id )
                          where  dat.submission_id >= 0
                          limit  1000
                     ) lst
