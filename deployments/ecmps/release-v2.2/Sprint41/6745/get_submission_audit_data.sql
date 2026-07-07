@@ -133,7 +133,9 @@ BEGIN
 		sq.submission_set,
 		sq.status_cd || ': ' || sq.note as queue_status,
 		'Event' as qa_type,
-		'Code ' || qce_wks.qa_cert_event_cd || ' Date/Hour ' || to_char(qce_wks.qa_cert_event_date, 'mm/dd/yyyy') || ' ' || qce_wks.qa_cert_event_hour as qa_identifier,
+		'Code ' || qce_wks.qa_cert_event_cd || 
+		' Date/Hour ' || to_char(qce_wks.qa_cert_event_date, 'mm/dd/yyyy') || ' ' || qce_wks.qa_cert_event_hour || 
+		case when qce_wks.mon_sys_id is not null then ' System ID ' || ms.system_identifier when qce_wks.component_id is not null then ' Comp ID ' || c.component_identifier else '' end as qa_identifier,
 		coalesce(sq.user_id , '') as submitter,
 		qa_qce_sq.submission_id as loaded_submission_id,
 		qa_qce_sq.queued_time as loaded_submission_date
@@ -147,6 +149,10 @@ BEGIN
 		and qce.submission_id = qa_qce_sq.submission_id
 	join camdecmpswks.qa_cert_event qce_wks on
 		sq.qa_cert_event_id = qce_wks.qa_cert_event_id
+    left join camdecmpswks.monitor_system ms on
+		qce_wks.mon_sys_id = ms.mon_sys_id
+    left join camdecmpswks.component c on
+		qce_wks.component_id = c.component_id
 	where
 		sq.process_cd = 'QA'
 		and sq.submission_id > coalesce(qa_qce_sq.submission_id, 0)
@@ -164,7 +170,8 @@ BEGIN
 		sq.submission_set,
 		sq.status_cd || ': ' || sq.note as queue_status,
 		'Extension/Exemption' as qa_type,
-		'Code ' || tee_wks.extens_exempt_cd as qa_identifier,
+		'Code ' || tee_wks.extens_exempt_cd || 
+		case when tee_wks.mon_sys_id is not null then ' System ID ' || ms.system_identifier when tee_wks.component_id is not null then ' Comp ID ' || c.component_identifier else '' end as qa_identifier,
 		coalesce(sq.user_id , '') as submitter,
 		qa_tee_sq.submission_id as loaded_submission_id,
 		qa_tee_sq.queued_time as loaded_submission_date
@@ -178,6 +185,10 @@ BEGIN
 		and tee.submission_id = qa_tee_sq.submission_id
 	join camdecmpswks.test_extension_exemption tee_wks on
 		sq.test_extension_exemption_id = tee_wks.test_extension_exemption_id
+    left join camdecmpswks.monitor_system ms on
+		tee_wks.mon_sys_id = ms.mon_sys_id
+    left join camdecmpswks.component c on
+		tee_wks.component_id = c.component_id
 	where
 		sq.process_cd = 'QA'
 		and sq.submission_id > coalesce(qa_tee_sq.submission_id, 0)
