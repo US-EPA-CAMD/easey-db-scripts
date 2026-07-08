@@ -135,7 +135,8 @@ BEGIN
 		'Event' as qa_type,
 		'Code ' || qce_wks.qa_cert_event_cd || 
 		' Date/Hour ' || to_char(qce_wks.qa_cert_event_date, 'mm/dd/yyyy') || ' ' || qce_wks.qa_cert_event_hour || 
-		case when qce_wks.mon_sys_id is not null then ' System ID ' || ms.system_identifier when qce_wks.component_id is not null then ' Comp ID ' || c.component_identifier else '' end as qa_identifier,
+		case when qce_wks.mon_sys_id is not null then ' System ID ' || ms.system_identifier else '' end ||
+        case when qce_wks.component_id is not null then ' Comp ID ' || c.component_identifier else '' end as qa_identifier,
 		coalesce(sq.user_id , '') as submitter,
 		qa_qce_sq.submission_id as loaded_submission_id,
 		qa_qce_sq.queued_time as loaded_submission_date
@@ -171,7 +172,8 @@ BEGIN
 		sq.status_cd || ': ' || sq.note as queue_status,
 		'Extension/Exemption' as qa_type,
 		'Code ' || tee_wks.extens_exempt_cd || 
-		case when tee_wks.mon_sys_id is not null then ' System ID ' || ms.system_identifier when tee_wks.component_id is not null then ' Comp ID ' || c.component_identifier else '' end as qa_identifier,
+		case when tee_wks.mon_sys_id is not null then ' System ID ' || ms.system_identifier else '' end ||
+        case when tee_wks.component_id is not null then ' Comp ID ' || c.component_identifier else '' end as qa_identifier,
 		coalesce(sq.user_id , '') as submitter,
 		qa_tee_sq.submission_id as loaded_submission_id,
 		qa_tee_sq.queued_time as loaded_submission_date
