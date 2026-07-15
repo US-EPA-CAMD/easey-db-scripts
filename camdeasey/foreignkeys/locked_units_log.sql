@@ -1,0 +1,6 @@
+ALTER TABLE camdeasey.locked_units_log
+        ADD CONSTRAINT fk_locked_units_log_act FOREIGN KEY (activity_id) 
+            REFERENCES camdeasey.activity_log (activity_id);
+ALTER TABLE camdeasey.locked_units_log
+        ADD CONSTRAINT fk_locked_units_log_unit FOREIGN KEY (unit_id) 
+            REFERENCES camd.unit (unit_id);
