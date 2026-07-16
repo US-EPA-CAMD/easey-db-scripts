@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_noxappemixedfuel
     rpt_period_id integer NOT NULL,
     date_hour character varying(25) COLLATE pg_catalog."default" NOT NULL,
     op_time numeric(3,2),
-    system_id character varying(3) COLLATE pg_catalog."default" NOT NULL,
+    system_id character varying(3) COLLATE pg_catalog."default",
     unit_load numeric(6,0),
     load_uom character varying(7) COLLATE pg_catalog."default",
     calc_hi_rate numeric(14,4),

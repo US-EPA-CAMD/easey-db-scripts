@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_view_massoilcalc
     rpt_period_id integer NOT NULL,
     date_hour character varying(25) COLLATE pg_catalog."default" NOT NULL,
     op_time numeric(3,2),
-    fuel_sys_id character varying(3) COLLATE pg_catalog."default" NOT NULL,
+    fuel_sys_id character varying(3) COLLATE pg_catalog."default",
     oil_type character varying(7) COLLATE pg_catalog."default" NOT NULL,
     fuel_use_time numeric(3,2),
     rpt_volumetric_oil_flow numeric(10,1),

@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_matsweekly
     weekly_test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     system_component_identifier character varying(3) COLLATE pg_catalog."default",
     system_component_type character varying(1000) COLLATE pg_catalog."default",
-    date_hour character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    date_hour character varying(25) COLLATE pg_catalog."default",
     test_type character varying(7) COLLATE pg_catalog."default",
     test_result character varying(7) COLLATE pg_catalog."default",
     span_scale character varying(7) COLLATE pg_catalog."default",
