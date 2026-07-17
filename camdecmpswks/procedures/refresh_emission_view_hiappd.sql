@@ -16,7 +16,7 @@ BEGIN
             dat.RPT_PERIOD_ID, 
             camdecmpswks.format_date_hour( dat.BEGIN_DATE, dat.BEGIN_HOUR, null ) AS DATE_HOUR,
             dat.OP_TIME, 
-            dat.SYSTEM_IDENTIFIER AS FUEL_SYS_ID,
+            COALESCE( dat.SYSTEM_IDENTIFIER, '' ) AS FUEL_SYS_ID,
             dat.FUEL_CD AS FUEL_TYPE,
             dat.FUEL_USAGE_TIME AS FUEL_USE_TIME,
             dat.HR_LOAD AS UNIT_LOAD, 

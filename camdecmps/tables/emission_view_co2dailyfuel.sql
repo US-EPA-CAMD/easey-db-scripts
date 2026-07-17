@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_co2dailyfuel
     rpt_adjusted_daily_co2_mass numeric(10,1),
     rpt_sorbent_rltd_co2_mass numeric(10,1),
     ERROR_CODES character varying(1) COLLATE pg_catalog."default",
-    fuel_cd character varying(7) COLLATE pg_catalog."default",
+    fuel_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     daily_fuel_feed numeric(13,1),
     carbon_content_used numeric(5,1),
     fuel_carbon_burned numeric(13,1),
