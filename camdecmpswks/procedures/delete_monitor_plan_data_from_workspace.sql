@@ -2,6 +2,13 @@
 
 -- DROP PROCEDURE IF EXISTS camdecmpswks.delete_monitor_plan_data_from_workspace(text);
 
+/****************************************************************************************************************************************************
+    Maintenance History:
+    
+    Date        Programmer      Ticket      Description
+    ----------  --------------  ----------  ---------------------------------------------------------------------------------------------------------
+    2026-07-10  Dwayne Whitten  #7202       Removed the deletion of camdecmpswks.UNIT rows, which are not really MP rows.
+****************************************************************************************************************************************************/
 CREATE OR REPLACE PROCEDURE camdecmpswks.delete_monitor_plan_data_from_workspace(
 	IN monplanid text)
 LANGUAGE 'plpgsql'
@@ -96,9 +103,6 @@ BEGIN
 
 	DELETE FROM camdecmpswks.monitor_plan
 	WHERE mon_plan_id = monPlanId;
-
-    DELETE FROM camdecmpswks.unit
-    WHERE unit_id = ANY(unitIds);
 
 	DELETE FROM camdecmpswks.unit_capacity
 	WHERE unit_id = ANY(unitIds);
