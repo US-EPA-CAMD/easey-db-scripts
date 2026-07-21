@@ -10,19 +10,19 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.import_queue
     file_type_cd character varying(8) COLLATE pg_catalog."default" NOT NULL,
     oris_code numeric(6,0),
     rpt_period_id numeric(38,0),
-    add_time timestamp without time zone NOT NULL,
-    queued_time timestamp without time zone,
+    queued_time timestamp without time zone NOT NULL,
+    claimed_time timestamp without time zone,
     started_time timestamp without time zone,
     completed_time timestamp without time zone,
     note text COLLATE pg_catalog."default",
     note_time timestamp without time zone,
     status_cd text COLLATE pg_catalog."default" GENERATED ALWAYS AS (
         CASE
-            WHEN queued_time IS NULL AND started_time IS NULL AND completed_time IS NULL AND note_time IS NULL THEN 'NEW'::text
-            WHEN queued_time IS NOT NULL AND started_time IS NULL AND completed_time IS NULL AND note_time IS NULL THEN 'QUEUED'::text
-            WHEN queued_time IS NOT NULL AND started_time IS NOT NULL AND completed_time IS NULL AND note_time IS NULL THEN 'WIP'::text
-            WHEN queued_time IS NOT NULL AND started_time IS NOT NULL AND completed_time IS NOT NULL AND note_time IS NULL THEN 'COMPLETE'::text
-            WHEN queued_time IS NOT NULL AND started_time IS NOT NULL AND completed_time IS NULL AND note_time IS NOT NULL THEN 'ERROR'::text
+            WHEN note_time IS NOT NULL THEN 'ERROR'::text
+            WHEN completed_time IS NOT NULL THEN 'COMPLETE'::text
+            WHEN started_time IS NOT NULL THEN 'WIP'::text
+            WHEN claimed_time IS NOT NULL THEN 'CLAIMED'::text
+            WHEN queued_time IS NOT NULL THEN 'QUEUED'::text
             ELSE NULL::text
         END
     ) STORED
@@ -46,9 +46,9 @@ COMMENT ON COLUMN camdecmpsaux.import_queue.oris_code IS 'ORIS code of the facil
 
 COMMENT ON COLUMN camdecmpsaux.import_queue.rpt_period_id IS 'Foreign key to the Reporting Period table. Populated for EM files only.';
 
-COMMENT ON COLUMN camdecmpsaux.import_queue.add_time IS 'Date and time the record was added to the system.';
-
 COMMENT ON COLUMN camdecmpsaux.import_queue.queued_time IS 'Timestamp for when the file was queued.';
+
+COMMENT ON COLUMN camdecmpsaux.import_queue.claimed_time IS 'Timestamp for when the file was claimed for processing.';
 
 COMMENT ON COLUMN camdecmpsaux.import_queue.started_time IS 'Timestamp for when the file started processing.';
 
@@ -68,19 +68,19 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.import_set
     import_set_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     user_id character varying(160) COLLATE pg_catalog."default" NOT NULL,
     user_email character varying(100) COLLATE pg_catalog."default" NOT NULL,
-    add_time timestamp without time zone NOT NULL,
-    queued_time timestamp without time zone,
+    queued_time timestamp without time zone NOT NULL,
+    claimed_time timestamp without time zone,
     started_time timestamp without time zone,
     completed_time timestamp without time zone,
     note text COLLATE pg_catalog."default",
     note_time timestamp without time zone,
     status_cd text COLLATE pg_catalog."default" GENERATED ALWAYS AS (
         CASE
-            WHEN queued_time IS NULL AND started_time IS NULL AND completed_time IS NULL AND note_time IS NULL THEN 'NEW'::text
-            WHEN queued_time IS NOT NULL AND started_time IS NULL AND completed_time IS NULL AND note_time IS NULL THEN 'QUEUED'::text
-            WHEN queued_time IS NOT NULL AND started_time IS NOT NULL AND completed_time IS NULL AND note_time IS NULL THEN 'WIP'::text
-            WHEN queued_time IS NOT NULL AND started_time IS NOT NULL AND completed_time IS NOT NULL AND note_time IS NULL THEN 'COMPLETE'::text
-            WHEN queued_time IS NOT NULL AND started_time IS NOT NULL AND completed_time IS NULL AND note_time IS NOT NULL THEN 'ERROR'::text
+            WHEN note_time IS NOT NULL THEN 'ERROR'::text
+            WHEN completed_time IS NOT NULL THEN 'COMPLETE'::text
+            WHEN started_time IS NOT NULL THEN 'WIP'::text
+            WHEN claimed_time IS NOT NULL THEN 'CLAIMED'::text
+            WHEN queued_time IS NOT NULL THEN 'QUEUED'::text
             ELSE NULL::text
         END
     ) STORED
@@ -94,9 +94,9 @@ COMMENT ON COLUMN camdecmpsaux.import_set.user_id IS 'User ID of the person who 
 
 COMMENT ON COLUMN camdecmpsaux.import_set.user_email IS 'Email address of the user who created the import.';
 
-COMMENT ON COLUMN camdecmpsaux.import_set.add_time IS 'Date and time the record was added to the system.';
-
 COMMENT ON COLUMN camdecmpsaux.import_set.queued_time IS 'Timestamp for when the import was queued.';
+
+COMMENT ON COLUMN camdecmpsaux.import_set.claimed_time IS 'Timestamp for when the Quartz job claimed the import for processing.';
 
 COMMENT ON COLUMN camdecmpsaux.import_set.started_time IS 'Timestamp for when the import started processing.';
 
@@ -107,12 +107,8 @@ COMMENT ON COLUMN camdecmpsaux.import_set.note IS 'Note indicating why the impor
 COMMENT ON COLUMN camdecmpsaux.import_set.note_time IS 'Timestamp for when the import failed.';
 
 COMMENT ON COLUMN camdecmpsaux.import_set.status_cd IS
-    'Indicates the current status of the import set. Generated column with logic:
-    NEW when all timestamps null,
-    QUEUED when only QUEUED_TIME set,
-    WIP when QUEUED_TIME and STARTED_TIME set,
-    COMPLETE when all timestamps except NOTE_TIME set,
-    ERROR when NOTE_TIME set with QUEUED_TIME and STARTED_TIME.';
+    'Current status of the import set (generated). ERROR when NOTE_TIME set;
+    otherwise COMPLETE, WIP, CLAIMED, or QUEUED by the latest timestamp set.';
 
 -- constraints and indexes
 

@@ -8,19 +8,19 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.import_queue
     file_type_cd character varying(8) COLLATE pg_catalog."default" NOT NULL,
     oris_code numeric(6,0),
     rpt_period_id numeric(38,0),
-    add_time timestamp without time zone NOT NULL,
-    queued_time timestamp without time zone,
+    queued_time timestamp without time zone NOT NULL,
+    claimed_time timestamp without time zone,
     started_time timestamp without time zone,
     completed_time timestamp without time zone,
     note text COLLATE pg_catalog."default",
     note_time timestamp without time zone,
     status_cd text COLLATE pg_catalog."default" GENERATED ALWAYS AS (
         CASE
-            WHEN queued_time IS NULL AND started_time IS NULL AND completed_time IS NULL AND note_time IS NULL THEN 'NEW'::text
-            WHEN queued_time IS NOT NULL AND started_time IS NULL AND completed_time IS NULL AND note_time IS NULL THEN 'QUEUED'::text
-            WHEN queued_time IS NOT NULL AND started_time IS NOT NULL AND completed_time IS NULL AND note_time IS NULL THEN 'WIP'::text
-            WHEN queued_time IS NOT NULL AND started_time IS NOT NULL AND completed_time IS NOT NULL AND note_time IS NULL THEN 'COMPLETE'::text
-            WHEN queued_time IS NOT NULL AND started_time IS NOT NULL AND completed_time IS NULL AND note_time IS NOT NULL THEN 'ERROR'::text
+            WHEN note_time IS NOT NULL THEN 'ERROR'::text
+            WHEN completed_time IS NOT NULL THEN 'COMPLETE'::text
+            WHEN started_time IS NOT NULL THEN 'WIP'::text
+            WHEN claimed_time IS NOT NULL THEN 'CLAIMED'::text
+            WHEN queued_time IS NOT NULL THEN 'QUEUED'::text
             ELSE NULL::text
         END
     ) STORED
@@ -44,9 +44,9 @@ COMMENT ON COLUMN camdecmpsaux.import_queue.oris_code IS 'ORIS code of the facil
 
 COMMENT ON COLUMN camdecmpsaux.import_queue.rpt_period_id IS 'Foreign key to the Reporting Period table. Populated for EM files only.';
 
-COMMENT ON COLUMN camdecmpsaux.import_queue.add_time IS 'Date and time the record was added to the system.';
-
 COMMENT ON COLUMN camdecmpsaux.import_queue.queued_time IS 'Timestamp for when the file was queued.';
+
+COMMENT ON COLUMN camdecmpsaux.import_queue.claimed_time IS 'Timestamp for when the file was claimed for processing.';
 
 COMMENT ON COLUMN camdecmpsaux.import_queue.started_time IS 'Timestamp for when the file started processing.';
 
@@ -57,4 +57,4 @@ COMMENT ON COLUMN camdecmpsaux.import_queue.note IS 'Note indicating why process
 COMMENT ON COLUMN camdecmpsaux.import_queue.note_time IS 'Timestamp for when processing the file failed.';
 
 COMMENT ON COLUMN camdecmpsaux.import_queue.status_cd IS
-    'Indicates the current status of the file. Generated column with the same logic as import_set.status_cd.';
+    'Current status of the file (generated), with the same logic as import_set.status_cd.';
