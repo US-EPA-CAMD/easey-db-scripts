@@ -9,6 +9,9 @@ begin
     refresh materialized view camdsnap.MONITOR_LOCATION_SS;
     refresh materialized view camdsnap.MONITOR_PLAN_LOCATION_SS;
     refresh materialized view camdsnap.MONITOR_PLAN_REPORTING_FREQ_SS;
+    refresh materialized view camdsnap.PROGRAM_SS;
+    refresh materialized view camdsnap.PROGRAM_PHASE_SS;
+    refresh materialized view camdsnap.UNIT_BT_TYPE_SS;
     
 end;
 $$;
