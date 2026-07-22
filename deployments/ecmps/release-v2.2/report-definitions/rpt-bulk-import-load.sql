@@ -6,12 +6,12 @@ DECLARE
 	datatableId integer;
 BEGIN
 	DELETE FROM camdaux.dataset WHERE dataset_cd = datasetCode;
+	DELETE FROM camdaux.template_code WHERE group_cd = datasetCode;
 
 	INSERT INTO camdaux.template_code(template_cd, group_cd, template_type, display_name)
 	VALUES
 		('BLKIMPFILE', datasetCode, '1COLTBL', 'Import File'),
-		('BLKIMPERR', datasetCode, 'DEFAULT', 'Errors')
-	ON CONFLICT (template_cd) DO NOTHING;
+		('BLKIMPERR', datasetCode, 'DEFAULT', 'Errors');
 
 	INSERT INTO camdaux.dataset(dataset_cd, group_cd, display_name, no_results_msg)
 	VALUES(datasetCode, groupCode, 'Bulk Import Results Report', 'Import completed with no errors.');
