@@ -4,6 +4,7 @@ as
 $$
 begin
     
+    refresh materialized view camdsnap.FACILITY_SS;
     refresh materialized view camdsnap.FACILITY_PEOPLE_SS;
     
 end;
