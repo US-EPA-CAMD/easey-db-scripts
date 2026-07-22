@@ -10,7 +10,8 @@ select  aco.account_owner_id as account_own_id,
         aco.end_date,
         aco.add_date,
         aco.update_date,
-        aco.userid
+        aco.userid,
+        now() as refresh_time
   from  ACCOUNT_OWNER aco;
 
 
