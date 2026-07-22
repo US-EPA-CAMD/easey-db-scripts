@@ -19,6 +19,7 @@ begin
     -- refresh materialized view camdsnap.ACCOUNT_PROGRAM_SS;
     -- refresh materialized view camdsnap.ACCOUNT_SS;
     -- refresh materialized view camdsnap.AGENCY_SS;
+    -- refresh materialized view camdsnap.ALLOWANCE_BLOCK_SS;
     refresh materialized view camdsnap.FACILITY_SS;
     refresh materialized view camdsnap.FACILITY_PEOPLE_SS;
     refresh materialized view camdsnap.MONITOR_LOCATION_SS;
