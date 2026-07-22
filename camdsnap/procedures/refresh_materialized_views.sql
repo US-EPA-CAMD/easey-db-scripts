@@ -23,6 +23,7 @@ begin
     -- refresh materialized view camdsnap.COMPLIANCE_EMISSION_SS;
     -- refresh materialized view camdsnap.COMPLIANCE_PERIOD_SS;
     -- refresh materialized view camdsnap.COMPLIANCE_PROBLEM_TRANS_SS;
+    -- refresh materialized view camdsnap.NOX_COMP_PLAN_RESULT_SS;
     refresh materialized view camdsnap.FACILITY_SS;
     refresh materialized view camdsnap.FACILITY_PEOPLE_SS;
     refresh materialized view camdsnap.MONITOR_LOCATION_SS;
