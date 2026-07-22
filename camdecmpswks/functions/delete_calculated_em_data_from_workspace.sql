@@ -16,14 +16,44 @@ AS $BODY$
 declare 
 
 	vMON_LOC_ID_LIST VARCHAR ARRAY;
+	vEVALUATION_OCCURRED BOOLEAN;
     
 BEGIN
     error_msg := '';
     result := 'T';	 
 	
-	vMON_LOC_ID_LIST := array(select distinct MON_LOC_ID
+	vMON_LOC_ID_LIST := array(select MON_LOC_ID
 		FROM camdecmpswks.MONITOR_PLAN_LOCATION 
 		 where MON_PLAN_ID = vmonplan_id);
+
+	-- Only clear calculated data when an EM evaluation occurred after the latest successful EM submission.
+	SELECT EXISTS (
+		SELECT 1
+		FROM camdecmpsaux.EVALUATION_SET evs
+		JOIN camdecmpsaux.EVALUATION_QUEUE evq
+		  ON evq.EVALUATION_SET_ID = evs.EVALUATION_SET_ID
+		WHERE evs.MON_PLAN_ID = vmonplan_id
+		  AND evq.PROCESS_CD = 'EM'
+		  AND evq.RPT_PERIOD_ID = vrptperiod_id
+		  AND evq.STATUS_CD = 'COMPLETE'
+		  AND evq.COMPLETED_TIME IS NOT NULL
+		  AND evq.COMPLETED_TIME > COALESCE((
+			SELECT MAX(sbq.COMPLETED_TIME)
+			FROM camdecmpsaux.SUBMISSION_SET sbs
+			JOIN camdecmpsaux.SUBMISSION_QUEUE sbq
+			  ON sbq.SUBMISSION_SET_ID = sbs.SUBMISSION_SET_ID
+			WHERE sbs.MON_PLAN_ID = vmonplan_id
+			  AND sbq.PROCESS_CD = 'EM'
+			  AND sbq.RPT_PERIOD_ID = vrptperiod_id
+			  AND sbs.STATUS_CD = 'COMPLETE'
+			  AND sbq.STATUS_CD = 'COMPLETE'
+			  AND sbq.COMPLETED_TIME IS NOT NULL
+		  ), '-infinity'::timestamp)
+	) INTO vEVALUATION_OCCURRED;
+
+	IF NOT vEVALUATION_OCCURRED THEN
+		RETURN NEXT;
+	END IF;
 			 
 	-- Delete the check session for this MP/RPT Period		
 	DELETE FROM camdecmpswks.CHECK_SESSION 
@@ -49,7 +79,7 @@ BEGIN
 			CALC_UPSCALE_APS_IND = null,
 			CALC_UPSCALE_CAL_ERROR = null
 		where DAILY_TEST_SUM_ID in
-		 (select distinct DAILY_TEST_SUM_ID
+		 (select DAILY_TEST_SUM_ID
 			 from camdecmpswks.DAILY_TEST_SUMMARY 
 			   where RPT_PERIOD_ID= vrptperiod_id
 				 and MON_LOC_ID  = ANY(vMON_LOC_ID_LIST));
@@ -112,7 +142,7 @@ BEGIN
       UPDATE camdecmpswks.DAILY_FUEL
 		SET CALC_FUEL_CARBON_BURNED = null
 		where DAILY_EMISSION_id in
-		 (select distinct DAILY_EMISSION_id from camdecmpswks.DAILY_EMISSION
+		 (select DAILY_EMISSION_id from camdecmpswks.DAILY_EMISSION
 		   where MON_LOC_ID  = ANY(vMON_LOC_ID_LIST)
 		    and RPT_PERIOD_ID= vrptperiod_id);
 	
