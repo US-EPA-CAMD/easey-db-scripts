@@ -16,6 +16,7 @@ begin
     refresh materialized view camdsnap.UNIT_CONTROL_SS;
     refresh materialized view camdsnap.UNIT_FUEL_SS;
     refresh materialized view camdsnap.UNIT_MONITOR_SS;
+    refresh materialized view camdsnap.UNIT_OP_STATUS_SS;
     
 end;
 $$;
