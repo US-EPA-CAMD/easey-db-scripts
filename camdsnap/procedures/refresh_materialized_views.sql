@@ -24,13 +24,14 @@ begin
     -- refresh materialized view camdsnap.COMPLIANCE_PERIOD_SS;
     -- refresh materialized view camdsnap.COMPLIANCE_PROBLEM_TRANS_SS;
     -- refresh materialized view camdsnap.NOX_COMP_PLAN_RESULT_SS;
-    refresh materialized view camdsnap.FACILITY_SS;
+    -- refresh materialized view camdsnap.NOX_COMP_PLAN_SS;
     refresh materialized view camdsnap.FACILITY_PEOPLE_SS;
+    refresh materialized view camdsnap.FACILITY_SS;
     refresh materialized view camdsnap.MONITOR_LOCATION_SS;
     refresh materialized view camdsnap.MONITOR_PLAN_LOCATION_SS;
     refresh materialized view camdsnap.MONITOR_PLAN_REPORTING_FREQ_SS;
-    refresh materialized view camdsnap.PROGRAM_SS;
     refresh materialized view camdsnap.PROGRAM_PHASE_SS;
+    refresh materialized view camdsnap.PROGRAM_SS;
     refresh materialized view camdsnap.UNIT_BT_TYPE_SS;
     refresh materialized view camdsnap.UNIT_CAPACITY_SS;
     refresh materialized view camdsnap.UNIT_CONTROL_SS;
