@@ -8,6 +8,7 @@ begin
     -- No Materialized View Dependency --
     -------------------------------------
 
+    -- refresh materialized view camdsnap.ACCOUNT_BLOCK_SS;
     refresh materialized view camdsnap.FACILITY_SS;
     refresh materialized view camdsnap.FACILITY_PEOPLE_SS;
     refresh materialized view camdsnap.MONITOR_LOCATION_SS;
