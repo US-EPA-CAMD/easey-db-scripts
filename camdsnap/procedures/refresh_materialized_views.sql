@@ -13,6 +13,8 @@ begin
     -- refresh materialized view camdsnap.ACCOUNT_COMPLIANCE_LIAB_SS;
     -- refresh materialized view camdsnap.ACCOUNT_COMPLIANCE_PENALTY;
     -- refresh materialized view camdsnap.ACCOUNT_COMPLIANCE_SS;
+    -- refresh materialized view camdsnap.ACCOUNT_FACILITY_SS;
+    -- refresh materialized view camdsnap.ACCOUNT_OWNER_SS;
     refresh materialized view camdsnap.FACILITY_SS;
     refresh materialized view camdsnap.FACILITY_PEOPLE_SS;
     refresh materialized view camdsnap.MONITOR_LOCATION_SS;
