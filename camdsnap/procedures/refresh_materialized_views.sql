@@ -31,6 +31,7 @@ begin
     -- refresh materialized view camdsnap.NOX_COMP_PLAN_RESULT_SS;
     -- refresh materialized view camdsnap.NOX_COMP_PLAN_SS;
     -- refresh materialized view camdsnap.NOX_UNIT_AVG_PLAN;
+    -- refresh materialized view camdsnap.PEOPLE_DETAIL_SS;
     refresh materialized view camdsnap.PROGRAM_PHASE_SS;
     refresh materialized view camdsnap.PROGRAM_SS;
     -- refresh materialized view camdsnap.ORIGINAL_ALLOCATION;
