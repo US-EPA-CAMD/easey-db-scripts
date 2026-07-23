@@ -53,7 +53,9 @@ begin
     refresh materialized view camdsnap.UNIT_PROGRAM_EXEMPTION_SS;
     -- refresh materialized view camdsnap.UNIT_PROGRAM_PHASE_SS;
     -- refresh materialized view camdsnap.UNIT_PROGRAM_SS;
-
+    -- refresh materialized view camdsnap.UNIT_SS;
+    
+    
     ----------------------------------------------
     -- First Level Materialized View Dependency --
     ----------------------------------------------
