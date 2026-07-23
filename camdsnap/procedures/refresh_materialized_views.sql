@@ -48,6 +48,7 @@ begin
     -- refresh materialized view camdsnap.UNIT_HISTORY_SS;
     refresh materialized view camdsnap.UNIT_MONITOR_SS;
     refresh materialized view camdsnap.UNIT_OP_STATUS_SS;
+    -- refresh materialized view camdsnap.UNIT_OWNER_SS;
     refresh materialized view camdsnap.UNIT_PROGRAM_EXEMPTION_SS;
 
     ----------------------------------------------
