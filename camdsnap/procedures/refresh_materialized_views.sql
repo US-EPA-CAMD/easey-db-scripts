@@ -35,6 +35,7 @@ begin
     -- refresh materialized view camdsnap.PEOPLE_SS;
     refresh materialized view camdsnap.PROGRAM_PHASE_SS;
     refresh materialized view camdsnap.PROGRAM_SS;
+    -- refresh materialized view camdsnap.PROGRAM_VINTAGE_SS;
     -- refresh materialized view camdsnap.ORIGINAL_ALLOCATION;
     refresh materialized view camdsnap.UNIT_BT_TYPE_SS;
     refresh materialized view camdsnap.UNIT_CAPACITY_SS;
