@@ -3,6 +3,7 @@ as
 select  prv.prg_vintage_id,
         prv.prg_cd,
         prv.prg_vintage_name ,
+        prv.vintage_year,
         prv.begin_date,
         prv.end_date,
         prv.allocation_ind,
