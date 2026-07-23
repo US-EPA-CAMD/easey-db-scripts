@@ -39,6 +39,7 @@ begin
     -- refresh materialized view camdsnap.ORIGINAL_ALLOCATION;
     -- refresh materialized view camdsnap.STAFF_AGENCY_SS;
     -- refresh materialized view camdsnap.TCOMPPROB_TRANSACT_SS;
+    -- refresh materialized view camdsnap.TRANSACTION_BLOCK_SS;
     refresh materialized view camdsnap.UNIT_BT_TYPE_SS;
     refresh materialized view camdsnap.UNIT_CAPACITY_SS;
     refresh materialized view camdsnap.UNIT_CONTROL_SS;
