@@ -17,3 +17,7 @@ CREATE INDEX IF NOT EXISTS idx_import_queue_mon_plan_id
 CREATE INDEX IF NOT EXISTS idx_import_queue_rpt_period_id
     ON camdecmpsaux.import_queue USING btree
     (rpt_period_id ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_import_queue_status_cd
+    ON camdecmpsaux.import_queue USING btree
+    (status_cd COLLATE pg_catalog."default" ASC NULLS LAST);

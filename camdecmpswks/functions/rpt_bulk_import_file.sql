@@ -16,10 +16,8 @@ AS $BODY$
 		iq.file_name AS "fileName",
 		iq.file_type_cd AS "fileType",
 		(
-			SELECT string_agg(
-				CASE WHEN ml.unit_id IS NULL THEN sp.stack_name ELSE u.unitid END,
-				', ' ORDER BY u.unitid, sp.stack_name
-			)
+			-- Show the alphabetically first stack/pipe, or the unit if there are none
+			SELECT COALESCE(MIN(sp.stack_name), MIN(u.unitid))
 			FROM camdecmpswks.monitor_plan_location mpl
 			JOIN camdecmpswks.monitor_location ml USING(mon_loc_id)
 			LEFT JOIN camdecmpswks.stack_pipe sp USING(stack_pipe_id)
