@@ -1,66 +1,43 @@
+/******************************************************************************************************************************
+    
+    REFRESH_MATERIALIZED_VIEWS
+    
+    Refreshes and analyzes the CAMDSNAP materialized views (MVW), starting with those that do not depend on CAMDSNAP MVWs, and
+    then sucessively handling MVW that only depend on MVW that have already been processed.
+    
+    Note a Vaccum is not need since Concurrency is not used in the refresh.
+    
+    
+    Maitnenance History:
+    
+    Date        Programmer      Ticket      Description
+    ----------  --------------  ----------  -----------------------------------------------------------------------------------
+    2026-07-24  Dwayne Whitten  #7238       Created
+******************************************************************************************************************************/
 create or replace procedure camdsnap.REFRESH_MATERIALIZED_VIEWS()
 language plpgsql
 as
 $$
+declare
+    vMaterializedView record;
 begin
     
-    -------------------------------------
-    -- No Materialized View Dependency --
-    -------------------------------------
-
-    -- refresh materialized view camdsnap.ACCOUNT_BLOCK_SS;
-    -- refresh materialized view camdsnap.ACCOUNT_COMPLIANCE_BALANCE_SS;
-    -- refresh materialized view camdsnap.ACCOUNT_COMPLIANCE_LIAB_SS;
-    -- refresh materialized view camdsnap.ACCOUNT_COMPLIANCE_PENALTY;
-    -- refresh materialized view camdsnap.ACCOUNT_COMPLIANCE_SS;
-    -- refresh materialized view camdsnap.ACCOUNT_FACILITY_SS;
-    -- refresh materialized view camdsnap.ACCOUNT_OWNER_SS;
-    -- refresh materialized view camdsnap.ACCOUNT_PEOPLE_SS;
-    -- refresh materialized view camdsnap.ACCOUNT_PROGRAM_SS;
-    -- refresh materialized view camdsnap.ACCOUNT_SS;
-    -- refresh materialized view camdsnap.AGENCY_SS;
-    -- refresh materialized view camdsnap.COMPANY_SS;
-    -- refresh materialized view camdsnap.COMPLIANCE_EMISSION_SS;
-    -- refresh materialized view camdsnap.COMPLIANCE_PERIOD_SS;
-    -- refresh materialized view camdsnap.COMPLIANCE_PROBLEM_TRANS_SS;
-    refresh materialized view camdsnap.FACILITY_PEOPLE_SS;
-    refresh materialized view camdsnap.FACILITY_SS;
-    refresh materialized view camdsnap.MONITOR_LOCATION_SS;
-    refresh materialized view camdsnap.MONITOR_PLAN_LOCATION_SS;
-    refresh materialized view camdsnap.MONITOR_PLAN_REPORTING_FREQ_SS;
-    -- refresh materialized view camdsnap.NOX_COMP_PLAN_RESULT_SS;
-    -- refresh materialized view camdsnap.NOX_COMP_PLAN_SS;
-    -- refresh materialized view camdsnap.NOX_UNIT_AVG_PLAN;
-    -- refresh materialized view camdsnap.PEOPLE_DETAIL_SS;
-    -- refresh materialized view camdsnap.PEOPLE_SS;
-    refresh materialized view camdsnap.PROGRAM_PHASE_SS;
-    refresh materialized view camdsnap.PROGRAM_SS;
-    -- refresh materialized view camdsnap.PROGRAM_VINTAGE_SS;
-    -- refresh materialized view camdsnap.ORIGINAL_ALLOCATION;
-    -- refresh materialized view camdsnap.STAFF_AGENCY_SS;
-    -- refresh materialized view camdsnap.TCOMPPROB_TRANSACT_SS;
-    -- refresh materialized view camdsnap.TRANSACTION_BLOCK_SS;
-    -- refresh materialized view camdsnap.TRANSACTION_SS;
-    refresh materialized view camdsnap.UNIT_BT_TYPE_SS;
-    refresh materialized view camdsnap.UNIT_CAPACITY_SS;
-    refresh materialized view camdsnap.UNIT_CONTROL_SS;
-    refresh materialized view camdsnap.UNIT_FUEL_SS;
-    -- refresh materialized view camdsnap.UNIT_HISTORY_SS;
-    refresh materialized view camdsnap.UNIT_MONITOR_SS;
-    refresh materialized view camdsnap.UNIT_OP_STATUS_SS;
-    -- refresh materialized view camdsnap.UNIT_OWNER_SS;
-    -- refresh materialized view camdsnap.UNIT_PHYSICAL_MOVE_SS;
-    refresh materialized view camdsnap.UNIT_PROGRAM_EXEMPTION_SS;
-    -- refresh materialized view camdsnap.UNIT_PROGRAM_PHASE_SS;
-    -- refresh materialized view camdsnap.UNIT_PROGRAM_SS;
-    -- refresh materialized view camdsnap.UNIT_SS;
-    
-    
-    ----------------------------------------------
-    -- First Level Materialized View Dependency --
-    ----------------------------------------------
-    
-    -- refresh materialized view camdsnap.UNIT_PEOPLE_SS;
+    for vMaterializedView in
+    (
+        select  mvw.materialized_view_schema,
+                mvw.materialized_view_name
+          from  camdsnap.REFRESH_MATERIALIZED_VIEW_GET() mvw
+         order
+            by  mvw.dependency_level,
+                mvw.materialized_view_schema,
+                mvw.materialized_view_name
+    )
+    loop
+        
+        execute format( 'refresh materialized view %I.%I', vMaterializedView.materialized_view_schema, vMaterializedView.materialized_view_name );
+        execute format( 'analyze %I.%I', vMaterializedView.materialized_view_schema, vMaterializedView.materialized_view_name );
+        
+    end loop;
     
 end;
 $$;
