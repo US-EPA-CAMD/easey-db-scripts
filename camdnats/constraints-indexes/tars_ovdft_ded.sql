@@ -1,0 +1,5 @@
+-----------------
+-- Constraints --
+-----------------
+
+ALTER TABLE CAMDNATS.TARS_OVDFT_DED ADD CONSTRAINT TARS_OVDFT_DED_PK PRIMARY KEY (TRANEVNT_CNT);
