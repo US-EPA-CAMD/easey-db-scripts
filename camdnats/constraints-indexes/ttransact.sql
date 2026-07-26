@@ -1,0 +1,13 @@
+---------------------
+-- General Indexes --
+---------------------
+
+CREATE INDEX TTRANSACT_BUY_IX ON CAMDNATS.TTRANSACT (BUYACCT_ID);
+CREATE INDEX TTRANSACT_SEL_IX ON CAMDNATS.TTRANSACT (SELLACCT_ID);
+
+
+-----------------
+-- Constraints --
+-----------------
+
+ALTER TABLE CAMDNATS.TTRANSACT ADD CONSTRAINT TTRANSACT_PK PRIMARY KEY (TRANEVNT_CNT);
