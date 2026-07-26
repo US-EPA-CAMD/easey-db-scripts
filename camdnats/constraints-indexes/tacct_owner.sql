@@ -1,0 +1,5 @@
+-----------------
+-- Constraints --
+-----------------
+
+ALTER TABLE CAMDNATS.TACCT_OWNER ADD CONSTRAINT TACCT_OWNER_PK PRIMARY KEY (ACCT_OWN_ID);
