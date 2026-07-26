@@ -9,7 +9,6 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.import_queue
     oris_code numeric(6,0),
     rpt_period_id numeric(38,0),
     queued_time timestamp without time zone NOT NULL,
-    claimed_time timestamp without time zone,
     started_time timestamp without time zone,
     completed_time timestamp without time zone,
     note text COLLATE pg_catalog."default",
@@ -19,7 +18,6 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.import_queue
             WHEN note_time IS NOT NULL THEN 'ERROR'::text
             WHEN completed_time IS NOT NULL THEN 'COMPLETE'::text
             WHEN started_time IS NOT NULL THEN 'WIP'::text
-            WHEN claimed_time IS NOT NULL THEN 'CLAIMED'::text
             WHEN queued_time IS NOT NULL THEN 'QUEUED'::text
             ELSE NULL::text
         END
@@ -45,8 +43,6 @@ COMMENT ON COLUMN camdecmpsaux.import_queue.oris_code IS 'ORIS code of the facil
 COMMENT ON COLUMN camdecmpsaux.import_queue.rpt_period_id IS 'Foreign key to the Reporting Period table. Populated for EM files only.';
 
 COMMENT ON COLUMN camdecmpsaux.import_queue.queued_time IS 'Timestamp for when the file was queued.';
-
-COMMENT ON COLUMN camdecmpsaux.import_queue.claimed_time IS 'Timestamp for when the file was claimed for processing.';
 
 COMMENT ON COLUMN camdecmpsaux.import_queue.started_time IS 'Timestamp for when the file started processing.';
 
