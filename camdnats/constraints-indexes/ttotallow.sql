@@ -1,0 +1,5 @@
+-----------------
+-- Constraints --
+-----------------
+
+ALTER TABLE CAMDNATS.TTOTALLOW ADD CONSTRAINT TTOTALLOW_PK PRIMARY KEY (ACCTNUM_ID, ALLWYEAR_DT);
