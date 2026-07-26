@@ -1,0 +1,5 @@
+-----------------
+-- Constraints --
+-----------------
+
+ALTER TABLE CAMDNATS.TAUTHYR ADD CONSTRAINT TAUTHYR_PK PRIMARY KEY (LIMITTYP_CD, ALLWYEAR_DT, ACCTNUM_ID);
