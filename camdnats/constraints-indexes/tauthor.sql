@@ -1,0 +1,5 @@
+-----------------
+-- Constraints --
+-----------------
+
+ALTER TABLE CAMDNATS.TAUTHOR ADD CONSTRAINT TAUTHOR_PK PRIMARY KEY (LIMITTYP_CD, ACCTNUM_ID);
