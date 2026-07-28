@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_dailycal
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     rpt_period_id numeric(38,0) NOT NULL,
-    test_sum_id character varying(45) COLLATE pg_catalog."default",
+    test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     component_identifier character varying(3) COLLATE pg_catalog."default",
     component_type_cd character varying(7) COLLATE pg_catalog."default",
     span_scale_cd character varying(7) COLLATE pg_catalog."default",
