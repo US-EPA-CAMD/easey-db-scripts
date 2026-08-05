@@ -310,5 +310,46 @@ BEGIN
 		RAISE NOTICE '-- executed --';
 	END IF;
 
+-------------------------------------------------------------------------------------------------------------------------------
+
+    -------------------------
+    -- Depend on UNIT_FACT --
+    -------------------------
+
+    ------------------------
+    -- OP_STATUS_YEAR_DIM --
+    ------------------------
+    
+    tableName := 'op_status_year_dim';
+	partitionName := tableName || '_p';
+    
+    cmdStmt := FORMAT('CREATE TABLE IF NOT EXISTS %s.%s%s PARTITION OF %s.%s FOR VALUES FROM (%L) TO (%L);', 
+                      schemaName, partitionName, year, schemaName, tableName, year, year+1);
+    
+    RAISE NOTICE '%', cmdStmt;
+    
+    IF executeFlag = 'Y' THEN
+        EXECUTE cmdStmt;
+        RAISE NOTICE '-- executed --';
+    END IF;
+    
+    
+    ----------------------
+    -- REP_DISPLAY_FACT --
+    ----------------------
+    
+    tableName := 'rep_display_fact';
+	partitionName := tableName || '_p';
+    
+    cmdStmt := FORMAT('CREATE TABLE IF NOT EXISTS %s.%s%s PARTITION OF %s.%s FOR VALUES FROM (%L) TO (%L);', 
+                      schemaName, partitionName, year, schemaName, tableName, year, year+1);
+    
+    RAISE NOTICE '%', cmdStmt;
+    
+    IF executeFlag = 'Y' THEN
+        EXECUTE cmdStmt;
+        RAISE NOTICE '-- executed --';
+    END IF;
+
 END
 $BODY$;
