@@ -16,22 +16,53 @@ AS $BODY$
 declare 
 
 	vMON_LOC_ID_LIST VARCHAR ARRAY;
+	vEVALUATION_OCCURRED BOOLEAN;
     
 BEGIN
     error_msg := '';
     result := 'T';	 
 	
-	vMON_LOC_ID_LIST := array(select distinct MON_LOC_ID
+	vMON_LOC_ID_LIST := array(select MON_LOC_ID
 		FROM camdecmpswks.MONITOR_PLAN_LOCATION 
 		 where MON_PLAN_ID = vmonplan_id);
+
+	-- Only clear calculated data when an EM evaluation occurred after the latest successful EM submission.
+	SELECT EXISTS (
+		SELECT 1
+		FROM camdecmpsaux.EVALUATION_SET evs
+		JOIN camdecmpsaux.EVALUATION_QUEUE evq
+		  ON evq.EVALUATION_SET_ID = evs.EVALUATION_SET_ID
+		WHERE evs.MON_PLAN_ID = vmonplan_id
+		  AND evq.PROCESS_CD = 'EM'
+		  AND evq.RPT_PERIOD_ID = vrptperiod_id
+		  AND evq.STATUS_CD = 'COMPLETE'
+		  AND evq.COMPLETED_TIME IS NOT NULL
+		  AND evq.COMPLETED_TIME > COALESCE((
+			SELECT MAX(sbq.COMPLETED_TIME)
+			FROM camdecmpsaux.SUBMISSION_SET sbs
+			JOIN camdecmpsaux.SUBMISSION_QUEUE sbq
+			  ON sbq.SUBMISSION_SET_ID = sbs.SUBMISSION_SET_ID
+			WHERE sbs.MON_PLAN_ID = vmonplan_id
+			  AND sbq.PROCESS_CD = 'EM'
+			  AND sbq.RPT_PERIOD_ID = vrptperiod_id
+			  AND sbs.STATUS_CD = 'COMPLETE'
+			  AND sbq.STATUS_CD = 'COMPLETE'
+			  AND sbq.COMPLETED_TIME IS NOT NULL
+		  ), '-infinity'::timestamp)
+	) INTO vEVALUATION_OCCURRED;
+
+	IF NOT vEVALUATION_OCCURRED THEN
+		RETURN NEXT;
+	END IF;
 			 
 	-- Delete the check session for this MP/RPT Period		
-	DELETE FROM camdecmpswks.CHECK_SESSION 
-		WHERE CHK_SESSION_ID IN 
-		(SELECT CHK_SESSION_ID FROM camdecmpswks.EMISSION_EVALUATION 
-		 where MON_PLAN_ID=vmonplan_id 
-		   and RPT_PERIOD_ID=vrptperiod_id
-		   and CHK_SESSION_ID IS NOT NULL);	
+	DELETE FROM camdecmpswks.CHECK_SESSION cs
+		WHERE EXISTS
+		(SELECT 1 FROM camdecmpswks.EMISSION_EVALUATION ee
+		 where ee.CHK_SESSION_ID = cs.CHK_SESSION_ID
+		   and ee.MON_PLAN_ID=vmonplan_id
+		   and ee.RPT_PERIOD_ID=vrptperiod_id
+		   and ee.CHK_SESSION_ID IS NOT NULL);
 			 
 		-- Clear the eval
 	UPDATE camdecmpswks.EMISSION_EVALUATION
@@ -42,17 +73,18 @@ BEGIN
 		  and RPT_PERIOD_ID = vrptperiod_id;			
 		
 	-- Now, clear all the calculated fields in tables		
-	UPDATE camdecmpswks.DAILY_CALIBRATION	
+	UPDATE camdecmpswks.DAILY_CALIBRATION dc
 	 	SET CALC_ONLINE_OFFLINE_IND = null,
 			CALC_ZERO_APS_IND = null,
 			CALC_ZERO_CAL_ERROR = null,
 			CALC_UPSCALE_APS_IND = null,
 			CALC_UPSCALE_CAL_ERROR = null
-		where DAILY_TEST_SUM_ID in
-		 (select distinct DAILY_TEST_SUM_ID
-			 from camdecmpswks.DAILY_TEST_SUMMARY 
-			   where RPT_PERIOD_ID= vrptperiod_id
-				 and MON_LOC_ID  = ANY(vMON_LOC_ID_LIST));
+		where exists
+		 (select 1
+			 from camdecmpswks.DAILY_TEST_SUMMARY dts
+			   where dts.DAILY_TEST_SUM_ID = dc.DAILY_TEST_SUM_ID
+				 and dts.RPT_PERIOD_ID= vrptperiod_id
+				 and dts.MON_LOC_ID  = ANY(vMON_LOC_ID_LIST));
 				 
     UPDATE camdecmpswks.DAILY_TEST_SUMMARY 
 		SET CALC_TEST_RESULT_CD = null
@@ -109,12 +141,13 @@ BEGIN
 		  and RPT_PERIOD_ID= vrptperiod_id;
 		
 		-- RGGI table/field
-      UPDATE camdecmpswks.DAILY_FUEL
+      UPDATE camdecmpswks.DAILY_FUEL df
 		SET CALC_FUEL_CARBON_BURNED = null
-		where DAILY_EMISSION_id in
-		 (select distinct DAILY_EMISSION_id from camdecmpswks.DAILY_EMISSION
-		   where MON_LOC_ID  = ANY(vMON_LOC_ID_LIST)
-		    and RPT_PERIOD_ID= vrptperiod_id);
+		where exists
+		 (select 1 from camdecmpswks.DAILY_EMISSION de
+		   where de.DAILY_EMISSION_id = df.DAILY_EMISSION_id
+		    and de.MON_LOC_ID  = ANY(vMON_LOC_ID_LIST)
+		    and de.RPT_PERIOD_ID= vrptperiod_id);
 	
 	--Remove error codes and calculated values from pre-rendered View Emissions tables.
 	 select * into result, error_msg 
