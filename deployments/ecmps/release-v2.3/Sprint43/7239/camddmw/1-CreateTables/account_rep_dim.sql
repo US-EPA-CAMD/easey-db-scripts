@@ -1,0 +1,28 @@
+CREATE TABLE IF NOT EXISTS CAMDDMW.ACCOUNT_REP_DIM
+(
+  PRG_CODE        VARCHAR(8)                    NOT NULL,
+  ACCOUNT_NUMBER  VARCHAR(12)                   NOT NULL,
+  UNIT_ID         NUMERIC(12),
+  PPL_ID          NUMERIC(12)                   NOT NULL,
+  DISPLAY_NAME    VARCHAR(100),
+  REP_CODE        VARCHAR(6)                    NOT NULL,
+  DATA_SOURCE     VARCHAR(35),
+  USERID          VARCHAR(8),
+  ADD_DATE        TIMESTAMP WITHOUT TIME ZONE,
+  FULL_NAME       VARCHAR(100)
+);
+
+
+COMMENT ON TABLE CAMDDMW.ACCOUNT_REP_DIM IS 'Current representatives for unit or general accounts';
+
+
+COMMENT ON COLUMN CAMDDMW.ACCOUNT_REP_DIM.PRG_CODE IS 'Program code';
+COMMENT ON COLUMN CAMDDMW.ACCOUNT_REP_DIM.ACCOUNT_NUMBER IS 'Account number';
+COMMENT ON COLUMN CAMDDMW.ACCOUNT_REP_DIM.UNIT_ID IS 'Unique identifier of a unit';
+COMMENT ON COLUMN CAMDDMW.ACCOUNT_REP_DIM.PPL_ID IS 'Unique identifier of a record in the PEOPLE table';
+COMMENT ON COLUMN CAMDDMW.ACCOUNT_REP_DIM.DISPLAY_NAME IS 'Formatted display of the individual''s name';
+COMMENT ON COLUMN CAMDDMW.ACCOUNT_REP_DIM.REP_CODE IS 'Code indicating alternate or primary representative';
+COMMENT ON COLUMN CAMDDMW.ACCOUNT_REP_DIM.DATA_SOURCE IS 'Source of the data';
+COMMENT ON COLUMN CAMDDMW.ACCOUNT_REP_DIM.USERID IS 'Initials of user who last modified data';
+COMMENT ON COLUMN CAMDDMW.ACCOUNT_REP_DIM.ADD_DATE IS 'Date on which the record was added';
+COMMENT ON COLUMN CAMDDMW.ACCOUNT_REP_DIM.FULL_NAME IS 'Formatted display of the individual''s name';
