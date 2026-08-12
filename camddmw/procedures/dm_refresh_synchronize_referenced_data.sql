@@ -1,4 +1,4 @@
-create or replace function camddmw.dm_refresh_update_supporting_data
+create or replace procedure camddmw.dm_refresh_update_supporting_data
 (
     out errorJson_out   json,
     out result_out      boolean
