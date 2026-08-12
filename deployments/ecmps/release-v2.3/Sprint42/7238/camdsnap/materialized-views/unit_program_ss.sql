@@ -20,7 +20,7 @@ select  unp.up_id,
         unp.add_date,
         unp.update_date,
         null as ee_limit,
-        case when unp.non_egu_ind is null then '0' else to_char( unp.non_egu_ind ) end as non_egu_flg,
+        case when unp.non_egu_ind is null then '0' else unp.non_egu_ind::text end as non_egu_flg,
         unp.unit_monitor_cert_begin_date,
         unp.unit_monitor_cert_deadline,
         unp.emissions_recording_begin_date,
@@ -29,7 +29,7 @@ select  unp.up_id,
         null as first_year_value,
         null as subsequent_year_value,
         now() as refresh_time
-  from  UNIT_PROGRAM unp
+  from  camd.UNIT_PROGRAM unp
  where  unp.prg_cd not in ( 'ARP' )
 union
 select  unp.up_id,
@@ -52,7 +52,7 @@ select  unp.up_id,
         unp.add_date,
         unp.update_date,
         nun.ee_limit,
-        case when unp.non_egu_ind is null then '0' else to_char( unp.non_egu_ind ) end as non_egu_flg,
+        case when unp.non_egu_ind is null then '0' else unp.non_egu_ind::text end as non_egu_flg,
         unp.unit_monitor_cert_begin_date,
         unp.unit_monitor_cert_deadline,
         unp.emissions_recording_begin_date,
@@ -61,10 +61,10 @@ select  unp.up_id,
         aoa.first_year_value,
         aoa.subsequent_year_value,
         now() as refresh_time
-  from  UNIT_PROGRAM  unp
-        left join ARP_OPTIN_ALLOCATION aoa
+  from  camd.UNIT_PROGRAM  unp
+        left join camdams.ARP_OPTIN_ALLOCATION aoa
           on aoa.unit_id = unp.unit_id
-        left join NOX_UNIT nun
+        left join camdams.NOX_UNIT nun
           on nun.unit_id = unp.unit_id
  where  unp.prg_cd IN ( 'ARP' );
 
