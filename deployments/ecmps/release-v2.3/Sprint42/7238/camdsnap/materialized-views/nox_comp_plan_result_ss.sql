@@ -20,7 +20,7 @@ SELECT  npr.comp_plan_id,
         npr.update_date,
         npr.userid,
         now() as refresh_time
-  FROM  NOX_COMP_PLAN_RESULT npr;
+  FROM  camdams.NOX_COMP_PLAN_RESULT npr;
 
 
 comment on materialized view camdsnap.NOX_COMP_PLAN_RESULT_SS is 'snapshot table for snapshot CAMDSNAP.NOX_COMP_PLAN_RESULT_SS';
