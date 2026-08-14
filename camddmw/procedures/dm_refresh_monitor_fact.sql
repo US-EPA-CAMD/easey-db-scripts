@@ -1,4 +1,4 @@
-create or replace procedure camddmw.dm_refresh_monitor_fact_load
+create or replace procedure camddmw.dm_refresh_monitor_fact
 (
     in  fullRefresh_in              boolean,
     in  increamentalRefreshDate_in  date,
@@ -8,7 +8,7 @@ create or replace procedure camddmw.dm_refresh_monitor_fact_load
 as
 $$
 declare
-    cProcedureName constant text := 'dm_refresh_monitor_fact_load';
+    cProcedureName constant text := 'dm_refresh_monitor_fact';
 
     -- Stacked Diagnostic Variables
     vErrorReturnedSqlstate      text;
@@ -83,10 +83,10 @@ begin
                         string_agg( distinct sub_unt.unitid, ', ' order by sub_unt.unitid ) as assoc_units
                   from  camdsnap.UNIT_MONITOR_SS sub_unm
                         join camdsnap.MONITOR_LOCATION_SS sub_loc using ( unit_id )
-                        join camdsnap.UNIT_SS sub_unt using ( unit_id )
+                        join camdsnap.UNIT_SS sub_unt using ( unit_id ) -- Ensures that unit exists in UNIT_SS.
                  where  sub_unm.mon_loc_id = loc.mon_loc_id 
-                   and  ( ( loc.active_date is null ) or ( extract( year from sub_loc.active_date ) <= 2025 ) )
-                   and  ( ( loc.retire_date is null ) or ( extract( year from sub_loc.retire_date ) >= 2025 ) )
+                   and  ( ( sub_loc.active_date is null ) or ( extract( year from sub_loc.active_date ) <= vyr.valid_year ) )
+                   and  ( ( sub_loc.retire_date is null ) or ( extract( year from sub_loc.retire_date ) >= vyr.valid_year ) )
                  group
                     by  sub_unm.mon_loc_id
             ) asu
