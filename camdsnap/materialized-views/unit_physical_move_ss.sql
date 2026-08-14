@@ -7,7 +7,7 @@ select  upm.unit_id,
         upm.add_date,
         upm.update_date,
         now() as refresh_time
-  from  UNIT_PHYSICAL_MOVE upm;
+  from  camd.UNIT_PHYSICAL_MOVE upm;
 
 
 comment on materialized view camdsnap.UNIT_PHYSICAL_MOVE_SS is 'snapshot table for snapshot CAMDSNAP.UNIT_PHYSICAL_MOVE_SS';
