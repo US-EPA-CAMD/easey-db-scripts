@@ -1,4 +1,4 @@
-create or replace procedure camddmw.dm_refresh_load_monitor_fact
+create or replace procedure camddmw.dm_refresh_monitor_fact_load
 (
     in  fullRefresh_in              boolean,
     in  increamentalRefreshDate_in  date,
@@ -8,7 +8,7 @@ create or replace procedure camddmw.dm_refresh_load_monitor_fact
 as
 $$
 declare
-    cProcedureName constant text := 'dm_refresh_load_monitor_fact';
+    cProcedureName constant text := 'dm_refresh_monitor_fact_load';
 
     -- Stacked Diagnostic Variables
     vErrorReturnedSqlstate      text;
