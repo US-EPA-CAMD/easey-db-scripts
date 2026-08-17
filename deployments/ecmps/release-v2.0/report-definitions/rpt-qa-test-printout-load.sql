@@ -477,10 +477,10 @@ BEGIN
 		(datatableId, 1, 'operatingLevelNo', 'Operating Level No.'),
 		(datatableId, 2, 'runNo', 'Run No.'),
 		(datatableId, 3, 'sysId', 'System ID'),
-		(datatableId, 4, 'gasGCV', 'Oil Mass (lb)'),
-		(datatableId, 5, 'gasVolume', 'Oil GCV'),
-		(datatableId, 6, 'gasHI', 'Oil GCV UOM'),
-		(datatableId, 7, 'calculatedGasHI', 'Oil Volume');		
+		(datatableId, 4, 'gasGCV', 'Gas GCV'),
+		(datatableId, 5, 'gasVolume', 'Gas Volume'),
+		(datatableId, 6, 'gasHI', 'Reported Gas HI'),
+		(datatableId, 7, 'calculatedGasHI', 'Recalculated Gas HI');
 			/***** PARAMETERS *****/
 	INSERT INTO camdaux.dataparameter(datatable_id, parameter_order, name, default_value)
 	VALUES (datatableId, 1, 'testId', null);
