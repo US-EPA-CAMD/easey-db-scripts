@@ -62,29 +62,29 @@ begin
                     then ( extract( year from unc.install_date ) <= oyr.op_year )
                     when ( unc.opt_date is not null )
                     then ( extract( year from unc.opt_date ) <= oyr.op_year )
-                    else true -- Later checking will determine whether the op_year applies to the UNIT_CONTROL row.
+                    else true -- Later checking will determine whether the op_year applies to the UNIT_CONTROL_SS row.
                  end
              and ( ( unc.retire_date is null ) or ( extract( year from unc.retire_date ) >= oyr.op_year ) )
             join camdsnap.UNIT_SS unt
               on unt.unit_id = unc.unit_id
              and case
                     when ( ( unc.install_date is not null ) or ( unc.opt_date is not null ) )
-                    then true -- Earlier checking determined whether the op_year applies to the UNIT_CONTROL row.
+                    then true -- Earlier checking determined whether the op_year applies to the UNIT_CONTROL_SS row.
                     when ( ( unc.orig_cd = '1' ) and ( coalesce( unt.comm_op_date, unt.comr_op_date ) is not null ) )
                     then ( extract( year from coalesce( unt.comm_op_date, unt.comr_op_date ) ) <= oyr.op_year )
-                    else true -- Later checking will determine whether the op_year applies to the UNIT_CONTROL row.
+                    else true -- Later checking will determine whether the op_year applies to the UNIT_CONTROL_SS row.
                  end
             join camddmw.UNIT_FACT unf 
               on unf.op_year = oyr.op_year
              and unf.unit_id = unt.unit_id
             join camdecmpsmd.CONTROL_CODE cnc using ( control_cd )
      where  (
-                -- Earlier checking determined whether the op_year applies to the UNIT_CONTROL row.
+                -- Earlier checking determined whether the op_year applies to the UNIT_CONTROL_SS row.
                 ( ( unc.install_date is not null ) or ( unc.opt_date is not null ) )
                 or
                 ( ( unc.orig_cd = '1' ) and ( coalesce( unt.comm_op_date, unt.comr_op_date ) is not null ) )
                 or
-                -- Unit Status determines whether the op_year applies to the UNIT_CONTROL row if above checking has not.
+                -- Unit Status determines whether the op_year applies to the UNIT_CONTROL_SS row if above checking has not.
                 exists
                 (
                     select  1
