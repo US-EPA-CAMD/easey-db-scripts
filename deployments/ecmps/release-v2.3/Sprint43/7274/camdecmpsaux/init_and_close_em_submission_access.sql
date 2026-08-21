@@ -124,18 +124,18 @@ BEGIN
 					CASE WHEN V_SYSDATE_AS_DATE < V_BEGINDATE OR V_PENDING = 'T' THEN NULL ELSE 'REQUIRE' END)
 				RETURNING EM_SUB_ACCESS_ID INTO V_EM_SUB_ACCESS_ID;
 
-                -- Trigger collateral EM data updates for ESA changes
-                SELECT * INTO V_COLLATERAL_RESULT, V_COLLATERAL_ERROR_MSG
-                FROM camdecmpswks.update_collateral_em_data_for_esa_changes(SUB_ACCESS_REC.MON_PLAN_ID, V_PERIOD_ID::int);
+            -- Trigger collateral EM data updates for ESA changes
+            SELECT * INTO V_COLLATERAL_RESULT, V_COLLATERAL_ERROR_MSG
+            FROM camdecmpswks.update_collateral_em_data_for_esa_changes(SUB_ACCESS_REC.MON_PLAN_ID, V_PERIOD_ID::int);
 
-                IF V_COLLATERAL_RESULT = 'F' THEN
-                    RAISE EXCEPTION 'Failed to update collateral EM data for ESA changes: %', V_COLLATERAL_ERROR_MSG;
-                END IF;
+            IF V_COLLATERAL_RESULT = 'F' THEN
+                RAISE EXCEPTION 'Failed to update collateral EM data for ESA changes: %', V_COLLATERAL_ERROR_MSG;
+            END IF;
 
-                IF V_SYSDATE_AS_DATE >= V_BEGINDATE::date AND V_PENDING = 'F' THEN
-                        -- send notifications when initial windows are created after the start of the reporting period
-                        V_SEND_INITIAL_WINDOW_NOTIFICATION := TRUE;
-                END IF;
+            IF V_SYSDATE_AS_DATE >= V_BEGINDATE::date AND V_PENDING = 'F' THEN
+					-- send notifications when initial windows are created after the start of the reporting period
+					V_SEND_INITIAL_WINDOW_NOTIFICATION := TRUE;
+				END IF;
 
 			ELSE
 				-- window already exists; open it when it is time to do so (only if it is approved)
