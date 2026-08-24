@@ -1,6 +1,7 @@
 -- FUNCTION: camdecmpswks.rpt_em_error_details(text, date, numeric, text)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_error_details(text, date, numeric, text) CASCADE;
+-- Delete old function
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_error_details(text, date, numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_error_details(
 	vmonplanid text,
