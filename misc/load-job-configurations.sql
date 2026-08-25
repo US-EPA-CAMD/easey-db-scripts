@@ -7,6 +7,7 @@ INSERT INTO camdaux.job_configuration (job_class, cron_expression, active, run_o
     ('ApportionedEmissionsBulkData', '0 0/10 4-6 ? * * *', TRUE, FALSE, NULL),
     ('BulkDataFileMaintenance', '0 0 6 ? * * *', TRUE, FALSE, NULL),
     ('BulkFileJobQueue', '0 0/1 * 1/1 * ? *', TRUE, FALSE, NULL),
+    ('BulkImportJobQueue', '0 0/1 * 1/1 * ? *', TRUE, FALSE, NULL),
     ('EmailQueue', '0 0/1 * 1/1 * ? *', TRUE, FALSE, NULL),
     ('EmissionsComplianceBulkDataFiles', '0 0/10 2-4 15 * ? *', TRUE, FALSE, NULL),
     ('EvaluationJobQueue', '*/15 * * * * ? *', TRUE, FALSE, NULL),
