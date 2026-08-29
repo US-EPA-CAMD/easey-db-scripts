@@ -1,0 +1,25 @@
+CREATE TABLE IF NOT EXISTS camdams.csapr_noda
+(
+    plant_name varchar(100),
+    state varchar(100),
+    oris_id numeric,
+    boiler_id varchar(6),
+    so2_allocation_2015__tons_ numeric,
+    so2_allocation_2016__tons_ numeric,
+    so2_allocation_2017__tons_ numeric,
+    so2_allocation_2018__tons_ numeric,
+    so2_allocation_2019__tons_ numeric,
+    so2_allocation_2020__tons_ numeric,
+    nox_annual_allocation_2015__to numeric,
+    nox_annual_allocation_2016__to numeric,
+    nox_annual_allocation_2017__to numeric,
+    nox_annual_allocation_2018__to numeric,
+    nox_annual_allocation_2019__to numeric,
+    nox_annual_allocation_2020__to numeric,
+    nox_os_allocation_2015__tons_ numeric,
+    nox_os_allocation_2016__tons_ numeric,
+    nox_os_allocation_2017__tons_ numeric,
+    nox_os_allocation_2018__tons_ numeric,
+    nox_os_allocation_2019__tons_ numeric,
+    nox_os_allocation_2020__tons_ numeric
+);
