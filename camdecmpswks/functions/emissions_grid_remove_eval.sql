@@ -1,10 +1,10 @@
--- FUNCTION: camdecmpswks.emissions_grid_remove_eval(character varying, integer)
+-- FUNCTION: camdecmpswks.emissions_grid_remove_eval(character varying, numeric)
 
--- DROP FUNCTION IF EXISTS camdecmpswks.emissions_grid_remove_eval(character varying, integer);
+-- DROP FUNCTION IF EXISTS camdecmpswks.emissions_grid_remove_eval(character varying, numeric);
 
 CREATE OR REPLACE FUNCTION camdecmpswks.emissions_grid_remove_eval(
 	vmonplan_id character varying,
-	vrptperiod_id integer)
+	vrptperiod_id numeric)
     RETURNS TABLE(result text, error_msg character varying) 
     LANGUAGE 'plpgsql'
     COST 100
@@ -164,13 +164,13 @@ BEGIN
 		where MON_PLAN_ID =vmonplan_id
 		  and RPT_PERIOD_ID = vrptperiod_id;
 
- return;
+    RETURN NEXT; -- Add row to return table.
 
 exception when others then
     get stacked diagnostics error_msg := message_text;
     result = 'F';  
-	error_msg :='From emissions_grid_remove_eval '||' '|| message_text;
+	error_msg :='From emissions_grid_remove_eval '||' '|| error_msg;
 	
-   return;
+    RETURN NEXT; -- Add row to return table.
 END;
 $BODY$;

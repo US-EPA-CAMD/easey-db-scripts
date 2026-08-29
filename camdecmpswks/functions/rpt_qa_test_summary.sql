@@ -34,7 +34,7 @@ SELECT
 		rp.period_abbreviation as "quarter",
 		esc.eval_status_cd_description as "evalStatus",
 		sac.sub_avail_cd_description as "submisionStatus",
-		TO_CHAR(eq.queued_time, 'MM/DD/YYYY HH24:MI') as "submittedOn",
+		COALESCE(TO_CHAR(eq.queued_time, 'MM/DD/YYYY HH24:MI'), 'No Data Available') as "submittedOn",
 		ts.test_description as "testDescription"
 	FROM camdecmpswks.test_summary ts
 	JOIN camdecmpswks.qa_supp_data supp on ts.test_sum_id = supp.test_sum_id

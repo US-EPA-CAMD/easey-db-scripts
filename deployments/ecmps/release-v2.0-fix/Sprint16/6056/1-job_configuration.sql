@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS camdaux.job_configuration (
     active boolean NOT NULL DEFAULT TRUE,
     run_once boolean DEFAULT FALSE,
     run_at timestamp without time zone,
-    CONSTRAINT unique_job_name UNIQUE (job_name)
+    CONSTRAINT unique_job_name UNIQUE (job_name),
+    CONSTRAINT unique_trigger_name UNIQUE (trigger_name)
 );
 
 COMMENT ON COLUMN camdaux.job_configuration.job_type IS 'Indicates the class name that implements the job';

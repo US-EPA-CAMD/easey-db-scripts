@@ -1,0 +1,3 @@
+This is a reminder to remove obsolete files from the MATS submission S3 bucket before deploying the changes in #6515.
+
+The bucket's service name is "mats-bulk-files-import".

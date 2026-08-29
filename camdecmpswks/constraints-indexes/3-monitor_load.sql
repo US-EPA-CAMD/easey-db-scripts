@@ -4,7 +4,9 @@ ALTER TABLE IF EXISTS camdecmpswks.monitor_load
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_monitor_load_units_of_measure_code FOREIGN KEY (max_load_uom_cd)
-        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE;
+        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE,
+    ADD CONSTRAINT uq_monitor_load_key
+        UNIQUE (MON_LOC_ID, BEGIN_DATE, BEGIN_HOUR);
 
 CREATE INDEX IF NOT EXISTS idx_monitor_load_mon_loc_id
     ON camdecmpswks.monitor_load USING btree

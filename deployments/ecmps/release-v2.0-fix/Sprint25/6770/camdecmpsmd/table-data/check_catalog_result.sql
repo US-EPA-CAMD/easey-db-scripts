@@ -1,0 +1,11 @@
+INSERT INTO camdecmpsmd.check_catalog_result (check_catalog_result_id, check_catalog_id, check_result, severity_cd, response_catalog_id, es_allowed_ind) VALUES (7093, 3677, 'A', 'CRIT1', 42463, 1);
+INSERT INTO camdecmpsmd.check_catalog_result (check_catalog_result_id, check_catalog_id, check_result, severity_cd, response_catalog_id, es_allowed_ind) VALUES (7094, 3677, 'B', 'CRIT1', 42464, 1);
+INSERT INTO camdecmpsmd.check_catalog_result (check_catalog_result_id, check_catalog_id, check_result, severity_cd, response_catalog_id, es_allowed_ind) VALUES (7095, 3677, 'C', 'CRIT1', 42465, 1);
+INSERT INTO camdecmpsmd.check_catalog_result (check_catalog_result_id, check_catalog_id, check_result, severity_cd, response_catalog_id, es_allowed_ind) VALUES (7096, 3677, 'D', 'CRIT1', 42466, 1);
+INSERT INTO camdecmpsmd.check_catalog_result (check_catalog_result_id, check_catalog_id, check_result, severity_cd, response_catalog_id, es_allowed_ind) VALUES (7097, 3677, 'E', 'CRIT1', 42467, 1);
+INSERT INTO camdecmpsmd.check_catalog_result (check_catalog_result_id, check_catalog_id, check_result, severity_cd, response_catalog_id, es_allowed_ind) VALUES (7098, 3677, 'F', 'CRIT1', 42468, 1);
+INSERT INTO camdecmpsmd.check_catalog_result (check_catalog_result_id, check_catalog_id, check_result, severity_cd, response_catalog_id, es_allowed_ind) VALUES (7099, 3677, 'G', 'CRIT1', 42469, 1);
+INSERT INTO camdecmpsmd.check_catalog_result (check_catalog_result_id, check_catalog_id, check_result, severity_cd, response_catalog_id, es_allowed_ind) VALUES (7100, 3677, 'H', 'CRIT1', 42470, 1);
+INSERT INTO camdecmpsmd.check_catalog_result (check_catalog_result_id, check_catalog_id, check_result, severity_cd, response_catalog_id, es_allowed_ind) VALUES (7101, 3677, 'I', 'CRIT1', 42471, 1);
+INSERT INTO camdecmpsmd.check_catalog_result (check_catalog_result_id, check_catalog_id, check_result, severity_cd, response_catalog_id, es_allowed_ind) VALUES (7102, 3677, 'J', 'CRIT1', 42472, 1);
+INSERT INTO camdecmpsmd.check_catalog_result (check_catalog_result_id, check_catalog_id, check_result, severity_cd, response_catalog_id, es_allowed_ind) VALUES (7103, 3677, 'K', 'CRIT1', 42473, 1);

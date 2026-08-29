@@ -1,10 +1,9 @@
 ALTER TABLE IF EXISTS camdecmps.derived_hrly_value
-    ADD CONSTRAINT pk_derived_hrly_value PRIMARY KEY (derv_id, rpt_period_id),
+    ADD CONSTRAINT pk_derived_hrly_value PRIMARY KEY (rpt_period_id, derv_id),
     ADD CONSTRAINT fk_derived_hrly_value_fuel_code FOREIGN KEY (fuel_cd)
         REFERENCES camdecmpsmd.fuel_code (fuel_cd) MATCH SIMPLE,
-    ADD CONSTRAINT fk_derived_hrly_value_hrly_op_data FOREIGN KEY (hour_id, rpt_period_id)
-        REFERENCES camdecmps.hrly_op_data (hour_id, rpt_period_id) MATCH SIMPLE
-        ON DELETE CASCADE,
+    ADD CONSTRAINT fk_derived_hrly_value_hrly_op_data FOREIGN KEY (rpt_period_id, hour_id)
+        REFERENCES camdecmps.hrly_op_data (rpt_period_id, hour_id) MATCH SIMPLE,
     ADD CONSTRAINT fk_derived_hrly_value_modc_code FOREIGN KEY (modc_cd)
         REFERENCES camdecmpsmd.modc_code (modc_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_derived_hrly_value_monitor_formula FOREIGN KEY (mon_form_id)
@@ -50,6 +49,10 @@ CREATE INDEX IF NOT EXISTS idx_derived_hrly_value_parameter_cd
 CREATE INDEX IF NOT EXISTS idx_derived_hrly_value_rpt_period_id
     ON camdecmps.derived_hrly_value USING btree
     (rpt_period_id ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_derived_hrly_value_rpt_period_id_hour_id
+    ON camdecmps.derived_hrly_value USING btree
+    (rpt_period_id ASC NULLS LAST, hour_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
 CREATE INDEX IF NOT EXISTS idx_derived_hrly_value_mon_loc_id
     ON camdecmps.derived_hrly_value USING btree

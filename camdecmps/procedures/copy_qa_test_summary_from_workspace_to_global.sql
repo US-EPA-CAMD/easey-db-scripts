@@ -62,13 +62,13 @@ BEGIN
     chk_session_id, mon_plan_id, test_sum_id, qa_cert_event_id,
     test_extension_exemption_id, rpt_period_id, session_begin_date,
     session_end_date, session_comment, severity_cd, category_cd,
-    process_cd, userid
+    process_cd, userid, evaluation_id
 	)
 	SELECT
 		cs.chk_session_id, cs.mon_plan_id, cs.test_sum_id, cs.qa_cert_event_id,
 		cs.test_extension_exemption_id, cs.rpt_period_id, cs.session_begin_date,
 		cs.session_end_date, cs.session_comment, cs.severity_cd, cs.category_cd,
-		cs.process_cd, cs.userid
+		cs.process_cd, cs.userid, cs.evaluation_id
 	FROM camdecmpswks.test_summary ts
 	JOIN camdecmpswks.check_session cs ON ts.chk_session_id = cs.chk_session_id
 	WHERE ts.test_sum_id = testsumid
@@ -85,7 +85,8 @@ BEGIN
 		severity_cd = EXCLUDED.severity_cd,
 		category_cd = EXCLUDED.category_cd,
 		process_cd = EXCLUDED.process_cd,
-		userid = EXCLUDED.userid;
+		userid = EXCLUDED.userid,
+		evaluation_id = EXCLUDED.evaluation_id;
 
 	
 	INSERT INTO camdecmpsaux.check_log(
@@ -197,23 +198,17 @@ BEGIN
 
 	---------------------------------- Protocol Gas --------------------------------------------
 
+    -- Completely delete existing protocol gas records for this test summary to avoid duplicates
+    DELETE FROM camdecmps.protocol_gas
+    WHERE test_sum_id = testSumId;
+
 	INSERT INTO camdecmps.protocol_gas (
     protocol_gas_id, test_sum_id, gas_level_cd, gas_type_cd, vendor_id, cylinder_id, expiration_date, add_date, update_date, userid
 	)
 	SELECT
 		protocol_gas_id, test_sum_id, gas_level_cd, gas_type_cd, vendor_id, cylinder_id, expiration_date, add_date, update_date, userid
 	FROM camdecmpswks.protocol_gas
-	WHERE test_sum_id = testSumId
-	ON CONFLICT (protocol_gas_id) DO UPDATE
-	SET
-		gas_level_cd = EXCLUDED.gas_level_cd,
-		gas_type_cd = EXCLUDED.gas_type_cd,
-		vendor_id = EXCLUDED.vendor_id,
-		cylinder_id = EXCLUDED.cylinder_id,
-		expiration_date = EXCLUDED.expiration_date,
-		add_date = EXCLUDED.add_date,
-		update_date = EXCLUDED.update_date,
-		userid = EXCLUDED.userid;
+	WHERE test_sum_id = testSumId;
 
 	---------------------------------- AET --------------------------------------------
 

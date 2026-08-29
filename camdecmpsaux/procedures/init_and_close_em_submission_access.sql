@@ -1,15 +1,16 @@
--- PROCEDURE: camdecmpsaux.init_and_close_em_submission_access(date, numeric, text, text)
+-- PROCEDURE: camdecmpsaux.init_and_close_em_submission_access(text, numeric, text, text)
 
-DROP PROCEDURE IF EXISTS camdecmpsaux.init_and_close_em_submission_access(date, numeric, text, text);
+DROP PROCEDURE IF EXISTS camdecmpsaux.init_and_close_em_submission_access(text, numeric, text, text);
 
 CREATE OR REPLACE PROCEDURE camdecmpsaux.init_and_close_em_submission_access(
-	v_sysdate date,
+	v_sysdate text,
 	v_fac_id numeric,
 	INOUT v_result text,
 	INOUT v_error_msg text)
 LANGUAGE 'plpgsql'
 AS $BODY$
 DECLARE
+	V_SYSDATE_AS_DATE   	DATE;
 	V_CALENDAR_YEAR       	NUMERIC;
 	V_QUARTER             	NUMERIC;
 	V_PERIOD_ID           	NUMERIC;
@@ -18,28 +19,31 @@ DECLARE
 	V_CURRENT_MONTH       	TEXT;
 	V_CURRENT_DAY         	TEXT;
 	V_ACCESS_BEGIN_DATE   	DATE;
-	V_EM_SUB_ACCESS_ID    	BIGINT;
+	V_EM_SUB_ACCESS_ID		NUMERIC;
 	V_SUB_AVAILABILITY_CD 	TEXT;
 	V_EM_STATUS_CD        	TEXT;
 	V_PENDING             	TEXT;
-	V_REOPEN              	TEXT;
 	V_EM_SUB_STATUS       	TEXT;
-	V_RESUB_EXPLANATION   	TEXT;
+	V_SEND_INITIAL_WINDOW_NOTIFICATION	BOOLEAN;
 	V_CUR_SUBMISSION_ID   	BIGINT;
 	V_CUR_SUB_STAGE_CD    	TEXT;
 	V_CUR_SEVERITY_CD     	TEXT;
 	SUB_ACCESS_REC			RECORD;
-	SUB_ACCESS_CUR			REFCURSOR;
 	CLOSE_ACCESS_REC		RECORD;
-	CLOSE_ACCESS_CUR		REFCURSOR;
 	CURR_SUB_STATUS         RECORD;
+	V_COLLATERAL_RESULT     TEXT;
+	V_COLLATERAL_ERROR_MSG  VARCHAR;
 BEGIN
-	SELECT EXTRACT(MONTH FROM v_sysdate)::TEXT INTO V_CURRENT_MONTH;
-	SELECT EXTRACT(DAY FROM v_sysdate)::TEXT INTO V_CURRENT_DAY;
-	SELECT EXTRACT(YEAR FROM v_sysdate)::INT INTO V_CALENDAR_YEAR;
-	
-	V_BEGINDATE := NULL;
-		
+	v_result := 'T';
+	v_error_msg := '';
+
+	-- Convert text parameter to date
+	V_SYSDATE_AS_DATE := TO_DATE(v_sysdate, 'YYYY-MM-DD');
+	SELECT EXTRACT(MONTH FROM V_SYSDATE_AS_DATE)::TEXT INTO V_CURRENT_MONTH;
+	SELECT EXTRACT(DAY FROM V_SYSDATE_AS_DATE)::TEXT INTO V_CURRENT_DAY;
+	SELECT EXTRACT(YEAR FROM V_SYSDATE_AS_DATE)::INT INTO V_CALENDAR_YEAR;
+
+	-- determine relevant quarter to use to open windows (if any)
 	IF (V_CURRENT_MONTH = '3' AND V_CURRENT_DAY >= '25') OR
 		(V_CURRENT_MONTH = '4' AND V_CURRENT_DAY <= '30') THEN
 		V_QUARTER := 1;
@@ -56,88 +60,46 @@ BEGIN
 		(V_CURRENT_MONTH = '1' AND V_CURRENT_DAY <= '30') THEN
 		V_QUARTER := 4;
 		IF V_CURRENT_MONTH = '1' THEN
-		V_CALENDAR_YEAR := V_CALENDAR_YEAR - 1;
+			V_CALENDAR_YEAR := V_CALENDAR_YEAR - 1;
 		END IF;
 		V_BEGINDATE := TO_DATE('01/01/' || (V_CALENDAR_YEAR + 1)::TEXT, 'MM/DD/YYYY');
 	END IF;
 	
-	
-	IF V_BEGINDATE IS NOT NULL THEN	
+	IF V_BEGINDATE IS NOT NULL THEN
+		
+		-- set window end date (adjusted to the following Monday if it would fall on the weekend)
 		V_ENDDATE := V_BEGINDATE + INTERVAL '29 days';
-
 		IF EXTRACT(DOW FROM V_ENDDATE) = 1 THEN
 			V_ENDDATE := V_ENDDATE + INTERVAL '1 day';
 		ELSIF EXTRACT(DOW FROM V_ENDDATE) = 0 THEN
 			V_ENDDATE := V_ENDDATE + INTERVAL '2 days';
-		END IF;
-
+		END IF;	
+		
+		-- get reporting period id
 		SELECT RPT_PERIOD_ID INTO V_PERIOD_ID
-			FROM CAMDECMPSMD.REPORTING_PERIOD I
-			WHERE CALENDAR_YEAR = V_CALENDAR_YEAR
-			AND QUARTER = V_QUARTER;
+		FROM CAMDECMPSMD.REPORTING_PERIOD I
+		WHERE CALENDAR_YEAR = V_CALENDAR_YEAR
+		AND QUARTER = V_QUARTER;
 			
-		OPEN SUB_ACCESS_CUR FOR 
-		SELECT MP.MON_PLAN_ID, EM.EM_SUB_STATUS
-		FROM CAMDECMPS.MONITOR_PLAN MP
-			JOIN (
-			  SELECT MON_PLAN_ID,
-					 CAMDECMPSAUX.GET_EM_SUBMISSION_STATUS(MON_PLAN_ID, V_CALENDAR_YEAR, V_QUARTER) AS EM_SUB_STATUS
-			  FROM CAMDECMPS.MONITOR_PLAN IMP
-			  WHERE (V_FAC_ID IS NULL OR IMP.FAC_ID = V_FAC_ID)
-			) EM ON MP.MON_PLAN_ID = EM.MON_PLAN_ID
-		WHERE EM.EM_SUB_STATUS IS NOT NULL
-  		AND (V_FAC_ID IS NULL OR MP.FAC_ID = V_FAC_ID);
-
+		FOR SUB_ACCESS_REC IN  
+		SELECT swjo.MON_PLAN_ID, 
+			   swjo.EM_SUB_STATUS, 
+			   swjo.em_sub_access_id,
+			   swjo.create_pending
+			FROM camdecmpsaux.vw_submission_window_job_open swjo
+			WHERE swjo.rpt_period_id = V_PERIOD_ID 
+	  		AND COALESCE(V_FAC_ID, swjo.FAC_ID) = swjo.FAC_ID
+			ORDER BY swjo.MON_PLAN_ID, swjo.em_sub_access_id NULLS FIRST
 		LOOP
-			FETCH SUB_ACCESS_CUR INTO SUB_ACCESS_REC;
-			EXIT WHEN NOT FOUND;
-
-			V_EM_SUB_ACCESS_ID := NULL;
-
-			BEGIN
-				SELECT EM_SUB_ACCESS_ID
-				INTO V_EM_SUB_ACCESS_ID
-				FROM CAMDECMPS.MONITOR_PLAN MP
-				LEFT JOIN CAMDECMPSAUX.EM_SUBMISSION_ACCESS EM ON MP.MON_PLAN_ID = EM.MON_PLAN_ID
-				WHERE MP.MON_PLAN_ID = SUB_ACCESS_REC.MON_PLAN_ID
-				AND EM.RPT_PERIOD_ID = V_PERIOD_ID
-				AND EM.EM_SUB_TYPE_CD = 'INITIAL';
-
-			EXCEPTION
-				WHEN OTHERS THEN
-				V_RESULT := 'F';
-				V_ERROR_MSG := SQLERRM;
-				ROLLBACK;
-			END;
-
-			IF (SELECT ARRAY_LENGTH(STRING_TO_ARRAY(SUB_ACCESS_REC.EM_SUB_STATUS, ';'), 1)) > 1 THEN
-				V_PENDING := 'T';
-				V_RESUB_EXPLANATION := 'Missing Rep for ' || SPLIT_PART(SUB_ACCESS_REC.EM_SUB_STATUS, ';', 2);
-			ELSE
-				V_RESUB_EXPLANATION := NULL;
-
-				BEGIN
-					SELECT CASE WHEN COUNT(MPL.MON_LOC_ID) = 0 THEN 'F' ELSE 'T' END
-					INTO V_PENDING
-					FROM CAMDECMPS.MONITOR_PLAN_LOCATION MPL
-					LEFT JOIN CAMDECMPS.MONITOR_LOCATION ML ON MPL.MON_LOC_ID = ML.MON_LOC_ID
-					LEFT JOIN CAMDECMPS.OPERATING_SUPP_DATA O ON MPL.MON_LOC_ID = O.MON_LOC_ID
-					WHERE MPL.MON_PLAN_ID = SUB_ACCESS_REC.MON_PLAN_ID
-					AND O.MON_LOC_ID IS NULL;
-
-					EXCEPTION
-					WHEN NO_DATA_FOUND THEN
-						V_PENDING := 'F';
-
-					WHEN OTHERS THEN
-						V_RESULT := 'F';
-						V_ERROR_MSG := SQLERRM;
-						ROLLBACK;
-				END;
-			END IF;
+			V_SEND_INITIAL_WINDOW_NOTIFICATION := FALSE;
+			V_EM_SUB_ACCESS_ID := SUB_ACCESS_REC.em_sub_access_id;
 
 			IF V_EM_SUB_ACCESS_ID IS NULL THEN
+				-- no window exists; create one
 
+				-- MPs with locations that have not previously submitted data get pending windows that must be manually approved
+				V_PENDING := SUB_ACCESS_REC.create_pending;
+	
 				INSERT INTO CAMDECMPSAUX.EM_SUBMISSION_ACCESS
 					(
 					MON_PLAN_ID,
@@ -145,12 +107,9 @@ BEGIN
 					ACCESS_BEGIN_DATE,
 					ACCESS_END_DATE,
 					EM_SUB_TYPE_CD,
-					RESUB_EXPLANATION,
 					USERID,
 					ADD_DATE,
-					UPDATE_DATE,
 					EM_STATUS_CD,
-					DATA_LOADED_FLG,
 					SUB_AVAILABILITY_CD)
 				VALUES
 					(
@@ -159,31 +118,29 @@ BEGIN
 					V_BEGINDATE,
 					V_ENDDATE,
 					'INITIAL',
-					V_RESUB_EXPLANATION,
 					'ECMPSOPN',
 					CURRENT_TIMESTAMP,
-					NULL,
 					CASE WHEN V_PENDING = 'T' THEN 'PENDING' ELSE 'APPRVD' END,
-					NULL,
-					CASE WHEN CURRENT_DATE < V_BEGINDATE OR V_PENDING = 'T' THEN NULL ELSE 'REQUIRE' END);
+					CASE WHEN V_SYSDATE_AS_DATE < V_BEGINDATE OR V_PENDING = 'T' THEN NULL ELSE 'REQUIRE' END)
+				RETURNING EM_SUB_ACCESS_ID INTO V_EM_SUB_ACCESS_ID;
 
-				/*
-				UPDATE SYNCHRONIZATION_MANAGEMENT
-					SET EM_SUBMISSION_LAST_UPDATED = CURRENT_TIMESTAMP
-					WHERE MON_PLAN_ID = SUB_ACCESS_REC.MON_PLAN_ID;
-				*/
-				
-				IF CURRENT_DATE >= V_BEGINDATE::date AND V_PENDING = 'F' THEN
-					CALL camdecmpsaux.ADD_WINDOW_EMAIL('155', 'windowNotification',
-												SUB_ACCESS_REC.MON_PLAN_ID,
-												V_PERIOD_ID,
-												V_EM_SUB_ACCESS_ID,
-												V_RESULT,
-												V_ERROR_MSG);
-				END IF;
+                -- Trigger collateral EM data updates for ESA changes
+                SELECT * INTO V_COLLATERAL_RESULT, V_COLLATERAL_ERROR_MSG
+                FROM camdecmpswks.update_collateral_em_data_for_esa_changes(SUB_ACCESS_REC.MON_PLAN_ID, V_PERIOD_ID::int);
+
+                IF V_COLLATERAL_RESULT = 'F' THEN
+                    RAISE EXCEPTION 'Failed to update collateral EM data for ESA changes: %', V_COLLATERAL_ERROR_MSG;
+                END IF;
+
+                IF V_SYSDATE_AS_DATE >= V_BEGINDATE::date AND V_PENDING = 'F' THEN
+                        -- send notifications when initial windows are created after the start of the reporting period
+                        V_SEND_INITIAL_WINDOW_NOTIFICATION := TRUE;
+                END IF;
 
 			ELSE
-
+				-- window already exists; open it when it is time to do so (only if it is approved)
+				
+				-- make sure we only act on the latest window for this monitoring plan and reporting period
 				SELECT EM.ACCESS_BEGIN_DATE,
 					EM.EM_SUB_ACCESS_ID,
 					EM.SUB_AVAILABILITY_CD,
@@ -205,10 +162,8 @@ BEGIN
 				WHERE EM.MON_PLAN_ID = SUB_ACCESS_REC.MON_PLAN_ID
 					AND EM.RPT_PERIOD_ID = V_PERIOD_ID;
 					
-				IF V_SYSDATE >= V_ACCESS_BEGIN_DATE AND
+				IF V_SYSDATE_AS_DATE >= V_ACCESS_BEGIN_DATE AND
 					V_SUB_AVAILABILITY_CD IS NULL AND V_EM_STATUS_CD = 'APPRVD' THEN
-					
-					
 				
 					-- OPEN ALREADY EXISTING WINDOW                 
 					UPDATE CAMDECMPSAUX.EM_SUBMISSION_ACCESS
@@ -217,169 +172,148 @@ BEGIN
 						UPDATE_DATE = CURRENT_TIMESTAMP
 					WHERE EM_SUB_ACCESS_ID = V_EM_SUB_ACCESS_ID;
 
-					/*
-					UPDATE SYNCHRONIZATION_MANAGEMENT
-						SET EM_SUBMISSION_LAST_UPDATED = CURRENT_TIMESTAMP
-						WHERE MON_PLAN_ID = SUB_ACCESS_REC.MON_PLAN_ID;
-					*/
+					-- Trigger collateral EM data updates for ESA changes
+					SELECT * INTO V_COLLATERAL_RESULT, V_COLLATERAL_ERROR_MSG
+					FROM camdecmpswks.update_collateral_em_data_for_esa_changes(SUB_ACCESS_REC.MON_PLAN_ID, V_PERIOD_ID::int);
 
-					-- send opening of initial window email to DR
-					CALL camdecmpsaux.ADD_WINDOW_EMAIL('155', 'windowNotification',
-													SUB_ACCESS_REC.MON_PLAN_ID,
-													V_PERIOD_ID,
-													V_EM_SUB_ACCESS_ID,
-													V_RESULT,
-													V_ERROR_MSG);
-					
+					IF V_COLLATERAL_RESULT = 'F' THEN
+						RAISE EXCEPTION 'Failed to update collateral EM data for ESA changes: %', V_COLLATERAL_ERROR_MSG;
+					END IF;
 
+					-- send notification when initial windows are opened
+					V_SEND_INITIAL_WINDOW_NOTIFICATION := TRUE;
 				END IF;
 			END IF;
+
+			IF V_SEND_INITIAL_WINDOW_NOTIFICATION THEN
+				CALL camdecmpsaux.ADD_WINDOW_EMAIL(155::numeric, 'windowNotification',
+												SUB_ACCESS_REC.MON_PLAN_ID,
+												V_PERIOD_ID,
+												V_EM_SUB_ACCESS_ID::bigint,
+												V_RESULT,
+												V_ERROR_MSG);
+				
+				--testing result of event call
+				IF V_RESULT = 'F' THEN
+					RAISE EXCEPTION 'Failed queueing 155 windowNotification email for existing window: % % %',
+						V_ERROR_MSG,
+						SUB_ACCESS_REC.MON_PLAN_ID,
+						V_PERIOD_ID;
+				END IF;				
+			END IF;
 		END LOOP;
-		CLOSE SUB_ACCESS_CUR;
 	END IF;
 
-	V_EM_SUB_STATUS := NULL;
-	
-    OPEN CLOSE_ACCESS_CUR FOR
-    SELECT ESA.MON_PLAN_ID,
-       ESA.RPT_PERIOD_ID,
-       ESA.EM_SUB_ACCESS_ID,
-       ESA.ACCESS_BEGIN_DATE,
-       ESA.ACCESS_END_DATE,
-       ESA.SUB_AVAILABILITY_CD,
-       ESA.EM_STATUS_CD,
-       ESA.EM_SUB_TYPE_CD,
-       S.SUBMISSION_STATUS_CD,
-       S.SEVERITY_CD,
-       RP.CALENDAR_YEAR,
-       RP.QUARTER
-    FROM CAMDECMPSAUX.EM_SUBMISSION_ACCESS ESA
-        JOIN CAMDECMPS.MONITOR_PLAN MP ON ESA.MON_PLAN_ID = MP.MON_PLAN_ID
-        JOIN CAMDECMPSMD.REPORTING_PERIOD RP ON ESA.RPT_PERIOD_ID = RP.RPT_PERIOD_ID
-        LEFT JOIN CAMDECMPSAUX.SUBMISSION S ON CAMDECMPSAUX.GET_LAST_SUBMISSION_IN_WINDOW(ESA.MON_PLAN_ID, ESA.RPT_PERIOD_ID, ESA.ACCESS_BEGIN_DATE, ESA.ACCESS_END_DATE) = S.SUBMISSION_ID
-    WHERE (ESA.SUB_AVAILABILITY_CD IN ('REQUIRE', 'GRANTED')
-        OR (ESA.SUB_AVAILABILITY_CD = 'UPDATED' AND S.SEVERITY_CD = 'CRIT2'))
-        AND ((1 IS NULL) OR (MP.FAC_ID = 1));
-
+	FOR CLOSE_ACCESS_REC IN
+    SELECT swjc.MON_PLAN_ID,
+       swjc.RPT_PERIOD_ID,
+       swjc.EM_SUB_ACCESS_ID,
+       swjc.ACCESS_BEGIN_DATE,
+       swjc.ACCESS_END_DATE,
+       swjc.SUB_AVAILABILITY_CD,
+       swjc.EM_STATUS_CD,
+       swjc.EM_SUB_TYPE_CD,
+       swjc.SUBMISSION_STATUS_CD,
+       swjc.SEVERITY_CD,
+       swjc.CALENDAR_YEAR,
+       swjc.QUARTER,
+	   swjc.REOPEN_CRIT2,
+	   swjc.CHECK_FOR_REMINDER,
+       swjc.EXTEND_WINDOW,
+	   swjc.FAC_ID
+    FROM camdecmpsaux.vw_submission_window_job_close swjc
+    WHERE COALESCE(V_FAC_ID, swjc.FAC_ID) = swjc.FAC_ID
 	LOOP
-		BEGIN
-			FETCH CLOSE_ACCESS_CUR INTO CLOSE_ACCESS_REC;
+		-- get expected reporting status for this monitoring plan and reporting period			
+		SELECT max(ers.em_reporting_status)
+			INTO V_EM_SUB_STATUS
+		FROM camdecmps.vw_em_reporting_status ers
+		WHERE ers.mon_plan_id = CLOSE_ACCESS_REC.MON_PLAN_ID
+			AND ers.rpt_period_id = CLOSE_ACCESS_REC.RPT_PERIOD_ID
+			AND ers.em_reporting_status IS NOT NULL
+			AND ers.fac_id = CLOSE_ACCESS_REC.FAC_ID;
 
-		EXCEPTION
-			WHEN OTHERS THEN
-				RAISE EXCEPTION '% (%, %)',
-					SQLERRM,
-					CLOSE_ACCESS_REC.MON_PLAN_ID,
-					CLOSE_ACCESS_REC.RPT_PERIOD_ID;
-		END;
-		EXIT WHEN NOT FOUND;
+		IF CLOSE_ACCESS_REC.ACCESS_END_DATE >= V_SYSDATE_AS_DATE THEN
+			-- window is still active
+			--	determine if a reminder should be sent
+			--  windows with CRIT2 submissions will be re-opened
+			--	windows that are no longer needed will be closed and marked as deleted (no notification sent)
 
-		V_REOPEN := 'F';
-
-		IF CLOSE_ACCESS_REC.SUB_AVAILABILITY_CD = 'UPDATED' AND
-			CLOSE_ACCESS_REC.SEVERITY_CD = 'CRIT2' THEN
-			V_REOPEN := 'T';
-		END IF;
-
-		IF CLOSE_ACCESS_REC.ACCESS_END_DATE >= V_SYSDATE THEN
-
-			IF V_REOPEN = 'T' THEN
-					-- REOPEN NON-EXPIRED WINDOW FOR CRIT2 SUBMISSION
-				
+			IF CLOSE_ACCESS_REC.REOPEN_CRIT2 = 'T' THEN
+				-- REOPEN NON-EXPIRED WINDOW FOR CRIT2 SUBMISSION				
 				UPDATE CAMDECMPSAUX.EM_SUBMISSION_ACCESS
 					 SET SUB_AVAILABILITY_CD = 'REQUIRE',
-							 USERID              = 'ECMPSOPN',
-							 UPDATE_DATE         = SYSDATE
+							 USERID          = 'ECMPSOPN',
+							 UPDATE_DATE     =  CURRENT_TIMESTAMP
 				 WHERE EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID;
-			
-				/*
-				UPDATE SYNCHRONIZATION_MANAGEMENT
-					 SET EM_SUBMISSION_LAST_UPDATED = SYSDATE
-				 WHERE MON_PLAN_ID = CLOSE_ACCESS_REC.MON_PLAN_ID;
-				*/
+
+				-- Trigger collateral EM data updates for ESA changes
+				SELECT * INTO V_COLLATERAL_RESULT, V_COLLATERAL_ERROR_MSG
+				FROM camdecmpswks.update_collateral_em_data_for_esa_changes(CLOSE_ACCESS_REC.MON_PLAN_ID, CLOSE_ACCESS_REC.RPT_PERIOD_ID::int);
+
+				IF V_COLLATERAL_RESULT = 'F' THEN
+					RAISE EXCEPTION 'Failed to update collateral EM data for ESA changes: %', V_COLLATERAL_ERROR_MSG;
+				END IF;
 			END IF;
 
 			IF (V_CURRENT_MONTH = '1' OR V_CURRENT_MONTH = '4' OR
 				V_CURRENT_MONTH = '7' OR V_CURRENT_MONTH = '10') AND
 				V_CURRENT_DAY = '20' AND CLOSE_ACCESS_REC.QUARTER = V_QUARTER AND
 				CLOSE_ACCESS_REC.CALENDAR_YEAR = V_CALENDAR_YEAR AND
-				CLOSE_ACCESS_REC.EM_SUB_TYPE_CD = 'INITIAL' AND
-				(CLOSE_ACCESS_REC.SUB_AVAILABILITY_CD <> 'UPDATED' OR
-				CLOSE_ACCESS_REC.SEVERITY_CD = 'CRIT2') THEN
-			
-				BEGIN
-					SELECT SUBSTRING(CAMDECMPSAUX.GET_EM_SUBMISSION_STATUS(CLOSE_ACCESS_REC.MON_PLAN_ID,
-																				CLOSE_ACCESS_REC.CALENDAR_YEAR,
-																				CLOSE_ACCESS_REC.QUARTER),
-									1,
-									7)
-					INTO V_EM_SUB_STATUS;
-				
-				EXCEPTION
-					WHEN NO_DATA_FOUND THEN
-						V_EM_SUB_STATUS := NULL;
-						
-					WHEN OTHERS THEN
-						V_RESULT    := 'F';
-						V_ERROR_MSG := SQLERRM;
-						RAISE EXCEPTION '% % % %',
-							V_ERROR_MSG,
-							CAMDECMPSAUX.GET_EM_SUBMISSION_STATUS(CLOSE_ACCESS_REC.MON_PLAN_ID,
-																		CLOSE_ACCESS_REC.CALENDAR_YEAR,
-																		CLOSE_ACCESS_REC.QUARTER),
-							CLOSE_ACCESS_REC.MON_PLAN_ID,
-							CLOSE_ACCESS_REC.RPT_PERIOD_ID;
-						--ROLLBACK;
-				END;
+				CLOSE_ACCESS_REC.CHECK_FOR_REMINDER = 'T' THEN
+				-- 20th day of the reporting period - send appropriate reminder
 
 				IF V_EM_SUB_STATUS IS NULL THEN
+					-- unused window is no longer needed 
+					-- 	close it and mark it as deleted
+					--	do not send a reminder
 					UPDATE CAMDECMPSAUX.EM_SUBMISSION_ACCESS
-					SET ACCESS_END_DATE     = GREATEST(CURRENT_DATE - 1, ACCESS_BEGIN_DATE),
+					SET ACCESS_END_DATE     = GREATEST(V_SYSDATE_AS_DATE - 1, ACCESS_BEGIN_DATE),
 						SUB_AVAILABILITY_CD = 'DELETE',
 						USERID              = 'ECMPSCLS',
-						UPDATE_DATE         = CURRENT_DATE
-					WHERE EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID;
+						UPDATE_DATE         =  CURRENT_TIMESTAMP
+				 	WHERE EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID;
 
-					/*
-					UPDATE SYNCHRONIZATION_MANAGEMENT
-					SET EM_SUBMISSION_LAST_UPDATED = CURRENT_DATE
-					WHERE MON_PLAN_ID = CLOSE_ACCESS_REC.MON_PLAN_ID;
-					*/
+					-- Trigger collateral EM data updates for ESA changes
+					SELECT * INTO V_COLLATERAL_RESULT, V_COLLATERAL_ERROR_MSG
+					FROM camdecmpswks.update_collateral_em_data_for_esa_changes(CLOSE_ACCESS_REC.MON_PLAN_ID, CLOSE_ACCESS_REC.RPT_PERIOD_ID::int);
 
-				
+					IF V_COLLATERAL_RESULT = 'F' THEN
+						RAISE EXCEPTION 'Failed to update collateral EM data for ESA changes: %', V_COLLATERAL_ERROR_MSG;
+					END IF;
+
 				ELSIF CLOSE_ACCESS_REC.SUBMISSION_STATUS_CD IS NULL THEN
-					-- send day 20 no submission warning email to agent
-					
-					CALL camdecmpsaux.ADD_WINDOW_EMAIL('151', 'submissionReminder',
+					-- unused window 
+					-- 	send day 20 no submission warning email to agent					
+					CALL camdecmpsaux.ADD_WINDOW_EMAIL(151::numeric, 'submissionReminder',
 													CLOSE_ACCESS_REC.MON_PLAN_ID,
 													CLOSE_ACCESS_REC.RPT_PERIOD_ID,
-													CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID,
+													CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID::bigint,
 													V_RESULT,
 													V_ERROR_MSG);
 					
 					--MEH 4/10/2010 - testing result of event call
 					IF V_RESULT = 'F' THEN
-						RAISE EXCEPTION '% % %',
+						RAISE EXCEPTION 'Failed queueing 151 no submission submissionReminder email: % % %',
 							V_ERROR_MSG,
 							CLOSE_ACCESS_REC.MON_PLAN_ID,
 							CLOSE_ACCESS_REC.RPT_PERIOD_ID;
 					END IF;
 
-				ELSIF CLOSE_ACCESS_REC.SUBMISSION_STATUS_CD = 'RECCRIT' OR
+				ELSIF CLOSE_ACCESS_REC.SEVERITY_CD = 'CRIT1' OR
 							CLOSE_ACCESS_REC.SEVERITY_CD = 'CRIT2' THEN
-					-- send day 20 critical error warning email to agent
-					           
-					CALL camdecmpsaux.ADD_WINDOW_EMAIL('152', 'submissionReminder',
+					-- used window with CRIT1 or CRIT2 submission
+					-- send day 20 critical error warning email to agent					           
+					CALL camdecmpsaux.ADD_WINDOW_EMAIL(152::numeric, 'submissionReminder',
 																 CLOSE_ACCESS_REC.MON_PLAN_ID,
 																 CLOSE_ACCESS_REC.RPT_PERIOD_ID,
-																 CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID,
+																 CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID::bigint,
 																 V_RESULT,
-																 V_ERROR_MSG);
-					
+																 V_ERROR_MSG);					
 				
 					--MEH 4/10/2010 - testing result of event call
 					IF V_RESULT = 'F' THEN
-						RAISE EXCEPTION '% % %',
+						RAISE EXCEPTION 'Failed queueing 152 critical submission submissionReminder email: % % %',
 							V_ERROR_MSG,
 							CLOSE_ACCESS_REC.MON_PLAN_ID,
 							CLOSE_ACCESS_REC.RPT_PERIOD_ID;
@@ -387,122 +321,94 @@ BEGIN
 				END IF;
 			END IF;
 
-		ELSIF CLOSE_ACCESS_REC.SUB_AVAILABILITY_CD <> 'UPDATED' OR V_REOPEN = 'T' THEN
-			BEGIN
-				SELECT SUBSTRING(CAMDECMPSAUX.GET_EM_SUBMISSION_STATUS(CLOSE_ACCESS_REC.MON_PLAN_ID,
-																			CLOSE_ACCESS_REC.CALENDAR_YEAR,
-																			CLOSE_ACCESS_REC.QUARTER),
-								1,
-								7)
-				INTO V_EM_SUB_STATUS;
-			
-			EXCEPTION
-				WHEN NO_DATA_FOUND THEN
-					V_EM_SUB_STATUS := NULL;
-					
-				WHEN OTHERS THEN
-					V_RESULT    := 'F';
-					V_ERROR_MSG := SQLERRM;
-					RAISE EXCEPTION '% % % %',
-						V_ERROR_MSG,
-						CAMDECMPSAUX.GET_EM_SUBMISSION_STATUS(CLOSE_ACCESS_REC.MON_PLAN_ID,
-																	CLOSE_ACCESS_REC.CALENDAR_YEAR,
-																	CLOSE_ACCESS_REC.QUARTER),
-						CLOSE_ACCESS_REC.MON_PLAN_ID,
-						CLOSE_ACCESS_REC.RPT_PERIOD_ID;
-					--ROLLBACK;
-			END;
+		ELSIF CLOSE_ACCESS_REC.SUB_AVAILABILITY_CD <> 'UPDATED' OR CLOSE_ACCESS_REC.REOPEN_CRIT2 = 'T' THEN
+			-- window access end date has passed
+			--	determine if a notification should be sent
+			--	windows that are no longer needed will be closed and marked as deleted (no notification sent)
+			--  initial windows with no submission will be extended
+			--  windows with failed submissions will be extended		
+			--  windows with citical submissions will be extended (no notification sent)
+			--  resubmission windows with no submission will be closed
 
 			IF V_EM_SUB_STATUS IS NULL THEN
+				-- unused window is no longer needed 
+				-- 	close it and mark it as deleted
+				--	do not send a reminder
 				UPDATE CAMDECMPSAUX.EM_SUBMISSION_ACCESS
-				SET ACCESS_END_DATE     = GREATEST(CURRENT_DATE - 1, ACCESS_BEGIN_DATE),
+				SET ACCESS_END_DATE     = GREATEST(V_SYSDATE_AS_DATE - 1, ACCESS_BEGIN_DATE),
 					SUB_AVAILABILITY_CD = 'DELETE',
 					USERID              = 'ECMPSCLS',
-					UPDATE_DATE         = CURRENT_DATE
+					UPDATE_DATE         =  CURRENT_TIMESTAMP
 				WHERE EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID;
-				
-				/*
-				UPDATE SYNCHRONIZATION_MANAGEMENT
-				SET EM_SUBMISSION_LAST_UPDATED = CURRENT_DATE
-				WHERE MON_PLAN_ID = CLOSE_ACCESS_REC.MON_PLAN_ID;
-				*/
 
-			ELSIF CLOSE_ACCESS_REC.EM_SUB_TYPE_CD = 'INITIAL' OR CLOSE_ACCESS_REC.SUBMISSION_STATUS_CD = 'NOLOAD' OR CLOSE_ACCESS_REC.SUBMISSION_STATUS_CD = 'RECCRIT' OR CLOSE_ACCESS_REC.SEVERITY_CD = 'CRIT2' THEN
+				-- Trigger collateral EM data updates for ESA changes
+				SELECT * INTO V_COLLATERAL_RESULT, V_COLLATERAL_ERROR_MSG
+				FROM camdecmpswks.update_collateral_em_data_for_esa_changes(CLOSE_ACCESS_REC.MON_PLAN_ID, CLOSE_ACCESS_REC.RPT_PERIOD_ID::int);
 
-				FOR CURR_SUB_STATUS IN
-				SELECT ESA1.EM_SUB_ACCESS_ID,
-						S.SUBMISSION_ID,
-						S.SUBMISSION_STATUS_CD,
-						S.SEVERITY_CD
-				FROM CAMDECMPSAUX.EM_SUBMISSION_ACCESS ESA1
-					LEFT JOIN CAMDECMPSAUX.SUBMISSION S ON CAMDECMPSAUX.GET_LAST_SUBMISSION_IN_WINDOW(ESA1.MON_PLAN_ID, ESA1.RPT_PERIOD_ID, ESA1.ACCESS_BEGIN_DATE, ESA1.ACCESS_END_DATE) = S.SUBMISSION_ID
-				WHERE ESA1.EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID
-				LOOP
-					IF CURR_SUB_STATUS.SUBMISSION_ID IS NULL OR
-						CURR_SUB_STATUS.SUBMISSION_STATUS_CD = 'NOLOAD' OR
-						CURR_SUB_STATUS.SUBMISSION_STATUS_CD = 'RECCRIT' OR
-						CURR_SUB_STATUS.SEVERITY_CD = 'CRIT2' THEN
+				IF V_COLLATERAL_RESULT = 'F' THEN
+					RAISE EXCEPTION 'Failed to update collateral EM data for ESA changes: %', V_COLLATERAL_ERROR_MSG;
+				END IF;
 
-						UPDATE CAMDECMPSAUX.EM_SUBMISSION_ACCESS
-						SET ACCESS_END_DATE = CURRENT_DATE + 29,
-							USERID          = 'ECMPSEXT',
-							UPDATE_DATE     = CURRENT_DATE
-						WHERE EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID;
+			ELSIF CLOSE_ACCESS_REC.EXTEND_WINDOW = 'T' THEN
+				-- extend window
+				UPDATE CAMDECMPSAUX.EM_SUBMISSION_ACCESS
+				SET ACCESS_END_DATE = V_SYSDATE_AS_DATE + 30,
+					USERID          = 'ECMPSEXT',
+					UPDATE_DATE     =  CURRENT_TIMESTAMP
+				WHERE EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID;
 
-						/*
-						UPDATE SYNCHRONIZATION_MANAGEMENT
-						SET EM_SUBMISSION_LAST_UPDATED = CURRENT_DATE
-						WHERE MON_PLAN_ID = CLOSE_ACCESS_REC.MON_PLAN_ID;
-						*/
+				-- Trigger collateral EM data updates for ESA changes
+				SELECT * INTO V_COLLATERAL_RESULT, V_COLLATERAL_ERROR_MSG
+				FROM camdecmpswks.update_collateral_em_data_for_esa_changes(CLOSE_ACCESS_REC.MON_PLAN_ID, CLOSE_ACCESS_REC.RPT_PERIOD_ID::int);
 
-						IF CURR_SUB_STATUS.SUBMISSION_STATUS_CD IS NULL OR
-							CURR_SUB_STATUS.SUBMISSION_STATUS_CD = 'NOLOAD' THEN
-							-- Bug 11561 send extension of window email to DR for missing and failed submissions
+				IF V_COLLATERAL_RESULT = 'F' THEN
+					RAISE EXCEPTION 'Failed to update collateral EM data for ESA changes: %', V_COLLATERAL_ERROR_MSG;
+				END IF;
 
-							
-							CALL camdecmpsaux.ADD_WINDOW_EMAIL('156', 'submissionReminder',
-													CLOSE_ACCESS_REC.MON_PLAN_ID,
-													CLOSE_ACCESS_REC.RPT_PERIOD_ID,
-													CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID,
-													V_RESULT,
-													V_ERROR_MSG);
-							
+				IF CLOSE_ACCESS_REC.SUBMISSION_STATUS_CD IS NULL OR
+					CLOSE_ACCESS_REC.SUBMISSION_STATUS_CD = 'NOLOAD' THEN
+					-- send extension notification for missing and failed submissions 					
+					CALL camdecmpsaux.ADD_WINDOW_EMAIL(156::numeric, 'submissionReminder',
+											CLOSE_ACCESS_REC.MON_PLAN_ID,
+											CLOSE_ACCESS_REC.RPT_PERIOD_ID,
+											CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID::bigint,
+											V_RESULT,
+											V_ERROR_MSG);							
 
-							--MEH 4/10/2010 - testing result of event call
-							IF V_RESULT = 'F' THEN
-								RAISE EXCEPTION '-20003: % (%, %)', V_ERROR_MSG, CLOSE_ACCESS_REC.MON_PLAN_ID, CLOSE_ACCESS_REC.RPT_PERIOD_ID;
-							END IF;
-						END IF;
+					--MEH 4/10/2010 - testing result of event call
+					IF V_RESULT = 'F' THEN
+						RAISE EXCEPTION 'Failed queueing 156 missing of failed submissionReminder email: % (%, %)', V_ERROR_MSG, CLOSE_ACCESS_REC.MON_PLAN_ID, CLOSE_ACCESS_REC.RPT_PERIOD_ID;
 					END IF;
-				END LOOP;
+				END IF;
 			
 			ELSIF CLOSE_ACCESS_REC.SUBMISSION_STATUS_CD IS NULL THEN
-
+				-- unsued resubmission window
+				--	close it and send notification
 				UPDATE CAMDECMPSAUX.EM_SUBMISSION_ACCESS
-					SET SUB_AVAILABILITY_CD = 'NOTSUB',
+				SET SUB_AVAILABILITY_CD = 'NOTSUB',
 						USERID              = 'ECMPSCLS',
 						UPDATE_DATE         = CURRENT_TIMESTAMP
-					WHERE EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID;
+				WHERE EM_SUB_ACCESS_ID = CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID;
 
-				/*
-				UPDATE SYNCHRONIZATION_MANAGEMENT
-					SET EM_SUBMISSION_LAST_UPDATED = CURRENT_TIMESTAMP
-					WHERE MON_PLAN_ID = CLOSE_ACCESS_REC.MON_PLAN_ID;
-				*/
+				-- Trigger collateral EM data updates for ESA changes
+				SELECT * INTO V_COLLATERAL_RESULT, V_COLLATERAL_ERROR_MSG
+				FROM camdecmpswks.update_collateral_em_data_for_esa_changes(CLOSE_ACCESS_REC.MON_PLAN_ID, CLOSE_ACCESS_REC.RPT_PERIOD_ID::int);
+
+				IF V_COLLATERAL_RESULT = 'F' THEN
+					RAISE EXCEPTION 'Failed to update collateral EM data for ESA changes: %', V_COLLATERAL_ERROR_MSG;
+				END IF;
 
 				-- send closing of resubmission window email to DR
-				
-				CALL camdecmpsaux.ADD_WINDOW_EMAIL('157', 'windowNotification',
+				CALL camdecmpsaux.ADD_WINDOW_EMAIL(157::numeric, 'windowNotification',
 					CLOSE_ACCESS_REC.MON_PLAN_ID,
 					CLOSE_ACCESS_REC.RPT_PERIOD_ID,
-					CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID,
+					CLOSE_ACCESS_REC.EM_SUB_ACCESS_ID::bigint,
 					V_RESULT,
-					V_ERROR_MSG);
-				
+					V_ERROR_MSG);				
 
 				--MEH 4/10/2010 - testing result of event call
 				IF V_RESULT = 'F' THEN
-					RAISE EXCEPTION '-20004: % (%, %)', V_ERROR_MSG, CLOSE_ACCESS_REC.MON_PLAN_ID, CLOSE_ACCESS_REC.RPT_PERIOD_ID;
+					RAISE EXCEPTION 'Failed queueing 157 windowNotification email: % (%, %)', V_ERROR_MSG, CLOSE_ACCESS_REC.MON_PLAN_ID, CLOSE_ACCESS_REC.RPT_PERIOD_ID;
 				END IF;
 
 			END IF;
@@ -510,20 +416,10 @@ BEGIN
 		END IF;
 	END LOOP;
 
-	CLOSE CLOSE_ACCESS_CUR;
-
-	/*
-	PERFORM SEND_WINDOW_EMAILS(V_RESULT, V_ERROR_MSG);
-	*/
-
-	EXCEPTION
-    WHEN OTHERS THEN
-        GET STACKED DIAGNOSTICS V_RESULT = PG_EXCEPTION_DETAIL,
-                            V_ERROR_MSG = PG_EXCEPTION_HINT;
-        V_RESULT := 'F';
-        V_ERROR_MSG := SQLERRM ||
-                       COALESCE(V_ERROR_MSG, '');
-        ROLLBACK;
-
+EXCEPTION
+	WHEN OTHERS THEN
+		V_RESULT := 'F';
+		V_ERROR_MSG := SQLERRM;
+		RAISE NOTICE 'Error in init_and_close_em_submission_access: %', V_ERROR_MSG;
 END
 $BODY$;

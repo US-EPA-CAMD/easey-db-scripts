@@ -3,8 +3,8 @@ ALTER TABLE IF EXISTS camdecmps.emission_view_hicems
     ADD CONSTRAINT fk_emission_view_hicems_emission_evaluation FOREIGN KEY (rpt_period_id, mon_plan_id)
         REFERENCES camdecmps.emission_evaluation (rpt_period_id, mon_plan_id) MATCH SIMPLE
         ON DELETE CASCADE,
-    ADD CONSTRAINT fk_emission_view_hicems_hrly_op_data FOREIGN KEY (hour_id, rpt_period_id)
-        REFERENCES camdecmps.hrly_op_data (hour_id, rpt_period_id) MATCH SIMPLE,
+    ADD CONSTRAINT fk_emission_view_hicems_hrly_op_data FOREIGN KEY (rpt_period_id, hour_id)
+        REFERENCES camdecmps.hrly_op_data (rpt_period_id, hour_id) MATCH SIMPLE,
     ADD CONSTRAINT fk_emission_view_hicems_monitor_location FOREIGN KEY (mon_loc_id)
         REFERENCES camdecmps.monitor_location (mon_loc_id) MATCH SIMPLE,
     ADD CONSTRAINT fk_emission_view_hicems_monitor_plan FOREIGN KEY (mon_plan_id)
@@ -27,6 +27,10 @@ CREATE INDEX IF NOT EXISTS idx_emission_view_hicems_rpt_period_id
 CREATE INDEX IF NOT EXISTS idx_emission_view_hicems_hour_id
 		ON camdecmps.emission_view_hicems USING btree
 		(hour_id COLLATE pg_catalog."default" ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_emission_view_hicems_rpt_period_id_hour_id
+		ON camdecmps.emission_view_hicems USING btree
+		(rpt_period_id ASC NULLS LAST, hour_id COLLATE pg_catalog."default" ASC NULLS LAST);
 
 CREATE INDEX IF NOT EXISTS idx_emission_view_hicems_rpt_period_id_mon_loc_id
 		ON camdecmps.emission_view_hicems USING btree

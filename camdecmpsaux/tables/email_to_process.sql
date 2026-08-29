@@ -11,5 +11,10 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.email_to_process
     submission_type character varying(3) COLLATE pg_catalog."default",
     is_mats boolean,
     context text COLLATE pg_catalog."default",
-    status_cd character varying(8) COLLATE pg_catalog."default" NOT NULL
+    status_cd character varying(8) COLLATE pg_catalog."default" NOT NULL,
+    note text COLLATE pg_catalog."default" DEFAULT NULL,
+    note_time timestamp without time zone DEFAULT NULL,
+    queued_time timestamp without time zone DEFAULT NULL,
+    started_time timestamp without time zone DEFAULT NULL,
+    failure_cnt integer DEFAULT NULL
 );

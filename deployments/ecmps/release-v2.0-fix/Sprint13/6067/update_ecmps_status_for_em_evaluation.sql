@@ -28,9 +28,9 @@ begin
 
 	select  coalesce ( max( 'Y' ), 'N' ) as Submittable
       into  vSubmittable
-      from  camdecmpswks.EM_SUBMISSION_ACCESS
+      from  camdecmpsaux.EM_SUBMISSION_ACCESS
      where  mon_plan_id = vmon_plan_id
-       and  SUBMISSION_AVAILABILITY_CD IN ('GRANTED', 'REQUIRE')
+       and  sub_availability_cd IN ('GRANTED', 'REQUIRE')
 	   and  RPT_PERIOD_ID = vperiod_id;
 	   
  	-- delete old evaluation data from check logs	  
@@ -55,23 +55,24 @@ begin
 	CALL camdecmpswks.refresh_emissions_views(vmon_plan_id,vYear, vQuarter);	
 
 	-- Update Monitoring Plan Needs Evaluation, if needed
-      UPDATE  camdecmpswks.MONITOR_PLAN
-           SET NEEDS_EVAL_FLG = 'Y',
-               CHK_SESSION_ID = null
-        WHERE MON_PLAN_ID = vmon_plan_id
-          AND  EXISTS
-              ( SELECT  1
-                   FROM  camdecmpswks.CHECK_LOG chl
-                    JOIN camdecmpsmd.CHECK_CATALOG_RESULT ccr ON ccr.CHECK_CATALOG_RESULT_ID = chl.CHECK_CATALOG_RESULT_ID
-                    JOIN camdecmpsmd.CHECK_CATALOG chk ON chk.CHECK_CATALOG_ID = ccr.CHECK_CATALOG_ID
-                     WHERE  chl.CHK_SESSION_ID = vchk_session_id
-                       AND  chk.CHECK_TYPE_CD = 'HOURGEN'
-                       AND  chk.CHECK_NUMBER = 8
-                       AND  ccr.CHECK_RESULT = 'C'
-                );	
+    UPDATE  camdecmpswks.MONITOR_PLAN
+       SET NEEDS_EVAL_FLG = 'Y',
+           CHK_SESSION_ID = null
+     WHERE MON_PLAN_ID = vmon_plan_id
+       AND EXISTS
+           ( SELECT  1
+               FROM  camdecmpswks.CHECK_LOG chl
+                     JOIN camdecmpsmd.CHECK_CATALOG_RESULT ccr ON ccr.CHECK_CATALOG_RESULT_ID = chl.CHECK_CATALOG_RESULT_ID
+                     JOIN camdecmpsmd.CHECK_CATALOG chk ON chk.CHECK_CATALOG_ID = ccr.CHECK_CATALOG_ID
+              WHERE  chl.CHK_SESSION_ID = vchk_session_id
+                AND  chk.CHECK_TYPE_CD = 'HOURGEN'
+                AND  chk.CHECK_NUMBER = 8
+                AND  ccr.CHECK_RESULT = 'C'
+           );	
  
-   if vSubmittable = 'Y' then  
-     create temp table tmpEmissionsStatus(MON_PLAN_ID character varying,RPT_PERIOD_ID int);
+    if vSubmittable = 'Y' then  
+        create temp table tmpEmissionsStatus(MON_PLAN_ID character varying,RPT_PERIOD_ID int);
+        
 	    INSERT INTO tmpEmissionsStatus 
 		 SELECT DISTINCT E.MON_PLAN_ID, E.RPT_PERIOD_ID 
            FROM camdecmpswks.EMISSION_EVALUATION E,
@@ -93,7 +94,7 @@ begin
 			  AND T.MON_PLAN_ID = vmon_plan_id
 			  AND T.RPT_PERIOD_ID = vperiod_id;
 
-   -- camdecmpswks.emission_evaluation has column=SUBMISSION_AVAILABILITY_CD
+            -- camdecmpswks.emission_evaluation has column=SUBMISSION_AVAILABILITY_CD
            OPEN EM_CSR;
 			 LOOP
 				FETCH Next from EM_CSR INTO V_MON_PLAN_ID, V_RPT_PERIOD_ID;
@@ -102,21 +103,21 @@ begin
 				       from camdecmpswks.delete_calculated_em_data_from_workspace(V_MON_PLAN_ID, V_RPT_PERIOD_ID);	
 					 -- Deleting Calculated data failed, bail (PJR)
 					 IF result = 'F' then
-					    return;
-				      end if;	
-					 RETURN NEXT;
+					    exit;
+				      end if;
 				 end loop;
 				CLOSE EM_CSR;	
              
-     end if; --vSubmittable if
-  return;
+    end if; --vSubmittable if
+    
+    RETURN NEXT; -- Add row to return table.
   
 exception when others then
     get stacked diagnostics error_msg:= message_text;
     result = 'F';
-     error_msg :='From update_ecmps_status_for_em_evaluation' ||' '|| error_msg;
+    error_msg :='From update_ecmps_status_for_em_evaluation' ||' '|| error_msg;
 	 
-   return;
+    RETURN NEXT; -- Add row to return table.
 END;
 $BODY$;
 

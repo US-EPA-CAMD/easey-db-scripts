@@ -2,6 +2,13 @@
 
 -- DROP PROCEDURE IF EXISTS camdecmpswks.delete_monitor_plan_data_from_workspace(text);
 
+/****************************************************************************************************************************************************
+    Maintenance History:
+    
+    Date        Programmer      Ticket      Description
+    ----------  --------------  ----------  ---------------------------------------------------------------------------------------------------------
+    2026-07-10  Dwayne Whitten  #7202       Removed the deletion of camdecmpswks.UNIT rows, which are not really MP rows.
+****************************************************************************************************************************************************/
 CREATE OR REPLACE PROCEDURE camdecmpswks.delete_monitor_plan_data_from_workspace(
 	IN monplanid text)
 LANGUAGE 'plpgsql'
@@ -55,12 +62,47 @@ BEGIN
 	DELETE FROM camdecmpswks.monitor_location
 	WHERE mon_loc_id = ANY(monLocIds)
     AND mon_loc_id != ALL(otherMpMonLocIds);
+	
+    -- Delete monitor location children for locations that are used in other monitor plans.
+	-- Helps ensure that workspace only monitor location children are deleted from the workspace.
+	DELETE FROM camdecmpswks.MATS_METHOD_DATA 			 WHERE mon_loc_id = ANY(monLocIds) AND mon_loc_id = ANY(otherMpMonLocIds);	
+	DELETE FROM camdecmpswks.MONITOR_DEFAULT 			 WHERE mon_loc_id = ANY(monLocIds) AND mon_loc_id = ANY(otherMpMonLocIds);	
+	DELETE FROM camdecmpswks.MONITOR_FORMULA 			 WHERE mon_loc_id = ANY(monLocIds) AND mon_loc_id = ANY(otherMpMonLocIds);
+	DELETE FROM camdecmpswks.MONITOR_LOAD 				 WHERE mon_loc_id = ANY(monLocIds) AND mon_loc_id = ANY(otherMpMonLocIds);
+	DELETE FROM camdecmpswks.MONITOR_LOCATION_ATTRIBUTE  WHERE mon_loc_id = ANY(monLocIds) AND mon_loc_id = ANY(otherMpMonLocIds);
+	DELETE FROM camdecmpswks.MONITOR_METHOD 			 WHERE mon_loc_id = ANY(monLocIds) AND mon_loc_id = ANY(otherMpMonLocIds);
+	DELETE FROM camdecmpswks.MONITOR_QUALIFICATION 		 WHERE mon_loc_id = ANY(monLocIds) AND mon_loc_id = ANY(otherMpMonLocIds);
+	DELETE FROM camdecmpswks.MONITOR_SPAN 				 WHERE mon_loc_id = ANY(monLocIds) AND mon_loc_id = ANY(otherMpMonLocIds);
+	DELETE FROM camdecmpswks.RECT_DUCT_WAF 				 WHERE mon_loc_id = ANY(monLocIds) AND mon_loc_id = ANY(otherMpMonLocIds);  
+	
+    -- Delete component or system for locations that are used in other monitor plans and are not used in supplemental data.
+	-- The supplemental data for the target MP should have been deleted by delete_monitor_plan_emissions_data_from_workspace.
+	-- If supplemental data exists for another MP, the coponent or system should not be new.
+	-- Helps ensure that workspace only monitor location children are deleted from the workspace.
+	DELETE 
+      FROM 	camdecmpswks.COMPONENT dat
+     WHERE  mon_loc_id = ANY(monLocIds)
+       AND 	mon_loc_id = ANY(otherMpMonLocIds)
+       AND  NOT EXISTS
+			( 
+				SELECT 	1
+				  FROM 	camdecmpswks.COMPONENT_OP_SUPP_DATA exs
+				 WHERE 	exs.COMPONENT_ID = dat.COMPONENT_ID
+			);
+	DELETE
+      FROM 	camdecmpswks.MONITOR_SYSTEM dat
+     WHERE  mon_loc_id = ANY(monLocIds)
+       AND 	mon_loc_id = ANY(otherMpMonLocIds)
+       AND  NOT EXISTS
+			( 
+				SELECT 	1
+				  FROM 	camdecmpswks.SYSTEM_OP_SUPP_DATA exs
+				 WHERE 	exs.MON_SYS_ID = dat.MON_SYS_ID
+			);
+    
 
 	DELETE FROM camdecmpswks.monitor_plan
 	WHERE mon_plan_id = monPlanId;
-
-    DELETE FROM camdecmpswks.unit
-    WHERE unit_id = ANY(unitIds);
 
 	DELETE FROM camdecmpswks.unit_capacity
 	WHERE unit_id = ANY(unitIds);

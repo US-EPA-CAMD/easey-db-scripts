@@ -1,10 +1,23 @@
 -- PROCEDURE: camdecmpswks.copy_monitor_plan_to_workspace(text, text[])
 
--- DROP PROCEDURE IF EXISTS camdecmpswks.copy_monitor_plan_to_workspace(text, text[]);
+DROP PROCEDURE IF EXISTS camdecmpswks.copy_monitor_plan_to_workspace(text, text[]);
 
-CREATE OR REPLACE PROCEDURE camdecmpswks.copy_monitor_plan_to_workspace(
+/****************************************************************************************************************************************************
+    Maintenance History:
+    
+    Date        Programmer      Ticket      Description
+    ----------  --------------  ----------  ---------------------------------------------------------------------------------------------------------
+    2026-07-10  Dwayne Whitten  #7202       Changed camdecmpswks.UNIT update to and upsert that:
+                                            1) Performs an Upsert for any camdecmps.UNIT for the target Plant.
+                                            2) Of course, uses UNIT_ID as the primary (connecting) key between the CAMD and CAMDECMPSWKS tables.
+                                            3) Does not include the NON_LOAD_BASED_IND column in the Upcert.
+****************************************************************************************************************************************************/
+CREATE OR REPLACE PROCEDURE camdecmpswks.copy_monitor_plan_to_workspace
+(
 	IN monplanid text,
-	IN monlocids text[])
+	IN monlocids text[],
+    IN facId numeric
+)
 LANGUAGE 'plpgsql'
 AS $BODY$
 DECLARE
@@ -52,14 +65,76 @@ SET fac_id = EXCLUDED.fac_id,
     add_date = EXCLUDED.add_date,
     update_date = EXCLUDED.update_date;
 
+
 -- UNIT --
-INSERT INTO camdecmpswks.unit(
-    unit_id, fac_id, unitid, unit_description, indian_country_ind, stateid, boiler_sequence_number, comm_op_date, comm_op_date_cd, comr_op_date, comr_op_date_cd, source_category_cd, naics_cd, no_active_gen_ind, non_load_based_ind, actual_90th_op_date, moved_ind, userid, add_date, update_date
-)
-SELECT
-    unit_id, fac_id, unitid, unit_description, indian_country_ind, stateid, boiler_sequence_number, comm_op_date, comm_op_date_cd, comr_op_date, comr_op_date_cd, source_category_cd, naics_cd, no_active_gen_ind, non_load_based_ind, actual_90th_op_date, moved_ind, userid, add_date, update_date
-FROM camd.unit
-WHERE unit_id = ANY (unitIds);
+INSERT
+  INTO  camdecmpswks.UNIT
+        (
+            unit_id,
+            fac_id,
+            unitid,
+            unit_description,
+            indian_country_ind,
+            stateid,
+            boiler_sequence_number,
+            comm_op_date,
+            comm_op_date_cd,
+            comr_op_date,
+            comr_op_date_cd,
+            source_category_cd,
+            naics_cd,
+            no_active_gen_ind,
+            -- non_load_based_ind set to default, presumbed 0 (zero).
+            actual_90th_op_date,
+            moved_ind,
+            userid,
+            add_date,
+            update_date
+        )
+SELECT  unit_id,
+        fac_id,
+        unitid,
+        unit_description,
+        indian_country_ind,
+        stateid,
+        boiler_sequence_number,
+        comm_op_date,
+        comm_op_date_cd,
+        comr_op_date,
+        comr_op_date_cd,
+        source_category_cd,
+        naics_cd,
+        no_active_gen_ind,
+        -- non_load_based_ind set to default, presumbed 0 (zero).
+        actual_90th_op_date,
+        moved_ind,
+        userid,
+        add_date,
+        update_date
+  FROM  camd.unit
+ WHERE  fac_id = facId
+    ON  CONFLICT ( unit_id )
+    DO  UPDATE
+           SET  fac_id                 = excluded.fac_id,
+                unitid                 = excluded.unitid,
+                unit_description       = excluded.unit_description,
+                indian_country_ind     = excluded.indian_country_ind,
+                stateid                = excluded.stateid,
+                boiler_sequence_number = excluded.boiler_sequence_number,
+                comm_op_date           = excluded.comm_op_date,
+                comm_op_date_cd        = excluded.comm_op_date_cd,
+                comr_op_date           = excluded.comr_op_date,
+                comr_op_date_cd        = excluded.comr_op_date_cd,
+                source_category_cd     = excluded.source_category_cd,
+                naics_cd               = excluded.naics_cd,
+                no_active_gen_ind      = excluded.no_active_gen_ind,
+                -- non_load_based_ind not included
+                actual_90th_op_date    = excluded.actual_90th_op_date,
+                moved_ind              = excluded.moved_ind,
+                userid                 = excluded.userid,
+                add_date               = excluded.add_date,
+                update_date            = excluded.update_date;
+
 
 -- UNIT_CAPACITY --
 INSERT INTO camdecmpswks.unit_capacity(
@@ -103,7 +178,18 @@ INSERT INTO camdecmpswks.monitor_plan(
     mon_plan_id, fac_id, config_type_cd, last_updated, updated_status_flg, needs_eval_flg, chk_session_id, userid, add_date, update_date, submission_id, submission_availability_cd, begin_rpt_period_id, end_rpt_period_id, last_evaluated_date, eval_status_cd
 )
 SELECT
-    mp.mon_plan_id, mp.fac_id, mp.config_type_cd, mp.last_updated, 'N', 'Y', mp.chk_session_id, mp.userid, mp.add_date, mp.update_date, mp.submission_id, mp.submission_availability_cd, mp.begin_rpt_period_id, mp.end_rpt_period_id, mp.last_evaluated_date, coalesce(sc.eval_status_cd, 'PASS')
+    mp.mon_plan_id, mp.fac_id, mp.config_type_cd, mp.last_updated,
+    'N' as updated_status_flg,
+    CASE 
+        WHEN mp.submission_availability_cd IN ('REQUIRE', 'GRANTED') THEN 'Y'
+        ELSE 'N'
+    END as needs_eval_flg,
+    mp.chk_session_id, mp.userid, mp.add_date, mp.update_date, mp.submission_id, mp.submission_availability_cd, mp.begin_rpt_period_id, mp.end_rpt_period_id, mp.last_evaluated_date,
+    CASE 
+        WHEN mp.submission_availability_cd IN ('REQUIRE', 'GRANTED') THEN 'EVAL'
+        WHEN mp.chk_session_id IS NULL OR cs.chk_session_id IS NULL THEN 'PASS'
+        ELSE coalesce(sc.eval_status_cd, 'PASS')
+    END as eval_status_cd
 FROM camdecmps.monitor_plan mp
          LEFT JOIN camdecmpsaux.check_session cs on cs.chk_session_id = mp.chk_session_id
          LEFT JOIN camdecmpsmd.severity_code sc on sc.severity_cd = cs.severity_cd

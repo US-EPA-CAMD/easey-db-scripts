@@ -1,11 +1,12 @@
--- FUNCTION: camdecmpswks.rpt_em_error_details(text, date, numeric)
+-- FUNCTION: camdecmpswks.rpt_em_error_details(text, date, numeric, text)
 
-DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_error_details(text, date, numeric) CASCADE;
+DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_error_details(text, date, numeric, text) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_error_details(
 	vmonplanid text,
-  vdate date,
-  vhour numeric
+  vdate date DEFAULT NULL,
+  vhour numeric DEFAULT NULL,
+  dailyTestSumId text DEFAULT NULL
 )
     RETURNS TABLE("unitStack" text, "severityCode" text, "beginPeriod" text, "endPeriod" text, "categoryDescription" text, "checkCode" text, "resultMessage" text) 
     LANGUAGE 'sql'
@@ -37,15 +38,34 @@ AS $BODY$
 	LEFT JOIN camdecmpswks.monitor_location ml USING(mon_loc_id)
 	LEFT JOIN camdecmpswks.stack_pipe sp USING(stack_pipe_id)
 	LEFT JOIN camd.unit u USING(unit_id)
-	WHERE cs.mon_plan_id = vmonplanid AND (
-		cl.OP_BEGIN_DATE < vdate OR (
-			cl.OP_BEGIN_DATE = vdate AND
-			cl.OP_BEGIN_HOUR <= vhour
+	WHERE cs.mon_plan_id = vmonplanid 
+	AND (
+			(
+				cl.source_table = 'DailyCalibration'
+				AND cl.test_sum_id = dailyTestSumId
+				AND dailyTestSumId IS NOT NULL
+				AND vdate IS NULL
+				AND vhour IS NULL
+			)
+    	OR
+		(
+			cl.source_table = 'DailyFuel'
+			AND vdate IS NOT NULL
+			AND vdate BETWEEN cl.op_begin_date AND cl.op_end_date
+			AND dailyTestSumId IS NULL
+			AND vhour IS NULL
 		)
-	) AND (
-		cl.OP_END_DATE > vdate OR (
-			cl.OP_END_DATE = vdate AND
-			cl.OP_END_HOUR >= vhour
-		)
+    	OR
+		(
+			(
+				cl.source_table IS NULL 
+				OR cl.source_table NOT IN ('DailyCalibration', 'DailyFuel')
+    		)
+			AND dailyTestSumId IS NULL
+			AND vdate IS NOT NULL
+			AND vhour IS NOT NULL
+			AND (vdate > cl.op_begin_date OR (vdate = cl.op_begin_date AND vhour >= cl.op_begin_hour))
+     		AND (vdate < cl.op_end_date OR (vdate = cl.op_end_date AND vhour <= cl.op_end_hour))
+	 	)
 	);
 $BODY$;

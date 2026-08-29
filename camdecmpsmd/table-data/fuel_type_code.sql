@@ -13,5 +13,5 @@ INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fue
 INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('W', 'Wood', 'OTHER');
 INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('WL', 'Waste Liquid', 'OTHER');
 INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('C', 'Coal', 'COAL');
-INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('CRF', 'Coal Refuse', 'COAL');
-INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('PTC', 'Petroleum Coke', 'COAL');
+INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('CRF', 'Coal Refuse', 'OTHER');
+INSERT INTO camdecmpsmd.fuel_type_code (fuel_type_cd, fuel_type_description, fuel_group_cd) VALUES ('PTC', 'Petroleum Coke', 'OTHER');

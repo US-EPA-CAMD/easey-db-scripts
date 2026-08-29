@@ -5,7 +5,13 @@ DROP FUNCTION IF EXISTS camdecmpswks.rpt_em_fuel_operating_hours(text, numeric) 
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_em_fuel_operating_hours(
 	monplanid text,
 	vyear numeric)
-    RETURNS TABLE(location character varying, "calendar_year" numeric, "period" text,"fuel_cd" character varying, "op_hours" numeric) 
+    RETURNS TABLE(
+        location character varying, 
+        "calendar_year" numeric, 
+        "period" text,
+        "fuel_cd" character varying, 
+        "op_hours" text 
+    ) 
     LANGUAGE 'plpgsql'
 
     COST 100
@@ -38,7 +44,7 @@ BEGIN
     cmb.calendar_year, 
     cmb.Period, 
     cmb.fuel_cd,
-    cmb.Op_Hours
+    TO_CHAR(cmb.Op_Hours, 'FM999999999990') as Op_Hours 
     from 
     (
         --

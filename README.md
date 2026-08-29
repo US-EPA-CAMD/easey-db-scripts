@@ -45,6 +45,9 @@ The following environment variables must be setup on the system/machine from whe
    ```
 7. The script files to be run will be displayed on the screen and you will be prompted for the password
 
+#### Timestamp Convention
+Activity columns that participate in session/check-out maintenance (`camdecmpswks.user_session.last_activity` and `last_login_date`, plus `camdecmpswks.user_check_out.last_activity` and `checked_out_on`) are `timestamp with time zone` (UTC). 
+
 ## License & Contributing
 ​
 This project is licensed under the MIT License. We encourage you to read this project’s [License](https://github.com/US-EPA-CAMD/devops/blob/master/LICENSE), [Contributing Guidelines](https://github.com/US-EPA-CAMD/devops/blob/master/CONTRIBUTING.md), and [Code of Conduct](https://github.com/US-EPA-CAMD/devops/blob/master/CODE_OF_CONDUCT.md).

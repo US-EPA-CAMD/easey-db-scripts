@@ -6,7 +6,7 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_test_summary_eval_and_submit
  AS
  SELECT p.oris_code,
     p.facility_name,
-    mpl.mon_plan_id,
+    mp.mon_plan_id,
     COALESCE(u.unitid, sp.stack_name) AS location_info,
     ts.test_sum_id,
     ts.mon_loc_id,
@@ -36,7 +36,14 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_test_summary_eval_and_submit
     rp.period_abbreviation
    FROM camd.plant p
      JOIN camdecmpswks.monitor_plan mp USING (fac_id)
-     JOIN camdecmpswks.monitor_plan_location mpl USING (mon_plan_id)
+     JOIN (select distinct mpl.mon_loc_id,
+				first_value(mp.mon_plan_id)
+			    over (
+			    	partition by mpl.mon_loc_id
+			        order by mp.begin_rpt_period_id desc
+			    ) latest_mon_plan_id
+			from camdecmpswks.monitor_plan_location mpl
+			inner join camdecmpswks.monitor_plan mp on mpl.mon_plan_id = mp.mon_plan_id) mpl ON mpl.latest_mon_plan_id = mp.mon_plan_Id
      JOIN camdecmpswks.monitor_location ml USING (mon_loc_id)
      JOIN camdecmpswks.test_summary ts USING (mon_loc_id)
      JOIN camdecmpsmd.eval_status_code esc
@@ -48,5 +55,4 @@ CREATE OR REPLACE VIEW camdecmpswks.vw_test_summary_eval_and_submit
      LEFT JOIN camdecmpswks.component c ON c.component_id::text = ts.component_id::text
      LEFT JOIN camdecmpsmd.reporting_period rp ON rp.rpt_period_id = ts.rpt_period_id
      LEFT JOIN camd.unit u USING (unit_id)
-     LEFT JOIN camdecmps.stack_pipe sp USING (stack_pipe_id)
-  ORDER BY p.oris_code, mp.mon_plan_id, u.unitid, sp.stack_name, ts.test_type_cd, qsd.rpt_period_id, ts.end_date, ts.end_hour, ts.end_min;
+     LEFT JOIN camdecmpswks.stack_pipe sp USING (stack_pipe_id);

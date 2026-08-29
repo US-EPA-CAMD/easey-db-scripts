@@ -10,3 +10,7 @@ CREATE INDEX IF NOT EXISTS idx_reporting_period_year
 CREATE INDEX IF NOT EXISTS idx_reporting_period_quarter
     ON camdecmpsmd.reporting_period USING btree
     (quarter ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_reporting_period_end_date 
+	ON camdecmpsmd.reporting_period USING btree 
+	(end_date ASC NULLS LAST);

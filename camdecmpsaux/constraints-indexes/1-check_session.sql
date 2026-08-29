@@ -20,6 +20,8 @@ ALTER TABLE IF EXISTS camdecmpsaux.check_session
     --ADD CONSTRAINT fk_check_session_test_summary FOREIGN KEY (test_sum_id)
     --    REFERENCES camdecmps.test_summary (test_sum_id) MATCH SIMPLE
     --    ON DELETE CASCADE,
+    ADD CONSTRAINT fk_check_session_evaluation_queue FOREIGN KEY (evaluation_id)
+        REFERENCES camdecmpsaux.evaluation_queue (evaluation_id) MATCH SIMPLE,
     ADD CONSTRAINT chk_check_session_begin_date_lte_end_date CHECK (session_begin_date <= session_end_date);
 
 CREATE INDEX IF NOT EXISTS idx_check_session_test_extension_exemption_id
@@ -57,6 +59,10 @@ CREATE INDEX IF NOT EXISTS idx_check_session_process_cd
 CREATE INDEX IF NOT EXISTS idx_check_session_severity_cd
     ON camdecmpsaux.check_session USING btree
     (severity_cd COLLATE pg_catalog."default" ASC NULLS LAST);
+
+CREATE INDEX IF NOT EXISTS idx_check_session_evaluation_id
+    ON camdecmpsaux.check_session USING btree
+    (evaluation_id ASC NULLS LAST);
 
 /*
 --9

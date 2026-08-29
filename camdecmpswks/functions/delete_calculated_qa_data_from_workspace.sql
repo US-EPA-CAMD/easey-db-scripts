@@ -1,8 +1,9 @@
 -- FUNCTION: camdecmpswks.delete_calculated_qa_data_from_workspace()
 
-DROP FUNCTION IF EXISTS camdecmpswks.delete_calculated_qa_data_from_workspace() CASCADE;
+DROP FUNCTION IF EXISTS camdecmpswks.delete_calculated_qa_data_from_workspace(character varying[]) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.delete_calculated_qa_data_from_workspace(
+	test_sum_ids character varying[]
 	)
     RETURNS TABLE(result text, error_msg character varying) 
     LANGUAGE 'plpgsql'
@@ -12,20 +13,23 @@ CREATE OR REPLACE FUNCTION camdecmpswks.delete_calculated_qa_data_from_workspace
     ROWS 1000
     
 AS $BODY$
-declare 
-  --I     	int;
- -- vTempID	character varying;
+declare
   
 BEGIN
     error_msg := '';
     result := 'T';
 	 
+    -- Early return if array is null or empty
+    IF test_sum_ids IS NULL OR array_length(test_sum_ids, 1) IS NULL OR array_length(test_sum_ids, 1) = 0 THEN
+        RETURN NEXT;
+    END IF;
+    
 	-- CHECK_SESSION --
 	  DELETE FROM camdecmpswks.CHECK_SESSION 
 	    	WHERE CHK_SESSION_ID IN	
 		    (SELECT CHK_SESSION_ID FROM camdecmpswks.TEST_SUMMARY WHERE 
 		        CHK_SESSION_ID IS NOT NULL and
-			    TEST_SUM_ID in (select test_sum_id from tmpTestsStatus));
+			    TEST_SUM_ID = ANY(test_sum_ids));
 	
      
 	 -- Update for 20 tables--
@@ -36,7 +40,7 @@ BEGIN
 			CALC_GP_IND = NULL,
 			CALC_TEST_RESULT_CD = NULL,
 			CALC_SPAN_VALUE = NULL
-		WHERE TEST_SUM_ID in (select test_sum_id from tmpTestsStatus);
+		WHERE TEST_SUM_ID = ANY(test_sum_ids);
 		
 
 		UPDATE camdecmpswks.LINEARITY_SUMMARY
@@ -44,7 +48,7 @@ BEGIN
 			CALC_MEAN_MEASURED_VALUE = NULL,
 			CALC_PERCENT_ERROR = NULL,
 			CALC_APS_IND = NULL
-		WHERE TEST_SUM_ID in (select test_sum_id from tmpTestsStatus);
+		WHERE TEST_SUM_ID = ANY(test_sum_ids);
 		
 
 		UPDATE camdecmpswks.RATA
@@ -52,7 +56,7 @@ BEGIN
 			CALC_OVERALL_BIAS_ADJ_FACTOR = NULL,
 			CALC_RATA_FREQUENCY_CD = NULL,
 			CALC_NUM_LOAD_LEVEL = NULL
-		WHERE TEST_SUM_ID in (select test_sum_id from tmpTestsStatus);
+		WHERE TEST_SUM_ID = ANY(test_sum_ids);
 		
 
 		UPDATE camdecmpswks.RATA_SUMMARY
@@ -70,7 +74,7 @@ BEGIN
 			CALC_CALC_WAF = NULL
  		FROM camdecmpswks.RATA
 		WHERE RATA_SUMMARY.RATA_ID = RATA.RATA_ID 
-		  AND RATA.TEST_SUM_ID in (select test_sum_id from tmpTestsStatus);
+		  AND RATA.TEST_SUM_ID = ANY(test_sum_ids);
 		
 			
 		UPDATE camdecmpswks.RATA_RUN
@@ -78,7 +82,7 @@ BEGIN
  		FROM camdecmpswks.RATA_SUMMARY, camdecmpswks.RATA
 		WHERE RATA_RUN.RATA_SUM_ID = RATA_SUMMARY.RATA_SUM_ID 
 		  AND RATA_SUMMARY.RATA_ID = RATA.RATA_ID 
-		  AND RATA.TEST_SUM_ID in (select test_sum_id from tmpTestsStatus);
+		  AND RATA.TEST_SUM_ID = ANY(test_sum_ids);
 		
 		UPDATE camdecmpswks.FLOW_RATA_RUN
 		SET CALC_DRY_MOLECULAR_WEIGHT = null,
@@ -90,7 +94,7 @@ BEGIN
 		WHERE FLOW_RATA_RUN.RATA_RUN_ID = RATA_RUN.RATA_RUN_ID AND
 			  RATA_RUN.RATA_SUM_ID = RATA_SUMMARY.RATA_SUM_ID AND
 			  RATA_SUMMARY.RATA_ID = RATA.RATA_ID AND
-			  RATA.TEST_SUM_ID in (select test_sum_id from tmpTestsStatus);
+			  RATA.TEST_SUM_ID = ANY(test_sum_ids);
 		
 		UPDATE camdecmpswks.RATA_TRAVERSE
 		SET CALC_CALC_VEL = NULL
@@ -99,7 +103,7 @@ BEGIN
 			  FLOW_RATA_RUN.RATA_RUN_ID = RATA_RUN.RATA_RUN_ID AND
 			  RATA_RUN.RATA_SUM_ID = RATA_SUMMARY.RATA_SUM_ID AND
 			  RATA_SUMMARY.RATA_ID = RATA.RATA_ID AND
-			  RATA.TEST_SUM_ID in (select test_sum_id from tmpTestsStatus);
+			  RATA.TEST_SUM_ID = ANY(test_sum_ids);
 		
 
 		UPDATE camdecmpswks.CALIBRATION_INJECTION
@@ -107,19 +111,19 @@ BEGIN
 			CALC_ZERO_CAL_ERROR = null,
 			CALC_UPSCALE_APS_IND = null,
 			CALC_UPSCALE_CAL_ERROR = null
-		WHERE CALIBRATION_INJECTION.TEST_SUM_ID in (select test_sum_id from tmpTestsStatus);
+		WHERE CALIBRATION_INJECTION.TEST_SUM_ID = ANY(test_sum_ids);
 		
 
 		UPDATE camdecmpswks.CYCLE_TIME_INJECTION
 		SET CALC_INJECTION_CYCLE_TIME = null
 		FROM camdecmpswks.CYCLE_TIME_SUMMARY
 		WHERE CYCLE_TIME_INJECTION.CYCLE_TIME_SUM_ID = CYCLE_TIME_SUMMARY.CYCLE_TIME_SUM_ID
-		  AND CYCLE_TIME_SUMMARY.TEST_SUM_ID in (select test_sum_id from tmpTestsStatus);
+		  AND CYCLE_TIME_SUMMARY.TEST_SUM_ID = ANY(test_sum_ids);
 		
 
 		UPDATE camdecmpswks.CYCLE_TIME_SUMMARY
 		SET CALC_TOTAL_TIME = null
-		WHERE CYCLE_TIME_SUMMARY.TEST_SUM_ID in (select test_sum_id from tmpTestsStatus);
+		WHERE CYCLE_TIME_SUMMARY.TEST_SUM_ID = ANY(test_sum_ids);
 		
 			
 		UPDATE camdecmpswks.FLOW_TO_LOAD_REFERENCE
@@ -127,7 +131,7 @@ BEGIN
 			CALC_AVG_REF_METHOD_FLOW = null,
 			CALC_REF_FLOW_LOAD_RATIO = null,
 			CALC_REF_GHR = null
-		WHERE FLOW_TO_LOAD_REFERENCE.TEST_SUM_ID in (select test_sum_id from tmpTestsStatus);
+		WHERE FLOW_TO_LOAD_REFERENCE.TEST_SUM_ID = ANY(test_sum_ids);
 		
 
 		UPDATE camdecmpswks.ON_OFF_CAL
@@ -139,13 +143,13 @@ BEGIN
 			CALC_OFFLINE_ZERO_CAL_ERROR = null,
 			CALC_OFFLINE_UPSCALE_APS_IND = null,
 			CALC_OFFLINE_UPSCALE_CAL_ERROR = null
-		WHERE ON_OFF_CAL.TEST_SUM_ID in (select test_sum_id from tmpTestsStatus);
+		WHERE ON_OFF_CAL.TEST_SUM_ID = ANY(test_sum_ids);
 		
 
 		UPDATE camdecmpswks.AE_CORRELATION_TEST_SUM
 		SET CALC_MEAN_REF_VALUE = NULL,
 			CALC_AVG_HRLY_HI_RATE = NULL
-		WHERE AE_CORRELATION_TEST_SUM.TEST_SUM_ID in (select test_sum_id from tmpTestsStatus);
+		WHERE AE_CORRELATION_TEST_SUM.TEST_SUM_ID = ANY(test_sum_ids);
 		
 
 		UPDATE camdecmpswks.AE_CORRELATION_TEST_RUN
@@ -153,7 +157,7 @@ BEGIN
 		CALC_HOURLY_HI_RATE = NULL
 		FROM camdecmpswks.AE_CORRELATION_TEST_SUM
 		WHERE AE_CORRELATION_TEST_RUN.AE_CORR_TEST_SUM_ID = AE_CORRELATION_TEST_SUM.AE_CORR_TEST_SUM_ID AND
-			  AE_CORRELATION_TEST_SUM.TEST_SUM_ID in (select test_sum_id from tmpTestsStatus);
+			  AE_CORRELATION_TEST_SUM.TEST_SUM_ID = ANY(test_sum_ids);
 		
 
 		UPDATE camdecmpswks.AE_HI_GAS
@@ -161,7 +165,7 @@ BEGIN
 		FROM camdecmpswks.AE_CORRELATION_TEST_RUN, camdecmpswks.AE_CORRELATION_TEST_SUM
 		WHERE AE_HI_GAS.AE_CORR_TEST_RUN_ID = AE_CORRELATION_TEST_RUN.AE_CORR_TEST_RUN_ID AND 
 			  AE_CORRELATION_TEST_RUN.AE_CORR_TEST_SUM_ID = AE_CORRELATION_TEST_SUM.AE_CORR_TEST_SUM_ID AND
-			  AE_CORRELATION_TEST_SUM.TEST_SUM_ID in (select test_sum_id from tmpTestsStatus);
+			  AE_CORRELATION_TEST_SUM.TEST_SUM_ID = ANY(test_sum_ids);
 		
 
 		UPDATE camdecmpswks.AE_HI_OIL
@@ -170,18 +174,19 @@ BEGIN
 		FROM camdecmpswks.AE_CORRELATION_TEST_RUN, camdecmpswks.AE_CORRELATION_TEST_SUM
 		WHERE AE_HI_OIL.AE_CORR_TEST_RUN_ID = AE_CORRELATION_TEST_RUN.AE_CORR_TEST_RUN_ID AND 
 			  AE_CORRELATION_TEST_RUN.AE_CORR_TEST_SUM_ID = AE_CORRELATION_TEST_SUM.AE_CORR_TEST_SUM_ID AND
-			  AE_CORRELATION_TEST_SUM.TEST_SUM_ID in (select test_sum_id from tmpTestsStatus);
+			  AE_CORRELATION_TEST_SUM.TEST_SUM_ID = ANY(test_sum_ids);
 		
 
 		UPDATE camdecmpswks.UNIT_DEFAULT_TEST
 		SET CALC_NOX_DEFAULT_RATE = NULL
-		WHERE UNIT_DEFAULT_TEST.TEST_SUM_ID in (select test_sum_id from tmpTestsStatus);
+		WHERE UNIT_DEFAULT_TEST.TEST_SUM_ID = ANY(test_sum_ids);
 
 	 return next;
 
 exception when others then
     get stacked diagnostics error_msg := message_text;
     result = 'F';   
+	error_msg :='From delete_calculated_qa_data_from_workspace '||' '|| error_msg;
    return next;
 END;
 $BODY$;

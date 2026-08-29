@@ -3,6 +3,8 @@ DROP PROCEDURE IF EXISTS camdecmps.copy_emissions_from_workspace_to_global(chara
 CREATE OR REPLACE PROCEDURE camdecmps.copy_emissions_from_workspace_to_global(
   monPlanId character varying(45), rptPeriodId numeric
 ) LANGUAGE 'plpgsql' AS $BODY$ DECLARE monLocIds text[];
+DECLARE
+    submissionId bigint;
 BEGIN 
 SELECT 
   ARRAY(
@@ -27,7 +29,8 @@ SELECT
                           needs_eval_flg,
                           chk_session_id,
                           submission_id,
-                          submission_availability_cd
+                          submission_availability_cd,
+                          submission_comment
               )
   SELECT mon_plan_id,
          rpt_period_id,
@@ -36,7 +39,8 @@ SELECT
          needs_eval_flg,
          chk_session_id,
          submission_id,
-         'UPDATED'
+         'UPDATED',
+         submission_comment
   FROM   camdecmpswks.emission_evaluation
   WHERE  mon_plan_id = monplanid
   AND    rpt_period_id = rptperiodid;  
@@ -56,7 +60,8 @@ SELECT
                           severity_cd,
                           category_cd,
                           process_cd,
-                          userid
+                          userid,
+                          evaluation_id
               )
   SELECT cs.chk_session_id,
          cs.mon_plan_id,
@@ -70,7 +75,8 @@ SELECT
          cs.severity_cd,
          cs.category_cd,
          cs.process_cd,
-         cs.userid
+         cs.userid,
+         cs.evaluation_id
   FROM   camdecmpswks.emission_evaluation ee
   JOIN   camdecmpswks.check_session cs
   ON     ee.chk_session_id = cs.chk_session_id
@@ -1400,5 +1406,16 @@ SELECT
                 AND    rpt_period_id = rptperiodid );
 
   CALL camdecmpswks.delete_monitor_plan_emissions_data_from_workspace(monPlanId, rptPeriodId);
+  
+  
+  -- Queue the Generation of the Program Data Emissions
+  SELECT  submission_id
+    INTO  submissionId
+    FROM  camdecmps.EMISSION_EVALUATION ems
+   WHERE  rpt_period_id = rptPeriodId
+     AND  mon_plan_id = monPlanId;
+  
+  CALL camdecmpsaux.pdem_job_queue( monPlanId, rptPeriodId, submissionId );
+  
 END
 $BODY$;

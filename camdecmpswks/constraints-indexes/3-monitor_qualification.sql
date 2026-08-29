@@ -4,7 +4,9 @@ ALTER TABLE IF EXISTS camdecmpswks.monitor_qualification
         REFERENCES camdecmpswks.monitor_location (mon_loc_id) MATCH SIMPLE
         ON DELETE CASCADE,
     ADD CONSTRAINT fk_monitor_qualification_qual_type_code FOREIGN KEY (qual_type_cd)
-        REFERENCES camdecmpsmd.qual_type_code (qual_type_cd) MATCH SIMPLE;
+        REFERENCES camdecmpsmd.qual_type_code (qual_type_cd) MATCH SIMPLE,
+    ADD CONSTRAINT uq_monitor_qualification_key
+        UNIQUE (MON_LOC_ID, QUAL_TYPE_CD, BEGIN_DATE);
 
 CREATE INDEX IF NOT EXISTS idx_monitor_qualification_mon_loc_id
     ON camdecmpswks.monitor_qualification USING btree

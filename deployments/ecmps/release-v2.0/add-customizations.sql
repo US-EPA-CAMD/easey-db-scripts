@@ -207,11 +207,11 @@ WHERE severity_cd IN ('NONE');
 
 UPDATE camdecmpsmd.severity_code
 SET eval_status_cd = 'INFO'
-WHERE severity_cd IN ('ADMNOVR', 'INFORM', 'NONCRIT', 'FORGIVE');
+WHERE severity_cd IN ('ADMNOVR', 'INFORM', 'NONCRIT', 'FORGIVE', 'CRIT2', 'CRIT3');
 
 UPDATE camdecmpsmd.severity_code
 SET eval_status_cd = 'ERR'
-WHERE severity_cd IN ('CRIT1', 'CRIT2', 'CRIT3', 'FATAL');
+WHERE severity_cd IN ('CRIT1', 'FATAL');
 --------------------------------------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdecmpsmd.test_type_code
     ADD COLUMN IF NOT EXISTS group_cd character varying(7) DEFAULT 'MISC';

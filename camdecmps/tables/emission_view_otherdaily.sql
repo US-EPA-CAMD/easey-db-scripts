@@ -11,5 +11,5 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_view_otherdaily
     rpt_test_result character varying(7) COLLATE pg_catalog."default" NOT NULL,
     ERROR_CODES character varying(1) COLLATE pg_catalog."default",
     calc_test_result_cd character varying(7) COLLATE pg_catalog."default",
-    test_sum_id character varying(45) COLLATE pg_catalog."default"
+    test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL
 ) PARTITION BY RANGE (rpt_period_id);

@@ -1366,4 +1366,4 @@ INSERT INTO camdecmpsmd.check_catalog_process (check_catalog_id, process_cd) VAL
 INSERT INTO camdecmpsmd.check_catalog_process (check_catalog_id, process_cd) VALUES (1469, 'EMIMPRT');
 INSERT INTO camdecmpsmd.check_catalog_process (check_catalog_id, process_cd) VALUES (1464, 'EMIMPRT');
 INSERT INTO camdecmpsmd.check_catalog_process (check_catalog_id, process_cd) VALUES (1471, 'EMIMPRT');
-
+INSERT INTO camdecmpsmd.check_catalog_process (check_catalog_id, process_cd) VALUES (3677, 'EMIMPRT');

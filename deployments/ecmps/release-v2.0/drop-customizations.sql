@@ -10,7 +10,9 @@ DROP VIEW IF EXISTS camdecmpswks.vw_test_extension_exemption_eval_and_submit;
 DROP VIEW IF EXISTS camdaux.vw_allowance_based_compliance_bulk_files_to_generate;
 DROP VIEW IF EXISTS camdaux.vw_annual_emissions_bulk_files_per_state_to_generate;
 DROP VIEW IF EXISTS camdecmpsmd.vw_es_check_catalog_result;
-DROP VIEW IF EXISTS camdecmpswks.vw_em_eval_and_submit;
+DROP VIEW IF EXISTS camdecmpswks.vw_em_export_and_report;
+DROP VIEW IF EXISTS camdecmpswks.vw_em_evaluate;
+DROP VIEW IF EXISTS camdecmpswks.vw_em_submit;
 --------------------------------------------------------------------------------------
 ALTER TABLE IF EXISTS camdmd.program_code
     DROP COLUMN IF EXISTS emissions_ui_filter;

@@ -1,3 +1,7 @@
+-- PROCEDURE: camddmw.create_partitions(integer, character)
+
+-- DROP PROCEDURE IF EXISTS camddmw.create_partitions(integer, character);
+
 CREATE OR REPLACE PROCEDURE camddmw.create_partitions(
 	IN year integer,
 	IN executeflag character DEFAULT 'N'::bpchar)
@@ -24,10 +28,30 @@ BEGIN
 	--CONSTRAINT allowance_holding_dim_all_hold_dim_p66_pkey PRIMARY KEY (vintage_year, prg_code, start_block)
 	--FOR VALUES FROM ('2060') TO ('2061')
 
+ 	-- Check if partition table of previous year exits
+     IF executeFlag = 'Y' THEN
+        tableName:= 'day_unit_data_dm_em_ud_'||year-1||'w01';
+	   --RAISE NOTICE '%', tableName;
+	 EXECUTE format('SELECT count(*) FROM pg_tables WHERE schemaname=%L and tablename =%L;', schemaName, tableName)
+	    into counter;
+	   IF counter=0 THEN
+		  executeFlag = 'F';
+		  RAISE NOTICE '--Error: no partition tables found for previous year --';
+		  Return;
+	   END IF;
+    end if;
+
 -------------------------------------------------------------------------------------------------------------------
 	tableName := schemaName || '.annual_unit_data';
 	cmdStmt := format('CREATE TABLE IF NOT EXISTS %s_dm_em_ua_%s PARTITION OF %s
 				    FOR VALUES FROM (%L) TO (%L);', tableName, year, tableName, year, year+1);
+	RAISE NOTICE '%', cmdStmt;
+	IF executeFlag = 'Y' THEN
+		EXECUTE cmdStmt;
+		RAISE NOTICE '-- executed --';
+	END IF;
+	
+	cmdStmt := format('INSERT INTO camddmw.op_year (op_year, archive_ind, hourly_data_ind) VALUES (%s, 0, 1);', year);
 	RAISE NOTICE '%', cmdStmt;
 	IF executeFlag = 'Y' THEN
 		EXECUTE cmdStmt;

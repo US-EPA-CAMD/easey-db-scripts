@@ -14,7 +14,9 @@ ALTER TABLE IF EXISTS camdecmpswks.monitor_default
     ADD CONSTRAINT fk_monitor_default_parameter_code FOREIGN KEY (parameter_cd)
         REFERENCES camdecmpsmd.parameter_code (parameter_cd) MATCH SIMPLE,
     ADD CONSTRAINT fk_monitor_default_units_of_measure_code FOREIGN KEY (default_uom_cd)
-        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE;
+        REFERENCES camdecmpsmd.units_of_measure_code (uom_cd) MATCH SIMPLE,
+    ADD CONSTRAINT uq_monitor_default_key
+        UNIQUE (mon_loc_id, parameter_cd, default_purpose_cd, fuel_cd, operating_condition_cd, begin_date, begin_hour);
 
 CREATE INDEX IF NOT EXISTS idx_monitor_default_default_purpose_cd
     ON camdecmpswks.monitor_default USING btree

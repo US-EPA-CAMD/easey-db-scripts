@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.em_submission_access
     update_date timestamp without time zone,
     em_status_cd character varying(7) COLLATE pg_catalog."default",
     data_loaded_flg character varying(1) COLLATE pg_catalog."default",
-    sub_availability_cd character varying(7) COLLATE pg_catalog."default"
+    sub_availability_cd character varying(7) COLLATE pg_catalog."default",
+    submission_id bigint
 );
 
 COMMENT ON TABLE camdecmpsaux.em_submission_access
@@ -56,3 +57,6 @@ COMMENT ON COLUMN camdecmpsaux.em_submission_access.data_loaded_flg
 
 COMMENT ON COLUMN camdecmpsaux.em_submission_access.sub_availability_cd
     IS 'Identity key for SUBMISSION_AVAILABILITY_CODE table';
+
+COMMENT ON COLUMN camdecmpsaux.em_submission_access.submission_id
+    IS 'Foreign key to the SUBMISSION_ID in the SUBMISSION_QUEUE table';

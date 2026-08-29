@@ -5,7 +5,20 @@ DROP FUNCTION IF EXISTS camdecmpswks.rpt_quartely_em_summary_data(text, numeric)
 CREATE OR REPLACE FUNCTION camdecmpswks.rpt_quartely_em_summary_data(
 	monplanid text,
 	vyear numeric)
-    RETURNS TABLE(location character varying, "calendar_year" numeric, "period" text, "op_hours" numeric, "op_days" numeric, "op_time" numeric, "hit" numeric, "so2m" numeric, "co2m" numeric, "noxr" numeric, "noxm" numeric, "bco2" numeric) 
+    RETURNS TABLE(
+        location character varying, 
+        "calendar_year" numeric, 
+        "period" text,
+        "op_hours" text,
+        "op_days" text,
+        "op_time" text,
+        "hit" text,
+        "so2m" text,
+        "co2m" text,
+        "noxr" text,
+        "noxm" text,
+        "bco2" text 
+    ) 
     LANGUAGE 'plpgsql'
 
     COST 100
@@ -37,15 +50,15 @@ BEGIN
                 coalesce( unt.unitid, stp.stack_name) as location,
                 cmb.calendar_year,
                 cmb.Period,
-                cmb.Op_Hours,
-                cmb.Op_Days,
-                cmb.Op_Time,
-                cmb.Hit,
-                cmb.So2m,
-                cmb.Co2m,
-                cmb.Noxr,
-                cmb.Noxm,
-                cmb.Bco2
+                TO_CHAR(cmb.Op_Hours, 'FM999999999990') as Op_Hours,
+                TO_CHAR(cmb.Op_Days, 'FM999999999990') as Op_Days,
+                TO_CHAR(cmb.Op_Time, 'FM999999999990.00') as Op_Time,
+                TO_CHAR(cmb.Hit, 'FM999999999990') as Hit,
+                TO_CHAR(cmb.So2m, 'FM999999999990.0') as So2m,
+                TO_CHAR(cmb.Co2m, 'FM999999999990.0') as Co2m,
+                TO_CHAR(cmb.Noxr, 'FM999999999990.000') as Noxr,
+                TO_CHAR(cmb.Noxm, 'FM999999999990.0') as Noxm,
+                TO_CHAR(cmb.Bco2, 'FM999999999990.0') as Bco2 
         from  (
                     --
                     -- Quarterly Data for the Non-Fuel-Specific and Fuel-Specific Report Report Tables

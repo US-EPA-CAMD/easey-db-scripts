@@ -118,3 +118,6 @@ INSERT INTO camdecmpsmd.parameter_uom (param_id, parameter_cd, uom_cd, parameter
 INSERT INTO camdecmpsmd.parameter_uom (param_id, parameter_cd, uom_cd, parameter_format, min_value, max_value, decimals_hrly, decimals_fuel_flow, decimals_summary) VALUES (139, 'SGF', 'LMIN', NULL, NULL, NULL, 2, NULL, NULL);
 INSERT INTO camdecmpsmd.parameter_uom (param_id, parameter_cd, uom_cd, parameter_format, min_value, max_value, decimals_hrly, decimals_fuel_flow, decimals_summary) VALUES (140, 'HCLC', 'PPM', NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO camdecmpsmd.parameter_uom (param_id, parameter_cd, uom_cd, parameter_format, min_value, max_value, decimals_hrly, decimals_fuel_flow, decimals_summary) VALUES (141, 'HFC', 'PPM', NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO camdecmpsmd.parameter_uom (param_id, parameter_cd, uom_cd, parameter_format, min_value, max_value, decimals_hrly, decimals_fuel_flow, decimals_summary) VALUES (142, 'PMRE', 'LBMWH', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO camdecmpsmd.parameter_uom (param_id, parameter_cd, uom_cd, parameter_format, min_value, max_value, decimals_hrly, decimals_fuel_flow, decimals_summary) VALUES (143, 'PMRH', 'LBMMBTU', NULL, NULL, NULL, NULL, NULL, NULL);
