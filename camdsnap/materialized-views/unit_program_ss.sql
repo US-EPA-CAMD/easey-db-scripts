@@ -56,7 +56,7 @@ select  unp.up_id,
         unp.unit_monitor_cert_begin_date,
         unp.unit_monitor_cert_deadline,
         unp.emissions_recording_begin_date,
-        unp.trueup_begin_year
+        unp.trueup_begin_year,
         aoa.first_optin_year,
         aoa.first_year_value,
         aoa.subsequent_year_value,
