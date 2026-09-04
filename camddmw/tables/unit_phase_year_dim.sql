@@ -1,0 +1,26 @@
+CREATE TABLE IF NOT EXISTS CAMDDMW.UNIT_PHASE_YEAR_DIM
+(
+    UNIT_ID             NUMERIC(12)                     NOT NULL,
+    PHASE               VARCHAR(25),
+    OP_YEAR             NUMERIC(4),
+    DATA_SOURCE         VARCHAR(35),
+    USERID              VARCHAR(8),
+    ADD_DATE            TIMESTAMP WITHOUT TIME ZONE,
+    PRG_CODE            VARCHAR(3),
+    PARAMETER           VARCHAR(10),
+    LAST_UPDATE_DATE    TIMESTAMP WITHOUT TIME ZONE
+);
+
+
+COMMENT ON TABLE CAMDDMW.UNIT_PHASE_YEAR_DIM IS 'Unit phase for an operating year';
+
+
+COMMENT ON COLUMN CAMDDMW.UNIT_PHASE_YEAR_DIM.UNIT_ID IS 'Unique identifier of a unit';
+COMMENT ON COLUMN CAMDDMW.UNIT_PHASE_YEAR_DIM.PHASE IS 'Identifies phase of unit';
+COMMENT ON COLUMN CAMDDMW.UNIT_PHASE_YEAR_DIM.OP_YEAR IS 'Year in which data was collected';
+COMMENT ON COLUMN CAMDDMW.UNIT_PHASE_YEAR_DIM.DATA_SOURCE IS 'Source of the data';
+COMMENT ON COLUMN CAMDDMW.UNIT_PHASE_YEAR_DIM.USERID IS 'Initials of user who last modified data';
+COMMENT ON COLUMN CAMDDMW.UNIT_PHASE_YEAR_DIM.ADD_DATE IS 'Date on which the record was added';
+COMMENT ON COLUMN CAMDDMW.UNIT_PHASE_YEAR_DIM.PRG_CODE IS 'Program code';
+COMMENT ON COLUMN CAMDDMW.UNIT_PHASE_YEAR_DIM.PARAMETER IS 'Parameters to be controlled (codes are ''SO2'', ''NOX'', ''PART'')';
+COMMENT ON COLUMN CAMDDMW.UNIT_PHASE_YEAR_DIM.LAST_UPDATE_DATE IS 'Latest add or update date on source records that are used to populate this record';
