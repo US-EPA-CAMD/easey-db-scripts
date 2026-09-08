@@ -30,7 +30,6 @@ begin
                 vOldAccountNumber,
                 vNewAccountNumber
           from  camd.PLANT fac
-                join camd.UNIT unt using ( fac_id )
          where  fac.fac_id = vFacId_in;
         
         
