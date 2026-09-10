@@ -1,0 +1,5 @@
+-----------------
+-- Constraints --
+-----------------
+
+ALTER TABLE CAMDNATS.TTRANTYPE ADD CONSTRAINT TTRANTYPE_PK PRIMARY KEY (TRANTYPE_CD);
