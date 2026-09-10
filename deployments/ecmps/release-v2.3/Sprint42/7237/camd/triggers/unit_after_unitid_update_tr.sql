@@ -21,12 +21,11 @@ begin
            and exists( select 1 from camd.PLANT where fac_id = old.fac_id and oris_code is not null )
         then
             
-            update  camdams.ACCOUNT
-               set  account_number = ( select lpad( fac.oris_code, 6, '0' ) || lpad( replace( replace( new.unitid, '*', 'X' ), '-', 'Z' ), 6, '0' ) from camd.PLANT fac where fac.fac_id = new.fac_id ),
+            update  camdams.ACCOUNT acc
+               set  account_number = ( select lpad( fac.oris_code::text, 6, '0' ) || lpad( replace( replace( new.unitid, '*', 'X' ), '-', 'Z' ), 6, '0' ) from camd.PLANT fac where fac.fac_id = new.fac_id ),
                     userid = new.userid,
                     update_date = now()
-             where  account_number = ( select lpad( fac.oris_code, 6, '0' ) || lpad( replace( replace( old.unitid, '*', 'X' ), '-', 'Z' ), 6, '0' ) from camd.PLANT fac where fac.fac_id = old.fac_id )
-               and  src.fac_id = new.fac_id;
+             where  account_number = ( select lpad( fac.oris_code::text, 6, '0' ) || lpad( replace( replace( old.unitid, '*', 'X' ), '-', 'Z' ), 6, '0' ) from camd.PLANT fac where fac.fac_id = old.fac_id );
             
         end if;
         

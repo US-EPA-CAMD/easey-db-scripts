@@ -20,12 +20,11 @@ begin
         -----------------------------------------
         
         select  fac.oris_code,
-                lpad( fac.oris_code, 6, '0' ) as account_number
+                lpad( fac.oris_code::text, 6, '0' ) as account_number
           into  vOrisCode,
                 vAccountNumber
           from  camd.PLANT fac
-                join camd.UNIT unt using ( fac_id )
-         where  fac.fac_id = vFacId_in;
+         where  fac.fac_id = new.fac_id;
 
         ----------------------------------------------------------------
         -- Update if ORIS Code Is Not Null and Account Number Matches --
@@ -35,8 +34,8 @@ begin
         then
             
             update  camdams.ACCOUNT
-               set  acctname_nme = new.facility_name,
-                    userid_id = new.userid,
+               set  account_name = new.facility_name,
+                    userid = new.userid,
                     update_date = now()
              where  account_type_cd in ( 'FACLTY', 'UNIT' )
                and  substr( account_number, 1, 6 ) = vAccountNumber;

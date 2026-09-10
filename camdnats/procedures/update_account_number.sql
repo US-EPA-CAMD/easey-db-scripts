@@ -24,8 +24,8 @@ begin
         -----------------------------------------
         
         select  fac.oris_code,
-                ( lpad( fac.oris_code, 6, '0' ) || lpad( replace( replace( vOldUnitName_in, '*', 'X' ), '-', 'Z' ), 6, '0' ) ) as old_account_number,
-                ( lpad( fac.oris_code, 6, '0' ) || lpad( replace( replace( vNewUnitName_in, '*', 'X' ), '-', 'Z' ), 6, '0' ) ) as new_account_number
+                ( lpad( fac.oris_code::varchar, 6, '0' ) || lpad( replace( replace( vOldUnitName_in, '*', 'X' ), '-', 'Z' ), 6, '0' ) ) as old_account_number,
+                ( lpad( fac.oris_code::varchar, 6, '0' ) || lpad( replace( replace( vNewUnitName_in, '*', 'X' ), '-', 'Z' ), 6, '0' ) ) as new_account_number
           into  vOrisCode,
                 vOldAccountNumber,
                 vNewAccountNumber
@@ -93,7 +93,7 @@ begin
                         acc.othpubl_ind,
                         acc.other_ind,
                         acc.boiler_ind,
-                        aubstr( USER, 1, 8 ),
+                        substr( vUserIdin, 1, 160 ),
                         acc.dateadd_dt,
                         now()
                   from  camdnats.TACCOUNT acc
@@ -137,11 +137,11 @@ begin
                    set  acctnum_id = vNewAccountNumber
                  where  acctnum_id = vOldAccountNumber;
 
-                update  camdnats.TBAL_DED
+                update  camdnats.TARS_BAL_DED
                    set  acctnum_id = vNewAccountNumber
                  where  acctnum_id = vOldAccountNumber;
 
-                update  camdnats.TOVDFT_DED
+                update  camdnats.TARS_OVDFT_DED
                    set  acctnum_id = vNewAccountNumber
                  where  acctnum_id = vOldAccountNumber;
 
@@ -149,7 +149,7 @@ begin
                    set  acctnum_id = vNewAccountNumber
                  where  acctnum_id = vOldAccountNumber;
 
-                update  camdnats.TSTACK_CONFIG
+                update  camdnats.TARS_STACK_CONFIG
                    set  unit_id = vNewUnitName_in
                  where  unit_id = vOldUnitName_in;
 
@@ -191,7 +191,7 @@ begin
                                 to_char( now(), 'HH24MISS' ),
                                 vOldAccountNumber,
                                 vNewAccountNumber,
-                                substr ( USER, 1, 8 )
+                                substr ( vUserIdin, 1, 160 )
                             );
                     
                 exception when others then
