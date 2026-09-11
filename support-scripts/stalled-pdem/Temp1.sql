@@ -1,0 +1,31 @@
+select  rpt.status_cd,
+        rpt.pdem_report_id,
+        pln.oris_code,
+        pln.facility_name,
+        pln.locations,
+        prd.period_abbreviation as quarter,
+        rpt.queued_time,
+        rpt.triggered_time,
+        rpt.started_time,
+        rpt.completed_time,
+        rpt.note,
+        rpt.note_time
+        --, rpt.*
+  from  camdecmpsaux.PDEM_REPORT rpt
+        join camdecmpsmd.REPORTING_PERIOD prd using ( rpt_period_id )
+        join camdecmps.VW_MONITOR_PLAN pln using ( mon_plan_id )
+        join camdecmpsaux.SUBMISSION_QUEUE sbq using ( submission_id )
+        join camdecmpsaux.SUBMISSION_SET sbs using ( submission_set_id )
+ where  rpt.completed_time is null
+    --or  rpt.completed_time >= current_timestamp - interval '-15 minutes'
+ order
+    by  case (rpt.status_cd) when 'QUEUED' then 8 when 'COMPLETE' then 9 when 'WIP' then 1 else 0 end,
+        case (rpt.status_cd) when 'QUEUED' then rpt.pdem_report_id else 0 end,
+        pln.oris_code,
+        pln.facility_name,
+        pln.locations,
+        prd.period_abbreviation
+;
+
+
+select  current_timestamp;
