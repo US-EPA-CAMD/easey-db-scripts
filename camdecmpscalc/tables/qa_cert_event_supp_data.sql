@@ -8,6 +8,6 @@ CREATE TABLE IF NOT EXISTS camdecmpscalc.qa_cert_event_supp_data
     count numeric(38,0),
     count_from_included_ind numeric(38,0) NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    rpt_period_id numeric(38,0) NOT NULL,
+    rpt_period_id bigint NOT NULL,
     chk_session_id character varying(45) COLLATE pg_catalog."default" NOT NULL
 );

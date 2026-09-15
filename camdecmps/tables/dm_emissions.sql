@@ -2,13 +2,13 @@ CREATE TABLE IF NOT EXISTS camdecmps.dm_emissions
 (
     dm_emissions_id character varying(45) COLLATE pg_catalog."default" NOT NULL DEFAULT NULL::character varying,
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    rpt_period_id numeric(38,0) NOT NULL,
+    rpt_period_id bigint NOT NULL,
     apportionment_type_cd character varying(7) COLLATE pg_catalog."default",
     emissions_created_flg character varying(1) COLLATE pg_catalog."default" NOT NULL,
     data_source character varying(35) COLLATE pg_catalog."default" NOT NULL,
     userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
-    fac_id numeric(38,0) NOT NULL
+    fac_id bigint NOT NULL
 );
 
 COMMENT ON TABLE camdecmps.dm_emissions

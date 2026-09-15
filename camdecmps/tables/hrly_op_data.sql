@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS camdecmps.hrly_op_data
 (
     hour_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    rpt_period_id numeric(38,0) NOT NULL,
+    rpt_period_id bigint NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     begin_date date NOT NULL,
     begin_hour numeric(2,0) NOT NULL,

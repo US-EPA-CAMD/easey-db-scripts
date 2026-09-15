@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS camdecmpswks.unit_capacity
 (
     unit_cap_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    unit_id numeric(38,0) NOT NULL,
+    unit_id bigint NOT NULL,
     begin_date date NOT NULL,
     end_date date,
     max_hi_capacity numeric(7,1),

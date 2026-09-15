@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS camddmw.hour_unit_data
 (
-    unit_id numeric(38,0) NOT NULL,
+    unit_id bigint NOT NULL,
     op_date date NOT NULL,
     op_hour numeric(2,0) NOT NULL,
     op_time numeric(4,2),
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS camddmw.hour_unit_data
     nox_mass_measure_flg character varying(60) COLLATE pg_catalog."default",
     nox_rate numeric(15,3),
     nox_rate_measure_flg character varying(60) COLLATE pg_catalog."default",
-    rpt_period_id numeric(38,0),
+    rpt_period_id bigint,
     op_year numeric(4,0),
     data_source character varying(35) COLLATE pg_catalog."default",
     userid character varying(160) COLLATE pg_catalog."default",

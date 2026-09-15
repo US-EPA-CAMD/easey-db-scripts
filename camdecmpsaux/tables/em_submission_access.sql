@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.em_submission_access
 (
     em_sub_access_id numeric(38,0) NOT NULL,
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    rpt_period_id numeric(38,0) NOT NULL,
+    rpt_period_id bigint NOT NULL,
     access_begin_date date NOT NULL,
     access_end_date date NOT NULL,
     em_sub_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,

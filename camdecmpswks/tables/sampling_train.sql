@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.sampling_train
     trap_train_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     trap_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    rpt_period_id numeric(38,0) NOT NULL,
+    rpt_period_id bigint NOT NULL,
     component_id character varying(45) COLLATE pg_catalog."default",
     sorbent_trap_serial_number character varying(45) COLLATE pg_catalog."default" NOT NULL,
     main_trap_hg character varying(30) COLLATE pg_catalog."default",

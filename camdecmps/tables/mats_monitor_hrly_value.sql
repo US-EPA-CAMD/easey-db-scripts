@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.mats_monitor_hrly_value
     mats_mhv_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     hour_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    rpt_period_id numeric(38,0) NOT NULL,
+    rpt_period_id bigint NOT NULL,
     parameter_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     mon_sys_id character varying(45) COLLATE pg_catalog."default",
     component_id character varying(45) COLLATE pg_catalog."default",

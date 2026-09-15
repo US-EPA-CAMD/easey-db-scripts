@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.check_session
     test_extension_exemption_id character varying(45) COLLATE pg_catalog."default",
     category_cd character varying(7) COLLATE pg_catalog."default",
     process_cd character varying(7) COLLATE pg_catalog."default",
-    rpt_period_id numeric(38,0),
+    rpt_period_id bigint,
     test_sum_id character varying(45) COLLATE pg_catalog."default",
     submission_id double precision,
     evaluation_id bigint

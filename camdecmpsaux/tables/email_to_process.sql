@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS camdecmpsaux.email_to_process
 (
     to_process_id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999999999999 CACHE 1 ),
-    fac_id numeric(38,0) NOT NULL,
+    fac_id bigint NOT NULL,
     email_type character varying(100) COLLATE pg_catalog."default" NOT NULL,
     event_code integer,
     userid character varying(160) COLLATE pg_catalog."default",

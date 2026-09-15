@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.daily_test_system_supp_data
     last_covered_nonop_datehour timestamp without time zone,
     first_op_after_nonop_datehour timestamp without time zone,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    rpt_period_id numeric(38,0) NOT NULL,
+    rpt_period_id bigint NOT NULL,
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone

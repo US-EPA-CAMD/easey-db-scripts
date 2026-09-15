@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.hrly_param_fuel_flow
     update_date timestamp without time zone,
     parameter_uom_cd character varying(7) COLLATE pg_catalog."default",
     calc_appe_status character varying(75) COLLATE pg_catalog."default",
-    rpt_period_id numeric(38,0) NOT NULL,
+    rpt_period_id bigint NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL
 );
 

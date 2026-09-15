@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.hrly_gas_flow_meter
     hrly_gas_flow_meter_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     hour_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    rpt_period_id numeric(38,0) NOT NULL,
+    rpt_period_id bigint NOT NULL,
     component_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     begin_end_hour_flg character varying(7) COLLATE pg_catalog."default",
     gfm_reading numeric(13,2),
