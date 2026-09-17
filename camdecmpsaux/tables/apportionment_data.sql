@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS camdecmpsaux.apportionment_data
 (
-    apport_data_id numeric(38,0) NOT NULL,
-    apport_range_id numeric(38,0) NOT NULL,
+    apport_data_id bigint NOT NULL,
+    apport_range_id bigint NOT NULL,
     evaluation_order numeric(3,0) NOT NULL,
     condition_xml xml,
     formulae_xml xml,

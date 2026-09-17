@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS camd.unit_op_status
 (
-    unit_op_status_id numeric(38,0) NOT NULL,
-    unit_id numeric(38,0) NOT NULL,
+    unit_op_status_id bigint NOT NULL,
+    unit_id bigint NOT NULL,
     op_status_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     begin_date date NOT NULL,
     end_date date,

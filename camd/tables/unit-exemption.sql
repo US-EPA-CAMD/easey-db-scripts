@@ -1,12 +1,12 @@
 CREATE TABLE IF NOT EXISTS camd.unit_exemption
 (
-    unit_exempt_id numeric(38,0) NOT NULL,
-    unit_id numeric(38,0) NOT NULL,
+    unit_exempt_id bigint NOT NULL,
+    unit_id bigint NOT NULL,
     exemption_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     begin_date date NOT NULL,
     end_date date,
     ex_rec_date date,
-    submitter_ppl_id numeric(38,0),
+    submitter_ppl_id bigint,
     userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone

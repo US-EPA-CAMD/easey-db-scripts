@@ -77,7 +77,7 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.load_emissions_workspace(
 LANGUAGE 'plpgsql'
 AS $BODY$
 DECLARE
-	rptPeriodId numeric(38,0);
+	rptPeriodId bigint;
 	monLocIds text[];
 BEGIN
 	SELECT rpt_period_id INTO rptPeriodId

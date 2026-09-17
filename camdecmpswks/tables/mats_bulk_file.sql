@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS camdecmpswks.mats_bulk_file
 (
     mats_bulk_file_id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
-    fac_id numeric(38,0) NOT NULL,
+    fac_id bigint NOT NULL,
     oris_code numeric(6,0) NOT NULL,
     location character varying COLLATE pg_catalog."default" NOT NULL,
     test_type_code character varying COLLATE pg_catalog."default" NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.mats_bulk_file
     filename character varying(100) COLLATE pg_catalog."default" NOT NULL,
     last_updated timestamp without time zone,
     updated_status_flg character varying(1) COLLATE pg_catalog."default",
-    submission_id numeric(38,0),
+    submission_id bigint,
     submission_availability_cd character varying(7) COLLATE pg_catalog."default" DEFAULT 'GRANTED'::character varying,
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,

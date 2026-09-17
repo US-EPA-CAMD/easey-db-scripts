@@ -6,8 +6,8 @@
 
 CREATE TABLE camdecmpswks.unit
 (
-    unit_id numeric(38,0) NOT NULL,
-    fac_id numeric(38,0) NOT NULL,
+    unit_id bigint NOT NULL,
+    fac_id bigint NOT NULL,
     unitid character varying(6) COLLATE pg_catalog."default" NOT NULL,
     unit_description character varying(4000) COLLATE pg_catalog."default",
     indian_country_ind numeric(1,0) NOT NULL DEFAULT 0,

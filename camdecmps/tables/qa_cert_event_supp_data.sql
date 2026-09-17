@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.qa_cert_event_supp_data
     count numeric(38,0),
     count_from_included_ind numeric(38,0) NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    rpt_period_id numeric(38,0) NOT NULL,
+    rpt_period_id bigint NOT NULL,
     delete_ind numeric(1,0) NOT NULL DEFAULT 0,
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,

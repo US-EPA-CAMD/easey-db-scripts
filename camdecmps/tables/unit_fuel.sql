@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS camdecmps.unit_fuel
 (
     uf_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    unit_id numeric(38,0) NOT NULL,
+    unit_id bigint NOT NULL,
     fuel_type character varying(7) COLLATE pg_catalog."default" NOT NULL,
     begin_date date NOT NULL,
     end_date date,

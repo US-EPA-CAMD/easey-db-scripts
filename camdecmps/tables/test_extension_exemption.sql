@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.test_extension_exemption
 (
     test_extension_exemption_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    rpt_period_id numeric(38,0) NOT NULL,
+    rpt_period_id bigint NOT NULL,
     mon_sys_id character varying(45) COLLATE pg_catalog."default",
     component_id character varying(45) COLLATE pg_catalog."default",
     fuel_cd character varying(7) COLLATE pg_catalog."default",
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.test_extension_exemption
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     span_scale_cd character varying(7) COLLATE pg_catalog."default",
-    submission_id numeric(38,0),
+    submission_id bigint,
     submission_availability_cd character varying(7) COLLATE pg_catalog."default",
     resub_explanation character varying(4000) COLLATE pg_catalog."default"
 );

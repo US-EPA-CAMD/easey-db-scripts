@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.daily_calibration
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
-    rpt_period_id numeric(38,0),
+    rpt_period_id bigint,
     upscale_gas_type_cd character varying(255) COLLATE pg_catalog."default",
     vendor_id character varying(8) COLLATE pg_catalog."default",
     cylinder_identifier character varying(25) COLLATE pg_catalog."default",

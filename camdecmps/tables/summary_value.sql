@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS camdecmps.summary_value
 (
     sum_value_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    rpt_period_id numeric(38,0) NOT NULL,
+    rpt_period_id bigint NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     parameter_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     current_rpt_period_total numeric(13,3),

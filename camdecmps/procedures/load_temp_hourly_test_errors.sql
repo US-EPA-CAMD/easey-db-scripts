@@ -19,7 +19,7 @@ BEGIN
       HOUR_ID character varying(45) NOT NULL,
       MON_PLAN_ID character varying(45) NOT NULL, 
       MON_LOC_ID character varying(45) NOT NULL, 
-      RPT_PERIOD_ID numeric(38,0) NOT NULL, 
+      RPT_PERIOD_ID bigint NOT NULL, 
       BEGIN_DATE date NOT NULL, 
       BEGIN_HOUR numeric(2,0) NOT NULL, 
       OP_TIME numeric(3,2), 
