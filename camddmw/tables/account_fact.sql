@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS camddmw.account_fact
     prg_code character varying(8) COLLATE pg_catalog."default" NOT NULL,
     account_name character varying(100) COLLATE pg_catalog."default",
     account_type character varying(35) COLLATE pg_catalog."default",
-    unit_id bigint,
+    unit_id numeric(38,0),
     unitid character varying(6) COLLATE pg_catalog."default",
     op_status_info character varying(1000) COLLATE pg_catalog."default",
     primary_fuel_info character varying(1000) COLLATE pg_catalog."default",

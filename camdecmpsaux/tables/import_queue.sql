@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.import_queue
     temp_s3_bucket_file_path text COLLATE pg_catalog."default" NOT NULL,
     file_type_cd character varying(8) COLLATE pg_catalog."default" NOT NULL,
     oris_code numeric(6,0),
-    rpt_period_id bigint,
+    rpt_period_id numeric(38,0),
     queued_time timestamp without time zone NOT NULL,
     started_time timestamp without time zone,
     completed_time timestamp without time zone,

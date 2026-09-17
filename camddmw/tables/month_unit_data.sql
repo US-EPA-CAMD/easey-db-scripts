@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS camddmw.month_unit_data
     nox_rate numeric(16,4),
     nox_rate_sum numeric(15,3),
     nox_rate_count numeric(4,0),
-    rpt_period_id bigint,
+    rpt_period_id numeric(38,0),
     op_quarter numeric(1,0),
     data_source character varying(35) COLLATE pg_catalog."default",
     userid character varying(160) COLLATE pg_catalog."default",

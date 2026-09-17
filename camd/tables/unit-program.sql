@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS camd.unit_program
 (
-    up_id numeric(38,0) NOT NULL,
-    unit_id numeric(38,0) NOT NULL,
-    prg_id numeric(38,0) NOT NULL,
+    up_id bigint NOT NULL,
+    unit_id bigint NOT NULL,
+    prg_id bigint NOT NULL,
     prg_cd character varying(7) COLLATE pg_catalog."default",
     class_cd character varying(7) COLLATE pg_catalog."default",
     app_status_cd character varying(7) COLLATE pg_catalog."default",
