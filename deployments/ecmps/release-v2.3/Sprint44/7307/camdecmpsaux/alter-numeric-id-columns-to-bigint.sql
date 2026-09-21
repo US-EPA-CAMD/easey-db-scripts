@@ -3,6 +3,7 @@
 ALTER TABLE IF EXISTS camdecmpsaux.apportionment ALTER COLUMN apport_id TYPE bigint, ALTER COLUMN begin_rpt_period_id TYPE bigint, ALTER COLUMN end_rpt_period_id TYPE bigint;
 ALTER TABLE IF EXISTS camdecmpsaux.apportionment_data ALTER COLUMN apport_data_id TYPE bigint, ALTER COLUMN apport_range_id TYPE bigint;
 ALTER TABLE IF EXISTS camdecmpsaux.apportionment_range ALTER COLUMN apport_id TYPE bigint, ALTER COLUMN apport_range_id TYPE bigint;
+ALTER TABLE IF EXISTS camdecmpsaux.check_log ALTER COLUMN check_catalog_result_id TYPE bigint, ALTER COLUMN error_suppress_id TYPE bigint, ALTER COLUMN rule_check_id TYPE bigint;
 ALTER TABLE IF EXISTS camdecmpsaux.check_session ALTER COLUMN rpt_period_id TYPE bigint;
 ALTER TABLE IF EXISTS camdecmpsaux.em_submission_access ALTER COLUMN rpt_period_id TYPE bigint;
 ALTER TABLE IF EXISTS camdecmpsaux.email_to_process ALTER COLUMN fac_id TYPE bigint;

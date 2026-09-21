@@ -1,5 +1,6 @@
 -- Ticket #7307: convert numeric(38,0) id columns to bigint (camdecmpswks)
 
+ALTER TABLE IF EXISTS camdecmpswks.check_log ALTER COLUMN check_catalog_result_id TYPE bigint, ALTER COLUMN error_suppress_id TYPE bigint, ALTER COLUMN rule_check_id TYPE bigint;
 ALTER TABLE IF EXISTS camdecmpswks.check_session ALTER COLUMN rpt_period_id TYPE bigint;
 ALTER TABLE IF EXISTS camdecmpswks.component_op_supp_data ALTER COLUMN rpt_period_id TYPE bigint;
 ALTER TABLE IF EXISTS camdecmpswks.daily_backstop ALTER COLUMN rpt_period_id TYPE bigint, ALTER COLUMN unit_id TYPE bigint;
