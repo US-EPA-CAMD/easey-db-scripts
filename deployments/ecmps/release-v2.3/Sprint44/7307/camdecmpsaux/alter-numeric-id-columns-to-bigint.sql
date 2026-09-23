@@ -10,6 +10,7 @@ ALTER TABLE IF EXISTS camdecmpsaux.email_to_process ALTER COLUMN fac_id TYPE big
 ALTER TABLE IF EXISTS camdecmpsaux.es_spec ALTER COLUMN check_catalog_result_id TYPE bigint, ALTER COLUMN fac_id TYPE bigint;
 ALTER TABLE IF EXISTS camdecmpsaux.evaluation_queue ALTER COLUMN rpt_period_id TYPE bigint;
 ALTER TABLE IF EXISTS camdecmpsaux.evaluation_set ALTER COLUMN fac_id TYPE bigint;
+ALTER TABLE IF EXISTS camdecmpsaux.import_queue ALTER COLUMN rpt_period_id TYPE bigint;
 ALTER TABLE IF EXISTS camdecmpsaux.mats_data_submission ALTER COLUMN fac_id TYPE bigint;
 ALTER TABLE IF EXISTS camdecmpsaux.pdem_mats_monitor_hour ALTER COLUMN rpt_period_id TYPE bigint;
 ALTER TABLE IF EXISTS camdecmpsaux.pdem_mats_unit_hour ALTER COLUMN rpt_period_id TYPE bigint, ALTER COLUMN unit_id TYPE bigint;
