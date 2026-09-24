@@ -6,7 +6,7 @@ ALTER TABLE IF EXISTS camdecmpsaux.apportionment_range ALTER COLUMN apport_id TY
 ALTER TABLE IF EXISTS camdecmpsaux.check_log ALTER COLUMN check_catalog_result_id TYPE bigint, ALTER COLUMN error_suppress_id TYPE bigint, ALTER COLUMN rule_check_id TYPE bigint;
 ALTER TABLE IF EXISTS camdecmpsaux.check_session ALTER COLUMN rpt_period_id TYPE bigint;
 ALTER TABLE IF EXISTS camdecmpsaux.em_submission_access ALTER COLUMN rpt_period_id TYPE bigint;
-ALTER TABLE IF EXISTS camdecmpsaux.email_to_process ALTER COLUMN fac_id TYPE bigint;
+ALTER TABLE IF EXISTS camdecmpsaux.email_to_process ALTER COLUMN fac_id TYPE bigint, ALTER COLUMN rpt_period_id TYPE bigint;
 ALTER TABLE IF EXISTS camdecmpsaux.es_spec ALTER COLUMN check_catalog_result_id TYPE bigint, ALTER COLUMN fac_id TYPE bigint;
 ALTER TABLE IF EXISTS camdecmpsaux.evaluation_queue ALTER COLUMN rpt_period_id TYPE bigint;
 ALTER TABLE IF EXISTS camdecmpsaux.evaluation_set ALTER COLUMN fac_id TYPE bigint;

@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.email_to_process
     event_code integer,
     userid character varying(160) COLLATE pg_catalog."default",
     mon_plan_id character varying(45) COLLATE pg_catalog."default",
-    rpt_period_id numeric,
+    rpt_period_id bigint,
     em_sub_access_id bigint,
     submission_type character varying(3) COLLATE pg_catalog."default",
     is_mats boolean,
