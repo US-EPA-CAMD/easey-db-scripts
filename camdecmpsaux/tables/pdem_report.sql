@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.pdem_report
 (
     pdem_report_id              bigserial,
     mon_plan_id                 varchar(45) NOT NULL,
-    rpt_period_id               bigint NOT NULL,
+    rpt_period_id               numeric(38,0) NOT NULL,
     submission_id               bigint NOT NULL,
     apportionment_type_cd       varchar(35) NULL,
     queued_time                 timestamp without time zone DEFAULT current_timestamp NOT NULL,

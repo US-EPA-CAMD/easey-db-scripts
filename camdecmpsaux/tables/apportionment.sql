@@ -2,8 +2,8 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.apportionment
 (
     apport_id bigint NOT NULL,
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    begin_rpt_period_id bigint NOT NULL,
-    end_rpt_period_id bigint,
+    begin_rpt_period_id numeric(38,0) NOT NULL,
+    end_rpt_period_id numeric(38,0),
     userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone

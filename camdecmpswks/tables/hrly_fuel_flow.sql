@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.hrly_fuel_flow
     volumetric_uom_cd character varying(7) COLLATE pg_catalog."default",
     calc_volumetric_flow_rate numeric(10,1),
     calc_appd_status character varying(75) COLLATE pg_catalog."default",
-    rpt_period_id bigint NOT NULL,
+    rpt_period_id numeric(38,0) NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL
 );
 

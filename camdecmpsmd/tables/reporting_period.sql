@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS camdecmpsmd.reporting_period
 (
-    rpt_period_id bigint NOT NULL,
+    rpt_period_id numeric(38,0) NOT NULL,
     calendar_year numeric(38,0) NOT NULL,
     quarter numeric(38,0) NOT NULL,
     begin_date date NOT NULL,

@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS camdecmpswks.long_term_fuel_flow
 (
     ltff_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    rpt_period_id bigint,
+    rpt_period_id numeric(38,0),
     mon_loc_id character varying(45) COLLATE pg_catalog."default",
     mon_sys_id character varying(45) COLLATE pg_catalog."default",
     fuel_flow_period_cd character varying(7) COLLATE pg_catalog."default",

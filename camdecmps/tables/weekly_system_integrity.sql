@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.weekly_system_integrity
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,
     update_date timestamp without time zone,
-    rpt_period_id bigint NOT NULL,
+    rpt_period_id numeric(38,0) NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL
 ) PARTITION BY RANGE (rpt_period_id);
 

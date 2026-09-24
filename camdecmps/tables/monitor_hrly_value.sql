@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_hrly_value
     calc_line_status character varying(75) COLLATE pg_catalog."default",
     calc_rata_status character varying(75) COLLATE pg_catalog."default",
     calc_daycal_status character varying(75) COLLATE pg_catalog."default",
-    rpt_period_id bigint NOT NULL,
+    rpt_period_id numeric(38,0) NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     calc_leak_status character varying(75) COLLATE pg_catalog."default",
     calc_dayint_status character varying(75) COLLATE pg_catalog."default",

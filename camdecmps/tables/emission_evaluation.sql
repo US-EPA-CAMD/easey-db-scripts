@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS camdecmps.emission_evaluation
 (
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    rpt_period_id bigint NOT NULL,
+    rpt_period_id numeric(38,0) NOT NULL,
     last_updated timestamp without time zone,
     updated_status_flg character varying(1) COLLATE pg_catalog."default",
     needs_eval_flg character varying(1) COLLATE pg_catalog."default",

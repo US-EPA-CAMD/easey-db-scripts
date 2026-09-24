@@ -12,8 +12,8 @@ CREATE TABLE IF NOT EXISTS camdecmps.monitor_plan
     update_date timestamp without time zone,
     submission_id bigint,
     submission_availability_cd character varying(7) COLLATE pg_catalog."default",
-    begin_rpt_period_id bigint NOT NULL,
-    end_rpt_period_id bigint,
+    begin_rpt_period_id numeric(38,0) NOT NULL,
+    end_rpt_period_id numeric(38,0),
     last_evaluated_date timestamp without time zone
 );
 

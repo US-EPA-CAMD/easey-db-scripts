@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.test_summary
     test_reason_cd character varying(7) COLLATE pg_catalog."default",
     test_result_cd character varying(7) COLLATE pg_catalog."default",
     calc_test_result_cd character varying(7) COLLATE pg_catalog."default",
-    rpt_period_id bigint,
+    rpt_period_id numeric(38,0),
     test_description character varying(100) COLLATE pg_catalog."default",
     begin_date date,
     begin_hour numeric(2,0),

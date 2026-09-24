@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.daily_test_supp_data
 (
     daily_test_supp_data_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     component_id character varying(45) COLLATE pg_catalog."default",
-    rpt_period_id bigint NOT NULL,
+    rpt_period_id numeric(38,0) NOT NULL,
     test_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     span_scale_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     key_online_ind numeric(1,0) NOT NULL,

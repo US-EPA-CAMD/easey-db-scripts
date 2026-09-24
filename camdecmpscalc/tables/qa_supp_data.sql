@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS camdecmpscalc.qa_supp_data
     end_date date,
     end_hour numeric(2,0),
     end_min numeric(2,0),
-    rpt_period_id bigint,
+    rpt_period_id numeric(38,0),
     gp_ind numeric(38,0),
     reinstallation_date date,
     reinstallation_hour numeric(2,0),

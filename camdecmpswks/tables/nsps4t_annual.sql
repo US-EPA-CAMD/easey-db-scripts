@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.nsps4t_annual
     annual_energy_sold_type_cd character varying(7) COLLATE pg_catalog."default",
     annual_potential_output numeric(8,0),
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    rpt_period_id bigint NOT NULL,
+    rpt_period_id numeric(38,0) NOT NULL,
     userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone

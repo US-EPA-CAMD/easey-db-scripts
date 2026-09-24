@@ -1,7 +1,7 @@
 -- Ticket #7307: convert numeric(38,0) id columns to bigint (camd and dependent camdaux columns)
 
 ALTER TABLE IF EXISTS camd.generator ALTER COLUMN fac_id TYPE bigint, ALTER COLUMN gen_id TYPE bigint;
-ALTER TABLE IF EXISTS camd.plant ALTER COLUMN fac_id TYPE bigint, ALTER COLUMN first_ecmps_rpt_period_id TYPE bigint;
+ALTER TABLE IF EXISTS camd.plant ALTER COLUMN fac_id TYPE bigint;
 ALTER TABLE IF EXISTS camd.plant_person ALTER COLUMN fac_id TYPE bigint, ALTER COLUMN fac_ppl_id TYPE bigint, ALTER COLUMN ppl_id TYPE bigint;
 ALTER TABLE IF EXISTS camd.program ALTER COLUMN prg_id TYPE bigint;
 ALTER TABLE IF EXISTS camd.program_phase ALTER COLUMN prg_id TYPE bigint, ALTER COLUMN program_phase_id TYPE bigint;

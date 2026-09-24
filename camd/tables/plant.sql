@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS camd.plant
     permit_exp_date date,
     latlon_source character varying(200) COLLATE pg_catalog."default",
     tribal_land_cd character varying(7) COLLATE pg_catalog."default",
-    first_ecmps_rpt_period_id bigint,
+    first_ecmps_rpt_period_id numeric(38,0),
     userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
     update_date timestamp without time zone

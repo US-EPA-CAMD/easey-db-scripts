@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.pdem_p75_monitor_hour
 	noxr                    numeric(15, 3) NULL,
 	noxr_hour_measure_cd    varchar(7) NULL,
 	mon_plan_id             varchar(45) NOT NULL,
-	rpt_period_id           bigint NOT NULL,
+	rpt_period_id           numeric(38,0) NOT NULL,
 	op_year                 numeric(4) NOT NULL,
 	add_date                timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
 );

@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.check_session
     test_sum_id character varying(45) COLLATE pg_catalog."default",
     qa_cert_event_id character varying(45) COLLATE pg_catalog."default",
     test_extension_exemption_id character varying(45) COLLATE pg_catalog."default",
-    rpt_period_id bigint,
+    rpt_period_id numeric(38,0),
     session_begin_date timestamp without time zone,
     eval_begin_date date,
     eval_end_date date,

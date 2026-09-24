@@ -29,7 +29,7 @@ returns table (
 )
 as $BODY$
 declare
-    v_rpt_period_id bigint;
+    v_rpt_period_id numeric;
 
 begin
 

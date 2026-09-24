@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.operating_supp_data
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     fuel_cd character varying(7) COLLATE pg_catalog."default",
     op_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
-    rpt_period_id bigint NOT NULL,
+    rpt_period_id numeric(38,0) NOT NULL,
     op_value numeric(13,3),
     userid character varying(160) COLLATE pg_catalog."default",
     add_date timestamp without time zone,

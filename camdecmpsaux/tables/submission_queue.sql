@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.submission_queue
     test_sum_id character varying(45) COLLATE pg_catalog."default",
     qa_cert_event_id character varying(45) COLLATE pg_catalog."default",
     test_extension_exemption_id character varying(45) COLLATE pg_catalog."default",
-    rpt_period_id bigint,
+    rpt_period_id numeric(38,0),
     mats_bulk_file_id bigint,
     severity_cd character varying(8) COLLATE pg_catalog."default",
     queued_time timestamp without time zone NOT NULL,

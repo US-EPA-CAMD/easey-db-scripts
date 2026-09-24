@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS camdecmps.daily_test_summary
 (
     daily_test_sum_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    rpt_period_id bigint NOT NULL,
+    rpt_period_id numeric(38,0) NOT NULL,
     mon_loc_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     component_id character varying(45) COLLATE pg_catalog."default",
     daily_test_date date NOT NULL,
