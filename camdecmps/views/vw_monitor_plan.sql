@@ -1,6 +1,6 @@
 -- View: camdecmps.vw_monitor_plan
 
-DROP VIEW IF EXISTS camdecmps.vw_monitor_plan CASCADE;
+DROP VIEW IF EXISTS camdecmps.vw_monitor_plan;
 
 CREATE OR REPLACE VIEW camdecmps.vw_monitor_plan
 AS SELECT pln.mon_plan_id,
