@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS camdecmps.unit_control
 (
     ctl_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    unit_id numeric(38,0) NOT NULL,
+    unit_id bigint NOT NULL,
     control_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     ce_param character varying(7) COLLATE pg_catalog."default" NOT NULL,
     install_date date,

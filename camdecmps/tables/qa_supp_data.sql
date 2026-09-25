@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.qa_supp_data
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     op_level_cd character varying(7) COLLATE pg_catalog."default",
-    submission_id numeric(38,0),
+    submission_id bigint,
     submission_availability_cd character varying(7) COLLATE pg_catalog."default",
     chk_session_id character varying(45) COLLATE pg_catalog."default",
     operating_condition_cd character varying(7) COLLATE pg_catalog."default",

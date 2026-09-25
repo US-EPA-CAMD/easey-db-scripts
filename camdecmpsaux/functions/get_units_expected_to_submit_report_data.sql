@@ -1,8 +1,9 @@
-DROP FUNCTION IF EXISTS camdecmpsaux.get_units_expected_to_submit_report_data(numeric, character varying, character varying, character varying, numeric, numeric, character varying) CASCADE;
+DROP FUNCTION IF EXISTS camdecmpsaux.get_units_expected_to_submit_report_data(numeric, character varying, character varying, character varying, numeric, numeric, character varying);
+DROP FUNCTION IF EXISTS camdecmpsaux.get_units_expected_to_submit_report_data(bigint, character varying, character varying, character varying, numeric, numeric, character varying);
 
 create or replace
 function camdecmpsaux.get_units_expected_to_submit_report_data(
-    V_FAC_ID numeric,
+    V_FAC_ID bigint,
     V_FACILITY_NAME character varying,
     V_STATE character varying,
     V_PRG_CODE character varying,
@@ -12,7 +13,7 @@ function camdecmpsaux.get_units_expected_to_submit_report_data(
 )
 returns table (
     ORIS_CODE numeric,
-	FAC_ID numeric,
+	FAC_ID bigint,
     FACILITY_NAME character varying,
     STATE character varying,
     UNITID character varying,
@@ -71,7 +72,7 @@ from
 join camd.plant F
         on
 	U.FAC_ID = F.FAC_ID
-	and 
+	and
 	F.FAC_ID = coalesce(V_FAC_ID, U.FAC_ID)
 	and F.FACILITY_NAME = coalesce(V_FACILITY_NAME, F.FACILITY_NAME)
 	and F.STATE = coalesce(V_STATE, F.STATE)
@@ -81,7 +82,7 @@ join (
 		max(ers.mon_plan_id) as mon_plan_id
 	from
 		camd.UNIT U
-	join camdecmps.vw_em_reporting_status ers 
+	join camdecmps.vw_em_reporting_status ers
          on
 		u.unit_id = ers.unit_id
 		and ers.rpt_period_id = v_rpt_period_id
@@ -93,7 +94,7 @@ join (
 	u.unit_id = mp.unit_id
 left join camdecmps.vw_monitor_plan vmp on
 	mp.mon_plan_id = vmp.mon_plan_id
-left join 
+left join
         (
 	select
 		ESA.MON_PLAN_ID,

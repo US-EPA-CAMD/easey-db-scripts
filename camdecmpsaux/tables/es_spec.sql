@@ -1,9 +1,9 @@
 CREATE TABLE IF NOT EXISTS camdecmpsaux.es_spec
 (
     es_spec_id numeric(38,0) NOT NULL,
-    check_catalog_result_id numeric(38,0) NOT NULL,
+    check_catalog_result_id bigint NOT NULL,
     severity_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
-    fac_id numeric(38,0),
+    fac_id bigint,
     location_name_list character varying(1000) COLLATE pg_catalog."default",
     es_match_data_type_cd character varying(7) COLLATE pg_catalog."default",
     match_data_value character varying(100) COLLATE pg_catalog."default",

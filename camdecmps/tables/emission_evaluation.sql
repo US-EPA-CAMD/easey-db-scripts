@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS camdecmps.emission_evaluation
     updated_status_flg character varying(1) COLLATE pg_catalog."default",
     needs_eval_flg character varying(1) COLLATE pg_catalog."default",
     chk_session_id character varying(45) COLLATE pg_catalog."default",
-    submission_id numeric(38,0),
+    submission_id bigint,
     submission_availability_cd character varying(7) COLLATE pg_catalog."default",
     submission_comment text COLLATE pg_catalog."default"
 ) PARTITION BY RANGE (rpt_period_id);

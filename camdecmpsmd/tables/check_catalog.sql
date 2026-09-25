@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS camdecmpsmd.check_catalog
 (
-    check_catalog_id numeric(38,0) NOT NULL,
+    check_catalog_id bigint NOT NULL,
     check_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     check_number numeric(38,0) NOT NULL,
     check_name character varying(100) COLLATE pg_catalog."default" NOT NULL,

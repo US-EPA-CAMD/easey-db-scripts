@@ -1,4 +1,4 @@
-DROP view IF EXISTS camdecmps.vw_em_reporting_status CASCADE;
+DROP view IF EXISTS camdecmps.vw_em_reporting_status;
 
 create or replace
 view camdecmps.vw_em_reporting_status

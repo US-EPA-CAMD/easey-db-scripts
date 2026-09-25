@@ -3,10 +3,10 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.check_log
     chk_log_id character varying(45) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v4(),
     chk_session_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     begin_date timestamp without time zone NOT NULL,
-    rule_check_id numeric(38,0),
+    rule_check_id bigint,
     result_message character varying(1000) COLLATE pg_catalog."default",
     chk_log_comment character varying(1000) COLLATE pg_catalog."default",
-    check_catalog_result_id numeric(38,0),
+    check_catalog_result_id bigint,
     mon_loc_id character varying(45) COLLATE pg_catalog."default",
     source_table character varying(100) COLLATE pg_catalog."default",
     row_id character varying(45) COLLATE pg_catalog."default",
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.check_log
     severity_cd character varying(7) COLLATE pg_catalog."default",
     suppressed_severity_cd character varying(7) COLLATE pg_catalog."default",
     check_cd character varying(30) COLLATE pg_catalog."default",
-    error_suppress_id numeric(38,0)
+    error_suppress_id bigint
 );
 
 COMMENT ON TABLE camdecmpswks.check_log

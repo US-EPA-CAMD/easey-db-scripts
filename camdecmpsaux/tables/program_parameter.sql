@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS camdecmpsaux.program_parameter
 (
-    prg_param_id numeric(38,0) NOT NULL,
-    prg_id numeric(38,0) NOT NULL,
+    prg_param_id bigint NOT NULL,
+    prg_id bigint NOT NULL,
     parameter_cd character varying(8) COLLATE pg_catalog."default" NOT NULL,
     required_ind numeric(1,0) NOT NULL DEFAULT 0,
     begin_rpt_period_id numeric(38,0) NOT NULL,

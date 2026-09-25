@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS camdecmps.daily_backstop
 (
     daily_backstop_id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
-    unit_id numeric(38,0) NOT NULL,
+    unit_id bigint NOT NULL,
     op_date date NOT NULL,
     daily_noxm numeric(10,1) NOT NULL,
     daily_hit numeric(10,1) NOT NULL,

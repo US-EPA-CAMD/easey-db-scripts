@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.test_extension_exemption
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     span_scale_cd character varying(7) COLLATE pg_catalog."default",
-    submission_id numeric(38,0),
+    submission_id bigint,
     submission_availability_cd character varying(7) COLLATE pg_catalog."default" DEFAULT 'GRANTED'::character varying,
     pending_status_cd character varying(7) COLLATE pg_catalog."default",
     eval_status_cd character varying(7) COLLATE pg_catalog."default" NOT NULL DEFAULT 'EVAL'::character varying

@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.pdem_mats_monitor_hour
     hf_mass                 numeric(22,10),
     hf_hour_measure_cd      varchar(7),
     mon_plan_id             varchar(45) NOT NULL,
-    rpt_period_id           numeric(38) NOT NULL,
+    rpt_period_id           numeric(38,0) NOT NULL,
     op_year                 numeric(4) NOT NULL,
     add_date                timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
