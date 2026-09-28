@@ -9,7 +9,7 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.refresh_emissions_views(
 LANGUAGE 'plpgsql'
 AS $BODY$
 DECLARE
-	vRptPeriodId bigint;
+	vRptPeriodId numeric;
 	sqlStatement text;
 	dataset record;
 BEGIN
