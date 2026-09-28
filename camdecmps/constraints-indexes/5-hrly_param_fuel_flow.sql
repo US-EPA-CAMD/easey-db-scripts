@@ -1,7 +1,7 @@
 ALTER TABLE IF EXISTS camdecmps.hrly_param_fuel_flow
     ADD CONSTRAINT pk_hrly_param_fuel_flow PRIMARY KEY (rpt_period_id, hrly_param_ff_id),
     ADD CONSTRAINT fk_hrly_param_fuel_flow_hrly_fuel_flow FOREIGN KEY (rpt_period_id, hrly_fuel_flow_id)
-        REFERENCES camdecmps.hrly_fuel_flow (hrly_fuel_flow_id, rpt_period_id) MATCH SIMPLE,
+        REFERENCES camdecmps.hrly_fuel_flow (rpt_period_id, hrly_fuel_flow_id) MATCH SIMPLE,
     ADD CONSTRAINT fk_hrly_param_fuel_flow_monitor_formula FOREIGN KEY (mon_form_id)
         REFERENCES camdecmps.monitor_formula (mon_form_id) MATCH SIMPLE
         ON DELETE CASCADE,

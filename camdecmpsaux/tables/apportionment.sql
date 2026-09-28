@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS camdecmpsaux.apportionment
 (
-    apport_id numeric(38,0) NOT NULL,
+    apport_id bigint NOT NULL,
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
     begin_rpt_period_id numeric(38,0) NOT NULL,
     end_rpt_period_id numeric(38,0),

@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS camdecmpsmd.parameter_uom
 (
-    param_id numeric(38,0) NOT NULL,
+    param_id bigint NOT NULL,
     parameter_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     uom_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     parameter_format character varying(10) COLLATE pg_catalog."default",

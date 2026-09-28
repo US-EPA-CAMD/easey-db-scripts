@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS camd.unit_generator
 (
-    unit_gen_id numeric(38,0) NOT NULL,
-    unit_id numeric(38,0) NOT NULL,
-    gen_id numeric(38,0) NOT NULL,
+    unit_gen_id bigint NOT NULL,
+    unit_id bigint NOT NULL,
+    gen_id bigint NOT NULL,
     begin_date date NOT NULL,
     end_date date,
     userid character varying(160) COLLATE pg_catalog."default" NOT NULL,

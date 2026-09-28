@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.qa_cert_event
     add_date timestamp without time zone,
     update_date timestamp without time zone,
     qa_cert_event_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    submission_id numeric(38,0),
+    submission_id bigint,
     submission_availability_cd character varying(7) COLLATE pg_catalog."default" DEFAULT 'GRANTED'::character varying,
     pending_status_cd character varying(7) COLLATE pg_catalog."default",
     eval_status_cd character varying(7) COLLATE pg_catalog."default" NOT NULL DEFAULT 'EVAL'::character varying

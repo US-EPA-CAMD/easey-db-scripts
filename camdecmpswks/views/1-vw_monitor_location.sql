@@ -1,5 +1,5 @@
 -- View: camdecmpswks.vw_monitor_location
-DROP VIEW IF EXISTS camdecmpswks.vw_monitor_location CASCADE;
+DROP VIEW IF EXISTS camdecmpswks.vw_monitor_location;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_monitor_location
 AS SELECT  ml.mon_loc_id,

@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS camdecmpswks.emission_evaluation
     updated_status_flg character varying(1) COLLATE pg_catalog."default",
     needs_eval_flg character varying(1) COLLATE pg_catalog."default" DEFAULT 'Y'::character varying,
     chk_session_id character varying(45) COLLATE pg_catalog."default",
-    submission_id numeric(38,0),
+    submission_id bigint,
     submission_availability_cd character varying(7) COLLATE pg_catalog."default" DEFAULT 'GRANTED'::character varying,
     eval_status_cd character varying(7) COLLATE pg_catalog."default" NOT NULL DEFAULT 'EVAL'::character varying,
     pending_status_cd character varying(7) COLLATE pg_catalog."default",

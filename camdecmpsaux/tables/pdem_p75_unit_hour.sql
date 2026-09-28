@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.pdem_p75_unit_hour
 (
     pdem_p75_unit_hour_id   bigserial,
 	pdem_report_id          bigint NOT NULL,
-    unit_id                 numeric(38) NOT NULL,
+    unit_id                 bigint NOT NULL,
     op_date                 date NOT NULL,
     op_hour                 numeric(2) NOT NULL,
     op_time                 numeric(3,2),
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.pdem_p75_unit_hour
     noxr                    numeric(15,3),
     noxr_hour_measure_cd    varchar(7),
     mon_plan_id             varchar(45) NOT NULL,
-    rpt_period_id           numeric(38) NOT NULL,
+    rpt_period_id           numeric(38,0) NOT NULL,
     op_year                 numeric(4) NOT NULL,
     add_date                timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
 );

@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS camd.program
 (
-    prg_id numeric(38,0) NOT NULL,
+    prg_id bigint NOT NULL,
     prg_cd character varying(8) COLLATE pg_catalog."default" NOT NULL,
     state_cd character varying(2) COLLATE pg_catalog."default",
     state_reg character varying(20) COLLATE pg_catalog."default",

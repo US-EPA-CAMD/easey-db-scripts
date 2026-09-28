@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS camdecmpsaux.apportionment_range
 (
-    apport_range_id numeric(38,0) NOT NULL,
-    apport_id numeric(38,0) NOT NULL,
+    apport_range_id bigint NOT NULL,
+    apport_id bigint NOT NULL,
     begin_date timestamp(0) without time zone NOT NULL,
     begin_hour numeric(2,0) NOT NULL,
     end_date timestamp(0) without time zone,

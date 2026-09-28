@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.mats_data_submission (
     note text,
     note_time timestamp without time zone,
     activity_id text,
-    fac_id numeric(38, 0) NOT NULL,
+    fac_id bigint NOT NULL,
     mon_plan_id varchar(45) COLLATE pg_catalog."default" NOT NULL,
     mats_status_cd varchar(8) COLLATE pg_catalog."default" NOT NULL DEFAULT 'NEW',
     user_id varchar(45) COLLATE pg_catalog."default" NOT NULL,

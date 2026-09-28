@@ -1,5 +1,5 @@
 -- View: camdecmps.vw_mp_unit_stack_configuration
-DROP VIEW IF EXISTS camdecmps.vw_mp_unit_stack_configuration CASCADE;
+DROP VIEW IF EXISTS camdecmps.vw_mp_unit_stack_configuration;
 
 CREATE OR REPLACE VIEW camdecmps.vw_mp_unit_stack_configuration AS SELECT DISTINCT
     mp.mon_plan_id,

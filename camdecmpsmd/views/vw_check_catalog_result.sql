@@ -1,6 +1,6 @@
 -- View: camdecmpsmd.vw_check_catalog_result
 
-DROP VIEW IF EXISTS camdecmpsmd.vw_check_catalog_result CASCADE;
+DROP VIEW IF EXISTS camdecmpsmd.vw_check_catalog_result;
 
 CREATE OR REPLACE VIEW camdecmpsmd.vw_check_catalog_result
  AS

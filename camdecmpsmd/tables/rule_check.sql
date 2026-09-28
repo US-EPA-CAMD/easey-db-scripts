@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS camdecmpsmd.rule_check
 (
-    rule_check_id numeric(38,0) NOT NULL,
+    rule_check_id bigint NOT NULL,
     category_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
-    check_catalog_id numeric(38,0) NOT NULL
+    check_catalog_id bigint NOT NULL
 );
 
 COMMENT ON TABLE camdecmpsmd.rule_check

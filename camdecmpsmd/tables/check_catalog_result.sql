@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS camdecmpsmd.check_catalog_result
 (
-    check_catalog_result_id numeric(38,0) NOT NULL,
-    check_catalog_id numeric(38,0) NOT NULL,
+    check_catalog_result_id bigint NOT NULL,
+    check_catalog_id bigint NOT NULL,
     check_result character varying(75) COLLATE pg_catalog."default" NOT NULL,
     severity_cd character varying(7) COLLATE pg_catalog."default",
-    response_catalog_id numeric(38,0),
+    response_catalog_id bigint,
     es_allowed_ind numeric(1,0) NOT NULL DEFAULT 1
 );
 
