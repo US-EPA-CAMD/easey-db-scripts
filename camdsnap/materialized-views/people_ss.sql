@@ -1,23 +1,30 @@
 create materialized view camdsnap.PEOPLE_SS 
 as 
-select  ppl.ppl_id,
-        ppl.last_name,
-        ppl.first_name,
-        ppl.middle_initial,
-        ppl.suffix,
-        cmp.company_name as affiliation,
-        ppl.agency_id,
-        ppl.userid,
-        ppl.update_date,
-        ppl.add_date,
-        ppl.person_type_cd as people_type,
-        case when person_type_cd = 'IND' then ppl_id else null end as rep_id,
-        ppl.company_id as comp_id,
-        null as cdx_user_id,
-        now() as refresh_time
-  from  camd.PERSON ppl 
-        left join camd.COMPANY cmp
-          on cmp.company_id = ppl.company_id;
+SELECT P.PPL_ID,
+       CASE WHEN CU.CDX_USER_ID IS NOT NULL THEN STRING_AGG(DISTINCT CO.CDX_ORG_NAME, '; ' ORDER BY CO.CDX_ORG_NAME) ELSE C.COMPANY_NAME END as AFFILIATION,
+       P.AGENCY_ID,
+       COALESCE(CU.USERID, P.USERID) as USERID,
+       GREATEST(COALESCE(P.UPDATE_DATE, P.ADD_DATE), COALESCE(CU.UPDATE_DATE, CU.ADD_DATE)) as UPDATE_DATE,
+       P.ADD_DATE,
+       P.PERSON_TYPE_CD as PEOPLE_TYPE,
+       CASE WHEN COALESCE(P.PERSON_TYPE_CD, 'IND') = 'IND' THEN P.PPL_ID ELSE NULL END as REP_ID,
+       P.COMPANY_ID as COMP_ID,
+       CU.CDX_USER_ID
+  FROM CAMD.PERSON P
+  LEFT OUTER JOIN CAMD.CDX_USER CU ON P.PPL_ID = CU.PPL_ID
+  LEFT OUTER JOIN CAMD.CDX_USER_ORG CUO ON CU.CDX_USER_ID = CUO.CDX_USER_ID AND CUO.ACTIVE_IND = 1
+  LEFT OUTER JOIN CAMD.CDX_ORG CO ON CUO.CDX_ORG_ID = CO.CDX_ORG_ID
+  LEFT OUTER JOIN CAMD.COMPANY C ON P.COMPANY_ID = C.COMPANY_ID
+  GROUP BY P.PPL_ID,
+            P.AGENCY_ID,
+            COALESCE(CU.USERID, P.USERID),
+            GREATEST(COALESCE(P.UPDATE_DATE, P.ADD_DATE), COALESCE(CU.UPDATE_DATE, CU.ADD_DATE)),
+            P.ADD_DATE,
+            P.PERSON_TYPE_CD,
+            CASE WHEN COALESCE(P.PERSON_TYPE_CD, 'IND') = 'IND' THEN P.PPL_ID ELSE NULL END,
+            P.COMPANY_ID,
+            CU.CDX_USER_ID,
+            C.COMPANY_NAME;
 
 
 comment on materialized view camdsnap.PEOPLE_SS is 'snapshot table for snapshot CAMDSNAP.PEOPLE_SS';

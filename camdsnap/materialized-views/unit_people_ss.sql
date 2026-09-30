@@ -1,106 +1,104 @@
 create materialized view camdsnap.UNIT_PEOPLE_SS 
 as 
-select  fcp.fac_ppl_id as unt_ppl_id,
-        fcp.fac_ppl_id,
-        fcp.fac_id,
-        unt.unit_id,
-        fcp.ppl_id,
-        fcp.responsibility_id,
-        prg.prg_id,
-        fcp.begin_date,
-        fcp.end_date,
-        fcp.userid,
-        fcp.update_date,
-        fcp.add_date,
-        now() as refresh_time
-  from  camd.PLANT_PERSON fcp
-        join camd.PLANT fac
-          on fac.fac_id = fcp.fac_id
-        join camd.UNIT unt
-          on unt.fac_id = fac.fac_id
-        left join camd.PROGRAM prg
-          on prg.state_cd || prg.prg_cd =  decode (fcp.prg_cd, 'ARP', null, fac.state ) || fcp.prg_cd
- where  not exists
-        (
-            select  unh.unit_id
-              from  camdsnap.UNIT_HISTORY_SS unh
-             where  unh.unit_history_type_cd in ( 'LOGICAL', 'PHYSCAL' )
-               and  unt.unit_id = unh.unit_id
-        )
-union all
-/* 
-    PLANT_PERSON DATA FOR UNITS THAT HAVE MOVED FOR THE OLD LOCATION
+SELECT FACILITY_PEOPLE.FAC_PPL_ID        UNT_PPL_ID,
+       FACILITY_PEOPLE.FAC_PPL_ID        FAC_PPL_ID,
+       FACILITY_PEOPLE.FAC_ID            FAC_ID,
+       UNIT.UNIT_ID                      UNIT_ID,
+       FACILITY_PEOPLE.PPL_ID            PPL_ID,
+       FACILITY_PEOPLE.RESPONSIBILITY_ID RESPONSIBILITY_ID,
+       P.PRG_ID                          PRG_ID,
+       FACILITY_PEOPLE.BEGIN_DATE        BEGIN_DATE,
+       FACILITY_PEOPLE.END_DATE          END_DATE,
+       FACILITY_PEOPLE.USERID            USERID,
+       FACILITY_PEOPLE.UPDATE_DATE       UPDATE_DATE,
+       FACILITY_PEOPLE.ADD_DATE          ADD_DATE
+  FROM CAMD.PLANT_PERSON  FACILITY_PEOPLE
+       JOIN CAMD.PLANT FACILITY ON FACILITY.FAC_ID = FACILITY_PEOPLE.FAC_ID
+       JOIN CAMD.UNIT UNIT ON UNIT.FAC_ID = FACILITY.FAC_ID
+       LEFT OUTER JOIN CAMD.PROGRAM P
+       	   on P.PRG_CD = FACILITY_PEOPLE.PRG_CD
+       	   and (
+       	   			FACILITY_PEOPLE.PRG_CD in ('ARP', 'MATS')
+       	   			or P.STATE_CD = FACILITY.STATE
+       	   	   )
+ WHERE NOT EXISTS
+           (SELECT UNIT_ID
+              FROM CAMDSNAP.UNIT_HISTORY_SS UH
+             WHERE     UNIT_HISTORY_TYPE_CD IN ('LOGICAL', 'PHYSCAL')
+                   AND UNIT.UNIT_ID = UH.UNIT_ID)
+UNION ALL
+/* FACILITY_PEOPLE DATA FOR UNITS THAT HAVE MOVED FOR THE OLD LOCATION
     INCLUDES ALL RECORDS THAT BEGAN AND ENDED PRIOR TO THE MOVE,
-    AS WELL AS ALL RECORDS THAT WERE ACTIVE WHEN THE MOVE OCCURRED
-*/
-select  fcp.fac_ppl_id as unt_ppl_id,
-        fcp.fac_ppl_id,
-        fcp.fac_id,
-        unh.unit_id,
-        fcp.ppl_id,
-        fcp.responsibility_id,
-        prg.prg_id,
-        fcp.begin_date,
-        case
-            when unh.effective_date > nvl( fcp.end_date, sysdate )
-            then fcp.end_date
-            else unh.effective_date - 1
-        end as end_date,
-        fcp.userid,
-        fcp.update_date,
-        fcp.add_date,
-        now() as refresh_time
-  from  camd.PLANT_PERSON fcp
-        join camd.PLANT fac
-          on fac.fac_id = fcp.fac_id
-        join camdsnap.UNIT_HISTORY_SS unh
-          on unh.old_fac_id = fac.fac_id
-         and unh.unit_history_type_cd in ( 'LOGICAL', 'PHYSCAL' )
-        left join camd.PROGRAM prg
-          on prg.state_cd || prg.prg_cd = decode( fcp.prg_cd, 'ARP', null, fac.state ) || fcp.prg_cd
- where  (
-            unh.effective_date > nvl( fcp.end_date, sysdate )
-            or
-            unh.effective_date - 1 between fcp.begin_date and nvl( fcp.end_date, sysdate )
-        )
-union all
-/*
-    PLANT_PERSON DATA FOR UNITS THAT HAVE MOVED FOR THE NEW LOCATION
+    AS WELL AS ALL RECORDS THAT WERE ACTIVE WHEN THE MOVE OCCURRED */
+SELECT FACILITY_PEOPLE.FAC_PPL_ID        UNT_PPL_ID,
+       FACILITY_PEOPLE.FAC_PPL_ID        FAC_PPL_ID,
+       FACILITY_PEOPLE.FAC_ID            FAC_ID,
+       UH.UNIT_ID                        UNIT_ID,
+       FACILITY_PEOPLE.PPL_ID            PPL_ID,
+       FACILITY_PEOPLE.RESPONSIBILITY_ID RESPONSIBILITY_ID,
+       P.PRG_ID                          PRG_ID,
+       FACILITY_PEOPLE.BEGIN_DATE        BEGIN_DATE,
+       CASE
+           WHEN UH.EFFECTIVE_DATE > COALESCE (FACILITY_PEOPLE.END_DATE, NOW())
+           THEN
+               FACILITY_PEOPLE.END_DATE
+           ELSE
+               UH.EFFECTIVE_DATE - interval '1 day'
+       END
+           END_DATE,
+       FACILITY_PEOPLE.USERID            USERID,
+       FACILITY_PEOPLE.UPDATE_DATE       UPDATE_DATE,
+       FACILITY_PEOPLE.ADD_DATE          ADD_DATE
+  FROM CAMD.PLANT_PERSON  FACILITY_PEOPLE
+       JOIN CAMD.PLANT FACILITY ON FACILITY.FAC_ID = FACILITY_PEOPLE.FAC_ID
+       JOIN CAMDSNAP.UNIT_HISTORY_SS UH
+           ON     UH.OLD_FAC_ID = FACILITY.FAC_ID
+              AND UH.UNIT_HISTORY_TYPE_CD IN ('LOGICAL', 'PHYSCAL')
+       LEFT OUTER JOIN CAMD.PROGRAM P
+       	   on P.PRG_CD = FACILITY_PEOPLE.PRG_CD
+       	   and (
+       	   			FACILITY_PEOPLE.PRG_CD in ('ARP', 'MATS')
+       	   			or P.STATE_CD = FACILITY.STATE
+       	   	   )
+ WHERE (   UH.EFFECTIVE_DATE > COALESCE (FACILITY_PEOPLE.END_DATE, NOW())
+        OR UH.EFFECTIVE_DATE - interval '1 day' BETWEEN FACILITY_PEOPLE.BEGIN_DATE
+                                     AND COALESCE (FACILITY_PEOPLE.END_DATE, NOW()))
+UNION ALL
+/* FACILITY_PEOPLE DATA FOR UNITS THAT HAVE MOVED FOR THE NEW LOCATION
     INCLUDES ALL RECORDS THAT BEGAN ON OR AFTER THE MOVE,
-    AS WELL AS ALL RECORDS THAT WERE ACTIVE WHEN THE MOVE OCCURRED
-*/
-select  fcp.fac_ppl_id as unt_ppl_id,
-        fcp.fac_ppl_id,
-        fcp.fac_id,
-        unh.unit_id,
-        fcp.ppl_id,
-        fcp.responsibility_id,
-        prg.prg_id,
-        case
-            when unh.effective_date <= fcp.begin_date
-            then
-                fcp.begin_date
-            else
-                unh.effective_date
-        end as begin_date,
-        fcp.end_date,
-        fcp.userid,
-        fcp.update_date,
-        fcp.add_date,
-        now() as refresh_time
-  from  camd.PLANT_PERSON fcp
-        join camd.PLANT fac
-          on fac.fac_id = fcp.fac_id
-        join camdsnap.UNIT_HISTORY_SS unh
-          on unh.new_fac_id = fac.fac_id
-         and unh.unit_history_type_cd IN ( 'LOGICAL', 'PHYSCAL' )
-        left join camd.PROGRAM prg
-          on prg.state_cd || prg.prg_cd = decode ( fcp.prg_cd, 'ARP', null, fac.state ) || fcp.prg_cd
- where  (
-            unh.effective_date <= fcp.begin_date
-            or
-            unh.effective_date between fcp.begin_date and nvl( fcp.end_date, sysdate )
-        );
-
+    AS WELL AS ALL RECORDS THAT WERE ACTIVE WHEN THE MOVE OCCURRED */
+SELECT FACILITY_PEOPLE.FAC_PPL_ID        UNT_PPL_ID,
+       FACILITY_PEOPLE.FAC_PPL_ID        FAC_PPL_ID,
+       FACILITY_PEOPLE.FAC_ID            FAC_ID,
+       UH.UNIT_ID                        UNIT_ID,
+       FACILITY_PEOPLE.PPL_ID            PPL_ID,
+       FACILITY_PEOPLE.RESPONSIBILITY_ID RESPONSIBILITY_ID,
+       P.PRG_ID                          PRG_ID,
+       CASE
+           WHEN UH.EFFECTIVE_DATE <= FACILITY_PEOPLE.BEGIN_DATE
+           THEN
+               FACILITY_PEOPLE.BEGIN_DATE
+           ELSE
+               UH.EFFECTIVE_DATE
+       END
+           BEGIN_DATE,
+       FACILITY_PEOPLE.END_DATE          END_DATE,
+       FACILITY_PEOPLE.USERID            USERID,
+       FACILITY_PEOPLE.UPDATE_DATE       UPDATE_DATE,
+       FACILITY_PEOPLE.ADD_DATE          ADD_DATE
+  FROM CAMD.PLANT_PERSON  FACILITY_PEOPLE
+       JOIN CAMD.PLANT FACILITY ON FACILITY.FAC_ID = FACILITY_PEOPLE.FAC_ID
+       JOIN CAMDSNAP.UNIT_HISTORY_SS UH
+           ON     UH.NEW_FAC_ID = FACILITY.FAC_ID
+              AND UH.UNIT_HISTORY_TYPE_CD IN ('LOGICAL', 'PHYSCAL')
+       LEFT OUTER JOIN CAMD.PROGRAM P
+       	   on P.PRG_CD = FACILITY_PEOPLE.PRG_CD
+       	   and (
+       	   			FACILITY_PEOPLE.PRG_CD in ('ARP', 'MATS')
+       	   			or P.STATE_CD = FACILITY.STATE
+       	   	   )
+ WHERE (   UH.EFFECTIVE_DATE <= FACILITY_PEOPLE.BEGIN_DATE
+        OR UH.EFFECTIVE_DATE BETWEEN FACILITY_PEOPLE.BEGIN_DATE
+                                 AND COALESCE (FACILITY_PEOPLE.END_DATE, NOW()));
 
 comment on materialized view camdsnap.UNIT_PEOPLE_SS is 'snapshot table for snapshot CAMDSNAP.UNIT_PEOPLE_SS';

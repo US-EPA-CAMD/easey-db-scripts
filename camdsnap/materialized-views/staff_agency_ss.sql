@@ -3,7 +3,7 @@ as
 select  ppl.ppl_id,
         ppl.agency_id as agy_id,
         now() as refresh_time
-  from  PERSON ppl
+  from  camd.PERSON ppl
  where  ppl.agency_id is not null;
 
 
