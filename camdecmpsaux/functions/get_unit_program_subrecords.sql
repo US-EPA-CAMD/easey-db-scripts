@@ -1,7 +1,8 @@
 DROP FUNCTION IF EXISTS camdecmpsaux.get_unit_program_subrecords(numeric, character varying, character varying);
+DROP FUNCTION IF EXISTS camdecmpsaux.get_unit_program_subrecords(bigint, character varying, character varying);
 
 CREATE OR REPLACE FUNCTION camdecmpsaux.get_unit_program_subrecords(
-  p_fac_id numeric,
+  p_fac_id bigint,
   p_unitid character varying,
   p_program_code character varying
 )

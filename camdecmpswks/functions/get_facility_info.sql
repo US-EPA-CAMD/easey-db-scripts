@@ -5,7 +5,7 @@ DROP FUNCTION IF EXISTS camdecmpswks.get_facility_info(character varying, charac
 CREATE OR REPLACE FUNCTION camdecmpswks.get_facility_info(
 	lookuptype character varying,
 	lookupid character varying)
-    RETURNS TABLE(facid integer, firstecmpsrptperiodid integer, error_msg character varying) 
+    RETURNS TABLE(facid bigint, firstecmpsrptperiodid integer, error_msg character varying)
     LANGUAGE 'plpgsql'
 
     COST 100
@@ -24,7 +24,7 @@ DECLARE
 	--	TEE		Test_Extension_Exemption_Id
 	--	ORIS	ORIS_Code
   	verror_msg    character varying :=null;
-	vfacid        integer;
+	vfacid        bigint;
 	vfirstEcmpsRptPeriodId	integer;
 BEGIN  
     if lookupType ='MP'  then

@@ -1,10 +1,11 @@
--- FUNCTION: camdecmpswks.combined_methods(integer)
+-- FUNCTION: camdecmpswks.combined_methods(bigint)
 
 DROP FUNCTION IF EXISTS camdecmpswks.combined_methods(integer) CASCADE;
+DROP FUNCTION IF EXISTS camdecmpswks.combined_methods(bigint) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.combined_methods(
-	p_facilityid integer)
-    RETURNS TABLE(mon_method_id character varying, mon_loc_id character varying, parameter_cd character varying, sub_data_cd character varying, bypass_approach_cd character varying, method_cd character varying, begin_date date, begin_hour numeric, end_date date, end_hour numeric, stack_pipe_id character varying, unit_id numeric, stack_name character varying, unitid character varying, begin_datehour timestamp without time zone, end_datehour timestamp without time zone, crosscheck_parameter character varying) 
+	p_facilityid bigint)
+    RETURNS TABLE(mon_method_id character varying, mon_loc_id character varying, parameter_cd character varying, sub_data_cd character varying, bypass_approach_cd character varying, method_cd character varying, begin_date date, begin_hour numeric, end_date date, end_hour numeric, stack_pipe_id character varying, unit_id bigint, stack_name character varying, unitid character varying, begin_datehour timestamp without time zone, end_datehour timestamp without time zone, crosscheck_parameter character varying)
     LANGUAGE 'plpgsql'
 
     COST 100

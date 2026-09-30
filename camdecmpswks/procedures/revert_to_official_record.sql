@@ -15,7 +15,7 @@ LANGUAGE 'plpgsql'
 AS $BODY$
 DECLARE
 	monLocIds 		text[];
-    facId           numeric;
+    facId           bigint;
 BEGIN
 	SELECT ARRAY(
 		SELECT mon_loc_id

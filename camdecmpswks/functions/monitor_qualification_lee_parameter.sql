@@ -4,7 +4,7 @@ DROP FUNCTION IF EXISTS camdecmpswks.monitor_qualification_lee_parameter(charact
 
 CREATE OR REPLACE FUNCTION camdecmpswks.monitor_qualification_lee_parameter(
 	monplanid character varying)
-    RETURNS TABLE(mon_loc_id character varying, location_id character varying, oris_code numeric, fac_id numeric, qual_type_cd character varying, mon_qual_lee_id character varying, mon_qual_id character varying, applicable_emission_standard numeric, emission_standard_pct numeric, emission_standard_uom character varying, parameter_cd character varying, potential_annual_emissions numeric, qual_lee_test_type_cd character varying, qual_test_date date, mon_plan_id character varying) 
+    RETURNS TABLE(mon_loc_id character varying, location_id character varying, oris_code numeric, fac_id bigint, qual_type_cd character varying, mon_qual_lee_id character varying, mon_qual_id character varying, applicable_emission_standard numeric, emission_standard_pct numeric, emission_standard_uom character varying, parameter_cd character varying, potential_annual_emissions numeric, qual_lee_test_type_cd character varying, qual_test_date date, mon_plan_id character varying)
     LANGUAGE 'sql'
 
     COST 100

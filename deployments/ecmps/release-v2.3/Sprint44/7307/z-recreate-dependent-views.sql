@@ -1,10 +1,33 @@
--- PostgreSQL view recreation script for psql.
+-- PostgreSQL routine and view recreation script for psql.
 -- Run this file from deployments/ecmps/release-v2.3/Sprint44/7307 after y-recreate-foreign-keys.sql.
+-- Routines that depend only on tables are recreated before the views.
 -- The included view files execute in dependency order.
--- The units-expected function is recreated after its dependent views.
+-- Routines that depend on recreated views are included last.
 -- Then run the camdsnap scripts to recreate the affected materialized views and indexes.
 
 \set ON_ERROR_STOP on
+
+\i ../../../../../camdecmps/functions/get_operating_unit_retire_date.sql
+\i ../../../../../camdecmpsaux/functions/get_unit_program_subrecords.sql
+\i ../../../../../camdecmpsaux/functions/pdem_apportionment_get_condition_table.sql
+\i ../../../../../camdecmpsaux/functions/pdem_apportionment_get_data_table.sql
+\i ../../../../../camdecmpsaux/functions/pdem_apportionment_get_formula_table.sql
+\i ../../../../../camdecmpsaux/functions/pdem_apportionment_get_range_table.sql
+\i ../../../../../camdecmpsaux/functions/pdem_apportionment_get_subtractive_table.sql
+\i ../../../../../camdecmpsaux/functions/pdem_apportionment_get_table.sql
+\i ../../../../../camdecmpsaux/functions/pdem_update_init_get_location_info.sql
+\i ../../../../../camdecmpswks/functions/combined_methods.sql
+\i ../../../../../camdecmpswks/functions/daily_calibration_test_period_data.sql
+\i ../../../../../camdecmpswks/functions/daily_miscellaneous_test_period_data.sql
+\i ../../../../../camdecmpswks/functions/error_suppression_spec_gather.sql
+\i ../../../../../camdecmpswks/functions/get_facility_info.sql
+\i ../../../../../camdecmpswks/functions/location_program_parameter.sql
+\i ../../../../../camdecmpswks/functions/monitor_qualification_lee_parameter.sql
+\i ../../../../../camdecmpswks/functions/on_off_calibration_test_all_data.sql
+\i ../../../../../camdecmpswks/functions/unit_program_parameter.sql
+\i ../../../../../camdecmpswks/procedures/copy_monitor_plan_to_workspace.sql
+\i ../../../../../camdecmpswks/procedures/revert_to_official_record.sql
+\i ../../../../../camdecmpswks/procedures/update_mp_eval_status_and_reporting_freq.sql
 
 \i ../../../../../camdaux/views/vw_annual_emissions_bulk_files_per_state_to_generate.sql
 \i ../../../../../camdaux/views/vw_annual_facility_bulk_files_to_generate.sql
@@ -185,4 +208,6 @@
 \i ../../../../../camdecmpswks/views/vw_unit_op_status.sql
 \i ../../../../../camdecmpswks/views/vw_unit_reporting_period.sql
 \i ../../../../../camdecmpswks/views/vw_used_identifier.sql
+\i ../../../../../camdecmpsaux/functions/get_em_submission_access_no_window_view.sql
 \i ../../../../../camdecmpsaux/functions/get_units_expected_to_submit_report_data.sql
+\i ../../../../../camdecmpsaux/procedures/init_and_close_em_submission_access.sql
