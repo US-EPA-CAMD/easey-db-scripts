@@ -21,7 +21,7 @@ RETURNS TABLE (
     sub_availability_cd           text,
     sub_availability_cd_description text,
     resub_explanation             text,
-    fac_id                        numeric,
+    fac_id                        bigint,
     oris_code                     numeric,
     state                         text,
     facility_name                 text,
@@ -29,7 +29,7 @@ RETURNS TABLE (
     quarter                       numeric,
     period_abbreviation           text,
     report_freq_cd                text,
-    submission_id                 numeric,
+    submission_id                 bigint,
     severity_cd                   text,
     severity_cd_description       text,
     locations                     text
@@ -62,7 +62,7 @@ BEGIN
         rp.quarter          AS quarter,
         rp.period_abbreviation::text AS period_abbreviation,
         rf.report_freq_cd::text   AS report_freq_cd,
-        NULL::numeric       AS submission_id,
+        NULL::bigint        AS submission_id,
         NULL::text          AS severity_cd,
         NULL::text          AS severity_cd_description,
         vmp.locations       AS locations

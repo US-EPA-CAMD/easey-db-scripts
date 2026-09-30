@@ -4,7 +4,7 @@ DROP FUNCTION IF EXISTS camdecmpswks.unit_program_parameter(character varying) C
 
 CREATE OR REPLACE FUNCTION camdecmpswks.unit_program_parameter(
 	monplanid character varying)
-    RETURNS TABLE(oris_code numeric, unit_name character varying, prg_cd character varying, class character varying, os_ind numeric, parameter_cd character varying, required_ind numeric, param_begin_date date, param_end_date date, umcb_date date, erb_date date, prg_end_date date, fac_id numeric, mon_plan_id character varying, mon_loc_id character varying, unit_id numeric, up_id numeric, prg_id numeric, prg_param_id numeric, begin_rpt_period_id numeric, end_rpt_period_id numeric) 
+    RETURNS TABLE(oris_code numeric, unit_name character varying, prg_cd character varying, class character varying, os_ind numeric, parameter_cd character varying, required_ind numeric, param_begin_date date, param_end_date date, umcb_date date, erb_date date, prg_end_date date, fac_id bigint, mon_plan_id character varying, mon_loc_id character varying, unit_id bigint, up_id bigint, prg_id bigint, prg_param_id bigint, begin_rpt_period_id numeric, end_rpt_period_id numeric)
     LANGUAGE 'sql'
 
     COST 100

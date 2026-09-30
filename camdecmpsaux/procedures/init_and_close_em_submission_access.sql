@@ -1,10 +1,11 @@
--- PROCEDURE: camdecmpsaux.init_and_close_em_submission_access(text, numeric, text, text)
+-- PROCEDURE: camdecmpsaux.init_and_close_em_submission_access(text, bigint, text, text)
 
 DROP PROCEDURE IF EXISTS camdecmpsaux.init_and_close_em_submission_access(text, numeric, text, text);
+DROP PROCEDURE IF EXISTS camdecmpsaux.init_and_close_em_submission_access(text, bigint, text, text);
 
 CREATE OR REPLACE PROCEDURE camdecmpsaux.init_and_close_em_submission_access(
 	v_sysdate text,
-	v_fac_id numeric,
+	v_fac_id bigint,
 	INOUT v_result text,
 	INOUT v_error_msg text)
 LANGUAGE 'plpgsql'

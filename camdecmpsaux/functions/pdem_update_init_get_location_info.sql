@@ -1,3 +1,5 @@
+drop function if exists camdecmpsaux.PDEM_Update_Init_Get_Location_Info(varchar) cascade;
+
 create or replace function camdecmpsaux.PDEM_Update_Init_Get_Location_Info
 (
     in vMonPlanId varchar
@@ -7,7 +9,7 @@ create or replace function camdecmpsaux.PDEM_Update_Init_Get_Location_Info
                 Mon_Plan_Id varchar,
                 Location_Name varchar,
                 Mon_Loc_Id varchar,
-                Unit_Id numeric
+                Unit_Id bigint
             )
 
 language plpgsql

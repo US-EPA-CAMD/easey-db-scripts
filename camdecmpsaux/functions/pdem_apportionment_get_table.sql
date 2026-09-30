@@ -1,3 +1,5 @@
+drop function if exists camdecmpsaux.PDEM_Apportionment_Get_Table(varchar, numeric) cascade;
+
 create or replace function camdecmpsaux.PDEM_Apportionment_Get_Table
 (
     in vMonPlanId varchar,
@@ -5,7 +7,7 @@ create or replace function camdecmpsaux.PDEM_Apportionment_Get_Table
 )
     returns table
             (
-                Apport_Id numeric,
+                Apport_Id bigint,
                 Mon_Plan_Id varchar,
                 Begin_Rpt_Period_Id numeric,
                 End_Rpt_Period_Id numeric
