@@ -1,6 +1,4 @@
--- PostgreSQL foreign-key recreation script for DBeaver.
--- Run after all bigint ALTER scripts and before z-recreate-dependent-views.sql.
-
+-- PostgreSQL foreign-key recreation script.
 BEGIN;
 
 ALTER TABLE IF EXISTS camd.generator ADD CONSTRAINT fk_generator_plant FOREIGN KEY (fac_id) REFERENCES camd.plant (fac_id);

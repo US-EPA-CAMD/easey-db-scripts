@@ -1,6 +1,6 @@
 -- View: camdecmpswks.vw_unit_program_exemption
 
-DROP VIEW IF EXISTS camdecmpswks.vw_unit_program_exemption;
+DROP VIEW IF EXISTS camdecmpswks.vw_unit_program_exemption CASCADE;
 
 CREATE OR REPLACE VIEW camdecmpswks.vw_unit_program_exemption
  AS

@@ -1,7 +1,7 @@
--- Drop PostgreSQL views and foreign keys that depend on converted ID columns.
+-- drop PostgreSQL views and foreign keys that depend on
+-- the identifier columns being restored to numeric(38,0).
 -- The affected camdsnap materialized views must be dropped first because they
 -- may depend on the regular views below. Their indexes are dropped with them.
--- Run this script before the bigint ALTER scripts.
 
 BEGIN;
 

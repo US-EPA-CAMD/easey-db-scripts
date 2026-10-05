@@ -1,10 +1,10 @@
--- PostgreSQL view recreation script for psql.
--- Run this file from deployments/ecmps/release-v2.3/Sprint44/7307 after y-recreate-foreign-keys.sql.
--- The included view files execute in dependency order.
--- The units-expected function is recreated after its dependent views.
--- Then run the camdsnap scripts to recreate the affected materialized views and indexes.
+-- recreate dependent views and restore the routines
+-- after rollback-3-recreate-foreign-keys.sql.
+-- Then run the separately owned camdsnap scripts
 
 \set ON_ERROR_STOP on
+
+BEGIN;
 
 \i ../../../../../camdaux/views/vw_annual_emissions_bulk_files_per_state_to_generate.sql
 \i ../../../../../camdaux/views/vw_annual_facility_bulk_files_to_generate.sql
@@ -185,4 +185,24 @@
 \i ../../../../../camdecmpswks/views/vw_unit_op_status.sql
 \i ../../../../../camdecmpswks/views/vw_unit_reporting_period.sql
 \i ../../../../../camdecmpswks/views/vw_used_identifier.sql
+DROP FUNCTION IF EXISTS camdecmpsaux.get_units_expected_to_submit_report_data(bigint, character varying, character varying, character varying, numeric, numeric, character varying);
 \i ../../../../../camdecmpsaux/functions/get_units_expected_to_submit_report_data.sql
+\i ../../../../../camdecmpsaux/procedures/pdem_update_public_load_mats_unit_hour.sql
+\i ../../../../../camdecmpsaux/procedures/pdem_update_public_load_p75_unit_annual.sql
+\i ../../../../../camdecmpsaux/procedures/pdem_update_public_load_p75_unit_day.sql
+\i ../../../../../camdecmpsaux/procedures/pdem_update_public_load_p75_unit_hour.sql
+\i ../../../../../camdecmpsaux/procedures/pdem_update_public_load_p75_unit_month.sql
+\i ../../../../../camdecmpsaux/procedures/pdem_update_public_load_p75_unit_ozone.sql
+\i ../../../../../camdecmpsaux/procedures/pdem_update_public_load_p75_unit_quarter.sql
+\i ../../../../../camdecmps/procedures/load_temp_daily_test_errors.sql
+\i ../../../../../camdecmps/procedures/load_temp_hourly_test_errors.sql
+\i ../../../../../camdecmps/procedures/load_temp_weekly_test_errors.sql
+\i ../../../../../camdecmps/procedures/refresh_emissions_views.sql
+\i ../../../../../camdecmpswks/procedures/delete_emissions_views.sql
+\i ../../../../../camdecmpswks/procedures/load_emissions_workspace.sql
+\i ../../../../../camdecmpswks/procedures/load_temp_daily_test_errors.sql
+\i ../../../../../camdecmpswks/procedures/load_temp_hourly_test_errors.sql
+\i ../../../../../camdecmpswks/procedures/load_temp_weekly_test_errors.sql
+\i ../../../../../camdecmpswks/procedures/refresh_emissions_views.sql
+
+COMMIT;
