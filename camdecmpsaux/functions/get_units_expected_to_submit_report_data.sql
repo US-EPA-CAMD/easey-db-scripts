@@ -1,9 +1,8 @@
-DROP FUNCTION IF EXISTS camdecmpsaux.get_units_expected_to_submit_report_data(numeric, character varying, character varying, character varying, numeric, numeric, character varying);
-DROP FUNCTION IF EXISTS camdecmpsaux.get_units_expected_to_submit_report_data(bigint, character varying, character varying, character varying, numeric, numeric, character varying);
+DROP FUNCTION IF EXISTS camdecmpsaux.get_units_expected_to_submit_report_data(numeric, character varying, character varying, character varying, numeric, numeric, character varying) CASCADE;
 
 create or replace
 function camdecmpsaux.get_units_expected_to_submit_report_data(
-    V_FAC_ID bigint,
+    V_FAC_ID numeric,
     V_FACILITY_NAME character varying,
     V_STATE character varying,
     V_PRG_CODE character varying,
@@ -13,7 +12,7 @@ function camdecmpsaux.get_units_expected_to_submit_report_data(
 )
 returns table (
     ORIS_CODE numeric,
-	FAC_ID bigint,
+	FAC_ID numeric,
     FACILITY_NAME character varying,
     STATE character varying,
     UNITID character varying,

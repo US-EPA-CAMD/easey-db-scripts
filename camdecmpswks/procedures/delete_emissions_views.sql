@@ -38,7 +38,7 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.delete_emissions_views
 LANGUAGE plpgsql
 AS $procedure$
 DECLARE
-	vRptPeriodId numeric;
+	vRptPeriodId numeric(38,0);
 	sqlStatement text;
 	dataset record;
 BEGIN
