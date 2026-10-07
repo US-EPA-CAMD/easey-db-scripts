@@ -1,0 +1,5 @@
+-----------------
+-- Constraints --
+-----------------
+
+ALTER TABLE CAMDNATS.TARS_ETS_TONS ADD CONSTRAINT TARS_ETS_TONS_PK PRIMARY key (COMPYEAR_DT, PLANTID_ID, UNIT_STACK_ID);
