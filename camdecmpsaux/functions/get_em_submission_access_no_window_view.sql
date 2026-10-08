@@ -21,7 +21,7 @@ RETURNS TABLE (
     sub_availability_cd           text,
     sub_availability_cd_description text,
     resub_explanation             text,
-    fac_id                        numeric,
+    fac_id                        integer,
     oris_code                     numeric,
     state                         text,
     facility_name                 text,

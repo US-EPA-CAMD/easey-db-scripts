@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS camd.plant_person
 (
     fac_ppl_id numeric(38,0) NOT NULL,
-    fac_id numeric(38,0),
+    fac_id integer,
     ppl_id numeric(38,0) NOT NULL,
     responsibility_id character varying(7) COLLATE pg_catalog."default" NOT NULL,
     prg_cd character varying(7) COLLATE pg_catalog."default",

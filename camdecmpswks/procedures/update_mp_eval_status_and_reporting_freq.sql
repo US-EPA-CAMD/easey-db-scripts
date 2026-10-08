@@ -1,9 +1,10 @@
--- PROCEDURE: camdecmpswks.update_mp_eval_status_and_reporting_freq(numeric, character varying)
+-- PROCEDURE: camdecmpswks.update_mp_eval_status_and_reporting_freq(integer, character varying)
 
 DROP PROCEDURE IF EXISTS camdecmpswks.update_mp_eval_status_and_reporting_freq(numeric, character varying);
+DROP PROCEDURE IF EXISTS camdecmpswks.update_mp_eval_status_and_reporting_freq(integer, character varying);
 
 CREATE OR REPLACE PROCEDURE camdecmpswks.update_mp_eval_status_and_reporting_freq(
-    par_v_unit_id numeric,
+    par_v_unit_id integer,
     par_v_data_type_cd character varying
 )
 LANGUAGE 'plpgsql'

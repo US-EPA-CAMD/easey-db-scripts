@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS camdecmps.monitor_plan
 (
     mon_plan_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    fac_id numeric(38,0) NOT NULL,
+    fac_id integer NOT NULL,
     config_type_cd character varying(7) COLLATE pg_catalog."default",
     last_updated timestamp without time zone,
     updated_status_flg character varying(1) COLLATE pg_catalog."default",
