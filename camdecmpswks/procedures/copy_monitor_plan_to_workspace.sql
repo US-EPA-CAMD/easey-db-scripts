@@ -1,6 +1,6 @@
--- PROCEDURE: camdecmpswks.copy_monitor_plan_to_workspace(text, text[])
+-- PROCEDURE: camdecmpswks.copy_monitor_plan_to_workspace(text, text[], integer)
 
-DROP PROCEDURE IF EXISTS camdecmpswks.copy_monitor_plan_to_workspace(text, text[]);
+DROP PROCEDURE IF EXISTS camdecmpswks.copy_monitor_plan_to_workspace(text, text[], numeric);
 
 /****************************************************************************************************************************************************
     Maintenance History:
@@ -16,7 +16,7 @@ CREATE OR REPLACE PROCEDURE camdecmpswks.copy_monitor_plan_to_workspace
 (
 	IN monplanid text,
 	IN monlocids text[],
-    IN facId numeric
+    IN facId integer
 )
 LANGUAGE 'plpgsql'
 AS $BODY$

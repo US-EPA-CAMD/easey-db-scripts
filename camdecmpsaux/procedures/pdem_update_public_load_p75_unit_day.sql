@@ -16,7 +16,7 @@ declare
     vDataSource varchar(35) := 'PDEM Load Process';
     vQuarterBeginDate date;
     vQuarterEndDate date;
-    vUnitIds numeric(38)[];
+    vUnitIds integer[];
     vUserid varchar(160);
     
     vSqlState text;

@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS camd.unit_exemption
 (
     unit_exempt_id numeric(38,0) NOT NULL,
-    unit_id numeric(38,0) NOT NULL,
+    unit_id integer NOT NULL,
     exemption_type_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,
     begin_date date NOT NULL,
     end_date date,

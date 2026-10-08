@@ -1,3 +1,7 @@
+-- FUNCTION: camdecmpsaux.pdem_update_init_get_location_info(character varying)
+
+DROP FUNCTION IF EXISTS camdecmpsaux.pdem_update_init_get_location_info(character varying);
+
 create or replace function camdecmpsaux.PDEM_Update_Init_Get_Location_Info
 (
     in vMonPlanId varchar
@@ -7,7 +11,7 @@ create or replace function camdecmpsaux.PDEM_Update_Init_Get_Location_Info
                 Mon_Plan_Id varchar,
                 Location_Name varchar,
                 Mon_Loc_Id varchar,
-                Unit_Id numeric
+                Unit_Id integer
             )
 
 language plpgsql

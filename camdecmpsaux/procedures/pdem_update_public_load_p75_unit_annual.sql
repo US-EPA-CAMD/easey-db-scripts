@@ -14,7 +14,7 @@ declare
     
     vArchived boolean;
     vDataSource varchar(35) := 'PDEM Load Process';
-    vUnitIds numeric(38)[];
+    vUnitIds integer[];
     vUserid varchar(160);
     vYear smallint;
     
