@@ -1,33 +1,45 @@
--- convert the approved 43 numeric(38,0) ID columns to integer.
+-- convert the approved 55 numeric(38,0) ID columns to integer.
 -- Run after 1-drop-dependent-objects.sql.
 
 BEGIN;
 
 ALTER TABLE camd.generator
+    ALTER COLUMN gen_id TYPE integer USING gen_id::integer,
     ALTER COLUMN fac_id TYPE integer USING fac_id::integer;
 ALTER TABLE camd.plant
     ALTER COLUMN fac_id TYPE integer USING fac_id::integer;
 ALTER TABLE camd.plant_person
-    ALTER COLUMN fac_id TYPE integer USING fac_id::integer;
+    ALTER COLUMN fac_ppl_id TYPE integer USING fac_ppl_id::integer,
+    ALTER COLUMN fac_id TYPE integer USING fac_id::integer,
+    ALTER COLUMN ppl_id TYPE integer USING ppl_id::integer;
 ALTER TABLE camd.program
     ALTER COLUMN prg_id TYPE integer USING prg_id::integer;
 ALTER TABLE camd.program_phase
+    ALTER COLUMN program_phase_id TYPE integer USING program_phase_id::integer,
     ALTER COLUMN prg_id TYPE integer USING prg_id::integer;
 ALTER TABLE camd.unit
     ALTER COLUMN fac_id TYPE integer USING fac_id::integer,
     ALTER COLUMN unit_id TYPE integer USING unit_id::integer;
 ALTER TABLE camd.unit_boiler_type
+    ALTER COLUMN unit_boiler_type_id TYPE integer USING unit_boiler_type_id::integer,
     ALTER COLUMN unit_id TYPE integer USING unit_id::integer;
 ALTER TABLE camd.unit_exemption
-    ALTER COLUMN unit_id TYPE integer USING unit_id::integer;
+    ALTER COLUMN unit_exempt_id TYPE integer USING unit_exempt_id::integer,
+    ALTER COLUMN unit_id TYPE integer USING unit_id::integer,
+    ALTER COLUMN submitter_ppl_id TYPE integer USING submitter_ppl_id::integer;
 ALTER TABLE camd.unit_generator
-    ALTER COLUMN unit_id TYPE integer USING unit_id::integer;
+    ALTER COLUMN unit_gen_id TYPE integer USING unit_gen_id::integer,
+    ALTER COLUMN unit_id TYPE integer USING unit_id::integer,
+    ALTER COLUMN gen_id TYPE integer USING gen_id::integer;
 ALTER TABLE camd.unit_op_status
+    ALTER COLUMN unit_op_status_id TYPE integer USING unit_op_status_id::integer,
     ALTER COLUMN unit_id TYPE integer USING unit_id::integer;
 ALTER TABLE camd.unit_program
+    ALTER COLUMN up_id TYPE integer USING up_id::integer,
     ALTER COLUMN prg_id TYPE integer USING prg_id::integer,
     ALTER COLUMN unit_id TYPE integer USING unit_id::integer;
 ALTER TABLE camdaux.inventory_status_log
+    ALTER COLUMN inventory_status_log_id TYPE integer USING inventory_status_log_id::integer,
     ALTER COLUMN fac_id TYPE integer USING fac_id::integer,
     ALTER COLUMN unit_id TYPE integer USING unit_id::integer;
 

@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS camd.generator
 (
-    gen_id numeric(38,0) NOT NULL,
+    gen_id integer NOT NULL,
     fac_id integer NOT NULL,
     genid character varying(8) COLLATE pg_catalog."default" NOT NULL,
     gen_source_cd character varying(7) COLLATE pg_catalog."default" NOT NULL,

@@ -1,4 +1,4 @@
--- recreate foreign keys for the 43 converted ID columns.
+-- recreate foreign keys for the 55 converted ID columns.
 -- Run after 2-alter-numeric-id-columns-to-integer.sql.
 
 BEGIN;
@@ -10,6 +10,7 @@ ALTER TABLE camd.unit ADD CONSTRAINT fk_unit_plant FOREIGN KEY (fac_id) REFERENC
 ALTER TABLE camd.unit_boiler_type ADD CONSTRAINT fk_unit_boiler_type_unit FOREIGN KEY (unit_id) REFERENCES camd.unit (unit_id);
 ALTER TABLE camd.unit_exemption ADD CONSTRAINT fk_unit_exemption_unit FOREIGN KEY (unit_id) REFERENCES camd.unit (unit_id);
 ALTER TABLE camd.unit_generator ADD CONSTRAINT fk_unit_generator_unit FOREIGN KEY (unit_id) REFERENCES camd.unit (unit_id);
+ALTER TABLE camd.unit_generator ADD CONSTRAINT fk_unit_generator_generator FOREIGN KEY (gen_id) REFERENCES camd.generator (gen_id);
 ALTER TABLE camd.unit_op_status ADD CONSTRAINT fk_unit_op_status_unit FOREIGN KEY (unit_id) REFERENCES camd.unit (unit_id);
 ALTER TABLE camd.unit_program ADD CONSTRAINT fk_unit_program_program FOREIGN KEY (prg_id) REFERENCES camd.program (prg_id);
 ALTER TABLE camd.unit_program ADD CONSTRAINT fk_unit_program_unit FOREIGN KEY (unit_id) REFERENCES camd.unit (unit_id);

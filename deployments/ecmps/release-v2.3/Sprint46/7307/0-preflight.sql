@@ -11,19 +11,31 @@ CREATE TEMP TABLE ticket_7307_targets (
 ) ON COMMIT DROP;
 
 INSERT INTO ticket_7307_targets (table_schema, table_name, column_name) VALUES
+    ('camd', 'generator', 'gen_id'),
     ('camd', 'generator', 'fac_id'),
     ('camd', 'plant', 'fac_id'),
+    ('camd', 'plant_person', 'fac_ppl_id'),
     ('camd', 'plant_person', 'fac_id'),
+    ('camd', 'plant_person', 'ppl_id'),
     ('camd', 'program', 'prg_id'),
+    ('camd', 'program_phase', 'program_phase_id'),
     ('camd', 'program_phase', 'prg_id'),
     ('camd', 'unit', 'fac_id'),
     ('camd', 'unit', 'unit_id'),
+    ('camd', 'unit_boiler_type', 'unit_boiler_type_id'),
     ('camd', 'unit_boiler_type', 'unit_id'),
+    ('camd', 'unit_exemption', 'unit_exempt_id'),
     ('camd', 'unit_exemption', 'unit_id'),
+    ('camd', 'unit_exemption', 'submitter_ppl_id'),
+    ('camd', 'unit_generator', 'unit_gen_id'),
     ('camd', 'unit_generator', 'unit_id'),
+    ('camd', 'unit_generator', 'gen_id'),
+    ('camd', 'unit_op_status', 'unit_op_status_id'),
     ('camd', 'unit_op_status', 'unit_id'),
+    ('camd', 'unit_program', 'up_id'),
     ('camd', 'unit_program', 'prg_id'),
     ('camd', 'unit_program', 'unit_id'),
+    ('camdaux', 'inventory_status_log', 'inventory_status_log_id'),
     ('camdaux', 'inventory_status_log', 'fac_id'),
     ('camdaux', 'inventory_status_log', 'unit_id'),
     ('camdecmps', 'daily_backstop', 'unit_id'),
@@ -61,8 +73,8 @@ DECLARE
     invalid_columns text;
     out_of_range_count bigint;
 BEGIN
-    IF (SELECT count(*) FROM ticket_7307_targets) <> 43 THEN
-        RAISE EXCEPTION 'Ticket #7307 target inventory must contain exactly 43 columns';
+    IF (SELECT count(*) FROM ticket_7307_targets) <> 55 THEN
+        RAISE EXCEPTION 'Ticket #7307 target inventory must contain exactly 55 columns';
     END IF;
 
     SELECT string_agg(
@@ -87,7 +99,7 @@ BEGIN
 
     IF invalid_columns IS NOT NULL THEN
         RAISE EXCEPTION
-            'Ticket #7307 requires all 43 targets to be numeric(38,0):%',
+            'Ticket #7307 requires all 55 targets to be numeric(38,0):%',
             E'\n' || invalid_columns;
     END IF;
 

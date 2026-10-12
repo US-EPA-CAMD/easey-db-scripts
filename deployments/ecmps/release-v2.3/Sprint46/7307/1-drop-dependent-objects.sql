@@ -190,6 +190,7 @@ ALTER TABLE IF EXISTS camd.unit_boiler_type DROP CONSTRAINT IF EXISTS fk_unit_bo
 ALTER TABLE IF EXISTS camd.unit_exemption DROP CONSTRAINT IF EXISTS fk_unit_exemption_unit;
 
 ALTER TABLE IF EXISTS camd.unit_generator DROP CONSTRAINT IF EXISTS fk_unit_generator_unit;
+ALTER TABLE IF EXISTS camd.unit_generator DROP CONSTRAINT IF EXISTS fk_unit_generator_generator;
 
 ALTER TABLE IF EXISTS camd.unit_op_status DROP CONSTRAINT IF EXISTS fk_unit_op_status_unit;
 

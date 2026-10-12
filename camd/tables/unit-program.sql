@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS camd.unit_program
 (
-    up_id numeric(38,0) NOT NULL,
+    up_id integer NOT NULL,
     unit_id integer NOT NULL,
     prg_id integer NOT NULL,
     prg_cd character varying(7) COLLATE pg_catalog."default",

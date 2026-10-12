@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS camd.program_phase
 (
-    program_phase_id numeric(38,0) NOT NULL,
+    program_phase_id integer NOT NULL,
     prg_id integer NOT NULL,
     phase character varying(10) COLLATE pg_catalog."default",
     prog_phase_begin_date date NOT NULL,

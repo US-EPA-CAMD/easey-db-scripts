@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS camdaux.inventory_status_log
 (
-    inventory_status_log_id numeric(38,0) NOT NULL,
+    inventory_status_log_id integer NOT NULL,
     fac_id integer NOT NULL,
     unit_id integer NOT NULL,
     data_type_cd character varying(160) NOT NULL,
