@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS camdecmpsaux.pdem_mats_unit_hour
 (
     pdem_mats_unit_hour_id  bigserial,
 	pdem_report_id          bigint NOT NULL,
-    unit_id                 numeric(38) NOT NULL,
+    unit_id                 integer NOT NULL,
     op_date                 date NOT NULL,
     op_hour                 numeric(2) NOT NULL,
     op_time                 numeric(3,2),

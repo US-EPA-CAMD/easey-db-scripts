@@ -3,7 +3,7 @@
 DROP FUNCTION IF EXISTS camdecmpswks.get_facility_units (integer[]) CASCADE;
 
 CREATE OR REPLACE FUNCTION camdecmpswks.get_facility_units (oriscodes integer[])
-    RETURNS SETOF numeric
+    RETURNS SETOF integer
     LANGUAGE 'plpgsql'
     COST 100 VOLATILE ROWS 1000
     AS $BODY$
@@ -18,4 +18,3 @@ BEGIN
         oris_code = ANY (orisCodes);
 END;
 $BODY$;
-

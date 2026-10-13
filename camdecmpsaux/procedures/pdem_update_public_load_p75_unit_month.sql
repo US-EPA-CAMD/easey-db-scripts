@@ -18,7 +18,7 @@ declare
     vEndMonth smallint;
     vQuarterBeginDate date;
     vQuarterEndDate date;
-    vUnitIds numeric(38)[];
+    vUnitIds integer[];
     vUserid varchar(160);
     vYear smallint;
     
