@@ -1,0 +1,5 @@
+-----------------
+-- Constraints --
+-----------------
+
+ALTER TABLE CAMDNATS.TARS_BANK_ALLW_PFC ADD CONSTRAINT TARS_BANK_ALLW_PFC_PK PRIMARY KEY (COMPYEAR_DT);
