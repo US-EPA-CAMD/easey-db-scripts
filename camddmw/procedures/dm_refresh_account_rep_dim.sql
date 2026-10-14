@@ -19,7 +19,7 @@ declare
 begin
 	delete from camddmw.account_rep_dim;
 
-	insert into camddmw.account_rep_dim_test (account_number, prg_code, unit_id, 
+	insert into camddmw.account_rep_dim (account_number, prg_code, unit_id, 
 											  ppl_id, display_name, full_name, 
 											  rep_code, data_source, userid, add_date)
 	--AMS accounts that are not UNIT or FACLTY accounts
@@ -126,6 +126,23 @@ begin
 			)
 	where a.account_type_cd = 'FACLTY'
 	on conflict do nothing;
+
+	--update account_fact rep display columns
+	update camddmw.account_fact af
+		set prm_display_name = (select ard.ppl_id 
+									from camddmw.account_rep_dim ard 
+									where ard.account_number = af.account_number 
+										and ard.prg_code = af.prg_code 
+										and ard.rep_code = 'PRM'), 
+			alt_display_name = (select min(ard.ppl_id) 
+									from camddmw.account_rep_dim ard 
+									where ard.account_number = af.account_number 
+										and ard.prg_code = af.prg_code 
+										and ard.rep_code = 'ALT');
+
+	update camddmw.account_fact af
+		set prm_display_block = prm_display_name,
+			alt_display_block = alt_display_name;
 
 	result_out := true;
     
