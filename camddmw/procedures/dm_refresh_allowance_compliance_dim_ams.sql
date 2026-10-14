@@ -74,10 +74,10 @@ begin
                             else null
                         end as other_deduct,
                         0 as current_deduct,
-                        ded.total_deduct,
+                        ( ded.total_deduct + arp.total_deduct) as total_deduct,
                         case
-                            when ( hld.total_held - ded.total_deduct ) >= 0
-                            then ( hld.total_held - ded.total_deduct )
+                            when ( hld.total_held - ( ded.total_deduct + arp.total_deduct) ) >= 0
+                            then ( hld.total_held - ( ded.total_deduct + arp.total_deduct) )
                             else 0
                         end as carried_over,
                         case
@@ -378,16 +378,89 @@ begin
                                          where  prb.account_comp_id = sel.account_comp_id
                                            and  trn.trans_status_cd = 'COMPLET'
                                            and  trn.trans_type_cd in ( 'EMADJ', 'EMISS', 'UNDERUT', 'LO', 'SE', 'CC' )
-                                        union   all
-                                        -- ARP Duductions for CAIRSO2
-                                        select  acd.total_deduct as deduct
-                                          from  camddmw.ACCOUNT_COMPLIANCE_DIM acd
-                                         where  sel.prg_cd = 'CAIRSO2'
-                                           and  acd.account_number = sel.account_number
-                                           and  acd.prg_code = 'ARP'
-                                           and  acd.op_year = sel.op_year
                                     ) cmb
                         ) ded
+                          on true
+                        -- Total Deducted ARP for CAIRSO2
+                        left join lateral
+                        (
+                            -- Emissions Adjustment Deduction (EMADJ)
+                            -- Emissions Deduction (EMISS)
+                            -- Underutilization Deduction (UNDERUT)
+                            -- Deduction of Loaned Allowances (LO)
+                            -- State Cap Deduction (SE)
+                            -- Substitution Control by Contract Deduction (CC)
+                            select  coalesce( sum( cmb.deduct ), 0 ) as total_deduct
+                              from  (
+                                        
+                                        -- Deductions
+                                        select  ( trb.end_number - trb.begin_number + 1 ) as deduct
+                                          from  camdsnap.TRANSACTION_SS trn
+                                                join camdsnap.TRANSACTION_BLOCK_SS trb
+                                                  on trb.trans_id = trn.trans_id
+                                         where  trn.account_comp_id =
+                                                (
+                                                    select  acp.account_comp_id
+                                                      from  camdsnap.PROGRAM_VINTAGE_SS prv,
+                                                            camdsnap.COMPLIANCE_PERIOD_SS cmp,
+                                                            camdsnap.ACCOUNT_COMPLIANCE_SS acp
+                                                     where  sel.prg_cd = 'CAIRSO2'
+                                                       and  prv.prg_cd = 'ARP'
+                                                       and  prv.prg_vintage_name::integer = sel.op_year
+                                                       and  cmp.prg_vintage_id = prv.prg_vintage_id
+                                                       and  acp.account_id = sel.account_id
+                                                       and  acp.comp_period_id = cmp.comp_period_id
+                                                )
+                                           and  trn.trans_status_cd = 'COMPLET'
+                                           and  trn.trans_type_cd in ( 'EMADJ', 'EMISS', 'UNDERUT', 'LO', 'SE', 'CC' )
+                                        union   all
+                                        -- Reverse Deductions
+                                        select  ( trb.end_number - trb.begin_number + 1 ) as deduct
+                                          from  camdsnap.TRANSACTION_SS rev
+                                                join camdsnap.TRANSACTION_SS cor
+                                                  on cor.changed_trans_id = rev.trans_id
+                                                 and cor.trans_status_cd = 'COMPLET'
+                                                 and cor.trans_type_cd = 'ERRCORR'
+                                                join camdsnap.TRANSACTION_BLOCK_SS trb
+                                                  on trb.trans_id = cor.trans_id
+                                         where  rev.account_comp_id =
+                                                (
+                                                    select  acp.account_comp_id
+                                                      from  camdsnap.PROGRAM_VINTAGE_SS prv,
+                                                            camdsnap.COMPLIANCE_PERIOD_SS cmp,
+                                                            camdsnap.ACCOUNT_COMPLIANCE_SS acp
+                                                     where  sel.prg_cd = 'CAIRSO2'
+                                                       and  prv.prg_cd = 'ARP'
+                                                       and  prv.prg_vintage_name::integer = sel.op_year
+                                                       and  cmp.prg_vintage_id = prv.prg_vintage_id
+                                                       and  acp.account_id = sel.account_id
+                                                       and  acp.comp_period_id = cmp.comp_period_id
+                                                )
+                                           and  rev.trans_status_cd = 'REVERSE'
+                                           and  rev.trans_type_cd in ( 'EMADJ', 'EMISS', 'UNDERUT', 'LO', 'SE', 'CC' )
+                                        union all
+                                        -- Compliance Problem Deductions
+                                        select  prb.block_total as deduct
+                                          from  camdsnap.COMPLIANCE_PROBLEM_TRANS_SS prb
+                                                join camdsnap.TRANSACTION_SS trn
+                                                  on trn.trans_id = prb.trans_id
+                                         where  prb.account_comp_id =
+                                                (
+                                                    select  acp.account_comp_id
+                                                      from  camdsnap.PROGRAM_VINTAGE_SS prv,
+                                                            camdsnap.COMPLIANCE_PERIOD_SS cmp,
+                                                            camdsnap.ACCOUNT_COMPLIANCE_SS acp
+                                                     where  sel.prg_cd = 'CAIRSO2'
+                                                       and  prv.prg_cd = 'ARP'
+                                                       and  prv.prg_vintage_name::integer = sel.op_year
+                                                       and  cmp.prg_vintage_id = prv.prg_vintage_id
+                                                       and  acp.account_id = sel.account_id
+                                                       and  acp.comp_period_id = cmp.comp_period_id
+                                                )
+                                           and  trn.trans_status_cd = 'COMPLET'
+                                           and  trn.trans_type_cd in ( 'EMADJ', 'EMISS', 'UNDERUT', 'LO', 'SE', 'CC' )
+                                    ) cmb
+                        ) arp
                           on true
                         -- Other Deduct (from Account Compliance Liability)
                         left join lateral
