@@ -41,14 +41,12 @@ begin
                         cmp.comp_name || ' (' || otc.owner_type_description || ')' ||
                         case
                             when ( unf.op_year > 2003 ) and 
-                                 ( extract( year from own.begin_date ) = unf.op_year ) and
-                                 ( extract( month from own.begin_date ) != 1 or extract( day from own.begin_date ) != 1 )
+                                 ( extract( year from own.begin_date ) = unf.op_year )
                             then ' (Started ' || to_char( own.begin_date, 'Mon dd, yyyy' ) || ')'
                             else ''
                         end ||
                         case
-                            when ( extract( year from own.end_date ) = unf.op_year ) and
-                                 ( extract( month from own.end_date ) != 12 or extract( day from own.end_date ) != 31 )
+                            when ( extract( year from own.end_date ) = unf.op_year )
                             then ' (Ended ' || to_char( own.end_date, 'Mon dd, yyyy' ) || ')'
                             else ''
                         end
@@ -62,14 +60,12 @@ begin
                         cmp.comp_name || ' (' || otc.owner_type_description || ')' ||
                         case
                             when ( unf.op_year > 2003 ) and 
-                                 ( extract( year from own.begin_date ) = unf.op_year ) and
-                                 ( extract( month from own.begin_date ) != 1 or extract( day from own.begin_date ) != 1 )
+                                 ( extract( year from own.begin_date ) = unf.op_year )
                             then ' (Started ' || to_char( own.begin_date, 'Mon dd, yyyy' ) || ')'
                             else ''
                         end ||
                         case
-                            when ( extract( year from own.end_date ) = unf.op_year ) and
-                                 ( extract( month from own.end_date ) != 12 or extract( day from own.end_date ) != 31 )
+                            when ( extract( year from own.end_date ) = unf.op_year )
                             then ' (Ended ' || to_char( own.end_date, 'Mon dd, yyyy' ) || ')'
                             else ''
                         end
@@ -100,6 +96,18 @@ begin
                   from  camddmw.OWNER_YEAR_DIM oyd
                  where  oyd.unit_id = unf.unit_id
                    and  oyd.op_year = unf.op_year
+            )
+       and  (
+                fullRefresh_in
+                or
+                exists
+                (
+                    select  1
+                      from  camddmw.OWNER_YEAR_DIM oyd
+                     where  oyd.unit_id = unf.unit_id
+                       and  oyd.op_year = unf.op_year
+                       and  oyd.last_update_date >= increamentalRefreshDate_in
+                )
             )
      group
         by  unf.unit_id,
