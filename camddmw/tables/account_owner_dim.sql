@@ -1,3 +1,6 @@
+CREATE SEQUENCE IF NOT EXISTS camddmw.account_owner_dim_seq
+    START WITH 1;
+
 CREATE TABLE IF NOT EXISTS camddmw.account_owner_dim
 (
     prg_code character varying(8) COLLATE pg_catalog."default" NOT NULL,
@@ -11,7 +14,7 @@ CREATE TABLE IF NOT EXISTS camddmw.account_owner_dim
     add_date timestamp without time zone,
     ppl_id numeric(12,0),
     account_owner_id double precision,
-    account_owner_unique_id numeric(38,0) NOT NULL,
+    account_owner_unique_id numeric(38,0) NOT NULL DEFAULT nextval('camddmw.account_owner_dim_seq'),
     last_update_date timestamp without time zone
 );
 
