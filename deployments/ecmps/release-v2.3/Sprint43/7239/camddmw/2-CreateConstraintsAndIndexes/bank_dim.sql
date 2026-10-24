@@ -1,0 +1,5 @@
+-----------------
+-- Constraints --
+-----------------
+
+ALTER TABLE CAMDDMW.BANK_DIM ADD CONSTRAINT BANK_DIM_PK PRIMARY KEY ( ACCOUNT_NUMBER, PRG_CODE, CALENDAR_YEAR );
