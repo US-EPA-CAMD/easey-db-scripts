@@ -232,6 +232,12 @@ if [ $2 == "POST_DATA_LOAD" ]; then
   \i ./check-tables/qa-check-catalog-process-load.sql
   \i ./check-tables/import-check-catalog-process-load.sql
   \i ../../../camdecmpsmd/views/vw_cross_check_catalog_value.sql
+  \i ./renumber-ecmps-1.0-submission-ids/renumber-submission-ids-EM.sql
+  \i ./renumber-ecmps-1.0-submission-ids/renumber-submission-ids-ESA.sql
+  \i ./renumber-ecmps-1.0-submission-ids/renumber-submission-ids-MP.sql
+  \i ./renumber-ecmps-1.0-submission-ids/renumber-submission-ids-QAT.sql
+  \i ./renumber-ecmps-1.0-submission-ids/renumber-submission-ids-QCE.sql
+  \i ./renumber-ecmps-1.0-submission-ids/renumber-submission-ids-TEE.sql
   "
 
   getFiles "./mdm-relationships"
