@@ -1,3 +1,6 @@
+CREATE SEQUENCE IF NOT EXISTS camddmw.transaction_owner_dim_seq
+    START WITH 1;
+
 CREATE TABLE IF NOT EXISTS camddmw.transaction_owner_dim
 (
     transaction_id double precision,
@@ -12,7 +15,7 @@ CREATE TABLE IF NOT EXISTS camddmw.transaction_owner_dim
     ppl_id double precision,
     own_id double precision,
     buy_or_sell character varying(4) COLLATE pg_catalog."default",
-    transaction_owner_unique_id numeric(38,0) NOT NULL,
+    transaction_owner_unique_id numeric(38,0) NOT NULL DEFAULT nextval('camddmw.transaction_owner_dim_seq'),
     last_update_date timestamp without time zone
 );
 
