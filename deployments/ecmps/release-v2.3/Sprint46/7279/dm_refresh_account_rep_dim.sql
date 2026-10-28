@@ -19,9 +19,9 @@ declare
 begin
 	delete from camddmw.account_rep_dim;
 
-	insert into camddmw.account_rep_dim_test (account_number, prg_code, unit_id, 
-											  ppl_id, display_name, full_name, 
-											  rep_code, data_source, userid, add_date)
+	insert into camddmw.account_rep_dim (account_number, prg_code, unit_id, 
+										 ppl_id, display_name, full_name, 
+										 rep_code, data_source, userid, add_date)
 	--AMS accounts that are not UNIT or FACLTY accounts
 	select a.account_number,
 		   aprg.prg_cd as prg_code,
