@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS camddmw.transaction_owner_dim
 (
-    transaction_id double precision,
+    transaction_id numeric(10,0) precision,
     prg_code character varying(8) COLLATE pg_catalog."default",
     account_number character varying(12) COLLATE pg_catalog."default",
     account_owner_id double precision,
