@@ -1,6 +1,9 @@
+CREATE SEQUENCE IF NOT EXISTS camddmw.transaction_block_dim_seq
+    START WITH 1;
+
 CREATE TABLE IF NOT EXISTS camddmw.transaction_block_dim
 (
-    transaction_block_id numeric(10,0) NOT NULL,
+    transaction_block_id numeric(10,0) NOT NULL DEFAULT nextval('camddmw.transaction_block_dim_seq'),
     transaction_id numeric(10,0) NOT NULL,
     start_block numeric(10,0) DEFAULT NULL::numeric,
     end_block numeric(10,0) DEFAULT NULL::numeric,
