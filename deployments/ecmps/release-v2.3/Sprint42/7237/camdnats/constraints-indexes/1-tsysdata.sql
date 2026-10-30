@@ -1,0 +1,5 @@
+-----------------
+-- Constraints --
+-----------------
+
+ALTER TABLE CAMDNATS.TSYSDATA ADD CONSTRAINT TSYSDATA_PK PRIMARY KEY (COMPYEAR_DT);
