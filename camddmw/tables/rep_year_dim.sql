@@ -1,6 +1,8 @@
+CREATE SEQUENCE IF NOT EXISTS camddmw.rep_year_dim_seq START WITH 1;
+
 CREATE TABLE IF NOT EXISTS camddmw.rep_year_dim
 (
-    rep_yr_id double precision NOT NULL,
+    rep_yr_id double precision NOT NULL DEFAULT nextval('camddmw.rep_year_dim_seq'),
     unit_id numeric(12,0),
     op_year numeric(4,0),
     ppl_id numeric(12,0),
@@ -155,3 +157,6 @@ CREATE TABLE IF NOT EXISTS camddmw.rep_year_dim_rep_year_dm_p8 PARTITION OF camd
 
 CREATE TABLE IF NOT EXISTS camddmw.rep_year_dim_rep_year_dm_p9 PARTITION OF camddmw.rep_year_dim
     FOR VALUES FROM ('2003') TO ('2004');
+
+
+ALTER SEQUENCE camddmw.rep_year_dim_seq OWNED BY camddmw.rep_year_dim.rep_yr_id;
