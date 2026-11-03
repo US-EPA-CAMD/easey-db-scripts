@@ -392,14 +392,14 @@ begin
 		data_source = excluded.data_source,
 		userid = excluded.userid,
 		add_date = excluded.add_date
-	where program_year_dim_test.program_description <> excluded.program_description
-		or program_year_dim_test.report_freq <> excluded.report_freq
-		or program_year_dim_test.non_egu_flg <> excluded.non_egu_flg
-		or program_year_dim_test.compliance_ind <> excluded.compliance_ind
-		or program_year_dim_test.last_update_date <> excluded.last_update_date
-		or program_year_dim_test.data_source <> excluded.data_source
-		or program_year_dim_test.userid <> excluded.userid
-		or program_year_dim_test.add_date <> excluded.add_date;
+	where program_year_dim.program_description <> excluded.program_description
+		or program_year_dim.report_freq <> excluded.report_freq
+		or program_year_dim.non_egu_flg <> excluded.non_egu_flg
+		or program_year_dim.compliance_ind <> excluded.compliance_ind
+		or program_year_dim.last_update_date <> excluded.last_update_date
+		or program_year_dim.data_source <> excluded.data_source
+		or program_year_dim.userid <> excluded.userid
+		or program_year_dim.add_date <> excluded.add_date;
 
 	result_out := true;
     
