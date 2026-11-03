@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS CAMD.PRE_ECMPS_UNIT_QUARTER
 (
-  UNIT_ID               NUMERIC(12)                     NOT NULL,
+  UNIT_ID               INT4                            NOT NULL,
   OP_YEAR               NUMERIC(4)                      NOT NULL,
   OP_QUARTER            NUMERIC(1)                      NOT NULL,
   COUNT_OP_TIME         NUMERIC(10),
