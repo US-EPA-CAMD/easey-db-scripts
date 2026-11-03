@@ -369,7 +369,7 @@ begin
 	on conflict do nothing;
 
 	-- delete records from program_year_dim that are not in program_year_dim_temp
-	delete from camddmw.program_year_dim
+	delete from camddmw.program_year_dim pyd
 		where not exists (select unit_id 
 							from program_year_dim_temp pydt 
 							where pydt.unit_id = pyd.unit_id  
