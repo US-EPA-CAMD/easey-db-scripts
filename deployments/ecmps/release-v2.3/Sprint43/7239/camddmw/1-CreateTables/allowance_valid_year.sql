@@ -1,0 +1,10 @@
+CREATE TABLE CAMDDMW.ALLOWANCE_VALID_YEAR
+(
+  VALID_YEAR  NUMERIC
+);
+
+
+COMMENT ON TABLE CAMDDMW.ALLOWANCE_VALID_YEAR IS 'List of valid years for accessing allowance data';
+
+
+COMMENT ON COLUMN CAMDDMW.ALLOWANCE_VALID_YEAR.VALID_YEAR IS 'Valid years for accessing allowance data';
