@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS CAMD.UNIT_PROGRAM_90TH_OP_DATE
 (
-    UNIT_ID             NUMERIC(38)                     NOT NULL,
+    UNIT_ID             INT4                            NOT NULL,
     PRG_CD              VARCHAR(7)                      NOT NULL,
     NINTIETH_OP_DATE    DATE                            NOT NULL,
     LOAD_DATE           TIMESTAMP WITHOUT TIME ZONE     DEFAULT NOW()::timestamp NOT NULL
