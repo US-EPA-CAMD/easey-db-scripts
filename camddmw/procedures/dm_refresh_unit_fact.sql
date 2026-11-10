@@ -49,7 +49,7 @@ begin
 	
 	-- unit account is the buying account for at least one AMS transaction during the op_year
 	insert into camddmw.unit_fact (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
-	select
+	select distinct
 		u.unit_id,
 		avy.valid_year,
 		f.fac_id,
@@ -71,7 +71,7 @@ begin
 
 	-- unit account is the buying account for at least one NATS transaction during the op_year
 	insert into camddmw.unit_fact (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
-	select
+	select distinct
 		u.unit_id,
 		avy.valid_year,
 		f.fac_id,
