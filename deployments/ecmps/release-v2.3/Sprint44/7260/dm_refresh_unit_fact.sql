@@ -20,7 +20,7 @@ declare
     vErrorConstraintName        text;
 begin
 	-- add records for units with emissions data in either annual_unit_data or annual_unit_data_a
-	insert into camddmw.unit_fact_test (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
+	insert into camddmw.unit_fact (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
 	select
 		aud.unit_id,
 		aud.op_year,
@@ -43,12 +43,12 @@ begin
 		 select unit_id, op_year, sum_op_time, so2_mass, nox_mass, nox_rate, heat_input, co2_mass, add_date from camddmw_arch.annual_unit_data_a) aud
 	inner join camdsnap.unit_ss u on aud.unit_id = u.unit_id	
 	inner join camdsnap.facility_ss f on u.fac_id = f.fac_id
-	where not exists (select uf.unit_id from camddmw.unit_fact_test uf where uf.unit_id = aud.unit_id and uf.op_year = aud.op_year);
+	where not exists (select uf.unit_id from camddmw.unit_fact uf where uf.unit_id = aud.unit_id and uf.op_year = aud.op_year);
 
 	-- add records for units with transaction or compliance data - TODO uncomment after we have all of the underlying tables created and populated
 	/*
 	-- unit account is the buying account for at least one AMS transaction during the op_year
-	insert into camddmw.unit_fact_test (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
+	insert into camddmw.unit_fact (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
 	select
 		u.unit_id,
 		avy.op_year,
@@ -71,7 +71,7 @@ begin
 	where not exists (select uf.unit_id from camddmw.unit_fact uf where uf.unit_id = aud.unit_id and uf.op_year = aud.op_year);	
 
 	-- unit account is the buying account for at least one NATS transaction during the op_year
-	insert into camddmw.unit_fact_test (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
+	insert into camddmw.unit_fact (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
 	select
 		u.unit_id,
 		avy.op_year,
@@ -93,7 +93,7 @@ begin
 	where not exists (select uf.unit_id from camddmw.unit_fact uf where uf.unit_id = aud.unit_id and uf.op_year = aud.op_year);	
 	
 	-- unit account has final compliance for the op_year in AMS data
-	insert into camddmw.unit_fact_test (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
+	insert into camddmw.unit_fact (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
 	select
 		u.unit_id,
 		avy.op_year,
@@ -117,7 +117,7 @@ begin
 	where not exists (select uf.unit_id from camddmw.unit_fact uf where uf.unit_id = aud.unit_id and uf.op_year = aud.op_year);
 
 	-- unit account has final compliance for the op_year in NATS data
-	insert into camddmw.unit_fact_test (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
+	insert into camddmw.unit_fact (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
 	select
 		u.unit_id,
 		avy.op_year,
@@ -139,7 +139,7 @@ begin
 	where not exists (select uf.unit_id from camddmw.unit_fact uf where uf.unit_id = aud.unit_id and uf.op_year = aud.op_year);
 	
 	-- unit account has compliance overdraft deduction for the op_year
-	insert into camddmw.unit_fact_test (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
+	insert into camddmw.unit_fact (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
 	select
 		u.unit_id,
 		avy.op_year,
@@ -163,7 +163,7 @@ begin
 	*/
 	
 	-- add records for remaining relevant units based on program data
-	insert into camddmw.unit_fact_test (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
+	insert into camddmw.unit_fact (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
 	select
 		u.unit_id,
 		avy.valid_year,
@@ -184,7 +184,7 @@ begin
 	inner join (select pyd.unit_id, max(pyd.last_update_date) as last_update_date, string_agg(distinct prg_code, ',') as prg_list
 				from camddmw.program_year_dim pyd
 				group by pyd.unit_id) pyd_unit on u.unit_id = pyd_unit.unit_id
-	where not exists (select uf.unit_id from camddmw.unit_fact_test uf where uf.unit_id = u.unit_id and uf.op_year = avy.valid_year)
+	where not exists (select uf.unit_id from camddmw.unit_fact uf where uf.unit_id = u.unit_id and uf.op_year = avy.valid_year)
 		and not exists (select uos.uos_id from camdsnap.unit_op_status_ss uos where uos.unit_id = u.unit_id and uos.op_status = 'CAN')
 		and exists (select pyd.unit_id from camddmw.program_year_dim pyd where pyd.unit_id = u.unit_id and pyd.op_year = avy.valid_year)
 		and (
@@ -247,7 +247,7 @@ begin
 		end <> 'OUT';
 
 	-- add/update op_status_year_dim records
-	insert into camddmw.op_status_year_dim_test(unit_id, op_year, op_status, op_status_description, data_source, userid, add_date, last_update_date)
+	insert into camddmw.op_status_year_dim (unit_id, op_year, op_status, op_status_description, data_source, userid, add_date, last_update_date)
 	select 
 		u.unit_id, 
 		uf.op_year,
@@ -343,7 +343,7 @@ begin
 			else coalesce(u.update_date, u.add_date)
 		end as last_update_date
 	from camdsnap.unit_ss u
-	inner join camddmw.unit_fact_test uf 
+	inner join camddmw.unit_fact uf 
 		on u.unit_id = uf.unit_id
 	left outer join camdmd.operating_status_code osc 
 		on osc.op_status_cd = case 
@@ -386,13 +386,13 @@ begin
 		op_status_description = excluded.op_status_description,
 		last_update_date = excluded.last_update_date
 	where		
-		coalesce(op_status_year_dim_test.op_status,'') <> coalesce(excluded.op_status,'')
-		or coalesce(op_status_year_dim_test.op_status_description,'') <> coalesce(excluded.op_status_description,'')
-		or op_status_year_dim_test.last_update_date <> excluded.last_update_date;
+		coalesce(op_status_year_dim.op_status,'') <> coalesce(excluded.op_status,'')
+		or coalesce(op_status_year_dim.op_status_description,'') <> coalesce(excluded.op_status_description,'')
+		or op_status_year_dim.last_update_date <> excluded.last_update_date;
 
 	-- update facility level data fields for unit_fact rows that were added
 	-- 	(all newly added records will have a null value in op_status_info)
-	update camddmw.unit_fact_test uf set
+	update camddmw.unit_fact uf set
 		county_code = f.county_cd,
 		county = cc.county_name,
 		fips_code = cc.county_number,
@@ -433,7 +433,7 @@ begin
 	/*
 	 - TODO uncomment after we have all of the underlying tables created and populated
 	-- update facility level data fields for logiccally moved units
-	update camddmw.unit_fact_test uf set
+	update camddmw.unit_fact uf set
 		county_code = f.county_cd,
 		county = cc.county_name,
 		fips_code = cc.county_number,
