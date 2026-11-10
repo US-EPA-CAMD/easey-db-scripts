@@ -45,13 +45,13 @@ begin
 	inner join camdsnap.facility_ss f on u.fac_id = f.fac_id
 	where not exists (select uf.unit_id from camddmw.unit_fact uf where uf.unit_id = aud.unit_id and uf.op_year = aud.op_year);
 
-	-- add records for units with transaction or compliance data - TODO uncomment after we have all of the underlying tables created and populated
-	/*
+	-- add records for units with transaction or compliance data
+	
 	-- unit account is the buying account for at least one AMS transaction during the op_year
 	insert into camddmw.unit_fact (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
 	select
 		u.unit_id,
-		avy.op_year,
+		avy.valid_year,
 		f.fac_id,
 		f.facility_name,
 		f.oris_code,
@@ -61,20 +61,19 @@ begin
 		'DMLOAD' as userid,
 		now() as add_date,
 		'ACCOUNT' as data_source,
-		greatest(u.add_date, u.update_date, f.add_date, f.update_date, a.add_date, a.update_date, t.add_date, t.update_date) as last_update_date
+		greatest(u.add_date, u.update_date, f.add_date, f.update_date, a.add_date, a.update_date, t.trans_date, t.update_date) as last_update_date
 	from camdsnap.unit_ss u	
 	inner join camdsnap.facility_ss f on u.fac_id = f.fac_id
 	cross join camddmw.allowance_valid_year avy
 	inner join camdsnap.account_ss a on u.account = a.account_number
-	inner join camdsnap.transaction_ss t on a.account_id = t.buy_account_id and avy.op_year = extract(year from t.trans_date)
-	left outer join camdnats.ttransact nt on u.account = bt.buyacct_id and avy.op_year = substr(t.cnfrmdte_dt, 1, 4)
-	where not exists (select uf.unit_id from camddmw.unit_fact uf where uf.unit_id = aud.unit_id and uf.op_year = aud.op_year);	
+	inner join camdsnap.transaction_ss t on a.account_id = t.buy_account_id and avy.valid_year = extract(year from t.trans_date)
+	where not exists (select uf.unit_id from camddmw.unit_fact uf where uf.unit_id = u.unit_id and uf.op_year = avy.valid_year);	
 
 	-- unit account is the buying account for at least one NATS transaction during the op_year
 	insert into camddmw.unit_fact (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
 	select
 		u.unit_id,
-		avy.op_year,
+		avy.valid_year,
 		f.fac_id,
 		f.facility_name,
 		f.oris_code,
@@ -89,14 +88,14 @@ begin
 	inner join camdsnap.facility_ss f on u.fac_id = f.fac_id
 	cross join camddmw.allowance_valid_year avy
 	inner join camdnats.taccount a on u.account = a.acctnum_id
-	inner join camdnats.ttransact t on a.acctnum_id = t.buyacct_id and avy.op_year = substr(.cnfrmdte_dt, 1, 4)
-	where not exists (select uf.unit_id from camddmw.unit_fact uf where uf.unit_id = aud.unit_id and uf.op_year = aud.op_year);	
+	inner join camdnats.ttransact t on a.acctnum_id = t.buyacct_id and avy.valid_year::text = substr(t.cnfrmdte_dt, 1, 4)
+	where not exists (select uf.unit_id from camddmw.unit_fact uf where uf.unit_id = u.unit_id and uf.op_year = avy.valid_year);	
 	
 	-- unit account has final compliance for the op_year in AMS data
 	insert into camddmw.unit_fact (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
 	select
 		u.unit_id,
-		avy.op_year,
+		avy.valid_year,
 		f.fac_id,
 		f.facility_name,
 		f.oris_code,
@@ -112,15 +111,15 @@ begin
 	cross join camddmw.allowance_valid_year avy
 	inner join camdsnap.account_ss a on u.account = a.account_number
 	inner join camdsnap.account_compliance_ss ac on a.account_id = ac.account_id and ac.comp_status_cd = 'FINAL'
-	inner join camdsnap.compliance_period_ss on ac.comp_period_id = cp.comp_period_id
-	inner join camdsnap.program_vintage pv on cp.prg_vintage_id = pv.prg_vintage_id and avy.op_year = pv.vintage_year
-	where not exists (select uf.unit_id from camddmw.unit_fact uf where uf.unit_id = aud.unit_id and uf.op_year = aud.op_year);
+	inner join camdsnap.compliance_period_ss cp on ac.comp_period_id = cp.comp_period_id
+	inner join camdsnap.program_vintage_ss pv on cp.prg_vintage_id = pv.prg_vintage_id and avy.valid_year = pv.vintage_year
+	where not exists (select uf.unit_id from camddmw.unit_fact uf where uf.unit_id = u.unit_id and uf.op_year = avy.valid_year);
 
 	-- unit account has final compliance for the op_year in NATS data
 	insert into camddmw.unit_fact (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
 	select
 		u.unit_id,
-		avy.op_year,
+		avy.valid_year,
 		f.fac_id,
 		f.facility_name,
 		f.oris_code,
@@ -135,14 +134,14 @@ begin
 	inner join camdsnap.facility_ss f on u.fac_id = f.fac_id
 	cross join camddmw.allowance_valid_year avy
 	inner join camdnats.taccount a on u.account = a.acctnum_id
-	inner join camdnats.tars_allw_ded tad on a.acctnum_id = tad.acctnum_id and avy.op_year = tad.compyear_dt
-	where not exists (select uf.unit_id from camddmw.unit_fact uf where uf.unit_id = aud.unit_id and uf.op_year = aud.op_year);
+	inner join camdnats.tars_allw_ded tad on a.acctnum_id = tad.acctnum_id and avy.valid_year::text = tad.compyear_dt
+	where not exists (select uf.unit_id from camddmw.unit_fact uf where uf.unit_id = u.unit_id and uf.op_year = avy.valid_year);
 	
 	-- unit account has compliance overdraft deduction for the op_year
 	insert into camddmw.unit_fact (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
 	select
 		u.unit_id,
-		avy.op_year,
+		avy.valid_year,
 		f.fac_id,
 		f.facility_name,
 		f.oris_code,
@@ -157,10 +156,9 @@ begin
 	inner join camdsnap.facility_ss f on u.fac_id = f.fac_id
 	cross join camddmw.allowance_valid_year avy
 	inner join camdnats.taccount a on u.account = a.acctnum_id
-	inner join camdnats.tars_ovdft_ded tod on a.acctnum_id = tod.acctnum_id and avy.op_year = tod.compyear_dt 
-		and exists(select tranvent_cnt from camdnats.ttransact t where t.tranvent_cnt = tod.tranevnt_cnt)
-	where not exists (select uf.unit_id from camddmw.unit_fact uf where uf.unit_id = aud.unit_id and uf.op_year = aud.op_year);
-	*/
+	inner join camdnats.tars_ovdft_ded tod on a.acctnum_id = tod.acctnum_id and avy.valid_year::text = tod.compyear_dt 
+		and exists(select t.tranevnt_cnt from camdnats.ttransact t where t.tranevnt_cnt = tod.tranevnt_cnt)
+	where not exists (select uf.unit_id from camddmw.unit_fact uf where uf.unit_id = u.unit_id and uf.op_year = avy.valid_year);
 	
 	-- add records for remaining relevant units based on program data
 	insert into camddmw.unit_fact (unit_id, op_year, fac_id, facility_name, orispl_code, unitid, comm_op_date, comr_op_date, userid, add_date, data_source, last_update_date)
@@ -430,9 +428,7 @@ begin
 	where uf.unit_id = u.unit_id
 		and uf.op_status_info is null;
 
-	/*
-	 - TODO uncomment after we have all of the underlying tables created and populated
-	-- update facility level data fields for logiccally moved units
+	-- update facility level data fields for logically moved units
 	update camddmw.unit_fact uf set
 		county_code = f.county_cd,
 		county = cc.county_name,
@@ -440,7 +436,7 @@ begin
 		source_cat = scc.source_category_description,
 		state = f.state,
 		state_name = sc.state_name,
-		latitide = f.latitude,
+		latitude = f.latitude,
 		longitude = f.longitude,
 		epa_region = sc.epa_region,
 		epa_region_description = erc.epa_region_description,
@@ -451,7 +447,7 @@ begin
 		nerc_region = f.nerc_region,
 		nerc_description = nrc.nerc_region_description,
 		last_update_date = greatest(uf.last_update_date, f.add_date, f.update_date, u.add_date, u.update_date)
-	from camdsnap.unit_history_ss
+	from camdsnap.unit_history_ss uh
 	inner join camdsnap.facility_ss f	
 		on uh.old_fac_id = f.fac_id
 	left outer join camdmd.county_code cc
@@ -465,14 +461,14 @@ begin
 	left outer join camdmd.nerc_region_code nrc
 		on f.nerc_region = nrc.nerc_region_cd
 	inner join camdsnap.unit_ss u
-		on uf.unit_id = u.unit_id
+		on uh.unit_id = u.unit_id
 	left outer join camdmd.source_category_code scc
 		on u.source_category_cd = scc.source_category_cd
 	left outer join camdmd.naics_code nc
 		on u.naics_cd = nc.naics_cd
 	where uf.unit_id = uh.unit_id
 		and uh.unit_history_type_cd = 'LOGICAL'
-		and uf.op_year <= (extract(year from uh.effective_date) - 1);*/
+		and uf.op_year <= (extract(year from uh.effective_date) - 1);
 
 	result_out := true;
     
