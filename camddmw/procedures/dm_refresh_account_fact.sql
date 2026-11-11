@@ -139,7 +139,11 @@ begin
 		   ap.prg_cd as prg_code,
 		   a.account_name,
 		   a.account_type_cd as account_type_code,
-		   atc.account_type_description as account_type,
+		   case 
+		   	when atc.account_type_cd = 'SERDRES' then 'Early Reduction Reserve'
+		   	when atc.account_type_cd in ('ENFSURR', 'VOLSURR', 'CASURR') then 'Surrender Account'
+		   	else atc.account_type_description
+		   end as account_type,
 		   null as unit_id,
 		   null as unitid,
 		   null as epa_region,
@@ -230,6 +234,7 @@ begin
 		   end as account_type_code,
 		   case 
 		   	when a.accttype_cd = 'OD' then 'Overdraft Account'
+			when a.accttype_cd = 'ER' then 'Early Reduction Reserve'
 		   	else atc.account_type_description 
 		   end as account_type,
 		   null as unit_id,
