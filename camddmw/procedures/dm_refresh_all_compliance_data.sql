@@ -1,7 +1,7 @@
 create or replace procedure camddmw.dm_refresh_all_compliance_data
 (
     in  fullRefresh_in              boolean,
-    in  increamentalRefreshDate_in  date,
+    in  incrementalRefreshDate_in   date,
     out errorJson_out               json,
     out result_out                  boolean
 )

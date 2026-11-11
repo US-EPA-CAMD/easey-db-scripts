@@ -15,4 +15,5 @@ INSERT INTO camdaux.job_configuration (job_class, cron_expression, active, run_o
     ('InventoryChanges', '0 0/5 * * * ?', TRUE, FALSE, NULL),
     ('PdemJob', '0 0/1 * 1/1 * ? *', TRUE, FALSE, NULL),
     ('SubmissionJobQueue', '0 0/1 * 1/1 * ? *', TRUE, FALSE, NULL),
-    ('SubmissionWindowManagement', '0 0 3 ? * * *', TRUE, FALSE, NULL);
+    ('SubmissionWindowManagement', '0 0 3 ? * * *', TRUE, FALSE, NULL),
+    ('DataMartRefreshJob', '0 0 2 ? * * *', TRUE, FALSE, NULL);
