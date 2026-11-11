@@ -1,7 +1,7 @@
 create or replace procedure camddmw.dm_refresh_unit_fact_stacks_pipes_update
 (
     in  fullRefresh_in              boolean,
-    in  increamentalRefreshDate_in  date,
+    in  incrementalRefreshDate_in   date,
     out errorJson_out               json,
     out result_out                  boolean
 )
@@ -39,7 +39,7 @@ begin
                  group
                     by  sub_unm.unit_id
             )
-     where  ( fullRefresh_in or ( unf.add_date >= increamentalRefreshDate_in ) );
+     where  ( fullRefresh_in or ( unf.add_date >= incrementalRefreshDate_in ) );
     
     
     -- Return Values
