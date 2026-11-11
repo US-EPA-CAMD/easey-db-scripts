@@ -47,8 +47,15 @@ qa_candidates AS (
     FROM camdecmpswks.test_summary ts
     JOIN latest_plan_by_location lp USING (mon_loc_id)
     CROSS JOIN parameters p
+    CROSS JOIN reporting_period rp
     WHERE 'QAT' = ANY(p.targets)
-      AND ts.rpt_period_id = p.rpt_period_id
+      AND (
+          ts.end_date BETWEEN rp.begin_date AND rp.end_date
+          OR (
+              ts.end_date IS NULL
+              AND ts.rpt_period_id = p.rpt_period_id
+          )
+      )
 
     UNION ALL
 
@@ -75,34 +82,33 @@ qa_candidates AS (
     WHERE 'TEE' = ANY(p.targets)
       AND tee.rpt_period_id = p.rpt_period_id
 ),
-target_mon_plans AS (
+mp_candidates AS (
     SELECT DISTINCT ee.mon_plan_id
     FROM camdecmps.emission_evaluation ee
     CROSS JOIN parameters p
     WHERE 'MP' = ANY(p.targets)
       AND ee.rpt_period_id = p.rpt_period_id
-
-    UNION
-
-    SELECT mon_plan_id
-    FROM qa_candidates
 ),
 evaluation_candidates AS (
     SELECT
         'MP'::text AS evaluation_type,
-        tmp.mon_plan_id,
-        tmp.mon_plan_id AS record_id
-    FROM target_mon_plans tmp
-    CROSS JOIN parameters p
-    WHERE 'MP' = ANY(p.targets)
+        mp.mon_plan_id,
+        mp.mon_plan_id AS record_id,
+        'QUEUED'::text AS initial_status_cd
+    FROM mp_candidates mp
 
     UNION ALL
 
     SELECT
-        evaluation_type,
-        mon_plan_id,
-        record_id
-    FROM qa_candidates
+        qa.evaluation_type,
+        qa.mon_plan_id,
+        qa.record_id,
+        CASE
+            WHEN mp.mon_plan_id IS NOT NULL THEN 'PENDING'
+            ELSE 'QUEUED'
+        END
+    FROM qa_candidates qa
+    LEFT JOIN mp_candidates mp USING (mon_plan_id)
 ),
 selected_target_types AS (
     SELECT
@@ -111,10 +117,6 @@ selected_target_types AS (
             WHEN 'MP' THEN 'MP'
             ELSE 'QA'
         END AS process_cd,
-        CASE
-            WHEN target = 'MP' OR NOT ('MP' = ANY(p.targets)) THEN 'QUEUED'
-            ELSE 'PENDING'
-        END AS initial_status_cd,
         CASE target
             WHEN 'MP' THEN 1
             WHEN 'QAT' THEN 2
@@ -129,22 +131,32 @@ evaluation_counts AS (
     SELECT
         st.evaluation_type,
         count(ec.record_id) AS evaluation_count,
+        count(ec.record_id) FILTER (
+            WHERE ec.initial_status_cd = 'QUEUED'
+        ) AS queued_count,
+        count(ec.record_id) FILTER (
+            WHERE ec.initial_status_cd = 'PENDING'
+        ) AS pending_count,
         st.process_cd,
-        st.initial_status_cd,
         st.type_order
     FROM selected_target_types st
     LEFT JOIN evaluation_candidates ec USING (evaluation_type)
     GROUP BY
         st.evaluation_type,
         st.process_cd,
-        st.initial_status_cd,
         st.type_order
 )
 SELECT
     evaluation_type,
     evaluation_count,
+    queued_count,
+    pending_count,
     process_cd,
-    initial_status_cd
+    CASE
+        WHEN pending_count > 0 AND queued_count > 0 THEN 'MIXED'
+        WHEN pending_count > 0 THEN 'PENDING'
+        ELSE 'QUEUED'
+    END AS initial_status_cd
 FROM evaluation_counts
 ORDER BY type_order;
 
@@ -192,8 +204,15 @@ qa_candidates AS (
     FROM camdecmpswks.test_summary ts
     JOIN latest_plan_by_location lp USING (mon_loc_id)
     CROSS JOIN parameters p
+    CROSS JOIN reporting_period rp
     WHERE 'QAT' = ANY(p.targets)
-      AND ts.rpt_period_id = p.rpt_period_id
+      AND (
+          ts.end_date BETWEEN rp.begin_date AND rp.end_date
+          OR (
+              ts.end_date IS NULL
+              AND ts.rpt_period_id = p.rpt_period_id
+          )
+      )
 
     UNION ALL
 
@@ -220,34 +239,33 @@ qa_candidates AS (
     WHERE 'TEE' = ANY(p.targets)
       AND tee.rpt_period_id = p.rpt_period_id
 ),
-target_mon_plans AS (
+mp_candidates AS (
     SELECT DISTINCT ee.mon_plan_id
     FROM camdecmps.emission_evaluation ee
     CROSS JOIN parameters p
     WHERE 'MP' = ANY(p.targets)
       AND ee.rpt_period_id = p.rpt_period_id
-
-    UNION
-
-    SELECT mon_plan_id
-    FROM qa_candidates
 ),
 evaluation_candidates AS (
     SELECT
         'MP'::text AS evaluation_type,
-        tmp.mon_plan_id,
-        tmp.mon_plan_id AS record_id
-    FROM target_mon_plans tmp
-    CROSS JOIN parameters p
-    WHERE 'MP' = ANY(p.targets)
+        mp.mon_plan_id,
+        mp.mon_plan_id AS record_id,
+        'QUEUED'::text AS initial_status_cd
+    FROM mp_candidates mp
 
     UNION ALL
 
     SELECT
-        evaluation_type,
-        mon_plan_id,
-        record_id
-    FROM qa_candidates
+        qa.evaluation_type,
+        qa.mon_plan_id,
+        qa.record_id,
+        CASE
+            WHEN mp.mon_plan_id IS NOT NULL THEN 'PENDING'
+            ELSE 'QUEUED'
+        END
+    FROM qa_candidates qa
+    LEFT JOIN mp_candidates mp USING (mon_plan_id)
 ),
 selected_target_types AS (
     SELECT
@@ -256,10 +274,6 @@ selected_target_types AS (
             WHEN 'MP' THEN 'MP'
             ELSE 'QA'
         END AS process_cd,
-        CASE
-            WHEN target = 'MP' OR NOT ('MP' = ANY(p.targets)) THEN 'QUEUED'
-            ELSE 'PENDING'
-        END AS initial_status_cd,
         CASE target
             WHEN 'MP' THEN 1
             WHEN 'QAT' THEN 2
@@ -273,7 +287,7 @@ selected_target_types AS (
 SELECT
     ec.evaluation_type,
     st.process_cd,
-    st.initial_status_cd,
+    ec.initial_status_cd,
     plant.oris_code,
     plant.facility_name,
     ec.mon_plan_id,

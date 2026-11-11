@@ -17,7 +17,7 @@ DECLARE
     v_mon_plan_id camdecmps.emission_evaluation.mon_plan_id%TYPE;
     v_period_begin_date camdecmpsmd.reporting_period.begin_date%TYPE;
     v_period_end_date camdecmpsmd.reporting_period.end_date%TYPE;
-    v_qa_status camdecmpsaux.evaluation_queue.status_cd%TYPE;
+    v_queue_mp boolean;
 BEGIN
     -- Normalize the requested targets and reject invalid input instead of silently creating incomplete or empty evaluation sets.
     SELECT array_agg(DISTINCT upper(btrim(target)))
@@ -48,13 +48,6 @@ BEGIN
         RAISE EXCEPTION 'Reporting period ID % does not exist.', p_rpt_period_id;
     END IF;
 
-    -- When MP is included, hold QA work until the MP evaluation succeeds.
-    -- Without MP, the selected QA records are ready for Quartz immediately.
-    v_qa_status := CASE
-        WHEN 'MP' = ANY(p_targets) THEN 'PENDING'
-        ELSE 'QUEUED'
-    END;
-
     -- Resolve QA records through their monitoring locations to the latest
     -- monitoring plan, matching the grouping used by the Evaluate screen.
     FOR v_mon_plan_id IN
@@ -81,7 +74,13 @@ BEGIN
             FROM camdecmpswks.test_summary ts
             JOIN latest_plan_by_location lp USING (mon_loc_id)
             WHERE 'QAT' = ANY(p_targets)
-              AND ts.rpt_period_id = p_rpt_period_id
+              AND (
+                  ts.end_date BETWEEN v_period_begin_date AND v_period_end_date
+                  OR (
+                      ts.end_date IS NULL
+                      AND ts.rpt_period_id = p_rpt_period_id
+                  )
+              )
 
             UNION ALL
 
@@ -106,14 +105,19 @@ BEGIN
     LOOP
         v_evaluation_set_id := uuid_generate_v4();
 
+        -- MP is independently selected by reporting period. A plan included
+        -- only because it has QA work should not automatically receive MP work.
+        SELECT EXISTS (
+            SELECT 1
+            FROM camdecmps.emission_evaluation ee
+            WHERE 'MP' = ANY(p_targets)
+              AND ee.mon_plan_id = v_mon_plan_id
+              AND ee.rpt_period_id = p_rpt_period_id
+        )
+        INTO v_queue_mp;
+
         -- Store the shared facility and configuration context once for all
         -- evaluation queue records belonging to this monitoring plan.
-        WITH facility AS (
-            SELECT f.oris_code, f.fac_id, f.facility_name
-            FROM camd.plant f
-            JOIN camdecmpswks.monitor_plan mp USING (fac_id)
-            WHERE mp.mon_plan_id = v_mon_plan_id
-        )
         INSERT INTO camdecmpsaux.evaluation_set (
             evaluation_set_id,
             mon_plan_id,
@@ -131,15 +135,17 @@ BEGIN
             CURRENT_TIMESTAMP,
             'system',
             p_user_email,
-            facility.oris_code,
-            facility.fac_id,
-            facility.facility_name,
+            f.oris_code,
+            f.fac_id,
+            f.facility_name,
             camdecmpswks.get_mp_location_list(v_mon_plan_id)
-        FROM facility;
+        FROM camd.plant f
+        JOIN camdecmpswks.monitor_plan mp USING (fac_id)
+        WHERE mp.mon_plan_id = v_mon_plan_id;
 
-        -- Queue MP first when selected. Quartz releases this set's pending QA
-        -- records after the MP evaluation completes.
-        IF 'MP' = ANY(p_targets) THEN
+        -- Queue MP only when this plan is an MP candidate. Quartz releases this
+        -- set's pending QA records after the MP evaluation completes.
+        IF v_queue_mp THEN
             INSERT INTO camdecmpsaux.evaluation_queue (
                 evaluation_set_id,
                 process_cd,
@@ -186,7 +192,13 @@ BEGIN
             JOIN latest_plan_by_location lp USING (mon_loc_id)
             WHERE 'QAT' = ANY(p_targets)
               AND lp.mon_plan_id = v_mon_plan_id
-              AND ts.rpt_period_id = p_rpt_period_id
+              AND (
+                  ts.end_date BETWEEN v_period_begin_date AND v_period_end_date
+                  OR (
+                      ts.end_date IS NULL
+                      AND ts.rpt_period_id = p_rpt_period_id
+                  )
+              )
 
             UNION ALL
 
@@ -228,7 +240,10 @@ BEGIN
             qa_cert_event_id,
             test_extension_exemption_id,
             CURRENT_TIMESTAMP,
-            v_qa_status
+            CASE
+                WHEN v_queue_mp THEN 'PENDING'
+                ELSE 'QUEUED'
+            END
         FROM qa_targets;
 
         -- Keep the workspace status consistent with the queue so users see
