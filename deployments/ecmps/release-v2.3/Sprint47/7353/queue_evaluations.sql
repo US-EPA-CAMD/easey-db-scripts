@@ -76,10 +76,7 @@ BEGIN
             WHERE 'QAT' = ANY(p_targets)
               AND (
                   ts.end_date BETWEEN v_period_begin_date AND v_period_end_date
-                  OR (
-                      ts.end_date IS NULL
-                      AND ts.rpt_period_id = p_rpt_period_id
-                  )
+                  OR ts.rpt_period_id = p_rpt_period_id
               )
 
             UNION ALL
@@ -194,10 +191,7 @@ BEGIN
               AND lp.mon_plan_id = v_mon_plan_id
               AND (
                   ts.end_date BETWEEN v_period_begin_date AND v_period_end_date
-                  OR (
-                      ts.end_date IS NULL
-                      AND ts.rpt_period_id = p_rpt_period_id
-                  )
+                  OR ts.rpt_period_id = p_rpt_period_id
               )
 
             UNION ALL

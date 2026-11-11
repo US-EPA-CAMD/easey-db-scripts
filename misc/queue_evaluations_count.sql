@@ -51,10 +51,7 @@ qa_candidates AS (
     WHERE 'QAT' = ANY(p.targets)
       AND (
           ts.end_date BETWEEN rp.begin_date AND rp.end_date
-          OR (
-              ts.end_date IS NULL
-              AND ts.rpt_period_id = p.rpt_period_id
-          )
+          OR ts.rpt_period_id = p.rpt_period_id
       )
 
     UNION ALL
@@ -208,10 +205,7 @@ qa_candidates AS (
     WHERE 'QAT' = ANY(p.targets)
       AND (
           ts.end_date BETWEEN rp.begin_date AND rp.end_date
-          OR (
-              ts.end_date IS NULL
-              AND ts.rpt_period_id = p.rpt_period_id
-          )
+          OR ts.rpt_period_id = p.rpt_period_id
       )
 
     UNION ALL
