@@ -31,7 +31,7 @@ begin
         truncate table camddmw.ACCOUNT_FACT cascade;
         truncate table camddmw.ACCOUNT_OWNER_DIM cascade;
         truncate table camddmw.ACCOUNT_REP_DIM cascade;
-        truncate table camddmw.ALLOWANCE_HOLDING_REP_DIM cascade;
+        truncate table camddmw.ALLOWANCE_HOLDING_DIM cascade;
         truncate table camddmw.BANK_DIM cascade;
         truncate table camddmw.MONITOR_FACT cascade;
         truncate table camddmw.STATE_ALLOCATION_FACT cascade;
