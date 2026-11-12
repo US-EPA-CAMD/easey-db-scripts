@@ -1,7 +1,5 @@
 create or replace procedure camddmw.dm_refresh_bank_dim
 (
-    in  fullRefresh_in              boolean,
-    in  increamentalRefreshDate_in  date,
     out errorJson_out               json,
     out result_out                  boolean
 )
