@@ -1,7 +1,7 @@
 create or replace procedure camddmw.dm_refresh_unit_type_year_dim
 (
     in  fullRefresh_in              boolean,
-    in  increamentalRefreshDate_in  date,
+    in  incrementalRefreshDate_in   date,
     out errorJson_out               json,
     out result_out                  boolean
 )
@@ -70,7 +70,7 @@ begin
                  where  exs.op_year = oyr.op_year
                    and  exs.unit_id = ubt.unit_id
             )
-       and  ( fullRefresh_in or ( greatest( ubt.add_date, ubt.update_date, unt.add_date, unt.update_date ) >= increamentalRefreshDate_in ) )
+       and  ( fullRefresh_in or ( greatest( ubt.add_date, ubt.update_date, unt.add_date, unt.update_date ) >= incrementalRefreshDate_in ) )
         on  conflict( op_year, unit_id, unit_type )
         do  update
                set  unit_type_description   = excluded.unit_type_description,
