@@ -1,7 +1,7 @@
 create or replace procedure camddmw.dm_refresh_fuel_year_dim
 (
     in  fullRefresh_in              boolean,
-    in  increamentalRefreshDate_in  date,
+    in  incrementalRefreshDate_in   date,
     out errorJson_out               json,
     out result_out                  boolean
 )
@@ -70,7 +70,7 @@ begin
              and unf.unit_id = unt.unit_id
             join camdecmpsmd.FUEL_TYPE_CODE ftc 
               on ftc.fuel_type_cd = ufs.fuel_type
-     where  ( fullRefresh_in or ( greatest( ufs.add_date, ufs.update_date, unf.add_date ) >= increamentalRefreshDate_in ) )
+     where  ( fullRefresh_in or ( greatest( ufs.add_date, ufs.update_date, unf.add_date ) >= incrementalRefreshDate_in ) )
      group
         by  oyr.op_year,
             ufs.unit_id,
