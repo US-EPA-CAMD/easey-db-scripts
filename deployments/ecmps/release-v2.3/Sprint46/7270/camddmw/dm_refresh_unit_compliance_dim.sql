@@ -1,7 +1,7 @@
 create or replace procedure camddmw.dm_refresh_unit_compliance_dim
 (
     in  fullRefresh_in              boolean,
-    in  increamentalRefreshDate_in  date,
+    in  incrementalRefreshDate_in   date,
     out errorJson_out               json,
     out result_out                  boolean
 )
@@ -99,11 +99,11 @@ begin
        and  (
                 fullRefresh_in
                 or
-                ncr.add_date >= increamentalRefreshDate_in
+                ncr.add_date >= incrementalRefreshDate_in
                 or
-                ncr.update_date >= increamentalRefreshDate_in
+                ncr.update_date >= incrementalRefreshDate_in
                 or
-                odf.last_update_date >= increamentalRefreshDate_in
+                odf.last_update_date >= incrementalRefreshDate_in
             )
      group
         by  ncp.unit_id,
