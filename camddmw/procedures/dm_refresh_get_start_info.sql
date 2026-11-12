@@ -1,5 +1,6 @@
 create or replace procedure camddmw.dm_refresh_get_start_info
 (
+    in  dmRefreshLogId_in   int,
     out isFullRefresh_out   boolean,
     out lookbackDate_out    date,
     out errorJson_out       json,
@@ -58,6 +59,13 @@ begin
         lookbackDate_out = null;
     end if;
     
+    -- Update DM_REFRESH_LOG.
+    if ( dmRefreshLogId_in is not null ) then
+        update  camddmw.DM_REFRESH_LOG
+           set  is_full_refresh = isFullRefresh_out,
+                incremental_refresh_date = lookbackDate_out
+         where  dm_refresh_log_id = dmRefreshLogId_in;
+    end if;
     
     -- Return Values
     errorJson_out := null;
