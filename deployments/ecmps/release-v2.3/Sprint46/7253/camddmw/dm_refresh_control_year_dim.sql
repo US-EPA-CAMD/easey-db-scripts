@@ -1,7 +1,7 @@
 create or replace procedure camddmw.dm_refresh_control_year_dim
 (
     in  fullRefresh_in              boolean,
-    in  increamentalRefreshDate_in  date,
+    in  incrementalRefreshDate_in   date,
     out errorJson_out               json,
     out result_out                  boolean
 )
@@ -100,7 +100,7 @@ begin
                             end
                 )
             )
-       and  ( fullRefresh_in or ( greatest( unc.add_date, unc.update_date, unf.add_date ) >= increamentalRefreshDate_in ) )
+       and  ( fullRefresh_in or ( greatest( unc.add_date, unc.update_date, unf.add_date ) >= incrementalRefreshDate_in ) )
      group
         by  oyr.op_year,
             unc.unit_id,
