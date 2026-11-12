@@ -1,7 +1,7 @@
 create or replace procedure camddmw.dm_refresh_allowance_compliance_dim_ams
 (
     in  fullRefresh_in              boolean,
-    in  increamentalRefreshDate_in  date,
+    in  incrementalRefreshDate_in   date,
     out errorJson_out               json,
     out result_out                  boolean
 )
@@ -120,14 +120,14 @@ begin
                                and  (
                                         fullRefresh_in
                                         or
-                                        ( greatest( acp.add_date, acp.update_date, fct.last_update_date ) >= increamentalRefreshDate_in )
+                                        ( greatest( acp.add_date, acp.update_date, fct.last_update_date ) >= incrementalRefreshDate_in )
                                         or
                                         exists
                                         (
                                             select  1
                                               from  camdsnap.TRANSACTION_SS trn
                                              where  trn.account_comp_id = acp.account_comp_id
-                                               and  trn.trans_date >= increamentalRefreshDate_in
+                                               and  trn.trans_date >= incrementalRefreshDate_in
                                         )
                                         or
                                         exists
@@ -136,7 +136,7 @@ begin
                                               from  camdsnap.TRANSACTION_SS chg
                                                     join camdsnap.TRANSACTION_SS trn
                                                       on trn.changed_trans_id = chg.trans_id
-                                                     and trn.trans_date >= increamentalRefreshDate_in
+                                                     and trn.trans_date >= incrementalRefreshDate_in
                                              where  chg.account_comp_id = acp.account_comp_id
                                         )
                                     )
@@ -575,14 +575,14 @@ begin
                                and  (
                                         fullRefresh_in
                                         or
-                                        ( greatest( acp.add_date, acp.update_date, fct.last_update_date ) >= increamentalRefreshDate_in )
+                                        ( greatest( acp.add_date, acp.update_date, fct.last_update_date ) >= incrementalRefreshDate_in )
                                         or
                                         exists
                                         (
                                             select  1
                                               from  camdsnap.TRANSACTION_SS trn
                                              where  trn.account_comp_id = acp.account_comp_id
-                                               and  trn.trans_date >= increamentalRefreshDate_in
+                                               and  trn.trans_date >= incrementalRefreshDate_in
                                         )
                                         or
                                         exists
@@ -591,7 +591,7 @@ begin
                                               from  camdsnap.TRANSACTION_SS chg
                                                     join camdsnap.TRANSACTION_SS trn
                                                       on trn.changed_trans_id = chg.trans_id
-                                                     and trn.trans_date >= increamentalRefreshDate_in
+                                                     and trn.trans_date >= incrementalRefreshDate_in
                                              where  chg.account_comp_id = acp.account_comp_id
                                         )
                                     )
