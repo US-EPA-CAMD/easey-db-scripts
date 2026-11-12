@@ -1,7 +1,7 @@
 create or replace procedure camddmw.dm_refresh_clear_tables
 (
     in  fullRefresh_in              boolean,
-    in  increamentalRefreshDate_in  date,
+    in  incrementalRefreshDate_in   date,
     out errorJson_out               json,
     out result_out                  boolean
 )
@@ -38,7 +38,7 @@ begin
         truncate table camddmw.TRANSACTION_FACT cascade;
         truncate table camddmw.UNIT_FACT cascade;
         
-    elsif ( increamentalRefreshDate_in is not null ) then
+    elsif ( incrementalRefreshDate_in is not null ) then
         
         --------------------------
         -- Increamental Refresh --
@@ -52,25 +52,23 @@ begin
                     select  1
                       from  camdsnap.UNIT_SS exs
                      where  exs.unit_id = unf.unit_id
-                       and  ( exs.add_date::date >= increamentalRefreshDate_in or exs.update_date::date >= increamentalRefreshDate_in )
+                       and  ( exs.add_date::date >= incrementalRefreshDate_in or exs.update_date::date >= incrementalRefreshDate_in )
                 )
-            /* TODO: Uncomment when the UNIT_PEOPLE_SS MV can and has been created.
             or  exists
                 (
                     -- UNIT_PEOPLE_SS
                     select  1
                       from  camdsnap.UNIT_PEOPLE_SS exs
                      where  exs.unit_id = unf.unit_id
-                       and  ( exs.add_date::date >= increamentalRefreshDate_in or exs.update_date::date >= increamentalRefreshDate_in )
+                       and  ( exs.add_date::date >= incrementalRefreshDate_in or exs.update_date::date >= incrementalRefreshDate_in )
                 )
-            */
             or  exists
                 (
                     -- UNIT_PROGRAM_SS
                     select  1
                       from  camdsnap.UNIT_PROGRAM_SS exs
                      where  exs.unit_id = unf.unit_id
-                       and  ( exs.add_date::date >= increamentalRefreshDate_in or exs.update_date::date >= increamentalRefreshDate_in )
+                       and  ( exs.add_date::date >= incrementalRefreshDate_in or exs.update_date::date >= incrementalRefreshDate_in )
                 )
             or  exists
                 (
@@ -78,7 +76,7 @@ begin
                     select  1
                       from  camdsnap.UNIT_OP_STATUS_SS exs
                      where  exs.unit_id = unf.unit_id
-                       and  ( exs.add_date::date >= increamentalRefreshDate_in or exs.update_date::date >= increamentalRefreshDate_in )
+                       and  ( exs.add_date::date >= incrementalRefreshDate_in or exs.update_date::date >= incrementalRefreshDate_in )
                 )
             or  exists
                 (
@@ -87,7 +85,7 @@ begin
                       from  camdsnap.UNIT_PROGRAM_SS unp
                             join camdsnap.UNIT_PROGRAM_EXEMPTION_SS exs using ( up_id )
                      where  unp.unit_id = unf.unit_id
-                       and  ( exs.add_date::date >= increamentalRefreshDate_in or exs.update_date::date >= increamentalRefreshDate_in )
+                       and  ( exs.add_date::date >= incrementalRefreshDate_in or exs.update_date::date >= incrementalRefreshDate_in )
                 )
             or  exists
                 (
@@ -96,7 +94,7 @@ begin
                       from  camdsnap.UNIT_SS unt
                             join camdsnap.FACILITY_SS exs using ( fac_id )
                      where  unt.unit_id = unf.unit_id
-                       and  ( exs.add_date::date >= increamentalRefreshDate_in or exs.update_date::date >= increamentalRefreshDate_in )
+                       and  ( exs.add_date::date >= incrementalRefreshDate_in or exs.update_date::date >= incrementalRefreshDate_in )
                 )
             or  exists
                 (
@@ -106,7 +104,7 @@ begin
                             join camdsnap.MONITOR_PLAN_LOCATION_SS mpl using ( mon_loc_id )
                             join camdsnap.MONITOR_PLAN_REPORTING_FREQ_SS exs using ( mon_plan_id )
                      where  mpl.unit_id = unf.unit_id
-                       and  ( exs.add_date::date >= increamentalRefreshDate_in or exs.update_date::date >= increamentalRefreshDate_in )
+                       and  ( exs.add_date::date >= incrementalRefreshDate_in or exs.update_date::date >= incrementalRefreshDate_in )
                 )
             or  exists
                 (
@@ -115,7 +113,7 @@ begin
                       from  camdsnap.UNIT_PROGRAM_SS  unp
                             join camdsnap.PROGRAM_SS exs using ( prg_id )
                      where  unp.unit_id = unf.unit_id
-                       and  ( exs.add_date::date >= increamentalRefreshDate_in or exs.update_date::date >= increamentalRefreshDate_in )
+                       and  ( exs.add_date::date >= incrementalRefreshDate_in or exs.update_date::date >= incrementalRefreshDate_in )
                 )
             or  exists
                 (
@@ -123,7 +121,7 @@ begin
                     select  1
                       from  camddmw.ANNUAL_UNIT_DATA exs
                      where  exs.unit_id = unf.unit_id
-                       and  ( exs.add_date::date >= increamentalRefreshDate_in or exs.update_date::date >= increamentalRefreshDate_in )
+                       and  ( exs.add_date::date >= incrementalRefreshDate_in or exs.update_date::date >= incrementalRefreshDate_in )
                 )
             or  exists
                 (
@@ -131,12 +129,12 @@ begin
                     select  1
                       from  camddmw_arch.ANNUAL_UNIT_DATA_A exs
                      where  exs.unit_id = unf.unit_id
-                       and  ( exs.add_date::date >= increamentalRefreshDate_in or exs.update_date::date >= increamentalRefreshDate_in )
+                       and  ( exs.add_date::date >= incrementalRefreshDate_in or exs.update_date::date >= incrementalRefreshDate_in )
                 );
         
     else
         
-        raise exception 'Increamental Refreshes require a value for the increamentalRefreshDate_in parameter.';
+        raise exception 'Increamental Refreshes require a value for the incrementalRefreshDate_in parameter.';
         
     end if;
     
