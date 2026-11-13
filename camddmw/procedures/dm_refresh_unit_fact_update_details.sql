@@ -53,7 +53,7 @@ begin
 			last_update_date = details.last_update_date
 	from (select uf.unit_id, 
 		 	     uf.op_year, 
-		 	     string_agg(fyd.fuel_type_description, ', ' order by fuel_type_description) as info,
+		 	     string_agg(fyd.fuel_type_description, ', ' order by fuel_code) as info,
 		 	     greatest(max(fyd.last_update_date), uf.last_update_date) as last_update_date
 		  from camddmw.unit_fact uf
 			  inner join camddmw.fuel_year_dim fyd
@@ -73,7 +73,7 @@ begin
 			last_update_date = details.last_update_date
 	from (select uf.unit_id, 
 		 	     uf.op_year, 
-		 	     string_agg(fyd.fuel_type_description, ', ' order by fuel_type_description) as info,
+		 	     string_agg(fyd.fuel_type_description, ', ' order by fuel_code) as info,
 		 	     greatest(max(fyd.last_update_date), uf.last_update_date) as last_update_date
 		  from camddmw.unit_fact uf
 			  inner join camddmw.fuel_year_dim fyd
