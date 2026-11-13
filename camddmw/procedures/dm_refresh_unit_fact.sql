@@ -433,6 +433,7 @@ begin
 		facility_name = f.facility_name,
 		fac_id = f.fac_id,
 		orispl_code = f.oris_code,
+		unitid = uh.old_unitid,
 		county_code = f.county_cd,
 		county = cc.county_name,
 		fips_code = cc.county_number,
