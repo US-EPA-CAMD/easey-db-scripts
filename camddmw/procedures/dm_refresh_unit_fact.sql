@@ -432,7 +432,7 @@ begin
 	update camddmw.unit_fact uf set
 		facility_name = f.facility_name,
 		fac_id = f.fac_id,
-		oris_code = f.oris_code,
+		orispl_code = f.oris_code,
 		county_code = f.county_cd,
 		county = cc.county_name,
 		fips_code = cc.county_number,
