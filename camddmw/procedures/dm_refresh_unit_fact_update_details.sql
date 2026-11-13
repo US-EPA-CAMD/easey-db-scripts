@@ -195,7 +195,7 @@ begin
 								else 
 									cyd.control_description
 							end , '|' 
-							order by coalesce(uc.install_date, uc.opt_date) nulls first) as info,
+							order by coalesce(uc.install_date, uc.opt_date) nulls first, uc.control_cd) as info,
 		 	     greatest(max(cyd.last_update_date), uf.last_update_date) as last_update_date
 		  from camddmw.unit_fact uf
 			  inner join camddmw.control_year_dim cyd
@@ -241,7 +241,7 @@ begin
 								else 
 									cyd.control_description
 							end , '|' 
-							order by coalesce(uc.install_date, uc.opt_date) nulls first) as info,
+							order by coalesce(uc.install_date, uc.opt_date) nulls first, uc.control_cd) as info,
 		 	     greatest(max(cyd.last_update_date), uf.last_update_date) as last_update_date
 		  from camddmw.unit_fact uf
 			  inner join camddmw.control_year_dim cyd
@@ -287,7 +287,7 @@ begin
 								else 
 									cyd.control_description
 							end , '|' 
-							order by coalesce(uc.install_date, uc.opt_date) nulls first) as info,
+							order by coalesce(uc.install_date, uc.opt_date) nulls first, uc.control_cd) as info,
 		 	     greatest(max(cyd.last_update_date), uf.last_update_date) as last_update_date
 		  from camddmw.unit_fact uf
 			  inner join camddmw.control_year_dim cyd
@@ -333,7 +333,7 @@ begin
 								else 
 									cyd.control_description
 							end , '|' 
-							order by coalesce(uc.install_date, uc.opt_date) nulls first) as info,
+							order by coalesce(uc.install_date, uc.opt_date) nulls first, uc.control_cd) as info,
 		 	     greatest(max(cyd.last_update_date), uf.last_update_date) as last_update_date
 		  from camddmw.unit_fact uf
 			  inner join camddmw.control_year_dim cyd
