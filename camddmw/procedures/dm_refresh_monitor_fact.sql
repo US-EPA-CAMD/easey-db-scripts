@@ -1,7 +1,7 @@
 create or replace procedure camddmw.dm_refresh_monitor_fact
 (
     in  fullRefresh_in              boolean,
-    in  increamentalRefreshDate_in  date,
+    in  incrementalRefreshDate_in   date,
     out errorJson_out               json,
     out result_out                  boolean
 )
@@ -30,7 +30,7 @@ begin
         
         truncate table camddmw.MONITOR_FACT cascade;
         
-    elsif ( increamentalRefreshDate_in is not null ) then
+    elsif ( incrementalRefreshDate_in is not null ) then
         
         --------------------------
         -- Increamental Refresh --
@@ -42,13 +42,15 @@ begin
                 (
                     select  1
                       from  camdsnap.MONITOR_LOCATION_SS exs
-                     where  exs.mon_loc_id = mfc.mon_loc_id 
+                     where  exs.mon_loc_id = mfc.mon_loc_id
+                       and  exs.stack_pipe_id is not null
+                       and  ( exs.add_date >= incrementalRefreshDate_in or exs.update_date >= incrementalRefreshDate_in )
                 );
 
         
     else
         
-        raise exception 'Increamental Refreshes require a value for the increamentalRefreshDate_in parameter.';
+        raise exception 'Increamental Refreshes require a value for the incrementalRefreshDate_in parameter.';
         
     end if;
     
@@ -76,7 +78,7 @@ begin
               on loc.stack_pipe_id is not null
              and ( ( loc.active_date is null ) or ( extract( year from loc.active_date ) <= vyr.valid_year ) )
              and ( ( loc.retire_date is null ) or ( extract( year from loc.retire_date ) >= vyr.valid_year ) )
-             and ( fullRefresh_in or ( loc.add_date >= increamentalRefreshDate_in ) )
+             and ( fullRefresh_in or ( loc.add_date >= incrementalRefreshDate_in ) )
             join lateral 
             (
                 select  sub_unm.mon_loc_id,
