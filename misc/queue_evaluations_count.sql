@@ -1,14 +1,14 @@
 /*
  * Previews the evaluations that queue_evaluations.sql will queue without
- * changing any data. Keep the reporting period and targets in both queries
- * synchronized with queue_evaluations.sql before running them.
+ * changing any data. The reporting period selects monitoring plans; requested
+ * QA targets include all records associated with those plans.
  */
 
 -- Query 1: Count the evaluations that will be queued for each requested type.
 WITH input AS (
     SELECT
         123::numeric AS rpt_period_id,
-        ARRAY['MP', 'QAT', 'QCE', 'TEE']::text[] AS targets
+        ARRAY['MP', 'QCE', 'TEE']::text[] AS targets
 ),
 parameters AS (
     SELECT
@@ -20,51 +20,20 @@ parameters AS (
         ) AS targets
     FROM input
 ),
-reporting_period AS (
-    SELECT
-        rp.rpt_period_id,
-        rp.begin_date,
-        rp.end_date
-    FROM camdecmpsmd.reporting_period rp
+selected_mon_plans AS (
+    SELECT DISTINCT ee.mon_plan_id
+    FROM camdecmps.emission_evaluation ee
     JOIN parameters p USING (rpt_period_id)
-),
-latest_plan_by_location AS (
-    SELECT DISTINCT ON (mpl.mon_loc_id)
-        mpl.mon_loc_id,
-        mpl.mon_plan_id
-    FROM camdecmpswks.monitor_plan_location mpl
-    JOIN camdecmpswks.monitor_plan mp USING (mon_plan_id)
-    ORDER BY
-        mpl.mon_loc_id,
-        mp.begin_rpt_period_id DESC,
-        mpl.mon_plan_id
 ),
 qa_candidates AS (
     SELECT
-        'QAT'::text AS evaluation_type,
-        lp.mon_plan_id,
-        ts.test_sum_id AS record_id
-    FROM camdecmpswks.test_summary ts
-    JOIN latest_plan_by_location lp USING (mon_loc_id)
-    CROSS JOIN parameters p
-    CROSS JOIN reporting_period rp
-    WHERE 'QAT' = ANY(p.targets)
-      AND (
-          ts.end_date BETWEEN rp.begin_date AND rp.end_date
-          OR ts.rpt_period_id = p.rpt_period_id
-      )
-
-    UNION ALL
-
-    SELECT
-        'QCE',
+        'QCE'::text AS evaluation_type,
         lp.mon_plan_id,
         qce.qa_cert_event_id
     FROM camdecmpswks.qa_cert_event qce
-    JOIN latest_plan_by_location lp USING (mon_loc_id)
+    JOIN camdecmpswks.monitor_plan_location lp USING (mon_loc_id)
+    JOIN selected_mon_plans smp USING (mon_plan_id)
     CROSS JOIN parameters p
-    JOIN reporting_period rp
-      ON qce.qa_cert_event_date BETWEEN rp.begin_date AND rp.end_date
     WHERE 'QCE' = ANY(p.targets)
 
     UNION ALL
@@ -74,17 +43,16 @@ qa_candidates AS (
         lp.mon_plan_id,
         tee.test_extension_exemption_id
     FROM camdecmpswks.test_extension_exemption tee
-    JOIN latest_plan_by_location lp USING (mon_loc_id)
+    JOIN camdecmpswks.monitor_plan_location lp USING (mon_loc_id)
+    JOIN selected_mon_plans smp USING (mon_plan_id)
     CROSS JOIN parameters p
     WHERE 'TEE' = ANY(p.targets)
-      AND tee.rpt_period_id = p.rpt_period_id
 ),
 mp_candidates AS (
-    SELECT DISTINCT ee.mon_plan_id
-    FROM camdecmps.emission_evaluation ee
+    SELECT smp.mon_plan_id
+    FROM selected_mon_plans smp
     CROSS JOIN parameters p
     WHERE 'MP' = ANY(p.targets)
-      AND ee.rpt_period_id = p.rpt_period_id
 ),
 evaluation_candidates AS (
     SELECT
@@ -116,13 +84,12 @@ selected_target_types AS (
         END AS process_cd,
         CASE target
             WHEN 'MP' THEN 1
-            WHEN 'QAT' THEN 2
-            WHEN 'QCE' THEN 3
-            WHEN 'TEE' THEN 4
+            WHEN 'QCE' THEN 2
+            WHEN 'TEE' THEN 3
         END AS type_order
     FROM parameters p
     CROSS JOIN unnest(p.targets) AS selected_targets(target)
-    WHERE target IN ('MP', 'QAT', 'QCE', 'TEE')
+    WHERE target IN ('MP', 'QCE', 'TEE')
 ),
 evaluation_counts AS (
     SELECT
@@ -162,7 +129,7 @@ ORDER BY type_order;
 WITH input AS (
     SELECT
         123::numeric AS rpt_period_id,
-        ARRAY['MP', 'QAT', 'QCE', 'TEE']::text[] AS targets
+        ARRAY['MP', 'QCE', 'TEE']::text[] AS targets
 ),
 parameters AS (
     SELECT
@@ -174,51 +141,20 @@ parameters AS (
         ) AS targets
     FROM input
 ),
-reporting_period AS (
-    SELECT
-        rp.rpt_period_id,
-        rp.begin_date,
-        rp.end_date
-    FROM camdecmpsmd.reporting_period rp
+selected_mon_plans AS (
+    SELECT DISTINCT ee.mon_plan_id
+    FROM camdecmps.emission_evaluation ee
     JOIN parameters p USING (rpt_period_id)
-),
-latest_plan_by_location AS (
-    SELECT DISTINCT ON (mpl.mon_loc_id)
-        mpl.mon_loc_id,
-        mpl.mon_plan_id
-    FROM camdecmpswks.monitor_plan_location mpl
-    JOIN camdecmpswks.monitor_plan mp USING (mon_plan_id)
-    ORDER BY
-        mpl.mon_loc_id,
-        mp.begin_rpt_period_id DESC,
-        mpl.mon_plan_id
 ),
 qa_candidates AS (
     SELECT
-        'QAT'::text AS evaluation_type,
-        lp.mon_plan_id,
-        ts.test_sum_id AS record_id
-    FROM camdecmpswks.test_summary ts
-    JOIN latest_plan_by_location lp USING (mon_loc_id)
-    CROSS JOIN parameters p
-    CROSS JOIN reporting_period rp
-    WHERE 'QAT' = ANY(p.targets)
-      AND (
-          ts.end_date BETWEEN rp.begin_date AND rp.end_date
-          OR ts.rpt_period_id = p.rpt_period_id
-      )
-
-    UNION ALL
-
-    SELECT
-        'QCE',
+        'QCE'::text AS evaluation_type,
         lp.mon_plan_id,
         qce.qa_cert_event_id
     FROM camdecmpswks.qa_cert_event qce
-    JOIN latest_plan_by_location lp USING (mon_loc_id)
+    JOIN camdecmpswks.monitor_plan_location lp USING (mon_loc_id)
+    JOIN selected_mon_plans smp USING (mon_plan_id)
     CROSS JOIN parameters p
-    JOIN reporting_period rp
-      ON qce.qa_cert_event_date BETWEEN rp.begin_date AND rp.end_date
     WHERE 'QCE' = ANY(p.targets)
 
     UNION ALL
@@ -228,17 +164,16 @@ qa_candidates AS (
         lp.mon_plan_id,
         tee.test_extension_exemption_id
     FROM camdecmpswks.test_extension_exemption tee
-    JOIN latest_plan_by_location lp USING (mon_loc_id)
+    JOIN camdecmpswks.monitor_plan_location lp USING (mon_loc_id)
+    JOIN selected_mon_plans smp USING (mon_plan_id)
     CROSS JOIN parameters p
     WHERE 'TEE' = ANY(p.targets)
-      AND tee.rpt_period_id = p.rpt_period_id
 ),
 mp_candidates AS (
-    SELECT DISTINCT ee.mon_plan_id
-    FROM camdecmps.emission_evaluation ee
+    SELECT smp.mon_plan_id
+    FROM selected_mon_plans smp
     CROSS JOIN parameters p
     WHERE 'MP' = ANY(p.targets)
-      AND ee.rpt_period_id = p.rpt_period_id
 ),
 evaluation_candidates AS (
     SELECT
@@ -270,13 +205,12 @@ selected_target_types AS (
         END AS process_cd,
         CASE target
             WHEN 'MP' THEN 1
-            WHEN 'QAT' THEN 2
-            WHEN 'QCE' THEN 3
-            WHEN 'TEE' THEN 4
+            WHEN 'QCE' THEN 2
+            WHEN 'TEE' THEN 3
         END AS type_order
     FROM parameters p
     CROSS JOIN unnest(p.targets) AS selected_targets(target)
-    WHERE target IN ('MP', 'QAT', 'QCE', 'TEE')
+    WHERE target IN ('MP', 'QCE', 'TEE')
 )
 SELECT
     ec.evaluation_type,
