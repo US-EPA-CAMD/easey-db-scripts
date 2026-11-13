@@ -194,7 +194,7 @@ begin
 									cyd.control_description || ' (Retired ' || to_char(uc.retire_date, 'Mon DD, YYYY') || ')'
 								else 
 									cyd.control_description
-							end , '<br>' 
+							end , '|' 
 							order by coalesce(uc.install_date, uc.opt_date) nulls first) as info,
 		 	     greatest(max(cyd.last_update_date), uf.last_update_date) as last_update_date
 		  from camddmw.unit_fact uf
@@ -240,7 +240,7 @@ begin
 									cyd.control_description || ' (Retired ' || to_char(uc.retire_date, 'Mon DD, YYYY') || ')'
 								else 
 									cyd.control_description
-							end , '<br>' 
+							end , '|' 
 							order by coalesce(uc.install_date, uc.opt_date) nulls first) as info,
 		 	     greatest(max(cyd.last_update_date), uf.last_update_date) as last_update_date
 		  from camddmw.unit_fact uf
@@ -286,7 +286,7 @@ begin
 									cyd.control_description || ' (Retired ' || to_char(uc.retire_date, 'Mon DD, YYYY') || ')'
 								else 
 									cyd.control_description
-							end , '<br>' 
+							end , '|' 
 							order by coalesce(uc.install_date, uc.opt_date) nulls first) as info,
 		 	     greatest(max(cyd.last_update_date), uf.last_update_date) as last_update_date
 		  from camddmw.unit_fact uf
@@ -332,7 +332,7 @@ begin
 									cyd.control_description || ' (Retired ' || to_char(uc.retire_date, 'Mon DD, YYYY') || ')'
 								else 
 									cyd.control_description
-							end , '<br>' 
+							end , '|' 
 							order by coalesce(uc.install_date, uc.opt_date) nulls first) as info,
 		 	     greatest(max(cyd.last_update_date), uf.last_update_date) as last_update_date
 		  from camddmw.unit_fact uf
