@@ -1,7 +1,7 @@
 create or replace procedure camddmw.dm_refresh_owner_year_dim
 (
     in  fullRefresh_in              boolean,
-    in  increamentalRefreshDate_in  date,
+    in  incrementalRefreshDate_in   date,
     out errorJson_out               json,
     out result_out                  boolean
 )
@@ -53,15 +53,15 @@ begin
      where  (
                 fullRefresh_in
                 or
-                own.add_date >= increamentalRefreshDate_in
+                own.add_date >= incrementalRefreshDate_in
                 or
-                own.update_date >= increamentalRefreshDate_in
+                own.update_date >= incrementalRefreshDate_in
                 or
-                cmp.add_date >= increamentalRefreshDate_in
+                cmp.add_date >= incrementalRefreshDate_in
                 or
-                cmp.update_date >= increamentalRefreshDate_in
+                cmp.update_date >= incrementalRefreshDate_in
                 or
-                unf.add_date >= increamentalRefreshDate_in
+                unf.add_date >= incrementalRefreshDate_in
             )
      group
         by  -- Eliminates duplicate records created by multiple records for the same unit, owner, and owner type within the same year.
