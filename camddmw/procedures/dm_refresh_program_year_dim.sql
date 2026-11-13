@@ -156,7 +156,28 @@ begin
 		end as comp_ind,
 		greatest(up.add_date, up.update_date, pp.add_date, pp.update_date, u.add_date, u.update_date) as last_update_date
 	from
-		camdsnap.unit_program_ss up
+		(select up_sub.up_id,
+				up_sub.unit_id, 
+				up_sub.prg_id,
+				up_sub.prg_code,
+				up_sub.class,
+				up_sub.non_egu_flg,
+				up_sub.def_ind,
+				up_sub.unit_monitor_cert_begin_date, 
+				case 
+					when u_sub.comr_op_date >= to_date('04/27/2011', 'mm/dd/yyyy') then unit_monitor_cert_begin_date + 180 
+					else up_sub.unit_monitor_cert_deadline end, 
+				case 
+					when u_sub.comr_op_date >= to_date('04/27/2011', 'mm/dd/yyyy') then unit_monitor_cert_begin_date + 180 
+					else up_sub.emissions_recording_begin_date end, 
+				case 
+					when u_sub.comr_op_date >= to_date('04/27/2011', 'mm/dd/yyyy') then extract(year from unit_monitor_cert_begin_date + 180) 
+					else up_sub.trueup_begin_year end,
+				up_sub.add_date,
+				up_sub.update_date
+			from camdsnap.unit_program_ss up_sub
+				inner join camdsnap.unit_ss u_sub
+					on up_sub.unit_id = u_sub.unit_id) up
 	inner join camdsnap.unit_ss u on
 		up.unit_id = u.unit_id
 	inner join camdmd.class_code cc on
