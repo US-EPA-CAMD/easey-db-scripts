@@ -1,6 +1,10 @@
+CREATE SEQUENCE IF NOT EXISTS camddmw.control_year_dim_seq
+    START WITH 1;
+	
+
 CREATE TABLE IF NOT EXISTS camddmw.control_year_dim
 (
-    control_year_id numeric(10,0) NOT NULL,
+    control_year_id numeric(10,0) NOT NULL DEFAULT nextval('camddmw.control_year_dim_seq'),
     unit_id numeric(12,0) NOT NULL,
     control_code character varying(10) COLLATE pg_catalog."default" NOT NULL,
     op_year numeric(4,0) NOT NULL,
