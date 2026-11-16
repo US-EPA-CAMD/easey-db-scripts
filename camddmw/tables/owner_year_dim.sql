@@ -1,6 +1,9 @@
+CREATE SEQUENCE IF NOT EXISTS camddmw.owner_year_dim_seq
+    START WITH 1;
+
 CREATE TABLE IF NOT EXISTS camddmw.owner_year_dim
 (
-    own_yr_id numeric(10,0) NOT NULL,
+    own_yr_id numeric(10,0) NOT NULL DEFAULT nextval('camddmw.owner_year_dim_seq'),
     unit_id numeric(12,0) NOT NULL,
     op_year numeric(4,0) NOT NULL,
     own_id numeric(12,0),
