@@ -1,7 +1,7 @@
 create or replace procedure camddmw.dm_refresh_owner_display_fact
 (
     in  fullRefresh_in              boolean,
-    in  increamentalRefreshDate_in  date,
+    in  incrementalRefreshDate_in   date,
     out errorJson_out               json,
     out result_out                  boolean
 )
@@ -106,7 +106,7 @@ begin
                       from  camddmw.OWNER_YEAR_DIM oyd
                      where  oyd.unit_id = unf.unit_id
                        and  oyd.op_year = unf.op_year
-                       and  oyd.last_update_date >= increamentalRefreshDate_in
+                       and  oyd.add_date >= incrementalRefreshDate_in
                 )
             )
      group
