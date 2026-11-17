@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS camd.unit
     moved_ind numeric(1,0) NOT NULL DEFAULT 0,
     userid character varying(160) COLLATE pg_catalog."default" NOT NULL,
     add_date timestamp without time zone NOT NULL,
-    update_date timestamp without time zone
+    update_date timestamp without time zone,
+	naics_description character varying(1000) COLLATE pg_catalog."default"
 );
 
 COMMENT ON TABLE camd.unit
@@ -84,3 +85,6 @@ COMMENT ON COLUMN camd.unit.add_date
 
 COMMENT ON COLUMN camd.unit.update_date
     IS 'Date of the last record update.';
+	
+COMMENT ON COLUMN camd.unit.naics_description 
+	IS 'Description of NAICS_CODE (Other).';

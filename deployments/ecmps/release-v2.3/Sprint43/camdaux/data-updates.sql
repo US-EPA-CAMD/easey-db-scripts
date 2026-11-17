@@ -1,0 +1,2 @@
+insert into camdaux.SYSTEM_PARAMETER ( system_parameter_name, system_parameter_value, system_parameter_description ) values ( 'DM_REFRESH_FORCE_FULL_REFRESH_DATE', null, 'The date on which a full refresh should occur.  The refresh process should perform a refresh if this parameter is populated with a date and the date of the refresh run is on or after the parameter date.  The refresh should null this parameter after a successful run.' );
+commit;

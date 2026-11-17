@@ -1,6 +1,10 @@
+CREATE SEQUENCE IF NOT EXISTS camddmw.fuel_year_dim_seq
+    START WITH 1;
+	
+
 CREATE TABLE IF NOT EXISTS camddmw.fuel_year_dim
 (
-    fuel_yr_dim numeric(10,0) NOT NULL,
+    fuel_yr_dim numeric(10,0) NOT NULL DEFAULT nextval('camddmw.fuel_year_dim_seq'),
     unit_id numeric(12,0) NOT NULL,
     op_year numeric(4,0) NOT NULL,
     fuel_code character varying(10) COLLATE pg_catalog."default" NOT NULL,
