@@ -1,14 +1,14 @@
-create or replace procedure camddmw.dm_refresh_allowance_compliance_dim
+create or replace procedure camddmw.dm_refresh_allowance_compliance_dim_nats
 (
     in  fullRefresh_in              boolean,
-    in  increamentalRefreshDate_in  date,
+    in  incrementalRefreshDate_in   date,
     out errorJson_out               json,
     out result_out                  boolean
 )
 as
 $$
 declare
-    cProcedureName constant text := 'dm_refresh_allowance_compliance_dim';
+    cProcedureName constant text := 'dm_refresh_allowance_compliance_dim_nats';
 
     -- Stacked Diagnostic Variables
     vErrorReturnedSqlstate      text;
@@ -80,7 +80,7 @@ begin
                    and  (
                             fullRefresh_in
                             or
-                            ( acf.add_date >= increamentalRefreshDate_in )
+                            ( acf.add_date >= incrementalRefreshDate_in )
                             or
                             exists
                             (
@@ -89,7 +89,7 @@ begin
                                  where  xtr.sellacct_id = tad.acctnum_id
                                    and  xtr.compyear_dt = tad.compyear_dt
                                    and  xtr.trantype_cd in ( 'PE', 'TB', 'TE' )
-                                   and  xtr.cnfrmdte_dt >= increamentalRefreshDate_in
+                                   and  to_date( nullif( trim ( xtr.cnfrmdte_dt ), '' ), 'yyyymmdd' ) >= incrementalRefreshDate_in
                             )
                             or
                             exists
@@ -99,15 +99,15 @@ begin
                                         join camdnats.TTRANSACT xt2
                                           on xt2.chgdtran_cnt = xt1.tranevnt_cnt
                                          and xt2.trantype_cd in ( 'EC', 'ER' )
-                                         and xt2.cnfrmdte_dt >= increamentalRefreshDate_in
+                                         and to_date( nullif( trim ( xt2.cnfrmdte_dt ), '' ), 'yyyymmdd' ) >= incrementalRefreshDate_in
                                  where  xt1.sellacct_id = tad.acctnum_id
                                    and  xt1.compyear_dt = tad.compyear_dt
                                    and  xt1.trantype_cd in ( 'PE', 'TB', 'TE' )
                             )
                         )
-                union   all
+                union
                 -- Overdraft Deductions
-                select  trn.sellacct_id as acctnum_id,
+                select  odd.acctnum_id,
                         'UA' as accttype_cd,
                         odd.compyear_dt::integer as compyear_dt,
                         case when odd.compyear_dt::integer <= 2002 then 'OTC' else 'NBP' end as prg_code
@@ -126,7 +126,7 @@ begin
                    and  (
                             fullRefresh_in
                             or
-                            ( acf.add_date >= increamentalRefreshDate_in )
+                            ( acf.add_date >= incrementalRefreshDate_in )
                             or
                             exists
                             (
@@ -135,7 +135,7 @@ begin
                                  where  xtr.sellacct_id = trn.sellacct_id
                                    and  xtr.compyear_dt = odd.compyear_dt
                                    and  xtr.trantype_cd in ( 'PE', 'TB', 'TE' )
-                                   and  xtr.cnfrmdte_dt >= increamentalRefreshDate_in
+                                   and  to_date( nullif( trim ( xtr.cnfrmdte_dt ), '' ), 'yyyymmdd' ) >= incrementalRefreshDate_in
                             )
                             or
                             exists
@@ -145,13 +145,13 @@ begin
                                         join camdnats.TTRANSACT xt2
                                           on xt2.chgdtran_cnt = xt1.tranevnt_cnt
                                          and xt2.trantype_cd in ( 'EC', 'ER' )
-                                         and xt2.cnfrmdte_dt >= increamentalRefreshDate_in
+                                         and to_date( nullif( trim ( xt2.cnfrmdte_dt ), '' ), 'yyyymmdd' ) >= incrementalRefreshDate_in
                                  where  xt1.sellacct_id = trn.sellacct_id
                                    and  xt1.compyear_dt = odd.compyear_dt
                                    and  xt1.trantype_cd in ( 'PE', 'TB', 'TE' )
                             )
                         )
-                union   all
+                union
                 -- Allowance Deductions (Overdraft)
                 select  acc.acctnum_id,
                         acc.accttype_cd,
@@ -164,15 +164,33 @@ begin
                           on acf.account_number = acc.acctnum_id
                          and acf.prg_code = case when sys.compyear_dt::integer <= 2002 then 'OTC' else 'NBP' end
                  where  acc.accttype_cd = 'OD'
-                   and  exists
-                        (
-                           select  1
-                             from  camdnats.TARS_ALLW_DED exs
-                            where  substr( exs.acctnum_id, 1, 6 ) = substr( acc.acctnum_id, 1, 6 )
-                              and  exs.compyear_dt::integer <= sys.compyear_dt::integer
-                           having  ( count( 1 ) > 1 )
+                        -- At least one TARS_ALLW_DED or TARS_OVDFT_DED exists for the ORIS and Compliance Year.
+                   and  (
+                            exists
+                            (
+                               select  1
+                                 from  camdnats.TARS_ALLW_DED exs
+                                where  substr( exs.acctnum_id, 1, 6 ) = substr( acc.acctnum_id, 1, 6 )
+                                  and  exs.compyear_dt::integer = sys.compyear_dt::integer
+                            )
+                            or
+                            exists
+                            (
+                               select  1
+                                 from  camdnats.TTRANSACT exs
+                                where  exs.sellacct_id = acc.acctnum_id
+                                  and  exs.compyear_dt::integer = sys.compyear_dt::integer
+                            )
+                            or
+                            exists
+                            (
+                               select  1
+                                 from  camdnats.TARS_OVDFT_DED exs
+                                where  exs.acctnum_id = acc.acctnum_id
+                                  and  exs.compyear_dt::integer = sys.compyear_dt::integer
+                            )
                         )
-                   and  ( fullRefresh_in or ( acf.add_date >= increamentalRefreshDate_in ) )
+                   and  ( fullRefresh_in or ( acf.add_date >= incrementalRefreshDate_in ) )
             ) cmb
             -- Unit Information
             left join lateral
@@ -206,9 +224,9 @@ begin
             -- Held Values
             left join lateral
             (
-                select  sum( case when sub.compyear_dt::integer = cmb.compyear_dt then sub.balance_tot else 0 end ) as total_held,
-                        sum( case when sub.allwyear_dt = cmb.compyear_dt then sub.balance_tot else 0 end ) as current_held,
-                        sum( case when sub.allwyear_dt > cmb.compyear_dt then sub.balance_tot else 0 end ) as banked_held
+                select  coalesce( sum( case when sub.compyear_dt::integer = cmb.compyear_dt then sub.balance_tot else 0 end ), 0 ) as total_held,
+                        coalesce( sum( case when sub.allwyear_dt = cmb.compyear_dt then sub.balance_tot else 0 end ), 0 ) as current_held,
+                        coalesce( sum( case when sub.allwyear_dt < cmb.compyear_dt then sub.balance_tot else 0 end ), 0 ) as banked_held
                   from  camdnats.TARS_BAL_DED sub
                  where  sub.acctnum_id = cmb.acctnum_id
                    and  sub.compyear_dt::integer = cmb.compyear_dt
@@ -271,9 +289,9 @@ begin
             -- Deductions
             left join lateral
             (                        
-                select  sum( sub.current_deduct ) as current_deduct,
-                        sum( sub.deduct_1_1 ) as deduct_1_1,
-                        sum( sub.deduct_2_1 ) as deduct_2_1,
+                select  coalesce( sum( sub.current_deduct ), 0 ) as current_deduct,
+                        coalesce( sum( sub.deduct_1_1 ), 0 ) as deduct_1_1,
+                        coalesce( sum( sub.deduct_2_1 ), 0 ) as deduct_2_1,
                         ( coalesce( sum( sub.current_deduct ), 0 ) + coalesce( sum( sub.deduct_1_1 ), 0 ) + coalesce( sum( sub.deduct_2_1 ), 0 ) ) as total_deduct
                   from  (
                             -- Takeback for Underutilization, Emissions Deduction, and Terminate NOx Budget Programs Allowances
@@ -290,7 +308,7 @@ begin
                                         case
                                             when ( trn.trantype_cd = 'TN' )
                                             then 0
-                                            when ( alw.allwyear_dt != cmb.compyear_dt ) and ( trim( alw.allwtrans_cd ) = '1' )
+                                            when ( alw.allwyear_dt != cmb.compyear_dt ) and ( coalesce( alw.allwtrans_cd, '1' ) like '1%' )
                                             then ( alw.serend_cnt - alw.serstart_cnt + 1 )
                                             else 0
                                         end
@@ -300,7 +318,7 @@ begin
                                         case
                                             when ( trn.trantype_cd = 'TN' )
                                             then 0
-                                            when ( alw.allwyear_dt != cmb.compyear_dt ) and ( trim( alw.allwtrans_cd ) = '2' )
+                                            when ( alw.allwyear_dt != cmb.compyear_dt ) and ( coalesce( alw.allwtrans_cd, '1' ) like '2%' )
                                             then ( alw.serend_cnt - alw.serstart_cnt + 1 )
                                             else 0
                                         end
@@ -328,7 +346,7 @@ begin
                                         case
                                             when ( trn.trantype_cd = 'TN' )
                                             then 0
-                                            when ( alw.allwyear_dt != cmb.compyear_dt ) and ( trim( alw.allwtrans_cd ) = '1' )
+                                            when ( alw.allwyear_dt != cmb.compyear_dt ) and ( coalesce( alw.allwtrans_cd, '1' ) like '1%' )
                                             then ( alw.serend_cnt - alw.serstart_cnt + 1 )
                                             else 0
                                         end
@@ -338,7 +356,7 @@ begin
                                         case
                                             when ( trn.trantype_cd = 'TN' )
                                             then 0
-                                            when ( alw.allwyear_dt != cmb.compyear_dt ) and ( trim( alw.allwtrans_cd ) = '2' )
+                                            when ( alw.allwyear_dt != cmb.compyear_dt ) and ( coalesce( alw.allwtrans_cd, '1' ) like '2%' )
                                             then ( alw.serend_cnt - alw.serstart_cnt + 1 )
                                             else 0
                                         end
@@ -514,7 +532,7 @@ begin
             -- Other Deductions
             left join lateral
             (
-                select  sum( sub.other_deduct ) as other_deduct
+                select  nullif( sum( sub.other_deduct ), 0 ) as other_deduct
                   from  (
                             select  allwdct_cnt as other_deduct
                               from  camdnats.TARS_ALLW_DED tad
@@ -583,7 +601,8 @@ begin
                               from  camdnats.TTRANSACT trn
                                     join camdnats.TALLOW alw
                                       on alw.tranevnt_cnt = trn.tranevnt_cnt
-                             where  trn.sellacct_id = cmb.acctnum_id
+                             where  cmb.accttype_cd = 'UA'
+                               and  trn.sellacct_id = cmb.acctnum_id
                                and  (
                                         trn.trantype_cd = 'PE' and
                                         trn.transtat_cd = 'CP' and
@@ -653,7 +672,7 @@ begin
                                          )
                                     join camdnats.TALLOW alw
                                       on alw.tranevnt_cnt = trn.tranevnt_cnt
-                             where  cmb.accttype_cd = 'UA'
+                             where  cmb.accttype_cd = 'OD'
                                and  ( substr( odd.acctnum_id, 1, 6 ) || 'OVERDF' ) = cmb.acctnum_id
                                and  trn.sellacct_id = cmb.acctnum_id
                              group
@@ -671,7 +690,7 @@ begin
                                       on trn.tranevnt_cnt = cpt.tranevnt_cnt
                                      and trn.sellacct_id = cmb.acctnum_id
                                      and trn.transtat_cd = 'CP'
-                             where  cmb.accttype_cd = 'UA'
+                             where  cmb.accttype_cd = 'OD'
                                and  ( substr( cpt.acctnum_id, 1, 6 ) || 'OVERDF' ) = cmb.acctnum_id
                                and  cpt.compyear_dt = cmb.compyear_dt
                                and  cpt.trantype_cd = 'PE'
@@ -680,6 +699,27 @@ begin
                         ) agg
             ) pen
               on true
+     where  (
+                cmb.accttype_cd = 'OD'
+                or
+                -- Check that total_req_deduct is not null.
+                case 
+                    when coalesce( tad.comp_year_emiss, 0 ) + coalesce( oth.other_deduct, 0 ) != 0
+                    then coalesce( tad.comp_year_emiss, 0 ) + coalesce( oth.other_deduct, 0 )
+                    else null
+                end is not null
+                or
+                -- Unit expected for compliance.
+                exists
+                (
+                    select  1
+                      from  camddmw.PROGRAM_YEAR_DIM pyd
+                     where  pyd.op_year = cmb.compyear_dt
+                       and  pyd.unit_id = unt.unit_id
+                       and  pyd.prg_code = cmb.prg_code
+                       and  pyd.compliance_ind = 1
+                )
+            )
         on  conflict ( account_number, prg_code, op_year )
         do  update
                set  units_affected      = excluded.units_affected,
