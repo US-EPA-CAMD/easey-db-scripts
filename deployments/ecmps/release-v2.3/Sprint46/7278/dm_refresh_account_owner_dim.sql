@@ -242,8 +242,8 @@ begin
 	--update account_fact own display column
 	with ao as (select aod.account_number, 
 							   aod.prg_code, 
-							   string_agg(distinct aod.own_display || '(' || otc.owner_type_description || ')' , '|' 
-							   				order by aod.own_display || '(' || otc.owner_type_description || ')') as own_display
+							   string_agg(distinct aod.own_display || ' (' || otc.owner_type_description || ')' , '|' 
+							   				order by aod.own_display || ' (' || otc.owner_type_description || ')') as own_display
 							from camddmw.account_owner_dim aod
 								join camdmd.owner_type_code otc on aod.own_type = otc.owner_type_cd
 						group by aod.account_number, aod.prg_code)
