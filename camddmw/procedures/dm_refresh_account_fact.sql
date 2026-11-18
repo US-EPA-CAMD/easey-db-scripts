@@ -148,13 +148,20 @@ begin
 		   null as unitid,
 		   null as epa_region,
 		   null as epa_region_description, 
-		   a.state,
-		   case
-			   when a.state is not null and atc.account_type_group_cd in ('RESERVE', 'RETIRE') then
-			   	sc.state_name
-			   else
-			   	null		   
-		   end as state_name,
+		   coalesce(a.state, case when a.account_number like 'TXSO2%' then 'TX' else null end) as state,
+		   coalesce(
+			   case
+				   when a.state is not null and atc.account_type_group_cd in ('RESERVE', 'RETIRE') then
+				   	sc.state_name
+				   else
+				   	null		   
+			   end, 
+			   case 
+				   when a.account_number like 'TXSO2%' then 
+				   	(select state_name from camdmd.state_code where state_cd = 'TX') 
+				   else 
+				   	null 
+			   end) as state_name,
 		   null as source_cat,
 		   null as fac_id,
 		   null as facility_name,
