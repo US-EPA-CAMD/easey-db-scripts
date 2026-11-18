@@ -146,7 +146,7 @@ begin
 		   null as epa_region_description, 
 		   a.state,
 		   case
-			   when a.state is not null and atc.account_type_group_cd = 'RETIRE' then
+			   when a.state is not null and atc.account_type_group_cd in ('RESERVE', 'RETIRE') then
 			   	sc.state_name
 			   else
 			   	null		   
