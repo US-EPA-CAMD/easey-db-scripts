@@ -230,6 +230,13 @@ begin
 		   a.acctname_nme as account_name,
 		   case
 			when a.accttype_cd = 'OD' then 'OVERDF'
+			when a.accttype_cd = 'GA' then 'GENERAL'
+			when a.accttype_cd IN ('GS', 'OA') then 'SGENRES'
+			when a.accttype_cd = 'EA' then 'SPRMRES'
+			when a.accttype_cd = 'ER' then 'SERDRES'
+			when a.accttype_cd = 'OI' then 'SOPTRES'
+		 	when a.accttype_cd = 'SH' then 'SHOLD'
+		 	when a.accttype_cd = 'SU' then 'SURR'
 			else a.accttype_cd
 		   end as account_type_code,
 		   case 
