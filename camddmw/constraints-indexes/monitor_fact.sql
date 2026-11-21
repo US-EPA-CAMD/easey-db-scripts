@@ -1,0 +1,5 @@
+-----------------
+-- Constraints --
+-----------------
+
+ALTER TABLE CAMDDMW.MONITOR_FACT ADD CONSTRAINT MONITOR_FACT_PK PRIMARY KEY ( MON_LOC_ID, OP_YEAR );

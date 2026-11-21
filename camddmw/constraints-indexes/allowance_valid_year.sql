@@ -1,0 +1,5 @@
+-----------------
+-- Constraints --
+-----------------
+
+ALTER TABLE CAMDDMW.ALLOWANCE_VALID_YEAR ADD CONSTRAINT ALLOWANCE_VALID_YEAR_PK PRIMARY KEY ( VALID_YEAR );
