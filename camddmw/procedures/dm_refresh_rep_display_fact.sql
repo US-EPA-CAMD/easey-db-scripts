@@ -82,7 +82,7 @@ begin
                                 then ( ryd.ppl_id || ' (Ended ' || to_char( ryd.end_date, 'Mon dd, yyyy' ) || ')' )
                                 else  ryd.ppl_id::text
                             end,
-                            '<br>' order by ryd.begin_date, ryd.end_date
+                            ', ' order by ryd.begin_date, ryd.end_date
                         ) as display_info
                   from  camddmw.REP_YEAR_DIM ryd
                  where  ryd.op_year = unf.op_year
