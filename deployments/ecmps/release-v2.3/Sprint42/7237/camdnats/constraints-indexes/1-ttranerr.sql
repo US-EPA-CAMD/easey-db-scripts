@@ -1,0 +1,5 @@
+-----------------
+-- Constraints --
+-----------------
+
+ALTER TABLE CAMDNATS.TTRANERR ADD CONSTRAINT TTRANERR_PK PRIMARY KEY (SEQUENCE_CNT, TRANEVNT_CNT);
